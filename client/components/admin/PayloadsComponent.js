@@ -83,10 +83,10 @@ class PayloadsComponent extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.fetchPayloadData();
+	//	this.props.fetchPayloadData();
 		this.props.getPayloads();
-		this.props.getCocoms();
-		this.props.getLocations();
+	//	this.props.getCocoms();
+	//	this.props.getLocations();
 	}
 
 	renderItems(optionItem) {
@@ -146,7 +146,7 @@ class PayloadsComponent extends React.Component {
 			  },
 			{
 				Header: translations['Name'],
-				accessor: 'payload',
+				accessor: 'description',
 				Filter: ({ filter, onChange }) =>
 						   <select
 							onChange={event => onChange(event.target.value)}
@@ -231,7 +231,7 @@ class PayloadsComponent extends React.Component {
 				</div>
 				<div className="col-md-12">
 					<ReactTable
-						data={payload_data}
+						data={payload_list}
 						columns={columns}
 						defaultPageSize={5}
 						className="-striped -highlight"
