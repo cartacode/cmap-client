@@ -105,7 +105,7 @@ class HeaderComponent extends React.Component {
               <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
-              Thomas Palumbo
+              Pramod
             </div>
             <div className="">
               COL, 116th MI Brigade
@@ -114,7 +114,7 @@ class HeaderComponent extends React.Component {
               Fort Gordon, GA USA
             </div>
           </div>
-          <div className="header-title">
+          <div className="header-title text-center">
             <div className="header-unclassified">
               UNCLASSIFIED
             </div>
