@@ -12,9 +12,9 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'client/dist')
+     path: path.resolve(__dirname, 'client/dist')
   },
-
+  devtool: 'cheap-module-eval-source-map',
   context: __dirname,
 
   resolve: {
@@ -53,6 +53,5 @@ module.exports = {
     }),
     new LiveReloadPlugin({appendScriptTag: true}),
     new ExtractTextPlugin("bundle.css"),
-
   ]
 };
