@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { base_url } from '../../config';
+import { baseUrl } from '../../config';
 
 class Table extends React.Component {
 
@@ -35,7 +35,7 @@ class Table extends React.Component {
 				dropdownItems: items
 			});
 		} else {
-			let apiUrl = base_url + this.props.dropdownDataUrl
+			let apiUrl = baseUrl + this.props.dropdownDataUrl
 			axios.get(apiUrl)
 				.then(response => {
 					response.data.map(item => {

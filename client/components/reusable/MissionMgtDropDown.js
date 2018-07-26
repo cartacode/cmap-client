@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { base_url } from '../../config';
+import { baseUrl } from '../../config';
 
 class MissionMgtDropDown extends React.Component {
 
@@ -28,7 +28,7 @@ class MissionMgtDropDown extends React.Component {
     componentWillMount() {
         let items = [{"label": "--"+this.props.id+"--", "value": 0}];
 
-        let apiUrl = base_url + this.props.dropdownDataUrl
+        let apiUrl = baseUrl + this.props.dropdownDataUrl
         axios.get(apiUrl)
             .then(response => {
                 response.data.map(item => {

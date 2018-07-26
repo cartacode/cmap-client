@@ -2,7 +2,7 @@
  * this is actionTaken actions creator functions.
  */
 import axios from 'axios';
-import { base_url, headers }  from '../config'
+import { baseUrl, headers }  from '../config'
 import qs  from 'qs';
 import namor from "namor";
 
@@ -153,7 +153,7 @@ function receiveUploadFile() {
 
 export let uploadFile = (fileData) => {
 
-  const url = base_url + 'Upload';
+  const url = baseUrl + 'Upload';
 
   console.log('----here api-----------');
   console.log(fileData);
@@ -193,7 +193,7 @@ function receiveAddPersonnel() {
 
 export let addPersonnel = (personnel) => {
 
-	const url = base_url + 'Personnel';
+	const url = baseUrl + 'Personnel';
 
 	console.log('----here api-----------');
   console.log(qs.stringify(personnel));
@@ -233,7 +233,7 @@ function receivePersonnels(data) {
 
 export function fetchPersonnels() {
 
-  const url = base_url + 'Personnel/GetPersonnelData';
+  const url = baseUrl + 'Personnel/GetPersonnelData';
 
   console.log('----here personnel api-----------');
 
@@ -272,7 +272,7 @@ function receiveAddPlatform() {
 
 export let addPlatform = (platform) => {
 
-  const url = base_url + 'Platform';
+  const url = baseUrl + 'Platform';
 
   console.log('----here api-----------');
   console.log(qs.stringify(platform));
@@ -313,7 +313,7 @@ function receivePlatforms(data) {
 
 export function fetchPlatforms() {
 
-  const url = base_url + 'Platform/GetPlatformsData';
+  const url = baseUrl + 'Platform/GetPlatformsData';
 
   console.log('----here munition api-----------');
 
@@ -350,7 +350,7 @@ function receiveAddPayload() {
 
 export let addPayload = (payload) => {
 
-  const url = base_url + 'Payload';
+  const url = baseUrl + 'Payload';
 
   console.log(JSON.stringify(payload));
   console.log(headers);
@@ -389,7 +389,7 @@ function receivePayloads(data) {
 
 export let getPayloads = () => {
 
-  const url = base_url + 'Payload/GetPayloads';
+  const url = baseUrl + 'Payload/GetPayloads';
 
   return (dispatch) => {
     dispatch(requestPayloads());
@@ -424,7 +424,7 @@ function receivePayloadTypes(data) {
 
 export let getPayloadTypes = () => {
 
-  const url = base_url + 'PayloadType';
+  const url = baseUrl + 'PayloadType';
 
   return (dispatch) => {
     dispatch(requestPayloadTypes());
@@ -459,7 +459,7 @@ function receivePayloadData(data) {
 
 export function fetchPayloadData() {
 
-  const url = base_url + 'Payload/GetPayloadsData';
+  const url = baseUrl + 'Payload/GetPayloadsData';
 
   return (dispatch) => {
     dispatch(requestPayloadData());
@@ -495,7 +495,7 @@ function receiveAddMunition() {
 
 export let addMunition = (munition) => {
 
-  const url = base_url + 'Munition';
+  const url = baseUrl + 'Munition';
 
   console.log('----here munition api-----------');
   console.log(JSON.stringify(munition));
@@ -535,7 +535,7 @@ function receiveMunitions(data) {
 
 export function fetchMunitions() {
 
-  const url = base_url + 'Munition/GetMunitionsData';
+  const url = baseUrl + 'Munition/GetMunitionsData';
 
   console.log('----here munition api-----------');
 
@@ -573,7 +573,7 @@ function receiveAddLocation() {
 
 export let addLocation = (location) => {
 
-  const url = base_url + 'Locations';
+  const url = baseUrl + 'Locations';
 
   console.log('----here locations post api-----------');
   console.log(JSON.stringify(location));
@@ -613,7 +613,7 @@ function receiveLocations(data) {
 
 export function getLocations() {
 
-  const url = base_url + 'Locations/GetLocations';
+  const url = baseUrl + 'Locations/GetLocations';
 
   return (dispatch) => {
     dispatch(requestLocations());
@@ -646,7 +646,7 @@ function receiveLocationTypes(data) {
 
 export function getLocationsTypes() {
 
-  const url = base_url + 'LocationCategory';
+  const url = baseUrl + 'LocationCategory';
 
   return (dispatch) => {
     dispatch(requestLocationTypes());
@@ -680,7 +680,7 @@ function receiveLocationData(data) {
 
 export function fetchLocationData() {
 
-  const url = base_url + 'Locations/GetLocationsData';
+  const url = baseUrl + 'Locations/GetLocationsData';
 
   return (dispatch) => {
     dispatch(requestLocationData());
@@ -751,7 +751,7 @@ function receiveAddEEI() {
 
 export let addIntelEEI = (intelEEI) => {
 
-  const url = base_url + 'IntelReqEEI';
+  const url = baseUrl + 'IntelReqEEI';
 
   console.log('----here locations post api-----------');
   console.log(JSON.stringify(intelEEI));
@@ -791,7 +791,7 @@ function receiveAddIntelReq() {
 
 export let addIntelReq = (intelReq) => {
 
-  const url = base_url + 'IntelRequest';
+  const url = baseUrl + 'IntelRequest';
 
   console.log('----here locations post api-----------');
   console.log(JSON.stringify(intelReq));
@@ -832,7 +832,7 @@ function receiveCocoms(data) {
 
 export function getCocoms() {
 
-  const url = base_url + 'COCOM';
+  const url = baseUrl + 'COCOM';
 
   return (dispatch) => {
     dispatch(requestCocoms());

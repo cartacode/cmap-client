@@ -6,6 +6,6 @@ import configureStore, { history } from './store/configureStore';
 const store = configureStore();
 
 ReactDOM.render(
-    <Root store={store} history={history} />,
-    document.getElementById('root')
+  <Root store={store} history={history} />,
+  document.getElementById('root')
 );

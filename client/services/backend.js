@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { base_url }  from '../config'
+import { baseUrl }  from '../config'
 
 function getRank() {
   return axios({
     method: 'get',
-    url: `${base_url}/Ranks`
+    url: `${baseUrl}/Ranks`
   })
   .then(
     (response) => {
@@ -16,7 +16,7 @@ function getRank() {
 function addPersonnel(personnelData) {
   return axios({
     method: 'post',
-    url: `${base_url}/Personnel`,
+    url: `${baseUrl}/Personnel`,
     data: personnelData
   })
   .then(
@@ -29,7 +29,7 @@ function addPersonnel(personnelData) {
 /*function activateCampaign (id) {
   return axios({
     method: 'post',
-    url: `${base_url}/campaigns/${id}/activate`
+    url: `${baseUrl}/campaigns/${id}/activate`
   })
     .then(
       (response) => {
