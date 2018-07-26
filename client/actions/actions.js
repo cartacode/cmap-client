@@ -398,6 +398,7 @@ export let getPayloads = () => {
       (response) => {
         dispatch(receivePayloads(response.data));
         console.log(response.data);
+        console.log(response);
           return response;
       }
     )

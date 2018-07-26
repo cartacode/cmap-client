@@ -60,6 +60,9 @@ class AddPlatformModal extends React.Component {
         PlatformPayload1: '',
         PlatformPayload2: '',
         PlatformPayload3: '',
+        PlatformPayload4: '',
+        PlatformPayload5: '',
+        PlatformPayload6: '',
         PlatformArmamentCapacity: '',
         PlatformArmamentCount: '',
         PlatformArmament1: '',
@@ -181,7 +184,10 @@ class AddPlatformModal extends React.Component {
         ...platform,
         PlatformPayload1: configData.Payload1,
         PlatformPayload2: configData.Payload2,
-        PlatformPayload3: configData.Payload3
+        PlatformPayload3: configData.Payload3,
+        PlatformPayload4: configData.Payload4,
+        PlatformPayload5: configData.Payload5,
+        PlatformPayload6: configData.Payload6
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
@@ -455,6 +461,9 @@ class AddPlatformModal extends React.Component {
       {name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload1', valFieldID:'PlatformPayload1'},
       {name: translations['Payload #2'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload2', valFieldID:'PlatformPayload2'},
       {name: translations['Payload #3'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload3', valFieldID:'PlatformPayload3'},
+      {name: translations['Payload #4'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload4', valFieldID:'PlatformPayload4'},
+      {name: translations['Payload #5'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload5', valFieldID:'PlatformPayload5'},
+      {name: translations['Payload #6'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload6', valFieldID:'PlatformPayload6'},
       {name: translations['Armament Capacity(lbs.)'], type: 'input', domID: 'PlatformArmamentCapacity', valFieldID:'PlatformArmamentCapacity'},
       {name: translations['Armament Count'], type: 'input', domID: 'PlatformArmamentCount', valFieldID: 'PlatformArmamentCount'},
       {name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID:'dispPlatformArmament1', valFieldID:'PlatformArmament1'},
@@ -464,6 +473,7 @@ class AddPlatformModal extends React.Component {
       {name: translations['Coms Type #2'], type: 'dropdown', ddID:'ComsType', domID:'dispPlatformComs2', valFieldID:'PlatformComs2'},
 
     ];
+    debugger;
 
     const crewFields = [
       {name: translations['Flight Crew Req'], type: 'dropdown', domID: 'PlatformFlightCrewReq', valFieldID: 'PlatformFlightCrewReq', ddID: 'CrewReq', valField:'15'},
@@ -480,7 +490,7 @@ class AddPlatformModal extends React.Component {
     const configureFields = [
       {name: translations['Add Payload']+" #1", type: 'dropdown', domID: 'AddPayload1', ddID: 'Payload/GetPayloads', valFieldID: 'PlatformPayload1'},
       {name: translations['Add Payload']+" #2", type: 'dropdown', domID: 'AddPayload2', ddID: 'Payload/GetPayloads', valFieldID: 'PlatformPayload2'},
-      {name: translations['Add Payload']+" #3", type: 'dropdown', domID: 'AddPayload3', ddID: 'Payload/GetPayloads', valFieldID: 'PlatformPayload3'}
+      {name: translations['Add Payload']+" #3", type: 'dropdown', domID: 'AddPayload3', ddID: 'Payload/GetPayloads', valFieldID: 'PlatformPayload3'},
       //{name: translations['Add Munition']+" #1", type: 'dropdown', domID: 'AddMunition1', ddID: 'Munition/GetMunitions', valFieldID: 'Munition1' },
      // {name: translations['Add Munition']+" #2", type: 'dropdown', domID: 'AddMunition2', ddID: 'Munition/GetMunitions', valFieldID: 'Munition2'},
      // {name: translations['Add Munition']+" #3", type: 'dropdown', domID: 'AddMunition3', ddID: 'Munition/GetMunitions', valFieldID: 'Munition3'},

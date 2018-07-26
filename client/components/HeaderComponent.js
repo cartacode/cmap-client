@@ -100,12 +100,12 @@ class HeaderComponent extends React.Component {
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid header">
-          <div className="user-info">
+          <div className="user-info ">
             <div className="header-line">
               <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
-              Thomas Palumbo
+              Thomas
             </div>
             <div className="">
               COL, 116th MI Brigade
@@ -114,7 +114,7 @@ class HeaderComponent extends React.Component {
               Fort Gordon, GA USA
             </div>
           </div>
-          <div className="header-title">
+          <div className="header-title text-center ">
             <div className="header-unclassified">
               UNCLASSIFIED
             </div>
@@ -122,7 +122,7 @@ class HeaderComponent extends React.Component {
               CENTCOM A-ISR MISSION MANAGER
             </div>
           </div>
-          <div className="date-info">
+          <div className="date-info ">
             <div className="date">
               <div className="">
                 {moment().local().format('DD MMMM, YYYY')}
