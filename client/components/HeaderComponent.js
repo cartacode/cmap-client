@@ -119,7 +119,7 @@ class HeaderComponent extends React.Component {
               UNCLASSIFIED
             </div>
             <div className="header-isr">
-              CENTCOM A-ISR MISSION MANAGER
+            Advanced Mission Planning Software (AMPS)
             </div>
           </div>
           <div className="date-info ">
