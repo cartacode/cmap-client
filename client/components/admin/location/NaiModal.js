@@ -177,7 +177,7 @@ class NaiModal extends React.Component {
       <form action="" onSubmit={this.handleSubmit}>
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="modal-header-text">{translations["Named Area of Interest (NAI) Administration"]}</div>
           <div className="col-md-6">
@@ -216,11 +216,11 @@ class NaiModal extends React.Component {
           </div>
            <div className="col-md-12" style={{textAlign:'center', paddingTop:20}}>
             <div className="action-buttons" >
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className="highlighted-button">
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
         </div>

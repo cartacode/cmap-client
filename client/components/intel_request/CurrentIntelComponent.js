@@ -181,21 +181,21 @@ class CurrentIntelComponent extends React.Component {
         Header: translations['email'],
         accessor: 'email',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/email_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/email_icon.png"  /></span> // Custom cell components!
       }, 
 
       {
         Header: translations['export'],
         accessor: 'export',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/export_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/export_icon.png"  /></span> // Custom cell components!
       }, 
 
       {
         Header: translations['detail'],
         accessor: 'detail',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/detail_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
       }
     ];
 
@@ -234,10 +234,10 @@ class CurrentIntelComponent extends React.Component {
             <div className="content-block">
               <ShortHeaderLine headerText={translations["geo selection"]} />
               <div className="content-geo">
-                <img src="/images/intel_request/current_intel/geo_1.png" />
-                <img src="/images/intel_request/current_intel/geo_2.png" />
-                <img src="/images/intel_request/current_intel/geo_3.png" />
-                <img src="/images/intel_request/current_intel/geo_4.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_1.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_2.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_3.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_4.png" />
               </div>
             </div>
             <div className="content-block">
@@ -282,18 +282,18 @@ class CurrentIntelComponent extends React.Component {
             <div className="button-group">
               <div className="content-button">
                 <div className="col-md-6">
-                  <img clasName="button-line" src="/images/admin/edit_up.png" alt=""/>
+                  <img clasName="button-line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                     {translations["clear"]}
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
                 <div className="col-md-6">
-                  <img clasName="button-line" src="/images/admin/edit_up.png" alt=""/>
+                  <img clasName="button-line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="highlighted-button" onClick={this.onEnter.bind(this)}>
                     {translations["route"]}
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
             </div>
@@ -304,7 +304,7 @@ class CurrentIntelComponent extends React.Component {
             <FullHeaderLine headerText={translations["search criteria"]} />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/images/intel_request/operating_picture/large_map.png" alt="" />
+            <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
           </div>
         </div>
         <div className="row intel-request">

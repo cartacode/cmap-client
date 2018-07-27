@@ -28,7 +28,7 @@ class MissionMGTComponent extends React.Component {
     ];
 
     return menuItems.map((item, i) => {
-      let image = '/images/menu/button-line-highlight.png';
+      let image = '/assets/img/menu/button-line-highlight.png';
       let matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
 
       return (

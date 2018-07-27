@@ -38,11 +38,11 @@ class UploadBlock extends React.Component {
         return (
             <div className="col-md-4 upload-block">
                 <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                         upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                 </div>
                 <div className="upload-content">
                     <div className="col-md-12">
@@ -56,11 +56,11 @@ class UploadBlock extends React.Component {
                 </div>
 
                 {/* <div className="upload-imagery">
-          <img src="/images/admin/upload_1.png" alt=""/>
+          <img src="/assets/img/admin/upload_1.png" alt=""/>
           <div className="header-text">
             upload imagery & datasheets
           </div>
-          <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+          <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
         </div>
         <div className="upload-content">
           {this.renderFields()}

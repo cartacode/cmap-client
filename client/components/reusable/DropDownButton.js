@@ -39,7 +39,7 @@ class DropDwonButton extends React.Component {
         <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
           {this.renderItems(key)}
         </ul>
-        <img className="arrow" src="/images/admin/small-arrow.png" alt=""/>
+        <img className="arrow" src="/assets/img/admin/small-arrow.png" alt=""/>
       </div>
     );
   }

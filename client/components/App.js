@@ -1,6 +1,7 @@
-/* eslint-disable import/no-named-as-default */
+import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { hot } from 'react-hot-loader';
 import { Switch, Route } from 'react-router-dom';
 import HeaderContainer from '../containers/HeaderContainer';
 import AdminComponent from '../components/AdminComponent';
@@ -17,12 +18,13 @@ import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 import NavigationComponent from './NavigationComponent';
 
+import { history } from 'store/configureStore';
 
 class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/logout" component={LoginContainer} />
           <Route exact path="/" component={NavigationComponent} />
@@ -38,7 +40,7 @@ class App extends React.Component {
           <Route path="/admin" component={NavigationComponent} />
           <Route path="/search" component={NavigationComponent} />
         </Switch>
-      </div>
+      </ConnectedRouter>
     );
   }
 }
@@ -47,4 +49,4 @@ App.propTypes = {
   children: PropTypes.element
 };
 
-export default App;
+export default hot(module)(App);

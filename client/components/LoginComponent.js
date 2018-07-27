@@ -25,23 +25,23 @@ class LoginComponent extends React.Component {
           <FullHeaderLine headerText="unclassified"/>
         </div>
         <div className="col-md-12 logo">
-          <img src="/images/login/logo.png" />
+          <img src="/assets/img/login/logo.png" />
         </div>
         <div className="col-md-12">
           <div className="second-header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               a-isr mission Manager
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
         </div>
         <div className="col-md-12 login-part"> 
           <div className="col-md-6 login-img">
-            <div><img src="/images/login/passport.png" /></div>
+            <div><img src="/assets/img/login/passport.png" /></div>
           </div>
           <div className="col-md-6 login-win">
-            <div><img src="/images/login/line_top.png" /></div>
+            <div><img src="/assets/img/login/line_top.png" /></div>
             <div className="login-info">
               <div className="col-md-12 login-text">
                 NON-CAC Authentication
@@ -55,25 +55,25 @@ class LoginComponent extends React.Component {
               <div className="col-md-12 login-button">
                  <div className="row action-buttons" >
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                       CLEAR
                     </button>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     < NavLink to="dashboard">
                       <button className="highlighted-button" onClick={this.onEnter.bind(this)}>
                         ENTER
                       </button>
                     </NavLink>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                 </div>
               </div>
             </div>
-            <div><img src="/images/login/line_down.png" /></div>
+            <div><img src="/assets/img/login/line_down.png" /></div>
           </div>
         </div>
         <div className="col-md-12 app-name">

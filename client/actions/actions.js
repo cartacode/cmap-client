@@ -2,7 +2,7 @@
  * this is actionTaken actions creator functions.
  */
 import axios from 'axios';
-import { baseUrl, headers }  from '../config'
+import { baseUrl, requestHeaders } from 'dictionary/network';
 import qs  from 'qs';
 import namor from "namor";
 
@@ -161,7 +161,7 @@ export let uploadFile = (fileData) => {
 
   return (dispatch) => {
     dispatch(requestUploadFile());
-    return axios.post(url, qs.stringify(fileData), headers)
+    return axios.post(url, qs.stringify(fileData), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveUploadFile(response));
@@ -197,12 +197,12 @@ export let addPersonnel = (personnel) => {
 
 	console.log('----here api-----------');
   console.log(qs.stringify(personnel));
-  console.log(headers);
+  console.log(requestHeaders);
 
 
 	return (dispatch) => {
 		dispatch(requestAddPersonnel());
-		return axios.post(url, qs.stringify(personnel), headers)
+		return axios.post(url, qs.stringify(personnel), requestHeaders)
 		.then(
 			(response) => {
         dispatch(receiveAddPersonnel(response));
@@ -239,7 +239,7 @@ export function fetchPersonnels() {
 
   return (dispatch) => {
     dispatch(requestPersonnels());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receivePersonnels(response.data));
@@ -277,12 +277,12 @@ export let addPlatform = (platform) => {
   console.log('----here api-----------');
   console.log(qs.stringify(platform));
   console.log(JSON.stringify(platform));
-  
+
 
 
   return (dispatch) => {
     dispatch(requestAddPlatform());
-    return axios.post(url, qs.stringify(platform), headers)
+    return axios.post(url, qs.stringify(platform), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddPlatform(response));
@@ -319,7 +319,7 @@ export function fetchPlatforms() {
 
   return (dispatch) => {
     dispatch(requestPlatforms());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receivePlatforms(response.data));
@@ -353,11 +353,11 @@ export let addPayload = (payload) => {
   const url = baseUrl + 'Payload';
 
   console.log(JSON.stringify(payload));
-  console.log(headers);
+  console.log(requestHeaders);
 
   return (dispatch) => {
     dispatch(requestAddPayload());
-    return axios.post(url, qs.stringify(payload), headers)
+    return axios.post(url, qs.stringify(payload), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddPayload(response));
@@ -370,7 +370,7 @@ export let addPayload = (payload) => {
           alert(error);
       });
   }
-  
+
 }
 
 function requestPayloads() {
@@ -393,7 +393,7 @@ export let getPayloads = () => {
 
   return (dispatch) => {
     dispatch(requestPayloads());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receivePayloads(response.data));
@@ -428,7 +428,7 @@ export let getPayloadTypes = () => {
 
   return (dispatch) => {
     dispatch(requestPayloadTypes());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receivePayloadTypes(response.data));
@@ -463,7 +463,7 @@ export function fetchPayloadData() {
 
   return (dispatch) => {
     dispatch(requestPayloadData());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receivePayloadData(response.data));
@@ -503,7 +503,7 @@ export let addMunition = (munition) => {
 
   return (dispatch) => {
     dispatch(requestAddMunition());
-    return axios.post(url, qs.stringify(munition), headers)
+    return axios.post(url, qs.stringify(munition), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddMunition(response));
@@ -542,7 +542,7 @@ export function fetchMunitions() {
 
   return (dispatch) => {
     dispatch(requestMunitions());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receiveMunitions(response.data));
@@ -581,7 +581,7 @@ export let addLocation = (location) => {
 
   return (dispatch) => {
     dispatch(requestAddLocation());
-    return axios.post(url, qs.stringify(location), headers)
+    return axios.post(url, qs.stringify(location), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddLocation(response));
@@ -617,7 +617,7 @@ export function getLocations() {
 
   return (dispatch) => {
     dispatch(requestLocations());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receiveLocations(response.data));
@@ -650,7 +650,7 @@ export function getLocationsTypes() {
 
   return (dispatch) => {
     dispatch(requestLocationTypes());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receiveLocationTypes(response.data));
@@ -684,7 +684,7 @@ export function fetchLocationData() {
 
   return (dispatch) => {
     dispatch(requestLocationData());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receiveLocationData(response.data));
@@ -759,7 +759,7 @@ export let addIntelEEI = (intelEEI) => {
 
   return (dispatch) => {
     dispatch(requestAddEEI());
-    return axios.post(url, qs.stringify(intelEEI), headers)
+    return axios.post(url, qs.stringify(intelEEI), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddEEI(response));
@@ -799,7 +799,7 @@ export let addIntelReq = (intelReq) => {
 
   return (dispatch) => {
     dispatch(requestAddIntelReq());
-    return axios.post(url, qs.stringify(intelReq), headers)
+    return axios.post(url, qs.stringify(intelReq), requestHeaders)
     .then(
       (response) => {
         dispatch(receiveAddIntelReq(response));
@@ -836,7 +836,7 @@ export function getCocoms() {
 
   return (dispatch) => {
     dispatch(requestCocoms());
-    return axios.get(url, headers)
+    return axios.get(url, requestHeaders)
     .then(
       (response) => {
         dispatch(receiveCocoms(response.data));

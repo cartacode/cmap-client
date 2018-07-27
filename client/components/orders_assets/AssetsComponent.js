@@ -40,13 +40,13 @@ class AssetsComponent extends React.Component {
             <FullHeaderLine headerText={translations["a-isr beddown"]} />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/images/orders_assets/assets/assets_map.png" alt="" />
+            <img className="large-map" src="/assets/img/orders_assets/assets/assets_map.png" alt="" />
           </div>
           <div className="col-md-12">
             <div className="alert">
-              <img src="/images/admin/exclamation_mark.png" alt=""/>
+              <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
               <div> alert: dvb relay bravo impacting mission "skipjack"... alert: dvb relay bravo impacting mission "skipjack"...</div>
-              <img src="/images/admin/exclamation_mark.png" alt="" />
+              <img src="/assets/img/admin/exclamation_mark.png" alt="" />
             </div>
           </div>
           <div className="col-md-12">

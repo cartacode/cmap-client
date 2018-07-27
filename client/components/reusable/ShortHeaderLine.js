@@ -11,11 +11,11 @@ class ShortHeaderLine extends React.Component {
   render() {
     return (
       <div className="header-line">
-        <img src="/images/admin/upload_1.png" alt=""/>
+        <img src="/assets/img/admin/upload_1.png" alt=""/>
         <div className="header-text">
           {this.props.headerText}
         </div>
-        <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+        <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
       </div>
 
     );

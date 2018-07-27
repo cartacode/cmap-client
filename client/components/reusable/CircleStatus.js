@@ -18,23 +18,23 @@ class CircleStatus extends React.Component {
 
       switch(this.props.statusHeader) {
         case translations['platform']:
-          background= 'url(/images/status/platform_status.png) no-repeat center';
+          background= 'url(/assets/img/status/platform_status.png) no-repeat center';
           break;
 
         case translations['payload']:
-          background= 'url(/images/status/payload_status.png) no-repeat center';
+          background= 'url(/assets/img/status/payload_status.png) no-repeat center';
           break;
 
         case translations['flight crew']:
-          background= 'url(/images/status/fcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/fcrew_status.png) no-repeat center';
           break;
 
         case translations['line crew']:
-          background= 'url(/images/status/lcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/lcrew_status.png) no-repeat center';
           break;
 
         case translations['ped crew']:
-          background= 'url(/images/status/pcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/pcrew_status.png) no-repeat center';
           break;
       }
 

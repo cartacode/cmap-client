@@ -106,7 +106,7 @@ class CcirPirComponent extends React.Component {
       {
         Header: translations['view'],
         accessor: 'view',
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
       }
     ];
 
@@ -123,11 +123,11 @@ class CcirPirComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["Ccir/Pir"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line" style={{padding:'0px 17px 0px 0px'}}>
             <div className="add-button">

@@ -42,7 +42,7 @@ class AdminComponent extends React.Component {
     ];
 
     return menuItems.map((item, i) => {
-      let image = '/images/menu/button-line-highlight.png';
+      let image = '/assets/img/menu/button-line-highlight.png';
       let matchForLink = false;
 
       if (item.url.indexOf('/', 8) !== -1) {

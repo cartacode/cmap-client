@@ -38,14 +38,14 @@ class NatlImageryComponent extends React.Component {
           
           <div className="col-md-12">
             <div className="national-imagery">
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_1.png"/>
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_2.png"/>
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_3.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_1.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_2.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_3.png"/>
             </div>
             <div className="national-imagery">
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_4.png"/>
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_5.png"/>
-              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/images/intel_request/national_imagery/video_6.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_4.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_5.png"/>
+              <ImageryBlock headerText={translations["POI"]+"-06"} fields={imageryData} src="/assets/img/intel_request/national_imagery/video_6.png"/>
             </div>        
           </div>
         </div>

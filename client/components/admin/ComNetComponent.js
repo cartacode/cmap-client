@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import UploadBlock from "../reusable/UploadBlock";
 import ContentBlock from "../reusable/ContentBlock";
 import ButtonsList from "../reusable/ButtonsList";
@@ -16,11 +15,11 @@ class ComNetComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMap: '/images/admin/comsnet4.png',
+      currentMap: '/assets/img/admin/comsnet4.png',
     };
   }
 
-  
+
   renderMapButtons = () => {
     const {translations: {translations}, match} = this.props;
 
@@ -62,11 +61,11 @@ class ComNetComponent extends React.Component {
       <div>
         <div className="row coms-net" >
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               coms/net
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="coms-net-content">
             <div className="col-md-12">

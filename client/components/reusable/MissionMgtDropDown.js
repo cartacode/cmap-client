@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { baseUrl } from '../../config';
+import { baseUrl } from 'dictionary/network';
 
 class MissionMgtDropDown extends React.Component {
 

@@ -26,12 +26,12 @@ class OperatingPictureComponent extends React.Component {
             <FullHeaderLine headerText={translations["real-time intelligence/threat picture"]} />
           </div>
           <div className="alert">
-            <img src="/images/admin/exclamation_mark.png" alt=""/>
+            <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
             <div>flash alert: [08:12:00] vbied in massoud square: 54 civ, 3 nato casulties ... developing ... [08:01:01] vbied in massoud square: 54 civ, 3 narto casul</div>
-            <img src="/images/admin/exclamation_mark.png" alt="" />
+            <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/images/intel_request/operating_picture/large_map.png" alt="" />
+            <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
           </div>
         </div>
         <div className="row intel-request">
@@ -58,7 +58,7 @@ class OperatingPictureComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>  
                 </div>
               </div>
 
@@ -78,7 +78,7 @@ class OperatingPictureComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>  
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -97,7 +97,7 @@ class OperatingPictureComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>  
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -116,7 +116,7 @@ class OperatingPictureComponent extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/force_position.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>  
                 </div>
               </div>    
             </div>        

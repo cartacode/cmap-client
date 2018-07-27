@@ -84,7 +84,7 @@ class Accordion extends React.Component {
               <label htmlFor={`checkbox${i}`}><span /></label>
             </div>
             <div>
-              <img className="result-avatar" src="/images/admin/avatar.png" alt=""/>
+              <img className="result-avatar" src="/assets/img/admin/avatar.png" alt=""/>
             </div>
             <div className="result-user">
               <div className="result-name">
@@ -135,7 +135,7 @@ class Accordion extends React.Component {
             <label htmlFor={`checkbox${i}`}><span /></label>
           </div>
           <div>
-            <img className="order-avatar" src="/images/admin/avatar.png" alt=""/>
+            <img className="order-avatar" src="/assets/img/admin/avatar.png" alt=""/>
           </div>
           <div className="order-user">
             <div className="order-name">
@@ -172,7 +172,7 @@ class Accordion extends React.Component {
         return (
           <div className="accordion-results" key={i}>
             <div>
-              <img className="result-avatar" src="/images/admin/avatar.png" alt=""/>
+              <img className="result-avatar" src="/assets/img/admin/avatar.png" alt=""/>
             </div>
             <div className="roster-user">
               <div className="result-name">
@@ -220,7 +220,7 @@ class Accordion extends React.Component {
             <div>
               add to roster
             </div>
-            <img className="arrow pull-right" src="/images/admin/small-arrow.png" alt=""/>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${0}`}>
@@ -238,25 +238,25 @@ class Accordion extends React.Component {
             <div>
               results
             </div>
-            <img className="arrow pull-right" src="/images/admin/small-arrow.png" alt=""/>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${1}`}>
               <div className="content">
                 {this.renderResults()}
                 <div className="menu-button">
-                  <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button onClick={() => this.close(1)}>
                     Close
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
                 <div className="menu-button">
-                  <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button onClick={this.save}>
                     Add
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
             </div>
@@ -267,7 +267,7 @@ class Accordion extends React.Component {
             <div>
               view roster
             </div>
-            <img className="arrow pull-right" src="/images/admin/small-arrow.png" alt=""/>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${2}`}>
@@ -285,7 +285,7 @@ class Accordion extends React.Component {
             <div>
               create / edit role
             </div>
-            <img className="arrow pull-right" src="/images/admin/small-arrow.png" alt=""/>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${3}`}>
@@ -332,18 +332,18 @@ class Accordion extends React.Component {
                 </div>
                 <div className="role-buttons">
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     <button onClick={() => this.close(3)}>
                       close
                     </button>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     <button onClick={this.save}>
                       create
                     </button>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                 </div>
               </div>
@@ -355,7 +355,7 @@ class Accordion extends React.Component {
             <div>
               generate orders
             </div>
-            <img className="arrow pull-right" src="/images/admin/small-arrow.png" alt=""/>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${4}`}>

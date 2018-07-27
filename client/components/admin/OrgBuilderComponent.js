@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import ButtonsList from "../reusable/ButtonsList";
 import Accordion from "../reusable/Accordion";
 import Dropdown from "../reusable/Dropdown";
-// import '../../libs/treant-js/Treant.css';
-// import '../../libs/treant-js/examples/custom-colored/custom-colored.css';
-// import '../../libs/treant-js/vendor/raphael.js';
-// import '../../libs/treant-js/Treant.js';
+// import '../../vendor/treant-js/Treant.css';
+// import '../../vendor/treant-js/examples/custom-colored/custom-colored.css';
+// import '../../vendor/treant-js/vendor/raphael.js';
+// import '../../vendor/treant-js/Treant.js';
 
 // import '../../../node_modules/treant-js/Treant.css';
 // import '../../../node_modules/treant-js/examples/custom-colored/custom-colored.css';
@@ -42,7 +42,7 @@ class OrgBuilderComponent extends React.Component {
           title: "Chief executive officer",
           contact: "Tel: 01 213 123 134",
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
 
       cto = {
@@ -51,7 +51,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Joe Linux",
           title: "Chief Technology Officer",
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       cbo = {
         parent: ceo,
@@ -66,7 +66,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Linda May",
           title: "Chief Business Officer",
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       cdo = {
         parent: ceo,
@@ -75,7 +75,7 @@ class OrgBuilderComponent extends React.Component {
           title: "Chief accounting officer",
           contact: "Tel: 01 213 123 134",
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       cio = {
         parent: cto,
@@ -83,7 +83,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Ron Blomquist",
           title: "Chief Information Security Officer"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       ciso = {
         parent: cto,
@@ -92,7 +92,7 @@ class OrgBuilderComponent extends React.Component {
           title: "Chief Innovation Officer",
           contact: "we@aregreat.com"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       cio2 = {
         parent: cdo,
@@ -100,7 +100,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Erica Reel",
           title: "Chief Customer Officer"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       ciso2 = {
         parent: cbo,
@@ -108,7 +108,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Alice Lopez",
           title: "Chief Communications Officer"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       ciso3 = {
         parent: cbo,
@@ -116,7 +116,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Mary Johnson",
           title: "Chief Brand Officer"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
       ciso4 = {
         parent: cbo,
@@ -124,7 +124,7 @@ class OrgBuilderComponent extends React.Component {
           name: "Kirk Douglas",
           title: "Chief Business Development Officer"
         },
-        image: "/images/admin/avatar.png"
+        image: "/assets/img/admin/avatar.png"
       },
 
       chart_config = [
@@ -147,11 +147,11 @@ class OrgBuilderComponent extends React.Component {
       <div>
         <div className="row personnel" >
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["organisation builder"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
         </div>
         <div className="row personnel" >

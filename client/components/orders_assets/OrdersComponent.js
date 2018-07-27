@@ -86,11 +86,11 @@ class OrdersComponent extends React.Component {
               <div className="filter-button">
                 <div className="row action-buttons" >
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     <button className="highlighted-button" onClick={this.onFind.bind(this)}>
                       {translations["find & filter"]}
                     </button>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                 </div>
               </div>

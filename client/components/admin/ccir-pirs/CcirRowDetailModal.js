@@ -24,7 +24,7 @@ class CcirRowDetailModal extends React.Component {
       <div className="ccir-modal modal-overlay" >
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="modal-header-text">Add New CCRI/PIRs </div>
           <div className="col-md-12">

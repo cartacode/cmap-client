@@ -82,7 +82,7 @@ class HeaderComponent extends React.Component {
               {item.title}
             </button>
             <div className="under-button-line">
-              <img src={matchForLink ? '/images/menu/button-line-highlight.png' : '/images/menu/button-line.png'} className="under-button-image pull-right" alt=""/>
+              <img src={matchForLink ? '/assets/img/menu/button-line-highlight.png' : '/assets/img/menu/button-line.png'} className="under-button-image pull-right" alt=""/>
             </div>
           </NavLink>
         </div>
@@ -102,7 +102,7 @@ class HeaderComponent extends React.Component {
         <div className="container-fluid header">
           <div className="user-info ">
             <div className="header-line">
-              <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
+              <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
               Thomas
@@ -135,12 +135,12 @@ class HeaderComponent extends React.Component {
               </div>
             </div>
             <div className="header-line">
-              <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
+              <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
           </div>
         </div>
         <div className="container-fluid buttons">
-          <img src="/images/menu/horiz-line.png" className="horiz-line" alt=""/>
+          <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
           <div className="buttons-list">
             {this.renderMenuItems()}
             <div className="search">

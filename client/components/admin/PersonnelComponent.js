@@ -118,7 +118,7 @@ class PersonnelComponent extends React.Component {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
       }
     ];
 
@@ -136,11 +136,11 @@ class PersonnelComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["personnel"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">

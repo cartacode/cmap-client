@@ -65,10 +65,10 @@ class SearchComponent extends React.Component {
             <div className="content-block">
               <ShortHeaderLine headerText="geo selection" />
               <div className="content-geo">
-                <img src="/images/intel_request/current_intel/geo_1.png" />
-                <img src="/images/intel_request/current_intel/geo_2.png" />
-                <img src="/images/intel_request/current_intel/geo_3.png" />
-                <img src="/images/intel_request/current_intel/geo_4.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_1.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_2.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_3.png" />
+                <img src="/assets/img/intel_request/current_intel/geo_4.png" />
               </div>
             </div>
             <div className="content-block">
@@ -99,18 +99,18 @@ class SearchComponent extends React.Component {
             <div className="button-group">
               <div className="content-button">
                 <div className="col-md-6">
-                  <img clasName="button-line" src="/images/admin/edit_up.png" alt=""/>
+                  <img clasName="button-line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                     CLEAR
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
                 <div className="col-md-6">
-                  <img clasName="button-line" src="/images/admin/edit_up.png" alt=""/>
+                  <img clasName="button-line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="highlighted-button" onClick={this.onEnter.bind(this)}>
                     ROUTE
                   </button>
-                  <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@ class SearchComponent extends React.Component {
             <FullHeaderLine headerText="search criteria" />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/images/intel_request/operating_picture/large_map.png" alt="" />
+            <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
           </div>
         </div>
         <div className="row intel-request">

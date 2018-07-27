@@ -11,11 +11,11 @@ class HalfHeaderLine extends React.Component {
   render() {
     return (
       <div className="header-line">
-        <img src="/images/status/theader_line.png" alt=""/>
+        <img src="/assets/img/status/theader_line.png" alt=""/>
         <div className="header-text">
           {this.props.headerText}
         </div>
-        <img className="mirrored-X-image" src="/images/status/theader_line.png" alt=""/>
+        <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
       </div>
     );
   }

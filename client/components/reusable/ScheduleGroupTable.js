@@ -28,7 +28,7 @@ class ScheduleGroupTable extends React.Component {
       if(j == 0){
         return (
           <td key={j} className="other-item">
-            <img src="/images/avata/murry.png" />
+            <img src="/assets/img/avata/murry.png" />
           </td>
         )        
       }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import UploadBlock from "../reusable/UploadBlock";
 import ContentBlock from "../reusable/ContentBlock";
 import FilterDropdown from '../reusable/FilterDropdown';
@@ -28,7 +27,7 @@ class IntelSummaryComponent extends React.Component {
     super(props);
     this.state={
       filterValue: '',
-      filter: [], 
+      filter: [],
       missileModalOpen:false,
       rocketModalOpen: false,
       gunModalOpen: false,
@@ -69,8 +68,8 @@ class IntelSummaryComponent extends React.Component {
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
     })
   }
-  
-  
+
+
 
   componentWillMount() {
     //this.props.fetchMunitions();
@@ -79,7 +78,7 @@ class IntelSummaryComponent extends React.Component {
   }
 
   handleChange(value) {
-    console.log(value); 
+    console.log(value);
   }
 
   handleForm = () => {
@@ -92,11 +91,11 @@ class IntelSummaryComponent extends React.Component {
      // console.log("New state in ASYNC callback:22222", this.state.intelRequest);
     });
   }
-  
+
   render() {
 
     const {translations: {translations}} = this.props;
-    
+
  /*   const munitions = [
       {name:translations['Missile'], onClick:this.missileModal},
       {name:translations['Rocket'], onClick:this.rocketModal},
@@ -110,7 +109,7 @@ class IntelSummaryComponent extends React.Component {
         Header: translations["type"],
         accessor: 'role',
         Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>, 
+                    <FilterDropdown dropdownDataUrl="MunitionRoles" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -121,14 +120,14 @@ class IntelSummaryComponent extends React.Component {
       {
         Header: 'IR#',
         accessor: 'role'
-       
+
       },
       {
         Header: 'Date',
         accessor: 'lastUpdate',
         Filter: ({ filter, onChange }) =>
                   <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
-      }, 
+      },
       /*{
         Header: translations['Name'],
         accessor: 'munition',
@@ -138,14 +137,14 @@ class IntelSummaryComponent extends React.Component {
 	  {
 		Header: 'Status',
 		accessor: 'munition'
-	
+
 	  },
       {
         Header: 'Operation',
         accessor: 'serial',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-      }, 
+      },
       {
         Header: 'Command',
         accessor: 'COCOM',
@@ -166,7 +165,7 @@ class IntelSummaryComponent extends React.Component {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
       }
     ];
 
@@ -189,7 +188,7 @@ class IntelSummaryComponent extends React.Component {
       {name: translations['Location'], type: 'dropdown', ddID:'Locations'},
       {name: translations['Record Date'], type: 'date'},
     ];
-	
+
 	console.log('all_munitions:');
 		console.log(all_munitions);
 
@@ -197,22 +196,22 @@ class IntelSummaryComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               Summary
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
-          
+
           <NavLink to={itemurl} className="submenu" activeClassName="active-submenu-item">
-           
+
                 <div className="add-button">
                   <button className="ccir-button">New Request</button>
                 </div>
-              
+
           </NavLink>
-           
+
           </div>
           <div className="col-md-12">
             <ReactTable
@@ -250,7 +249,7 @@ class IntelSummaryComponent extends React.Component {
           </div>
         </div>
 
-      
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
       </div>
     );

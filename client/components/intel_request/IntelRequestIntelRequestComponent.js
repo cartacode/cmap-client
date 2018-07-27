@@ -335,14 +335,14 @@ class IntelRequestIntelRequestComponent extends React.Component {
         Header: translations['edit'],
         accessor: 'edit',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/pen_icon.png" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png" /></span>// Custom cell components!
       }, 
 
       {
         Header: translations['del'],
         accessor: 'del',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/trash_icon.png" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/trash_icon.png" /></span>// Custom cell components!
       }
     ];
 
@@ -361,14 +361,14 @@ class IntelRequestIntelRequestComponent extends React.Component {
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
             <div className="img-header-line">
-              <img src="/images/status/theader_line.png" alt=""/>
+              <img src="/assets/img/status/theader_line.png" alt=""/>
               <div className="header-text">
                 {translations["real-time intelligence/threat picture"]}
               </div>
-              <img className="mirrored-X-image" src="/images/status/theader_line.png" alt=""/>
+              <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <img className="photo" src="/images/intel_request/request/request_pic.png"  alt="" />
+              <img className="photo" src="/assets/img/intel_request/request/request_pic.png"  alt="" />
             </div>
           </div>
           <div className="col-md-4 one-block">
@@ -423,18 +423,18 @@ class IntelRequestIntelRequestComponent extends React.Component {
           </div>
           <div className="row action-buttons" >
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                 {translations["clear"]}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" type="submit">
                 {translations["add"]}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
         </form>

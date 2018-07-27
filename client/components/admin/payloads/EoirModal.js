@@ -241,7 +241,7 @@ class EoirModal extends React.Component {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
     } 
     else {
-      $imagePreview = (<img src="/images/admin/aircraft.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
 
     let {imagePreviewUrl2} = this.state;
@@ -251,7 +251,7 @@ class EoirModal extends React.Component {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
     } 
     else {
-      $imagePreview2 = (<img src="/images/admin/r2d2-1.png" className="photo" alt=""/>);
+      $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt=""/>);
     }
 
     const {payload} = this.state;
@@ -307,16 +307,16 @@ class EoirModal extends React.Component {
       <form action="" onSubmit={this.handleSubmit} >
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
-                <img src="/images/admin/personnel_1.png" alt=""/>
+                <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
                   {translations["eo/ir payloads administration"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
               <div className="personnel-content">
                 <div className="col-md-4 image-block">
@@ -327,11 +327,11 @@ class EoirModal extends React.Component {
                 </div>
                 <div className="col-md-4 upload-block">
                   <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                       upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
                   <div className="upload-content">
                     <div className="upload-line">
@@ -376,38 +376,38 @@ class EoirModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-payload-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
                 data={this.handlePayloadGeneralData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields} 
                 data={this.handlePayloadTechnicalData} initstate ={this.state.payload}/>
-                <ContentBlock bigBackground={true} headerLine="/images/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields} 
+                <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields} 
                 data={this.handlePayloadFeatureData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
                 data={this.handlePayloadCrewData} initstate ={this.state.payload}/>
               </div>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
         </div>

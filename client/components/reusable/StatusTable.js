@@ -69,7 +69,7 @@ class StatusTable extends React.Component {
       if(item =='view'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/eye_icon.png" />
+            <img src="/assets/img/general/eye_icon.png" />
           </td>
         )        
       }
@@ -77,7 +77,7 @@ class StatusTable extends React.Component {
       if(item =='update'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/eye_icon.png" onClick={this.props.fun} />
+            <img src="/assets/img/general/eye_icon.png" onClick={this.props.fun} />
           </td>
         )        
       }
@@ -85,7 +85,7 @@ class StatusTable extends React.Component {
       else if(item =='detail'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/detail_icon.png" />
+            <img src="/assets/img/general/detail_icon.png" />
           </td>
         )        
       }
@@ -93,14 +93,14 @@ class StatusTable extends React.Component {
       else if(item =='email'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/email_icon.png" />
+            <img src="/assets/img/general/email_icon.png" />
           </td>
         )        
       }
       else if(item =='export'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/export_icon.png" />
+            <img src="/assets/img/general/export_icon.png" />
           </td>
         )        
       }
@@ -108,14 +108,14 @@ class StatusTable extends React.Component {
       else if(item =='edit'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/pen_icon.png" />
+            <img src="/assets/img/general/pen_icon.png" />
           </td>
         )        
       }
       else if(item =='del'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/trash_icon.png" />
+            <img src="/assets/img/general/trash_icon.png" />
           </td>
         )        
       }

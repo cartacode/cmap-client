@@ -1120,7 +1120,7 @@ class AddPersonnelModal extends React.Component {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
     }
     else {
-      $imagePreview = (<img src="/images/admin/photo_1.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/photo_1.png" className="photo" alt=""/>);
     }
 
     let {imagePreviewUrl2} = this.state;
@@ -1130,7 +1130,7 @@ class AddPersonnelModal extends React.Component {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
     }
     else {
-      $imagePreview2 = (<img src="/images/admin/primoris_backgr.png" className="photo" alt=""/>);
+      $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
     }
 
     const {personnel} = this.state;
@@ -1179,16 +1179,16 @@ class AddPersonnelModal extends React.Component {
       <form action="" onSubmit={this.handleSubmit} >
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
-                <img src="/images/admin/personnel_1.png" alt=""/>
+                <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
                   {translations["Personnel Administration"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
               <div className="personnel-content">
                 <div className="col-md-4 image-block">
@@ -1199,11 +1199,11 @@ class AddPersonnelModal extends React.Component {
                 </div>
                 <div className="col-md-4 upload-block">
                   <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                       upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
                   <div className="upload-content">
                     <div className="upload-line">
@@ -1230,12 +1230,12 @@ class AddPersonnelModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-payload-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]}
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
                                       fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png"
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
                               data={this.handleOrganizationAndDutyData} initstate ={this.state.personnel}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png"
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
                               data={this.handleContactInformationData} initstate ={this.state.personnel} />
               </div>
@@ -1243,25 +1243,25 @@ class AddPersonnelModal extends React.Component {
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
         </div>

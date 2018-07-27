@@ -21,7 +21,7 @@ class ConfigBlock extends React.Component {
             <label htmlFor={`checkbox${i}`}><span /></label>
           </div>
           <div className="col-md-2 mail-avatar">
-            <img src={'/images/avata/'+item.avatar+'.png'} />
+            <img src={'/assets/img/avata/'+item.avatar+'.png'} />
           </div>
           <div className="col-md-8 mail-detail">
             <div className="mail-from">

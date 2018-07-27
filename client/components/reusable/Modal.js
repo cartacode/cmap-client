@@ -12,7 +12,7 @@ class Modal extends React.Component {
       <div className="status-modal modal-overlay" >
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           {this.props.children}
         </div>
