@@ -56,7 +56,7 @@ class PlatformComponent extends React.Component {
 
   componentWillMount() {
 
-    this.props.fetchPlatform();
+    this.props.fetchPlatforms();
   }
 
   // renderItems(optionItem) {

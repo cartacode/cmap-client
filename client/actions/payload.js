@@ -12,7 +12,7 @@ export function addPayload(payload) {
   });
 }
 
-export function fetchPayloadType() {
+export function fetchPayloadTypes() {
   return createAction({
     type: PAYLOAD_TYPE__FETCH,
     action: () => axios.get(`${baseUrl}/PayloadType`, requestHeaders)

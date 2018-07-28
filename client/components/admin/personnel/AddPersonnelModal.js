@@ -14,7 +14,7 @@ import axios from 'axios';
 
 import { getTranslations,  } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnel } from 'actions/personnel';
+import { addPersonnel, fetchPersonnels } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -1089,7 +1089,7 @@ class AddPersonnelModal extends React.Component {
       let flag;
       this.props.addPersonnel(this.state.personnel);
       this.props.onClose();
-      this.props.fetchPersonnel();
+      this.props.fetchPersonnels();
   }
 
 
@@ -1295,8 +1295,8 @@ const mapDispatchToProps = dispatch => {
       console.log("Cool");
     },
 
-    fetchPersonnel: () => {
-      dispatch(fetchPersonnel());
+    fetchPersonnels: () => {
+      dispatch(fetchPersonnels());
     },
 
     uploadFile: (fileData) => {

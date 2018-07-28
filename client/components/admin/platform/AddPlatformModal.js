@@ -373,7 +373,7 @@ class AddPlatformModal extends React.Component {
     console.log(this.state.platform);
     this.props.addPlatform(this.state.platform);
     this.props.onClose();
-   // this.props.fetchPlatform(this.state.platform);
+   // this.props.fetchPlatforms(this.state.platform);
   }
 
 

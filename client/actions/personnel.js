@@ -12,7 +12,7 @@ export function addPersonnel(personnel) {
   });
 }
 
-export function fetchPersonnel() {
+export function fetchPersonnels() {
   return createAction({
     type: PERSONNEL__FETCH,
     action: () => axios.get(`${baseUrl}/Personnel/GetPersonnelData`, requestHeaders),

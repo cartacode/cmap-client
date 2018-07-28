@@ -12,7 +12,7 @@ export function addPlatform(platform) {
   });
 }
 
-export function fetchPlatform() {
+export function fetchPlatforms() {
   return createAction({
     type: PLATFORM__FETCH,
     action: () => axios.get(`${baseUrl}/Platform/GetPlatformsData`, requestHeaders),

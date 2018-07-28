@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 
 import PayloadsComponent from '../../components/admin/PayloadsComponent';
 import {getTranslations, fetchPayloadData, getPayloads, getCocoms, getLocations} from '../../actions/actions';
-import { addPayload, fetchPayloadType } from 'actions/payload';
+import { addPayload, fetchPayloadTypes } from 'actions/payload';
 
 const mapStateToProps = state => {
   return {
@@ -30,8 +30,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(getPayloads());
     },
 
-    fetchPayloadType: () => {
-      dispatch(fetchPayloadType());
+    fetchPayloadTypes: () => {
+      dispatch(fetchPayloadTypes());
     },
 
     fetchPayloadData: () => {

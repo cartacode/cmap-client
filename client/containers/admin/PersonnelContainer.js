@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import PersonnelComponent from '../../components/admin/PersonnelComponent';
 import {getTranslations} from '../../actions/actions';
-import { fetchPersonnel } from 'actions/personnel';
+import { fetchPersonnels } from 'actions/personnel';
 
 const mapStateToProps = state => {
   return {
@@ -18,8 +18,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(getTranslations(lang));
     },
 
-    fetchPersonnel: () => {
-      dispatch(fetchPersonnel());
+    fetchPersonnels: () => {
+      dispatch(fetchPersonnels());
     },
 
   };
