@@ -10,8 +10,8 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addPayload, fetchPayloadData, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addPayload, fetchPayloadData } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class SigintModal extends React.Component {
 
@@ -62,7 +62,7 @@ class SigintModal extends React.Component {
           PayloadMOS3: '',
         }
     }
-    
+
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
     this.baseState = this.state;
@@ -140,7 +140,7 @@ class SigintModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.payload);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -154,10 +154,10 @@ class SigintModal extends React.Component {
                 imagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
 
-      
+
      else if(event.target.id == "PaylodWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
@@ -167,9 +167,9 @@ class SigintModal extends React.Component {
               imagePreviewUrl2: reader.result
           });
       }
-      reader.readAsDataURL(file)  
+      reader.readAsDataURL(file)
     }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -227,7 +227,7 @@ class SigintModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
@@ -237,7 +237,7 @@ class SigintModal extends React.Component {
 
     if (imagePreviewUrl2) {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt=""/>);
     }
@@ -248,7 +248,7 @@ class SigintModal extends React.Component {
 
     const generalFields = [
       {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},    
+      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName'},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole'},
@@ -359,13 +359,13 @@ class SigintModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-payload-content">
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields}
                 data={this.handlePayloadGeneralData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields}
                 data={this.handlePayloadTechnicalData} initstate ={this.state.payload}/>
-                <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="capabilities" fields={payloadFields} 
+                <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="capabilities" fields={payloadFields}
                 data={this.handlePayloadFeatureData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="crew requirements" fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="crew requirements" fields={crewFields}
                 data={this.handlePayloadCrewData} initstate ={this.state.payload}/>
               </div>
             </div>

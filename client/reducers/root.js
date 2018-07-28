@@ -7,14 +7,14 @@ import {routerReducer} from 'react-router-redux';
 
 import {
 
-        GET_TRANSLATIONS_FULFILLED, 
-        
-        REQUEST_ADD_PERSONNEL, 
+        GET_TRANSLATIONS_FULFILLED,
+
+        REQUEST_ADD_PERSONNEL,
         RECEIVE_ADD_PERSONNEL,
 
         REQUEST_PERSONNELS,
         RECEIVE_PERSONNELS,
-        
+
         REQUEST_ADD_PLATFORM,
         RECEIVE_ADD_PLATFORM,
 
@@ -32,9 +32,6 @@ import {
 
         REQUEST_PAYLOAD_DATA,
         RECEIVE_PAYLOAD_DATA,
-
-        REQUEST_UPLOAD,
-        RECEIVE_UPLOAD,
 
         REQUEST_ADD_MUNITION,
         RECEIVE_ADD_MUNITION,
@@ -55,7 +52,7 @@ import {
         RECEIVE_LOCATION_TYPES,
 
         REQUEST_COCOM,
-        RECEIVE_COCOM,        
+        RECEIVE_COCOM,
 
 
 } from '../constants/actionTypes';

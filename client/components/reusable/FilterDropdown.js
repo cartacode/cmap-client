@@ -35,8 +35,7 @@ class Table extends React.Component {
 				dropdownItems: items
 			});
 		} else {
-			let apiUrl = baseUrl + this.props.dropdownDataUrl
-			axios.get(apiUrl)
+			axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
 				.then(response => {
 					response.data.map(item => {
 						items.push({"label": item[this.labelField], "value": item[this.valueField]});

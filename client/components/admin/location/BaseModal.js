@@ -6,7 +6,8 @@ import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
 import ButtonsList from "../../reusable/ButtonsList";
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
+import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class BaseModal extends React.Component {
 
@@ -60,7 +61,7 @@ class BaseModal extends React.Component {
         LocationCountry: generalData.LocationCountry,
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -98,7 +99,7 @@ class BaseModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -112,7 +113,7 @@ class BaseModal extends React.Component {
                 locationPhotoPreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
 
       if(event.target.id == "LocationMapImage") {
@@ -124,9 +125,9 @@ class BaseModal extends React.Component {
                 mapImagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -181,14 +182,14 @@ class BaseModal extends React.Component {
 
     if (locationPhotoPreviewUrl) {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt=""/>);
     }
 
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt=""/>);
     }
@@ -278,11 +279,11 @@ class BaseModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-location-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
               data={this.handleLocationGeneralData} initstate ={this.state.location}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
               data={this.handleLocationPositionData} initstate ={this.state.location}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
               data={this.handleLocationInfoData} initstate ={this.state.location}/>
             </div>
           </div>

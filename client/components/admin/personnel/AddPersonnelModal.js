@@ -12,8 +12,8 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations, addPersonnel, fetchPersonnels, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addPersonnel, fetchPersonnels } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class AddPersonnelModal extends React.Component {
 
@@ -82,16 +82,16 @@ class AddPersonnelModal extends React.Component {
 
       let personnell = generalData.Rank;
       let rank = document.getElementsByName("PayGrade");
-      
+
       switch (personnell) {
           case '9':
           case '10':
-          case '11': 
+          case '11':
           case '12': this.setState({personnel: { PayGrade: '1' }
                 });
                 rank[0].selectedIndex = "1";
                 break;
-          
+
           case '14':
           case '24':
           case '15':
@@ -100,14 +100,14 @@ class AddPersonnelModal extends React.Component {
                 });
                 rank[0].selectedIndex = "2";
                 break;
-          
+
           case '19':
           case '22':
           case '21': this.setState({personnel: { PayGrade: '3' }
               });
               rank[0].selectedIndex = "3";
               break;
-          
+
           case '26':
           case '28':
           case '27':
@@ -124,7 +124,7 @@ class AddPersonnelModal extends React.Component {
             });
             rank[0].selectedIndex = "5";
               break;
-              
+
 
           case '37':
           case '35':
@@ -132,7 +132,7 @@ class AddPersonnelModal extends React.Component {
             });
             rank[0].selectedIndex = "6";
               break;
-              
+
           case '41':
           case '42':
           case '40':
@@ -147,7 +147,7 @@ class AddPersonnelModal extends React.Component {
             });
             rank[0].selectedIndex = "8";
             break;
-            
+
           case '55':
           case '56':
           case '57':
@@ -171,7 +171,7 @@ class AddPersonnelModal extends React.Component {
             break;
 
           case '70':
-          case '71':  
+          case '71':
           case '69': this.setState({personnel: { PayGrade: '11' }
             });
             rank[0].selectedIndex = "11";
@@ -179,20 +179,20 @@ class AddPersonnelModal extends React.Component {
 
 
           case '73':
-          case '74':  
+          case '74':
           case '75': this.setState({personnel: { PayGrade: '12' }
             });
             rank[0].selectedIndex = "12";
             break;
 
 
-          case '77':  
+          case '77':
           case '78': this.setState({personnel: { PayGrade: '13' }
             });
             rank[0].selectedIndex = "13";
             break;
 
-  
+
           case '81': this.setState({personnel: { PayGrade: '14' }
               });
               rank[0].selectedIndex = "14";
@@ -200,29 +200,29 @@ class AddPersonnelModal extends React.Component {
 
 
           case '84':
-          case '87':    
+          case '87':
           case '86':
           case '85': this.setState({personnel: { PayGrade: '15' }
               });
               rank[0].selectedIndex = "15";
               break;
-          
+
           case '92':
           case '93':
-          case '91':    
+          case '91':
           case '89':
           case '90': this.setState({personnel: { PayGrade: '16' }
               });
               rank[0].selectedIndex = "16";
               break;
-        
-          case '94':    
+
+          case '94':
           case '111':
           case '95': this.setState({personnel: { PayGrade: '17' }
                   });
                   rank[0].selectedIndex = "17";
               break;
-             
+
           case '101':
           case '99': this.setState({personnel: { PayGrade: '18' }
                   });
@@ -236,9 +236,9 @@ class AddPersonnelModal extends React.Component {
           case '106':
           case '104': this.setState({personnel: { PayGrade: '19' }
                         });
-                      rank[0].selectedIndex = "19";     
+                      rank[0].selectedIndex = "19";
               break;
-                      
+
           case '110':
           case '112':
           case '109': this.setState({personnel: { PayGrade: '20' }
@@ -264,97 +264,97 @@ class AddPersonnelModal extends React.Component {
                         });
                        rank[0].selectedIndex = "22";
               break;
-      
+
           case '125':
           case '128':
           case '126':
           case '124': this.setState({personnel: { PayGrade: '23' }
                         });
                         rank[0].selectedIndex = "23";
-               break;           
-                        
+               break;
+
           case '131':
           case '129': this.setState({personnel: { PayGrade: '24' }
                             });
                         rank[0].selectedIndex = "24";
-                break;     
-                        
+                break;
+
           case '134': this.setState({personnel: { PayGrade: '25' }
                     });
-                rank[0].selectedIndex = "25";  
-                break; 
+                rank[0].selectedIndex = "25";
+                break;
 
           case '135': this.setState({personnel: { PayGrade: '26' }
                     });
                 rank[0].selectedIndex = "26";
-                break; 
-                
+                break;
+
           case '136': this.setState({personnel: { PayGrade: '27' }
                     });
                 rank[0].selectedIndex = "27";
-                break;    
-                
+                break;
+
           case '137': this.setState({personnel: { PayGrade: '28' }
                     });
                 rank[0].selectedIndex = "28";
-                break;      
+                break;
 
           case '138': this.setState({personnel: { PayGrade: '29' }
                     });
                 rank[0].selectedIndex = "29";
-                break; 
-                
+                break;
+
           case '139': this.setState({personnel: { PayGrade: '30' }
                     });
                 rank[0].selectedIndex = "30";
-                break; 
-                
+                break;
+
           case '140': this.setState({personnel: { PayGrade: '31' }
                     });
                 rank[0].selectedIndex = "31";
-                break; 
-                
+                break;
+
           case '141': this.setState({personnel: { PayGrade: '32' }
                     });
                 rank[0].selectedIndex = "32";
-                break; 
-                
+                break;
+
           case '142': this.setState({personnel: { PayGrade: '33' }
                     });
-                rank[0].selectedIndex = "33"; 
+                rank[0].selectedIndex = "33";
                 break;
 
           case '143': this.setState({personnel: { PayGrade: '34' }
                     });
-                rank[0].selectedIndex = "34";   
-                break;            
+                rank[0].selectedIndex = "34";
+                break;
 
           case '144': this.setState({personnel: { PayGrade: '35' }
                     });
-                rank[0].selectedIndex = "35"; 
-                break;  
-                
+                rank[0].selectedIndex = "35";
+                break;
+
           case '145': this.setState({personnel: { PayGrade: '36' }
                     });
-                rank[0].selectedIndex = "36";   
-                break;                
+                rank[0].selectedIndex = "36";
+                break;
           case '146': this.setState({personnel: { PayGrade: '37' }
                     });
-                rank[0].selectedIndex = "37"; 
+                rank[0].selectedIndex = "37";
                 break;
           case '147': this.setState({personnel: { PayGrade: '38' }
                     });
-                rank[0].selectedIndex = "38"; 
+                rank[0].selectedIndex = "38";
                 break;
-                
+
           case '148': this.setState({personnel: { PayGrade: '39' }
                     });
-                rank[0].selectedIndex = "39"; 
+                rank[0].selectedIndex = "39";
                 break;
 
           case '149': this.setState({personnel: { PayGrade: '39' }
                     });
-                rank[0].selectedIndex = "39";  
+                rank[0].selectedIndex = "39";
 
 
       }
@@ -419,7 +419,7 @@ class AddPersonnelModal extends React.Component {
       ];
 
 
-      
+
        let rankitems2 = [
             {
                 "label": "Seaman Recruit",
@@ -523,7 +523,7 @@ class AddPersonnelModal extends React.Component {
             }
         ]
 
-        
+
           let rankitems3 = [
               {
                   "label": "Airman Basic",
@@ -610,8 +610,8 @@ class AddPersonnelModal extends React.Component {
                   "value": "129"
               }
           ]
-      
-          
+
+
           let rankitems4 = [
                 {
                     "label": "Private",
@@ -723,7 +723,7 @@ class AddPersonnelModal extends React.Component {
                 }
             ]
 
-            
+
          let rankitems5 = [
                   {
                       "label": "Seaman Recruit",
@@ -822,8 +822,8 @@ class AddPersonnelModal extends React.Component {
                       "value": "131"
                   }
               ]
-          
-             
+
+
              let rankitems9 = [
                     {
                         "label": "General Schedule 1",
@@ -891,81 +891,81 @@ class AddPersonnelModal extends React.Component {
                     }
                 ]
 
-        
+
 
       switch(organizationAndDutyData.ServiceBranch)
       {
-          case '1': 
+          case '1':
           rankselect.innerHTML = "";
-          
+
           for (let i=0; i<rankitems.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems[i]['label'];
                 opt.value = rankitems[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
 
           case '2':
           rankselect.innerHTML = "";
           for (let i=0; i<rankitems2.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems2[i]['label'];
                 opt.value = rankitems2[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
 
           case '3':
           rankselect.innerHTML = "";
           for (let i=0; i<rankitems3.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems3[i]['label'];
                 opt.value = rankitems3[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
 
           case '4':
           rankselect.innerHTML = "";
           for (let i=0; i<rankitems4.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems4[i]['label'];
                 opt.value = rankitems4[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
 
           case '5':
           rankselect.innerHTML = "";
           for (let i=0; i<rankitems5.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems5[i]['label'];
                 opt.value = rankitems5[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
 
           case '9':
           rankselect.innerHTML = "";
           for (let i=0; i<rankitems9.length; i++)
           {
-           
+
             var opt = document.createElement('option');
                 opt.innerHTML = rankitems9[i]['label'];
                 opt.value = rankitems9[i]['value'];
                 rankselect.appendChild(opt);
-          } 
+          }
           break;
       }
   }
@@ -1060,7 +1060,7 @@ class AddPersonnelModal extends React.Component {
         }
         reader.readAsDataURL(file)
       }
-      
+
 
       let parametername = event.target.id;
 
@@ -1163,7 +1163,7 @@ class AddPersonnelModal extends React.Component {
         {name: translations['Special Qualifications']+' 2', type: 'dropdown', domID: 'dispSpecialQuals2', ddID: "SpecQuals", valFieldID: 'SpecialQuals2' },
         {name: translations['Dates of Current Assignment Start'], type: 'date', domID: 'CurrentAssignmentStart',  valFieldID: 'CurrentAssignmentStart'},
         {name: translations['Dates of Current Assignment End'], type: 'date', domID: 'CurrentAssignmentEnd', valFieldID: 'CurrentAssignmentEnd' }
-        
+
     ];
 
     const contactFields = [

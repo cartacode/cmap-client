@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class NaiModal extends React.Component {
 
@@ -60,7 +60,7 @@ class NaiModal extends React.Component {
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
         LocationCategory: generalData.LocationCategory
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -85,7 +85,7 @@ class NaiModal extends React.Component {
   handleUploadFile(event){
       event.preventDefault();
       const {location} = this.state;
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -116,7 +116,7 @@ class NaiModal extends React.Component {
             [id]: value
         }
     }, () =>{
-       
+
        console.log(this.state.location);
     });
 

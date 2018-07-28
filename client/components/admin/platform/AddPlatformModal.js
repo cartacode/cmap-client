@@ -12,8 +12,8 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations, addPlatform, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addPlatform } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class AddPlatformModal extends React.Component {
 
@@ -127,11 +127,11 @@ class AddPlatformModal extends React.Component {
         PlatformCeiling: technicalData.PlatformCeiling,
         PlatformMaxTakeOff: technicalData.PlatformMaxTakeOff
       //  PlatformMinRunway: technicalData.PlatformMin
-        
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handlePlatformPayloadData = (payloadData) => {
@@ -151,11 +151,11 @@ class AddPlatformModal extends React.Component {
         PlatformArmament3: payloadData.PlatformArmament3,
         // PlatformComs1: payloadData.PlatformComs1,
         // PlatformComs2: payloadData.PlatformComs2,
-        
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handlePlatformCrewData = (crewData) => {
@@ -174,9 +174,9 @@ class AddPlatformModal extends React.Component {
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
-  
+
   handlePlatformConfigData = (configData) => {
     const {platform} = this.state;
     this.setState({
@@ -191,7 +191,7 @@ class AddPlatformModal extends React.Component {
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handleUploadImgFile(event){
@@ -221,12 +221,12 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
       });
-      
+
   }
 
   handleUploadPhotoFile(event) {
@@ -257,11 +257,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -291,11 +291,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -325,11 +325,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -362,7 +362,7 @@ class AddPlatformModal extends React.Component {
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -403,7 +403,7 @@ class AddPlatformModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
@@ -413,7 +413,7 @@ class AddPlatformModal extends React.Component {
 
     if (imagePreviewUrl2) {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
     }
@@ -422,7 +422,7 @@ class AddPlatformModal extends React.Component {
     const {platform} = this.state;
     const {translations: {translations}} = this.props;
 
-    
+
 
     const generalFields = [
       {name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber'},
@@ -551,7 +551,7 @@ class AddPlatformModal extends React.Component {
                     </div>
                     <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
-                  
+
                   <div className="upload-content">
                     <div className="upload-line">
                       <div>
@@ -589,17 +589,17 @@ class AddPlatformModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-personnel-content">
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
                 data={this.handlePlatformGeneralData} initstate ={this.state.platform}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
                 data={this.handlePlatformTechnicalData} initstate ={this.state.platform}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
                 data={this.handlePlatformPayloadData} initstate ={this.state.platform}/>
               </div>
             </div>
             <div className="row personnel" >
               <div className="under-platform-content">
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handlePlatformCrewData} initstate ={this.state.platform} platform={nums}/>
 
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}

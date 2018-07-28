@@ -136,47 +136,6 @@ function checkAndAddError(dispatch, error, component) {
   }
 }
 
-
-//personnel
-
-function requestUploadFile() {
-  return {
-    type: REQUEST_UPLOAD
-  };
-}
-
-function receiveUploadFile() {
-  return {
-    type: RECEIVE_UPLOAD
-  };
-}
-
-export let uploadFile = (fileData) => {
-
-  const url = baseUrl + 'Upload';
-
-  console.log('----here api-----------');
-  console.log(fileData);
-
-
-  return (dispatch) => {
-    dispatch(requestUploadFile());
-    return axios.post(url, qs.stringify(fileData), requestHeaders)
-    .then(
-      (response) => {
-        dispatch(receiveUploadFile(response));
-        console.log(response);
-          return response;
-      }
-    )
-    .catch(error => {
-          alert(error);
-      });
-  }
-}
-
-
-
 //personnel
 
 function requestAddPersonnel() {

@@ -10,8 +10,8 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addPayload, fetchPayloadData, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addPayload, fetchPayloadData } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 
 class WamiModal extends React.Component {

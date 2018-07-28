@@ -10,8 +10,8 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addMunition, fetchMunitions, uploadFile } from '../../../actions/actions';
-
+import { getTranslations, addMunition, fetchMunitions } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class GunModal extends React.Component {
 
@@ -122,7 +122,7 @@ class GunModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.munition);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -136,9 +136,9 @@ class GunModal extends React.Component {
                 imagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -190,18 +190,18 @@ class GunModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt=""/>);
     }
 
     const {munition} = this.state;
     const {translations: {translations}} = this.props;
-    
+
 
     const generalFields = [
       {name: translations['Serial#'], type: 'input', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},        
+      {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName'},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole'},
@@ -308,11 +308,11 @@ class GunModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-munitions-content">
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
                 data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handleMunitionCrewData} initstate ={this.state.munition}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
                 data={this.handleMunitionTechnicalData} initstate ={this.state.munition}/>
               </div>
             </div>

@@ -37,7 +37,7 @@ class Table extends React.Component {
 			});
         }
         else {
-        let apiUrl = baseUrl + this.props.dropdownDataUrl
+        let apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`
 		console.log('dropdown: '+apiUrl);
         axios.get(apiUrl)
             .then(response => {

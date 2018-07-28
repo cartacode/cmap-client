@@ -6,7 +6,8 @@ import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 import ContentBlock from "../../reusable/ContentBlock";
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
+import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
 
 class PoiModal extends React.Component {
   constructor(props){
@@ -59,7 +60,7 @@ class PoiModal extends React.Component {
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
         LocationCategory: generalData.LocationCategory
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -84,7 +85,7 @@ class PoiModal extends React.Component {
   handleUploadFile(event){
       event.preventDefault();
       const {location} = this.state;
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -115,7 +116,7 @@ class PoiModal extends React.Component {
             [id]: value
         }
     }, () =>{
-       
+
        console.log(this.state.location);
     });
 

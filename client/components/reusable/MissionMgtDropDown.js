@@ -28,8 +28,7 @@ class MissionMgtDropDown extends React.Component {
     componentWillMount() {
         let items = [{"label": "--"+this.props.id+"--", "value": 0}];
 
-        let apiUrl = baseUrl + this.props.dropdownDataUrl
-        axios.get(apiUrl)
+        axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
             .then(response => {
                 response.data.map(item => {
                     items.push({"label": item[this.labelField], "value": item[this.valueField]});
