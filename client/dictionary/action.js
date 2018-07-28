@@ -4,6 +4,9 @@ export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
 
+export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
+export const PAYLOAD_TYPE__FETCH = createActionType('PAYLOAD_TYPE__FETCH');
+
 export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 

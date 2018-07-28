@@ -75,57 +75,6 @@ export let getTranslations = (lang) => {
   };
 };
 
-function requestAddPayload() {
-  return {
-    type: REQUEST_ADD_PAYLOAD
-  };
-}
-
-function receiveAddPayload() {
-  return {
-    type: RECEIVE_ADD_PAYLOAD
-  };
-}
-
-
-export let addPayload = (payload) => {
-
-  const url = baseUrl + 'Payload';
-
-  console.log(JSON.stringify(payload));
-  console.log(requestHeaders);
-
-  return (dispatch) => {
-    dispatch(requestAddPayload());
-    return axios.post(url, qs.stringify(payload), requestHeaders)
-    .then(
-      (response) => {
-        dispatch(receiveAddPayload(response));
-        console.log(response);
-        alert("Add Success!");
-          return response;
-      }
-    )
-    .catch(error => {
-          alert(error);
-      });
-  }
-
-}
-
-function requestPayloads() {
-  return {
-    type: REQUEST_PAYLOAD
-  }
-}
-
-function receivePayloads(data) {
-  return {
-    type: RECEIVE_PAYLOAD,
-    payloads: data
-  }
-}
-
 
 export let getPayloads = () => {
 
@@ -147,55 +96,6 @@ export let getPayloads = () => {
       });
   }
 }
-
-function requestPayloadTypes() {
-  return {
-    type: REQUEST_PAYLOAD_TYPES
-  }
-}
-
-function receivePayloadTypes(data) {
-  return {
-    type: RECEIVE_PAYLOAD_TYPES,
-    payload_types: data
-  }
-}
-
-
-export let getPayloadTypes = () => {
-
-  const url = baseUrl + 'PayloadType';
-
-  return (dispatch) => {
-    dispatch(requestPayloadTypes());
-    return axios.get(url, requestHeaders)
-    .then(
-      (response) => {
-        dispatch(receivePayloadTypes(response.data));
-        console.log(response);
-          return response;
-      }
-    )
-    .catch(error => {
-          alert(error);
-      });
-  }
-}
-
-
-function requestPayloadData() {
-  return {
-    type: REQUEST_PAYLOAD_DATA
-  }
-}
-
-function receivePayloadData(data) {
-  return {
-    type: RECEIVE_PAYLOAD_DATA,
-    payload_data: data
-  }
-}
-
 
 export function fetchPayloadData() {
 

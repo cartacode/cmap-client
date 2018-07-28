@@ -11,8 +11,9 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addPayload, fetchPayloadData } from '../../../actions/actions';
+import { getTranslations, fetchPayloadData } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addPayload } from 'actions/payload';
 
 class SargmtiModal extends React.Component {
   constructor(props) {
