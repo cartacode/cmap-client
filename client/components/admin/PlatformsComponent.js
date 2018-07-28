@@ -31,12 +31,12 @@ class PlatformComponent extends React.Component {
     super(props);
     this.state={
       filterValue: '',
-      filter: [], 
+      filter: [],
       addPlatformModalOpen:false,
       tableRowDetailModalOpen: false,
     }
   }
- 
+
   onFind(){
     console.log("find");
   }
@@ -47,7 +47,7 @@ class PlatformComponent extends React.Component {
     });
   }
 
-  tableRowDetailModal = () => {  
+  tableRowDetailModal = () => {
     this.setState({
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
     })
@@ -56,7 +56,7 @@ class PlatformComponent extends React.Component {
 
   componentWillMount() {
 
-    this.props.fetchPlatforms();
+    this.props.fetchPlatform();
   }
 
   // renderItems(optionItem) {
@@ -64,7 +64,7 @@ class PlatformComponent extends React.Component {
   //   optionItem.map((item, i) => {
   //       items.push({"label": item.description, "value": i});
   //   });
-  //   return items.map(function(data, key){  
+  //   return items.map(function(data, key){
   //       if(data.label == "-Select Item-"){
   //         return ( <option key={key} value=""> {data.label} </option>) ;
   //       } else {
@@ -74,7 +74,7 @@ class PlatformComponent extends React.Component {
   // }
 
   handleChange(value) {
-    console.log(value); 
+    console.log(value);
   }
 
   render() {
@@ -83,15 +83,15 @@ class PlatformComponent extends React.Component {
     const {all_platforms} = this.props;
 
     console.log(all_platforms);
-    
+
     const columns = [
-     
+
       {
         Header: translations["Tail#"],
-        accessor: 'tail', 
+        accessor: 'tail',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
-                    
+
         sortMethod: (a, b) => {
                   if (a.length === b.length) {
                       return a > b ? 1 : -1;
@@ -110,7 +110,7 @@ class PlatformComponent extends React.Component {
         accessor: 'category',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-      }, 
+      },
       {
         Header: translations['Service'],
         accessor: 'service'
@@ -147,7 +147,7 @@ class PlatformComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["platform"]} 
+              {translations["platform"]}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
@@ -168,7 +168,7 @@ class PlatformComponent extends React.Component {
             />
           </div>
         </div>
-        
+
         <AddPlatformModal show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>

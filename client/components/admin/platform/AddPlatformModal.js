@@ -12,8 +12,9 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations, addPlatform } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addPlatform } from 'actions/platform';
 
 class AddPlatformModal extends React.Component {
 

@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 
 import PlatformsComponent from '../../components/admin/PlatformsComponent';
-import {getTranslations, addPlatform, fetchPlatforms} from '../../actions/actions';
+import {getTranslations } from '../../actions/actions';
+import { addPlatform, fetchPlatform } from 'actions/platform';
 
 const mapStateToProps = state => {
   return {
@@ -21,8 +22,8 @@ const mapDispatchToProps = dispatch => {
     	dispatch(addPlatform(platform));
     },
 
-    fetchPlatforms: () => {
-      dispatch(fetchPlatforms());
+    fetchPlatform: () => {
+      dispatch(fetchPlatform());
     },
   };
 };
