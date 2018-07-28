@@ -10,8 +10,9 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addMunition, fetchMunitions } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addMunition, fetchMunitions } from 'actions/munition';
 
 class RocketModal extends React.Component {
 
