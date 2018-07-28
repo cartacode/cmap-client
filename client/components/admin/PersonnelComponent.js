@@ -57,7 +57,7 @@ class PersonnelComponent extends React.Component {
 
   componentWillMount() {
 
-    this.props.fetchPersonnels();
+    this.props.fetchPersonnel();
   }
 
   // renderItems(optionItem) {
