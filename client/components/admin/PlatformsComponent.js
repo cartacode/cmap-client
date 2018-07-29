@@ -10,7 +10,7 @@ import FilterDatePicker from '../reusable/FilterDatePicker';
 import DropDownButton from '../reusable/DropDownButton';
 import StatusTable from '../reusable/StatusTable';
 
-import AddPlatformModal from './platform/AddPlatformModal';
+import AddPlatform from './platform/AddPlatformModal';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
 
 import moment from 'moment';
@@ -113,11 +113,7 @@ class PlatformComponent extends React.Component {
       }, 
       {
         Header: translations['Service'],
-        accessor: 'service'
-      },
-      {
-        Header: translations['Owning Unit'],
-        accessor: 'owningunit'
+        accessor: 'branchOfService'
       },
       {
         Header: translations['Location'],
@@ -156,6 +152,9 @@ class PlatformComponent extends React.Component {
               <button className="ccir-button" onClick={this.addPlatformModal} >{translations["Add Platform"]}</button>
             </div>
           </div>
+
+          <AddPlatform show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
+
           <div className="col-md-12">
             <ReactTable
               data={all_platforms}
@@ -169,7 +168,7 @@ class PlatformComponent extends React.Component {
           </div>
         </div>
         
-        <AddPlatformModal show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
+        
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

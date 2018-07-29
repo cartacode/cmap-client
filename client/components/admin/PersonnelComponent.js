@@ -10,13 +10,13 @@ import FilterDatePicker from '../reusable/FilterDatePicker';
 import DropDownButton from '../reusable/DropDownButton';
 import StatusTable from '../reusable/StatusTable';
 
-import AddPersonnelModal from './personnel/AddPersonnelModal';
+import AddPersonnel from './personnel/AddPersonnelModal';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
 
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { Switch, Route, NavLink } from 'react-router-dom';
 
 
 import "react-table/react-table.css";
@@ -34,6 +34,7 @@ class PersonnelComponent extends React.Component {
       filter: [],
       addPersonnelModalOpen:false,
       tableRowDetailModalOpen: false,
+      addshow:false
     }
   }
 
@@ -46,6 +47,18 @@ class PersonnelComponent extends React.Component {
     this.setState({
       addPersonnelModalOpen: !this.state.addPersonnelModalOpen
     });
+  }
+
+  addPersonnelForm = () => {
+    
+    this.setState({
+      addshow: !this.state.addshow
+    });
+  }
+
+  openForm = () => {
+    console.log("Okay");
+   
   }
 
   tableRowDetailModal = () => {
@@ -89,30 +102,30 @@ class PersonnelComponent extends React.Component {
 
       {
         Header: translations["First Name"],
-        accessor: 'type',
+        accessor: 'firstName',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations['Last Name'],
-        accessor: 'payload',
+        accessor: 'lastName',
       },
       {
         Header: translations['Rank'],
-        accessor: 'serial',
+        accessor: 'rank.description',
 
       },
       {
         Header: translations['Service'],
-        accessor: 'status',
+        accessor: 'branchOfService.description',
       },
       {
         Header: translations['Deployed Unit'],
-        accessor: 'remark',
+        accessor: 'deployedUnit.description',
       },
       {
         Header: translations['CAC ID'],
-        accessor: 'etic',
+        accessor: 'CACID',
       },
       {
         Header: translations['view'],
@@ -132,6 +145,8 @@ class PersonnelComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 
+  
+
     return (
       <div>
         <div className="row orders-assets">
@@ -142,11 +157,14 @@ class PersonnelComponent extends React.Component {
             </div>
             <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
           </div>
-          <div className="col-md-12 filter-line">
-            <div className="add-button">
-              <button className="ccir-button" onClick={this.addPersonnelModal} >{translations["Add Personnel"]}</button>
-            </div>
+          <div className="col-md-12 filter-line">           
+           <div className="add-button">
+             <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
+          </div>                  
           </div>
+
+          <AddPersonnel show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
+
           <div className="col-md-12">
             <ReactTable
               data={all_personnels}
@@ -160,7 +178,7 @@ class PersonnelComponent extends React.Component {
           </div>
         </div>
 
-        <AddPersonnelModal show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
+        
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

@@ -8,6 +8,8 @@ import DropDownButton from '../reusable/DropDownButton';
 import FilterDropdown from '../reusable/FilterDropdown';
 import StatusTable from '../reusable/StatusTable';
 import FormBlock from  '../reusable/FormBlock';
+import ContentBlock from "../reusable/ContentBlock";
+import ModalFormBlock from '../reusable/ModalFormBlock';
 
 import BaseModal from './location/BaseModal';
 import NaiModal from './location/NaiModal';
@@ -31,6 +33,8 @@ class PersonnelComponent extends React.Component {
       naiModalOpen: false,
       poiModalOpen: false,
       tableRowDetailModalOpen: false,
+      baseshow:false,
+      naishow:false
     }
   }
 
@@ -41,6 +45,20 @@ class PersonnelComponent extends React.Component {
   baseModal = () => {
     this.setState({
       baseModalOpen: !this.state.baseModalOpen
+    });
+  }
+
+  baseForm = () => {
+    this.setState({
+      baseshow: true,
+      naishow:false
+    });
+  }
+
+  naiForm = () => {
+    this.setState({
+      naishow: true,
+      baseshow:false
     });
   }
 
@@ -157,6 +175,33 @@ class PersonnelComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 
+    const generalFields = [
+      {name: translations['Name'], type: 'input', domID: 'LocationName', valFieldID: 'LocationName'},
+      {name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet'},
+      {name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity'},
+      {name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry'},
+      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'LocationCOCOM'},
+      {name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion'},
+    ];
+
+    const locationFields = [
+      {name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude'},
+      {name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude'},
+      {name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation'},
+      {name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS'},
+
+    ];
+
+    const contactFields = [
+      {name: translations['Point of Contact'], type: 'input', domID: 'dispLocationPointofContact', valFieldID:'LocationPointofContact'},
+      {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'LocationDSN'},
+      {name: translations['Email-NIPR'], type: 'input', domID: 'EmailNIPR', valFieldID: 'LocationEmailNIPR'},
+      {name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'LocationEmailSIPR'},
+      {name: translations['Frequency'], type: 'number', domID: 'LocationFrequency', valFieldID: 'LocationFrequency'},
+      {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'LocationChatID'},
+    ];
+
+
     return (
       <div>
         <div className="row orders-assets">
@@ -175,6 +220,13 @@ class PersonnelComponent extends React.Component {
               <DropDownButton key = '1' label={translations["Add Location"]} id="1" items={locations}/>
             </div>
           </div>
+          
+          <BaseModal show={this.state.baseModalOpen} onClose={this.baseModal} translations = {translations}/>
+          <NaiModal show={this.state.naiModalOpen} onClose={this.naiModal} translations = {translations}/>
+          <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>  
+           
+                <br/>
+          <div className="row personnel"> 
           <div className="col-md-12">
             <ReactTable
               data={location_data}
@@ -186,10 +238,10 @@ class PersonnelComponent extends React.Component {
                 String(row[filter.id]) === filter.value}
             />
           </div>
+          </div>
         </div>
-        <BaseModal show={this.state.baseModalOpen} onClose={this.baseModal} translations = {translations}/>
-        <NaiModal show={this.state.naiModalOpen} onClose={this.naiModal} translations = {translations}/>
-        <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>
+        
+        
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

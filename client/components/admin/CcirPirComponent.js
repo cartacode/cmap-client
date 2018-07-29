@@ -134,6 +134,7 @@ class CcirPirComponent extends React.Component {
               <button className="ccir-button" onClick={this.ccirModal} >{translations["Add Ccir/Pirs"]}</button>
             </div>
           </div>
+          <CcirPirModal show={this.state.ccirModalOpen} onClose={this.ccirModal} onAdd={this.handleAdd}/>
           <div className="col-md-12">
             <ReactTable
               data={data}
@@ -145,7 +146,7 @@ class CcirPirComponent extends React.Component {
                 String(row[filter.id]) === filter.value}
             />
           </div>
-          <CcirPirModal show={this.state.ccirModalOpen} onClose={this.ccirModal} onAdd={this.handleAdd}/>
+          
           <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} />
         </div>
       </div>

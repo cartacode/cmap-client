@@ -173,9 +173,10 @@ class NaiModal extends React.Component {
 
     return (
 
-      <div className="nai-modal modal-overlay" >
+      
       <form action="" onSubmit={this.handleSubmit}>
-        <div className="modal-content">
+       
+       <div className="row personnel" >
           <div className="close-button" >
             <img src="/images/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -204,16 +205,20 @@ class NaiModal extends React.Component {
               </div>
             </div>
           </div>
+          </div>
+          <div className="row personnel">
           <div className="col-md-12">
             <div className="nai-description">
               <div className="description-label">
                 {translations["Description"]}
               </div>
-              <div className="description-detail">
-                <textarea className="form-control" id="LocationDescription" rows="6" className="description-detail" onChange={this.handleChange}/>
+              <div className="">
+                <textarea className="form-control" id="LocationDescription" rows="6" className="description" onChange={this.handleChange}/>
               </div>
             </div>
           </div>
+          </div>
+          <div className="row personnel">
            <div className="col-md-12" style={{textAlign:'center', paddingTop:20}}>
             <div className="action-buttons" >
               <img className="line" src="/images/admin/edit_up.png" alt=""/>
@@ -223,9 +228,10 @@ class NaiModal extends React.Component {
               <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        </div>
+          </div>
+        
       </form>
-      </div>
+      
     );
   }
 }

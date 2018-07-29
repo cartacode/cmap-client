@@ -238,9 +238,9 @@ class GunModal extends React.Component {
 
 
     return (
-      <div className="payload-modal modal-overlay" >
+      
       <form action="" onSubmit={this.handleSubmit} >
-        <div className="modal-content">
+        
           <div className="close-button" >
             <img src="/images/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -340,9 +340,9 @@ class GunModal extends React.Component {
               <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        </div>
+        
       </form>
-      </div>
+      
     );
   }
 }

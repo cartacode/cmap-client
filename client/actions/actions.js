@@ -367,7 +367,7 @@ export let addPayload = (payload) => {
       }
     )
     .catch(error => {
-          alert(error);
+          alert("API Error - 500");
       });
   }
   

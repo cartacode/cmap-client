@@ -232,6 +232,10 @@ class MunitionsComponent extends React.Component {
               <DropDownButton key = '1' label={translations["Add Munition"]} id="1" items={munitions} />
             </div>
           </div>
+
+        <MissileModal show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
+        <RocketModal show={this.state.rocketModalOpen} onClose={this.rocketModal} translations = {translations}/>
+        <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
           <div className="col-md-12">
             <ReactTable
               data={all_munitions}
@@ -267,10 +271,6 @@ class MunitionsComponent extends React.Component {
             />
           </div>
         </div>
-
-        <MissileModal show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
-        <RocketModal show={this.state.rocketModalOpen} onClose={this.rocketModal} translations = {translations}/>
-        <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
       </div>
     );
