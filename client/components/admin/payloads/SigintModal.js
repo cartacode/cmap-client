@@ -287,9 +287,9 @@ class SigintModal extends React.Component {
     ];
 
     return (
-      <div className="payload-modal modal-overlay" >
+      
       <form action="" onSubmit={this.handleSubmit} >
-        <div className="modal-content">
+        
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -394,9 +394,9 @@ class SigintModal extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        </div>
+        
       </form>
-      </div>
+      
     );
   }
 }

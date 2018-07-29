@@ -75,6 +75,7 @@ export let getTranslations = (lang) => {
   };
 };
 
+
 // Locations
 
 function requestAddLocation() {

@@ -39,7 +39,7 @@ class CcirPirModal extends React.Component {
 
     if(this.state.addClicked)
       {
-      $newdiv=(<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3" /></div><div className="add-buttion"><button> add </button></div></div></div>);
+      $newdiv=(<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3" className="description"/></div><div className="add-buttion"><button> add </button></div></div></div>);
       }
       else {$newdiv = '';}
 
@@ -57,8 +57,8 @@ class CcirPirModal extends React.Component {
    
 
     return (
-      <div className="ccir-modal modal-overlay" >
-        <div className="modal-content">
+      
+        <div>
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -70,7 +70,7 @@ class CcirPirModal extends React.Component {
           <div className="col-md-12">
             <div className="entry-field">
               <div className="entry-detail">
-                <textarea rows="3"/>
+                <textarea rows="3" className="description"/>
               </div>
               <div className="add-buttion">
                 <button onClick={this.handleAdd}> add </button>
@@ -80,7 +80,7 @@ class CcirPirModal extends React.Component {
           <div className="col-md-12">
             <div className="entry-field">
               <div className="entry-detail">
-                <textarea rows="3" />
+                <textarea rows="3" className="description"/>
               </div>
               <div className="add-buttion">
                 <button> add </button>
@@ -93,7 +93,7 @@ class CcirPirModal extends React.Component {
             <CustomButton buttonName="save" />
           </div>
         </div>
-      </div>
+      
     );
   }
 }

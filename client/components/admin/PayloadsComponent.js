@@ -229,6 +229,14 @@ class PayloadsComponent extends React.Component {
 						<DropDownButton key = '1' label={translations["Add Payload"]} id="1" items={addPayloads} />
 					</div>
 				</div>
+
+				<EoirModal show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
+				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>
+				<WamiModal show={this.state.wamiModalOpen} onClose={this.wamiModal} translations = {translations}/>
+				<SigintModal show={this.state.sigintModalOpen} onClose={this.sigintModal} translations = {translations}/>
+				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
+				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+
 				<div className="col-md-12">
 					<ReactTable
 						data={payload_data}
@@ -242,12 +250,7 @@ class PayloadsComponent extends React.Component {
 				</div>
 				</div>
 
-				<EoirModal show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
-				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>
-				<WamiModal show={this.state.wamiModalOpen} onClose={this.wamiModal} translations = {translations}/>
-				<SigintModal show={this.state.sigintModalOpen} onClose={this.sigintModal} translations = {translations}/>
-				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
-				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+				
 			</div>
 		);
 	}

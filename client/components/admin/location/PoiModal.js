@@ -173,9 +173,9 @@ class PoiModal extends React.Component {
     ];
 
     return (
-      <div className="nai-modal modal-overlay" >
+      
       <form action="" onSubmit={this.handleSubmit} >
-        <div className="modal-content">
+        
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -209,8 +209,8 @@ class PoiModal extends React.Component {
               <div className="description-label">
                 {translations["Description"]}
               </div>
-              <div className="description-detail">
-                <textarea className="form-control" id="LocationDescription" rows="6" className="description-detail" onChange={this.handleChange}/>
+              <div>
+                <textarea className="form-control" id="LocationDescription" rows="6" className="description" onChange={this.handleChange}/>
               </div>
             </div>
           </div>
@@ -223,9 +223,9 @@ class PoiModal extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        </div>
+        
       </form>
-      </div>
+      
     );
   }
 }
