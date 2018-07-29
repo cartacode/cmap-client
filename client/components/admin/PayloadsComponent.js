@@ -24,8 +24,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 class PayloadsComponent extends React.Component {
 	constructor(props) {
 		super(props);

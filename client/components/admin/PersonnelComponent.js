@@ -22,8 +22,6 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 
 class PersonnelComponent extends React.Component {
 
@@ -50,7 +48,7 @@ class PersonnelComponent extends React.Component {
   }
 
   addPersonnelForm = () => {
-    
+
     this.setState({
       addshow: !this.state.addshow
     });
@@ -58,7 +56,7 @@ class PersonnelComponent extends React.Component {
 
   openForm = () => {
     console.log("Okay");
-   
+
   }
 
   tableRowDetailModal = () => {
@@ -145,7 +143,7 @@ class PersonnelComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 
-  
+
 
     return (
       <div>
@@ -157,10 +155,10 @@ class PersonnelComponent extends React.Component {
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
-          <div className="col-md-12 filter-line">           
+          <div className="col-md-12 filter-line">
            <div className="add-button">
              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-          </div>                  
+          </div>
           </div>
 
           <AddPersonnel show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
@@ -178,7 +176,7 @@ class PersonnelComponent extends React.Component {
           </div>
         </div>
 
-        
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

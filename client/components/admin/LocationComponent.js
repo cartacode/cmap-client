@@ -19,8 +19,6 @@ import TableRowDetailModal from '../reusable/TableRowDetailModal';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 
 class PersonnelComponent extends React.Component {
 

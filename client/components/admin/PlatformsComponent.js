@@ -17,12 +17,8 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-
-
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
-
-import { makeData } from '../../actions/actions';
 
 
 class PlatformComponent extends React.Component {
