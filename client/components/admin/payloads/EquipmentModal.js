@@ -10,9 +10,9 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, fetchPayloadData } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
-import { addPayload } from 'actions/payload';
+import { addPayload, fetchPayloads } from 'actions/payload';
 
 class EquipmentModal extends React.Component {
 
@@ -71,7 +71,7 @@ class EquipmentModal extends React.Component {
 
   componentWillMount(){
     console.log("---hereis eoirmodal---------");
-    //this.props.fetchPayloadData();
+    //this.props.fetchPayloads();
   }
 
   handlePayloadGeneralData = (generalData) => {
@@ -192,7 +192,7 @@ class EquipmentModal extends React.Component {
     console.log('---here--');
     console.log(this.state.payload);
     this.props.addPayload(this.state.payload);
-    this.props.fetchPayloadData();
+    this.props.fetchPayloads();
   }
 
 
@@ -409,8 +409,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(addPayload(payload));
     },
 
-    fetchPayload: () => {
-      dispatch(fetchPayloadData());
+    fetchPayloads: () => {
+      dispatch(fetchPayloads());
     },
 
     uploadFile: (fileData) => {

@@ -8,6 +8,8 @@ export const MUNITION__ADD = createActionType('MUNITION__ADD');
 export const MUNITION__FETCH = createActionType('MUNITION__FETCH');
 
 export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
+export const PAYLOAD__FETCH = createActionType('PAYLOAD__FETCH');
+export const PAYLOAD_LIST__FETCH = createActionType('PAYLOAD_LIST__FETCH');
 export const PAYLOAD_TYPE__FETCH = createActionType('PAYLOAD_TYPE__FETCH');
 
 export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');

@@ -75,48 +75,6 @@ export let getTranslations = (lang) => {
   };
 };
 
-
-export let getPayloads = () => {
-
-  const url = baseUrl + 'Payload/GetPayloads';
-
-  return (dispatch) => {
-    dispatch(requestPayloads());
-    return axios.get(url, requestHeaders)
-    .then(
-      (response) => {
-        dispatch(receivePayloads(response.data));
-        console.log(response.data);
-        console.log(response);
-          return response;
-      }
-    )
-    .catch(error => {
-          alert(error);
-      });
-  }
-}
-
-export function fetchPayloadData() {
-
-  const url = baseUrl + 'Payload/GetPayloadsData';
-
-  return (dispatch) => {
-    dispatch(requestPayloadData());
-    return axios.get(url, requestHeaders)
-    .then(
-      (response) => {
-        dispatch(receivePayloadData(response.data));
-        console.log(JSON.stringify(response.data));
-          return response;
-      }
-    )
-    .catch(error => {
-          alert(error);
-      });
-  }
-}
-
 // Locations
 
 function requestAddLocation() {
