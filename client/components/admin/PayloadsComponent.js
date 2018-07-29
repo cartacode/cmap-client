@@ -86,7 +86,7 @@ class PayloadsComponent extends React.Component {
 		this.props.fetchPayloads();
 		this.props.fetchPayloadList();
 	//	this.props.getCocoms();
-	//	this.props.getLocations();
+	//	this.props.fetchLocationList();
 	}
 
 	renderItems(optionItem) {
@@ -250,7 +250,7 @@ class PayloadsComponent extends React.Component {
 				</div>
 				</div>
 
-				
+
 			</div>
 		);
 	}

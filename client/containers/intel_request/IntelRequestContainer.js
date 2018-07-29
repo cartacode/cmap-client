@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 
 import IntelRequestIntelRequestComponent from '../../components/intel_request/IntelRequestIntelRequestComponent';
-import {getTranslations, addIntelEEI, addIntelReq} from '../../actions/actions';
+import {getTranslations} from '../../actions/actions';
+import { addIntelEei, addIntelRequest } from 'actions/intel';
 
 const mapStateToProps = state => {
   return {
@@ -14,11 +15,11 @@ const mapDispatchToProps = dispatch => {
     getTranslations: (lang) => {
       dispatch(getTranslations(lang));
     },
-    addIntelEEI: (intelEEI) => {
-    	dispatch(addIntelEEI(intelEEI));
+    addIntelEei: (intelEEI) => {
+    	dispatch(addIntelEei(intelEEI));
     },
-    addIntelReq: (intelReq) => {
-    	dispatch(addIntelReq(intelReq));
+    addIntelRequest: (intelReq) => {
+    	dispatch(addIntelRequest(intelReq));
     },
   };
 };

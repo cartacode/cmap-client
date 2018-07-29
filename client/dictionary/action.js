@@ -2,7 +2,15 @@ import { createActionType } from 'util/action';
 
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
+export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
+export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
+
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
+
+export const LOCATION__ADD = createActionType('LOCATION__ADD');
+export const LOCATION__FETCH = createActionType('LOCATION__FETCH');
+export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
+export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
 
 export const MUNITION__ADD = createActionType('MUNITION__ADD');
 export const MUNITION__FETCH = createActionType('MUNITION__FETCH');

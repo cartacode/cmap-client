@@ -6,8 +6,9 @@ import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 import ContentBlock from "../../reusable/ContentBlock";
 
-import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class PoiModal extends React.Component {
   constructor(props){
@@ -44,7 +45,7 @@ class PoiModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -173,9 +174,9 @@ class PoiModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -223,9 +224,9 @@ class PoiModal extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -253,7 +254,7 @@ const mapDispatchToProps = dispatch => {
     },
 
     fetchLocations: () => {
-      dispatch(fetchLocationData());
+      dispatch(fetchLocations());
     },
 
     uploadFile: (fileData) => {

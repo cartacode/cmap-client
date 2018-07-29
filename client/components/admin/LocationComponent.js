@@ -81,8 +81,8 @@ class PersonnelComponent extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchLocationData();
-    
+    this.props.fetchLocations();
+
     // console.log("--here is locations fetch---");
     // console.log(data);
   }
@@ -98,7 +98,7 @@ class PersonnelComponent extends React.Component {
     ];
 
     const { location_data } = this.props;
-    
+
     console.log("That data");
     console.log(location_data);
 
@@ -108,7 +108,7 @@ class PersonnelComponent extends React.Component {
         accessor: 'id',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
       {
         Header: translations["Name"] ,
@@ -120,7 +120,7 @@ class PersonnelComponent extends React.Component {
         Header: translations['COCOM'],
         accessor: 'COCOM',
         Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>, 
+                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -133,30 +133,30 @@ class PersonnelComponent extends React.Component {
         accessor: 'country',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
       {
         Header: translations["Region"],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
-      }, 
+
+      },
       {
         Header: translations['unit'],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
-      
+
       {
         Header: translations['Record Date'],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
-      }, 
+
+      },
       {
         Header: translations['view'],
         accessor: 'view',
@@ -206,7 +206,7 @@ class PersonnelComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="row">
-          
+
           </div>
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -220,13 +220,13 @@ class PersonnelComponent extends React.Component {
               <DropDownButton key = '1' label={translations["Add Location"]} id="1" items={locations}/>
             </div>
           </div>
-          
+
           <BaseModal show={this.state.baseModalOpen} onClose={this.baseModal} translations = {translations}/>
           <NaiModal show={this.state.naiModalOpen} onClose={this.naiModal} translations = {translations}/>
-          <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>  
-           
+          <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>
+
                 <br/>
-          <div className="row personnel"> 
+          <div className="row personnel">
           <div className="col-md-12">
             <ReactTable
               data={location_data}
@@ -240,8 +240,8 @@ class PersonnelComponent extends React.Component {
           </div>
           </div>
         </div>
-        
-        
+
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

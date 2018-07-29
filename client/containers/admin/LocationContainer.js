@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 
 import LocationComponent from '../../components/admin/LocationComponent';
-import {getTranslations, addLocation, fetchLocationData} from '../../actions/actions';
+import {getTranslations} from '../../actions/actions';
+import { addLocation, fetchLocations } from 'actions/location';
 
 const mapStateToProps = state => {
   return {
@@ -21,8 +22,8 @@ const mapDispatchToProps = dispatch => {
     	dispatch(addLocation(location));
     },
 
-    fetchLocationData: () => {
-    	dispatch(fetchLocationData());
+    fetchLocations: () => {
+    	dispatch(fetchLocations());
     },
   };
 };

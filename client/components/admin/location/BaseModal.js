@@ -6,8 +6,9 @@ import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
 import ButtonsList from "../../reusable/ButtonsList";
 
-import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class BaseModal extends React.Component {
 
@@ -47,7 +48,7 @@ class BaseModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -152,7 +153,7 @@ class BaseModal extends React.Component {
     console.log('---here--');
     console.log(this.state.location);
     this.props.addLocation(this.state.location);
-    this.props.fetchLocationData();
+    this.props.fetchLocations();
   }
 
   resetForm(){
@@ -225,9 +226,9 @@ class BaseModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -310,9 +311,9 @@ class BaseModal extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -340,7 +341,7 @@ const mapDispatchToProps = dispatch => {
     },
 
     fetchLocations: () => {
-      dispatch(fetchLocationData());
+      dispatch(fetchLocations());
     },
 
     uploadFile: (fileData) => {

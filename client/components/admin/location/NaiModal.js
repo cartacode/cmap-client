@@ -5,8 +5,9 @@ import {connect} from 'react-redux';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 
-import { getTranslations, addLocation, fetchLocationData } from '../../../actions/actions';
+import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class NaiModal extends React.Component {
 
@@ -44,7 +45,7 @@ class NaiModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -173,9 +174,9 @@ class NaiModal extends React.Component {
 
     return (
 
-      
+
       <form action="" onSubmit={this.handleSubmit}>
-       
+
        <div className="row personnel" >
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
@@ -229,9 +230,9 @@ class NaiModal extends React.Component {
             </div>
           </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -259,7 +260,7 @@ const mapDispatchToProps = dispatch => {
     },
 
     fetchLocations: () => {
-      dispatch(fetchLocationData());
+      dispatch(fetchLocations());
     },
 
     uploadFile: (fileData) => {
