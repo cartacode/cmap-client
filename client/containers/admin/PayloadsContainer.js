@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 
 import PayloadsComponent from '../../components/admin/PayloadsComponent';
-import {getTranslations, getCocoms} from '../../actions/actions';
+import {getTranslations} from '../../actions/actions';
+import { fetchCocoms } from 'actions/cocom';
 import { fetchLocationList } from 'actions/location';
 import { addPayload, fetchPayloadList, fetchPayloads, fetchPayloadTypes } from 'actions/payload';
 
@@ -39,8 +40,8 @@ const mapDispatchToProps = dispatch => {
     	dispatch(fetchPayloads());
     },
 
-    getCocoms: () => {
-      dispatch(getCocoms());
+    fetchCocoms: () => {
+      dispatch(fetchCocoms());
     },
 
     fetchLocationList: () => {

@@ -85,7 +85,7 @@ class PayloadsComponent extends React.Component {
 	componentWillMount() {
 		this.props.fetchPayloads();
 		this.props.fetchPayloadList();
-	//	this.props.getCocoms();
+	//	this.props.fetchCocoms();
 	//	this.props.fetchLocationList();
 	}
 

@@ -1,5 +1,7 @@
 import { createActionType } from 'util/action';
 
+export const COCOM__FETCH = createActionType('COCOM__FETCH');
+
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
