@@ -107,7 +107,7 @@ class PayloadsComponent extends React.Component {
 
 	render() {
 		const {translations: {translations}} = this.props;
-		const {allPayloads, payloadList, payloadTypes, cocom_list, location_list} = this.props;
+		const {allPayloads, payloadList, payloadTypes, cocom_list, locationList} = this.props;
 
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.eoirModal},

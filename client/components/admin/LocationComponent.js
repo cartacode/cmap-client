@@ -95,10 +95,10 @@ class PersonnelComponent extends React.Component {
       {name:translations['POI'], onClick: this.poiModal}
     ];
 
-    const { location_data } = this.props;
+    const { allLocations } = this.props;
 
     console.log("That data");
-    console.log(location_data);
+    console.log(allLocations);
 
     const columns = [
       {
@@ -227,7 +227,7 @@ class PersonnelComponent extends React.Component {
           <div className="row personnel">
           <div className="col-md-12">
             <ReactTable
-              data={location_data}
+              data={allLocations}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"

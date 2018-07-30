@@ -6,8 +6,8 @@ import { addLocation, fetchLocations } from 'actions/location';
 const mapStateToProps = state => {
   return {
     translations: state.translationsReducer,
-    location_data: state.locationData.location_data,
-    fetchingLocations: state.locations.isFetching
+    allLocations: state.locations.allLocations,
+    fetchingLocations: state.locations.isFetching,
   };
 };
 

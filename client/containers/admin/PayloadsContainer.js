@@ -12,7 +12,7 @@ const mapStateToProps = state => {
     payloadList: state.payloads.payloadList,
     payloadTypes: state.payloads.payloadTypes,
     fetchingPayloads: state.payloads.isFetching,
-    location_list: state.locations.location_list,
+    locationList: state.locations.locationList,
     cocom_list: state.cocoms.cocom_list,
   };
 };

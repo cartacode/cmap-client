@@ -1,4 +1,12 @@
 export default {
+  locations: {
+    allLocations: [],
+    isFetching: false,
+    isListFetching: false,
+    isTypesFetching: false,
+    locationList: [],
+    locationTypes: [],
+  },
   munitions: {
     allMunitions: [],
     isFetching: false,
