@@ -207,7 +207,7 @@ class RocketModal extends React.Component {
       {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram'},
-      {name: translations['Cost'], type: 'input', domID: 'MunitionCost', valFieldID: 'MunitionCost'},
+      {name: translations['Cost'], type: 'number', domID: 'MunitionCost', valFieldID: 'MunitionCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'MunitionCostNotes', valFieldID: 'MunitionCostNotes'},
     ];
 

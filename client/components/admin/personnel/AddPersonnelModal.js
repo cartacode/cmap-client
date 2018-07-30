@@ -1168,8 +1168,8 @@ class AddPersonnelModal extends React.Component {
 
     const contactFields = [
         {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN'},
-        {name: translations['Email-NIPR'], type: 'input', domID: 'EmailNIPR', valFieldID: 'EmailNIPR'},
-        {name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'EmailSIPR'},
+        {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR'},
+        {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR'},
         {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
 
     ];

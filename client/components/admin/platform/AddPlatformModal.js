@@ -434,7 +434,7 @@ class AddPlatformModal extends React.Component {
       {name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID:'Manufacturer', valFieldID:'PlatformManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'PlatformExecutiveAgent', valFieldID: 'PlatformExecutiveAgent'},
       {name: 'Contact Program', type: 'input', domID:'PlatformContractProgram', valFieldID: 'PlatformContractProgram'},
-      {name: translations['Cost'], type: 'input', domID: 'PlatformCost', valFieldID: 'PlatformCost'},
+      {name: translations['Cost'], type: 'number', domID: 'PlatformCost', valFieldID: 'PlatformCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PlatformCostNotes', valFieldID: 'PlatformCostNotes'},
       {name: translations['Initial Op Capability'], type: 'date', domID: 'PlatformIOCDate', valFieldID: 'PlatformIOCDate'},
       // {name: translations['Inventory'], type: 'dropdown', domID: 'PlatformInventory', ddID: 'PlatformInventory'},

@@ -115,6 +115,10 @@ class ContentBlock extends React.Component {
                 case 'input':
                     input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
                     break;
+                
+                case 'email':
+                    input = (<input type="email" className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
+                    break;    
 
                 case 'number':
                 let minValue=0;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 
-
 class CcirPirModal extends React.Component {
 
   constructor(props) {
