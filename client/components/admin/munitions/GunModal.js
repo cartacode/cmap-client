@@ -200,7 +200,7 @@ class GunModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'input', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
+      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName'},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
@@ -224,16 +224,16 @@ class GunModal extends React.Component {
       {name: translations['Caliber'], type: 'input', domID: 'MunitionCaliber', valFieldID: 'MunitionCaliber'},
       {name: translations['Drive System'], type: 'input', domID: 'MunitionDriveSystem', valFieldID: 'MunitionDriveSystem'},
       {name: translations['Feed System'], type: 'input', domID: 'MunitionFeedSystem', valFieldID: 'MunitionFeedSystem'},
-      {name: translations['Rate of Fire'], type: 'input', domID: 'MunitionRateFire', valFieldID: 'MunitionRateFire'},
-      {name: translations['Muzzle Velocity'], type: 'input', domID: 'MunitionMuzzleVelocity', valFieldID: 'MunitionMuzzleVelocity'},
-      {name: translations['Projectile Weight'], type: 'input', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight'},
-      {name: translations['Mussel Energy'], type: 'input', domID: 'MunitionMusselEnergy', valFieldID: 'MunitionMusselEnergy'},
+      {name: translations['Rate of Fire'], type: 'number', domID: 'MunitionRateFire', valFieldID: 'MunitionRateFire'},
+      {name: translations['Muzzle Velocity'], type: 'number', domID: 'MunitionMuzzleVelocity', valFieldID: 'MunitionMuzzleVelocity'},
+      {name: translations['Projectile Weight'], type: 'number', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight'},
+      {name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMusselEnergy', valFieldID: 'MunitionMusselEnergy'},
       {name: translations['Length'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength'},
       {name: translations['Width/Diameter'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter'},
       {name: translations['Height'], type: 'number', domID: 'MunitionHeight', valFieldID: 'MunitionHeight'},
       {name: translations['Weight Unloaded(lbs.)'], type: 'number', domID: 'MunitionWeightUnloaded', valFieldID: 'MunitionWeightUnloaded'},
       {name: translations['Weight Loaded(lbs.)'], type: 'number', domID: 'MunitionWeightLoaded', valFieldID: 'MunitionWeightLoaded'},
-      {name: translations['Rounds Carried'], type: 'input', domID: 'MunitionRoundsCarried', valFieldID: 'MunitionRoundsCarried'},
+      {name: translations['Rounds Carried'], type: 'number', domID: 'MunitionRoundsCarried', valFieldID: 'MunitionRoundsCarried'},
     ];
 
 
