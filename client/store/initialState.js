@@ -1,4 +1,8 @@
 export default {
+  cocoms: {
+    cocomList: [],
+    isListFetching: false,
+  },
   locations: {
     allLocations: [],
     isFetching: false,

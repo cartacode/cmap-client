@@ -1,6 +1,6 @@
 import { createActionType } from 'util/action';
 
-export const COCOM__FETCH = createActionType('COCOM__FETCH');
+export const COCOM_LIST__FETCH = createActionType('COCOM_LIST__FETCH');
 
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 

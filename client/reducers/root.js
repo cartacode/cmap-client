@@ -1,45 +1,19 @@
 import { combineReducers } from 'redux';
 
-const cocoms = (
-  state = {
-    isFetching: false,
-    isReady: false,
-    cocom_list: [],
-  },
-  action
-) => {
-  switch (action.type) {
-    case REQUEST_COCOM:
-      return {
-        ...state,
-        isFetching: true,
-        isReady: false
-      };
-    case RECEIVE_COCOM:
-      return {
-        ...state,
-        isFetching: false,
-        isReady: true,
-        cocom_list: action.cocom_list
-      };
-    default:
-      return state;
-  }
-};
+import cocoms from 'reducers/cocoms';
+import locations from 'reducers/locations';
+import munitions from 'reducers/munitions';
+import payloads from 'reducers/payloads';
+import personnels from 'reducers/personnels';
+import platforms from 'reducers/platforms';
 
-const rootReducer = combineReducers({
-	personnels,
-	platforms,
-	payloads,
-  payloadTypes,
-  payloadData,
-	munitions,
-	locations,
-  locationTypes,
-  locationData,
-  cocoms,
-  translationsReducer,
-  routing: routerReducer
-});
-
-export default rootReducer;
+export default function createReducer() {
+  return combineReducers({
+    cocoms,
+    locations,
+    munitions,
+    payloads,
+    personnels,
+    platforms,
+  });
+}

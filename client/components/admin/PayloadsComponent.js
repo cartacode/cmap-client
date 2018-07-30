@@ -107,7 +107,7 @@ class PayloadsComponent extends React.Component {
 
 	render() {
 		const {translations: {translations}} = this.props;
-		const {allPayloads, payloadList, payloadTypes, cocom_list, locationList} = this.props;
+		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
 
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.eoirModal},
@@ -170,7 +170,7 @@ class PayloadsComponent extends React.Component {
 							  style={{ width: "100%" }}
 							  value={filter ? filter.value : ""}
 						  >
-							  {this.renderItems(cocom_list)}
+							  {this.renderItems(cocomList)}
 						  </select>
 			},
 			{
