@@ -250,7 +250,7 @@ class SargmtiModal extends React.Component {
     const {translations} = this.props;
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
+      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName'},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
@@ -258,7 +258,7 @@ class SargmtiModal extends React.Component {
       {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram'},
-      {name: translations['Cost'], type: 'input', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
+      {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
     ];
 
@@ -273,10 +273,10 @@ class SargmtiModal extends React.Component {
     ];
 
     const payloadFields = [
-      {name: 'Frequency Range:', type: 'input', domID: 'PayloadFrequencyRange', valFieldID: 'PayloadFrequencyRange'},
-      {name: 'Scan Coverage:', type: 'input', domID: 'PayloadScanCoverage', valFieldID: 'PayloadScanCoverage'},
-      {name: 'Maximum Range:', type: 'input', domID: 'PayloadMaximumRange', valFieldID: 'PayloadMaximumRange'},
-      {name: 'Map Resolution:', type: 'input', domID: 'PayloadMapResolution', valFieldID: 'PayloadMapResolution'},
+      {name: 'Frequency Range:', type: 'number', domID: 'PayloadFrequencyRange', valFieldID: 'PayloadFrequencyRange'},
+      {name: 'Scan Coverage:', type: 'number', domID: 'PayloadScanCoverage', valFieldID: 'PayloadScanCoverage'},
+      {name: 'Maximum Range:', type: 'number', domID: 'PayloadMaximumRange', valFieldID: 'PayloadMaximumRange'},
+      {name: 'Map Resolution:', type: 'number', domID: 'PayloadMapResolution', valFieldID: 'PayloadMapResolution'},
       {name: 'Ground Mapping:', type: 'checkbox', domID: 'PayloadGroundMapping', valFieldID: 'PayloadGroundMapping'},
       {name: 'Strip SAR:', type: 'checkbox', domID: 'PayloadStripSAR', valFieldID: 'PayloadStripSAR'},
       {name: 'Spotlight SAR:', type: 'checkbox', domID: 'PayloadSpotlightSAR', valFieldID: 'PayloadSpotlightSAR'},

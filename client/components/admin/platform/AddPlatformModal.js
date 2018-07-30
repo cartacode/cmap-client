@@ -442,30 +442,30 @@ class AddPlatformModal extends React.Component {
     ];
 
     const technicalFields = [
-      {name: translations['Length (ft.)'], type: 'input', domID: 'Length', valFieldID: 'PlatformLength'},
-      {name: translations['Wingspan (ft.)'], type: 'input', domID: 'Wingspan', valFieldID: 'PlatformWingspan'},
-      {name: translations['Height (ft.)'], type: 'input', domID: 'Height', valFieldID: 'PlatformHeight'},
-      {name: translations['Weight (lbs.)'], type: 'input', domID: 'Weight', valFieldID: 'PlatformWeight'},
+      {name: translations['Length (ft.)'], type: 'number', domID: 'Length', valFieldID: 'PlatformLength'},
+      {name: translations['Wingspan (ft.)'], type: 'number', domID: 'Wingspan', valFieldID: 'PlatformWingspan'},
+      {name: translations['Height (ft.)'], type: 'number', domID: 'Height', valFieldID: 'PlatformHeight'},
+      {name: translations['Weight (lbs.)'], type: 'number', domID: 'Weight', valFieldID: 'PlatformWeight'},
       {name: translations['Power Plant'], type: 'input', domID: 'PowerPlant', valFieldID: 'PlatformPowerPlant'},
-      {name: translations['Fuel Capacity(lbs.)'], type: 'input', domID: 'FuelCapacity', valFieldID: 'PlatformFuelCapacity'},
-      {name: translations['Cruising Speed(mph)'], type: 'input', domID: 'CruisingSpeed', valFieldID: 'PlatformCruisingSpeed'},
-      {name: translations['Range(miles)'], type: 'input', domID: 'Range', valFieldID: 'PlatformRange'},
-      {name: translations['Ceiling(ft.)'], type: 'input', domID: 'Ceiling', valFieldID: 'PlatformCeiling'},
-      {name: translations['Max Takeoff Weight(lbs.)'], type: 'input', domID: 'MaxTakeoffWeight', valFieldID: 'PlatformMaxTakeOff'}
+      {name: translations['Fuel Capacity(lbs.)'], type: 'number', domID: 'FuelCapacity', valFieldID: 'PlatformFuelCapacity'},
+      {name: translations['Cruising Speed(mph)'], type: 'number', domID: 'CruisingSpeed', valFieldID: 'PlatformCruisingSpeed'},
+      {name: translations['Range(miles)'], type: 'number', domID: 'Range', valFieldID: 'PlatformRange'},
+      {name: translations['Ceiling(ft.)'], type: 'number', domID: 'Ceiling', valFieldID: 'PlatformCeiling'},
+      {name: translations['Max Takeoff Weight(lbs.)'], type: 'number', domID: 'MaxTakeoffWeight', valFieldID: 'PlatformMaxTakeOff'}
     //  {name: translations['Min Runway(ft.)'], type: 'input', domID: 'MinRunway', valFieldID: 'PlatformMinRunway'},
     ];
 
     const payloadsFields = [
-      {name: translations['Payload Capacity(lbs.)'], type: 'input', domID: 'PlatformPayloadCapacity', valFieldID: 'PlatformPayloadCapacity'},
-      {name: translations['Payload Count'], type: 'input', domID: 'PlatformPayloadCount', valFieldID: 'PlatformPayloadCount'},
+      {name: translations['Payload Capacity(lbs.)'], type: 'number', domID: 'PlatformPayloadCapacity', valFieldID: 'PlatformPayloadCapacity'},
+      {name: translations['Payload Count'], type: 'number', domID: 'PlatformPayloadCount', valFieldID: 'PlatformPayloadCount'},
       {name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload1', valFieldID:'PlatformPayload1'},
       {name: translations['Payload #2'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload2', valFieldID:'PlatformPayload2'},
       {name: translations['Payload #3'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload3', valFieldID:'PlatformPayload3'},
       {name: translations['Payload #4'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload4', valFieldID:'PlatformPayload4'},
       {name: translations['Payload #5'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload5', valFieldID:'PlatformPayload5'},
       {name: translations['Payload #6'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID:'dispPlatformPayload6', valFieldID:'PlatformPayload6'},
-      {name: translations['Armament Capacity(lbs.)'], type: 'input', domID: 'PlatformArmamentCapacity', valFieldID:'PlatformArmamentCapacity'},
-      {name: translations['Armament Count'], type: 'input', domID: 'PlatformArmamentCount', valFieldID: 'PlatformArmamentCount'},
+      {name: translations['Armament Capacity(lbs.)'], type: 'number', domID: 'PlatformArmamentCapacity', valFieldID:'PlatformArmamentCapacity'},
+      {name: translations['Armament Count'], type: 'number', domID: 'PlatformArmamentCount', valFieldID: 'PlatformArmamentCount'},
       {name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID:'dispPlatformArmament1', valFieldID:'PlatformArmament1'},
       {name: translations['Armament #2'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID:'dispPlatformArmament2', valFieldID:'PlatformArmament2'},
       {name: translations['Armament #3'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID:'dispPlatformArmament3', valFieldID:'PlatformArmament3'},
