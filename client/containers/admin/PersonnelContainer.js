@@ -7,7 +7,7 @@ import { fetchPersonnels } from 'actions/personnel';
 const mapStateToProps = state => {
   return {
     translations: state.translationsReducer,
-    all_personnels: state.personnels.all_personnels,
+    personnels: state.personnels.allPersonnels,
   };
 };
 

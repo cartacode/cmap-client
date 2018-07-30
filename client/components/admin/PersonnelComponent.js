@@ -92,9 +92,9 @@ class PersonnelComponent extends React.Component {
   render() {
 
     const {translations: {translations}} = this.props;
-    const {all_personnels} = this.props;
+    const {allPersonnels} = this.props;
 
-    console.log(all_personnels);
+    console.log(allPersonnels);
 
     const columns = [
 
@@ -165,7 +165,7 @@ class PersonnelComponent extends React.Component {
 
           <div className="col-md-12">
             <ReactTable
-              data={all_personnels}
+              data={allPersonnels}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
