@@ -1,7 +1,11 @@
-/* eslint-disable import/no-named-as-default */
+import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { hot } from 'react-hot-loader';
 import { Switch, Route } from 'react-router-dom';
+
+
 import HeaderContainer from '../containers/HeaderContainer';
 import AdminComponent from '../components/AdminComponent';
 import DashboardContainer from '../containers/DashboardContainer';
@@ -17,34 +21,45 @@ import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 import NavigationComponent from './NavigationComponent';
 
+import { history } from 'store/configureStore';
 
 class App extends React.Component {
 
   render() {
+    const { directionality } = this.props;
     return (
-      <div>
-        <Switch>
-          <Route exact path="/logout" component={LoginContainer} />
-          <Route exact path="/" component={NavigationComponent} />
-          <Route exact path="/dashboard" component={NavigationComponent} />
-          <Route exact path="/intel-library" component={NavigationComponent} />
-          <Route path="/intel-request" component={NavigationComponent} />
-          <Route exact path="/liveview" component={NavigationComponent} />
-          <Route exact path="/messages" component={NavigationComponent} />
-          <Route path="/mission-mgt" component={NavigationComponent} />
-          <Route path="/orders-assets" component={NavigationComponent} />
-          <Route exact path="/schedules" component={NavigationComponent} />
-          <Route exact path="/status" component={NavigationComponent} />
-          <Route path="/admin" component={NavigationComponent} />
-          <Route path="/search" component={NavigationComponent} />
-        </Switch>
-      </div>
+      <ConnectedRouter history={history}>
+        <div dir={directionality}>
+          <Switch>
+            <Route exact path="/logout" component={LoginContainer} />
+            <Route exact path="/" component={NavigationComponent} />
+            <Route exact path="/dashboard" component={NavigationComponent} />
+            <Route exact path="/intel-library" component={NavigationComponent} />
+            <Route path="/intel-request" component={NavigationComponent} />
+            <Route exact path="/liveview" component={NavigationComponent} />
+            <Route exact path="/messages" component={NavigationComponent} />
+            <Route path="/mission-mgt" component={NavigationComponent} />
+            <Route path="/orders-assets" component={NavigationComponent} />
+            <Route exact path="/schedules" component={NavigationComponent} />
+            <Route exact path="/status" component={NavigationComponent} />
+            <Route path="/admin" component={NavigationComponent} />
+            <Route path="/search" component={NavigationComponent} />
+          </Switch>
+        </div>
+      </ConnectedRouter>
     );
   }
 }
 
 App.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  directionality: PropTypes.string.isRequired,
 };
 
-export default App;
+function mapStateToProps({ localization: { directionality } }) {
+  return {
+    directionality,
+  };
+}
+
+export default hot(module)(connect(mapStateToProps)(App));

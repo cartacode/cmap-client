@@ -50,7 +50,7 @@ class StatusComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const platform = [
       { platform:'grey eagle', tail:'fg2592', status:'flight ready', remark:'none', etic:'90 days', update:'update' },
@@ -99,7 +99,7 @@ class StatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -151,7 +151,7 @@ class StatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -204,7 +204,7 @@ class StatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -257,7 +257,7 @@ class StatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -309,7 +309,7 @@ class StatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -324,7 +324,7 @@ class StatusComponent extends React.Component {
             <FullHeaderLine headerText={translations["unit status report"]} />
             <div className="status-content">
               <div className="col-md-4 image-block">
-                <img src="/images/status/status_logo.png" className="photo" alt="" />
+                <img src="/assets/img/status/status_logo.png" className="photo" alt="" />
               </div>
               <div className="col-md-8 status-block">
                 <CircleStatus statusHeader={translations["platform"]} statusPercent="88%" statusNumber="16/18" />
@@ -401,18 +401,18 @@ class StatusComponent extends React.Component {
         </div>
           <div className="row action-buttons" >
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                 CLEAR
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" onClick={this.onSubmit.bind(this)}>
                 SUBMIT
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
           <Modal show={this.state.statusModalOpen}

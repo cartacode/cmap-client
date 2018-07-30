@@ -30,7 +30,7 @@ class DashboardComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const actionRequired = [
       {name: 'Intel request #8232-2 awating review', type: 'checkbox'},
@@ -157,26 +157,26 @@ class DashboardComponent extends React.Component {
         <div className="row dashboard">
           <div className="col-md-12">
             <div className="header-line">
-              <img src="/images/admin/personnel_1.png" alt=""/>
+              <img src="/assets/img/admin/personnel_1.png" alt=""/>
               <div className="header-text">
                 {translations["a-isr operation status"]}
               </div>
-              <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
           </div>
           <div className="col-md-12 operating-status">
             <NumBlock headerText="Requests" blockValue="23" />
-            <img src= "/images/dashboard/status_divider.png" />
+            <img src= "/assets/img/dashboard/status_divider.png" />
             <NumBlock headerText={translations["pending"]} blockValue="12" />
-            <img className="mirrored-Y-image" src="/images/dashboard/status_divider.png" alt=""/>
+            <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
             <NumBlock headerText={translations["denied"]} blockValue="3" />
-            <img src= "/images/dashboard/status_divider.png" />
+            <img src= "/assets/img/dashboard/status_divider.png" />
             <NumBlock headerText={translations["assigned"]} blockValue="16" />
-            <img className="mirrored-Y-image" src="/images/dashboard/status_divider.png" alt=""/>
+            <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
             <NumBlock headerText={translations["active"]} blockValue="12" />
-            <img src= "/images/dashboard/status_divider.png" />
+            <img src= "/assets/img/dashboard/status_divider.png" />
             <NumBlock headerText={translations["canceled"]} blockValue="1" />
-            <img className="mirrored-Y-image" src="/images/dashboard/status_divider.png" alt=""/>
+            <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
             <NumBlock headerText={translations["completed"]} blockValue="15" />
           </div>
           <div className="col-md-12">
@@ -231,7 +231,7 @@ class DashboardComponent extends React.Component {
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>  
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -244,7 +244,7 @@ class DashboardComponent extends React.Component {
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>  
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -257,7 +257,7 @@ class DashboardComponent extends React.Component {
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>  
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -270,7 +270,7 @@ class DashboardComponent extends React.Component {
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
-                  <img src="/images/intel_request/operating_picture/force_position.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>  
                 </div>
               </div>    
             </div>        
@@ -306,9 +306,9 @@ class DashboardComponent extends React.Component {
         </div>
         <div className="row dashboard">
           <div className="col-md-12 alert">
-            <img src="/images/admin/exclamation_mark.png" alt=""/>
+            <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
             <div>flash alert: [08:12:00] vbied in massoud square: 54 civ, 3 nato casulties ... developing ... [08:01:01] vbied in massoud square: 54 civ, 3 narto casul</div>
-            <img src="/images/admin/exclamation_mark.png" alt="" />
+            <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
         </div>
 

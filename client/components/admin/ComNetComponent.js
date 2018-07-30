@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import UploadBlock from "../reusable/UploadBlock";
 import ContentBlock from "../reusable/ContentBlock";
 import ButtonsList from "../reusable/ButtonsList";
@@ -16,13 +15,13 @@ class ComNetComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMap: '/images/admin/comsnet4.png',
+      currentMap: '/assets/img/admin/comsnet4.png',
     };
   }
 
-  
+
   renderMapButtons = () => {
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     let buttons = [
       {name: 'satcom', subButton: false, url: `${match.url}/satcom`},
@@ -34,7 +33,7 @@ class ComNetComponent extends React.Component {
 
     return buttons.map((item, i) => {
       if (!item.subButton) {
-        let matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        let matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
 
         return (
           <div className={`${item.subButton ? 'sub-button' : 'main-button'} ${matchForLink ?  'highlighted-main-button' : ''}`} key={i}>
@@ -45,7 +44,7 @@ class ComNetComponent extends React.Component {
         )
       } else {
         return (
-          <div className={`${item.subButton ? 'sub-button' : ''}  ${this.props.routing.location.pathname.indexOf(buttons[0].url) !== -1 ?  'highlighted-sub-button' : ''}`} key={i}>
+          <div className={`${item.subButton ? 'sub-button' : ''}  ${this.props.router.location.pathname.indexOf(buttons[0].url) !== -1 ?  'highlighted-sub-button' : ''}`} key={i}>
             <button>{item.name}</button>
           </div>
         )
@@ -56,17 +55,17 @@ class ComNetComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     return (
       <div>
         <div className="row coms-net" >
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               coms/net
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="coms-net-content">
             <div className="col-md-12">

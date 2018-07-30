@@ -12,11 +12,11 @@ class CustomButton extends React.Component {
 
     return (
       <div className="action-buttons" >
-        <img className="line" src="/images/admin/edit_up.png" alt=""/>
+        <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
         <button className="highlighted-button">
           {this.props.buttonName}
         </button>
-        <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+        <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
       </div>
     );
   }

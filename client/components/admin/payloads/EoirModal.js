@@ -10,8 +10,8 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addPayload, fetchPayloadData, uploadFile } from '../../../actions/actions';
-
+import { uploadFile } from 'actions/file';
+import { addPayload, fetchPayloads } from 'actions/payload';
 
 class EoirModal extends React.Component {
 
@@ -74,7 +74,7 @@ class EoirModal extends React.Component {
 
   componentWillMount(){
     console.log("---hereis eoirmodal---------");
-    //this.props.fetchPayloadData();
+    //this.props.fetchPayloads();
   }
 
   handlePayloadGeneralData = (generalData) => {
@@ -152,7 +152,7 @@ class EoirModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.payload);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -166,7 +166,7 @@ class EoirModal extends React.Component {
                 imagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
 
      else if(event.target.id == "PaylodWireframe") {
@@ -178,9 +178,9 @@ class EoirModal extends React.Component {
                 imagePreviewUrl2: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -205,7 +205,7 @@ class EoirModal extends React.Component {
     console.log('---here--');
     console.log(this.state.payload);
     this.props.addPayload(this.state.payload);
-  //  this.props.fetchPayloadData();
+  //  this.props.fetchPayloads();
   }
 
 
@@ -239,9 +239,9 @@ class EoirModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $imagePreview = (<img src="/images/admin/aircraft.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
 
     let {imagePreviewUrl2} = this.state;
@@ -249,17 +249,17 @@ class EoirModal extends React.Component {
 
     if (imagePreviewUrl2) {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $imagePreview2 = (<img src="/images/admin/r2d2-1.png" className="photo" alt=""/>);
+      $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt=""/>);
     }
 
     const {payload} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const generalFields = [
       {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},    
+      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName'},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole'},
@@ -303,20 +303,20 @@ class EoirModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
-                <img src="/images/admin/personnel_1.png" alt=""/>
+                <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
                   {translations["eo/ir payloads administration"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
               <div className="personnel-content">
                 <div className="col-md-4 image-block">
@@ -327,11 +327,11 @@ class EoirModal extends React.Component {
                 </div>
                 <div className="col-md-4 upload-block">
                   <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                       upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
                   <div className="upload-content">
                     <div className="upload-line">
@@ -376,43 +376,43 @@ class EoirModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-payload-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
                 data={this.handlePayloadGeneralData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields}
                 data={this.handlePayloadTechnicalData} initstate ={this.state.payload}/>
-                <ContentBlock bigBackground={true} headerLine="/images/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields} 
+                <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields}
                 data={this.handlePayloadFeatureData} initstate ={this.state.payload}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handlePayloadCrewData} initstate ={this.state.payload}/>
               </div>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -426,28 +426,14 @@ EoirModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addPayload: (payload) => {
-      dispatch(addPayload(payload));
-    },
-
-    fetchPayload: () => {
-      dispatch(fetchPayloadData());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addPayload,
+  fetchPayloads,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EoirModal);

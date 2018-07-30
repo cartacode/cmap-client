@@ -1,30 +1,18 @@
 import {connect} from 'react-redux';
 
 import PlatformsComponent from '../../components/admin/PlatformsComponent';
-import {getTranslations, addPlatform, fetchPlatforms} from '../../actions/actions';
+import { addPlatform, fetchPlatforms } from 'actions/platform';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    all_platforms: state.platforms.all_platforms
-
+    translations: state.localization.staticText,
+    allPlatforms: state.platforms.allPlatforms,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addPlatform: (platform) => {
-    	dispatch(addPlatform(platform));
-    },
-
-    fetchPlatforms: () => {
-      dispatch(fetchPlatforms());
-    },
-  };
+const mapDispatchToProps = {
+  addPlatform,
+  fetchPlatforms,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsComponent);

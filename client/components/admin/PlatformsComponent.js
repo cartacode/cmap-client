@@ -17,12 +17,8 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-
-
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
-
-import { makeData } from '../../actions/actions';
 
 
 class PlatformComponent extends React.Component {
@@ -31,12 +27,12 @@ class PlatformComponent extends React.Component {
     super(props);
     this.state={
       filterValue: '',
-      filter: [], 
+      filter: [],
       addPlatformModalOpen:false,
       tableRowDetailModalOpen: false,
     }
   }
- 
+
   onFind(){
     console.log("find");
   }
@@ -47,7 +43,7 @@ class PlatformComponent extends React.Component {
     });
   }
 
-  tableRowDetailModal = () => {  
+  tableRowDetailModal = () => {
     this.setState({
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
     })
@@ -64,7 +60,7 @@ class PlatformComponent extends React.Component {
   //   optionItem.map((item, i) => {
   //       items.push({"label": item.description, "value": i});
   //   });
-  //   return items.map(function(data, key){  
+  //   return items.map(function(data, key){
   //       if(data.label == "-Select Item-"){
   //         return ( <option key={key} value=""> {data.label} </option>) ;
   //       } else {
@@ -74,24 +70,24 @@ class PlatformComponent extends React.Component {
   // }
 
   handleChange(value) {
-    console.log(value); 
+    console.log(value);
   }
 
   render() {
 
-    const {translations: {translations}} = this.props;
-    const {all_platforms} = this.props;
+    const {translations} = this.props;
+    const {allPlatforms} = this.props;
 
-    console.log(all_platforms);
-    
+    console.log(allPlatforms);
+
     const columns = [
-     
+
       {
         Header: translations["Tail#"],
-        accessor: 'tail', 
+        accessor: 'tail',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
-                    
+
         sortMethod: (a, b) => {
                   if (a.length === b.length) {
                       return a > b ? 1 : -1;
@@ -110,7 +106,7 @@ class PlatformComponent extends React.Component {
         accessor: 'category',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-      }, 
+      },
       {
         Header: translations['Service'],
         accessor: 'branchOfService'
@@ -123,7 +119,7 @@ class PlatformComponent extends React.Component {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
       }
     ];
 
@@ -141,11 +137,11 @@ class PlatformComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["platform"]} 
+              {translations["platform"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
@@ -157,7 +153,7 @@ class PlatformComponent extends React.Component {
 
           <div className="col-md-12">
             <ReactTable
-              data={all_platforms}
+              data={allPlatforms}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
@@ -167,8 +163,7 @@ class PlatformComponent extends React.Component {
             />
           </div>
         </div>
-        
-        
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

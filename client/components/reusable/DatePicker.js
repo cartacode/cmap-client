@@ -14,7 +14,7 @@ class FormBlock extends React.Component {
     return (
       <div>
         <input type="text" defaultValue={this.props.headerText} />
-        <img className="calendar" src="/images/admin/calendar.png" alt=""/>
+        <img className="calendar" src="/assets/img/admin/calendar.png" alt=""/>
       </div>
       
     );

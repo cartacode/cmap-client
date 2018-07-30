@@ -6,7 +6,8 @@ import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 import ContentBlock from "../../reusable/ContentBlock";
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class PoiModal extends React.Component {
   constructor(props){
@@ -43,7 +44,7 @@ class PoiModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -59,7 +60,7 @@ class PoiModal extends React.Component {
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
         LocationCategory: generalData.LocationCategory
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -84,7 +85,7 @@ class PoiModal extends React.Component {
   handleUploadFile(event){
       event.preventDefault();
       const {location} = this.state;
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -115,7 +116,7 @@ class PoiModal extends React.Component {
             [id]: value
         }
     }, () =>{
-       
+
        console.log(this.state.location);
     });
 
@@ -151,7 +152,7 @@ class PoiModal extends React.Component {
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
 
     const generalFields = [
@@ -172,11 +173,11 @@ class PoiModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="modal-header-text">{translations["Point of Interest (POI) Administration"]}</div>
           <div className="col-md-6">
@@ -215,16 +216,16 @@ class PoiModal extends React.Component {
           </div>
           <div className="col-md-12" style={{textAlign:'center', paddingTop:20}}>
             <div className="action-buttons" >
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className="highlighted-button">
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -237,28 +238,14 @@ PoiModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addLocation: (location) => {
-      dispatch(addLocation(location));
-    },
-
-    fetchLocations: () => {
-      dispatch(fetchLocationData());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addLocation,
+  fetchLocations,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PoiModal);

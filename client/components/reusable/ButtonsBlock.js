@@ -13,11 +13,11 @@ class ButtonsBlock extends React.Component {
 		return this.props.buttons.map((item, i) => {
 	      	return (
 		        <div className="menu-button" key={i}>
-		          	<img className="line" src="/images/admin/edit_up.png" alt=""/>
+		          	<img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
 		          	<button className="highlighted-button">
 		            	{item}
 		          	</button>
-		          	<img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+		          	<img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
 		        </div>
 	      	)
 	    })

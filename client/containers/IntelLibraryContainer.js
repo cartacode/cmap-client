@@ -1,20 +1,11 @@
 import {connect} from 'react-redux';
 
 import IntelLibraryComponent from '../components/IntelLibraryComponent';
-import {getTranslations} from '../actions/actions';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IntelLibraryComponent);
+export default connect(mapStateToProps)(IntelLibraryComponent);

@@ -156,7 +156,7 @@ class FilterDatePicker extends React.Component {
                       value={value && value.format(getFormat(state.showTime)) || ''}
                   />
                       <span class="input-group-addon">
-                  <img className="calendar" src="/images/admin/calendar.png" alt=""/>
+                  <img className="calendar" src="/assets/img/admin/calendar.png" alt=""/>
                       </span>
                   </div>
                   </span>

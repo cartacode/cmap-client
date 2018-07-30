@@ -169,7 +169,7 @@ class AdminStatusComponent extends React.Component {
       <option key={key} value={data[key]}>{key}</option> )
   })}</select>);
   
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     let {update} = this.state;
 
@@ -225,7 +225,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -281,7 +281,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -336,7 +336,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  id="Equipment"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Equipment"/></span>// Custom cell components!
       }
     ];
 
@@ -395,7 +395,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  id="PED"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="PED"/></span>// Custom cell components!
       }
     ];
 
@@ -513,7 +513,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" id="Personnel"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" id="Personnel"/></span>// Custom cell components!
       }
     ];
 
@@ -526,11 +526,11 @@ class AdminStatusComponent extends React.Component {
       <div>
         <div className="row orders-assets" style={{marginBottom:0}}>
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["status entry"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
         </div>
         <div className="row status">
@@ -711,18 +711,18 @@ class AdminStatusComponent extends React.Component {
         </div>
         <div className="row action-buttons" >
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onClear.bind(this)}>
               {translations["clear"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onSubmit.bind(this)}>
               {translations["submit"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
         </div>
         <Modal show={this.state.statusModalOpen}
@@ -763,11 +763,11 @@ class AdminStatusComponent extends React.Component {
             </div>
             <div className="col-md-12" style={{textAlign:'center'}}>
               <div className="action-buttons" >
-                <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                 <button className="highlighted-button" onClick={this.updateRows.bind(this)}>
                   Save
                 </button>
-                <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
               </div>
             </div>            
         </Modal>

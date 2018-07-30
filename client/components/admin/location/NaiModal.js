@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
-
+import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class NaiModal extends React.Component {
 
@@ -44,7 +44,7 @@ class NaiModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -60,7 +60,7 @@ class NaiModal extends React.Component {
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
         LocationCategory: generalData.LocationCategory
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -85,7 +85,7 @@ class NaiModal extends React.Component {
   handleUploadFile(event){
       event.preventDefault();
       const {location} = this.state;
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -116,7 +116,7 @@ class NaiModal extends React.Component {
             [id]: value
         }
     }, () =>{
-       
+
        console.log(this.state.location);
     });
 
@@ -151,7 +151,7 @@ class NaiModal extends React.Component {
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const generalFields = [
       {name: translations['NAI#'], type: 'input', domID: 'LocationNAI', valFieldID: 'LocationNai'},
@@ -173,12 +173,12 @@ class NaiModal extends React.Component {
 
     return (
 
-      
+
       <form action="" onSubmit={this.handleSubmit}>
-       
+
        <div className="row personnel" >
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="modal-header-text">{translations["Named Area of Interest (NAI) Administration"]}</div>
           <div className="col-md-6">
@@ -221,17 +221,17 @@ class NaiModal extends React.Component {
           <div className="row personnel">
            <div className="col-md-12" style={{textAlign:'center', paddingTop:20}}>
             <div className="action-buttons" >
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className="highlighted-button">
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -244,28 +244,14 @@ NaiModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addLocation: (location) => {
-      dispatch(addLocation(location));
-    },
-
-    fetchLocations: () => {
-      dispatch(fetchLocationData());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addLocation,
+  fetchLocations,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NaiModal);

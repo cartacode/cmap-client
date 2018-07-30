@@ -23,7 +23,7 @@ class LiveViewComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input'},
@@ -81,7 +81,7 @@ class LiveViewComponent extends React.Component {
       <div>
         <div className="row mission-mgt">
           <div className="col-md-12 header-line">
-            <img className="full-line" src="/images/general/full_line.png" />
+            <img className="full-line" src="/assets/img/general/full_line.png" />
           </div>
           <div className="col-md-12">
             <FormBlock fields={missionBlock1} />
@@ -117,18 +117,18 @@ class LiveViewComponent extends React.Component {
         </div>
         <div className="row action-buttons" >
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onClear.bind(this)}>
               {translations["clear"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onRoute.bind(this)}>
               {translations["route"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
         </div>
       </div>

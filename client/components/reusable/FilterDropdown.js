@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { base_url } from '../../config';
+import { baseUrl } from 'dictionary/network';
 
 class Table extends React.Component {
 
@@ -26,7 +26,7 @@ class Table extends React.Component {
 
     componentWillMount() {
         let items = [{"label": "-Select Item-", "value": 0}];
-		
+
 		if (this.props.dropdownDataUrl === 'MunitionRoles') {
 			this.props.munitions.map(item => {
 				items.push({"label": item['name'], "value": item['name']});
@@ -35,8 +35,7 @@ class Table extends React.Component {
 				dropdownItems: items
 			});
 		} else {
-			let apiUrl = base_url + this.props.dropdownDataUrl
-			axios.get(apiUrl)
+			axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
 				.then(response => {
 					response.data.map(item => {
 						items.push({"label": item[this.labelField], "value": item[this.valueField]});
@@ -57,7 +56,7 @@ class Table extends React.Component {
 
     //render dropdown list of lang switcher
     renderItems() {
-        return this.state.dropdownItems.map(function(data, key){  
+        return this.state.dropdownItems.map(function(data, key){
             if(data.label == "-Select Item-"){
                 return ( <option key={key} value="">{data.label}</option>) ;
             } else {

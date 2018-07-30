@@ -1,26 +1,17 @@
 import {connect} from 'react-redux';
 
 import IntelRequestIntelRequestComponent from '../../components/intel_request/IntelRequestIntelRequestComponent';
-import {getTranslations, addIntelEEI, addIntelReq} from '../../actions/actions';
+import { addIntelEei, addIntelRequest } from 'actions/intel';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-    addIntelEEI: (intelEEI) => {
-    	dispatch(addIntelEEI(intelEEI));
-    },
-    addIntelReq: (intelReq) => {
-    	dispatch(addIntelReq(intelReq));
-    },
-  };
+const mapDispatchToProps = {
+  addIntelEei,
+  addIntelRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IntelRequestIntelRequestComponent);

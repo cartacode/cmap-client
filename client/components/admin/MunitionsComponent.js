@@ -29,7 +29,7 @@ class MunitionsComponent extends React.Component {
     super(props);
     this.state={
       filterValue: '',
-      filter: [], 
+      filter: [],
       missileModalOpen:false,
       rocketModalOpen: false,
       gunModalOpen: false,
@@ -70,8 +70,8 @@ class MunitionsComponent extends React.Component {
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
     })
   }
-  
-  
+
+
 
   componentWillMount() {
     this.props.fetchMunitions();
@@ -80,7 +80,7 @@ class MunitionsComponent extends React.Component {
   }
 
   handleChange(value) {
-    console.log(value); 
+    console.log(value);
   }
 
   handleForm = () => {
@@ -93,25 +93,25 @@ class MunitionsComponent extends React.Component {
      // console.log("New state in ASYNC callback:22222", this.state.intelRequest);
     });
   }
-  
+
   render() {
 
-    const {translations: {translations}} = this.props;
-    
+    const {translations} = this.props;
+
     const munitions = [
       {name:translations['Missile'], onClick:this.missileModal},
       {name:translations['Rocket'], onClick:this.rocketModal},
       {name:translations['Guns'], onClick:this.gunModal}
     ];
 
-    const { all_munitions } = this.props;
+    const { allMunitions } = this.props;
 
     const columns = [
       /*{
         Header: translations["type"],
         accessor: 'role',
         Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>, 
+                    <FilterDropdown dropdownDataUrl="MunitionRoles" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -123,7 +123,7 @@ class MunitionsComponent extends React.Component {
         Header: translations["type"],
         accessor: 'role',
         Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>, 
+                    <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -146,7 +146,7 @@ class MunitionsComponent extends React.Component {
 					style={{ width: "100%" }}
 					value={filter ? filter.value : ""}
 				  >
-					{all_munitions.map(function(data, key){  
+					{allMunitions.map(function(data, key){
 						return (<option key={key} value={data.munition}>{data.munition}</option> );
 					})}
 				  </select>
@@ -156,7 +156,7 @@ class MunitionsComponent extends React.Component {
         accessor: 'serial',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-      }, 
+      },
       {
         Header: translations['cocom'],
         accessor: 'COCOM',
@@ -182,7 +182,7 @@ class MunitionsComponent extends React.Component {
 					style={{ width: "100%" }}
 					value={filter ? filter.value : ""}
 				  >
-					{all_munitions.map(function(data, key){  
+					{allMunitions.map(function(data, key){
 						return (<option key={key} value={data.location}>{data.location}</option> );
 					})}
 				  </select>
@@ -192,12 +192,12 @@ class MunitionsComponent extends React.Component {
         accessor: 'lastUpdate',
         Filter: ({ filter, onChange }) =>
                   <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
-      }, 
+      },
       {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
       }
     ];
 
@@ -213,19 +213,19 @@ class MunitionsComponent extends React.Component {
       {name: translations['Location'], type: 'dropdown', ddID:'Locations'},
       {name: translations['Record Date'], type: 'date'},
     ];
-	
-	console.log('all_munitions:');
-		console.log(all_munitions);
+
+	console.log('allMunitions:');
+		console.log(allMunitions);
 
     return (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["Munitions"]} 
+              {translations["Munitions"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
@@ -238,7 +238,7 @@ class MunitionsComponent extends React.Component {
         <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
           <div className="col-md-12">
             <ReactTable
-              data={all_munitions}
+              data={allMunitions}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"

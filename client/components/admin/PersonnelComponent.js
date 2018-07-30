@@ -22,8 +22,6 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 
 class PersonnelComponent extends React.Component {
 
@@ -50,7 +48,7 @@ class PersonnelComponent extends React.Component {
   }
 
   addPersonnelForm = () => {
-    
+
     this.setState({
       addshow: !this.state.addshow
     });
@@ -58,7 +56,7 @@ class PersonnelComponent extends React.Component {
 
   openForm = () => {
     console.log("Okay");
-   
+
   }
 
   tableRowDetailModal = () => {
@@ -93,10 +91,10 @@ class PersonnelComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
-    const {all_personnels} = this.props;
+    const {translations} = this.props;
+    const {allPersonnels} = this.props;
 
-    console.log(all_personnels);
+    console.log(allPersonnels);
 
     const columns = [
 
@@ -131,7 +129,7 @@ class PersonnelComponent extends React.Component {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
       }
     ];
 
@@ -145,29 +143,29 @@ class PersonnelComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 
-  
+
 
     return (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["personnel"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
-          <div className="col-md-12 filter-line">           
+          <div className="col-md-12 filter-line">
            <div className="add-button">
              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-          </div>                  
+          </div>
           </div>
 
           <AddPersonnel show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
-              data={all_personnels}
+              data={allPersonnels}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
@@ -178,7 +176,7 @@ class PersonnelComponent extends React.Component {
           </div>
         </div>
 
-        
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

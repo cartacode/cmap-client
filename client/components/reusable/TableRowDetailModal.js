@@ -15,7 +15,7 @@ class TableRowDetailModal extends React.Component {
       <div className="rowdata-modal modal-overlay" >
         <div className="modal-content">
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="col-md-12">
             <ModalFormBlock fields={this.props.rowdata} data={this.props.rowvalues} initstate ={this.props.init}/>

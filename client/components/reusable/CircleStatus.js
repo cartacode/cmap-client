@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {getTranslations} from '../../actions/actions';
 import {connect} from 'react-redux';
 
 class CircleStatus extends React.Component {
@@ -11,30 +10,30 @@ class CircleStatus extends React.Component {
     super(props);
   }
 
-  
+
   render() {
     let background;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
       switch(this.props.statusHeader) {
         case translations['platform']:
-          background= 'url(/images/status/platform_status.png) no-repeat center';
+          background= 'url(/assets/img/status/platform_status.png) no-repeat center';
           break;
 
         case translations['payload']:
-          background= 'url(/images/status/payload_status.png) no-repeat center';
+          background= 'url(/assets/img/status/payload_status.png) no-repeat center';
           break;
 
         case translations['flight crew']:
-          background= 'url(/images/status/fcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/fcrew_status.png) no-repeat center';
           break;
 
         case translations['line crew']:
-          background= 'url(/images/status/lcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/lcrew_status.png) no-repeat center';
           break;
 
         case translations['ped crew']:
-          background= 'url(/images/status/pcrew_status.png) no-repeat center';
+          background= 'url(/assets/img/status/pcrew_status.png) no-repeat center';
           break;
       }
 
@@ -55,17 +54,9 @@ CircleStatus.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CircleStatus);
+export default connect(mapStateToProps)(CircleStatus);
 

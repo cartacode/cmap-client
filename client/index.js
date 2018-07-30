@@ -1,11 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Root from './components/Root';
-import configureStore, { history } from './store/configureStore';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-const store = configureStore();
+import App from 'components/App';
+import configureStore from 'store/configureStore';
 
-ReactDOM.render(
-    <Root store={store} history={history} />,
-    document.getElementById('root')
+import 'styles/main.scss';
+
+render(
+  <Provider store={configureStore()}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
 );

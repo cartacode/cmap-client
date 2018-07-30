@@ -24,14 +24,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 class PayloadsComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state={
 			filterValue: '',
-			filter: [], 
+			filter: [],
 			eoirModalOpen:false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
@@ -76,17 +74,17 @@ class PayloadsComponent extends React.Component {
 		});
 	}
 
-	tableRowDetailModal = () => {  
+	tableRowDetailModal = () => {
 		this.setState({
 			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
 		})
 	}
 
 	componentWillMount() {
-		this.props.fetchPayloadData();
-		this.props.getPayloads();
-	//	this.props.getCocoms();
-	//	this.props.getLocations();
+		this.props.fetchPayloads();
+		this.props.fetchPayloadList();
+	//	this.props.fetchCocoms();
+	//	this.props.fetchLocationList();
 	}
 
 	renderItems(optionItem) {
@@ -94,7 +92,7 @@ class PayloadsComponent extends React.Component {
 		optionItem.map((item, i) => {
 			items.push({"label": item.description, "value": i});
 		});
-		return items.map(function(data, key){  
+		return items.map(function(data, key){
 			if(data.label == "-Select Item-"){
 			  return ( <option key={key} value=""> {data.label} </option>) ;
 			} else {
@@ -104,12 +102,12 @@ class PayloadsComponent extends React.Component {
 	}
 
 	handleChange(value) {
-		console.log(value); 
+		console.log(value);
 	}
 
 	render() {
-		const {translations: {translations}} = this.props;
-		const {payload_data, payload_list, payload_types, cocom_list, location_list} = this.props;
+		const {translations} = this.props;
+		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
 
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.eoirModal},
@@ -122,11 +120,11 @@ class PayloadsComponent extends React.Component {
 		const columns = [
 			{
 				Header: translations["type"],
-				accessor: 'type', 
+				accessor: 'type',
 				filterMethod: (filter, row) =>
 							row[filter.id].startsWith(filter.value),
 				Filter: ({ filter, onChange}) =>
-						<select 
+						<select
 							onChange={event => onChange(event.target.value)}
 							style={{ width: "100%" }}
 							value={filter ? filter.value : ""} >
@@ -154,7 +152,7 @@ class PayloadsComponent extends React.Component {
 							value={filter ? filter.value : ""}
 						  >
 							{this.renderItems([])}
-							{payload_data.map(function(data, key){  
+							{allPayloads.map(function(data, key){
 								return (<option key={key} value={data.payload}>{data.payload}</option> );
 							})}
 						  </select>
@@ -162,7 +160,7 @@ class PayloadsComponent extends React.Component {
 			{
 				Header: translations['serial#'],
 				accessor: 'serial',
-			}, 
+			},
 			{
 				Header: translations['cocom'],
 				accessor: 'COCOM',
@@ -172,7 +170,7 @@ class PayloadsComponent extends React.Component {
 							  style={{ width: "100%" }}
 							  value={filter ? filter.value : ""}
 						  >
-							  {this.renderItems(cocom_list)}
+							  {this.renderItems(cocomList)}
 						  </select>
 			},
 			{
@@ -185,7 +183,7 @@ class PayloadsComponent extends React.Component {
 							  value={filter ? filter.value : ""}
 						  >
 							{this.renderItems([])}
-							{payload_data.map(function(data, key){  
+							{allPayloads.map(function(data, key){
 								return (<option key={key} value={data.location}>{data.location}</option> );
 							})}
 						  </select>
@@ -195,12 +193,12 @@ class PayloadsComponent extends React.Component {
 				accessor: 'etic',
 				Filter: ({ filter, onChange }) =>
 						  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
-			}, 
+			},
 			{
 				Header: translations['view'],
 				accessor: 'view',
 				filterable: false,
-				Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+				Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
 			}
 		];
 
@@ -218,11 +216,11 @@ class PayloadsComponent extends React.Component {
 			<div>
 				<div className="row orders-assets">
 					<div className="header-line">
-						<img src="/images/admin/personnel_1.png" alt=""/>
+						<img src="/assets/img/admin/personnel_1.png" alt=""/>
 						<div className="header-text">
-							{translations["payloads"]} 
+							{translations["payloads"]}
 						</div>
-						<img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
 				<div className="col-md-12 filter-line">
 					<div className="add-button">
@@ -239,7 +237,7 @@ class PayloadsComponent extends React.Component {
 
 				<div className="col-md-12">
 					<ReactTable
-						data={payload_data}
+						data={allPayloads}
 						columns={columns}
 						defaultPageSize={5}
 						className="-striped -highlight"
@@ -250,7 +248,7 @@ class PayloadsComponent extends React.Component {
 				</div>
 				</div>
 
-				
+
 			</div>
 		);
 	}

@@ -10,8 +10,8 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations, addMunition, fetchMunitions, uploadFile } from '../../../actions/actions';
-
+import { uploadFile } from 'actions/file';
+import { addMunition, fetchMunitions } from 'actions/munition';
 
 class MissileModal extends React.Component {
 
@@ -121,7 +121,7 @@ class MissileModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.munition);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -135,9 +135,9 @@ class MissileModal extends React.Component {
                 imagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -191,19 +191,19 @@ class MissileModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $imagePreview = (<img src="/images/admin/rockets.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt=""/>);
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
-    
-    
+    const {translations} = this.props;
+
+
 
     const generalFields = [
       {name: translations['Serial#'], type: 'input', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},        
+      {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName'},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole'},
@@ -221,7 +221,7 @@ class MissileModal extends React.Component {
       {name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'MunitionMOS3'},
     ];
 
-    
+
     const technicalFields = [
       {name: translations['Length (in.)'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength'},
       {name: translations['Width/Diameter (in.)'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter'},
@@ -238,20 +238,20 @@ class MissileModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
-                <img src="/images/admin/personnel_1.png" alt=""/>
+                <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
                   {translations["missile administration"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
               <div className="personnel-content">
                 <div className="col-md-8 image-block">
@@ -259,11 +259,11 @@ class MissileModal extends React.Component {
                 </div>
                 <div className="col-md-4 upload-block">
                   <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                       upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
                   <div className="upload-content">
                     <div className="upload-line">
@@ -308,41 +308,41 @@ class MissileModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-munitions-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
                 data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handleMunitionCrewData} initstate ={this.state.munition}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
                 data={this.handleMunitionTechnicalData} initstate ={this.state.munition}/>
               </div>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -355,28 +355,14 @@ MissileModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addMunition: (munition) => {
-      dispatch(addMunition(munition));
-    },
-
-    fetchMunitions: () => {
-      dispatch(fetchMunitions());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addMunition,
+  fetchMunitions,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MissileModal);

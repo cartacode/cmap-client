@@ -30,7 +30,7 @@ class StatusTable extends React.Component {
       if(item =='view'){
         return (
           <td key={j} style={{color}} className="other-item">
-            <img src="/images/general/eye_icon.png" />
+            <img src="/assets/img/general/eye_icon.png" />
           </td>
         )        
       }

@@ -15,8 +15,6 @@ import ComNetContainer from '../containers/admin/ComNetContainer';
 import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
 
-import {getTranslations} from '../actions/actions';
-
 class AdminComponent extends React.Component {
 
   constructor(props) {
@@ -25,7 +23,7 @@ class AdminComponent extends React.Component {
 
   renderMenuItems() {
 
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     const menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel`},
@@ -42,13 +40,13 @@ class AdminComponent extends React.Component {
     ];
 
     return menuItems.map((item, i) => {
-      let image = '/images/menu/button-line-highlight.png';
+      let image = '/assets/img/menu/button-line-highlight.png';
       let matchForLink = false;
 
       if (item.url.indexOf('/', 8) !== -1) {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 8))) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 8))) !== -1);
       } else {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
       }
 
       return (
@@ -69,7 +67,7 @@ class AdminComponent extends React.Component {
   }
 
   render() {
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     return (
       <div>
@@ -98,23 +96,15 @@ class AdminComponent extends React.Component {
 
 AdminComponent.propTypes = {
   children: PropTypes.element,
-  routing: PropTypes.object,
+  router: PropTypes.object,
   translations: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminComponent);
+export default connect(mapStateToProps)(AdminComponent);

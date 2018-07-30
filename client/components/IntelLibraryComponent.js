@@ -23,7 +23,7 @@ class IntelLibraryComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const searchResult = [
       { date:'07//11/17', mission:'firechief', type:'strike', start:'12:45', end:'18:45', classification:'unclass', air_track:'check', video:'check', images:'check', sigacts:'check', email:'email', export:'export', detail:'detail' },
@@ -105,21 +105,21 @@ class IntelLibraryComponent extends React.Component {
         Header: translations['email'],
         accessor: 'email',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/email_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/email_icon.png"  /></span> // Custom cell components!
       }, 
 
       {
         Header: translations['export'],
         accessor: 'export',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/export_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/export_icon.png"  /></span> // Custom cell components!
       }, 
 
       {
         Header: translations['detail'],
         accessor: 'detail',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/detail_icon.png"  /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
       }
     ];
 
@@ -163,7 +163,7 @@ class IntelLibraryComponent extends React.Component {
             <FullHeaderLine headerText={translations["search criteria"]} />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/images/intel_request/operating_picture/large_map.png" alt="" />
+            <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
           </div>
         </div>
       </div>

@@ -12,8 +12,8 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations, addPlatform, uploadFile } from '../../../actions/actions';
-
+import { uploadFile } from 'actions/file';
+import { addPlatform } from 'actions/platform';
 
 class AddPlatformModal extends React.Component {
 
@@ -127,11 +127,11 @@ class AddPlatformModal extends React.Component {
         PlatformCeiling: technicalData.PlatformCeiling,
         PlatformMaxTakeOff: technicalData.PlatformMaxTakeOff
       //  PlatformMinRunway: technicalData.PlatformMin
-        
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handlePlatformPayloadData = (payloadData) => {
@@ -151,11 +151,11 @@ class AddPlatformModal extends React.Component {
         PlatformArmament3: payloadData.PlatformArmament3,
         // PlatformComs1: payloadData.PlatformComs1,
         // PlatformComs2: payloadData.PlatformComs2,
-        
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handlePlatformCrewData = (crewData) => {
@@ -174,9 +174,9 @@ class AddPlatformModal extends React.Component {
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
-  
+
   handlePlatformConfigData = (configData) => {
     const {platform} = this.state;
     this.setState({
@@ -191,7 +191,7 @@ class AddPlatformModal extends React.Component {
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
-    }); 
+    });
   }
 
   handleUploadImgFile(event){
@@ -221,12 +221,12 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
       });
-      
+
   }
 
   handleUploadPhotoFile(event) {
@@ -257,11 +257,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -291,11 +291,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -325,11 +325,11 @@ class AddPlatformModal extends React.Component {
 
       data.append('file', event.target.files[0]);
       data.append('name', event.target.files[0].name);
-      
+
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -362,7 +362,7 @@ class AddPlatformModal extends React.Component {
 
       axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
         console.log(response);
-      });    
+      });
 
   }
 
@@ -372,7 +372,7 @@ class AddPlatformModal extends React.Component {
     console.log(this.state.platform);
     this.props.addPlatform(this.state.platform);
     this.props.onClose();
-   // this.props.fetchPlatform(this.state.platform);
+   // this.props.fetchPlatforms(this.state.platform);
   }
 
 
@@ -403,9 +403,9 @@ class AddPlatformModal extends React.Component {
 
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $imagePreview = (<img src="/images/admin/aircraft.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
 
     let {imagePreviewUrl2} = this.state;
@@ -413,16 +413,16 @@ class AddPlatformModal extends React.Component {
 
     if (imagePreviewUrl2) {
       $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $imagePreview2 = (<img src="/images/admin/primoris_backgr.png" className="photo" alt=""/>);
+      $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
     }
 
 
     const {platform} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
-    
+
 
     const generalFields = [
       {name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber'},
@@ -521,16 +521,16 @@ class AddPlatformModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
-                <img src="/images/admin/personnel_1.png" alt=""/>
+                <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
                   {translations["Platform Administration"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
               <div className="platform-and-munitions-content">
                 <div className="col-md-4 image-block">
@@ -541,13 +541,13 @@ class AddPlatformModal extends React.Component {
                 </div>
                 <div className="col-md-4 upload-block">
                   <div className="upload-imagery">
-                    <img src="/images/admin/upload_1.png" alt=""/>
+                    <img src="/assets/img/admin/upload_1.png" alt=""/>
                     <div className="header-text">
                       upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                   </div>
-                  
+
                   <div className="upload-content">
                     <div className="upload-line">
                       <div>
@@ -585,50 +585,50 @@ class AddPlatformModal extends React.Component {
             </div>
             <div className="row personnel" >
               <div className="under-personnel-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
                 data={this.handlePlatformGeneralData} initstate ={this.state.platform}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
                 data={this.handlePlatformTechnicalData} initstate ={this.state.platform}/>
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
                 data={this.handlePlatformPayloadData} initstate ={this.state.platform}/>
               </div>
             </div>
             <div className="row personnel" >
               <div className="under-platform-content">
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handlePlatformCrewData} initstate ={this.state.platform} platform={nums}/>
 
-                <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
+                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
 				data={this.handlePlatformConfigData} initstate ={this.state.platform}/>
               </div>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -642,24 +642,13 @@ AddPlatformModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addPlatform: (platform) => {
-      dispatch(addPlatform(platform));
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addPlatform,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformModal);

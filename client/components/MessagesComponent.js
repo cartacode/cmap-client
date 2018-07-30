@@ -1,4 +1,4 @@
-import React from 'react';  
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ class MessagesComponent extends React.Component {
   render() {
 
     let langs = ['val 1', 'val 2'];
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const actionRequired = [
       {name: 'Intel request #8232-2 awating review', type: 'checkbox'},
@@ -80,35 +80,35 @@ class MessagesComponent extends React.Component {
               <div className="email-content">
                 <div className="sidebar">
                   <div className="sidebutton">
-                    <img src="/images/message/message_icon.png" alt=""/>
+                    <img src="/assets/img/message/message_icon.png" alt=""/>
                     {translations["New Messages"]}
                   </div>
                   <div className="sidebutton">
-                    <img src="/images/message/inbox_icon.png" className="brightness" alt=""/>
+                    <img src="/assets/img/message/inbox_icon.png" className="brightness" alt=""/>
                     {translations["Inbox"]}
                   </div>
                   <div className="sidebutton">
-                    <img src="/images/message/sent_icon.png" alt=""/>
+                    <img src="/assets/img/message/sent_icon.png" alt=""/>
                     {translations["Sent Mail"]}
                   </div>
                   <div className="sidebutton">
-                    <img src="/images/message/pen_icon.png" alt=""/>
+                    <img src="/assets/img/message/pen_icon.png" alt=""/>
                     {translations["Drafts"]}
                   </div>
                   <div className="sidebutton">
-                    <img src="/images/message/trash_icon.png" alt=""/>
+                    <img src="/assets/img/message/trash_icon.png" alt=""/>
                     {translations["Trash"]}
                   </div>
                   <div className="col-md-12">
                     {translations["Folders"]}
                     <div className="folder-tree">
-                      <img src="/images/message/folder_image.png" /> {translations["Rolling Thunder"]}
+                      <img src="/assets/img/message/folder_image.png" /> {translations["Rolling Thunder"]}
                     </div>
                     <div className="folder-tree">
-                      <img src="/images/message/folder_image.png" /> {translations["Platform"]}
+                      <img src="/assets/img/message/folder_image.png" /> {translations["Platform"]}
                     </div>
                     <div className="folder-tree">
-                      <img src="/images/message/folder_image.png" /> {translations["Org builder"]}
+                      <img src="/assets/img/message/folder_image.png" /> {translations["Org builder"]}
                     </div>
                   </div>
                 </div>
@@ -127,11 +127,11 @@ class MessagesComponent extends React.Component {
             </div>
             <div className="col-md-6">
               <div className="chat-header-line">
-                <img src="/images/message/headerline2.png" alt=""/>
+                <img src="/assets/img/message/headerline2.png" alt=""/>
                 <div className="header-text">
                  {translations["A-ISR Mission Manager Chat"]}
                 </div>
-                <img className="mirrored-X-image" src="/images/message/headerline2.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/message/headerline2.png" alt=""/>
               </div>
               <div className="chat-content">
                 <div className="sidebar">
@@ -142,23 +142,23 @@ class MessagesComponent extends React.Component {
                   </div>
                   <div className="col-md-12 name-list">
                     <div className = "each-name">
-                      <img src="/images/message/white_circle.png" />
+                      <img src="/assets/img/message/white_circle.png" />
                       Albert Barker
                     </div>
                     <div className = "each-name">
-                      <img src="/images/message/sky_circle.png" />
+                      <img src="/assets/img/message/sky_circle.png" />
                       Albert Barker
                     </div>
                     <div className = "each-name">
-                      <img src="/images/message/yellow_circle.png" />
+                      <img src="/assets/img/message/yellow_circle.png" />
                       Albert Barker
                     </div>
                     <div className = "each-name">
-                      <img src="/images/message/red_circle.png" />
+                      <img src="/assets/img/message/red_circle.png" />
                       Albert Barker
                     </div>
                     <div className = "each-name">
-                      <img src="/images/message/blue_circle.png" />
+                      <img src="/assets/img/message/blue_circle.png" />
                       Albert Barker
                     </div>
                   </div>
@@ -170,7 +170,7 @@ class MessagesComponent extends React.Component {
                   <div className="col-md-12 chat-list">
                     <div className="each-chat">
                       <div className="chat-to">
-                        <img src="/images/message/white_circle.png" />
+                        <img src="/assets/img/message/white_circle.png" />
                         Albert Barker
                       </div>
                       <div className="chat-detail">
@@ -182,7 +182,7 @@ class MessagesComponent extends React.Component {
                     </div>
                     <div className="each-chat">
                       <div className="chat-to">
-                        <img src="/images/message/white_circle.png" />
+                        <img src="/assets/img/message/white_circle.png" />
                         Albert Barker
                       </div>
                       <div className="chat-detail">
@@ -196,10 +196,10 @@ class MessagesComponent extends React.Component {
                   <div className="col-md-12">
                     <div className="chat-input" >
                       <input type="type" placeholder={translations["Enter your text here"]} />
-                      <img src="/images/message/chat_expand_icon.png" />
+                      <img src="/assets/img/message/chat_expand_icon.png" />
                     </div>
                     <div className="chat-sent">
-                      <img src="/images/message/chat_send_icon.png" />
+                      <img src="/assets/img/message/chat_send_icon.png" />
                     </div>
                   </div>
                 </div>

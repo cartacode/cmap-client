@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { base_url } from '../../config';
+import { baseUrl } from 'dictionary/network';
 
 class Table extends React.Component {
 
@@ -37,7 +37,7 @@ class Table extends React.Component {
 			});
         }
         else {
-        let apiUrl = base_url + this.props.dropdownDataUrl
+        let apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`
 		console.log('dropdown: '+apiUrl);
         axios.get(apiUrl)
             .then(response => {
@@ -51,7 +51,7 @@ class Table extends React.Component {
             .catch((error) => {
                 console.log("Exception comes:" + error);
             });
-        } 
+        }
     }
 
     changeValue = (label, value) => {
@@ -60,7 +60,7 @@ class Table extends React.Component {
 
     //render dropdown list of lang switcher
     renderItems() {
-        
+
         return this.state.dropdownItems.map(function(data, key){  return (
             <option key={key} value={data.value}>{data.label}</option> )
         })

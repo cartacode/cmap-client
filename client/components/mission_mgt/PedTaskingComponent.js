@@ -29,7 +29,7 @@ class AtoComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
    const intelRequest1 = [
       {name: translations['Support Command'], type: 'input'},
@@ -118,18 +118,18 @@ class AtoComponent extends React.Component {
         </div>
         <div className="row action-buttons" >
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onClear.bind(this)}>
               {translations["clear"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className="highlighted-button" onClick={this.onRoute.bind(this)}>
               {translations["route"]}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
         </div>
       </div>

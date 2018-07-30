@@ -1,57 +1,131 @@
-var path = require('path');
-var LiveReloadPlugin = require('webpack-livereload-plugin');
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+/* eslint-disable import/unambiguous */
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = {
+module.exports = function getWebpackConfig() {
+  const isDev = (process.env.NODE_ENV === 'development');
 
-  entry: [
-    './client/index.js',
-    './client/styles/main.scss',
-    ],
+  return {
+    devServer: {
+      compress: true,
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      port: 3001,
+      stats: 'errors-only',
+    },
 
-  output: {
-    filename: 'bundle.js',
-     path: path.resolve(__dirname, 'client/dist')
-  },
-  devtool: 'cheap-module-eval-source-map',
-  context: __dirname,
+    devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map',
 
-  resolve: {
-    extensions: ['.js', '.jsx', '.json', '*']
-  },
+    entry: getEntry(isDev),
 
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['react', 'es2015', "stage-2"]
-        }
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: ExtractTextPlugin.extract({
-          use: ["css-loader","sass-loader"],
-          fallback: "style-loader",
-        })
-      },
-      {
-        test: /\.css$/,
-        loaders: ["style-loader","css-loader"]
-      }
-    ]
-  },
+    module: {
+      rules: [
+        {
+          test: /\.(css|scss)$/,
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins() {
+                  return [
+                    require('precss'),
+                    require('autoprefixer'),
+                  ];
+                },
+              },
+            },
+            { loader: 'sass-loader' },
+          ],
+        },
+        {
+          test: /\.(eot|svg|ttf)(\?[a-z0-9]+)?$/,
+          loader: 'file-loader',
+        },
+        {
+          test: /\.(gif|jpg|png)$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: { limit: 8192 },
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          exclude: /(node_modules)/,
+          use: [
+            { loader: 'babel-loader' },
+            { loader: `preprocess-loader?${isDev ? '+DEVELOPMENT' : ''}` },
+          ],
+        },
+        {
+          test: /\.woff(2)?(\?[a-z0-9]+)?$/,
+          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+        },
+      ],
+    },
 
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.COSMIC_BUCKET': JSON.stringify(process.env.COSMIC_BUCKET),
-      'process.env.COSMIC_READ_KEY': JSON.stringify(process.env.COSMIC_READ_KEY),
-      'process.env.COSMIC_WRITE_KEY': JSON.stringify(process.env.COSMIC_WRITE_KEY)
-    }),
-    new LiveReloadPlugin({appendScriptTag: true}),
-    new ExtractTextPlugin("bundle.css"),
-  ]
+    output: {
+      filename: '[name].[hash].js',
+      path: path.join(__dirname, 'public'),
+      publicPath: '/',
+    },
+
+    plugins: getPlugins(isDev),
+
+    resolve: {
+      extensions: ['.js', '.json'],
+      modules: [
+        path.join(__dirname, 'client'),
+        'node_modules',
+      ],
+    },
+
+    target: 'web',
+  };
 };
+
+function getEntry(isDev) {
+  const middlewares = [
+    'babel-polyfill',
+  ];
+
+  if (isDev) {
+    middlewares.push(
+      'react-hot-loader/patch'
+    );
+  }
+
+  return {
+    app: [...middlewares, './client/index'],
+  };
+}
+
+function getPlugins(isDev) {
+  const plugins = [
+    new CopyWebpackPlugin([
+      {from: 'client/assets', to: 'assets'}
+    ]),
+    new CopyWebpackPlugin([
+      {from: 'client/vendor', to: 'vendor'}
+    ]),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      inject: 'body',
+      template: path.join(__dirname, 'client/index.html'),
+    }),
+  ];
+
+  if (isDev) {
+    plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+    );
+  }
+
+  return plugins;
+}

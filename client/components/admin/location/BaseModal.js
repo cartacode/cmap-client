@@ -6,7 +6,8 @@ import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
 import ButtonsList from "../../reusable/ButtonsList";
 
-import { getTranslations, addLocation, fetchLocationData, uploadFile } from '../../../actions/actions';
+import { uploadFile } from 'actions/file';
+import { addLocation, fetchLocations } from 'actions/location';
 
 class BaseModal extends React.Component {
 
@@ -46,7 +47,7 @@ class BaseModal extends React.Component {
 
   componentWillMount(){
     // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocationData();
+    // this.props.fetchLocations();
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -60,7 +61,7 @@ class BaseModal extends React.Component {
         LocationCountry: generalData.LocationCountry,
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.location);
@@ -98,7 +99,7 @@ class BaseModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
-  
+
 
   handleUploadFile(event){
       event.preventDefault();
@@ -112,7 +113,7 @@ class BaseModal extends React.Component {
                 locationPhotoPreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
 
       if(event.target.id == "LocationMapImage") {
@@ -124,9 +125,9 @@ class BaseModal extends React.Component {
                 mapImagePreviewUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)  
+        reader.readAsDataURL(file)
       }
-      
+
       let parametername = event.target.id;
 
       this.setState({
@@ -151,7 +152,7 @@ class BaseModal extends React.Component {
     console.log('---here--');
     console.log(this.state.location);
     this.props.addLocation(this.state.location);
-    this.props.fetchLocationData();
+    this.props.fetchLocations();
   }
 
   resetForm(){
@@ -181,20 +182,20 @@ class BaseModal extends React.Component {
 
     if (locationPhotoPreviewUrl) {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $locationPhoto = (<img src="/images/admin/map2.png" className="photo" alt=""/>);
+      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt=""/>);
     }
 
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt=""/>);
-    } 
+    }
     else {
-      $mpaImage = (<img src="/images/admin/map1.png" className="photo" alt=""/>);
+      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt=""/>);
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
 
     const generalFields = [
@@ -224,19 +225,19 @@ class BaseModal extends React.Component {
     ];
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
-            <img src="/images/general/close.png" onClick={this.props.onClose} />
+            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="row personnel" >
             <div className="header-line">
-              <img src="/images/admin/personnel_1.png" alt="" style={{width:"35%"}}/>
+              <img src="/assets/img/admin/personnel_1.png" alt="" style={{width:"35%"}}/>
               <div className="header-text" style={{width:"30%"}}>
                 {translations["Base Location Administration"]}
               </div>
-              <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt="" style={{width:"35%"}}/>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" style={{width:"35%"}}/>
             </div>
             <div className="personnel-content">
               <div className="col-md-4 image-block">
@@ -247,11 +248,11 @@ class BaseModal extends React.Component {
               </div>
               <div className="col-md-4 upload-block">
                 <div className="upload-imagery">
-                  <img src="/images/admin/upload_1.png" alt=""/>
+                  <img src="/assets/img/admin/upload_1.png" alt=""/>
                   <div className="header-text">
                     upload imagery & datasheets
                   </div>
-                  <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                  <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
                 </div>
                 <div className="upload-content">
                   <div className="upload-line">
@@ -278,40 +279,40 @@ class BaseModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-location-content">
-              <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
               data={this.handleLocationGeneralData} initstate ={this.state.location}/>
-              <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Location"]} fields={locationFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
               data={this.handleLocationPositionData} initstate ={this.state.location}/>
-              <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields} 
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
               data={this.handleLocationInfoData} initstate ={this.state.location}/>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className='highlighted-button'>
                 {translations['Delete']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
                 {translations['save']}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -324,28 +325,14 @@ BaseModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
-    addLocation: (location) => {
-      dispatch(addLocation(location));
-    },
-
-    fetchLocations: () => {
-      dispatch(fetchLocationData());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addLocation,
+  fetchLocations,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BaseModal);

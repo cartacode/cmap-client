@@ -31,7 +31,7 @@ class FormBlock extends React.Component {
           input = (
             <div>
               <input type="text"/>
-              <img className="calendar" src="/images/admin/calendar.png" alt=""/>
+              <img className="calendar" src="/assets/img/admin/calendar.png" alt=""/>
             </div>
           );
           break;

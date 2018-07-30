@@ -8,7 +8,7 @@ class PersonnelComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMap: '/images/admin/comsnet4.png'
+      currentMap: '/assets/img/admin/comsnet4.png'
     };
   }
 
@@ -23,9 +23,9 @@ class PersonnelComponent extends React.Component {
           <img src={this.state.currentMap} alt=""/>
         </div>
         <div className="alert">
-          <img src="/images/admin/exclamation_mark.png" alt=""/>
+          <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
           <div>alert: dvb relay bravo 6 impacting mission "rolling thunder" ... capacity on galileo 9 available... dvb relay bravo</div>
-          <img src="/images/admin/exclamation_mark.png" alt=""/>
+          <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
         </div>
         <div className="table-list">
           <div className="col-md-6">

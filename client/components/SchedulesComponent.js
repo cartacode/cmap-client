@@ -22,7 +22,7 @@ class SchedulesComponent extends React.Component {
   render() {
 
     const filterItems=['val1', 'val2'];
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const groups = [
       {id: 1, title: 'group 1'},
@@ -56,23 +56,23 @@ class SchedulesComponent extends React.Component {
               <div className="schedule-views">
                 <div className="view-element">
                   <div> {translations["DAY"]} </div>
-                  <img src="/images/schedules/day_image.png" />
+                  <img src="/assets/img/schedules/day_image.png" />
                 </div>
                 <div className="view-element">
                   <div> {translations["SHIFT"]} </div>
-                  <img src="/images/schedules/shift_image.png" />
+                  <img src="/assets/img/schedules/shift_image.png" />
                 </div>
                 <div className="view-element">
                   <div> {translations["CALL"]} </div>
-                  <img src="/images/schedules/call_image.png" />
+                  <img src="/assets/img/schedules/call_image.png" />
                 </div>
                 <div className="view-element">
                   <div> {translations["MISSION"]} </div>
-                  <img src="/images/schedules/mission_image.png" />
+                  <img src="/assets/img/schedules/mission_image.png" />
                 </div>
                 <div className="view-element">
                   <div> {translations["ROLE"]} </div>
-                  <img src="/images/schedules/role_image.png" />
+                  <img src="/assets/img/schedules/role_image.png" />
                 </div>
               </div>
             </div>

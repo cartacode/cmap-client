@@ -16,7 +16,7 @@ class Table extends React.Component {
       if (item == 'del'){
         return (
           <td key={i}>
-            <img src="/images/general/trash_icon.png"/>
+            <img src="/assets/img/general/trash_icon.png"/>
           </td>
         )  
       }

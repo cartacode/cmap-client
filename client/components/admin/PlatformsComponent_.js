@@ -376,11 +376,11 @@ class PersonnelComponent extends React.Component {
       $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
     } 
     else {
-      $imagePreview = (<img src="/images/admin/aircraft.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
     }
 
     const {platform} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     
 
@@ -458,11 +458,11 @@ class PersonnelComponent extends React.Component {
       <form action="" onSubmit={this.handleSubmit}> 
         <div className="row personnel" >
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["Platform Administration"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="platform-and-munitions-content">
             <div className="col-md-8 image-block">
@@ -470,11 +470,11 @@ class PersonnelComponent extends React.Component {
             </div>
             <div className="col-md-4 upload-block">
               <div className="upload-imagery">
-                <img src="/images/admin/upload_1.png" alt=""/>
+                <img src="/assets/img/admin/upload_1.png" alt=""/>
                 <div className="header-text">
                   upload imagery & datasheets
                 </div>
-                <img className="mirrored-X-image" src="/images/admin/upload_1.png" alt=""/>
+                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
               </div>
               
               <div className="upload-content">
@@ -514,42 +514,42 @@ class PersonnelComponent extends React.Component {
         </div>
         <div className="row personnel" >
           <div className="under-personnel-content">
-            <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} 
             data={this.handlePlatformGeneralData} initstate ={this.state.platform}/>
-            <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} 
             data={this.handlePlatformTechnicalData} initstate ={this.state.platform}/>
-            <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} 
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} 
             data={this.handlePlatformPayloadData} initstate ={this.state.platform}/>
           </div>
         </div>
         <div className="row personnel" >
           <div className="under-platform-content">
-            <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} 
             data={this.handlePlatformCrewData} initstate ={this.state.platform}/>
-            <ContentBlock headerLine="/images/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields} />
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields} />
           </div>
         </div>
         <div className="row action-buttons">
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
               {translations['clear']}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button className='highlighted-button'>
               {translations['Delete']}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
           <div className="menu-button">
-            <img className="line" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button type="submit" className='highlighted-button'>
               {translations['save']}
             </button>
-            <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
         </div>
       </form>

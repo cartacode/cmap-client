@@ -24,7 +24,7 @@ class AllocationComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     const cocom    = [translations['all'], translations['centcom'], translations['africom'], translations['eucom'], translations['pacom'], translations['northcom'], translations['southcom'], translations['socom'], translations['startcom'], translations['nato'],];
     const unit     = [translations['all'], translations['all ops'], translations['all intel'], '480th', '116th', '70th', '369th', '280th', '233th'];
     const order_type= [translations['all'],translations['Exord'], translations['Dsca'], translations['Opord'], translations['Tacon'], translations['Juons'], translations['Frago'], translations['Travel'],];
@@ -68,11 +68,11 @@ class AllocationComponent extends React.Component {
               <div className="filter-button">
                 <div className="row action-buttons" >
                   <div className="menu-button">
-                    <img className="line" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                     <button className="highlighted-button" onClick={this.onFind.bind(this)}>
                       {translations["find & filter"]}
                     </button>
-                    <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                 </div>
               </div>

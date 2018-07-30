@@ -81,7 +81,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
     // this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
     this.baseState = this.state;
-    
+
   }
 
   handleIntelRequest1 = (intelRequest1) => {
@@ -108,7 +108,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
         PrimaryPayload: intelRequest2.PrimaryPayload,
         SecondaryPayload: intelRequest2.SecondaryPayload,
         Armed: intelRequest2.Armed
-       
+
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.intelRequest);
@@ -180,7 +180,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
     console.log('---here--');
     console.log(this.state.intelRequest);
     console.log()
-    this.props.addIntelReq(this.state.intelRequest);
+    this.props.addIntelRequest(this.state.intelRequest);
     // this.resetForm();
   }
 
@@ -189,7 +189,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
     console.log('---here--');
     console.log(this.state.intelReqEEI);
     console.log()
-    this.props.addIntelEEI(this.state.intelReqEEI);
+    this.props.addIntelEei(this.state.intelReqEEI);
     // this.resetForm();
   }
 
@@ -205,21 +205,21 @@ class IntelRequestIntelRequestComponent extends React.Component {
     console.log("submit");
   }
 
-  tableRowDetailModal = () => {  
+  tableRowDetailModal = () => {
 		this.setState({
 			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
 		})
   }
-  
+
   deleteStuff = () => {
 
           console.log(this);
           var a = rowInfo.index;
 
           console.log(this.state.missionEEI);
-          var array = [...this.state.missionEEI]; 
+          var array = [...this.state.missionEEI];
           array.splice(a, 1);
-          
+
           console.log(array);
 
           this.setState({
@@ -231,7 +231,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
   render() {
     const langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const intelRequest1 = [
       {name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID:'COCOM',valFieldID:'SupportedCommand'},
@@ -253,7 +253,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
       {name: translations['Report Classification'], type: 'dropdown',ddID:'Clearance',domID:'dispReportClass',valFieldID:'ReportClassification'},
       {name: translations['Email-SIPR'], type: 'input',domID:'EmailSIPR', valFieldID: 'EmailSIPR'},
     ];
-    
+
 
     const eeiFiled1 = [
       {name: translations['Target Name'], type: 'input', domID: 'targetName',valFieldID: 'targetName'},
@@ -276,15 +276,15 @@ class IntelRequestIntelRequestComponent extends React.Component {
       {name: translations['EEIs'], type: 'dropdown',domID:'dispEEIs', ddID: 'EEIs', valFieldID:'EEIs'},
     ];
 
-  
+
 
     const missionColumns = [
       {
         Header: translations["eei#"],
-        accessor: 'eei', 
+        accessor: 'eei',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
-        
+
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -303,7 +303,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
         accessor: 'threat',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-      }, 
+      },
       {
         Header: translations['Location'],
         accessor: 'location',
@@ -323,7 +323,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
-        
+
       {
         Header: translations['LIMIDS Request'],
         accessor: 'limids',
@@ -335,14 +335,14 @@ class IntelRequestIntelRequestComponent extends React.Component {
         Header: translations['edit'],
         accessor: 'edit',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/pen_icon.png" /></span>// Custom cell components!
-      }, 
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png" /></span>// Custom cell components!
+      },
 
       {
         Header: translations['del'],
         accessor: 'del',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/trash_icon.png" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/trash_icon.png" /></span>// Custom cell components!
       }
     ];
 
@@ -361,14 +361,14 @@ class IntelRequestIntelRequestComponent extends React.Component {
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
             <div className="img-header-line">
-              <img src="/images/status/theader_line.png" alt=""/>
+              <img src="/assets/img/status/theader_line.png" alt=""/>
               <div className="header-text">
                 {translations["real-time intelligence/threat picture"]}
               </div>
-              <img className="mirrored-X-image" src="/images/status/theader_line.png" alt=""/>
+              <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <img className="photo" src="/images/intel_request/request/request_pic.png"  alt="" />
+              <img className="photo" src="/assets/img/intel_request/request/request_pic.png"  alt="" />
             </div>
           </div>
           <div className="col-md-4 one-block">
@@ -423,18 +423,18 @@ class IntelRequestIntelRequestComponent extends React.Component {
           </div>
           <div className="row action-buttons" >
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" onClick={this.onClear.bind(this)}>
                 {translations["clear"]}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
-              <img className="line" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button className="highlighted-button" type="submit">
                 {translations["add"]}
               </button>
-              <img className="line mirrored-Y-image" src="/images/admin/edit_up.png" alt=""/>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
         </form>
@@ -460,11 +460,11 @@ class IntelRequestIntelRequestComponent extends React.Component {
                         var a = rowInfo.index;
 
                         console.log(this.state.missionEEI);
-                        var array = [...this.state.missionEEI]; 
+                        var array = [...this.state.missionEEI];
                         array.splice(a, 1);
-                        
+
                         console.log(array);
-              
+
                         this.setState({
                           missionEEI: array
                         });
@@ -488,7 +488,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
         </div>
 
                   <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
-       
+
       </div>
     );
   }

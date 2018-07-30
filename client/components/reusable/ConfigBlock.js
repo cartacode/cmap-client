@@ -34,11 +34,11 @@ class ConfigBlock extends React.Component {
       <div className="check-block">
         <div className="col-md-12">
           <div className="header-line">
-            <img src="/images/message/headerline1.png" alt=""/>
+            <img src="/assets/img/message/headerline1.png" alt=""/>
             <div className="header-text">
               {this.props.subHeaderText}
             </div>
-            <img className="mirrored-X-image" src="/images/message/headerline1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/message/headerline1.png" alt=""/>
           </div>
         </div>
         <div className="col-md-12">

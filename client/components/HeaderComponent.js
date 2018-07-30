@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { supportedLanguages } from 'dictionary/localization';
+
 class HeaderComponent extends React.Component {
 
   constructor(props) {
@@ -16,7 +18,7 @@ class HeaderComponent extends React.Component {
   }
 
   changeLang(lang) {
-    this.props.getTranslations(lang);
+    this.props.updateLocalization(lang);
 
     setTimeout(() => {
       console.log(this.refs.search.innerText.length)
@@ -30,13 +32,11 @@ class HeaderComponent extends React.Component {
 
   //render dropdown list of lang switcher
   renderLangsList() {
-
-    let langs = ['English', 'Spanish', 'French', 'Italian', 'German',  'Korean', 'Russian', 'Arabic', 'Portugese', 'Indonesian', 'Filipino', 'Ukranian', 'Vietnamese', 'Swahili', 'Japanese', 'Hindi' ];
     let langsList;
 
-    langsList = langs.map((lang, i) => (
+    langsList = Object.keys(supportedLanguages).map((code, i) => (
         <li key={i}>
-          <a className="dropdown-item" href="#" onClick={() => this.changeLang(lang)}>{lang}</a>
+          <a className="dropdown-item" href="#" onClick={() => this.changeLang(code)}>{supportedLanguages[code]}</a>
         </li>
       )
     );
@@ -44,13 +44,9 @@ class HeaderComponent extends React.Component {
     return langsList;
   }
 
-  componentWillMount() {
-    this.props.getTranslations('English');
-  }
-
   renderMenuItems() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const menuItems = [
       {title: translations['dashboard'], url: '/dashboard'},
@@ -70,9 +66,9 @@ class HeaderComponent extends React.Component {
       let matchForLink = false;
 
       if (item.url.indexOf('/', 1) !== -1) {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 1))) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 1))) !== -1);
       } else {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
       }
 
       return (
@@ -82,7 +78,7 @@ class HeaderComponent extends React.Component {
               {item.title}
             </button>
             <div className="under-button-line">
-              <img src={matchForLink ? '/images/menu/button-line-highlight.png' : '/images/menu/button-line.png'} className="under-button-image pull-right" alt=""/>
+              <img src={matchForLink ? '/assets/img/menu/button-line-highlight.png' : '/assets/img/menu/button-line.png'} className="under-button-image pull-right" alt=""/>
             </div>
           </NavLink>
         </div>
@@ -95,14 +91,14 @@ class HeaderComponent extends React.Component {
   }
 
   render () {
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid header">
           <div className="user-info ">
             <div className="header-line">
-              <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
+              <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
               Thomas
@@ -135,12 +131,12 @@ class HeaderComponent extends React.Component {
               </div>
             </div>
             <div className="header-line">
-              <img src="/images/menu/vertical-line.png" className="line-img" alt=""/>
+              <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
           </div>
         </div>
         <div className="container-fluid buttons">
-          <img src="/images/menu/horiz-line.png" className="horiz-line" alt=""/>
+          <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
           <div className="buttons-list">
             {this.renderMenuItems()}
             <div className="search">
@@ -169,7 +165,7 @@ class HeaderComponent extends React.Component {
 
 HeaderComponent.propTypes = {
   children: PropTypes.element,
-  routing: PropTypes.object,
+  router: PropTypes.object,
   translations: PropTypes.object
 };
 

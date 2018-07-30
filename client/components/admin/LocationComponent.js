@@ -19,8 +19,6 @@ import TableRowDetailModal from '../reusable/TableRowDetailModal';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-import { makeData } from '../../actions/actions';
-
 
 class PersonnelComponent extends React.Component {
 
@@ -81,15 +79,15 @@ class PersonnelComponent extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchLocationData();
-    
+    this.props.fetchLocations();
+
     // console.log("--here is locations fetch---");
     // console.log(data);
   }
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const locations = [
       {name:translations['Base'], onClick: this.baseModal},
@@ -97,10 +95,10 @@ class PersonnelComponent extends React.Component {
       {name:translations['POI'], onClick: this.poiModal}
     ];
 
-    const { location_data } = this.props;
-    
+    const { allLocations } = this.props;
+
     console.log("That data");
-    console.log(location_data);
+    console.log(allLocations);
 
     const columns = [
       {
@@ -108,7 +106,7 @@ class PersonnelComponent extends React.Component {
         accessor: 'id',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
       {
         Header: translations["Name"] ,
@@ -120,7 +118,7 @@ class PersonnelComponent extends React.Component {
         Header: translations['COCOM'],
         accessor: 'COCOM',
         Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>, 
+                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -133,35 +131,35 @@ class PersonnelComponent extends React.Component {
         accessor: 'country',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
       {
         Header: translations["Region"],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
-      }, 
+
+      },
       {
         Header: translations['unit'],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
+
       },
-      
+
       {
         Header: translations['Record Date'],
         accessor: 'region',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
-        
-      }, 
+
+      },
       {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/images/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
       }
     ];
 
@@ -206,30 +204,30 @@ class PersonnelComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="row">
-          
+
           </div>
           <div className="header-line">
-            <img src="/images/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["Location"]}
             </div>
-            <img className="mirrored-X-image" src="/images/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
               <DropDownButton key = '1' label={translations["Add Location"]} id="1" items={locations}/>
             </div>
           </div>
-          
+
           <BaseModal show={this.state.baseModalOpen} onClose={this.baseModal} translations = {translations}/>
           <NaiModal show={this.state.naiModalOpen} onClose={this.naiModal} translations = {translations}/>
-          <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>  
-           
+          <PoiModal show={this.state.poiModalOpen} onClose={this.poiModal} translations = {translations}/>
+
                 <br/>
-          <div className="row personnel"> 
+          <div className="row personnel">
           <div className="col-md-12">
             <ReactTable
-              data={location_data}
+              data={allLocations}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
@@ -240,8 +238,8 @@ class PersonnelComponent extends React.Component {
           </div>
           </div>
         </div>
-        
-        
+
+
         <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );

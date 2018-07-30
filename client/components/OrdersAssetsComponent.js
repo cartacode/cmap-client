@@ -8,8 +8,6 @@ import OrdersContainer from '../containers/orders_assets/OrdersContainer';
 import AllocationContainer from '../containers/orders_assets/AllocationContainer';
 import ForecastContainer from '../containers/orders_assets/ForecastContainer';
 
-import {getTranslations} from '../actions/actions';
-
 class OrdersAssetsComponent extends React.Component {
 
   constructor(props) {
@@ -18,7 +16,7 @@ class OrdersAssetsComponent extends React.Component {
 
   renderMenuItems() {
 
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     const menuItems = [
       {title: translations['orders'], url: `${match.url}/orders`},
@@ -28,8 +26,8 @@ class OrdersAssetsComponent extends React.Component {
     ];
 
     return menuItems.map((item, i) => {
-      let image = '/images/menu/button-line-highlight.png';
-      let matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+      let image = '/assets/img/menu/button-line-highlight.png';
+      let matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
 
       return (
         <div className="submenu-button" key={i}>
@@ -49,7 +47,7 @@ class OrdersAssetsComponent extends React.Component {
   }
 
   render() {
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     return (
       <div>
@@ -71,23 +69,15 @@ class OrdersAssetsComponent extends React.Component {
 
 OrdersAssetsComponent.propTypes = {
   children: PropTypes.element,
-  routing: PropTypes.object,
+  router: PropTypes.object,
   translations: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrdersAssetsComponent);
+export default connect(mapStateToProps)(OrdersAssetsComponent);
