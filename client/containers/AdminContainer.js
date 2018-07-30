@@ -4,7 +4,7 @@ import AdminComponent from '../components/AdminComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

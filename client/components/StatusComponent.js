@@ -50,7 +50,7 @@ class StatusComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const platform = [
       { platform:'grey eagle', tail:'fg2592', status:'flight ready', remark:'none', etic:'90 days', update:'update' },

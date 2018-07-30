@@ -1134,7 +1134,7 @@ class AddPersonnelModal extends React.Component {
     }
 
     const {personnel} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const generalFields = [
         {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName'},
@@ -1275,7 +1275,7 @@ AddPersonnelModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

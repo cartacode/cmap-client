@@ -4,7 +4,7 @@ import CcirPirComponent from '../../components/admin/CcirPirComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

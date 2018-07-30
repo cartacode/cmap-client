@@ -30,7 +30,7 @@ class DashboardComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const actionRequired = [
       {name: 'Intel request #8232-2 awating review', type: 'checkbox'},

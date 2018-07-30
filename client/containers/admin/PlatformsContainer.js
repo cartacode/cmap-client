@@ -5,7 +5,7 @@ import { addPlatform, fetchPlatforms } from 'actions/platform';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
+    translations: state.localization.staticText,
     allPlatforms: state.platforms.allPlatforms,
   };
 };

@@ -197,7 +197,7 @@ class MissileModal extends React.Component {
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
 
 
@@ -355,7 +355,7 @@ MissileModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

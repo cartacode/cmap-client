@@ -25,7 +25,7 @@ class IsrSyncComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const resource = [translations['platform'], translations['personnel'],];
     const view     = [translations['pending'], translations['avaliable'], translations['off-line'], translations['booked'], translations['active'], translations['look-back'],];

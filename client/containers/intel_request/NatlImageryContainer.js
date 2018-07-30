@@ -4,7 +4,7 @@ import NatlImageryComponent from '../../components/intel_request/NatlImageryComp
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

@@ -231,7 +231,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
   render() {
     const langs = ['val 1', 'val 2'];
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const intelRequest1 = [
       {name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID:'COCOM',valFieldID:'SupportedCommand'},

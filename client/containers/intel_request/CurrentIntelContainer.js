@@ -4,8 +4,8 @@ import CurrentIntelComponent from '../../components/intel_request/CurrentIntelCo
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 

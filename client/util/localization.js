@@ -1,4 +1,4 @@
-import { directionality, supportedLanguages } from 'dictionary/localization';
+import { directionality } from 'dictionary/localization';
 
 /**
  * Returns the directionality of the language corresponding to the given code.
@@ -7,7 +7,7 @@ import { directionality, supportedLanguages } from 'dictionary/localization';
  */
 export function getLanguageDirectionality(code) {
   switch (code) {
-    case supportedLanguages.ar:
+    case 'ar':
       return directionality.rtl;
     default:
       return directionality.ltr;

@@ -4,7 +4,7 @@ import PedTaskingComponent from '../../components/mission_mgt/PedTaskingComponen
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

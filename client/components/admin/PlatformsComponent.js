@@ -75,7 +75,7 @@ class PlatformComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     const {allPlatforms} = this.props;
 
     console.log(allPlatforms);

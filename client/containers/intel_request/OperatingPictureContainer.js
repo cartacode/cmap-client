@@ -4,7 +4,7 @@ import OperatingPictureComponent from '../../components/intel_request/OperatingP
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

@@ -4,7 +4,7 @@ import StatusComponent from '../components/StatusComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

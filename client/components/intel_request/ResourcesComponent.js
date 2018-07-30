@@ -77,7 +77,7 @@ class ResourcesComponent extends React.Component {
 	}
 
   render() {
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const intelRequest1 = [
       {name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID:'COCOM',valFieldID:'SupportedCommand'},

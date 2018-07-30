@@ -21,7 +21,7 @@ class ComNetComponent extends React.Component {
 
 
   renderMapButtons = () => {
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     let buttons = [
       {name: 'satcom', subButton: false, url: `${match.url}/satcom`},
@@ -33,7 +33,7 @@ class ComNetComponent extends React.Component {
 
     return buttons.map((item, i) => {
       if (!item.subButton) {
-        let matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        let matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
 
         return (
           <div className={`${item.subButton ? 'sub-button' : 'main-button'} ${matchForLink ?  'highlighted-main-button' : ''}`} key={i}>
@@ -44,7 +44,7 @@ class ComNetComponent extends React.Component {
         )
       } else {
         return (
-          <div className={`${item.subButton ? 'sub-button' : ''}  ${this.props.routing.location.pathname.indexOf(buttons[0].url) !== -1 ?  'highlighted-sub-button' : ''}`} key={i}>
+          <div className={`${item.subButton ? 'sub-button' : ''}  ${this.props.router.location.pathname.indexOf(buttons[0].url) !== -1 ?  'highlighted-sub-button' : ''}`} key={i}>
             <button>{item.name}</button>
           </div>
         )
@@ -55,7 +55,7 @@ class ComNetComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     return (
       <div>

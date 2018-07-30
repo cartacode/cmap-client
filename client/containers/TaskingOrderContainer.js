@@ -4,7 +4,7 @@ import TaskingOrderComponent from '../components/TaskingOrderComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

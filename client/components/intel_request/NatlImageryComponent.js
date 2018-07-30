@@ -18,7 +18,7 @@ class NatlImageryComponent extends React.Component {
   render() {
 
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const imageryData = [
       {name: translations['Place Name'], type: 'input'},

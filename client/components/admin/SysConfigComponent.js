@@ -15,7 +15,7 @@ class SysConfigComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     const userPermissionButtons = [translations['user admin'], translations['load configuration'], translations['role creation'], translations['hierachy admin'],];
     const serverConfigButtons = [translations['server administration'], translations['associations'], translations['web server'], translations['server diagnostics'],];
     const storageConfigButtons = [translations['direct storage admin'], translations['storage status'], translations['repository quotas'], translations['distributed archive admin'],];

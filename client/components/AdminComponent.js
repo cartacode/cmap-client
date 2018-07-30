@@ -23,7 +23,7 @@ class AdminComponent extends React.Component {
 
   renderMenuItems() {
 
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     const menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel`},
@@ -44,9 +44,9 @@ class AdminComponent extends React.Component {
       let matchForLink = false;
 
       if (item.url.indexOf('/', 8) !== -1) {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 8))) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 8))) !== -1);
       } else {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
       }
 
       return (
@@ -67,7 +67,7 @@ class AdminComponent extends React.Component {
   }
 
   render() {
-    const {translations: {translations}, match} = this.props;
+    const {translations, match} = this.props;
 
     return (
       <div>
@@ -96,14 +96,14 @@ class AdminComponent extends React.Component {
 
 AdminComponent.propTypes = {
   children: PropTypes.element,
-  routing: PropTypes.object,
+  router: PropTypes.object,
   translations: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 

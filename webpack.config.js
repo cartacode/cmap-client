@@ -1,4 +1,5 @@
 /* eslint-disable import/unambiguous */
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
@@ -38,6 +39,7 @@ module.exports = function getWebpackConfig() {
                 },
               },
             },
+            { loader: 'sass-loader' },
           ],
         },
         {
@@ -106,6 +108,9 @@ function getEntry(isDev) {
 
 function getPlugins(isDev) {
   const plugins = [
+    new CopyWebpackPlugin([
+      {from: 'client/assets', to: 'assets'}
+    ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: 'body',

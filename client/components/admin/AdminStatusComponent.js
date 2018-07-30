@@ -169,7 +169,7 @@ class AdminStatusComponent extends React.Component {
       <option key={key} value={data[key]}>{key}</option> )
   })}</select>);
   
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     let {update} = this.state;
 

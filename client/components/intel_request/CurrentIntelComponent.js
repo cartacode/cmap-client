@@ -93,7 +93,7 @@ class CurrentIntelComponent extends React.Component {
     const { selectedOption } = this.state;
     const { selectedOption2 } = this.state;
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const searchResult = [
       { date:'07//11/17', mission:'firechief', type:'strike', start:'12:45', end:'18:45', classification:'unclass', air_track:'check', video:'check', images:'check', sigacts:'check', email:'email', export:'export', detail:'detail' },

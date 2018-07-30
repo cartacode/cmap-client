@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { supportedLanguages } from 'dictionary/localization';
+
 class HeaderComponent extends React.Component {
 
   constructor(props) {
@@ -30,13 +32,11 @@ class HeaderComponent extends React.Component {
 
   //render dropdown list of lang switcher
   renderLangsList() {
-
-    let langs = ['English', 'Spanish', 'French', 'Italian', 'German',  'Korean', 'Russian', 'Arabic', 'Portugese', 'Indonesian', 'Filipino', 'Ukranian', 'Vietnamese', 'Swahili', 'Japanese', 'Hindi' ];
     let langsList;
 
-    langsList = langs.map((lang, i) => (
+    langsList = Object.keys(supportedLanguages).map((code, i) => (
         <li key={i}>
-          <a className="dropdown-item" href="#" onClick={() => this.changeLang(lang)}>{lang}</a>
+          <a className="dropdown-item" href="#" onClick={() => this.changeLang(code)}>{supportedLanguages[code]}</a>
         </li>
       )
     );
@@ -46,7 +46,7 @@ class HeaderComponent extends React.Component {
 
   renderMenuItems() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const menuItems = [
       {title: translations['dashboard'], url: '/dashboard'},
@@ -66,9 +66,9 @@ class HeaderComponent extends React.Component {
       let matchForLink = false;
 
       if (item.url.indexOf('/', 1) !== -1) {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 1))) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 1))) !== -1);
       } else {
-        matchForLink = (this.props.routing.location.pathname.indexOf(item.url) !== -1);
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
       }
 
       return (
@@ -91,7 +91,7 @@ class HeaderComponent extends React.Component {
   }
 
   render () {
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     return (
       <nav className="navbar navbar-default">
@@ -165,7 +165,7 @@ class HeaderComponent extends React.Component {
 
 HeaderComponent.propTypes = {
   children: PropTypes.element,
-  routing: PropTypes.object,
+  router: PropTypes.object,
   translations: PropTypes.object
 };
 

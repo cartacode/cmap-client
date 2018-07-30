@@ -151,7 +151,7 @@ class NaiModal extends React.Component {
     }
 
     const {munition} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const generalFields = [
       {name: translations['NAI#'], type: 'input', domID: 'LocationNAI', valFieldID: 'LocationNai'},
@@ -244,7 +244,7 @@ NaiModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

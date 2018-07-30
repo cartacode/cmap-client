@@ -91,7 +91,7 @@ class PersonnelComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     const {allPersonnels} = this.props;
 
     console.log(allPersonnels);

@@ -4,8 +4,8 @@ import AtoComponent from '../../components/mission_mgt/AtoComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 

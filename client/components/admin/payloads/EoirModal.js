@@ -255,7 +255,7 @@ class EoirModal extends React.Component {
     }
 
     const {payload} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const generalFields = [
       {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
@@ -426,7 +426,7 @@ EoirModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

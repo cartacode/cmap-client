@@ -106,7 +106,7 @@ class PayloadsComponent extends React.Component {
 	}
 
 	render() {
-		const {translations: {translations}} = this.props;
+		const {translations} = this.props;
 		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
 
 		const addPayloads = [

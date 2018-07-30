@@ -22,7 +22,7 @@ class SchedulesComponent extends React.Component {
   render() {
 
     const filterItems=['val1', 'val2'];
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const groups = [
       {id: 1, title: 'group 1'},

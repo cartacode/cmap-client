@@ -11,7 +11,7 @@ class DashboardCircleStatus extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     let background, backgroundSize, width;
 
       switch(this.props.statusHeader) {
@@ -88,7 +88,7 @@ DashboardCircleStatus.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

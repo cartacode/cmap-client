@@ -251,7 +251,7 @@ class WamiModal extends React.Component {
     }
 
     const {payload} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
 
     const generalFields = [
@@ -421,7 +421,7 @@ WamiModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

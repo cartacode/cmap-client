@@ -4,7 +4,7 @@ import MissionDetailComponent from '../../components/mission_mgt/MissionDetailCo
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

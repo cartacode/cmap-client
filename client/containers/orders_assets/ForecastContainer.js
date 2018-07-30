@@ -4,8 +4,8 @@ import ForecastComponent from '../../components/orders_assets/ForecastComponent'
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
-    routing: state.routing,
+    translations: state.localization.staticText,
+    router: state.router,
   };
 };
 

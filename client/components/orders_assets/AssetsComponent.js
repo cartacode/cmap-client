@@ -15,7 +15,7 @@ class AssetsComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
     const thead = [translations['Service'], translations['Asset'], translations['#assets'], translations['Base'], translations['unit'], translations['mission'], translations['SPD'], translations['status'],];
     const firstContent = [
       {service:'usaf', asset:'mq-9', assets:'12', base:'fob-2', unit:'lre1', mission:'fmv', spd:'4', status:'10 fmc/2 pmc'},

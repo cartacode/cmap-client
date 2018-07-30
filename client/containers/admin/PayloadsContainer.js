@@ -7,7 +7,7 @@ import { addPayload, fetchPayloadList, fetchPayloads, fetchPayloadTypes } from '
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer,
+    translations: state.localization.staticText,
     allPayloads: state.payloads.allPayloads,
     payloadList: state.payloads.payloadList,
     payloadTypes: state.payloads.payloadTypes,

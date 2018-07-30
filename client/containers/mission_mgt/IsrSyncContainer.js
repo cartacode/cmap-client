@@ -4,7 +4,7 @@ import IsrSyncComponent from '../../components/mission_mgt/IsrSyncComponent';
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

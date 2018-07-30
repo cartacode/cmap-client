@@ -94,7 +94,7 @@ class IntelSummaryComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
  /*   const munitions = [
       {name:translations['Missile'], onClick:this.missileModal},

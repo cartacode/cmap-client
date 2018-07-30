@@ -24,7 +24,7 @@ class OrdersComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const cocom    = [translations['all'], translations['centcom'], translations['africom'], translations['eucom'], translations['pacom'], translations['northcom'], translations['southcom'], translations['socom'], translations['startcom'], translations['nato'],];
     const unit     = [translations['all'], translations['all ops'], translations['all intel'], '480th', '116th', '70th', '369th', '280th', '233th'];

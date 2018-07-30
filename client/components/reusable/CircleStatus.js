@@ -13,7 +13,7 @@ class CircleStatus extends React.Component {
 
   render() {
     let background;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
       switch(this.props.statusHeader) {
         case translations['platform']:
@@ -54,7 +54,7 @@ CircleStatus.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translationsReducer
+    translations: state.localization.staticText
   };
 };
 

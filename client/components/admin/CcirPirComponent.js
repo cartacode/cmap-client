@@ -51,7 +51,7 @@ class CcirPirComponent extends React.Component {
   render() {
 
     let langs = ['ccir', 'pir'] ;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const ccirPirs = [translations['missile'], translations['rocket'], translations['gun'],];
 

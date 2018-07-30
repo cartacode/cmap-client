@@ -23,7 +23,7 @@ class LiveViewComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input'},

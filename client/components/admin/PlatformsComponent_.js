@@ -380,7 +380,7 @@ class PersonnelComponent extends React.Component {
     }
 
     const {platform} = this.state;
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     
 

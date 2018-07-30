@@ -1,7 +1,15 @@
+import englishStaticText from 'assets/json/staticText/en';
+import { directionality } from 'dictionary/localization';
+
 export default {
   cocoms: {
     cocomList: [],
     isListFetching: false,
+  },
+  localization: {
+    directionality: directionality.ltr,
+    languageCode: 'en',
+    staticText: englishStaticText,
   },
   locations: {
     allLocations: [],

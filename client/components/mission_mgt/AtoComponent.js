@@ -27,7 +27,7 @@ class AtoComponent extends React.Component {
 
   render() {
 
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     const intelRequest1 = [
       {name: translations['Support Command'], type: 'input'},

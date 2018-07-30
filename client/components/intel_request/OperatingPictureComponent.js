@@ -17,7 +17,7 @@ class OperatingPictureComponent extends React.Component {
   render() {
 
     let langs = ['val 1', 'val 2'];
-    const {translations: {translations}} = this.props;
+    const {translations} = this.props;
 
     return (
       <div>
