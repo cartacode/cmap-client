@@ -6,7 +6,7 @@ import { addMunition, fetchMunitions } from 'actions/munition';
 const mapStateToProps = state => {
   return {
     translations: state.translationsReducer,
-    all_munitions: state.munitions.all_munitions,
+    allMunitions: state.munitions.allMunitions,
     fetchingMunitions: state.munitions.isFetching,
   };
 };

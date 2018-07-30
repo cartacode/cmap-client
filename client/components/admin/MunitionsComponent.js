@@ -104,7 +104,7 @@ class MunitionsComponent extends React.Component {
       {name:translations['Guns'], onClick:this.gunModal}
     ];
 
-    const { all_munitions } = this.props;
+    const { allMunitions } = this.props;
 
     const columns = [
       /*{
@@ -146,7 +146,7 @@ class MunitionsComponent extends React.Component {
 					style={{ width: "100%" }}
 					value={filter ? filter.value : ""}
 				  >
-					{all_munitions.map(function(data, key){  
+					{allMunitions.map(function(data, key){  
 						return (<option key={key} value={data.munition}>{data.munition}</option> );
 					})}
 				  </select>
@@ -182,7 +182,7 @@ class MunitionsComponent extends React.Component {
 					style={{ width: "100%" }}
 					value={filter ? filter.value : ""}
 				  >
-					{all_munitions.map(function(data, key){  
+					{allMunitions.map(function(data, key){  
 						return (<option key={key} value={data.location}>{data.location}</option> );
 					})}
 				  </select>
@@ -214,8 +214,8 @@ class MunitionsComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 	
-	console.log('all_munitions:');
-		console.log(all_munitions);
+	console.log('allMunitions:');
+		console.log(allMunitions);
 
     return (
       <div>
@@ -238,7 +238,7 @@ class MunitionsComponent extends React.Component {
         <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
           <div className="col-md-12">
             <ReactTable
-              data={all_munitions}
+              data={allMunitions}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"

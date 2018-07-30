@@ -1,4 +1,8 @@
 export default {
+  munitions: {
+    allMunitions: [],
+    isFetching: false,
+  },
   payloads: {
     allPayloads: [],
     isFetching: false,

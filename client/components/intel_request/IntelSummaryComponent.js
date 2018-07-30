@@ -102,7 +102,7 @@ class IntelSummaryComponent extends React.Component {
       {name:translations['Guns'], onClick:this.gunModal}
     ]; */
 
-    const { all_munitions } = this.props;
+    const { allMunitions } = this.props;
 
     const columns = [
       /*{
@@ -189,8 +189,8 @@ class IntelSummaryComponent extends React.Component {
       {name: translations['Record Date'], type: 'date'},
     ];
 
-	console.log('all_munitions:');
-		console.log(all_munitions);
+	console.log('allMunitions:');
+		console.log(allMunitions);
 
     return (
       <div>
@@ -215,7 +215,7 @@ class IntelSummaryComponent extends React.Component {
           </div>
           <div className="col-md-12">
             <ReactTable
-              data={all_munitions}
+              data={allMunitions}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"

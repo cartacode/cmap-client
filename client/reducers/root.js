@@ -1,32 +1,5 @@
 import { combineReducers } from 'redux';
 
-const munitions = (
-  state = {
-    isFetching: false,
-    isReady: false,
-    all_munitions: [],
-  },
-  action
-) => {
-  switch (action.type) {
-    case REQUEST_MUNITION:
-      return {
-        ...state,
-        isFetching: true,
-        isReady: false
-      };
-    case RECEIVE_MUNITION:
-      return {
-        ...state,
-        isFetching: false,
-        isReady: true,
-        all_munitions: action.munitions
-      };
-    default:
-      return state;
-  }
-};
-
 const locations = (
   state = {
     isFetching: false,
