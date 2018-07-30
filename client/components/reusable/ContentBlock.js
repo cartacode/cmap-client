@@ -109,13 +109,19 @@ class ContentBlock extends React.Component {
     renderFields() {
         return this.props.fields.map((item, i) => {
             let input;
+            
+            
             switch (item.type) {
                 case 'input':
                     input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
                     break;
 
                 case 'number':
-                    input = (<input type="number" className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
+                let minValue=0;
+                    if(item.minValue){
+                        minValue = item.minValue
+                    }
+                    input = (<input type="number" min={minValue} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
                     break;
 
                 case 'dropdown':

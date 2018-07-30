@@ -255,7 +255,7 @@ class WamiModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
+      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName'},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
@@ -263,7 +263,7 @@ class WamiModal extends React.Component {
       {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram'},
-      {name: translations['Cost'], type: 'input', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
+      {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
     ];
 
@@ -278,12 +278,12 @@ class WamiModal extends React.Component {
     ];
 
     const payloadFields = [
-      {name: translations['Lens Count'], type: 'input', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount'},
-      {name: translations['Image Resolution'], type: 'input', domID: 'PayloadImageResolution', valFieldID: 'PayloadImageResolution'},
-      {name: translations['Max Altitude'], type: 'input', domID: 'PayloadMaxAltitude', valFieldID: 'PayloadMaxAltitude'},
-      {name: translations['Max Range'], type: 'input', domID: 'PayloadMaxRange', valFieldID: 'PayloadMaxRange'},
-      {name: translations['Refresh Rate EO'], type: 'input', domID: 'PayloadRefreshRateEO', valFieldID: 'PayloadRefreshRateEO'},
-      {name: translations['Refresh Rate IR'], type: 'input', domID: 'PayloadRefreshRateIR', valFieldID: 'PayloadRefreshRateIR'},
+      {name: translations['Lens Count'], type: 'number', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount'},
+      {name: translations['Image Resolution'], type: 'number', domID: 'PayloadImageResolution', valFieldID: 'PayloadImageResolution'},
+      {name: translations['Max Altitude'], type: 'number', domID: 'PayloadMaxAltitude', valFieldID: 'PayloadMaxAltitude'},
+      {name: translations['Max Range'], type: 'number', domID: 'PayloadMaxRange', valFieldID: 'PayloadMaxRange'},
+      {name: translations['Refresh Rate EO'], type: 'number', domID: 'PayloadRefreshRateEO', valFieldID: 'PayloadRefreshRateEO'},
+      {name: translations['Refresh Rate IR'], type: 'number', domID: 'PayloadRefreshRateIR', valFieldID: 'PayloadRefreshRateIR'},
       {name: translations['Angular Coverage'], type: 'checkbox', domID: 'PayloadAngularCoverage', valFieldID: 'PayloadAngularCoverage'},
       {name: translations['Area of Coverage'], type: 'checkbox', domID: 'PayloadAreaCoverage', valFieldID: 'PayloadAreaCoverage'},
       {name: translations['Change Detect'], type: 'checkbox', domID: 'PayloadChangeDetect', valFieldID: 'PayloadChangeDetect'},

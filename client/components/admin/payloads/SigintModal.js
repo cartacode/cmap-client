@@ -247,7 +247,7 @@ class SigintModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'input', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
+      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName'},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
@@ -255,7 +255,7 @@ class SigintModal extends React.Component {
       {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram'},
-      {name: translations['Cost'], type: 'input', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
+      {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
     ];
 
