@@ -359,20 +359,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addMunition: (munition) => {
-      dispatch(addMunition(munition));
-    },
-
-    fetchMunitions: () => {
-      dispatch(fetchMunitions());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addMunition,
+  fetchMunitions,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GunModal);

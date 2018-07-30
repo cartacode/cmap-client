@@ -646,16 +646,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPlatform: (platform) => {
-      dispatch(addPlatform(platform));
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addPlatform,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformModal);

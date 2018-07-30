@@ -11,16 +11,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPlatform: (platform) => {
-    	dispatch(addPlatform(platform));
-    },
-
-    fetchPlatforms: () => {
-      dispatch(fetchPlatforms());
-    },
-  };
+const mapDispatchToProps = {
+  addPlatform,
+  fetchPlatforms,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsComponent);

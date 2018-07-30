@@ -11,13 +11,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchPersonnels: () => {
-      dispatch(fetchPersonnels());
-    },
-
-  };
+const mapDispatchToProps = {
+  fetchPersonnels,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonnelComponent);

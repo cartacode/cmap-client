@@ -248,20 +248,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addLocation: (location) => {
-      dispatch(addLocation(location));
-    },
-
-    fetchLocations: () => {
-      dispatch(fetchLocations());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addLocation,
+  fetchLocations,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NaiModal);

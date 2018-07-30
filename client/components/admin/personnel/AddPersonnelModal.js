@@ -1279,21 +1279,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPersonnel: (personnel) => {
-      dispatch(addPersonnel(personnel));
-      console.log("Cool");
-    },
-
-    fetchPersonnels: () => {
-      dispatch(fetchPersonnels());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addPersonnel,
+  fetchPersonnels,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPersonnelModal);

@@ -9,15 +9,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addIntelEei: (intelEEI) => {
-    	dispatch(addIntelEei(intelEEI));
-    },
-    addIntelRequest: (intelReq) => {
-    	dispatch(addIntelRequest(intelReq));
-    },
-  };
+const mapDispatchToProps = {
+  addIntelEei,
+  addIntelRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IntelRequestIntelRequestComponent);

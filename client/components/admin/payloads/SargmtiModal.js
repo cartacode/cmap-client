@@ -419,20 +419,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPayload: (payload) => {
-      dispatch(addPayload(payload));
-    },
-
-    fetchPayloads: () => {
-      dispatch(fetchPayloads());
-    },
-
-    uploadFile: (fileData) => {
-      dispatch(uploadFile(fileData));
-    }
-  };
+const mapDispatchToProps = {
+  addPayload,
+  fetchPayloads,
+  uploadFile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SargmtiModal);

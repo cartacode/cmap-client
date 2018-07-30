@@ -11,16 +11,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addLocation: (location) => {
-    	dispatch(addLocation(location));
-    },
-
-    fetchLocations: () => {
-    	dispatch(fetchLocations());
-    },
-  };
+const mapDispatchToProps = {
+  addLocation,
+  fetchLocations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationComponent);

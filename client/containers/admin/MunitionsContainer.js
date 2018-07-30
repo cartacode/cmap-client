@@ -11,16 +11,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addMunition: (munition) => {
-    	dispatch(addMunition(munition));
-    },
-
-    fetchMunitions: () => {
-    	dispatch(fetchMunitions());
-    }
-  };
+const mapDispatchToProps = {
+  addMunition,
+  fetchMunitions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsComponent);

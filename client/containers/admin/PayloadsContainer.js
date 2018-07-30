@@ -17,32 +17,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addPayload: (payload) => {
-    	dispatch(addPayload(payload));
-    },
-
-    fetchPayloadList: () => {
-      dispatch(fetchPayloadList());
-    },
-
-    fetchPayloadTypes: () => {
-      dispatch(fetchPayloadTypes());
-    },
-
-    fetchPayloads: () => {
-    	dispatch(fetchPayloads());
-    },
-
-    fetchCocoms: () => {
-      dispatch(fetchCocoms());
-    },
-
-    fetchLocationList: () => {
-      dispatch(fetchLocationList());
-    }
-  };
+const mapDispatchToProps = {
+  addPayload,
+  fetchPayloadList,
+  fetchPayloadTypes,
+  fetchPayloads,
+  fetchCocoms,
+  fetchLocationList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PayloadsComponent);
