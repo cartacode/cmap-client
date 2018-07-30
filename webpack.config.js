@@ -111,6 +111,9 @@ function getPlugins(isDev) {
     new CopyWebpackPlugin([
       {from: 'client/assets', to: 'assets'}
     ]),
+    new CopyWebpackPlugin([
+      {from: 'client/vendor', to: 'vendor'}
+    ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: 'body',
