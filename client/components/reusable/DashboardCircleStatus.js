@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {getTranslations} from '../../actions/actions';
 import {connect} from 'react-redux';
 
 class DashboardCircleStatus extends React.Component {
@@ -69,7 +68,7 @@ class DashboardCircleStatus extends React.Component {
         case translations["pid's"]:
           background= 'url(/assets/img/status/pcrew_status.png) no-repeat center';
           break;
-          
+
 
       }
 
@@ -93,13 +92,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardCircleStatus);
+export default connect(mapStateToProps)(DashboardCircleStatus);
 

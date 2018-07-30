@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {getTranslations} from '../../actions/actions';
 import {connect} from 'react-redux';
 
 class CircleStatus extends React.Component {
@@ -11,7 +10,7 @@ class CircleStatus extends React.Component {
     super(props);
   }
 
-  
+
   render() {
     let background;
     const {translations: {translations}} = this.props;
@@ -59,13 +58,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CircleStatus);
+export default connect(mapStateToProps)(CircleStatus);
 

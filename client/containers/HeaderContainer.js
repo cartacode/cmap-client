@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import HeaderComponent from '../components/HeaderComponent';
-import {getTranslations} from '../actions/actions';
+import { updateLocalization } from 'actions/localization';
 
 const mapStateToProps = state => {
   return {
@@ -10,12 +10,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
+const mapDispatchToProps = {
+  updateLocalization,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

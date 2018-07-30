@@ -8,8 +8,6 @@ import OrdersContainer from '../containers/orders_assets/OrdersContainer';
 import AllocationContainer from '../containers/orders_assets/AllocationContainer';
 import ForecastContainer from '../containers/orders_assets/ForecastContainer';
 
-import {getTranslations} from '../actions/actions';
-
 class OrdersAssetsComponent extends React.Component {
 
   constructor(props) {
@@ -82,12 +80,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrdersAssetsComponent);
+export default connect(mapStateToProps)(OrdersAssetsComponent);

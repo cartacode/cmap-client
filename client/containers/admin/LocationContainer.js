@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import LocationComponent from '../../components/admin/LocationComponent';
-import {getTranslations} from '../../actions/actions';
 import { addLocation, fetchLocations } from 'actions/location';
 
 const mapStateToProps = state => {
@@ -14,10 +13,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addLocation: (location) => {
     	dispatch(addLocation(location));
     },

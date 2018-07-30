@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
 
-import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
 import { addLocation, fetchLocations } from 'actions/location';
 
@@ -251,10 +250,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addLocation: (location) => {
       dispatch(addLocation(location));
     },

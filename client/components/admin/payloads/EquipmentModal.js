@@ -10,7 +10,6 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
 import { addPayload, fetchPayloads } from 'actions/payload';
 
@@ -275,7 +274,7 @@ class EquipmentModal extends React.Component {
 
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
@@ -380,7 +379,7 @@ class EquipmentModal extends React.Component {
             </div>
           </div>
       </form>
-      
+
     );
   }
 }
@@ -399,10 +398,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addPayload: (payload) => {
       dispatch(addPayload(payload));
     },

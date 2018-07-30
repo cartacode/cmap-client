@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {getTranslations} from '../../actions/actions';
 import {connect} from 'react-redux';
 
 
@@ -13,7 +12,7 @@ class OperationVideoBlock extends React.Component {
   }
 
   render() {
-    
+
     const {translations: {translations}} = this.props;
 
     let borderBottom, progressbar, width, video;
@@ -62,7 +61,7 @@ class OperationVideoBlock extends React.Component {
           </div>
           <div className="col-md-12 time-bar">
             <div className="col-md-8">
-              {translations["mission progress"]} 
+              {translations["mission progress"]}
             </div>
             <div className="col-md-4">
               RTB {this.props.remainTime}
@@ -73,7 +72,7 @@ class OperationVideoBlock extends React.Component {
               <img src={progressbar} alt="" style={{width}} />
             </div>
           </div>
-          <img src={video} className="video" alt=""/>  
+          <img src={video} className="video" alt=""/>
         </div>
       </div>
     );
@@ -91,12 +90,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OperationVideoBlock);
+export default connect(mapStateToProps)(OperationVideoBlock);

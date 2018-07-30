@@ -12,7 +12,6 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
 import { addPlatform } from 'actions/platform';
 
@@ -649,10 +648,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addPlatform: (platform) => {
       dispatch(addPlatform(platform));
     },

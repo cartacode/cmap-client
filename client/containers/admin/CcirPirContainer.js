@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import CcirPirComponent from '../../components/admin/CcirPirComponent';
-import {getTranslations} from '../../actions/actions';
 
 const mapStateToProps = state => {
   return {
@@ -9,12 +8,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CcirPirComponent);
+export default connect(mapStateToProps)(CcirPirComponent);

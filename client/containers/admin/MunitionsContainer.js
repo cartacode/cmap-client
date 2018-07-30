@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import MunitionsComponent from '../../components/admin/MunitionsComponent';
-import {getTranslations } from '../../actions/actions';
 import { addMunition, fetchMunitions } from 'actions/munition';
 
 const mapStateToProps = state => {
@@ -14,10 +13,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addMunition: (munition) => {
     	dispatch(addMunition(munition));
     },

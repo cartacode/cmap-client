@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import DashboardComponent from '../components/DashboardComponent';
-import {getTranslations} from '../actions/actions';
 
 const mapStateToProps = state => {
   return {
@@ -9,12 +8,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);
+export default connect(mapStateToProps)(DashboardComponent);

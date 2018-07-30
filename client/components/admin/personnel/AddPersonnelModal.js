@@ -12,7 +12,6 @@ import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
-import { getTranslations,  } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
 import { addPersonnel, fetchPersonnels } from 'actions/personnel';
 
@@ -1282,10 +1281,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addPersonnel: (personnel) => {
       dispatch(addPersonnel(personnel));
       console.log("Cool");

@@ -8,8 +8,6 @@ import AtoContainer from '../containers/mission_mgt/AtoContainer';
 import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
 import MissionDetailContainer from '../containers/mission_mgt/MissionDetailContainer';
 
-import {getTranslations} from '../actions/actions';
-
 class MissionMGTComponent extends React.Component {
 
   constructor(props) {
@@ -82,12 +80,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MissionMGTComponent);
+export default connect(mapStateToProps)(MissionMGTComponent);

@@ -11,8 +11,6 @@ import NatlImageryContainer from '../containers/intel_request/NatlImageryContain
 import ResourcesContainer from '../containers/intel_request/ResourcesContainer';
 import TaskingOrderContainer from '../containers/TaskingOrderContainer';
 
-import {getTranslations} from '../actions/actions';
-
 
 class IntelRequestComponent extends React.Component {
 
@@ -65,7 +63,7 @@ class IntelRequestComponent extends React.Component {
           </div>
         </div>
         <Switch>
-          <Route path={`${match.url}/summary`} component={IntelSummaryContainer} /> 
+          <Route path={`${match.url}/summary`} component={IntelSummaryContainer} />
           <Route path={`${match.url}/request`} component={IntelRequestContainer} />
           <Route path={`${match.url}/review`} component={ResourcesContainer} />
           <Route path={`${match.url}/operating-picture`} component={OperatingPictureContainer} />
@@ -89,13 +87,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IntelRequestComponent);
+export default connect(mapStateToProps)(IntelRequestComponent);
 

@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import SysHealthComponent from '../../components/admin/SysHealthComponent';
-import {getTranslations} from '../../actions/actions';
 
 const mapStateToProps = state => {
   return {
@@ -10,12 +9,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SysHealthComponent);
+export default connect(mapStateToProps)(SysHealthComponent);

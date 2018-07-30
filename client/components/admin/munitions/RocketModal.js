@@ -10,7 +10,6 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
-import { getTranslations } from '../../../actions/actions';
 import { uploadFile } from 'actions/file';
 import { addMunition, fetchMunitions } from 'actions/munition';
 
@@ -235,9 +234,9 @@ class RocketModal extends React.Component {
 
 
     return (
-      
+
       <form action="" onSubmit={this.handleSubmit} >
-        
+
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -337,9 +336,9 @@ class RocketModal extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-        
+
       </form>
-      
+
     );
   }
 }
@@ -358,10 +357,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    },
-
     addMunition: (munition) => {
       dispatch(addMunition(munition));
     },

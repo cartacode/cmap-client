@@ -16,7 +16,7 @@ class HeaderComponent extends React.Component {
   }
 
   changeLang(lang) {
-    this.props.getTranslations(lang);
+    this.props.updateLocalization(lang);
 
     setTimeout(() => {
       console.log(this.refs.search.innerText.length)
@@ -42,10 +42,6 @@ class HeaderComponent extends React.Component {
     );
 
     return langsList;
-  }
-
-  componentWillMount() {
-    this.props.getTranslations('English');
   }
 
   renderMenuItems() {

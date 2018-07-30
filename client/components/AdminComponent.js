@@ -15,8 +15,6 @@ import ComNetContainer from '../containers/admin/ComNetContainer';
 import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
 
-import {getTranslations} from '../actions/actions';
-
 class AdminComponent extends React.Component {
 
   constructor(props) {
@@ -109,12 +107,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTranslations: (lang) => {
-      dispatch(getTranslations(lang));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminComponent);
+export default connect(mapStateToProps)(AdminComponent);
