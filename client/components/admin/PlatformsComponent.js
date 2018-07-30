@@ -76,9 +76,9 @@ class PlatformComponent extends React.Component {
   render() {
 
     const {translations: {translations}} = this.props;
-    const {all_platforms} = this.props;
+    const {allPlatforms} = this.props;
 
-    console.log(all_platforms);
+    console.log(allPlatforms);
 
     const columns = [
 
@@ -153,7 +153,7 @@ class PlatformComponent extends React.Component {
 
           <div className="col-md-12">
             <ReactTable
-              data={all_platforms}
+              data={allPlatforms}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"

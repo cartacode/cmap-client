@@ -8,9 +8,9 @@ import { addPayload, fetchPayloadList, fetchPayloads, fetchPayloadTypes } from '
 const mapStateToProps = state => {
   return {
     translations: state.translationsReducer,
-    payload_data: state.payloadData.payload_data,
-    payload_list: state.payloads.payload_list,
-    payload_types: state.payloadTypes.payload_types,
+    allPayloads: state.payloads.allPayloads,
+    payloadList: state.payloads.payloadList,
+    payloadTypes: state.payloads.payloadTypes,
     fetchingPayloads: state.payloads.isFetching,
     location_list: state.locations.location_list,
     cocom_list: state.cocoms.cocom_list,

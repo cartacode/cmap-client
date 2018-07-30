@@ -107,7 +107,7 @@ class PayloadsComponent extends React.Component {
 
 	render() {
 		const {translations: {translations}} = this.props;
-		const {payload_data, payload_list, payload_types, cocom_list, location_list} = this.props;
+		const {allPayloads, payloadList, payloadTypes, cocom_list, location_list} = this.props;
 
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.eoirModal},
@@ -152,7 +152,7 @@ class PayloadsComponent extends React.Component {
 							value={filter ? filter.value : ""}
 						  >
 							{this.renderItems([])}
-							{payload_data.map(function(data, key){
+							{allPayloads.map(function(data, key){
 								return (<option key={key} value={data.payload}>{data.payload}</option> );
 							})}
 						  </select>
@@ -183,7 +183,7 @@ class PayloadsComponent extends React.Component {
 							  value={filter ? filter.value : ""}
 						  >
 							{this.renderItems([])}
-							{payload_data.map(function(data, key){
+							{allPayloads.map(function(data, key){
 								return (<option key={key} value={data.location}>{data.location}</option> );
 							})}
 						  </select>
@@ -237,7 +237,7 @@ class PayloadsComponent extends React.Component {
 
 				<div className="col-md-12">
 					<ReactTable
-						data={payload_data}
+						data={allPayloads}
 						columns={columns}
 						defaultPageSize={5}
 						className="-striped -highlight"

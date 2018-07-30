@@ -10,6 +10,7 @@ export default function personnels(state = initialState.personnels, { payload, t
       };
     case PERSONNEL__FETCH.SUCCESS:
       return {
+        ...state,
         isFetching: false,
         allPersonnels: payload.data,
       };
