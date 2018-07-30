@@ -7,7 +7,7 @@ import { fetchPersonnels } from 'actions/personnel';
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    personnels: state.personnels.allPersonnels,
+    allPersonnels: state.personnels.allPersonnels,
   };
 };
 
