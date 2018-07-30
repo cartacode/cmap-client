@@ -24,7 +24,6 @@ class Table extends React.Component {
         }
     }
 
-
     componentWillMount() {
         let items = [{"label": "--Select Item--", "value": 0}];
 
@@ -60,8 +59,8 @@ class Table extends React.Component {
 
     //render dropdown list of lang switcher
     renderItems() {
-
-        return this.state.dropdownItems.map(function(data, key){  return (
+            let req = this.props.required;
+        return this.state.dropdownItems.map(function(data, key){ if(req && key==0) {data.value=""} return (
             <option key={key} value={data.value}>{data.label}</option> )
         })
     }
@@ -81,9 +80,17 @@ class Table extends React.Component {
         let key = this.props.id || 0;
         return (
             <div>
+                {this.props.required ? 
+                <select className="form-control" name={key} onChange={this.handleChange} required>
+                    {this.renderItems()}
+                </select> 
+                
+                : 
+                
                 <select className="form-control" name={key} onChange={this.handleChange}>
                     {this.renderItems()}
-                </select>
+                </select>}
+                
             </div>
         );
     }

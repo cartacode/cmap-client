@@ -204,7 +204,7 @@ class MissileModal extends React.Component {
     const generalFields = [
       {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
-      {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName'},
+      {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName',required:true},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole'},
       {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer'},

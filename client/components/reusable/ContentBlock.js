@@ -108,12 +108,17 @@ class ContentBlock extends React.Component {
 
     renderFields() {
         return this.props.fields.map((item, i) => {
-            let input;
-            
+            let input; 
             
             switch (item.type) {
+                
                 case 'input':
-                    input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
+                    if(item.required){
+                    input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange} required/>);
+                    }
+                    else {
+                        input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange}/>)
+                    }
                     break;
                 
                 case 'email':
@@ -129,8 +134,12 @@ class ContentBlock extends React.Component {
                     break;
 
                 case 'dropdown':
+                    let req=false;
+                    if(item.required){
+                        req = true;
+                    }
                     input = (
-                        <Dropdown id={item.valFieldID} dropdownDataUrl={item.ddID} nums={this.props.platform} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData}/>
+                        <Dropdown id={item.valFieldID} dropdownDataUrl={item.ddID} nums={this.props.platform} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData} required={req}/>
                     );
                     break;
 

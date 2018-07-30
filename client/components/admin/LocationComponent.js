@@ -20,7 +20,7 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
 
-class PersonnelComponent extends React.Component {
+class LocationComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -246,9 +246,9 @@ class PersonnelComponent extends React.Component {
   }
 }
 
-PersonnelComponent.propTypes = {
+LocationComponent.propTypes = {
   children: PropTypes.element,
 
 };
 
-export default PersonnelComponent;
+export default LocationComponent;
