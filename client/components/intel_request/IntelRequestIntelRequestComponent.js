@@ -242,9 +242,9 @@ class IntelRequestIntelRequestComponent extends React.Component {
 
     const intelRequest2 = [
       {name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', ddID: 'PriorityIntelRequirement', valFieldID:'PriorityIntelRequirement'},
-      {name: translations['Primary Sensor'], type: 'dropdown',ddID: 'Payload', domID:'dispPriSensor', valFieldID:'PrimaryPayload'},
-      {name: translations['Secondary Sensor'], type: 'dropdown',ddID: 'Payload', domID:'dispSecSensor', valFieldID:'SecondaryPayload'},
-      {name: translations['Armed'], type: 'dropdown',ddID: 'Munition', domID:'dispArmed', valFieldID:'Armed'},
+      {name: translations['Primary Sensor'], type: 'dropdown',ddID: 'GetPayloads', domID:'dispPriSensor', valFieldID:'PrimaryPayload'},
+      {name: translations['Secondary Sensor'], type: 'dropdown',ddID: 'GetPayloads', domID:'dispSecSensor', valFieldID:'SecondaryPayload'},
+      {name: translations['Armed'], type: 'dropdown',ddID: 'GetMunitions', domID:'dispArmed', valFieldID:'Armed'},
     ];
 
     const intelRequest3 = [

@@ -88,8 +88,8 @@ class CcirPirComponent extends React.Component {
       {
         Header: translations['Unit'],
         accessor: 'unit',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        Filter: ({ filter, onChange }) =>
+                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },
       {
         Header: translations['Commander'],
@@ -100,23 +100,27 @@ class CcirPirComponent extends React.Component {
       {
         Header: translations['Record Date'],
         accessor: 'recorddate',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        filterable: false
+        // filterMethod: (filter, row) =>
+        //             row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['view'],
         accessor: 'view',
+        filterable: false,
         Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
       }
     ];
 
     const rowFields = [
-      {name: translations['COCOM'], type: 'dropdown'},
-      {name: translations['Country'], type: 'dropdown'},
-      {name: translations['Region'], type: 'dropdown'},
-      {name: translations['Unit'], type: 'dropdown'},
-      {name: translations['Commander'], type: 'dropdown'},
-      {name: translations['Record Date'], type: 'date'},
+      {name: 'Creation Date/Time', type: 'date'},
+      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
+      {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
+      {name: 'Country', type: 'dropdown', ddID: 'Countries'},
+      {name: 'Region', type: 'dropdown', ddID: 'Regions'},
+      {name: 'Unit', type: 'dropdown',ddID: 'Units'},
+      {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
+      {name: 'Mission/Operation name', type: 'input'}
     ];
 
     return (

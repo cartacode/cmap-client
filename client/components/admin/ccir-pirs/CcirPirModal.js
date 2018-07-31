@@ -44,13 +44,13 @@ class CcirPirModal extends React.Component {
 
     const generalFields = [
       {name: 'Creation Date/Time', type: 'date'},
-      {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
-      {name: 'Service', type: 'dropdown', ddID:'Service'},
-      {name: 'Country', type: 'dropdown', ddID:'Countries'},
-      {name: 'Region', type: 'dropdown', ddID:'Regions'},
-      {name: 'Unit', type: 'dropdown',ddID:'Unit'},
-      {name: 'Commander', type: 'dropdown', ddID:'Commander'},
-      {name: 'Mission/Operation name', type: 'input'},
+      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM'},
+      {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
+      {name: 'Country', type: 'dropdown', ddID: 'Countries'},
+      {name: 'Region', type: 'dropdown', ddID: 'Regions'},
+      {name: 'Unit', type: 'dropdown',ddID: 'Units'},
+      {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
+      {name: 'Mission/Operation name', type: 'input'}
     ];
 
    
