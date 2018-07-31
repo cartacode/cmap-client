@@ -247,14 +247,14 @@ class SigintModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
+      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial',required:true },
+      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit',required:true},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName',required:true},
-      {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole'},
-      {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer'},
-      {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent'},
-      {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram'},
+      {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature',required:true},
+      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole',required:true},
+      {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer',required:true},
+      {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent',required:true},
+      {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram',required:true},
       {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
     ];
@@ -321,37 +321,37 @@ class SigintModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Wireframe Image']}
                       </div>
-                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['3D Model']}
                       </div>
-                      <input type="file"  name="file" id="Payload3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="Payload3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['2D Icon']}
                       </div>
-                      <input type="file"  name="file" id="PayloadIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="PayloadIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Milspec Icon']}
                       </div>
-                      <input type="file"  name="file" id="Payload2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="Payload2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Datasheets']}
                       </div>
-                      <input type="file"  name="file" id="PayloadDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="PayloadDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                   </div>
                 </div>

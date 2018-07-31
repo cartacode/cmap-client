@@ -1137,13 +1137,13 @@ class AddPersonnelModal extends React.Component {
     const {translations} = this.props;
 
     const generalFields = [
-        {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName'},
+        {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName', required:true},
         {name: translations['Middle Initial'], type: 'input', domID: 'MiddleInitial', valFieldID: 'MiddleInitial'},
-        {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName'},
+        {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required:true},
         {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
         {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
-        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality'},
-        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance'},
+        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality',required:true},
+        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance',required:true},
         {name: translations['CAC ID'], type: 'input', domID: 'CACid'},
         {name: translations['Call Sign'], type: 'input', domID: 'CallSign'},
     ];
@@ -1167,9 +1167,9 @@ class AddPersonnelModal extends React.Component {
     ];
 
     const contactFields = [
-        {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN'},
-        {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR'},
-        {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR'},
+        {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN',required:true},
+        {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR',required:true},
+        {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR',required:true},
         {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
 
     ];
@@ -1206,19 +1206,19 @@ class AddPersonnelModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  required/>
+                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  required/>
                     </div>
                     <div className="upload-line">
                       <div>
                         Organization Logo
                       </div>
-                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" required/>
+                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" required/>
                     </div>
                     <div className="upload-line">
                       <div>
                         Datasheet
                       </div>
-                      <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"/>
+                      <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required/>
                     </div>
                   </div>
                 </div>

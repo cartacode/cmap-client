@@ -200,11 +200,11 @@ class GunModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
+      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial',required:true},
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName', required:true},
-      {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole'},
+      {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature',required:true},
+      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole',required:true},
       {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram'},
@@ -220,13 +220,13 @@ class GunModal extends React.Component {
     ];
 
     const technicalFields = [
-      {name: translations['Type'], type: 'input', domID: 'MunitionType', valFieldID: 'MunitionType'},
-      {name: translations['Caliber'], type: 'input', domID: 'MunitionCaliber', valFieldID: 'MunitionCaliber'},
+      {name: translations['Type'], type: 'input', domID: 'MunitionType', valFieldID: 'MunitionType',required:true},
+      {name: translations['Caliber'], type: 'input', domID: 'MunitionCaliber', valFieldID: 'MunitionCaliber',required:true},
       {name: translations['Drive System'], type: 'input', domID: 'MunitionDriveSystem', valFieldID: 'MunitionDriveSystem'},
       {name: translations['Feed System'], type: 'input', domID: 'MunitionFeedSystem', valFieldID: 'MunitionFeedSystem'},
       {name: translations['Rate of Fire'], type: 'number', domID: 'MunitionRateFire', valFieldID: 'MunitionRateFire'},
       {name: translations['Muzzle Velocity'], type: 'number', domID: 'MunitionMuzzleVelocity', valFieldID: 'MunitionMuzzleVelocity'},
-      {name: translations['Projectile Weight'], type: 'number', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight'},
+      {name: translations['Projectile Weight'], type: 'number', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight',required:true},
       {name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMusselEnergy', valFieldID: 'MunitionMusselEnergy'},
       {name: translations['Length'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength'},
       {name: translations['Width/Diameter'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter'},
@@ -270,37 +270,37 @@ class GunModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Wireframe Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['3D Model']}
                       </div>
-                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['2D Icon']}
                       </div>
-                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" />
+                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Milspec Icon']}
                       </div>
-                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Datasheets']}
                       </div>
-                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                   </div>
                 </div>

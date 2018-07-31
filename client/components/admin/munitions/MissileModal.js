@@ -202,14 +202,14 @@ class MissileModal extends React.Component {
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial'},
+      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial',required:true},
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName',required:true},
-      {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature'},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole'},
-      {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer'},
-      {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent'},
-      {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram'},
+      {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature',required:true},
+      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole',required:true},
+      {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer',required:true},
+      {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent',required:true},
+      {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram',required:true},
       {name: translations['Cost'], type: 'number', domID: 'MunitionCost', valFieldID: 'MunitionCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'MunitionCostNotes', valFieldID: 'MunitionCostNotes'},
     ];
@@ -223,15 +223,15 @@ class MissileModal extends React.Component {
 
 
     const technicalFields = [
-      {name: translations['Length (in.)'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength'},
-      {name: translations['Width/Diameter (in.)'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter'},
-      {name: translations['Height (in.)'], type: 'number', domID: 'MunitionHeight', valFieldID: 'MunitionHeight'},
-      {name: translations['Weight (lbs.)'], type: 'number', domID: 'MunitionWeight', valFieldID: 'MunitionWeight'},
-      {name: translations['Wingspan (in.)'], type: 'number', domID: 'MunitionWingspan', valFieldID: 'MunitionWingspan'},
+      {name: translations['Length (in.)'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength',required:true},
+      {name: translations['Width/Diameter (in.)'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter',required:true},
+      {name: translations['Height (in.)'], type: 'number', domID: 'MunitionHeight', valFieldID: 'MunitionHeight',required:true},
+      {name: translations['Weight (lbs.)'], type: 'number', domID: 'MunitionWeight', valFieldID: 'MunitionWeight',required:true},
+      {name: translations['Wingspan (in.)'], type: 'number', domID: 'MunitionWingspan', valFieldID: 'MunitionWingspan',required:true},
       {name: translations['Warhead'], type: 'input', domID: 'MunitionWarhead', valFieldID: 'MunitionWarhead'},
       {name: translations['Engine'], type: 'input', domID: 'MunitionEngine', valFieldID: 'MunitionEngine'},
-      {name: translations['Operational Range (miles)'], type: 'number', domID: 'MunitionRange', valFieldID: 'MunitionRange'},
-      {name: translations['Speed (mph)'], type: 'number', domID: 'MunitionSpeed', valFieldID: 'MunitionSpeed'},
+      {name: translations['Operational Range (miles)'], type: 'number', domID: 'MunitionRange', valFieldID: 'MunitionRange',required:true},
+      {name: translations['Speed (mph)'], type: 'number', domID: 'MunitionSpeed', valFieldID: 'MunitionSpeed',required:true},
       {name: translations['Guidance System'], type: 'input', domID: 'MunitionGuidanceSys', valFieldID: 'MunitionGuideanceSys'},
       {name: translations['Launch Platform'], type: 'input', domID: 'MunitionLaunchPlatform', valFieldID: 'MunitionLaunchPlatform'},
       {name: translations['Weather Restriction'], type: 'input', domID: 'MunitionWeatherRestriction', valFieldID:'MunitionWeatherRestriction'},
@@ -270,37 +270,37 @@ class MissileModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Wireframe Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['3D Model']}
                       </div>
-                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['2D Icon']}
                       </div>
-                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Milspec Icon']}
                       </div>
-                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Datasheets']}
                       </div>
-                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                   </div>
                 </div>

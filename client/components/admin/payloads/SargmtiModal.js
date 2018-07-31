@@ -250,33 +250,33 @@ class SargmtiModal extends React.Component {
     const {translations} = this.props;
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial' },
+      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial',required:true },
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required:true},
-      {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature'},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole'},
-      {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer'},
-      {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent'},
-      {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram'},
+      {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature',required:true},
+      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole',required:true},
+      {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer',required:true},
+      {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent',required:true},
+      {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram',required:true},
       {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
       {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
     ];
 
     const technicalFields = [
-      {name: translations['Length (in.)'], type: 'number', domID: 'PayloadLength', valFieldID: 'PayloadLength'},
-      {name: translations['Width (in.)'], type: 'number', domID: 'PayloadWidth', valFieldID: 'PayloadWidth'},
-      {name: translations['Height (in.)'], type: 'number', domID: 'PayloadHeight', valFieldID: 'PayloadHeight'},
-      {name: translations['Weight (lbs.)'], type: 'number', domID: 'PayloadWeight', valFieldID: 'PayloadWeight'},
-      {name: translations['Power(W)'], type: 'number', domID: 'PayloadPower', valFieldID: 'PayloadPower'},
+      {name: translations['Length (in.)'], type: 'number', domID: 'PayloadLength', valFieldID: 'PayloadLength',required:true},
+      {name: translations['Width (in.)'], type: 'number', domID: 'PayloadWidth', valFieldID: 'PayloadWidth',required:true},
+      {name: translations['Height (in.)'], type: 'number', domID: 'PayloadHeight', valFieldID: 'PayloadHeight',required:true},
+      {name: translations['Weight (lbs.)'], type: 'number', domID: 'PayloadWeight', valFieldID: 'PayloadWeight',required:true},
+      {name: translations['Power(W)'], type: 'number', domID: 'PayloadPower', valFieldID: 'PayloadPower',required:true},
       {name: translations['Connector']+ "1", type: 'input', domID: 'PayloadConnector1', valFieldID: 'PayloadConnector1'},
       {name: translations['Connector']+ "2", type: 'input', domID: 'PayloadConnector2', valFieldID: 'PayloadConnector2'},
     ];
 
     const payloadFields = [
-      {name: 'Frequency Range:', type: 'number', domID: 'PayloadFrequencyRange', valFieldID: 'PayloadFrequencyRange'},
-      {name: 'Scan Coverage:', type: 'number', domID: 'PayloadScanCoverage', valFieldID: 'PayloadScanCoverage'},
-      {name: 'Maximum Range:', type: 'number', domID: 'PayloadMaximumRange', valFieldID: 'PayloadMaximumRange'},
-      {name: 'Map Resolution:', type: 'number', domID: 'PayloadMapResolution', valFieldID: 'PayloadMapResolution'},
+      {name: 'Frequency Range:', type: 'number', domID: 'PayloadFrequencyRange', valFieldID: 'PayloadFrequencyRange',required:true},
+      {name: 'Scan Coverage:', type: 'number', domID: 'PayloadScanCoverage', valFieldID: 'PayloadScanCoverage',required:true},
+      {name: 'Maximum Range:', type: 'number', domID: 'PayloadMaximumRange', valFieldID: 'PayloadMaximumRange',required:true},
+      {name: 'Map Resolution:', type: 'number', domID: 'PayloadMapResolution', valFieldID: 'PayloadMapResolution',required:true},
       {name: 'Ground Mapping:', type: 'checkbox', domID: 'PayloadGroundMapping', valFieldID: 'PayloadGroundMapping'},
       {name: 'Strip SAR:', type: 'checkbox', domID: 'PayloadStripSAR', valFieldID: 'PayloadStripSAR'},
       {name: 'Spotlight SAR:', type: 'checkbox', domID: 'PayloadSpotlightSAR', valFieldID: 'PayloadSpotlightSAR'},
@@ -286,7 +286,7 @@ class SargmtiModal extends React.Component {
     ];
 
     const crewFields = [
-      {name: translations['Payload Crew Count'], type: 'number', domID: 'PayloadCrewCount', valFieldID: 'PayloadCrewCount'},
+      {name: translations['Payload Crew Count'], type: 'number', domID: 'PayloadCrewCount', valFieldID: 'PayloadCrewCount',required:true},
       {name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'MOS1'},
       {name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: "MOS", valFieldID: 'MOS2'},
       {name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'MOS3'},
@@ -328,37 +328,37 @@ class SargmtiModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Wireframe Image']}
                       </div>
-                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['3D Model']}
                       </div>
-                      <input type="file"  name="file" id="Payload3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="Payload3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['2D Icon']}
                       </div>
-                      <input type="file"  name="file" id="PayloadIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="PayloadIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Milspec Icon']}
                       </div>
-                      <input type="file"  name="file" id="Payload2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="Payload2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Datasheets']}
                       </div>
-                      <input type="file"  name="file" id="PayloadDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                      <input type="file"  name="file" id="PayloadDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
                     </div>
                   </div>
                 </div>
