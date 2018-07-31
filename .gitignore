@@ -5,4 +5,6 @@
 node_modules
 public
 test/coverage
+dist
+client/dist
 
