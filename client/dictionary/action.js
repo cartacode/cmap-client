@@ -6,6 +6,9 @@ export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
 export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
+export const INTEL_EEI__FETCH = createActionType('INTEL_EEI__FETCH');
+export const INTEL_REQUEST__FETCH = createActionType('INTEL_REQUEST__FETCH');
+
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
 
