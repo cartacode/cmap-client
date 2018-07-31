@@ -5,8 +5,11 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 
 import PersonnelContainer from '../containers/admin/PersonnelContainer';
 import PlatformsContainer from '../containers/admin/PlatformsContainer';
+import PlatformsSpecificationContainer from '../containers/admin/PlatformsSpecificationContainer';
 import PayloadsContainer from '../containers/admin/PayloadsContainer';
+import PayloadsSpecificationContainer from '../containers/admin/PayloadsSpecificationContainer';
 import MunitionsContainer from '../containers/admin/MunitionsContainer';
+import MunitionsSpecificationContainer from '../containers/admin/MunitionsSpecificationContainer';
 import AdminStatusContainer from '../containers/admin/AdminStatusContainer';
 import LocationContainer from '../containers/admin/LocationContainer';
 import CcirPirContainer from '../containers/admin/CcirPirContainer';
@@ -14,12 +17,25 @@ import OrgBuilderContainer from '../containers/admin/OrgBuilderContainer';
 import ComNetContainer from '../containers/admin/ComNetContainer';
 import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
+import SubMenu from './reusable/SubMenu';
 
 class AdminComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      showSubMenu: false,
+      key:-1
+    };
   }
+
+  handleHover = (i) => {
+    this.setState({ key: i});
+  };
+
+  handleLeave = () => {
+    this.setState({ key:-1 });
+  };
 
   renderMenuItems() {
 
@@ -27,9 +43,9 @@ class AdminComponent extends React.Component {
 
     const menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel`},
-      {title: translations['platforms'], url: `${match.url}/platforms`},
-      {title: translations['payloads'], url: `${match.url}/payloads`},
-      {title: translations['Munitions'], url: `${match.url}/munitions`},
+      {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true},
+      {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
+      {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
       {title: translations['status'], url: `${match.url}/admin-status`},
       {title: translations['Location'], url: `${match.url}/location`},
       {title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
@@ -50,8 +66,9 @@ class AdminComponent extends React.Component {
       }
 
       return (
-        <div className="submenu-button" key={i}>
+        <div className="submenu-button" key={i} onMouseEnter={this.handleHover.bind(this,i)} onMouseLeave={this.handleLeave.bind(this)}>
           <NavLink to={item.url} className={`${matchForLink ? 'active-submenu-item' : ''} submenu`}>
+            
             {item.title}
             {matchForLink ?
               (
@@ -60,7 +77,9 @@ class AdminComponent extends React.Component {
                 </div>
               ):
               null}
+               
           </NavLink>
+          {this.state.key==i && item.submenu ? <SubMenu link={item.url}/> : null }
         </div>
       );
     });
@@ -68,7 +87,9 @@ class AdminComponent extends React.Component {
 
   render() {
     const {translations, match} = this.props;
+      
 
+      
     return (
       <div>
         <div className="container-fluid sub-buttons">
@@ -79,8 +100,11 @@ class AdminComponent extends React.Component {
         <Switch>
           <Route path={`${match.url}/personnel`} component={PersonnelContainer} />
           <Route path={`${match.url}/platforms`} component={PlatformsContainer} />
+          <Route path={`${match.url}/platformsspec`} component={PlatformsSpecificationContainer} />
           <Route path={`${match.url}/payloads`} component={PayloadsContainer} />
+          <Route path={`${match.url}/payloadsspec`} component={PayloadsSpecificationContainer} />
           <Route path={`${match.url}/munitions`} component={MunitionsContainer} />
+          <Route path={`${match.url}/munitionsspec`} component={MunitionsSpecificationContainer} />
           <Route path={`${match.url}/admin-status`} component={AdminStatusContainer} />
           <Route path={`${match.url}/location`} component={LocationContainer} />
           <Route path={`${match.url}/ccir-pir`} component={CcirPirContainer} />
