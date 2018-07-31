@@ -103,7 +103,7 @@ class LocationComponent extends React.Component {
     const columns = [
       {
         Header:translations["type"],
-        accessor: 'id',
+        accessor: 'category',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
 

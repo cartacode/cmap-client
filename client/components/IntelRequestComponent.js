@@ -23,8 +23,8 @@ class IntelRequestComponent extends React.Component {
     const {translations, match} = this.props;
 
     const menuItems = [
-      {title: 'Summary', url: `${match.url}/summary`},
-      {title: translations['request'], url: `${match.url}/request`},
+      {title: 'Request', url: `${match.url}/summary`},
+     /*  {title: translations['request'], url: `${match.url}/request`}, */
       {title: translations['review'], url: `${match.url}/review`},
       {title: translations['operating picture'], url: `${match.url}/operating-picture`},
       {title: translations['current intel'], url: `${match.url}/current-intel`},
@@ -32,8 +32,14 @@ class IntelRequestComponent extends React.Component {
     ];
 
     return menuItems.map((item, i) => {
-      let image = '/assets/img/menu/button-line-highlight.png';
-      let matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
+        let matchForLink = false;
+        let image = '/assets/img/menu/button-line-highlight.png';
+        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
+
+        //When clicking on New Request. the REQUEST tab should remain highlighted
+        if(this.props.router.location.pathname === '/intel-request/request/request' && item.title === 'Request' ){
+          matchForLink = true;
+        }
 
       return (
         <div className="submenu-button" key={i}>
