@@ -401,7 +401,7 @@ class IntelRequestIntelRequestComponent extends React.Component {
               <FullHeaderLine headerText={translations["special instructions/notes"]} />
             </div>
             <div className="col-md-12">
-              <textarea className="instruction" />
+              <input type="text" className="instruction" />
             </div>
           </div>
 
