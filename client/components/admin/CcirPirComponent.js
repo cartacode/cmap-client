@@ -62,34 +62,49 @@ class CcirPirComponent extends React.Component {
 
     const columns = [
       {
+        Header: translations['Service'],
+        accessor: 'Service', 
+        filterMethod: (filter, row) =>
+                        row[filter.id].startsWith(filter.value)
+      },
+      {
         Header: translations['COCOM'],
         accessor: 'cocom', 
-        Filter: ({ filter, onChange }) =>
+        filterMethod: (filter, row) =>
+                        row[filter.id].startsWith(filter.value)
+       /*  Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
                       }
                       return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
-      },
-      {
-        Header: translations['Country'],
-        accessor: 'country',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Countries" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+                    }// String-based value accessors! */
       },
       {
         Header: translations['Region'],
         accessor: 'region',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Regions" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+        filterMethod: (filter, row) =>
+                        row[filter.id].startsWith(filter.value)
+        /* Filter: ({ filter, onChange }) =>
+                    <FilterDropdown dropdownDataUrl="Regions" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       }, 
+      {
+        Header: translations['Country'],
+        accessor: 'country',
+        filterMethod: (filter, row) =>
+                        row[filter.id].startsWith(filter.value)
+        /* Filter: ({ filter, onChange }) =>
+                    <FilterDropdown dropdownDataUrl="Countries" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
+      },
+     
       {
         Header: translations['Unit'],
         accessor: 'unit',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+       /*  Filter: ({ filter, onChange }) =>
+                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
+        filterMethod: (filter, row) =>
+                        row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['Commander'],
@@ -97,7 +112,7 @@ class CcirPirComponent extends React.Component {
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },  
-      {
+     /*  {
         Header: translations['Record Date'],
         accessor: 'recorddate',
         filterable: false
@@ -109,7 +124,7 @@ class CcirPirComponent extends React.Component {
         accessor: 'view',
         filterable: false,
         Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
-      }
+      } */
     ];
 
     const rowFields = [

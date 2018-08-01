@@ -212,6 +212,9 @@ class BaseModal extends React.Component {
       {name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude'},
       {name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation'},
       {name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS'},
+      {name: translations['LocationType'], type: 'dropdown', domID: 'LocationType',ddID: 'LocationCategory', valFieldID: 'LocationType'},
+      {name: translations['LocationID'], type: 'input', domID: 'LocationID', valFieldID: 'LocationID'},
+      
 
     ];
 
@@ -263,16 +266,23 @@ class BaseModal extends React.Component {
                   </div>
                   <div className="upload-line">
                     <div>
+                      {translations['Map Image']}
+                    </div>
+                    <input type="file"  name="file" id="LocationMapImage" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                  </div>
+                  <div className="upload-line">
+                    <div>
                       {translations['Document']}
                     </div>
                     <input type="file"  name="file" id="LocationDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
                   </div>
                   <div className="upload-line">
                     <div>
-                      {translations['Map Image']}
+                      {translations['KML']}
                     </div>
-                    <input type="file"  name="file" id="LocationMapImage" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                    <input type="file"  name="file" id="LocationKMLDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
                   </div>
+                  
                 </div>
               </div>
             </div>
