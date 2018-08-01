@@ -35,6 +35,31 @@ class ModalFormBlock extends React.Component {
        });
         
     }
+    /**
+     * This method is uses to handle file handle events.
+     */
+    handleUploadFile(event){
+        event.preventDefault();
+        const {location} = this.state;
+  
+        let parametername = event.target.id;
+  
+        this.setState({
+            location: {
+                ...location,
+                [parametername] : event.target.files[0].name
+            }
+        }, () => {
+            console.log("New state in ASYNC callback:", this.state.location);
+        });
+  
+        const data = new FormData();
+  
+        data.append('file', event.target.files[0]);
+        data.append('name', event.target.files[0].name);
+  
+      //  this.props.uploadFile(data);
+    }
 
     handleChangeNumber = (e) =>{
        const { name, value } = e.target;
@@ -117,6 +142,10 @@ class ModalFormBlock extends React.Component {
           case 'number':
             input = (<input type="number" className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             break;
+
+        case 'file':
+            input = (<input type="file" className="form-control" name={item.valFieldID} onChange={this.handleUploadFile.bind(this)} value={item.valField}/>);
+            break;  
 
           case 'dropdown':
             input = (
