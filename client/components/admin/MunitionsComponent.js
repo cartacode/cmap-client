@@ -22,6 +22,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import AddMunitionsInventory from './munitions/AddMunitionsInventory';
 
 class MunitionsComponent extends React.Component {
 
@@ -30,7 +31,7 @@ class MunitionsComponent extends React.Component {
     this.state={
       filterValue: '',
       filter: [],
-      missileModalOpen:false,
+      addMunitionsInventoryOpen:false,
       rocketModalOpen: false,
       gunModalOpen: false,
       tableRowDetailModalOpen: false,
@@ -47,21 +48,9 @@ class MunitionsComponent extends React.Component {
     console.log("find");
   }
 
-  missileModal = () => {
+  addMunitionsInventory = () => {
     this.setState({
-      missileModalOpen: !this.state.missileModalOpen
-    });
-  }
-
-  rocketModal = () => {
-    this.setState({
-      rocketModalOpen: !this.state.rocketModalOpen
-    });
-  }
-
-  gunModal = () => {
-    this.setState({
-      gunModalOpen: !this.state.gunModalOpen
+      addMunitionsInventoryOpen: !this.state.addMunitionsInventoryOpen
     });
   }
 
@@ -229,13 +218,12 @@ class MunitionsComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <DropDownButton key = '1' label={translations["Add Munition"]} id="1" items={munitions} />
+              <button className="ccir-button" onClick={this.addMunitionsInventory} >{translations["Add Munition"]}</button>
             </div>
           </div>
 
-        <MissileModal show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
-        <RocketModal show={this.state.rocketModalOpen} onClose={this.rocketModal} translations = {translations}/>
-        <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
+        <AddMunitionsInventory show={this.state.addMunitionsInventoryOpen} onClose={this.addMunitionsInventory} translations = {translations}/>
+        
           <div className="col-md-12">
             <ReactTable
               data={allMunitions}

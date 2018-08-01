@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NavLink from 'react-router-dom';
+import { Switch, Route, NavLink } from 'react-router-dom';
 
 class SubMenu extends React.Component {
 
@@ -13,10 +13,10 @@ class SubMenu extends React.Component {
         return (
             <ul className="sub-list">
                 <li className="submenu ">
-                <a href={this.props.link}>Inventory</a>
+                <NavLink to={this.props.link}>Inventory</NavLink>
                 </li>
                 <li className="submenu ">
-                <a href={this.props.link+'spec'}>Specifications</a>
+                <NavLink to={this.props.link+'spec'}>Specifications</NavLink>
                 </li>
             </ul>
         );

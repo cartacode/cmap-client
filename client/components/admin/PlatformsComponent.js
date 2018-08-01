@@ -10,7 +10,7 @@ import FilterDatePicker from '../reusable/FilterDatePicker';
 import DropDownButton from '../reusable/DropDownButton';
 import StatusTable from '../reusable/StatusTable';
 
-import AddPlatform from './platform/AddPlatformModal';
+import AddPlatformInventory from './platform/AddPlatformInventory';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
 
 import moment from 'moment';
@@ -28,7 +28,7 @@ class PlatformComponent extends React.Component {
     this.state={
       filterValue: '',
       filter: [],
-      addPlatformModalOpen:false,
+      addPlatformInventoryOpen:false,
       tableRowDetailModalOpen: false,
     }
   }
@@ -37,9 +37,9 @@ class PlatformComponent extends React.Component {
     console.log("find");
   }
 
-  addPlatformModal = () => {
+  addPlatformInventory = () => {
     this.setState({
-      addPlatformModalOpen: !this.state.addPlatformModalOpen
+      addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen
     });
   }
 
@@ -145,11 +145,11 @@ class PlatformComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={this.addPlatformModal} >{translations["Add Platform"]}</button>
+              <button className="ccir-button" onClick={this.addPlatformInventory} >{translations["Add Platform"]}</button>
             </div>
           </div>
 
-          <AddPlatform show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
+          <AddPlatformInventory show={this.state.addPlatformInventoryOpen} onClose={this.addPlatformInventory} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
