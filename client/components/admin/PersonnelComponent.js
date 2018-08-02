@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
-// import UploadBlock from "../reusable/UploadBlock";
-// import ContentBlock from "../reusable/ContentBlock";
-// import ButtonsList from "../reusable/ButtonsList";
-// import FilterDropdown from '../reusable/FilterDropdown';
-// import Dropdown from '../reusable/Dropdown';
-// import FilterDatePicker from '../reusable/FilterDatePicker';
-// import DropDownButton from '../reusable/DropDownButton';
-// import StatusTable from '../reusable/StatusTable';
+import { Link } from 'react-router-dom';
+import UploadBlock from "../reusable/UploadBlock";
+import ContentBlock from "../reusable/ContentBlock";
+import ButtonsList from "../reusable/ButtonsList";
+import FilterDropdown from '../reusable/FilterDropdown';
+import Dropdown from '../reusable/Dropdown';
+import FilterDatePicker from '../reusable/FilterDatePicker';
+import DropDownButton from '../reusable/DropDownButton';
+import StatusTable from '../reusable/StatusTable';
 
 import AddPersonnel from './personnel/AddPersonnelModal';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
@@ -34,11 +34,16 @@ class PersonnelComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: null,
-    };
+    }
   }
 
   componentWillMount() {
+
     this.props.fetchPersonnels();
+  }
+
+  onFind() {
+    console.log('find');
   }
 
   addPersonnelModal = (row) => {    
@@ -56,19 +61,15 @@ class PersonnelComponent extends React.Component {
   }
 
   openForm = () => {
-    console.log("Okay");
+    console.log('Opne Form');
 
   }
 
-  tableRowDetailModal = (row) => {
-    // this.props.onePersonnel();
-    console.log('row ==> ' + JSON.stringify(row));
+  tableRowDetailModal = () => {
     this.setState({
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
     });
   }
-
-
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -92,13 +93,16 @@ class PersonnelComponent extends React.Component {
 
     const { translations } = this.props;
     const { allPersonnels } = this.props;
+
+    console.log(allPersonnels);
+
     const columns = [
 
       {
         Header: translations["First Name"],
         accessor: 'firstName',
         filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
+                    row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations['Last Name'],
@@ -123,9 +127,9 @@ class PersonnelComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'ID',
+        accessor: 'view',
         filterable: false,
-        Cell: row => <span className="number"><img src="/assets/img/general/eye_icon.png" onClick={() => this.addPersonnelModal(row.value)} /></span> // Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.addPersonnelModal(row.value)} /></span>,
       },
     ];
 
@@ -147,7 +151,7 @@ class PersonnelComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["personnel"]}
+              {translations['personnel']}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
@@ -157,7 +161,7 @@ class PersonnelComponent extends React.Component {
             </div>
           </div>
 
-          <AddPersonnel show={this.state.addPersonnelModalOpen} editId={this.state.editId} onClose={this.addPersonnelModal} translations = {translations}/>
+          <AddPersonnel show={this.state.addPersonnelModalOpen} editId = {this.state.editId} onClose={this.addPersonnelModal} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
@@ -173,7 +177,7 @@ class PersonnelComponent extends React.Component {
         </div>
 
 
-        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} itemid={this.state.editId} rowdata = {rowFields} translations = {translations}/> */}
+        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
       </div>
     );
   }
