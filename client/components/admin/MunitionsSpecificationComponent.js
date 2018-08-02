@@ -120,8 +120,8 @@ class MunitionsSpecificationComponent extends React.Component {
                     }// String-based value accessors!
       },*/
       {
-        Header: translations["type"],
-        accessor: 'role',
+        Header: "ID",
+        accessor: 'id',
         Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
@@ -138,7 +138,7 @@ class MunitionsSpecificationComponent extends React.Component {
                     row[filter.id].startsWith(filter.value),
       },*/
 	  {
-		Header: translations['Name'],
+		Header: "Munition",
 		accessor: 'munition',
 		Filter: ({ filter, onChange }) =>
 				   <select
@@ -152,47 +152,34 @@ class MunitionsSpecificationComponent extends React.Component {
 				  </select>
 	  },
       {
-        Header: translations['serial#'],
+        Header: "Nomenclature",
         accessor: 'serial',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
-        Header: translations['cocom'],
+        Header: "Manufacturer",
         accessor: 'COCOM',
         Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },
       {
-        Header: translations['unit'],
-        accessor: 'unit',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>
+        Header: "Role",
+        accessor: 'role',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       /*{
         Header: translations['Location'],
         accessor: 'location'
       },*/
-	  {
-		Header: translations['Location'],
-		accessor: 'location',
-		Filter: ({ filter, onChange }) =>
-				   <select
-					onChange={event => onChange(event.target.value)}
-					style={{ width: "100%" }}
-					value={filter ? filter.value : ""}
-				  >
-					{allMunitions.map(function(data, key){
-						return (<option key={key} value={data.location}>{data.location}</option> );
-					})}
-				  </select>
-	  },
       {
-        Header: translations['Record Date'],
-        accessor: 'lastUpdate',
-        Filter: ({ filter, onChange }) =>
-                  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
+        Header: "Reference",
+        accessor: 'reference',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
+	 
       {
         Header: translations['view'],
         accessor: 'view',
@@ -223,7 +210,7 @@ class MunitionsSpecificationComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["Munitions"]}
+              Munitions Specification
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>

@@ -119,7 +119,7 @@ class PayloadsSpecificationComponent extends React.Component {
 
 		const columns = [
 			{
-				Header: translations["type"],
+				Header: "ID",
 				accessor: 'type',
 				filterMethod: (filter, row) =>
 							row[filter.id].startsWith(filter.value),
@@ -143,7 +143,7 @@ class PayloadsSpecificationComponent extends React.Component {
 							}// String-based value accessors!
 			  },
 			{
-				Header: translations['Name'],
+				Header: "Payload",
 				accessor: 'payload',
 				Filter: ({ filter, onChange }) =>
 						   <select
@@ -158,11 +158,11 @@ class PayloadsSpecificationComponent extends React.Component {
 						  </select>
 			},
 			{
-				Header: translations['serial#'],
+				Header: "Nomenclature",
 				accessor: 'serial',
 			},
 			{
-				Header: translations['cocom'],
+				Header: "Manufacturer",
 				accessor: 'COCOM',
 				Filter: ({ filter, onChange }) =>
 						  <select
@@ -174,7 +174,7 @@ class PayloadsSpecificationComponent extends React.Component {
 						  </select>
 			},
 			{
-				Header: translations['Location'],
+				Header: "Abbreviation",
 				accessor: 'location',
 				Filter: ({ filter, onChange }) =>
 						  <select
@@ -189,7 +189,7 @@ class PayloadsSpecificationComponent extends React.Component {
 						  </select>
 			},
 			{
-				Header: translations['Record Date'],
+				Header: "Description",
 				accessor: 'etic',
 				Filter: ({ filter, onChange }) =>
 						  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
@@ -222,7 +222,11 @@ class PayloadsSpecificationComponent extends React.Component {
 						</div>
 						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
-				
+				<div className="col-md-12 filter-line">
+					<div className="add-button">
+						<DropDownButton key = '1' label="Add Specification" id="1" items={addPayloads} />
+					</div>
+				</div>
 
 				<EoirModal show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
 				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>

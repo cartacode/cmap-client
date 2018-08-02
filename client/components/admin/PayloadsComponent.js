@@ -23,6 +23,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import AddPayloadsInventory from './payloads/AddPayloadsInventory';
 
 class PayloadsComponent extends React.Component {
 	constructor(props) {
@@ -30,7 +31,7 @@ class PayloadsComponent extends React.Component {
 		this.state={
 			filterValue: '',
 			filter: [],
-			eoirModalOpen:false,
+			addPayloadsInventoryOpen:false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
 			sigintModalOpen: false,
@@ -44,33 +45,9 @@ class PayloadsComponent extends React.Component {
 		console.log("find");
 	}
 
-	eoirModal = () => {
+	addPayloadsInventory = () => {
 		this.setState({
-			eoirModalOpen: !this.state.eoirModalOpen
-		});
-	}
-
-	sargmtiModal = () => {
-		this.setState({
-			sargmtiModalOpen: !this.state.sargmtiModalOpen
-		});
-	}
-
-	wamiModal = () => {
-		this.setState({
-			wamiModalOpen: !this.state.wamiModalOpen
-		});
-	}
-
-	sigintModal = () =>{
-		this.setState({
-			sigintModalOpen: !this.state.sigintModalOpen
-		});
-	}
-
-	equipmentModal = () => {
-		this.setState({
-			equipmentModalOpen: !this.state.equipmentModalOpen
+			addPayloadsInventoryOpen: !this.state.addPayloadsInventoryOpen
 		});
 	}
 
@@ -222,18 +199,13 @@ class PayloadsComponent extends React.Component {
 						</div>
 						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
-				<div className="col-md-12 filter-line">
-					<div className="add-button">
-						<DropDownButton key = '1' label={translations["Add Payload"]} id="1" items={addPayloads} />
-					</div>
-				</div>
+					<div className="col-md-12 filter-line">
+            			<div className="add-button">
+              				<button className="ccir-button" onClick={this.addPayloadsInventory} >{translations["Add Payload"]}</button>
+            			</div>
+          			</div>
 
-				<EoirModal show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
-				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>
-				<WamiModal show={this.state.wamiModalOpen} onClose={this.wamiModal} translations = {translations}/>
-				<SigintModal show={this.state.sigintModalOpen} onClose={this.sigintModal} translations = {translations}/>
-				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
-				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+				<AddPayloadsInventory show={this.state.addPayloadsInventoryOpen} onClose={this.addPayloadsInventory} translations = {translations}/>
 
 				<div className="col-md-12">
 					<ReactTable
