@@ -83,7 +83,7 @@ class PlatformsSpecificationComponent extends React.Component {
     const columns = [
 
       {
-        Header: translations["Tail#"],
+        Header: "ID",
         accessor: 'tail',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
@@ -102,17 +102,25 @@ class PlatformsSpecificationComponent extends React.Component {
                     row[filter.id].startsWith(filter.value)
       },
       {
-        Header: translations['Category'],
+        Header: "Nomenclature",
         accessor: 'category',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
-        Header: translations['Service'],
+        Header: "Manufacturer",
         accessor: 'branchOfService'
       },
       {
-        Header: translations['Location'],
+        Header: "Category",
+        accessor: 'location'
+      },
+      {
+        Header: "Category Desc",
+        accessor: 'location'
+      },
+      {
+        Header: "Role",
         accessor: 'location'
       },
       {
@@ -142,6 +150,12 @@ class PlatformsSpecificationComponent extends React.Component {
               Platforms Specification
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+          </div>
+
+          <div className="col-md-12 filter-line">
+            <div className="add-button">
+              <button className="ccir-button" onClick={this.addPlatformModal} >Add Specification</button>
+            </div>
           </div>
 
           <AddPlatform show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
