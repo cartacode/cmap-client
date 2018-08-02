@@ -46,9 +46,8 @@ class PersonnelComponent extends React.Component {
     console.log('find');
   }
 
-  addPersonnelModal = (row) => {    
+  addPersonnelModal = () => {    
     this.setState({
-      editId: row,
       addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
     });
   }
@@ -89,12 +88,17 @@ class PersonnelComponent extends React.Component {
     console.log(value);
   }
 
+getOnePersonnel = (row) => {
+  this.props.fetchPersonnelById(row);
+  this.setState({
+    addPersonnelModalOpen: !this.state.addPersonnelModalOpen
+  });
+}
+
   render() {
 
     const { translations } = this.props;
     const { allPersonnels } = this.props;
-
-    console.log(allPersonnels);
 
     const columns = [
 
@@ -127,9 +131,9 @@ class PersonnelComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.addPersonnelModal(row.value)} /></span>,
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.getOnePersonnel(row.value)} /></span>,
       },
     ];
 
@@ -157,11 +161,11 @@ class PersonnelComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={() => this.addPersonnelModal(0)}>{translations["Add Personnel"]}</button>
+              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
             </div>
           </div>
 
-          <AddPersonnel show={this.state.addPersonnelModalOpen} editId = {this.state.editId} onClose={this.addPersonnelModal} translations = {translations}/>
+          <AddPersonnel show={this.state.addPersonnelModalOpen} personnel = {this.state.personnel} onClose={this.addPersonnelModal} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
@@ -185,7 +189,6 @@ class PersonnelComponent extends React.Component {
 
 PersonnelComponent.propTypes = {
   children: PropTypes.element,
-
 };
 
 export default PersonnelComponent;
