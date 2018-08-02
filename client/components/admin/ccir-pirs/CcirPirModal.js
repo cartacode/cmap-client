@@ -62,28 +62,73 @@ class CcirPirModal extends React.Component {
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
-          <div className="modal-header-text">Add New CCRI/PIRs </div>
-          <div className="col-md-12">
+          <div className="modal-header-text"> </div>
+          <div className="col-md-4 ">
+
+             <div className="header-line addccir">
+                <img src="/assets/img/admin/upload_1.png" alt=""/>
+                <div className="header-text">
+                CCRI/PIRs
+                </div>
+                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
+              </div>
+              <div className="col-md-12 info-content">
+
             <ModalFormBlock fields={generalFields} />
-          </div>
-          <div id="add"> 
-          <div className="col-md-12">
-            <div className="entry-field">
-              <div className="entry-detail">
-                <textarea rows="3" className="description"/>
-              </div>
-              <div className="add-buttion">
-                <button onClick={this.handleAdd}> add </button>
-              </div>
             </div>
           </div>
-          <div className="col-md-12">
-            <div className="entry-field">
-              <div className="entry-detail">
-                <textarea rows="3" className="description"/>
+          <div id="add"> 
+          <div className="col-md-4 ">
+
+               <div className="header-line addccir">
+                <img src="/assets/img/admin/upload_1.png" alt=""/>
+                <div className="header-text">
+                 CCRI
+                </div>
+                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
               </div>
-              <div className="add-buttion">
-                <button> add </button>
+              <div className="col-md-12 info-content">
+            <div className="entry-field">
+              <div className="entry-detail col-md-8">
+                <textarea rows="3" className="description ccir"/>
+              </div>
+              <div className="add-buttion col-md-4">
+               
+
+                          <div className="action-buttons ccir" >
+        <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+        <button className="highlighted-button" onClick={this.handleAdd}>
+        add
+        </button>
+        <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+      </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+             <div className="header-line addccir">
+                <img src="/assets/img/admin/upload_1.png" alt=""/>
+                <div className="header-text">
+                PIRs
+                </div>
+                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
+              </div>
+              <div className="col-md-12 info-content">
+            <div className="entry-field ">
+              <div className="entry-detail col-md-8">
+                <textarea rows="3" className="description ccir"  />
+              </div>
+              <div className="add-buttion col-md-4 text-center">
+               
+                <div className="action-buttons ccir" >
+        <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+        <button className="highlighted-button">
+        add
+        </button>
+        <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+      </div>
+              </div>
               </div>
             </div>
           </div>
