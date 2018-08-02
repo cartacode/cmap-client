@@ -1,5 +1,5 @@
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import PersonnelComponent from '../../components/admin/PersonnelComponent';
 import { fetchPersonnels } from 'actions/personnel';

@@ -145,7 +145,7 @@ class CustomDatePicker extends React.Component {
                             ({value}) => {
                                 return (
                                     <span tabIndex="0">
-                    <div class="input-group">
+                    <div className="input-group">
                   <input
                       placeholder={this.props.headerText}
                       disabled={state.disabled}
@@ -154,7 +154,7 @@ class CustomDatePicker extends React.Component {
                       className="ant-calendar-picker-input ant-input"
                       value={value && value.format(getFormat(state.showTime)) || ''}
                   />
-                      <span class="input-group-addon">
+                      <span className="input-group-addon">
                   <img className="calendar" src="/assets/img/admin/calendar.png" alt=""/>
                       </span>
                   </div>

@@ -13,7 +13,7 @@ import StatusTable from '../../reusable/StatusTable';
 import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnels } from 'actions/personnel';
+import { addPersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -1087,7 +1087,7 @@ class AddPersonnelModal extends React.Component {
       console.log(this.state.personnel);
       let flag;
       this.props.addPersonnel(this.state.personnel);
-      this.props.onClose();
+      this.props.onClose(0);
       this.props.fetchPersonnels();
   }
 
@@ -1107,11 +1107,25 @@ class AddPersonnelModal extends React.Component {
       }
   }
 
+//   componentDidMount= () => {
+//       const { editId } = this.props;
+//       if(editId !== 'undefined' &&  editId !== 0){
+//         this.props.fetchPersonnelById(editId);
+//       }
+//   }
+
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
       return null;
     }
+
+    // const { onePersonnel } = this.props;
+    // console.log('add modal init state');
+    // console.log(onePersonnel);
+    // this.setState({
+    //     personnel: onePersonnel
+    // });
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -1275,7 +1289,8 @@ AddPersonnelModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    personnel: state.personnels.onePersonnel,
   };
 };
 
@@ -1283,6 +1298,7 @@ const mapDispatchToProps = {
   addPersonnel,
   fetchPersonnels,
   uploadFile,
+  fetchPersonnelById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPersonnelModal);

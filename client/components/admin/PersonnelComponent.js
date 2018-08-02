@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
+// import { Link } from 'react-router-dom';
+// import UploadBlock from "../reusable/UploadBlock";
+// import ContentBlock from "../reusable/ContentBlock";
+// import ButtonsList from "../reusable/ButtonsList";
+// import FilterDropdown from '../reusable/FilterDropdown';
+// import Dropdown from '../reusable/Dropdown';
+// import FilterDatePicker from '../reusable/FilterDatePicker';
+// import DropDownButton from '../reusable/DropDownButton';
+// import StatusTable from '../reusable/StatusTable';
 
 import AddPersonnel from './personnel/AddPersonnelModal';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
@@ -27,23 +27,24 @@ class PersonnelComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
-      addPersonnelModalOpen:false,
+      addPersonnelModalOpen: false,
       tableRowDetailModalOpen: false,
-      addshow:false
-    }
+      addshow: false,
+      editId: null,
+    };
   }
 
-  onFind(){
-    console.log("find");
+  componentWillMount() {
+    this.props.fetchPersonnels();
   }
 
-  addPersonnelModal = () => {
-    console.log("Okayman");
+  addPersonnelModal = (row) => {    
     this.setState({
-      addPersonnelModalOpen: !this.state.addPersonnelModalOpen
+      editId: row,
+      addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
     });
   }
 
@@ -59,17 +60,15 @@ class PersonnelComponent extends React.Component {
 
   }
 
-  tableRowDetailModal = () => {
+  tableRowDetailModal = (row) => {
+    // this.props.onePersonnel();
+    console.log('row ==> ' + JSON.stringify(row));
     this.setState({
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
+    });
   }
 
 
-  componentWillMount() {
-
-    this.props.fetchPersonnels();
-  }
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -91,18 +90,15 @@ class PersonnelComponent extends React.Component {
 
   render() {
 
-    const {translations} = this.props;
-    const {allPersonnels} = this.props;
-
-    console.log(allPersonnels);
-
+    const { translations } = this.props;
+    const { allPersonnels } = this.props;
     const columns = [
 
       {
         Header: translations["First Name"],
         accessor: 'firstName',
         filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
+          row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations['Last Name'],
@@ -127,10 +123,10 @@ class PersonnelComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
-      }
+        Cell: row => <span className="number"><img src="/assets/img/general/eye_icon.png" onClick={() => this.addPersonnelModal(row.value)} /></span> // Custom cell components!
+      },
     ];
 
     const rowFields = [
@@ -156,12 +152,12 @@ class PersonnelComponent extends React.Component {
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
-           <div className="add-button">
-             <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-          </div>
+            <div className="add-button">
+              <button className="ccir-button" onClick={() => this.addPersonnelModal(0)}>{translations["Add Personnel"]}</button>
+            </div>
           </div>
 
-          <AddPersonnel show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
+          <AddPersonnel show={this.state.addPersonnelModalOpen} editId={this.state.editId} onClose={this.addPersonnelModal} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
@@ -177,7 +173,7 @@ class PersonnelComponent extends React.Component {
         </div>
 
 
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} itemid={this.state.editId} rowdata = {rowFields} translations = {translations}/> */}
       </div>
     );
   }

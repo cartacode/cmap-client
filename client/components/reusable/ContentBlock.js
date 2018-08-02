@@ -163,7 +163,7 @@ class ContentBlock extends React.Component {
 
             return (
 
-                <div className="col-md-12 form-fields-gap">
+                <div className="col-md-12 form-fields-gap" key={'elem' + i}>
                     <div className="col-md-12 label-title">{item.name}</div>
                     <div className="col-md-12 pull-right">{input}</div>
                 </div>
