@@ -10,6 +10,8 @@ import PedComponent from './live_view/PedComponent';
 import ComsComponent from './live_view/ComsComponent'; */
 import FullHeaderLine from './reusable/FullHeaderLine';
 
+import Map from 'components/reusable/Map';
+
 class LiveViewComponent extends React.Component {
 
   constructor(props) {
@@ -38,14 +40,14 @@ class LiveViewComponent extends React.Component {
             <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
           <div className="col-md-12">
-            <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
+            <Map />
           </div>
         </div>
         <div className="row intel-request">
           <div className="col-md-12">
             <FullHeaderLine headerText={translations["operating environment"]} />
           </div>
-          
+
           <div className="col-md-12">
             <div className="operating-content">
               <div className="col-md-3 map-block">
@@ -65,7 +67,7 @@ class LiveViewComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>
                 </div>
               </div>
 
@@ -85,7 +87,7 @@ class LiveViewComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -104,7 +106,7 @@ class LiveViewComponent extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -123,10 +125,10 @@ class LiveViewComponent extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>  
+                  <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>
                 </div>
-              </div>    
-            </div>        
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -135,7 +137,7 @@ class LiveViewComponent extends React.Component {
 }
 
 
-/* 
+/*
   renderMapButtons = () => {
     const {translations, match} = this.props;
 

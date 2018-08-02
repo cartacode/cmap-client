@@ -138,7 +138,7 @@ function getPlugins(isDev) {
       { from: path.join(__dirname, 'node_modules/cesium/Build/Cesium/Workers'), to: 'Cesium/Workers' },
     ]),
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'node_modules/cesium/Source', 'Assets'), to: 'Cesium/Assets' },
+      { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
     ]),
   ];
 
