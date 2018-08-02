@@ -27,23 +27,28 @@ class PersonnelComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
-      addPersonnelModalOpen:false,
+      addPersonnelModalOpen: false,
       tableRowDetailModalOpen: false,
-      addshow:false
+      addshow: false,
+      editId: null,
     }
   }
 
-  onFind(){
-    console.log("find");
+  componentWillMount() {
+
+    this.props.fetchPersonnels();
   }
 
-  addPersonnelModal = () => {
-    console.log("Okayman");
+  onFind() {
+    console.log('find');
+  }
+
+  addPersonnelModal = () => {    
     this.setState({
-      addPersonnelModalOpen: !this.state.addPersonnelModalOpen
+      addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
     });
   }
 
@@ -55,20 +60,14 @@ class PersonnelComponent extends React.Component {
   }
 
   openForm = () => {
-    console.log("Okay");
+    console.log('Opne Form');
 
   }
 
   tableRowDetailModal = () => {
     this.setState({
       tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
-  }
-
-
-  componentWillMount() {
-
-    this.props.fetchPersonnels();
+    });
   }
 
   // renderItems(optionItem) {
@@ -89,12 +88,17 @@ class PersonnelComponent extends React.Component {
     console.log(value);
   }
 
+getOnePersonnel = (row) => {
+  this.props.fetchPersonnelById(row);
+  this.setState({
+    addPersonnelModalOpen: !this.state.addPersonnelModalOpen
+  });
+}
+
   render() {
 
-    const {translations} = this.props;
-    const {allPersonnels} = this.props;
-
-    console.log(allPersonnels);
+    const { translations } = this.props;
+    const { allPersonnels } = this.props;
 
     const columns = [
 
@@ -127,10 +131,10 @@ class PersonnelComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
-      }
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.getOnePersonnel(row.value)} /></span>,
+      },
     ];
 
     const rowFields = [
@@ -151,17 +155,17 @@ class PersonnelComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              {translations["personnel"]}
+              {translations['personnel']}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
-           <div className="add-button">
-             <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-          </div>
+            <div className="add-button">
+              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
+            </div>
           </div>
 
-          <AddPersonnel show={this.state.addPersonnelModalOpen} onClose={this.addPersonnelModal} translations = {translations}/>
+          <AddPersonnel show={this.state.addPersonnelModalOpen} personnel = {this.state.personnel} onClose={this.addPersonnelModal} translations = {translations}/>
 
           <div className="col-md-12">
             <ReactTable
@@ -185,7 +189,6 @@ class PersonnelComponent extends React.Component {
 
 PersonnelComponent.propTypes = {
   children: PropTypes.element,
-
 };
 
 export default PersonnelComponent;

@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
+// import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
+// import ButtonsList from "../../reusable/ButtonsList";
 
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
+// import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
+// import CustomDatePicker from '../../reusable/CustomDatePicker';
+// import DropDownButton from '../../reusable/DropDownButton';
+// import StatusTable from '../../reusable/StatusTable';
 
 import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnels } from 'actions/personnel';
+import { addPersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -23,37 +23,37 @@ class AddPersonnelModal extends React.Component {
             file: '',
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
-            personnel: {
-                PersonnelPhoto: '',
-                FirstName: '',
-                MiddleInitial: '',
-                LastName: '',
-                PayGrade: '',
-                Rank: '',
-                Nationality: '',
-                Clearance: '',
-                CACid: '',
-                CallSign: '',
-                ServiceBranch: '',
-                Company: '',
-                AssignedUnit: '',
-                DeployedUnit: '',
-                MOS1: '',
-                MOS2: '',
-                MOS3: '',
-                DutyPosition1: '',
-                DutyPosition2: '',
-                DutyPosition3: '',
-                SpecialQuals1: '',
-                SpecialQuals2: '',
-                SpecialQuals3: '',
-                CurrentAssignmentStart: '',
-                CurrentAssignmentEnd: '',
-                DSN: '',
-                EmailNIPR: '',
-                EmailSIPR: '',
-                ChatID: ''
-            },
+            // personnel: {
+            //     PersonnelPhoto: '',
+            //     FirstName: '',
+            //     MiddleInitial: '',
+            //     LastName: '',
+            //     PayGrade: '',
+            //     Rank: '',
+            //     Nationality: '',
+            //     Clearance: '',
+            //     CACid: '',
+            //     CallSign: '',
+            //     ServiceBranch: '',
+            //     Company: '',
+            //     AssignedUnit: '',
+            //     DeployedUnit: '',
+            //     MOS1: '',
+            //     MOS2: '',
+            //     MOS3: '',
+            //     DutyPosition1: '',
+            //     DutyPosition2: '',
+            //     DutyPosition3: '',
+            //     SpecialQuals1: '',
+            //     SpecialQuals2: '',
+            //     SpecialQuals3: '',
+            //     CurrentAssignmentStart: '',
+            //     CurrentAssignmentEnd: '',
+            //     DSN: '',
+            //     EmailNIPR: '',
+            //     EmailSIPR: '',
+            //     ChatID: ''
+            // },
 
         }
         this.resetForm = this.resetForm.bind(this);
@@ -77,7 +77,7 @@ class AddPersonnelModal extends React.Component {
               CallSign: generalData.CallSign
           }
       }, () => {
-          console.log("New state in ASYNC callback:22222", this.state.personnel);
+        //   console.log("New state in ASYNC callback:22222", this.props.personnel);
       });
 
       let personnell = generalData.Rank;
@@ -981,7 +981,7 @@ class AddPersonnelModal extends React.Component {
               ChatID: contactInformationData.ChatID
           }
       }, () => {
-          console.log("New state in ASYNC callback3333:", this.state.personnel);
+        //   console.log("New state in ASYNC callback3333:", this.props.personnel);
       });
   }
 
@@ -1007,7 +1007,7 @@ class AddPersonnelModal extends React.Component {
               [parametername]: event.target.files[0].name
           }
       }, () => {
-          console.log("New state in ASYNC callback:", this.state.personnel);
+        //   console.log("New state in ASYNC callback:", this.props.personnel);
       });
 
       const data = new FormData();
@@ -1083,10 +1083,9 @@ class AddPersonnelModal extends React.Component {
 
   handleSubmit = event => {
       event.preventDefault();
-      console.log('--here--');
-      console.log(this.state.personnel);
-      let flag;
-      this.props.addPersonnel(this.state.personnel);
+      
+      //let flag;
+      //this.props.addPersonnel(this.state.personnel);
       this.props.onClose();
       this.props.fetchPersonnels();
   }
@@ -1107,11 +1106,30 @@ class AddPersonnelModal extends React.Component {
       }
   }
 
+  componentDidMount() {
+    this.setState({personnel: this.props.personnel});
+    
+ }
+
+//   componentDidMount= () => {
+//       const { editId,show } = this.props;
+//       console.log('ediId '+editId+ ' show '+show);
+//       if(editId !== 'undefined' &&  editId !== 0){
+//         this.props.fetchPersonnelById(editId);
+//       }
+//   }
+
   render() {
+    
+
+    const { show } = this.props;
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
-      return null;
-    }
+    if(!show) {
+        return null;
+      }
+    // if(editId !== 'undefined' &&  editId !== 0){
+    //     this.props.fetchPersonnelById(editId);
+    // }
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -1133,7 +1151,8 @@ class AddPersonnelModal extends React.Component {
       $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
     }
 
-    const {personnel} = this.state;
+    
+    
     const {translations} = this.props;
 
     const generalFields = [
@@ -1144,8 +1163,8 @@ class AddPersonnelModal extends React.Component {
         {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
         {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality',required:true},
         {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance',required:true},
-        {name: translations['CAC ID'], type: 'input', domID: 'CACid'},
-        {name: translations['Call Sign'], type: 'input', domID: 'CallSign'},
+        {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid'},
+        {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
     ];
 
     const organisationFields = [
@@ -1167,7 +1186,7 @@ class AddPersonnelModal extends React.Component {
     ];
 
     const contactFields = [
-        {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN',required:true},
+        {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required:true},
         {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR',required:true},
         {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR',required:true},
         {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
@@ -1182,7 +1201,8 @@ class AddPersonnelModal extends React.Component {
               <div className="header-line">
                 <img src="/assets/img/admin/personnel_1.png" alt=""/>
                 <div className="header-text">
-                  {translations["Personnel Administration"]}
+                  {translations["Personnel Administration"]}              
+
                 </div>
                 <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
               </div>
@@ -1206,19 +1226,19 @@ class AddPersonnelModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  required/>
+                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         Organization Logo
                       </div>
-                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" required/>
+                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
                     <div className="upload-line">
-                      <div>
-                        Datasheet
+                      <div>                      
+                   Datasheet
                       </div>
-                      <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required/>
+                      <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
                   </div>
                 </div>
@@ -1227,13 +1247,13 @@ class AddPersonnelModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.personnel}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.state.personnel}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.personnel}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.state.personnel} />
+                              data={this.handleContactInformationData} initstate ={this.props.personnel} />
               </div>
             </div>
           </div>
@@ -1270,12 +1290,14 @@ class AddPersonnelModal extends React.Component {
 AddPersonnelModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
+  ediId: PropTypes.string,
   children: PropTypes.node
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    personnel: state.personnels.onePersonnel    
   };
 };
 
@@ -1283,6 +1305,7 @@ const mapDispatchToProps = {
   addPersonnel,
   fetchPersonnels,
   uploadFile,
+  fetchPersonnelById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPersonnelModal);

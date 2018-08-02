@@ -33,6 +33,7 @@ export default {
   },
   personnels: {
     allPersonnels: [],
+    onePersonnel: {},
     isFetching: false,
   },
   platforms: {
