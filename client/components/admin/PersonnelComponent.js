@@ -33,7 +33,7 @@ class PersonnelComponent extends React.Component {
       addPersonnelModalOpen: false,
       tableRowDetailModalOpen: false,
       addshow: false,
-      editId: null,
+      editId: '0',
     }
   }
 
@@ -95,93 +95,96 @@ getOnePersonnel = (row) => {
   });
 }
 
-  render() {
+openPersonnelForm = (row) => {
+  this.setState({
+    editId: row,
+    addPersonnelModalOpen: true,
+  });
+}
 
-    const { translations } = this.props;
-    const { allPersonnels } = this.props;
+closePersonnelForm = () => {
+  this.setState({
+    editId: 0,
+    addPersonnelModalOpen: false,
+  });
+}
 
-    const columns = [
+render() {
 
-      {
-        Header: translations["First Name"],
-        accessor: 'firstName',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-      },
-      {
-        Header: translations['Last Name'],
-        accessor: 'lastName',
-      },
-      {
-        Header: translations['Rank'],
-        accessor: 'rank.description',
+  const { translations } = this.props;
+  const { allPersonnels } = this.props;
 
-      },
-      {
-        Header: translations['Service'],
-        accessor: 'branchOfService.description',
-      },
-      {
-        Header: translations['Deployed Unit'],
-        accessor: 'deployedUnit.description',
-      },
-      {
-        Header: translations['CAC ID'],
-        accessor: 'CACID',
-      },
-      {
-        Header: translations['view'],
-        accessor: 'ID',
-        filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.getOnePersonnel(row.value)} /></span>,
-      },
-    ];
+  const columns = [
 
-    const rowFields = [
-      {name: translations['First Name'], type: 'input'},
-      {name: translations['Last Name'], type: 'input'},
-      {name: translations['Rank'], type: 'dropdown'},
-      {name: translations['Service'], type: 'input'},
-      {name: translations['Deployed Unit'], type: 'dropdown'},
-      {name: translations['CAC ID'], type: 'input'},
-      {name: translations['Record Date'], type: 'date'},
-    ];
+    {
+      Header: translations["First Name"],
+      accessor: 'firstName',
+      filterMethod: (filter, row) =>
+        row[filter.id].startsWith(filter.value),
+    },
+    {
+      Header: translations['Last Name'],
+      accessor: 'lastName',
+    },
+    {
+      Header: translations['Rank'],
+      accessor: 'rank.description',
 
+    },
+    {
+      Header: translations['Service'],
+      accessor: 'branchOfService.description',
+    },
+    {
+      Header: translations['Deployed Unit'],
+      accessor: 'deployedUnit.description',
+    },
+    {
+      Header: translations['CAC ID'],
+      accessor: 'CACID',
+    },
+    {
+      Header: translations['view'],
+      accessor: 'ID',
+      filterable: false,
+      Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span>,
+    },
+  ];
 
-
-    return (
-      <div>
-        <div className="row orders-assets">
-          <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
-            <div className="header-text">
-              {translations['personnel']}
-            </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+  return (
+    <div>
+      <div className="row orders-assets">
+        <div className="header-line">
+          <img src="/assets/img/admin/personnel_1.png" alt=""/>
+          <div className="header-text">
+            {translations['personnel']}
           </div>
-          <div className="col-md-12 filter-line">
-            <div className="add-button">
-              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-            </div>
-          </div>
-
-          <AddPersonnel show={this.state.addPersonnelModalOpen} personnel = {this.state.personnel} onClose={this.addPersonnelModal} translations = {translations}/>
-
-          <div className="col-md-12">
-            <ReactTable
-              data={allPersonnels}
-              columns={columns}
-              defaultPageSize={5}
-              className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
-            />
+          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+        </div>
+        <div className="col-md-12 filter-line">
+          <div className="add-button">
+            <button className="ccir-button" onClick={() => this.openPersonnelForm('0')} >{translations["Add Personnel"]}</button>
           </div>
         </div>
+        {this.state.addPersonnelModalOpen ?
+          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations}/>
+          : null
+        }
+        <div className="col-md-12">
+          <ReactTable
+            data={allPersonnels}
+            columns={columns}
+            defaultPageSize={5}
+            className="-striped -highlight"
+            filterable
+            defaultFilterMethod={(filter, row) =>
+              String(row[filter.id]) === filter.value}
+          />
+        </div>
+      </div>
 
 
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
       </div>
     );
   }
