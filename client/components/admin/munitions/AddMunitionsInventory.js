@@ -9,6 +9,7 @@ import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
 import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
+import Dropdown from "../../reusable/Dropdown";
 
 import { uploadFile } from 'actions/file';
 import { addMunition, fetchMunitions } from 'actions/munitionsinventory';
@@ -19,12 +20,14 @@ class AddMunitionsInventory extends React.Component {
     super(props);
     this.state = {
       file: '',
+      locationcategory:'',
       imagePreviewUrl: '',
       munition : {
       metaDataID:'',
       locationID:'',
-      owningUnit:0,
-      serialNumber:''
+      owningUnit:'',
+      serialNumber:'',
+      updatelocation:false
       }
     }
 
@@ -39,15 +42,17 @@ class AddMunitionsInventory extends React.Component {
 
   handleMunitionGeneralData = (generalData) => {
     const {munition} = this.state;
+    this.setState({locationcategory: generalData.locationcategory});
     this.setState({
       munition: { 
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
-        owningUnit:0,
+        owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.munition);
+      console.log("New state in ASYNC callback:22222", this.state.locationcategory);
     });
   }
 
@@ -83,12 +88,16 @@ class AddMunitionsInventory extends React.Component {
     const {munition} = this.state;
     const {translations} = this.props;
 
-    const generalFields = [
+    let {locationcategory} = this.state;
+    
+   let generalFields = [
       {name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
-      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'LocationCategory', valFieldID: 'locationID'},
+      {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
+      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID'},
       {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
       {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber',required:true}
     ];
+
 
     
     return (
@@ -116,6 +125,7 @@ class AddMunitionsInventory extends React.Component {
               <div className="col-md-4"></div>
                 <ContentBlock  fields={generalFields}
                 data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
+                
               </div>
             </div>
           </div>

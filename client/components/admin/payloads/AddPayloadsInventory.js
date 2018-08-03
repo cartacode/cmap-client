@@ -20,6 +20,7 @@ class AddPayloadsInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      locationcategory:'',
       payloads : {
       metaDataID:'',
       locationID:'',
@@ -39,6 +40,7 @@ class AddPayloadsInventory extends React.Component {
 
   handlePayloadGeneralData = (generalData) => {
     const {munition} = this.state;
+    this.setState({locationcategory: generalData.locationcategory});
     this.setState({
       payloads: { 
         metaDataID: generalData.metaDataID,
@@ -85,7 +87,8 @@ class AddPayloadsInventory extends React.Component {
 
     const generalFields = [
       {name: "Payload Specifications", type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
-      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'LocationCategory', valFieldID: 'locationID'},
+      {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
+      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID'},
       {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
       {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber',required:true}
     ];

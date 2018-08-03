@@ -22,6 +22,7 @@ class AddPlatformInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      locationcategory:'',
        platform: {
         metaDataID: '',
         locationID: '',
@@ -56,6 +57,7 @@ class AddPlatformInventory extends React.Component {
 
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
+    this.setState({locationcategory: generalData.locationcategory});
     this.setState({
       platform: {
         metaDataID: generalData.metaDataID,
@@ -81,6 +83,7 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId != null) {
       //this.props.addPlatform(this.state.platform);
+      this.props.addPlatform(this.state.platform);
     }
     else{
       this.props.addPlatform(this.state.platform);
@@ -118,7 +121,7 @@ class AddPlatformInventory extends React.Component {
 
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'LocationCategory', valFieldID: 'locationID' },
+      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocations', valFieldID: 'locationID' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
       { name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
@@ -127,8 +130,8 @@ class AddPlatformInventory extends React.Component {
       { name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
       { name: translations['Armament #2'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
       { name: translations['Armament #3'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
-      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'PlatformComs1' },
-      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'PlatformComs2' }
+      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'dispPlatformComs1' },
+      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'dispPlatformComs2' }
     ];
 
 
