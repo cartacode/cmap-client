@@ -95,11 +95,11 @@ class Table extends React.Component {
       return (
         <div>
           {this.props.required ? 
-            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
+            <select className="form-control" name={key} onChange={this.handleChange} required>
               {this.renderItems()}
             </select>
             :
-            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue}>
+            <select className="form-control" name={key} onChange={this.handleChange} >
               {this.renderItems()}
             </select>}
             

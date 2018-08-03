@@ -49,7 +49,6 @@ class PlatformComponent extends React.Component {
     })
   }
 
-
   componentWillMount() {
 
     this.props.fetchPlatforms();

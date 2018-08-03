@@ -13,7 +13,7 @@ import ContentBlock from "../../reusable/ContentBlock";
 import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
+import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -1094,13 +1094,26 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-      event.preventDefault();
-      
-      console.log("submitting");
-      console.log(JSON.stringify(this.state.personnel));
+    event.preventDefault();
 
-      this.props.addPersonnel(this.state.personnel);
-      this.props.onClose();
+    console.log("submitting");
+    
+    const {  personnel } = this.state;
+    const { editId } = this.props;
+  
+    if (editId !== undefined && editId !== '0') {
+      
+      const data = {
+        id: editId,
+        personnel: personnel
+      }
+  
+      this.props.updatePersonnel(data);
+    } else {
+      this.props.addPersonnel(personnel);
+    }
+
+    this.props.onClose();
     //   this.props.fetchPersonnels();
   }
 
@@ -1302,6 +1315,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addPersonnel,
+  updatePersonnel,
   fetchPersonnels,
   uploadFile,
   fetchPersonnelById,
