@@ -205,7 +205,7 @@ class PayloadsComponent extends React.Component {
             			</div>
           			</div>
 
-				<AddPayloadsInventory show={this.state.addPayloadsInventoryOpen} onClose={this.addPayloadsInventory} translations = {translations}/>
+				<AddPayloadsInventory show={this.state.addPayloadsInventoryOpen} onClose={this.addPayloadsInventory} translations = {translations} />
 
 				<div className="col-md-12">
 					<ReactTable

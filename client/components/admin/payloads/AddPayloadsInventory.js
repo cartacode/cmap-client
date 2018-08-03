@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-
+import { addPayload, fetchPayloads } from 'actions/payloadinventory';
 
 class AddPayloadsInventory extends React.Component {
 
@@ -51,8 +51,8 @@ class AddPayloadsInventory extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addMunition(this.state.munition);
-    this.props.fetchMunitions();
+    this.props.addPayload(this.state.payloads);
+    this.props.fetchPayloads();
   }
 
   resetForm(){
@@ -161,6 +161,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   uploadFile,
+  addPayload
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPayloadsInventory);
