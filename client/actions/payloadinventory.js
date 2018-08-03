@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addPayload(payload) {
   return createAction({
     type: PAYLOAD_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/PayloadInventory`, qs.stringify(payload), requestHeaders),
+    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, qs.stringify(payload), requestHeaders),
   });
 }
 

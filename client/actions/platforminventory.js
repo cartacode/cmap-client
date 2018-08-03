@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addPlatform(platform) {
   return createAction({
     type: PLATFORM_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/PlatformInventory`, qs.stringify(platform), requestHeaders),
+    action: () => axios.post(`${baseUrl}`, qs.stringify(platform), requestHeaders),
   });
 }
 
 export function updatePlatform(platform) {
   return createAction({
     type: PLATFORM_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PlatformInventory`, qs.stringify(platform), requestHeaders),
+    action: () => axios.put(`${baseUrl}/PlatformInventory/PostPlatformInventory`, qs.stringify(platform), requestHeaders),
   });
 }
 

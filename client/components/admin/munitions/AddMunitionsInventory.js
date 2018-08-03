@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitions } from 'actions/munitionsinventory';
 
 class AddMunitionsInventory extends React.Component {
 
@@ -23,7 +23,7 @@ class AddMunitionsInventory extends React.Component {
       munition : {
       metaDataID:'',
       locationID:'',
-      owningUnit:'',
+      owningUnit:0,
       serialNumber:''
       }
     }
@@ -40,10 +40,12 @@ class AddMunitionsInventory extends React.Component {
   handleMunitionGeneralData = (generalData) => {
     const {munition} = this.state;
     this.setState({
+      munition: { 
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
-        owningUnit: generalData.owningUnit,
+        owningUnit:0,
         serialNumber: generalData.serialNumber
+      }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.munition);
     });

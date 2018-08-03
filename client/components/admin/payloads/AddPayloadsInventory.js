@@ -40,12 +40,14 @@ class AddPayloadsInventory extends React.Component {
   handlePayloadGeneralData = (generalData) => {
     const {munition} = this.state;
     this.setState({
+      payloads: { 
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber
+      }
     }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.munition);
+      console.log("New state in ASYNC callback:22222", this.state.payloads);
     });
   }
 
@@ -161,7 +163,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   uploadFile,
-  addPayload
+  addPayload,
+  fetchPayloads
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPayloadsInventory);

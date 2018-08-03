@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addMunition(munition) {
   return createAction({
     type: MUNITION_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/MunitionsInventory`, qs.stringify(munition), requestHeaders),
+    action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, qs.stringify(munition), requestHeaders),
   });
 }
 
