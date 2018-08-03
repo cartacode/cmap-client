@@ -54,6 +54,7 @@ class AddPersonnelModal extends React.Component {
             //     EmailSIPR: '',
             //     ChatID: ''
             // },
+            onePersonnel: {},
 
         }
         this.resetForm = this.resetForm.bind(this);
@@ -1084,8 +1085,8 @@ class AddPersonnelModal extends React.Component {
   handleSubmit = event => {
       event.preventDefault();
       
-      //let flag;
-      //this.props.addPersonnel(this.state.personnel);
+      let flag;
+      this.props.addPersonnel(this.state.personnel);
       this.props.onClose();
       this.props.fetchPersonnels();
   }
@@ -1106,30 +1107,29 @@ class AddPersonnelModal extends React.Component {
       }
   }
 
-  componentDidMount() {
-    this.setState({personnel: this.props.personnel});
-    
- }
+  componentDidMount = () => {
+      
+    //this.setState({personnel: this.props.personnel});
+    const { editId } = this.props;
+    // if(editId!== '0'){
+    //     this.props.fetchPersonnelById(editId);
+    // }else{
+    //     this.setState({onePersonnel:{}});
+    // }
+    this.props.fetchPersonnelById(editId);    
+  }
 
-//   componentDidMount= () => {
-//       const { editId,show } = this.props;
-//       console.log('ediId '+editId+ ' show '+show);
-//       if(editId !== 'undefined' &&  editId !== 0){
-//         this.props.fetchPersonnelById(editId);
-//       }
-//   }
+
 
   render() {
     
 
-    const { show } = this.props;
-    // Render nothing if the "show" prop is false
-    if(!show) {
-        return null;
-      }
-    // if(editId !== 'undefined' &&  editId !== 0){
-    //     this.props.fetchPersonnelById(editId);
-    // }
+    // const { show } = this.props;
+    // // Render nothing if the "show" prop is false
+    // if(!show) {
+    //     return null;
+    //   }
+
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -1230,13 +1230,13 @@ class AddPersonnelModal extends React.Component {
                     </div>
                     <div className="upload-line">
                       <div>
-                        Organization Logo
+                        Organization Logo 
                       </div>
                       <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
                     <div className="upload-line">
                       <div>                      
-                   Datasheet
+                   Datasheet 
                       </div>
                       <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
@@ -1247,13 +1247,13 @@ class AddPersonnelModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.personnel}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.personnel}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.personnel} />
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} />
               </div>
             </div>
           </div>
@@ -1289,7 +1289,7 @@ class AddPersonnelModal extends React.Component {
 
 AddPersonnelModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
+//   show: PropTypes.bool,
   ediId: PropTypes.string,
   children: PropTypes.node
 };
@@ -1297,7 +1297,7 @@ AddPersonnelModal.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    personnel: state.personnels.onePersonnel    
+    onePersonnel: state.personnels.onePersonnel    
   };
 };
 

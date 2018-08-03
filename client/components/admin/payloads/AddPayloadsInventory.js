@@ -20,10 +20,12 @@ class AddPayloadsInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      payloads : {
       metaDataID:'',
       locationID:'',
       owningUnit:'',
       serialNumber:''
+      }
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -80,9 +82,9 @@ class AddPayloadsInventory extends React.Component {
     const {translations} = this.props;
 
     const generalFields = [
-      {name: "Meta Data ID", type: 'input', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
+      {name: "Payload Specifications", type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
       {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'LocationCategory', valFieldID: 'locationID'},
-      {name: "Owning Unit", type: 'number', domID: 'owningUnit', valFieldID: 'owningUnit'},
+      {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
       {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber',required:true}
     ];
 
@@ -111,7 +113,7 @@ class AddPayloadsInventory extends React.Component {
               <div className="under-munitions-content">
               <div className="col-md-4"></div>
                 <ContentBlock  fields={generalFields}
-                data={this.handlePayloadGeneralData} initstate ={this.state.munition}/>
+                data={this.handlePayloadGeneralData} initstate ={this.state.payloads}/>
               </div>
             </div>
           </div>

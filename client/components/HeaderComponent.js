@@ -155,7 +155,7 @@ class HeaderComponent extends React.Component {
         </div>
 
 
-           <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+           <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-AMPS-navbar-collapse-1">
         <span className="sr-only">Toggle navigation</span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
@@ -164,7 +164,7 @@ class HeaderComponent extends React.Component {
   
         <div className="container-fluid buttons">
           <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div class="collapse navbar-collapse" id="bs-AMPS-navbar-collapse-1">
           <div className="buttons-list">
           
             {this.renderMenuItems()}
