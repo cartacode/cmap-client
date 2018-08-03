@@ -11,7 +11,8 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addPlatform, fetchPlatforms } from 'actions/platforminventory';
+import { addPlatform, fetchPlatforms, fetchPlatformById } from 'actions/platforminventory';
+import { id } from 'postcss-selector-parser';
 
 
 class AddPlatformInventory extends React.Component {
@@ -21,7 +22,7 @@ class AddPlatformInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
-      platform: {
+      /* platform: {
         metaDataID: '',
         locationID: '',
         owningUnit: '',
@@ -35,6 +36,8 @@ class AddPlatformInventory extends React.Component {
         dispPlatformComs1: '',
         dispPlatformComs2: '',
       },
+       */
+      onePlatform: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -44,6 +47,12 @@ class AddPlatformInventory extends React.Component {
 
   componentWillMount() {
     //this.props.fetchMunitions();
+  }
+
+  componentDidMount = () => {
+    const { editId } = this.props;
+    this.props.fetchPlatformById(editId);
+    /* this.props.fetchPlatformById('2388467a-a373-4a53-98e8-3ee58cf4efd0'); */
   }
 
   handlePlatformGeneralData = (generalData) => {
@@ -71,7 +80,14 @@ class AddPlatformInventory extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addPlatform(this.state.platform);
+    const { editId } = this.props;
+    if (editId != null) {
+      //this.props.addPlatform(this.state.platform);
+    }
+    else{
+      this.props.addPlatform(this.state.platform);
+    }
+
     this.props.fetchPlatforms();
   }
 
@@ -142,7 +158,7 @@ class AddPlatformInventory extends React.Component {
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
               <ContentBlock fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} />
+                data={this.handlePlatformGeneralData} initstate={this.state.onePlatform} />
             </div>
           </div>
         </div>
@@ -177,6 +193,7 @@ class AddPlatformInventory extends React.Component {
 }
 
 AddPlatformInventory.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
@@ -184,13 +201,15 @@ AddPlatformInventory.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    onePlatform: state.platforms.onePlatform,
   };
 };
 
 const mapDispatchToProps = {
   addPlatform,
   fetchPlatforms,
+  fetchPlatformById,
   uploadFile,
 };
 
