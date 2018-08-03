@@ -103,7 +103,7 @@ class ContentBlock extends React.Component {
           value = this.state.content[item.valFieldID];
         }
         // console.log('value of ' +item.valFieldID+ ' is => ' + this.props.initstate[item.valFieldID]+' final  '+ value);
-        // console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
+       // console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
         // if(value === null || value === 'undefined') {
         //     value = 'NA';
         // }
@@ -135,8 +135,12 @@ class ContentBlock extends React.Component {
             if(item.required) {
               req = true;
             }
-            input = (
+            // if(value === '') {
+            //   value = 11;
+            // }
+            input = ( 
               <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} nums={this.props.platform} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData} required={req}/>
+            
             );
             break;
 

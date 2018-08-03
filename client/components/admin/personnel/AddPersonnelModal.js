@@ -1173,8 +1173,8 @@ class AddPersonnelModal extends React.Component {
         {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required:true},
         {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
         {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
-        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality',required:true},
-        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance',required:true},
+        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
+        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
         {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid'},
         {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
     ];
