@@ -120,7 +120,7 @@ class PayloadsSpecificationComponent extends React.Component {
 		const columns = [
 			{
 				Header: "ID",
-				accessor: 'type',
+				accessor: 'ID',
 				filterMethod: (filter, row) =>
 							row[filter.id].startsWith(filter.value),
 				Filter: ({ filter, onChange}) =>
@@ -159,11 +159,11 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 				Header: "Nomenclature",
-				accessor: 'serial',
+				accessor: 'nomenclature',
 			},
 			{
 				Header: "Manufacturer",
-				accessor: 'COCOM',
+				accessor: 'manufacturer',
 				Filter: ({ filter, onChange }) =>
 						  <select
 							  onChange={event => onChange(event.target.value)}
@@ -175,7 +175,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 				Header: "Abbreviation",
-				accessor: 'location',
+				accessor: 'type',
 				Filter: ({ filter, onChange }) =>
 						  <select
 							  onChange={event => onChange(event.target.value)}
@@ -190,7 +190,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 				Header: "Description",
-				accessor: 'etic',
+				accessor: 'typeDescription',
 				Filter: ({ filter, onChange }) =>
 						  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
 			},

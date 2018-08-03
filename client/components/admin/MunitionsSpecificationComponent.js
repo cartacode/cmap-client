@@ -121,7 +121,7 @@ class MunitionsSpecificationComponent extends React.Component {
       },*/
       {
         Header: "ID",
-        accessor: 'id',
+        accessor: 'ID',
         Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
@@ -153,13 +153,13 @@ class MunitionsSpecificationComponent extends React.Component {
 	  },
       {
         Header: "Nomenclature",
-        accessor: 'serial',
+        accessor: 'nomenclature',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: "Manufacturer",
-        accessor: 'COCOM',
+        accessor: 'manufacturer',
         Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },

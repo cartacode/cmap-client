@@ -94,9 +94,27 @@ class HeaderComponent extends React.Component {
     const {translations} = this.props;
 
     return (
+
+
+
+
+
+
+
+
+
+
+
+
+<section>
+
+
+
+
+      
       <nav className="navbar navbar-default">
         <div className="container-fluid header">
-          <div className="user-info ">
+          <div className="user-info col-md-3 col-xs-12">
             <div className="header-line">
               <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
@@ -110,7 +128,7 @@ class HeaderComponent extends React.Component {
               Fort Gordon, GA USA
             </div>
           </div>
-          <div className="header-title text-center ">
+          <div className="header-title text-center col-md-6 col-xs-12">
             <div className="header-unclassified">
               UNCLASSIFIED
             </div>
@@ -118,7 +136,7 @@ class HeaderComponent extends React.Component {
             Advanced Mission Planning Software (AMPS)
             </div>
           </div>
-          <div className="date-info ">
+          <div className="date-info col-md-3 col-xs-12">
             <div className="date">
               <div className="">
                 {moment().local().format('DD MMMM, YYYY')}
@@ -135,11 +153,23 @@ class HeaderComponent extends React.Component {
             </div>
           </div>
         </div>
+
+
+           <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-AMPS-navbar-collapse-1">
+        <span className="sr-only">Toggle navigation</span>
+        <span className="icon-bar"></span>
+        <span className="icon-bar"></span>
+        <span className="icon-bar"></span>
+      </button>
+  
         <div className="container-fluid buttons">
           <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
+          <div class="collapse navbar-collapse" id="bs-AMPS-navbar-collapse-1">
           <div className="buttons-list">
+          
             {this.renderMenuItems()}
             <div className="search">
+           
               <NavLink to="/search">
                 <div className="search-button" style={{width: this.state.width}} ref="search" onClick={() => this.search()}>
                   {translations.search}
@@ -158,7 +188,9 @@ class HeaderComponent extends React.Component {
             </div>
           </div>
         </div>
+        </div>
       </nav>
+      </section>
     );
   }
 }

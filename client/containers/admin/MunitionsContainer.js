@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import MunitionsComponent from '../../components/admin/MunitionsComponent';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitions } from 'actions/munitionsinventory';
 
 const mapStateToProps = state => {
   return {

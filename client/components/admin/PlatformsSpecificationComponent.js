@@ -84,7 +84,7 @@ class PlatformsSpecificationComponent extends React.Component {
 
       {
         Header: "ID",
-        accessor: 'tail',
+        accessor: 'ID',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
 
@@ -103,25 +103,25 @@ class PlatformsSpecificationComponent extends React.Component {
       },
       {
         Header: "Nomenclature",
-        accessor: 'category',
+        accessor: 'nomenclature',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: "Manufacturer",
-        accessor: 'branchOfService'
+        accessor: 'manufacturer'
       },
       {
         Header: "Category",
-        accessor: 'location'
+        accessor: 'category'
       },
       {
         Header: "Category Desc",
-        accessor: 'location'
+        accessor: 'categoryDesc'
       },
       {
         Header: "Role",
-        accessor: 'location'
+        accessor: 'role'
       },
       {
         Header: translations['view'],
