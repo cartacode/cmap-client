@@ -73,7 +73,8 @@ render() {
 
   const { translations } = this.props;
   const { allPersonnels } = this.props;
-
+debugger;
+  console.log(allPersonnels);
   const columns = [
 
     {

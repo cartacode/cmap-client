@@ -38,4 +38,6 @@ export const PLATFORM__ADD = createActionType('PLATFORM__ADD');
 export const PLATFORM__FETCH = createActionType('PLATFORM__FETCH');
 
 export const PLATFORM_INVENTORY__ADD = createActionType('PLATFORM_INVENTORY__ADD');
+export const PLATFORM_INVENTORY__UPDATE = createActionType('PLATFORM_INVENTORY__UPDATE');
 export const PLATFORM_INVENTORY__FETCH = createActionType('PLATFORM_INVENTORY__FETCH');
+export const PLATFORM_INVENTORY__FETCH_ONE = createActionType('PLATFORM_INVENTORY__FETCH_ONE');

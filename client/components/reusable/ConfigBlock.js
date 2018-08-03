@@ -42,7 +42,7 @@ class ConfigBlock extends React.Component {
           </div>
         </div>
         <div className="col-md-12">
-          <div className="check-status">
+          <div className="check-status col-xs-12">
             {this.renderFields()}
           </div>
         </div>
