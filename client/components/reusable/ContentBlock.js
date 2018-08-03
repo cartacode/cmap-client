@@ -35,8 +35,8 @@ class ContentBlock extends React.Component {
   componentDidUpdate() {
     
     const { content } = this.state;
-    if(Object.keys(content).length === 0 && content.constructor === Object) {    
-      const { initstate } = this.props;
+    const { initstate, editId } = this.props;
+    if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
       this.setState({
         content: initstate,
       });
@@ -92,7 +92,7 @@ class ContentBlock extends React.Component {
     renderFields() {
     
       return this.props.fields.map((item, i) => {
-        let input; 
+        let input;
         let value = '';
         
         // if(item.valFieldID !== undefined && this.props.initstate[item.valFieldID] !== undefined && this.props.initstate[item.valFieldID] !== null){
@@ -136,37 +136,33 @@ class ContentBlock extends React.Component {
               req = true;
             }
             input = (
-              <Dropdown id={item.valFieldID} dropdownDataUrl={item.ddID} nums={this.props.platform} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData} required={req}/>
+              <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} nums={this.props.platform} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData} required={req}/>
             );
             break;
 
           case 'date':
             input = (
               <div>
-                <CustomDatePicker name={item.valFieldID} changeDate={this.handleChangeDate}/>
+                <CustomDatePicker name={item.valFieldID} initValue={value} changeDate={this.handleChangeDate}/>
               </div>
             );
             break;
-        case 'checkbox':
+          case 'checkbox':
             input = (
-                <div>
-                    <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}/>
-                    <label htmlFor={`checkbox${i}`}><span/></label>
-                </div>
+              <div>
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}/>
+                <label htmlFor={`checkbox${i}`}><span/></label>
+              </div>
             );
             break;
 
         }
 
-    return (
-
-        <div className="col-md-12 form-fields-gap" key={'elem' + i}>
+        return (
+          <div className="col-md-12 form-fields-gap" key={'elem' + i}>
             <div className="col-md-12 label-title">{item.name}</div>
             <div className="col-md-12 pull-right">{input}</div>
-            {/* <div className="col-md-12 pull-right">{this.props.initstate.FirstName} sss</div>
-            <div className="col-md-12 pull-right">{this.state.content.FirstName} qqq</div> */}
-            
-        </div>
+          </div>
         /* <div className="info-line" key={i}>
                 <div>
                     {item.name}
@@ -175,10 +171,9 @@ class ContentBlock extends React.Component {
                     {input}
                 </div>
             </div>*/
-    )
-});
+        );
+      });
     }
-
 
     render() {
 
@@ -202,6 +197,7 @@ class ContentBlock extends React.Component {
 ContentBlock.propTypes = {  
   children: PropTypes.element,
   data: PropTypes.func,
+  editId: PropTypes.any
 };
 
 export default ContentBlock;

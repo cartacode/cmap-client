@@ -22,7 +22,6 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-
 class PersonnelComponent extends React.Component {
 
   constructor(props) {
@@ -34,40 +33,11 @@ class PersonnelComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
-    }
+    };
   }
 
-  componentWillMount() {
-
+  componentDidMount() {
     this.props.fetchPersonnels();
-  }
-
-  onFind() {
-    console.log('find');
-  }
-
-  addPersonnelModal = () => {    
-    this.setState({
-      addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
-    });
-  }
-
-  addPersonnelForm = () => {
-
-    this.setState({
-      addshow: !this.state.addshow
-    });
-  }
-
-  openForm = () => {
-    console.log('Opne Form');
-
-  }
-
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    });
   }
 
   // renderItems(optionItem) {
@@ -84,27 +54,17 @@ class PersonnelComponent extends React.Component {
   //   })
   // }
 
-  handleChange(value) {
-    console.log(value);
+  openPersonnelForm = (row) => {
+    this.setState({
+      editId: row,
+      addPersonnelModalOpen: true,
+    });
   }
 
-getOnePersonnel = (row) => {
-  this.props.fetchPersonnelById(row);
-  this.setState({
-    addPersonnelModalOpen: !this.state.addPersonnelModalOpen
-  });
-}
-
-openPersonnelForm = (row) => {
-  this.setState({
-    editId: row,
-    addPersonnelModalOpen: true,
-  });
-}
-
 closePersonnelForm = () => {
+  this.props.fetchPersonnels();
   this.setState({
-    editId: 0,
+    editId: '0',
     addPersonnelModalOpen: false,
   });
 }
@@ -151,6 +111,13 @@ render() {
     },
   ];
 
+  const sortOn = [
+    {
+      id: 'firstName',
+      desc: true,
+    },
+  ];
+
   return (
     <div>
       <div className="row orders-assets">
@@ -174,7 +141,8 @@ render() {
           <ReactTable
             data={allPersonnels}
             columns={columns}
-            defaultPageSize={5}
+            
+            defaultPageSize={10}
             className="-striped -highlight"
             filterable
             defaultFilterMethod={(filter, row) =>

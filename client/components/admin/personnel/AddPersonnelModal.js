@@ -62,24 +62,35 @@ class AddPersonnelModal extends React.Component {
         this.baseState = this.state;
   }
 
+  componentDidMount = () => {
+    //this.setState({personnel: this.props.personnel});
+    const { editId } = this.props;
+    if(editId !== '0') {
+      this.props.fetchPersonnelById(editId);
+    }else {
+      this.setState({ onePersonnel: {} });
+    }
+    // this.props.fetchPersonnelById(editId);
+  }
+
   handleGeneralPersonnelData = (generalData) => {
-      const {personnel} = this.state;
-      this.setState({
-          personnel: {
-              ...personnel,
-              FirstName: generalData.FirstName,
-              MiddleInitial: generalData.MiddleInitial,
-              LastName: generalData.LastName,
-              PayGrade: generalData.PayGrade,
-              Rank: generalData.Rank,
-              Nationality: generalData.Nationality,
-              Clearance: generalData.Clearance,
-              CACid: generalData.CACid,
-              CallSign: generalData.CallSign
-          }
-      }, () => {
-        //   console.log("New state in ASYNC callback:22222", this.props.personnel);
-      });
+    const { personnel } = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,
+        FirstName: generalData.FirstName,
+        MiddleInitial: generalData.MiddleInitial,
+        LastName: generalData.LastName,
+        PayGrade: generalData.PayGrade,
+        Rank: generalData.Rank,
+        Nationality: generalData.Nationality,
+        Clearance: generalData.Clearance,
+        CACid: generalData.CACid,
+        CallSign: generalData.CallSign
+      }
+    }, () => {
+    //   console.log("New state in ASYNC callback:22222", this.props.personnel);
+    });
 
       let personnell = generalData.Rank;
       let rank = document.getElementsByName("PayGrade");
@@ -1085,10 +1096,12 @@ class AddPersonnelModal extends React.Component {
   handleSubmit = event => {
       event.preventDefault();
       
-      let flag;
+      console.log("submitting");
+      console.log(JSON.stringify(this.state.personnel));
+
       this.props.addPersonnel(this.state.personnel);
       this.props.onClose();
-      this.props.fetchPersonnels();
+    //   this.props.fetchPersonnels();
   }
 
 
@@ -1106,20 +1119,6 @@ class AddPersonnelModal extends React.Component {
         }
       }
   }
-
-  componentDidMount = () => {
-      
-    //this.setState({personnel: this.props.personnel});
-    const { editId } = this.props;
-    // if(editId!== '0'){
-    //     this.props.fetchPersonnelById(editId);
-    // }else{
-    //     this.setState({onePersonnel:{}});
-    // }
-    this.props.fetchPersonnelById(editId);    
-  }
-
-
 
   render() {
     
@@ -1247,13 +1246,13 @@ class AddPersonnelModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} />
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
               </div>
             </div>
           </div>
@@ -1290,7 +1289,7 @@ class AddPersonnelModal extends React.Component {
 AddPersonnelModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 //   show: PropTypes.bool,
-  ediId: PropTypes.string,
+  editId: PropTypes.string,
   children: PropTypes.node
 };
 
