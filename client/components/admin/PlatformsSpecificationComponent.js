@@ -30,6 +30,8 @@ class PlatformsSpecificationComponent extends React.Component {
       filter: [],
       addPlatformModalOpen:false,
       tableRowDetailModalOpen: false,
+      addshow: false,
+      editId: '0',
     }
   }
 
@@ -39,16 +41,29 @@ class PlatformsSpecificationComponent extends React.Component {
 
   addPlatformModal = () => {
     this.setState({
-      addPlatformModalOpen: !this.state.addPlatformModalOpen
+      addPlatformModalOpen: !this.state.addPlatformModalOpen,
     });
   }
 
   tableRowDetailModal = () => {
     this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
+      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen,
     })
   }
 
+  openPlatformForm = (row) => {
+    this.setState({
+      editId: row,
+      addPlatformModalOpen: true,
+    });
+  }
+
+  closePlatformForm = () => {
+    this.setState({
+      editId: 0,
+      addPlatformModalOpen: false,
+    });
+  }
 
   componentWillMount() {
 
@@ -125,9 +140,9 @@ class PlatformsSpecificationComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span>// Custom cell components!
       }
     ];
 
@@ -154,11 +169,13 @@ class PlatformsSpecificationComponent extends React.Component {
 
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={this.addPlatformModal} >Add Specification</button>
+              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Specification</button>
             </div>
           </div>
 
-          <AddPlatform show={this.state.addPlatformModalOpen} onClose={this.addPlatformModal} translations = {translations}/>
+        {this.state.addPlatformModalOpen ?
+            <AddPlatform editId = {this.state.editId} show={this.state.addPlatformModalOpen} onClose={this.closePlatformForm} translations={translations} />
+            : null}
 
           <div className="col-md-12">
             <ReactTable
@@ -173,7 +190,7 @@ class PlatformsSpecificationComponent extends React.Component {
           </div>
         </div>
 
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
       </div>
     );
   }

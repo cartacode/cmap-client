@@ -1,4 +1,4 @@
-import { PLATFORM_INVENTORY__FETCH } from 'dictionary/action';
+import { PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function platforms(state = initialState.platforms, { payload, type }) {
@@ -13,6 +13,17 @@ export default function platforms(state = initialState.platforms, { payload, typ
         ...state,
         isFetching: false,
         allPlatforms: payload.data,
+      };
+    case PLATFORM_INVENTORY__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case PLATFORM_INVENTORY__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        onePlatform: payload.data,
       };
     default:
       return state;

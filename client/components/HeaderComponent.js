@@ -154,8 +154,16 @@ class HeaderComponent extends React.Component {
           </div>
         </div>
 
-
-           <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <div className="langs-dropdown" style={{position: "absolute",
+              top: "45px", right: "200px"}}>
+              <button type="button" className="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Change Lang
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                {this.renderLangsList()}
+              </ul>
+            </div>
+      <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-AMPS-navbar-collapse-1">
         <span className="sr-only">Toggle navigation</span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
@@ -164,7 +172,7 @@ class HeaderComponent extends React.Component {
   
         <div className="container-fluid buttons">
           <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div className="collapse navbar-collapse" id="bs-AMPS-navbar-collapse-1">
           <div className="buttons-list">
           
             {this.renderMenuItems()}
@@ -177,15 +185,7 @@ class HeaderComponent extends React.Component {
               </NavLink>
               <input type="text" className="search-input" placeholder={translations['enter values']} name="search" />
             </div>
-            <div className="langs-dropdown" style={{position: "absolute",
-              top: "45px", right: "260px"}}>
-              <button type="button" className="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Change Lang
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                {this.renderLangsList()}
-              </ul>
-            </div>
+      
           </div>
         </div>
         </div>

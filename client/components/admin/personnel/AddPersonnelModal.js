@@ -13,7 +13,7 @@ import ContentBlock from "../../reusable/ContentBlock";
 import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
+import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -54,6 +54,7 @@ class AddPersonnelModal extends React.Component {
             //     EmailSIPR: '',
             //     ChatID: ''
             // },
+            onePersonnel: {},
 
         }
         this.resetForm = this.resetForm.bind(this);
@@ -61,24 +62,35 @@ class AddPersonnelModal extends React.Component {
         this.baseState = this.state;
   }
 
+  componentDidMount = () => {
+    //this.setState({personnel: this.props.personnel});
+    const { editId } = this.props;
+    if(editId !== '0') {
+      this.props.fetchPersonnelById(editId);
+    }else {
+      this.setState({ onePersonnel: {} });
+    }
+    // this.props.fetchPersonnelById(editId);
+  }
+
   handleGeneralPersonnelData = (generalData) => {
-      const {personnel} = this.state;
-      this.setState({
-          personnel: {
-              ...personnel,
-              FirstName: generalData.FirstName,
-              MiddleInitial: generalData.MiddleInitial,
-              LastName: generalData.LastName,
-              PayGrade: generalData.PayGrade,
-              Rank: generalData.Rank,
-              Nationality: generalData.Nationality,
-              Clearance: generalData.Clearance,
-              CACid: generalData.CACid,
-              CallSign: generalData.CallSign
-          }
-      }, () => {
-        //   console.log("New state in ASYNC callback:22222", this.props.personnel);
-      });
+    const { personnel } = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,
+        FirstName: generalData.FirstName,
+        MiddleInitial: generalData.MiddleInitial,
+        LastName: generalData.LastName,
+        PayGrade: generalData.PayGrade,
+        Rank: generalData.Rank,
+        Nationality: generalData.Nationality,
+        Clearance: generalData.Clearance,
+        CACid: generalData.CACid,
+        CallSign: generalData.CallSign
+      }
+    }, () => {
+    //   console.log("New state in ASYNC callback:22222", this.props.personnel);
+    });
 
       let personnell = generalData.Rank;
       let rank = document.getElementsByName("PayGrade");
@@ -1082,12 +1094,27 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-      event.preventDefault();
+    event.preventDefault();
+
+    console.log("submitting");
+    
+    const {  personnel } = this.state;
+    const { editId } = this.props;
+  
+    if (editId !== undefined && editId !== '0') {
       
-      //let flag;
-      //this.props.addPersonnel(this.state.personnel);
-      this.props.onClose();
-      this.props.fetchPersonnels();
+      const data = {
+        id: editId,
+        personnel: personnel
+      }
+  
+      this.props.updatePersonnel(data);
+    } else {
+      this.props.addPersonnel(personnel);
+    }
+
+    this.props.onClose();
+    //   this.props.fetchPersonnels();
   }
 
 
@@ -1106,30 +1133,15 @@ class AddPersonnelModal extends React.Component {
       }
   }
 
-  componentDidMount() {
-    this.setState({personnel: this.props.personnel});
-    
- }
-
-//   componentDidMount= () => {
-//       const { editId,show } = this.props;
-//       console.log('ediId '+editId+ ' show '+show);
-//       if(editId !== 'undefined' &&  editId !== 0){
-//         this.props.fetchPersonnelById(editId);
-//       }
-//   }
-
   render() {
     
 
-    const { show } = this.props;
-    // Render nothing if the "show" prop is false
-    if(!show) {
-        return null;
-      }
-    // if(editId !== 'undefined' &&  editId !== 0){
-    //     this.props.fetchPersonnelById(editId);
-    // }
+    // const { show } = this.props;
+    // // Render nothing if the "show" prop is false
+    // if(!show) {
+    //     return null;
+    //   }
+
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -1230,13 +1242,13 @@ class AddPersonnelModal extends React.Component {
                     </div>
                     <div className="upload-line">
                       <div>
-                        Organization Logo
+                        Organization Logo 
                       </div>
                       <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
                     <div className="upload-line">
                       <div>                      
-                   Datasheet
+                   Datasheet 
                       </div>
                       <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                     </div>
@@ -1247,13 +1259,13 @@ class AddPersonnelModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.personnel}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.personnel}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.personnel} />
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
               </div>
             </div>
           </div>
@@ -1289,20 +1301,21 @@ class AddPersonnelModal extends React.Component {
 
 AddPersonnelModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
-  ediId: PropTypes.string,
+//   show: PropTypes.bool,
+  editId: PropTypes.string,
   children: PropTypes.node
 };
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    personnel: state.personnels.onePersonnel    
+    onePersonnel: state.personnels.onePersonnel    
   };
 };
 
 const mapDispatchToProps = {
   addPersonnel,
+  updatePersonnel,
   fetchPersonnels,
   uploadFile,
   fetchPersonnelById,

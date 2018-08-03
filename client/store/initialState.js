@@ -38,6 +38,7 @@ export default {
   },
   platforms: {
     allPlatforms: [],
+    onePlatform: {},
     isFetching: false,
   },
 };

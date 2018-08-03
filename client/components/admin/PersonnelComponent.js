@@ -22,7 +22,6 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
-
 class PersonnelComponent extends React.Component {
 
   constructor(props) {
@@ -33,41 +32,12 @@ class PersonnelComponent extends React.Component {
       addPersonnelModalOpen: false,
       tableRowDetailModalOpen: false,
       addshow: false,
-      editId: null,
-    }
+      editId: '0',
+    };
   }
 
-  componentWillMount() {
-
+  componentDidMount() {
     this.props.fetchPersonnels();
-  }
-
-  onFind() {
-    console.log('find');
-  }
-
-  addPersonnelModal = () => {    
-    this.setState({
-      addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
-    });
-  }
-
-  addPersonnelForm = () => {
-
-    this.setState({
-      addshow: !this.state.addshow
-    });
-  }
-
-  openForm = () => {
-    console.log('Opne Form');
-
-  }
-
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    });
   }
 
   // renderItems(optionItem) {
@@ -84,104 +54,106 @@ class PersonnelComponent extends React.Component {
   //   })
   // }
 
-  handleChange(value) {
-    console.log(value);
+  openPersonnelForm = (row) => {
+    this.setState({
+      editId: row,
+      addPersonnelModalOpen: true,
+    });
   }
 
-getOnePersonnel = (row) => {
-  this.props.fetchPersonnelById(row);
+closePersonnelForm = () => {
+  this.props.fetchPersonnels();
   this.setState({
-    addPersonnelModalOpen: !this.state.addPersonnelModalOpen
+    editId: '0',
+    addPersonnelModalOpen: false,
   });
 }
 
-  render() {
+render() {
 
-    const { translations } = this.props;
-    const { allPersonnels } = this.props;
+  const { translations } = this.props;
+  const { allPersonnels } = this.props;
+debugger;
+  console.log(allPersonnels);
+  const columns = [
 
-    const columns = [
+    {
+      Header: translations["First Name"],
+      accessor: 'firstName',
+      filterMethod: (filter, row) =>
+        row[filter.id].startsWith(filter.value),
+    },
+    {
+      Header: translations['Last Name'],
+      accessor: 'lastName',
+    },
+    {
+      Header: translations['Rank'],
+      accessor: 'rank.description',
 
-      {
-        Header: translations["First Name"],
-        accessor: 'firstName',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-      },
-      {
-        Header: translations['Last Name'],
-        accessor: 'lastName',
-      },
-      {
-        Header: translations['Rank'],
-        accessor: 'rank.description',
+    },
+    {
+      Header: translations['Service'],
+      accessor: 'branchOfService.description',
+    },
+    {
+      Header: translations['Deployed Unit'],
+      accessor: 'deployedUnit.description',
+    },
+    {
+      Header: translations['CAC ID'],
+      accessor: 'CACID',
+    },
+    {
+      Header: translations['view'],
+      accessor: 'ID',
+      filterable: false,
+      Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span>,
+    },
+  ];
 
-      },
-      {
-        Header: translations['Service'],
-        accessor: 'branchOfService.description',
-      },
-      {
-        Header: translations['Deployed Unit'],
-        accessor: 'deployedUnit.description',
-      },
-      {
-        Header: translations['CAC ID'],
-        accessor: 'CACID',
-      },
-      {
-        Header: translations['view'],
-        accessor: 'ID',
-        filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.getOnePersonnel(row.value)} /></span>,
-      },
-    ];
+  const sortOn = [
+    {
+      id: 'firstName',
+      desc: true,
+    },
+  ];
 
-    const rowFields = [
-      {name: translations['First Name'], type: 'input'},
-      {name: translations['Last Name'], type: 'input'},
-      {name: translations['Rank'], type: 'dropdown'},
-      {name: translations['Service'], type: 'input'},
-      {name: translations['Deployed Unit'], type: 'dropdown'},
-      {name: translations['CAC ID'], type: 'input'},
-      {name: translations['Record Date'], type: 'date'},
-    ];
-
-
-
-    return (
-      <div>
-        <div className="row orders-assets">
-          <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
-            <div className="header-text">
-              {translations['personnel']}
-            </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+  return (
+    <div>
+      <div className="row orders-assets">
+        <div className="header-line">
+          <img src="/assets/img/admin/personnel_1.png" alt=""/>
+          <div className="header-text">
+            {translations['personnel']}
           </div>
-          <div className="col-md-12 filter-line">
-            <div className="add-button">
-              <button className="ccir-button" onClick={this.addPersonnelModal}>{translations["Add Personnel"]}</button>
-            </div>
-          </div>
-
-          <AddPersonnel show={this.state.addPersonnelModalOpen} personnel = {this.state.personnel} onClose={this.addPersonnelModal} translations = {translations}/>
-
-          <div className="col-md-12">
-            <ReactTable
-              data={allPersonnels}
-              columns={columns}
-              defaultPageSize={5}
-              className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
-            />
+          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+        </div>
+        <div className="col-md-12 filter-line">
+          <div className="add-button">
+            <button className="ccir-button" onClick={() => this.openPersonnelForm('0')} >{translations["Add Personnel"]}</button>
           </div>
         </div>
+        {this.state.addPersonnelModalOpen ?
+          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations}/>
+          : null
+        }
+        <div className="col-md-12">
+          <ReactTable
+            data={allPersonnels}
+            columns={columns}
+            
+            defaultPageSize={10}
+            className="-striped -highlight"
+            filterable
+            defaultFilterMethod={(filter, row) =>
+              String(row[filter.id]) === filter.value}
+          />
+        </div>
+      </div>
 
 
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
       </div>
     );
   }
