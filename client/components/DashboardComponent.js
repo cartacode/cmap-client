@@ -143,13 +143,13 @@ class DashboardComponent extends React.Component {
       <div>
         <div className="row dashboard">
           <div className="col-md-12" style={{padding:0}}>
-            <div className="col-md-4">
+            <div className="col-md-4 col-xs-12">
               <ConfigBlock subHeaderText={translations["action required"]} fields={actionRequired} block="1" />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-xs-12">
               <ConfigBlock subHeaderText={translations["notification"]} fields={notification} block="2"/>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-xs-12">
               <ConfigBlock subHeaderText={translations["Priority Alerts"]} fields={priorityAlerts} block="3"/>
             </div>
           </div>
@@ -227,7 +227,7 @@ class DashboardComponent extends React.Component {
                     <div className="col-md-6 label-text">
                       {translations["sigacts"]}
                     </div>
-                    <div className="col-md-6 pull-right">
+                    <div className="col-md-6 t">
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
@@ -240,7 +240,7 @@ class DashboardComponent extends React.Component {
                     <div className="col-md-6 label-text">
                       {translations["current weather"]}
                     </div>
-                    <div className="col-md-6 pull-right">
+                    <div className="col-md-6 ">
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
@@ -253,7 +253,7 @@ class DashboardComponent extends React.Component {
                     <div className="col-md-6 label-text">
                       {translations["a-isr coverage"]}
                     </div>
-                    <div className="col-md-6 pull-right">
+                    <div className="col-md-6 ">
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
@@ -266,7 +266,7 @@ class DashboardComponent extends React.Component {
                     <div className="col-md-6 label-text">
                       {translations["force positions"]}
                     </div>
-                    <div className="col-md-6 pull-right">
+                    <div className="col-md-6 ">
                       <Dropdown key="1" id="1" items={langs}/>
                     </div>
                   </div>
