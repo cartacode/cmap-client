@@ -9,11 +9,11 @@ class Table extends React.Component {
     valueField = 'id';
 
     constructor(props) {
-        super(props);
-        this.state = {
-            dropdownItems: [],
-            selectedDropDownValue : 0
-        };
+      super(props);
+      this.state = {
+        dropdownItems: [],
+        selectedDropDownValue: 0,
+      };
 
       this.handleChange = this.handleChange.bind(this);
       if(undefined !== props.labelName) {
@@ -26,25 +26,25 @@ class Table extends React.Component {
     }
 
     componentWillMount() {
-        let items = [{'label': '--Select Item--', 'value': 0}];
+      let items = [{'label': '--Select Item--', 'value': 0}];
 
-        if (this.props.dropdownDataUrl === 'CrewReq') {
-			this.props.nums.map(item => {
-				items.push({'label': item['name'], 'value': item['name']});
-			});
-			this.setState({
-				dropdownItems: items
-			});
-        }
-        else {
+      if (this.props.dropdownDataUrl === 'CrewReq') {
+        this.props.nums.map(item => {
+          items.push({'label': item['name'], 'value': item['name']});
+        });
+        this.setState({
+          dropdownItems: items,
+        });
+      }
+      else {
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
         axios.get(apiUrl)
           .then(response => {
             response.data.map(item => {
-              items.push({'label': item[this.labelField], 'value': item[this.valueField]});
+              items.push({ 'label': item[this.labelField], 'value': item[this.valueField] });
             });
             this.setState({
-              dropdownItems: items
+              dropdownItems: items,
             });
           })
           .catch((error) => {
@@ -63,20 +63,14 @@ class Table extends React.Component {
       }
     }
 
-
-    // changeValue = (label, value) => {
-    //     console.log('Display Lable : '+label+ ', Saved Value :'+value);
-    // };
-
-    // render dropdown list of lang switcher
+    // Generates optins array
     renderItems = () => {
     //   const req = this.props.required;
       return this.state.dropdownItems.map((data, key) => {
-        if(key === 0)
-        { data.value = ''; } 
-           return (
-            <option key={key} value={data.value}>{ data.label }</option>
-        )
+        if(key === 0) { data.value = ''; }
+        return (
+          <option key={key} value={data.value}>{ data.label }</option>
+        );
       });
     }
 
@@ -94,12 +88,15 @@ class Table extends React.Component {
       const key = this.props.id || 0;
       return (
         <div>
-          {this.props.required ? 
-            <select className="form-control" name={key} onChange={this.handleChange} required>
+          {/* State {this.state.selectedDropDownValue} value
+        Props {this.props.initValue} Value */}
+
+          {this.props.required ?
+            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
               {this.renderItems()}
             </select>
             :
-            <select className="form-control" name={key} onChange={this.handleChange} >
+            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} >
               {this.renderItems()}
             </select>}
             
@@ -111,7 +108,9 @@ class Table extends React.Component {
 Table.propTypes = {     
   children: PropTypes.element,
   dropdownData: PropTypes.func,
+  id: PropTypes.string,
   initValue: PropTypes.any,
+  required: PropTypes.bool,
 };
 
 export default Table;
