@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
  import PayloadsComponent from '../../components/admin/PayloadsComponent';
 // import { fetchCocoms } from 'actions/cocom';
 // import { fetchLocationList } from 'actions/location';
-import { fetchPayloads /* fetchPayloadById,addPayload, fetchPayloadList,  fetchPayloadTypes */ } from 'actions/payloadinventory';
+import { fetchPayloadInventory } from 'actions/payloadinventory';
 
 const mapStateToProps = state => {
   
@@ -15,7 +15,7 @@ const mapStateToProps = state => {
     // locationList: state.locations.locationList,
     // cocomList: state.cocoms.cocomList,
     // payload: state.payloads.onePayload, 
-    allPayloadInventory: state.payloads.allPayloadInventory
+    allPayloadInventory: state.payloadinventory.allPayloadInventory,
 
   };
 };
@@ -24,7 +24,7 @@ const mapDispatchToProps = {
   // addPayload,
   // fetchPayloadList,
   // fetchPayloadTypes,
-  fetchPayloads,
+  fetchPayloadInventory,
   // fetchCocoms,
   // fetchLocationList,
   // fetchPayloadById 

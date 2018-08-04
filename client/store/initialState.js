@@ -28,15 +28,18 @@ export default {
     isFetching: false,
     isListFetching: false,
     isTypesFetching: false,
+    isFetchingOne: false,
     payloadList: [],
     payloadTypes: [],
     onePayload: {},
-    allPayloadInventory: []
+    onePayloadInventory: {},
+    allPayloadInventory: [],
   },
   personnels: {
     allPersonnels: [],
     onePersonnel: {},
     isFetching: false,
+    isFetchingOne: false,
   },
   platforms: {
     allPlatforms: [],

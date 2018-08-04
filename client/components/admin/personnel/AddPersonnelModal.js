@@ -68,7 +68,7 @@ class AddPersonnelModal extends React.Component {
     if(editId !== '0') {
       this.props.fetchPersonnelById(editId);
     }else {
-      this.setState({ onePersonnel: {} });
+    //   this.setState({ onePersonnel: {} });
     }
     // this.props.fetchPersonnelById(editId);
   }
@@ -1095,9 +1095,6 @@ class AddPersonnelModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    console.log("submitting");
-    
     const {  personnel } = this.state;
     const { editId } = this.props;
   

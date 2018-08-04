@@ -102,8 +102,8 @@ class ContentBlock extends React.Component {
         if(item.valFieldID !== undefined && this.state.content[item.valFieldID] !== undefined && this.state.content[item.valFieldID] !== null) {
           value = this.state.content[item.valFieldID];
         }
-        // console.log('value of ' +item.valFieldID+ ' is => ' + this.props.initstate[item.valFieldID]+' final  '+ value);
-       // console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
+        // console.log('value of ' +item.valFieldID+ ' is => ' + this.props.initstate[item.valFieldID]+' final  ' + value);
+      //  console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
         // if(value === null || value === 'undefined') {
         //     value = 'NA';
         // }
