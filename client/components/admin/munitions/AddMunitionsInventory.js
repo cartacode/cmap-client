@@ -10,9 +10,13 @@ import CustomDatePicker from '../../reusable/CustomDatePicker';
 import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 import Dropdown from "../../reusable/Dropdown";
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
 import { addMunitionInventory, updateMunitionInventory, fetchMunitionInventoryById } from 'actions/munitionsinventory';
+
+
 
 class AddMunitionsInventory extends React.Component {
 
@@ -22,6 +26,7 @@ class AddMunitionsInventory extends React.Component {
       file: '',
       locationcategory: '',
       imagePreviewUrl: '',
+      locationUpdate:true,
       oneMunitionInventory: {},
       // munition: {
       //   metaDataID: '',
@@ -57,7 +62,17 @@ class AddMunitionsInventory extends React.Component {
         lastUpdateUserId: '000',
         lastUpdate: new Date(),
       }
+    }, () => {
+      console.log('New state in ASYNC callback:22222', this.state.munition);
     });
+    
+      
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
+    {
+      
+      console.log("Category Selected");
+      this.updatelocationid(generalData);
+    }
   }
 
   handleSubmit = event => {
@@ -76,6 +91,29 @@ class AddMunitionsInventory extends React.Component {
     }
     this.props.onClose('0');
     
+  }
+
+  updatelocationid (generalData) 
+  {
+     let locationselect = document.getElementsByName('locationID')[0];
+     let items = [{'label': '--Select Item--', 'value': 0}];
+     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
+        axios.get(apiUrl)
+          .then(response => {
+            console.log(response.data);
+            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+            response.data.map(item => {
+              items.push({ 'label': item['description'], 'value': item['id'].trim() });
+            });
+            if (locationselect.length > 0) {locationselect.length = 0;}
+            for(let i in items) {
+              locationselect.add(new Option(items[i].label, items[i].value));
+            }
+            
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });   
   }
 
   resetForm() {
@@ -106,7 +144,7 @@ class AddMunitionsInventory extends React.Component {
    let generalFields = [
       {name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
-      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID'},
+      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID'},
       {name: "Type", type: 'dropdown', domID: 'typeId', ddID: 'MunitionRoles/GetMunitionRoles', valFieldID: 'type'},
       {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
       {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required:true}

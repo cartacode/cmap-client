@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
-
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
 
 
 
@@ -68,6 +69,12 @@ class AddPlatformInventory extends React.Component {
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
     });
+
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
+    {
+      console.log("Category Selected");
+      this.updatelocationid(generalData);
+    }
   }
 
   handleSubmit = event => {
@@ -83,6 +90,30 @@ class AddPlatformInventory extends React.Component {
 
     this.props.onClose('0');
   }
+
+  updatelocationid (generalData) 
+  {
+     let locationselect = document.getElementsByName('locationID')[0];
+     let items = [{'label': '--Select Item--', 'value': 0}];
+     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
+        axios.get(apiUrl)
+          .then(response => {
+            console.log(response.data);
+            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+            response.data.map(item => {
+              items.push({ 'label': item['description'], 'value': item['id'].trim() });
+            });
+            if (locationselect.length > 0) {locationselect.length = 0;}
+            for(let i in items) {
+              locationselect.add(new Option(items[i].label, items[i].value));
+            }
+            
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });   
+  }
+
 
   resetForm() {
     this.setState(this.baseState);
@@ -109,7 +140,8 @@ class AddPlatformInventory extends React.Component {
 
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=1', valFieldID: 'locationID' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
       { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UploadBlock from '../../reusable/UploadBlock';
 import ContentBlock from '../../reusable/ContentBlock';
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
 import { addPayloadInventory, updatePayloadInventory, fetchPayloadInventoryById } from 'actions/payloadinventory';
@@ -54,6 +56,13 @@ class AddPayloadsInventory extends React.Component {
     }, () => {
       console.log('New state in ASYNC callback:22222', this.state.payloads);
     });
+
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
+    {
+      
+      console.log("Category Selected");
+      this.updatelocationid(generalData);
+    }
   }
 
   handleSubmit = event => {
@@ -73,6 +82,29 @@ class AddPayloadsInventory extends React.Component {
     
     
     this.props.onClose('0');
+  }
+
+  updatelocationid (generalData) 
+  {
+     let locationselect = document.getElementsByName('locationID')[0];
+     let items = [{'label': '--Select Item--', 'value': 0}];
+     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
+        axios.get(apiUrl)
+          .then(response => {
+            console.log(response.data);
+            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+            response.data.map(item => {
+              items.push({ 'label': item['description'], 'value': item['id'].trim() });
+            });
+            if (locationselect.length > 0) {locationselect.length = 0;}
+            for(let i in items) {
+              locationselect.add(new Option(items[i].label, items[i].value));
+            }
+            
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });   
   }
 
   resetForm() {
