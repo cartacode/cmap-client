@@ -12,7 +12,7 @@ export default function payloads(state = initialState.payloads, { payload, type 
       return {
         ...state,
         isFetching: false,
-        allPayloads: payload.data,
+        allPayloadInventory: payload.data,
       };
     case PAYLOAD_LIST__FETCH.REQUEST:
       return {

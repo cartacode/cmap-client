@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH } from 'dictionary/action';
+import { PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -30,5 +30,12 @@ export function fetchPayloadTypes() {
   return createAction({
     type: PAYLOAD_TYPE__FETCH,
     action: () => axios.get(`${baseUrl}/PayloadType`, requestHeaders),
+  })
+}
+
+export function fetchPayloadById(id) {
+  return createAction({
+    type: PAYLOAD__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventory/${id}`, requestHeaders),
   })
 }

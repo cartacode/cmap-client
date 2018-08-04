@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addPayload, fetchPayloads } from 'actions/payloadinventory';
+import { addPayload, fetchPayloads, fetchPayloadById } from 'actions/payloadinventory';
 
 class AddPayloadsInventory extends React.Component {
 
@@ -21,12 +21,13 @@ class AddPayloadsInventory extends React.Component {
       file: '',
       imagePreviewUrl: '',
       locationcategory:'',
-      payloads : {
+      /* payloads : {
       metaDataID:'',
       locationID:'',
       owningUnit:'',
       serialNumber:''
-      }
+      } */
+      onePayload: {}
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -35,11 +36,11 @@ class AddPayloadsInventory extends React.Component {
   }
 
   componentWillMount(){
-    //this.props.fetchMunitions();
+    this.props.fetchPayloadById();
   }
 
   handlePayloadGeneralData = (generalData) => {
-    const {munition} = this.state;
+    const {payloads} = this.state;
     this.setState({locationcategory: generalData.locationcategory});
     this.setState({
       payloads: { 
@@ -82,7 +83,7 @@ class AddPayloadsInventory extends React.Component {
 
     
 
-    const {munition} = this.state;
+    const {payload} = this.state;
     const {translations} = this.props;
 
     const generalFields = [
@@ -118,7 +119,7 @@ class AddPayloadsInventory extends React.Component {
               <div className="under-munitions-content">
               <div className="col-md-4"></div>
                 <ContentBlock  fields={generalFields}
-                data={this.handlePayloadGeneralData} initstate ={this.state.payloads}/>
+                data={this.handlePayloadGeneralData} initstate ={this.props.onePayload}/>
               </div>
             </div>
           </div>
@@ -160,14 +161,16 @@ AddPayloadsInventory.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    onePayload:state.payloads.onePayload
   };
 };
 
 const mapDispatchToProps = {
   uploadFile,
   addPayload,
-  fetchPayloads
+  fetchPayloads,
+  fetchPayloadById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPayloadsInventory);

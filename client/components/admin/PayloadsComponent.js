@@ -38,6 +38,7 @@ class PayloadsComponent extends React.Component {
 			equipmentModalOpen: false,
 			tableRowDetailModalOpen: false,
 			payload_list_name: [],
+			editId: '0'
 		}
 	}
 
@@ -57,12 +58,28 @@ class PayloadsComponent extends React.Component {
 		})
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchPayloads();
-		this.props.fetchPayloadList();
+		//this.props.fetchPayloadList();
 	//	this.props.fetchCocoms();
 	//	this.props.fetchLocationList();
 	}
+
+	openPersonnelForm = (row) => {
+		this.setState({
+		  editId: row,
+		  addPayloadsInventoryOpen: true,
+		});
+	  }
+	
+	closePersonnelForm = () => {
+	  this.props.fetchPersonnels();
+	  this.setState({
+		editId: '0',
+		addPayloadsInventoryOpen: false,
+	  });
+	}
+	
 
 	renderItems(optionItem) {
 		let items = [{"label": "-Select Item-", "value": 0}];
@@ -83,8 +100,7 @@ class PayloadsComponent extends React.Component {
 	}
 
 	render() {
-		const {translations} = this.props;
-		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
+		const {translations, allPayloadInventory} = this.props;
 
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.eoirModal},
@@ -121,7 +137,7 @@ class PayloadsComponent extends React.Component {
 			  },
 			{
 				Header: translations['Name'],
-				accessor: 'payload',
+				accessor: 'name',
 				// Filter: ({ filter, onChange }) =>
 				// 		   <select
 				// 			onChange={event => onChange(event.target.value)}
@@ -136,7 +152,7 @@ class PayloadsComponent extends React.Component {
 			},
 			{
 				Header: translations['serial#'],
-				accessor: 'serial',
+				accessor: 'serialNumber',
 			},
 			{
 				Header: translations['cocom'],
@@ -167,27 +183,19 @@ class PayloadsComponent extends React.Component {
 			},
 			{
 				Header: translations['Record Date'],
-				accessor: 'etic',
+				accessor: 'recordDate',
 				Filter: ({ filter, onChange }) =>
 						  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
 			},
 			{
 				Header: translations['view'],
-				accessor: 'view',
+				accessor: 'ID',
 				filterable: false,
 				Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
 			}
 		];
 
-		const rowFields = [
-			{name: translations['Type'], type: 'dropdown'},
-			{name: translations['Name'], type: 'input'},
-			{name: translations['Serial#'], type: 'input'},
-			{name: translations['COCOM'], type: 'dropdown'},
-			{name: translations['Unit'], type: 'dropdown'},
-			{name: translations['Location'], type: 'dropdown'},
-			{name: translations['Record Date'], type: 'date'},
-		];
+		
 
 		return (
 			<div>
@@ -209,7 +217,7 @@ class PayloadsComponent extends React.Component {
 
 				<div className="col-md-12">
 					<ReactTable
-						data={allPayloads}
+						data={allPayloadInventory}
 						columns={columns}
 						defaultPageSize={5}
 						className="-striped -highlight"
