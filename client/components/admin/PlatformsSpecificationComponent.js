@@ -25,17 +25,17 @@ class PlatformsSpecificationComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
-      addPlatformModalOpen:false,
+      addPlatformModalOpen: false,
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
     }
   }
 
-  onFind(){
+  onFind() {
     console.log("find");
   }
 
@@ -90,8 +90,8 @@ class PlatformsSpecificationComponent extends React.Component {
 
   render() {
 
-    const {translations} = this.props;
-    const {allPlatforms} = this.props;
+    const { translations } = this.props;
+    const { allPlatforms } = this.props;
 
     console.log(allPlatforms);
 
@@ -143,24 +143,24 @@ class PlatformsSpecificationComponent extends React.Component {
     ];
 
     const rowFields = [
-      {name: translations['Tail#'], type: 'input', valField:'aaa'},
-      {name: translations['Platform Name'], type: 'input'},
-      {name: translations['Category'], type: 'input'},
-      {name: translations['Service'], type: 'input'},
-      {name: translations['Owning Unit'], type: 'input'},
-      {name: translations['Location'], type: 'dropdown'},
-      {name: translations['Record Date'], type: 'date'},
+      { name: translations['Tail#'], type: 'input', valField: 'aaa' },
+      { name: translations['Platform Name'], type: 'input' },
+      { name: translations['Category'], type: 'input' },
+      { name: translations['Service'], type: 'input' },
+      { name: translations['Owning Unit'], type: 'input' },
+      { name: translations['Location'], type: 'dropdown' },
+      { name: translations['Record Date'], type: 'date' },
     ];
 
     return (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
               Platforms Specification
             </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
           <div className="col-md-12 filter-line">
@@ -169,8 +169,8 @@ class PlatformsSpecificationComponent extends React.Component {
             </div>
           </div>
 
-        {this.state.addPlatformModalOpen ?
-            <AddPlatform editId = {this.state.editId} show={this.state.addPlatformModalOpen} onClose={this.closePlatformForm} translations={translations} />
+          {this.state.addPlatformModalOpen ?
+            <AddPlatform editId={this.state.editId} show={this.state.addPlatformModalOpen} onClose={this.closePlatformForm} translations={translations} />
             : null}
 
           <div className="col-md-12">
@@ -180,10 +180,10 @@ class PlatformsSpecificationComponent extends React.Component {
               defaultPageSize={5}
               className="-striped -highlight"
               filterable={true}
-						  defaultFilterMethod={(filter, row) => {
-							  const id = filter.pivotId || filter.id
-							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
-						  }}
+              defaultFilterMethod={(filter, row) => {
+                const id = filter.pivotId || filter.id
+                return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+              }}
             />
           </div>
         </div>

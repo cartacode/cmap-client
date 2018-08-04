@@ -96,7 +96,6 @@ class PlatformComponent extends React.Component {
     const { allPlatforms } = this.props;
 
     console.log(allPlatforms);
-    debugger;
     const columns = [
 
       {
