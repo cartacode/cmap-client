@@ -81,6 +81,15 @@ class AddPlatformModal extends React.Component {
     this.baseState = this.state
   }
 
+  componentDidMount = () => {
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchPlatformById(editId);
+    }/* else {
+      this.setState({ onePlatform: {} });
+    } */
+  }
+
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
     console.log(generalData);
@@ -363,21 +372,12 @@ class AddPlatformModal extends React.Component {
 
   }
 
-  componentDidMount = () => {
-    const { editId } = this.props;
-    if (editId !== undefined && editId !== '0') {
-      this.props.fetchPlatformById(editId);
-    }else {
-      this.setState({ onePlatform: {} });
-    }
-  }
-
   handleSubmit = event => {
     event.preventDefault();
     const { platform } = this.state;
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
-      platform.id = editId;
+      platform.PlatformID = editId;
       this.props.updatePlatform(editId, platform);
     } else {
       this.props.addPlatform(platform);
@@ -404,9 +404,9 @@ class AddPlatformModal extends React.Component {
 
   render() {
     // Render nothing if the "show" prop is false
-    if (!this.props.show) {
+    /* if (!this.props.show) {
       return null;
-    }
+    } */
 
     let { imagePreviewUrl } = this.state;
     let $imagePreview = '';
@@ -429,10 +429,9 @@ class AddPlatformModal extends React.Component {
     }
 
 
-    const { platform } = this.state;
+    //let { platform } = this.state;
     const { translations } = this.props;
- 
-
+    debugger;
 
     const generalFields = [
       { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber', required: true },
@@ -562,31 +561,31 @@ class AddPlatformModal extends React.Component {
                     <div>
                       {translations['Photo Image']}
                     </div>
-                    <input type="file" name="file" id="PlatformPhoto" onChange={this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="PlatformPhoto" onChange={this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Wireframe Image']}
                     </div>
-                    <input type="file" name="file" id="PlatformWireframe" onChange={this.handleUploadPhotoFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="PlatformWireframe" onChange={this.handleUploadPhotoFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['3D Model']}
                     </div>
-                    <input type="file" name="file" id="Platform3DModel" onChange={this.handleUpload3DFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="Platform3DModel" onChange={this.handleUpload3DFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Milspec Icon']}
                     </div>
-                    <input type="file" name="file" id="PlatformMilspec" onChange={this.handleUploadIconFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="PlatformMilspec" onChange={this.handleUploadIconFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Datasheets']}
                     </div>
-                    <input type="file" name="file" id="file" onChange={this.handleUploadDatasheetsFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="file" onChange={this.handleUploadDatasheetsFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                 </div>
               </div>
@@ -595,11 +594,11 @@ class AddPlatformModal extends React.Component {
           <div className="row personnel" >
             <div className="under-personnel-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handlePlatformTechnicalData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
-                data={this.handlePlatformPayloadData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} />
             </div>
           </div>
           <div className="row personnel" >
@@ -645,7 +644,6 @@ class AddPlatformModal extends React.Component {
 AddPlatformModal.propTypes = {
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
   children: PropTypes.node
 };
 

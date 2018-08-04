@@ -8,12 +8,14 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     allMunitions: state.munitions.allMunitions,
     fetchingMunitions: state.munitions.isFetching,
+    munition: state.munitions.oneMunition
+
   };
 };
 
 const mapDispatchToProps = {
   addMunition,
-  fetchMunitions,
+  fetchMunitions
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsSpecificationComponent);

@@ -30,6 +30,11 @@ class HeaderComponent extends React.Component {
 
   }
 
+   
+  collapse = () => {
+   debugger;
+  }
+
   //render dropdown list of lang switcher
   renderLangsList() {
     let langsList;
@@ -73,8 +78,8 @@ class HeaderComponent extends React.Component {
 
       return (
         <div className="menu-button" key={i}>
-          <NavLink to={item.url} className={matchForLink ? "active-menu-item" : ''} >
-            <button >
+          <NavLink to={item.url} className={matchForLink ? "active-menu-item" : ''}>
+            <button data-target="#bs-AMPS-navbar-collapse-1"  data-toggle="collapse">
               {item.title}
             </button>
             <div className="under-button-line">
@@ -162,6 +167,18 @@ class HeaderComponent extends React.Component {
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 {this.renderLangsList()}
               </ul>
+              <ul className="pull-right setting-user">
+        <li className="dropdown">
+          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="fa fa-cog "></i><span className="caret"></span></a>
+          <ul className="dropdown-menu" role="menu">
+                       <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
+            <li><a href="#"> <i className="fa fa-key"></i> Change Password</a></li>
+            <li className="divider"></li>
+            <li><a href="#"><i className="fa fa-sign-out"></i> Log Out</a></li>
+          </ul>
+        </li>
+      
+      </ul>
             </div>
       <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-AMPS-navbar-collapse-1">
         <span className="sr-only">Toggle navigation</span>
