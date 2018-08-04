@@ -142,16 +142,6 @@ class PlatformsSpecificationComponent extends React.Component {
       }
     ];
 
-    const rowFields = [
-      { name: translations['Tail#'], type: 'input', valField: 'aaa' },
-      { name: translations['Platform Name'], type: 'input' },
-      { name: translations['Category'], type: 'input' },
-      { name: translations['Service'], type: 'input' },
-      { name: translations['Owning Unit'], type: 'input' },
-      { name: translations['Location'], type: 'dropdown' },
-      { name: translations['Record Date'], type: 'date' },
-    ];
-
     return (
       <div>
         <div className="row orders-assets">
@@ -170,7 +160,7 @@ class PlatformsSpecificationComponent extends React.Component {
           </div>
 
           {this.state.addPlatformModalOpen ?
-            <AddPlatform editId={this.state.editId} show={this.state.addPlatformModalOpen} onClose={this.closePlatformForm} translations={translations} />
+            <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
 
           <div className="col-md-12">
