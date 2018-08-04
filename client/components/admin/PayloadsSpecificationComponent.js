@@ -37,6 +37,13 @@ class PayloadsSpecificationComponent extends React.Component {
 			equipmentModalOpen: false,
 			tableRowDetailModalOpen: false,
 			payload_list_name: [],
+			serialVal:'',
+      		nameVal:'',
+			form : {
+				type: 'Test'
+			  },
+			editId: '0'
+			
 		}
 	}
 
@@ -86,6 +93,30 @@ class PayloadsSpecificationComponent extends React.Component {
 	//	this.props.fetchCocoms();
 	//	this.props.fetchLocationList();
 	}
+
+	openPayloadsSpecificationForm = (row) => {
+		console.log(row);
+		this.setState({
+		    editId: row,
+		  	eoirModalOpen:true,
+			sargmtiModalOpen: false,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
+		});
+		console.log(this.state.editId);
+	  }
+
+	  handleForm = () => {
+		console.log("here");
+		this.setState({
+		  form: {
+			type: 'Air-to-surface'
+		  }
+		}, () => {
+		 // console.log("New state in ASYNC callback:22222", this.state.intelRequest);
+		});
+	  }
 
 	renderItems(optionItem) {
 		let items = [{"label": "-Select Item-", "value": 0}];
@@ -194,16 +225,19 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 				Header: translations['view'],
-				accessor: 'view',
+				accessor: 'ID',
 				filterable: false,
-				Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+				Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsSpecificationForm(row.value)} /></span> // Custom cell components!
 			}
 		];
 
+		let serialval = this.state.serialVal;
+    	let nameval = this.state.nameVal;
+
 		const rowFields = [
 			{name: translations['Type'], type: 'dropdown'},
-			{name: translations['Name'], type: 'input'},
-			{name: translations['Serial#'], type: 'input'},
+			{name: translations['Name'], type: 'input', valField:nameval},
+			{name: translations['Serial#'], type: 'input', valField:serialval},
 			{name: translations['COCOM'], type: 'dropdown'},
 			{name: translations['Unit'], type: 'dropdown'},
 			{name: translations['Location'], type: 'dropdown'},
@@ -225,13 +259,22 @@ class PayloadsSpecificationComponent extends React.Component {
 						<DropDownButton key = '1' label="Add Specification" id="1" items={addPayloads} />
 					</div>
 				</div>
-
-				<EoirModal show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
+				{this.state.eoirModalOpen ?
+				<EoirModal editId={this.state.editId} show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
+				: null }
+				{this.state.sargmtiModalOpen ?
 				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>
+				: null }
+				{this.state.wamiModalOpen ?
 				<WamiModal show={this.state.wamiModalOpen} onClose={this.wamiModal} translations = {translations}/>
+				: null }
+				{this.state.sigintModalOpen ?
 				<SigintModal show={this.state.sigintModalOpen} onClose={this.sigintModal} translations = {translations}/>
+				: null }
+				{this.state.equipmentModalOpen ? 
 				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
-				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+				: null }
+				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
 
 				<div className="col-md-12">
 					<ReactTable
