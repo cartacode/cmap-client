@@ -14,6 +14,17 @@ export default function munitions(state = initialState.munitions, { payload, typ
         allMunitions: payload.data,
         isFetching: false,
       };
+      case MUNITION__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case MUNITION__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        oneMunition: payload.data,
+      };
     default:
       return state;
   }

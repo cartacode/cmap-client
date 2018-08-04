@@ -4402,6 +4402,12 @@ ul.pull-right.setting-user {
 button.btn.btn-secondary.dropdown-toggle {
   margin-right: 10px;
 }
+
+
+.change-cursor-to-pointer{
+  cursor: pointer;
+}
+
 @media(max-width:768px)
 {
   .navbar-default .header-title {

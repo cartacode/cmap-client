@@ -26,6 +26,7 @@ export default {
     isFetchingOne: false,
     allMunitionInventory: [],
     oneMunitionInventory: {},
+    oneMunition: {}
   },
 
   payloads: {
