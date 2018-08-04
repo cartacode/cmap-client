@@ -34,11 +34,13 @@ class MunitionsSpecificationComponent extends React.Component {
       rocketModalOpen: false,
       gunModalOpen: false,
       tableRowDetailModalOpen: false,
+      addMunitionsSpecificationOpen: false,
       serialVal:'',
       nameVal:'',
       form : {
         type: 'Test'
-      }
+      },
+      editId: '0'
 
     }
   }
@@ -77,6 +79,19 @@ class MunitionsSpecificationComponent extends React.Component {
     this.props.fetchMunitions();
     // console.log("--here is Munitions---");
     // console.log(data);
+  }
+
+
+  //This method called when we select a row from table.
+  //TODO: i found there is no chnages in UI in Missile, Rocket and Gun Section all showing same UI. 
+  //So for now i am using Missile Scetion.
+  openMunitionsSpecificationForm = (row) => {
+    this.setState({
+      editId: row,
+      missileModalOpen: true,
+      rocketModalOpen: false,
+      gunModalOpen: false
+    });
   }
 
   handleChange(value) {
@@ -176,9 +191,9 @@ class MunitionsSpecificationComponent extends React.Component {
 	 
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row.value)} /></span> // Custom cell components!
       }
     ];
 
@@ -214,9 +229,19 @@ class MunitionsSpecificationComponent extends React.Component {
             </div>
           </div>
 
-        <MissileModal show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
+        {this.state.missileModalOpen ?
+                <MissileModal editId={this.state.editId} show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
+          : null
+          }
+           {this.state.rocketModalOpen ?
         <RocketModal show={this.state.rocketModalOpen} onClose={this.rocketModal} translations = {translations}/>
+        : null
+          }
+           {this.state.gunModalOpen ?
         <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
+        : null
+          }
+          
           <div className="col-md-12">
             <ReactTable
               data={allMunitions}

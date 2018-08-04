@@ -1,4 +1,4 @@
-import { MUNITION__FETCH } from 'dictionary/action';
+import { MUNITION__FETCH, MUNITION__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function munitions(state = initialState.munitions, { payload, type }) {
