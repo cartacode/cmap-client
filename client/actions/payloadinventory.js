@@ -12,12 +12,12 @@ export function addPayloadInventory(payload) {
   });
 }
 
-export function updatePayloadInventory(data) {
-  console.log('updating');
-  console.log(data);
+export function updatePayloadInventory(id, data) {
+  console.log('updating'+JSON.stringify(data));
+  
   return createAction({
     type: PAYLOAD_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, qs.stringify(data), requestHeaders),
   });
 }
 

@@ -49,6 +49,7 @@ class AddPayloadsInventory extends React.Component {
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber,
+        id: this.props.editId,
       },
     }, () => {
       console.log('New state in ASYNC callback:22222', this.state.payloads);
@@ -58,14 +59,14 @@ class AddPayloadsInventory extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { editId } = this.props;
-    const { payloads } = this.state;  
+    let { payloads } = this.state;
     if (editId !== undefined && editId !== '0') {
-      const data = {
-        id: editId,
-        payloadInventory: payloads,
-      };
-  
-      this.props.updatePayloadInventory(data);
+      // const data = {
+      //   id: editId,
+      //   payloadInventory: payloads,
+      // };
+      payloads.id = editId;
+      this.props.updatePayloadInventory(editId, payloads);
     } else {
       this.props.addPayloadInventory(this.state.payloads);
     }
