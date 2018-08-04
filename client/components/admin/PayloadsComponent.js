@@ -102,7 +102,7 @@ closePayloadsForm = () => {
 					  <div className="col-md-12 filter-line">
             			<div className="add-button">
               				<button className="ccir-button" onClick={() => this.openPayloadsForm('0')} >{translations["Add Payload"]}</button>
-							  {allPayloadInventory.length}
+							  
             			</div>
           			</div>
 					 {this.state.addPayloadsInventoryOpen ?
