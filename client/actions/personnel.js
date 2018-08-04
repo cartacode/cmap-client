@@ -12,10 +12,10 @@ export function addPersonnel(personnel) {
   });
 }
 
-export function updatePersonnel(data) {
+export function updatePersonnel(id, data) {
   return createAction({
     type: PERSONNEL__UPDATE,
-    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, qs.stringify(data), requestHeaders),
   });
 }
 
