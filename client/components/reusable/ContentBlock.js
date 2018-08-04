@@ -36,6 +36,7 @@ class ContentBlock extends React.Component {
     
     const { content } = this.state;
     const { initstate, editId } = this.props;
+    console.log('edit id'+editId);
     if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
       this.setState({
         content: initstate,

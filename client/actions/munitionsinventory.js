@@ -1,18 +1,33 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { MUNITION_INVENTORY__ADD, MUNITION_INVENTORY__FETCH } from 'dictionary/action';
+import { MUNITION_INVENTORY__ADD, MUNITION_INVENTORY__FETCH, MUNITION_INVENTORY__UPDATE, MUNITION_INVENTORY__FETCH_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
-export function addMunition(munition) {
+export function addMunitionInventory(munition) {
   return createAction({
     type: MUNITION_INVENTORY__ADD,
     action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, qs.stringify(munition), requestHeaders),
   });
 }
 
-export function fetchMunitions() {
+export function updateMunitionInventory(id, data) {
+  console.log('updating'+JSON.stringify(data));
+  return createAction({
+    type: MUNITION_INVENTORY__UPDATE,
+    action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, qs.stringify(data), requestHeaders),
+  });
+}
+
+export function fetchMunitionInventoryById(id) {
+  return createAction({
+    type: MUNITION_INVENTORY__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventory/${id}`, requestHeaders),
+  });
+}
+
+export function fetchMunitionInventory() {
   return createAction({
     type: MUNITION_INVENTORY__FETCH,
     action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventoryData`, requestHeaders),

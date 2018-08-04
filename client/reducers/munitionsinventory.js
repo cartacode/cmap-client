@@ -1,4 +1,4 @@
-import { MUNITION_INVENTORY__FETCH } from 'dictionary/action';
+import { MUNITION_INVENTORY__FETCH, MUNITION_INVENTORY__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function munitions(state = initialState.munitions, { payload, type }) {
@@ -11,9 +11,20 @@ export default function munitions(state = initialState.munitions, { payload, typ
     case MUNITION_INVENTORY__FETCH.SUCCESS:
       return {
         ...state,
-        allMunitions: payload.data,
+        allMunitionInventory: payload.data,
         isFetching: false,
       };
+    case MUNITION_INVENTORY__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetchingOne: true,
+      };
+    case MUNITION_INVENTORY__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetchingOne: false,
+        oneMunitionInventory: payload.data,
+      };     
     default:
       return state;
   }

@@ -1,26 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import FilterDropdown from '../reusable/FilterDropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import ButtonsList from "../reusable/ButtonsList";
-import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../reusable/CustomDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
-import MissileModal from './munitions/MissileModal';
-import RocketModal from './munitions/RocketModal';
-import GunModal from './munitions/GunModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import AddMunitionsInventory from './munitions/AddMunitionsInventory';
 
@@ -28,49 +9,40 @@ class MunitionsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
       addMunitionsInventoryOpen:false,
       rocketModalOpen: false,
-      gunModalOpen: false,
-      tableRowDetailModalOpen: false,
+      gunModalOpen: false,      
       serialVal:'',
       nameVal:'',
       form : {
         type: 'Test'
-      }
+      },
+      editId: '0',
 
     }
   }
 
-  onFind(){
-    console.log("find");
+  componentDidMount() {
+    this.props.fetchMunitionInventory();
   }
 
-  addMunitionsInventory = () => {
-    this.setState({
-      addMunitionsInventoryOpen: !this.state.addMunitionsInventoryOpen
-    });
-  }
+openMunitionsForm = (row) => {
+  this.setState({
+    editId: row,
+    addMunitionsInventoryOpen: true,
+  });
+}
 
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
-  }
-
-
-
-  componentWillMount() {
-    this.props.fetchMunitions();
-    // console.log("--here is Munitions---");
-    // console.log(data);
-  }
-
-  handleChange(value) {
-    console.log(value);
-  }
+closeMunitionsForm = () => {
+  this.props.fetchMunitionInventory();
+  this.setState({
+    editId: '0',
+    addMunitionsInventoryOpen: false,
+  });
+}
 
   handleForm = () => {
     console.log("here");
@@ -93,7 +65,7 @@ class MunitionsComponent extends React.Component {
       {name:translations['Guns'], onClick:this.gunModal}
     ];
 
-    const { allMunitions } = this.props;
+    const { allMunitionInventory } = this.props;
 
     const columns = [
       /*{
@@ -110,7 +82,7 @@ class MunitionsComponent extends React.Component {
       },*/
       {
         Header: translations["type"],
-        accessor: 'role',
+        accessor: 'type',
         // Filter: ({ filter, onChange }) =>
         //             <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         // sortMethod: (a, b) => {
@@ -128,7 +100,7 @@ class MunitionsComponent extends React.Component {
       },*/
 	  {
 		Header: translations['Name'],
-		accessor: 'munition',
+		accessor: 'name',
 		// Filter: ({ filter, onChange }) =>
 		// 		   <select
 		// 			onChange={event => onChange(event.target.value)}
@@ -142,7 +114,7 @@ class MunitionsComponent extends React.Component {
 	  },
       {
         Header: translations['serial#'],
-        accessor: 'serial',
+        accessor: 'serialNumber',
       },
       {
         Header: translations['cocom'],
@@ -152,7 +124,7 @@ class MunitionsComponent extends React.Component {
       },
       {
         Header: translations['unit'],
-        accessor: 'unit',
+        accessor: 'owningUnit',
         // Filter: ({ filter, onChange }) =>
         //             <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>
       },
@@ -176,33 +148,17 @@ class MunitionsComponent extends React.Component {
 	  },
       {
         Header: translations['Record Date'],
-        accessor: 'lastUpdate',
+        accessor: 'recordDate',
         // Filter: ({ filter, onChange }) =>
         //           <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: row => <span className="number"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsForm(row.value)}/></span>
       }
     ];
-
-    let serialval = this.state.serialVal;
-    let nameval = this.state.nameVal;
-
-    const rowFields = [
-      {name: translations['Type'], type: 'dropdown', ddID:'MunitionRoles'},
-      {name: translations['Name'], type: 'input', valField:nameval},
-      {name: translations['Serial#'], type: 'input', valField:serialval},
-      {name: translations['COCOM'], type: 'dropdown', ddID:'COCOM'},
-      {name: translations['Unit'], type: 'dropdown',ddID:'Units'},
-      {name: translations['Location'], type: 'dropdown', ddID:'Locations'},
-      {name: translations['Record Date'], type: 'date'},
-    ];
-
-	console.log('allMunitions:');
-		console.log(allMunitions);
 
     return (
       <div>
@@ -216,27 +172,28 @@ class MunitionsComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={this.addMunitionsInventory} >{translations["Add Munition"]}</button>
+              <button className="ccir-button" onClick={() => this.openMunitionsForm('0')} >{translations["Add Munition"]}</button>
             </div>
           </div>
-
-        <AddMunitionsInventory show={this.state.addMunitionsInventoryOpen} onClose={this.addMunitionsInventory} translations = {translations}/>
-        
+          { this.state.addMunitionsInventoryOpen ?
+            <AddMunitionsInventory onClose={this.closeMunitionsForm} editId={this.state.editId} translations = {translations}/>
+            : null
+          }
           <div className="col-md-12">
             <ReactTable
-              data={allMunitions}
+              data={allMunitionInventory}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id;
-							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+							  return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
               }}
             />
           </div>
         </div>
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
+        
       </div>
     );
   }

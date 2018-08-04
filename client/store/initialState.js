@@ -19,19 +19,24 @@ export default {
     locationList: [],
     locationTypes: [],
   },
+
   munitions: {
     allMunitions: [],
     isFetching: false,
+    isFetchingOne: false,
+    allMunitionInventory: [],
+    oneMunitionInventory: {},
   },
+
   payloads: {
     allPayloads: [],
+    onePayload: {},
     isFetching: false,
     isListFetching: false,
     isTypesFetching: false,
     isFetchingOne: false,
     payloadList: [],
-    payloadTypes: [],
-    onePayload: {},
+    payloadTypes: [],    
     onePayloadInventory: {},
     allPayloadInventory: [],
   },
@@ -41,6 +46,7 @@ export default {
     isFetching: false,
     isFetchingOne: false,
   },
+
   platforms: {
     allPlatforms: [],
     onePlatform: {},

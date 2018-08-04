@@ -12,23 +12,24 @@ import StatusTable from '../../reusable/StatusTable';
 import Dropdown from "../../reusable/Dropdown";
 
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitions } from 'actions/munitionsinventory';
+import { addMunitionInventory, updateMunitionInventory, fetchMunitionInventoryById } from 'actions/munitionsinventory';
 
 class AddMunitionsInventory extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       file: '',
-      locationcategory:'',
+      locationcategory: '',
       imagePreviewUrl: '',
-      munition : {
-      metaDataID:'',
-      locationID:'',
-      owningUnit:'',
-      serialNumber:'',
-      updatelocation:false
-      }
+      oneMunitionInventory: {},
+      // munition: {
+      //   metaDataID: '',
+      //   locationID: '',
+      //   owningUnit: '',
+      //   serialNumber: '',
+      //   updatelocation: false
+      // }
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -36,8 +37,12 @@ class AddMunitionsInventory extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount(){
-    //this.props.fetchMunitions();
+  componentDidMount() {
+    const { editId } = this.props;
+    console.log('edit id' + editId);
+    if (editId !== '0') {
+      this.props.fetchMunitionInventoryById(editId);
+    }
   }
 
   handleMunitionGeneralData = (generalData) => {
@@ -48,21 +53,32 @@ class AddMunitionsInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
-        serialNumber: generalData.serialNumber
+        serialNumber: generalData.serialNumber,
+        lastUpdateUserId: '000',
+        lastUpdate: new Date(),
       }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.munition);
-      console.log("New state in ASYNC callback:22222", this.state.locationcategory);
     });
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addMunition(this.state.munition);
-    this.props.fetchMunitions();
+    const { editId } = this.props;
+    let { munition } = this.state;
+    if (editId !== undefined && editId !== '0') {
+      // const data = {
+      //   id: editId,
+      //   payloadInventory: payloads,
+      // };
+      munition.id = editId;
+      this.props.updateMunitionInventory(editId, munition);
+    } else {
+      this.props.addMunitionInventory(this.state.munition);
+    }
+    this.props.onClose('0');
+    
   }
 
-  resetForm(){
+  resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
@@ -79,13 +95,10 @@ class AddMunitionsInventory extends React.Component {
 
   render() {
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
-      return null;
-    }
+    // if(!this.props.show) {
+    //   return null;
+    // }
 
-    
-
-    const {munition} = this.state;
     const {translations} = this.props;
 
     let {locationcategory} = this.state;
@@ -95,11 +108,9 @@ class AddMunitionsInventory extends React.Component {
       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
       {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID'},
       {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
-      {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber',required:true}
+      {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required:true}
     ];
 
-
-    
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
@@ -123,9 +134,7 @@ class AddMunitionsInventory extends React.Component {
             
               <div className="under-munitions-content">
               <div className="col-md-4"></div>
-                <ContentBlock  fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
-                
+                <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate ={this.props.oneMunitionInventory}/>
               </div>
             </div>
           </div>
@@ -160,20 +169,22 @@ class AddMunitionsInventory extends React.Component {
 }
 
 AddMunitionsInventory.propTypes = {
+  children: PropTypes.node,
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
-  children: PropTypes.node
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    oneMunitionInventory: state.munitionsinventory.oneMunitionInventory,
   };
 };
 
 const mapDispatchToProps = {
-  addMunition,
-  fetchMunitions,
+  addMunitionInventory, 
+  updateMunitionInventory, 
+  fetchMunitionInventoryById,
   uploadFile,
 };
 

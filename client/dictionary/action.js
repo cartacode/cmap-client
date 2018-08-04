@@ -18,9 +18,15 @@ export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
 export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
 
 export const MUNITION__ADD = createActionType('MUNITION__ADD');
+export const MUNITION__UPDATE = createActionType('MUNITION__UPDATE');
 export const MUNITION__FETCH = createActionType('MUNITION__FETCH');
+export const MUNITION__FETCH_ONE = createActionType('MUNITION__FETCH_ONE');
+
 export const MUNITION_INVENTORY__ADD = createActionType('MUNITION_INVENTORY__ADD');
+export const MUNITION_INVENTORY__UPDATE = createActionType('MUNITION_INVENTORY__UPDATE');
 export const MUNITION_INVENTORY__FETCH = createActionType('MUNITION_INVENTORY__FETCH');
+export const MUNITION_INVENTORY__FETCH_ONE = createActionType('MUNITION_INVENTORY__FETCH_ONE');
+
 
 export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
 export const PAYLOAD__UPDATE = createActionType('PAYLOAD__UPDATE');

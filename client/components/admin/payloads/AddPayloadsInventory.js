@@ -29,7 +29,7 @@ class AddPayloadsInventory extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { editId } = this.props;
     console.log('edit id'+editId);
     if(editId !== '0') {

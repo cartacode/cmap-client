@@ -12,8 +12,6 @@ import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
 import { addPlatform, fetchPlatforms, fetchPlatformById } from 'actions/platforminventory';
-import { id } from 'postcss-selector-parser';
-
 
 class AddPlatformInventory extends React.Component {
 

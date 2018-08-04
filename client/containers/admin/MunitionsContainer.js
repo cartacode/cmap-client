@@ -1,19 +1,18 @@
 import {connect} from 'react-redux';
 
 import MunitionsComponent from '../../components/admin/MunitionsComponent';
-import { addMunition, fetchMunitions } from 'actions/munitionsinventory';
+import { fetchMunitionInventory } from 'actions/munitionsinventory';
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText,
-    allMunitions: state.munitions.allMunitions,
-    fetchingMunitions: state.munitions.isFetching,
+    translations: state.localization.staticText,    
+    allMunitionInventory: state.munitionsinventory.allMunitionInventory,
+    isFetching: state.munitionsinventory.isFetching,
   };
 };
 
 const mapDispatchToProps = {
-  addMunition,
-  fetchMunitions,
+  fetchMunitionInventory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsComponent);
