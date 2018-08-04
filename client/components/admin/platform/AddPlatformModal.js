@@ -429,10 +429,9 @@ class AddPlatformModal extends React.Component {
     }
 
 
-    const { platform } = this.state;
+    //let { platform } = this.state;
     const { translations } = this.props;
- 
-
+    debugger;
 
     const generalFields = [
       { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber', required: true },
@@ -595,11 +594,11 @@ class AddPlatformModal extends React.Component {
           <div className="row personnel" >
             <div className="under-personnel-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handlePlatformTechnicalData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
-                data={this.handlePlatformPayloadData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} />
             </div>
           </div>
           <div className="row personnel" >
