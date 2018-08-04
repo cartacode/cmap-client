@@ -12,10 +12,10 @@ export function addPlatform(platform) {
   });
 }
 
-export function updatePlatform(platform) {
+export function updatePlatform(id, platform) {
   return createAction({
     type: PLATFORM_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PlatformInventory/PostPlatformInventory`, qs.stringify(platform), requestHeaders),
+    action: () => axios.put(`${baseUrl}/PlatformInventory/PutPlatformInventory/${id}`, qs.stringify(platform), requestHeaders),
   });
 }
 

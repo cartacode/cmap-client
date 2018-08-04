@@ -42,7 +42,9 @@ export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
 
 export const PLATFORM__ADD = createActionType('PLATFORM__ADD');
+export const PLATFORM__UPDATE = createActionType('PLATFORM__UPDATE');
 export const PLATFORM__FETCH = createActionType('PLATFORM__FETCH');
+export const PLATFORM__FETCH_ONE = createActionType('PLATFORM__FETCH_ONE');
 
 export const PLATFORM_INVENTORY__ADD = createActionType('PLATFORM_INVENTORY__ADD');
 export const PLATFORM_INVENTORY__UPDATE = createActionType('PLATFORM_INVENTORY__UPDATE');

@@ -1,18 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-
 import { uploadFile } from 'actions/file';
-import { addPlatform, fetchPlatforms, fetchPlatformById } from 'actions/platforminventory';
-import { id } from 'postcss-selector-parser';
+import { addPlatform, fetchPlatformById, fetchPlatforms, updatePlatform } from 'actions/platforminventory';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+
+
 
 
 class AddPlatformInventory extends React.Component {
@@ -22,8 +15,8 @@ class AddPlatformInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
-      locationcategory:'',
-       platform: {
+      locationcategory: '',
+      platform: {
         metaDataID: '',
         locationID: '',
         owningUnit: '',
@@ -46,18 +39,20 @@ class AddPlatformInventory extends React.Component {
   }
 
   componentWillMount() {
-    //this.props.fetchMunitions();
   }
 
   componentDidMount = () => {
     const { editId } = this.props;
-    this.props.fetchPlatformById(editId);
-    /* this.props.fetchPlatformById('2388467a-a373-4a53-98e8-3ee58cf4efd0'); */
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchPlatformById(editId);
+    }else {
+      this.setState({ onePlatform: {} });
+    }
   }
 
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
-    this.setState({locationcategory: generalData.locationcategory});
+    this.setState({ locationcategory: generalData.locationcategory });
     this.setState({
       platform: {
         metaDataID: generalData.metaDataID,
@@ -80,17 +75,17 @@ class AddPlatformInventory extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const { platform } = this.state;
     const { editId } = this.props;
-    if (editId != null) {
-      //this.props.addPlatform(this.state.platform);
-      this.props.addPlatform(this.state.platform);
-    }
-    else{
-      this.props.addPlatform(this.state.platform);
-      console.log("Test Here");
+    if (editId !== undefined && editId !== '0') {
+      platform.id = editId;
+      this.props.updatePlatform(editId, platform);
+    } else {
+      this.props.addPlatform(platform);
     }
 
-    this.props.fetchPlatforms();
+    this.props.onClose();
+    //this.props.fetchPlatforms();
   }
 
   resetForm() {
@@ -119,6 +114,9 @@ class AddPlatformInventory extends React.Component {
     const { platform } = this.state;
     const { translations } = this.props;
 
+    console.log("#########################################################################"+platform);
+
+    debugger;
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocations', valFieldID: 'locationID' },
@@ -160,7 +158,7 @@ class AddPlatformInventory extends React.Component {
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
               <ContentBlock fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} />
+                data={this.handlePlatformGeneralData} initstate={this.state.platform} editId={this.props.editId} />
             </div>
           </div>
         </div>
@@ -213,6 +211,7 @@ const mapDispatchToProps = {
   fetchPlatforms,
   fetchPlatformById,
   uploadFile,
+  updatePlatform,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformInventory);
