@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitions, fetchMunitionsById } from 'actions/munition';
+import { addMunition, fetchMunitions, fetchMunitionsById, updateMunition } from 'actions/munition';
 
 class MissileModal extends React.Component {
 
@@ -171,8 +171,19 @@ class MissileModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.munition);
-    this.props.addMunition(this.state.munition);
     this.props.fetchMunitions();
+    const {  munition } = this.state;
+    const { editId } = this.props;
+    debugger;
+    if (editId !== undefined && editId !== '0') {
+      debugger;
+      munition.MunitionID = editId;
+      this.props.updateMunition(editId, munition);
+    } else {
+      debugger;
+      this.props.addMunition(munition);
+    }
+    this.props.onClose();
   }
 
   resetForm(){
@@ -373,6 +384,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addMunition,
+  updateMunition,
   fetchMunitions,
   fetchMunitionsById,
   uploadFile,

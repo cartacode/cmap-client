@@ -12,10 +12,10 @@ export function addMunition(munition) {
   });
 }
 
-export function updateMunition(data) {
+export function updateMunition(id, munition) {
   return createAction({
     type: MUNITION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Munition`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/Munition/PutMunition/${id}`, qs.stringify(munition), requestHeaders),
   });
 }
 
