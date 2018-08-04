@@ -100,27 +100,23 @@ class PlatformsSpecificationComponent extends React.Component {
       {
         Header: "ID",
         accessor: 'ID',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
+        // filterMethod: (filter, row) =>
+        //             row[filter.id].startsWith(filter.value),
 
-        sortMethod: (a, b) => {
-                  if (a.length === b.length) {
-                      return a > b ? 1 : -1;
-                    }
-                  return a.length > b.length ? 1 : -1;
-              }// String-based value accessors!
+        // sortMethod: (a, b) => {
+        //           if (a.length === b.length) {
+        //               return a > b ? 1 : -1;
+        //             }
+        //           return a.length > b.length ? 1 : -1;
+        //       }// String-based value accessors!
       },
       {
         Header: translations['Platform Name'],
         accessor: 'platform',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: "Nomenclature",
         accessor: 'nomenclature',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: "Manufacturer",
@@ -183,9 +179,11 @@ class PlatformsSpecificationComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							  const id = filter.pivotId || filter.id
+							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+						  }}
             />
           </div>
         </div>

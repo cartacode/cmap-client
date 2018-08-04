@@ -111,14 +111,14 @@ class MunitionsComponent extends React.Component {
       {
         Header: translations["type"],
         accessor: 'role',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
+        // sortMethod: (a, b) => {
+        //               if (a.length === b.length) {
+        //                 return a > b ? 1 : -1;
+        //               }
+        //               return a.length > b.length ? 1 : -1;
+        //             }// String-based value accessors!
       },
       /*{
         Header: translations['Name'],
@@ -129,34 +129,32 @@ class MunitionsComponent extends React.Component {
 	  {
 		Header: translations['Name'],
 		accessor: 'munition',
-		Filter: ({ filter, onChange }) =>
-				   <select
-					onChange={event => onChange(event.target.value)}
-					style={{ width: "100%" }}
-					value={filter ? filter.value : ""}
-				  >
-					{allMunitions.map(function(data, key){
-						return (<option key={key} value={data.munition}>{data.munition}</option> );
-					})}
-				  </select>
+		// Filter: ({ filter, onChange }) =>
+		// 		   <select
+		// 			onChange={event => onChange(event.target.value)}
+		// 			style={{ width: "100%" }}
+		// 			value={filter ? filter.value : ""}
+		// 		  >
+		// 			{allMunitions.map(function(data, key){
+		// 				return (<option key={key} value={data.munition}>{data.munition}</option> );
+		// 			})}
+		// 		  </select>
 	  },
       {
         Header: translations['serial#'],
         accessor: 'serial',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['cocom'],
         accessor: 'COCOM',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },
       {
         Header: translations['unit'],
         accessor: 'unit',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>
       },
       /*{
         Header: translations['Location'],
@@ -165,28 +163,28 @@ class MunitionsComponent extends React.Component {
 	  {
 		Header: translations['Location'],
 		accessor: 'location',
-		Filter: ({ filter, onChange }) =>
-				   <select
-					onChange={event => onChange(event.target.value)}
-					style={{ width: "100%" }}
-					value={filter ? filter.value : ""}
-				  >
-					{allMunitions.map(function(data, key){
-						return (<option key={key} value={data.location}>{data.location}</option> );
-					})}
-				  </select>
+		// Filter: ({ filter, onChange }) =>
+		// 		   <select
+		// 			onChange={event => onChange(event.target.value)}
+		// 			style={{ width: "100%" }}
+		// 			value={filter ? filter.value : ""}
+		// 		  >
+		// 			{allMunitions.map(function(data, key){
+		// 				return (<option key={key} value={data.location}>{data.location}</option> );
+		// 			})}
+		// 		  </select>
 	  },
       {
         Header: translations['Record Date'],
         accessor: 'lastUpdate',
-        Filter: ({ filter, onChange }) =>
-                  <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
+        // Filter: ({ filter, onChange }) =>
+        //           <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
       },
       {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
       }
     ];
 
@@ -230,32 +228,11 @@ class MunitionsComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
-                getTdProps={(state, rowInfo, column, instance) => {
-                  return {
-                    onClick: e =>{
-
-                      console.log(rowInfo);
-                      console.log(column);
-
-                       if (column.Header == 'view')
-                      {
-                        this.setState({
-                          tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-                        });
-                        this.setState({
-                          serialVal: rowInfo.original.serial,
-                          nameVal: rowInfo.original.munition
-                        });
-                      }
-
-                    }
-
-
-                  };
-                }}
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							  const id = filter.pivotId || filter.id;
+							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+              }}
             />
           </div>
         </div>

@@ -98,41 +98,41 @@ class PayloadsComponent extends React.Component {
 			{
 				Header: translations["type"],
 				accessor: 'type',
-				filterMethod: (filter, row) =>
-							row[filter.id].startsWith(filter.value),
-				Filter: ({ filter, onChange}) =>
-						<select
-							onChange={event => onChange(event.target.value)}
-							style={{ width: "100%" }}
-							value={filter ? filter.value : ""} >
-							{this.renderItems([])}
-							<option key={'1'} value={'eo/ir'}>{'eo/ir'}</option>
-							<option key={'2'} value={'sar/gmti'}>{'sar/gmti'}</option>
-							<option key={'3'} value={'wami'}>{'wami'}</option>
-							<option key={'4'} value={'sigint'}>{'sigint'}</option>
-							<option key={'5'} value={'equipment'}>{'equipment'}</option>
-						</select>,
-				sortMethod: (a, b) => {
-							  if (a.length === b.length) {
-								return a > b ? 1 : -1;
-							  }
-							  return a.length > b.length ? 1 : -1;
-							}// String-based value accessors!
+				// filterMethod: (filter, row) =>
+				// 			row[filter.id].startsWith(filter.value),
+				// Filter: ({ filter, onChange}) =>
+				// 		<select
+				// 			onChange={event => onChange(event.target.value)}
+				// 			style={{ width: "100%" }}
+				// 			value={filter ? filter.value : ""} >
+				// 			{this.renderItems([])}
+				// 			<option key={'1'} value={'eo/ir'}>{'eo/ir'}</option>
+				// 			<option key={'2'} value={'sar/gmti'}>{'sar/gmti'}</option>
+				// 			<option key={'3'} value={'wami'}>{'wami'}</option>
+				// 			<option key={'4'} value={'sigint'}>{'sigint'}</option>
+				// 			<option key={'5'} value={'equipment'}>{'equipment'}</option>
+				// 		</select>,
+				// sortMethod: (a, b) => {
+				// 			  if (a.length === b.length) {
+				// 				return a > b ? 1 : -1;
+				// 			  }
+				// 			  return a.length > b.length ? 1 : -1;
+				// 			}// String-based value accessors!
 			  },
 			{
 				Header: translations['Name'],
 				accessor: 'payload',
-				Filter: ({ filter, onChange }) =>
-						   <select
-							onChange={event => onChange(event.target.value)}
-							style={{ width: "100%" }}
-							value={filter ? filter.value : ""}
-						  >
-							{this.renderItems([])}
-							{allPayloads.map(function(data, key){
-								return (<option key={key} value={data.payload}>{data.payload}</option> );
-							})}
-						  </select>
+				// Filter: ({ filter, onChange }) =>
+				// 		   <select
+				// 			onChange={event => onChange(event.target.value)}
+				// 			style={{ width: "100%" }}
+				// 			value={filter ? filter.value : ""}
+				// 		  >
+				// 			{this.renderItems([])}
+				// 			{allPayloads.map(function(data, key){
+				// 				return (<option key={key} value={data.payload}>{data.payload}</option> );
+				// 			})}
+				// 		  </select>
 			},
 			{
 				Header: translations['serial#'],
@@ -141,29 +141,29 @@ class PayloadsComponent extends React.Component {
 			{
 				Header: translations['cocom'],
 				accessor: 'COCOM',
-				Filter: ({ filter, onChange }) =>
-						  <select
-							  onChange={event => onChange(event.target.value)}
-							  style={{ width: "100%" }}
-							  value={filter ? filter.value : ""}
-						  >
-							  {this.renderItems(cocomList)}
-						  </select>
+				// Filter: ({ filter, onChange }) =>
+				// 		  <select
+				// 			  onChange={event => onChange(event.target.value)}
+				// 			  style={{ width: "100%" }}
+				// 			  value={filter ? filter.value : ""}
+				// 		  >
+				// 			  {this.renderItems(cocomList)}
+				// 		  </select>
 			},
 			{
 				Header: translations['Location'],
 				accessor: 'location',
-				Filter: ({ filter, onChange }) =>
-						  <select
-							  onChange={event => onChange(event.target.value)}
-							  style={{ width: "100%" }}
-							  value={filter ? filter.value : ""}
-						  >
-							{this.renderItems([])}
-							{allPayloads.map(function(data, key){
-								return (<option key={key} value={data.location}>{data.location}</option> );
-							})}
-						  </select>
+				// Filter: ({ filter, onChange }) =>
+				// 		  <select
+				// 			  onChange={event => onChange(event.target.value)}
+				// 			  style={{ width: "100%" }}
+				// 			  value={filter ? filter.value : ""}
+				// 		  >
+				// 			{this.renderItems([])}
+				// 			{allPayloads.map(function(data, key){
+				// 				return (<option key={key} value={data.location}>{data.location}</option> );
+				// 			})}
+				// 		  </select>
 			},
 			{
 				Header: translations['Record Date'],
@@ -213,9 +213,11 @@ class PayloadsComponent extends React.Component {
 						columns={columns}
 						defaultPageSize={5}
 						className="-striped -highlight"
-						filterable
-						defaultFilterMethod={(filter, row) =>
-						String(row[filter.id]) === filter.value}
+						filterable = {true}
+						defaultFilterMethod={(filter, row) => {
+							const id = filter.pivotId || filter.id
+							return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+						  }}
 					/>
 				</div>
 				</div>
