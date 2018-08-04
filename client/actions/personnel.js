@@ -15,7 +15,7 @@ export function addPersonnel(personnel) {
 export function updatePersonnel(data) {
   return createAction({
     type: PERSONNEL__UPDATE,
-    action: () => axios.put(`${baseUrl}/Personnel`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel`, qs.stringify(data), requestHeaders),
   });
 }
 
