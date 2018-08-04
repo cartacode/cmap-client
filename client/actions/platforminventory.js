@@ -5,28 +5,28 @@ import { PLATFORM_INVENTORY__ADD, PLATFORM_INVENTORY__UPDATE, PLATFORM_INVENTORY
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
-export function addPlatform(platform) {
+export function addPlatformInventory(platform) {
   return createAction({
     type: PLATFORM_INVENTORY__ADD,
     action: () => axios.post(`${baseUrl}/PlatformInventory/PostPlatformInventory`, qs.stringify(platform), requestHeaders),
   });
 }
 
-export function updatePlatform(id, platform) {
+export function updatePlatformInventory(id, platform) {
   return createAction({
     type: PLATFORM_INVENTORY__UPDATE,
     action: () => axios.put(`${baseUrl}/PlatformInventory/PutPlatformInventory/${id}`, qs.stringify(platform), requestHeaders),
   });
 }
 
-export function fetchPlatforms() {
+export function fetchPlatformInventory() {
   return createAction({
     type: PLATFORM_INVENTORY__FETCH,
     action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
   });
 }
 
-export function fetchPlatformById(id) {
+export function fetchPlatformInventoryById(id) {
   return createAction({
     type: PLATFORM_INVENTORY__FETCH_ONE,
     action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventory/${id}`, requestHeaders),

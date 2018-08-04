@@ -35,10 +35,10 @@ class PlatformComponent extends React.Component {
     }
   }
 
-  onFind() {
-    console.log("find");
+  componentDidMount() {
+    this.props.fetchPlatformInventory();
   }
-
+  
   addPlatformInventory = () => {
     this.setState({
       addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen,
@@ -59,18 +59,7 @@ class PlatformComponent extends React.Component {
     });
   }
 
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen,
-    })
-  }
 
-
-  componentDidMount() {
-
-    this.props.fetchPlatforms();
-    debugger;
-  }
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -93,14 +82,13 @@ class PlatformComponent extends React.Component {
   render() {
 
     const { translations } = this.props;
-    const { allPlatforms } = this.props;
-
-    console.log(allPlatforms);
+    const { allPlatformInventory } = this.props;
+    
     const columns = [
 
       {
         Header: translations["Tail#"],
-        accessor: 'tail',
+        accessor: 'description',
         // filterMethod: (filter, row) =>
         //   row[filter.id].startsWith(filter.value),
 
@@ -112,9 +100,12 @@ class PlatformComponent extends React.Component {
         // }// String-based value accessors!
       },
       {
-        Header: translations['Platform Name'],
-        accessor: 'platform',
-        
+        Header: translations['status'],
+        accessor: 'status',
+      },
+      {
+        Header: translations['unit'],
+        accessor: 'owningUnit',
       },
       {
         Header: translations['Category'],
@@ -131,7 +122,7 @@ class PlatformComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'ID',
+        accessor: 'id',
         filterable: false,
         Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span>// Custom cell components!
       }
@@ -163,18 +154,18 @@ class PlatformComponent extends React.Component {
             </div>
           </div>
           {this.state.addPlatformInventoryOpen ?
-            <AddPlatformInventory editId = {this.state.editId} show={this.state.addPlatformInventoryOpen} onClose={this.closePlatformForm} translations={translations} />
+            <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
           <div className="col-md-12">
             <ReactTable
-              data={allPlatforms}
+              data={allPlatformInventory}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"              
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id
-							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+							  return row[id] !== undefined ? String(row[id.toLowerCase()]).startsWith(filter.value.toLowerCase()) : true;
 						  }}
             />
           </div>

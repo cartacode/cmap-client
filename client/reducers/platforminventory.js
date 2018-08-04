@@ -12,7 +12,7 @@ export default function platforms(state = initialState.platforms, { payload, typ
       return {
         ...state,
         isFetching: false,
-        allPlatforms: payload.data,
+        allPlatformInventory: payload.data,
       };
     case PLATFORM_INVENTORY__FETCH_ONE.REQUEST:
       return {
@@ -23,7 +23,7 @@ export default function platforms(state = initialState.platforms, { payload, typ
       return {
         ...state,
         isFetching: false,
-        onePlatform: payload.data,
+        onePlatformInventory: payload.data,
       };
     default:
       return state;

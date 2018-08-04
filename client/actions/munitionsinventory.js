@@ -12,8 +12,7 @@ export function addMunitionInventory(munition) {
   });
 }
 
-export function updateMunitionInventory(id, data) {
-  console.log('updating'+JSON.stringify(data));
+export function updateMunitionInventory(id, data) {  
   return createAction({
     type: MUNITION_INVENTORY__UPDATE,
     action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, qs.stringify(data), requestHeaders),

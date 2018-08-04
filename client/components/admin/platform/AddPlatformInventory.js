@@ -1,5 +1,5 @@
 import { uploadFile } from 'actions/file';
-import { addPlatform, fetchPlatformById, fetchPlatforms, updatePlatform } from 'actions/platforminventory';
+import { addPlatformInventory, fetchPlatformInventoryById, updatePlatformInventory } from 'actions/platforminventory';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -16,21 +16,21 @@ class AddPlatformInventory extends React.Component {
       file: '',
       imagePreviewUrl: '',
       locationcategory: '',
-      platform: {
-        metaDataID: '',
-        locationID: '',
-        owningUnit: '',
-        tailNumber: '',
-        dispPlatformPayload1: '',
-        dispPlatformPayload2: '',
-        dispPlatformPayload3: '',
-        dispPlatformArmament1: '',
-        dispPlatformArmament2: '',
-        dispPlatformArmament3: '',
-        dispPlatformComs1: '',
-        dispPlatformComs2: '',
-      },
-      onePlatform: {},
+      // platform: {
+      //   metaDataID: '',
+      //   locationID: '',
+      //   owningUnit: '',
+      //   tailNumber: '',
+      //   dispPlatformPayload1: '',
+      //   dispPlatformPayload2: '',
+      //   dispPlatformPayload3: '',
+      //   dispPlatformArmament1: '',
+      //   dispPlatformArmament2: '',
+      //   dispPlatformArmament3: '',
+      //   dispPlatformComs1: '',
+      //   dispPlatformComs2: '',
+      // },
+      onePlatformInventory: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -38,15 +38,12 @@ class AddPlatformInventory extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount() {
-  }
-
   componentDidMount = () => {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
-      this.props.fetchPlatformById(editId);
+      this.props.fetchPlatformInventoryById(editId);
     }else {
-      this.setState({ onePlatform: {} });
+      // this.setState({ onePlatformInventory: {} });
     }
   }
 
@@ -79,13 +76,12 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatform(editId, platform);
+      this.props.updatePlatformInventory(editId, platform);
     } else {
-      this.props.addPlatform(platform);
+      this.props.addPlatformInventory(platform);
     }
 
-    this.props.onClose();
-    //this.props.fetchPlatforms();
+    this.props.onClose('0');
   }
 
   resetForm() {
@@ -105,29 +101,23 @@ class AddPlatformInventory extends React.Component {
 
   render() {
     // Render nothing if the "show" prop is false
-    if (!this.props.show) {
-      return null;
-    }
-
-
-
-    const { platform } = this.state;
+    // if (!this.props.show) {
+    //   return null;
+    // }
+   
     const { translations } = this.props;
 
-    console.log("#########################################################################"+platform);
-
-    debugger;
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocations', valFieldID: 'locationID' },
+      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=1', valFieldID: 'locationID' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
-      { name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
-      { name: translations['Payload #2'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload2', valFieldID: 'dispPlatformPayload2' },
-      { name: translations['Payload #3'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload3', valFieldID: 'dispPlatformPayload3' },
-      { name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
-      { name: translations['Armament #2'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
-      { name: translations['Armament #3'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
+      { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
+      { name: translations['Payload #2'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload2', valFieldID: 'dispPlatformPayload2' },
+      { name: translations['Payload #3'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload3', valFieldID: 'dispPlatformPayload3' },
+      { name: translations['Armament #1'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
+      { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
+      { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
       { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'dispPlatformComs1' },
       { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'dispPlatformComs2' }
     ];
@@ -157,8 +147,7 @@ class AddPlatformInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} editId={this.props.editId} />
+              <ContentBlock fields={generalFields}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} />
             </div>
           </div>
         </div>
@@ -202,16 +191,16 @@ AddPlatformInventory.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePlatform: state.platforms.onePlatform,
+    onePlatformInventory: state.platforminventory.onePlatformInventory,
   };
 };
 
 const mapDispatchToProps = {
-  addPlatform,
-  fetchPlatforms,
-  fetchPlatformById,
+  addPlatformInventory,
+  fetchPlatformInventoryById,
+  updatePlatformInventory,
   uploadFile,
-  updatePlatform,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformInventory);

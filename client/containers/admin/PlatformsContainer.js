@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
 
 import PlatformsComponent from '../../components/admin/PlatformsComponent';
-import { addPlatform, fetchPlatforms, fetchPlatformById } from 'actions/platforminventory';
+import { fetchPlatformInventory } from 'actions/platforminventory';
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allPlatforms: state.platforms.allPlatforms,
-    platform: state.platforms.onePlatform,
+    allPlatformInventory: state.platforminventory.allPlatformInventory,
+    
   };
 };
 
 const mapDispatchToProps = {
-  addPlatform,
-  fetchPlatforms,
-  fetchPlatformById,
+  fetchPlatformInventory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsComponent);
