@@ -25,35 +25,42 @@ class PlatformComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
-      addPlatformInventoryOpen:false,
+      addPlatformInventoryOpen: false,
       tableRowDetailModalOpen: false,
+      addshow: false,
+      editId: '0',
     }
   }
 
-  onFind(){
-    console.log("find");
+  componentDidMount() {
+    this.props.fetchPlatformInventory();
   }
-
+  
   addPlatformInventory = () => {
     this.setState({
-      addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen
+      addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen,
     });
   }
 
-  tableRowDetailModal = () => {
+  openPlatformForm = (row) => {
     this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
+      editId: row,
+      addPlatformInventoryOpen: true,
+    });
+  }
+
+  closePlatformForm = () => {
+    this.props.fetchPlatformInventory();
+    this.setState({
+      editId: 0,
+      addPlatformInventoryOpen: false,
+    });
   }
 
 
-  componentWillMount() {
-
-    this.props.fetchPlatforms();
-  }
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -75,37 +82,36 @@ class PlatformComponent extends React.Component {
 
   render() {
 
-    const {translations} = this.props;
-    const {allPlatforms} = this.props;
-
-    console.log(allPlatforms);
-
+    const { translations } = this.props;
+    const { allPlatformInventory } = this.props;
+    
     const columns = [
 
       {
         Header: translations["Tail#"],
-        accessor: 'tail',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
+        accessor: 'description',
+        // filterMethod: (filter, row) =>
+        //   row[filter.id].startsWith(filter.value),
 
-        sortMethod: (a, b) => {
-                  if (a.length === b.length) {
-                      return a > b ? 1 : -1;
-                    }
-                  return a.length > b.length ? 1 : -1;
-              }// String-based value accessors!
+        // sortMethod: (a, b) => {
+        //   if (a.length === b.length) {
+        //     return a > b ? 1 : -1;
+        //   }
+        //   return a.length > b.length ? 1 : -1;
+        // }// String-based value accessors!
       },
       {
-        Header: translations['Platform Name'],
-        accessor: 'platform',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        Header: translations['status'],
+        accessor: 'status',
+      },
+      {
+        Header: translations['unit'],
+        accessor: 'owningUnit',
       },
       {
         Header: translations['Category'],
         accessor: 'category',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        
       },
       {
         Header: translations['Service'],
@@ -117,54 +123,56 @@ class PlatformComponent extends React.Component {
       },
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'id',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span>// Custom cell components!
       }
     ];
 
     const rowFields = [
-      {name: translations['Tail#'], type: 'input', valField:'aaa'},
-      {name: translations['Platform Name'], type: 'input'},
-      {name: translations['Category'], type: 'input'},
-      {name: translations['Service'], type: 'input'},
-      {name: translations['Owning Unit'], type: 'input'},
-      {name: translations['Location'], type: 'dropdown'},
-      {name: translations['Record Date'], type: 'date'},
+      { name: translations['Tail#'], type: 'input', valField: 'aaa' },
+      { name: translations['Platform Name'], type: 'input' },
+      { name: translations['Category'], type: 'input' },
+      { name: translations['Service'], type: 'input' },
+      { name: translations['Owning Unit'], type: 'input' },
+      { name: translations['Location'], type: 'dropdown' },
+      { name: translations['Record Date'], type: 'date' },
     ];
 
     return (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
               {translations["platform"]}
             </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={this.addPlatformInventory} >{translations["Add Platform"]}</button>
+              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations["Add Platform"]}</button>
             </div>
           </div>
-
-          <AddPlatformInventory show={this.state.addPlatformInventoryOpen} onClose={this.addPlatformInventory} translations = {translations}/>
-
+          {this.state.addPlatformInventoryOpen ?
+            <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
+            : null}
           <div className="col-md-12">
             <ReactTable
-              data={allPlatforms}
+              data={allPlatformInventory}
               columns={columns}
               defaultPageSize={5}
-              className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
+              className="-striped -highlight"              
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							  const id = filter.pivotId || filter.id
+							  return row[id] !== undefined ? String(row[id.toLowerCase()]).startsWith(filter.value.toLowerCase()) : true;
+						  }}
             />
           </div>
         </div>
 
-        <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
       </div>
     );
   }

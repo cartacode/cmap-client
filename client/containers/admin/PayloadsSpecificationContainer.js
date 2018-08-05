@@ -14,6 +14,7 @@ const mapStateToProps = state => {
     fetchingPayloads: state.payloads.isFetching,
     locationList: state.locations.locationList,
     cocomList: state.cocoms.cocomList,
+    payload: state.payloads.onePayload
   };
 };
 

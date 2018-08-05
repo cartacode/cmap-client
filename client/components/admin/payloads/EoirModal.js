@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addPayload, fetchPayloads } from 'actions/payload';
+import { addPayload, fetchPayloads, fetchPayloadsById, updatePayload } from 'actions/payload';
 
 class EoirModal extends React.Component {
 
@@ -75,6 +75,16 @@ class EoirModal extends React.Component {
   componentWillMount(){
     console.log("---hereis eoirmodal---------");
     //this.props.fetchPayloads();
+  }
+
+  componentDidMount = () => {
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchPayloadsById(editId);
+    }else{
+      this.setState({ onePayload: {} });
+    }    
+    console.log("variable"+editId);
   }
 
   handlePayloadGeneralData = (generalData) => {
@@ -204,7 +214,18 @@ class EoirModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.payload);
-    this.props.addPayload(this.state.payload);
+    this.props.fetchPayloads();
+    const {  payload } = this.state;
+    const { editId } = this.props;
+    debugger;
+    if (editId !== undefined && editId !== '0') {
+      debugger;
+      payload.PayloadID = editId;
+      this.props.updatePayload(editId, payload);
+    } else {
+      debugger;
+      this.props.addPayload(payload);
+    }
     this.props.onClose();
   //  this.props.fetchPayloads();
   }
@@ -234,6 +255,7 @@ class EoirModal extends React.Component {
     if(!this.props.show) {
       return null;
     }
+    console.log(this.props);
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -263,7 +285,7 @@ class EoirModal extends React.Component {
       {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
       {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required:true},
       {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature',required:true},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole',required:true},
+      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole',required:true},
       {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer',required:true},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent',required:true},
       {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram',required:true},
@@ -378,13 +400,13 @@ class EoirModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handlePayloadGeneralData} initstate ={this.state.payload}/>
+                data={this.handlePayloadGeneralData} initstate ={this.props.onePayload}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields}
-                data={this.handlePayloadTechnicalData} initstate ={this.state.payload}/>
+                data={this.handlePayloadTechnicalData} initstate ={this.props.onePayload}/>
                 <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields}
-                data={this.handlePayloadFeatureData} initstate ={this.state.payload}/>
+                data={this.handlePayloadFeatureData} initstate ={this.props.onePayload}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handlePayloadCrewData} initstate ={this.state.payload}/>
+                data={this.handlePayloadCrewData} initstate ={this.props.onePayload}/>
               </div>
             </div>
           </div>
@@ -419,6 +441,7 @@ class EoirModal extends React.Component {
 }
 
 EoirModal.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
@@ -427,14 +450,17 @@ EoirModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    onePayload: state.payloads.onePayload
   };
 };
 
 const mapDispatchToProps = {
   addPayload,
   fetchPayloads,
+  fetchPayloadsById,
   uploadFile,
+  updatePayload
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EoirModal);

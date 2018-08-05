@@ -34,11 +34,13 @@ class MunitionsSpecificationComponent extends React.Component {
       rocketModalOpen: false,
       gunModalOpen: false,
       tableRowDetailModalOpen: false,
+      addMunitionsSpecificationOpen: false,
       serialVal:'',
       nameVal:'',
       form : {
         type: 'Test'
-      }
+      },
+      editId: '0'
 
     }
   }
@@ -77,6 +79,19 @@ class MunitionsSpecificationComponent extends React.Component {
     this.props.fetchMunitions();
     // console.log("--here is Munitions---");
     // console.log(data);
+  }
+
+
+  //This method called when we select a row from table.
+  //TODO: i found there is no chnages in UI in Missile, Rocket and Gun Section all showing same UI. 
+  //So for now i am using Missile Scetion.
+  openMunitionsSpecificationForm = (row) => {
+    this.setState({
+      editId: row,
+      missileModalOpen: true,
+      rocketModalOpen: false,
+      gunModalOpen: false
+    });
   }
 
   handleChange(value) {
@@ -122,14 +137,14 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "ID",
         accessor: 'ID',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
+        // sortMethod: (a, b) => {
+        //               if (a.length === b.length) {
+        //                 return a > b ? 1 : -1;
+        //               }
+        //               return a.length > b.length ? 1 : -1;
+        //             }// String-based value accessors!
       },
       /*{
         Header: translations['Name'],
@@ -140,34 +155,30 @@ class MunitionsSpecificationComponent extends React.Component {
 	  {
 		Header: "Munition",
 		accessor: 'munition',
-		Filter: ({ filter, onChange }) =>
-				   <select
-					onChange={event => onChange(event.target.value)}
-					style={{ width: "100%" }}
-					value={filter ? filter.value : ""}
-				  >
-					{allMunitions.map(function(data, key){
-						return (<option key={key} value={data.munition}>{data.munition}</option> );
-					})}
-				  </select>
+		// Filter: ({ filter, onChange }) =>
+		// 		   <select
+		// 			onChange={event => onChange(event.target.value)}
+		// 			style={{ width: "100%" }}
+		// 			value={filter ? filter.value : ""}
+		// 		  >
+		// 			{allMunitions.map(function(data, key){
+		// 				return (<option key={key} value={data.munition}>{data.munition}</option> );
+		// 			})}
+		// 		  </select>
 	  },
       {
         Header: "Nomenclature",
-        accessor: 'nomenclature',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        accessor: 'nomenclature',       
       },
       {
         Header: "Manufacturer",
         accessor: 'manufacturer',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },
       {
         Header: "Role",
-        accessor: 'role',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        accessor: 'role',        
       },
       /*{
         Header: translations['Location'],
@@ -175,16 +186,14 @@ class MunitionsSpecificationComponent extends React.Component {
       },*/
       {
         Header: "Reference",
-        accessor: 'reference',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
+        accessor: 'reference',        
       },
 	 
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row.value)} /></span> // Custom cell components!
       }
     ];
 
@@ -220,41 +229,31 @@ class MunitionsSpecificationComponent extends React.Component {
             </div>
           </div>
 
-        <MissileModal show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
+        {this.state.missileModalOpen ?
+                <MissileModal editId={this.state.editId} show={this.state.missileModalOpen} onClose={this.missileModal} translations = {translations}/>
+          : null
+          }
+           {this.state.rocketModalOpen ?
         <RocketModal show={this.state.rocketModalOpen} onClose={this.rocketModal} translations = {translations}/>
+        : null
+          }
+           {this.state.gunModalOpen ?
         <GunModal show={this.state.gunModalOpen} onClose={this.gunModal} translations = {translations}/>
+        : null
+          }
+          
           <div className="col-md-12">
             <ReactTable
               data={allMunitions}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
-                getTdProps={(state, rowInfo, column, instance) => {
-                  return {
-                    onClick: e =>{
-
-                      console.log(rowInfo);
-                      console.log(column);
-
-                       if (column.Header == 'view')
-                      {
-                        this.setState({
-                          tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-                        });
-                        this.setState({
-                          serialVal: rowInfo.original.serial,
-                          nameVal: rowInfo.original.munition
-                        });
-                      }
-
-                    }
-
-
-                  };
-                }}
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							  const id = filter.pivotId || filter.id
+							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+						  }}
+                
             />
           </div>
         </div>

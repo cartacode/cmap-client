@@ -104,62 +104,46 @@ class LocationComponent extends React.Component {
       {
         Header:translations["type"],
         accessor: 'category',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
-
       },
       {
         Header: translations["Name"] ,
         accessor: 'name',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['COCOM'],
         accessor: 'COCOM',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
+        // Filter: ({ filter, onChange }) =>
+        //             <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
+        // sortMethod: (a, b) => {
+        //               if (a.length === b.length) {
+        //                 return a > b ? 1 : -1;
+        //               }
+        //               return a.length > b.length ? 1 : -1;
+        //             }// String-based value accessors!
       },
       {
         Header: translations["Country"],
         accessor: 'country',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
 
       },
       {
         Header: translations["Region"],
         accessor: 'region',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
-
       },
       {
         Header: translations['unit'],
         accessor: 'region',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
-
       },
 
       {
         Header: translations['Record Date'],
         accessor: 'region',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
-
       },
       {
         Header: translations['view'],
         accessor: 'view',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
       }
     ];
 
@@ -231,9 +215,11 @@ class LocationComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							    const id = filter.pivotId || filter.id;
+                  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+                }}
             />
           </div>
           </div>

@@ -1,27 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
 import AddPersonnel from './personnel/AddPersonnelModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Switch, Route, NavLink } from 'react-router-dom';
-
-
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import ReactTable from 'react-table';
-
 
 class PersonnelComponent extends React.Component {
 
@@ -34,40 +16,11 @@ class PersonnelComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
-    }
+    };
   }
 
-  componentWillMount() {
-
+  componentDidMount() {
     this.props.fetchPersonnels();
-  }
-
-  onFind() {
-    console.log('find');
-  }
-
-  addPersonnelModal = () => {    
-    this.setState({
-      addPersonnelModalOpen: !this.state.addPersonnelModalOpen,
-    });
-  }
-
-  addPersonnelForm = () => {
-
-    this.setState({
-      addshow: !this.state.addshow
-    });
-  }
-
-  openForm = () => {
-    console.log('Opne Form');
-
-  }
-
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    });
   }
 
   // renderItems(optionItem) {
@@ -84,27 +37,17 @@ class PersonnelComponent extends React.Component {
   //   })
   // }
 
-  handleChange(value) {
-    console.log(value);
+  openPersonnelForm = (row) => {
+    this.setState({
+      editId: row,
+      addPersonnelModalOpen: true,
+    });
   }
 
-getOnePersonnel = (row) => {
-  this.props.fetchPersonnelById(row);
-  this.setState({
-    addPersonnelModalOpen: !this.state.addPersonnelModalOpen
-  });
-}
-
-openPersonnelForm = (row) => {
-  this.setState({
-    editId: row,
-    addPersonnelModalOpen: true,
-  });
-}
-
 closePersonnelForm = () => {
+  this.props.fetchPersonnels();
   this.setState({
-    editId: 0,
+    editId: '0',
     addPersonnelModalOpen: false,
   });
 }
@@ -113,14 +56,10 @@ render() {
 
   const { translations } = this.props;
   const { allPersonnels } = this.props;
-
   const columns = [
-
     {
-      Header: translations["First Name"],
+      Header: translations['First Name'],
       accessor: 'firstName',
-      filterMethod: (filter, row) =>
-        row[filter.id].startsWith(filter.value),
     },
     {
       Header: translations['Last Name'],
@@ -147,7 +86,14 @@ render() {
       Header: translations['view'],
       accessor: 'ID',
       filterable: false,
-      Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span>,
+      Cell: row => <span className="number"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span>,
+    },
+  ];
+
+  const sortOn = [
+    {
+      id: 'firstName',
+      desc: true,
     },
   ];
 
@@ -173,21 +119,20 @@ render() {
         <div className="col-md-12">
           <ReactTable
             data={allPersonnels}
-            columns={columns}
-            defaultPageSize={5}
+            columns={columns}            
+            defaultPageSize={10}
             className="-striped -highlight"
-            filterable
-            defaultFilterMethod={(filter, row) =>
-              String(row[filter.id]) === filter.value}
+            filterable={true}
+            defaultFilterMethod={(filter, row) => {
+              const id = filter.pivotId || filter.id
+              return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+            }}
           />
         </div>
       </div>
-
-
-        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
-      </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 PersonnelComponent.propTypes = {

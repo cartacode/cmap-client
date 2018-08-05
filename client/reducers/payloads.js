@@ -1,4 +1,4 @@
-import { PAYLOAD__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH } from 'dictionary/action';
+import { PAYLOAD__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function payloads(state = initialState.payloads, { payload, type }) {
@@ -36,6 +36,18 @@ export default function payloads(state = initialState.payloads, { payload, type 
         isTypesFetching: false,
         payloadTypes: payload.data,
       };
+      case PAYLOAD__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case PAYLOAD__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        onePayload: payload.data,
+      };
+
     default:
       return state;
   }

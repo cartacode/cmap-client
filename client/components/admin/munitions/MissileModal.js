@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitions, fetchMunitionsById, updateMunition } from 'actions/munition';
 
 class MissileModal extends React.Component {
 
@@ -62,6 +62,16 @@ class MissileModal extends React.Component {
   componentWillMount(){
     //this.props.fetchMunitions();
   }
+
+  componentDidMount = () => {
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchMunitionsById(editId);
+    }else{
+      this.setState({ oneMunition: {} });
+    }    
+  }
+
 
   handleMunitionGeneralData = (generalData) => {
     const {munition} = this.state;
@@ -161,8 +171,19 @@ class MissileModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.munition);
-    this.props.addMunition(this.state.munition);
     this.props.fetchMunitions();
+    const {  munition } = this.state;
+    const { editId } = this.props;
+    debugger;
+    if (editId !== undefined && editId !== '0') {
+      debugger;
+      munition.MunitionID = editId;
+      this.props.updateMunition(editId, munition);
+    } else {
+      debugger;
+      this.props.addMunition(munition);
+    }
+    this.props.onClose();
   }
 
   resetForm(){
@@ -185,7 +206,6 @@ class MissileModal extends React.Component {
     if(!this.props.show) {
       return null;
     }
-
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
 
@@ -309,11 +329,11 @@ class MissileModal extends React.Component {
             <div className="row personnel" >
               <div className="under-munitions-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
+                data={this.handleMunitionGeneralData} initstate ={this.props.oneMunition}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handleMunitionCrewData} initstate ={this.state.munition}/>
+                data={this.handleMunitionCrewData} initstate ={this.props.oneMunition}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handleMunitionTechnicalData} initstate ={this.state.munition}/>
+                data={this.handleMunitionTechnicalData} initstate ={this.props.oneMunition}/>
               </div>
             </div>
           </div>
@@ -348,20 +368,25 @@ class MissileModal extends React.Component {
 }
 
 MissileModal.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
 };
 
+
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    oneMunition: state.munitions.oneMunition
   };
 };
 
 const mapDispatchToProps = {
   addMunition,
+  updateMunition,
   fetchMunitions,
+  fetchMunitionsById,
   uploadFile,
 };
 

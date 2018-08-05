@@ -13,7 +13,7 @@ import ContentBlock from "../../reusable/ContentBlock";
 import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
-import { addPersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
+import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 
 class AddPersonnelModal extends React.Component {
 
@@ -62,24 +62,35 @@ class AddPersonnelModal extends React.Component {
         this.baseState = this.state;
   }
 
+  componentDidMount = () => {
+    //this.setState({personnel: this.props.personnel});
+    const { editId } = this.props;
+    if(editId !== '0') {
+      this.props.fetchPersonnelById(editId);
+    }else {
+    //   this.setState({ onePersonnel: {} });
+    }
+    // this.props.fetchPersonnelById(editId);
+  }
+
   handleGeneralPersonnelData = (generalData) => {
-      const {personnel} = this.state;
-      this.setState({
-          personnel: {
-              ...personnel,
-              FirstName: generalData.FirstName,
-              MiddleInitial: generalData.MiddleInitial,
-              LastName: generalData.LastName,
-              PayGrade: generalData.PayGrade,
-              Rank: generalData.Rank,
-              Nationality: generalData.Nationality,
-              Clearance: generalData.Clearance,
-              CACid: generalData.CACid,
-              CallSign: generalData.CallSign
-          }
-      }, () => {
-        //   console.log("New state in ASYNC callback:22222", this.props.personnel);
-      });
+    const { personnel } = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,
+        FirstName: generalData.FirstName,
+        MiddleInitial: generalData.MiddleInitial,
+        LastName: generalData.LastName,
+        PayGrade: generalData.PayGrade,
+        Rank: generalData.Rank,
+        Nationality: generalData.Nationality,
+        Clearance: generalData.Clearance,
+        CACid: generalData.CACid,
+        CallSign: generalData.CallSign
+      }
+    }, () => {
+    //   console.log("New state in ASYNC callback:22222", this.props.personnel);
+    });
 
       let personnell = generalData.Rank;
       let rank = document.getElementsByName("PayGrade");
@@ -88,7 +99,7 @@ class AddPersonnelModal extends React.Component {
           case '9':
           case '10':
           case '11':
-          case '12': this.setState({personnel: { PayGrade: '1' }
+          case '12': this.setState({personnel: {  ...personnel, PayGrade: '1' }
                 });
                 rank[0].selectedIndex = "1";
                 break;
@@ -97,14 +108,14 @@ class AddPersonnelModal extends React.Component {
           case '24':
           case '15':
           case '17':
-          case '16': this.setState({personnel: { PayGrade: '2' }
+          case '16': this.setState({personnel: { ...personnel, PayGrade: '2' }
                 });
                 rank[0].selectedIndex = "2";
                 break;
 
           case '19':
           case '22':
-          case '21': this.setState({personnel: { PayGrade: '3' }
+          case '21': this.setState({personnel: { ...personnel, PayGrade: '3' }
               });
               rank[0].selectedIndex = "3";
               break;
@@ -112,7 +123,7 @@ class AddPersonnelModal extends React.Component {
           case '26':
           case '28':
           case '27':
-          case '25': this.setState({personnel: { PayGrade: '4' }
+          case '25': this.setState({personnel: { ...personnel, PayGrade: '4' }
             });
             rank[0].selectedIndex = "4";
               break;
@@ -121,7 +132,7 @@ class AddPersonnelModal extends React.Component {
           case '31':
           case '33':
           case '30':
-          case '32': this.setState({personnel: { PayGrade: '5' }
+          case '32': this.setState({personnel: { ...personnel, PayGrade: '5' }
             });
             rank[0].selectedIndex = "5";
               break;
@@ -129,7 +140,7 @@ class AddPersonnelModal extends React.Component {
 
           case '37':
           case '35':
-          case '38': this.setState({personnel: { PayGrade: '6' }
+          case '38': this.setState({personnel: {  ...personnel, PayGrade: '6' }
             });
             rank[0].selectedIndex = "6";
               break;
@@ -138,13 +149,13 @@ class AddPersonnelModal extends React.Component {
           case '42':
           case '40':
           case '43':
-          case '46': this.setState({personnel: { PayGrade: '7' }
+          case '46': this.setState({personnel: {  ...personnel, PayGrade: '7' }
             });
             rank[0].selectedIndex = "7";
              break;
 
           case '47':
-          case '50': this.setState({personnel: { PayGrade: '8' }
+          case '50': this.setState({personnel: {  ...personnel, PayGrade: '8' }
             });
             rank[0].selectedIndex = "8";
             break;
@@ -161,19 +172,19 @@ class AddPersonnelModal extends React.Component {
           case '54':
           case '61':
           case '59':
-          case '62': this.setState({personnel: { PayGrade: '9' }
+          case '62': this.setState({personnel: {  ...personnel, PayGrade: '9' }
             });
             rank[0].selectedIndex = "9";
             break;
 
-          case '67': this.setState({personnel: { PayGrade: '10' }
+          case '67': this.setState({personnel: {  ...personnel, PayGrade: '10' }
             });
             rank[0].selectedIndex = "10";
             break;
 
           case '70':
           case '71':
-          case '69': this.setState({personnel: { PayGrade: '11' }
+          case '69': this.setState({personnel: {  ...personnel, PayGrade: '11' }
             });
             rank[0].selectedIndex = "11";
             break;
@@ -181,20 +192,20 @@ class AddPersonnelModal extends React.Component {
 
           case '73':
           case '74':
-          case '75': this.setState({personnel: { PayGrade: '12' }
+          case '75': this.setState({personnel: {  ...personnel, PayGrade: '12' }
             });
             rank[0].selectedIndex = "12";
             break;
 
 
           case '77':
-          case '78': this.setState({personnel: { PayGrade: '13' }
+          case '78': this.setState({personnel: {  ...personnel, PayGrade: '13' }
             });
             rank[0].selectedIndex = "13";
             break;
 
 
-          case '81': this.setState({personnel: { PayGrade: '14' }
+          case '81': this.setState({personnel: {  ...personnel, PayGrade: '14' }
               });
               rank[0].selectedIndex = "14";
               break;
@@ -203,7 +214,7 @@ class AddPersonnelModal extends React.Component {
           case '84':
           case '87':
           case '86':
-          case '85': this.setState({personnel: { PayGrade: '15' }
+          case '85': this.setState({personnel: {  ...personnel, PayGrade: '15' }
               });
               rank[0].selectedIndex = "15";
               break;
@@ -212,20 +223,20 @@ class AddPersonnelModal extends React.Component {
           case '93':
           case '91':
           case '89':
-          case '90': this.setState({personnel: { PayGrade: '16' }
+          case '90': this.setState({personnel: {  ...personnel, PayGrade: '16' }
               });
               rank[0].selectedIndex = "16";
               break;
 
           case '94':
           case '111':
-          case '95': this.setState({personnel: { PayGrade: '17' }
+          case '95': this.setState({personnel: {  ...personnel, PayGrade: '17' }
                   });
                   rank[0].selectedIndex = "17";
               break;
 
           case '101':
-          case '99': this.setState({personnel: { PayGrade: '18' }
+          case '99': this.setState({personnel: {  ...personnel, PayGrade: '18' }
                   });
                 rank[0].selectedIndex = "18";
               break;
@@ -235,14 +246,14 @@ class AddPersonnelModal extends React.Component {
           case '107':
           case '108':
           case '106':
-          case '104': this.setState({personnel: { PayGrade: '19' }
+          case '104': this.setState({personnel: {  ...personnel, PayGrade: '19' }
                         });
                       rank[0].selectedIndex = "19";
               break;
 
           case '110':
           case '112':
-          case '109': this.setState({personnel: { PayGrade: '20' }
+          case '109': this.setState({personnel: {  ...personnel, PayGrade: '20' }
                         });
                       rank[0].selectedIndex = "20";
               break;
@@ -252,7 +263,7 @@ class AddPersonnelModal extends React.Component {
           case '114':
           case '118':
           case '116':
-          case '117': this.setState({personnel: { PayGrade: '21' }
+          case '117': this.setState({personnel: {  ...personnel, PayGrade: '21' }
                         });
                        rank[0].selectedIndex = "21";
               break;
@@ -261,7 +272,7 @@ class AddPersonnelModal extends React.Component {
           case '123':
           case '120':
           case '119':
-          case '121': this.setState({personnel: { PayGrade: '22' }
+          case '121': this.setState({personnel: {  ...personnel, PayGrade: '22' }
                         });
                        rank[0].selectedIndex = "22";
               break;
@@ -269,91 +280,91 @@ class AddPersonnelModal extends React.Component {
           case '125':
           case '128':
           case '126':
-          case '124': this.setState({personnel: { PayGrade: '23' }
+          case '124': this.setState({personnel: {  ...personnel, PayGrade: '23' }
                         });
                         rank[0].selectedIndex = "23";
                break;
 
           case '131':
-          case '129': this.setState({personnel: { PayGrade: '24' }
+          case '129': this.setState({personnel: {  ...personnel, PayGrade: '24' }
                             });
                         rank[0].selectedIndex = "24";
                 break;
 
-          case '134': this.setState({personnel: { PayGrade: '25' }
+          case '134': this.setState({personnel: {  ...personnel, PayGrade: '25' }
                     });
                 rank[0].selectedIndex = "25";
                 break;
 
-          case '135': this.setState({personnel: { PayGrade: '26' }
+          case '135': this.setState({personnel: {  ...personnel, PayGrade: '26' }
                     });
                 rank[0].selectedIndex = "26";
                 break;
 
-          case '136': this.setState({personnel: { PayGrade: '27' }
+          case '136': this.setState({personnel: {  ...personnel, PayGrade: '27' }
                     });
                 rank[0].selectedIndex = "27";
                 break;
 
-          case '137': this.setState({personnel: { PayGrade: '28' }
+          case '137': this.setState({personnel: {  ...personnel, PayGrade: '28' }
                     });
                 rank[0].selectedIndex = "28";
                 break;
 
-          case '138': this.setState({personnel: { PayGrade: '29' }
+          case '138': this.setState({personnel: {  ...personnel, PayGrade: '29' }
                     });
                 rank[0].selectedIndex = "29";
                 break;
 
-          case '139': this.setState({personnel: { PayGrade: '30' }
+          case '139': this.setState({personnel: {  ...personnel, PayGrade: '30' }
                     });
                 rank[0].selectedIndex = "30";
                 break;
 
-          case '140': this.setState({personnel: { PayGrade: '31' }
+          case '140': this.setState({personnel: {  ...personnel, PayGrade: '31' }
                     });
                 rank[0].selectedIndex = "31";
                 break;
 
-          case '141': this.setState({personnel: { PayGrade: '32' }
+          case '141': this.setState({personnel: {  ...personnel, PayGrade: '32' }
                     });
                 rank[0].selectedIndex = "32";
                 break;
 
-          case '142': this.setState({personnel: { PayGrade: '33' }
+          case '142': this.setState({personnel: {  ...personnel, PayGrade: '33' }
                     });
                 rank[0].selectedIndex = "33";
                 break;
 
-          case '143': this.setState({personnel: { PayGrade: '34' }
+          case '143': this.setState({personnel: {  ...personnel, PayGrade: '34' }
                     });
                 rank[0].selectedIndex = "34";
                 break;
 
-          case '144': this.setState({personnel: { PayGrade: '35' }
+          case '144': this.setState({personnel: {  ...personnel, PayGrade: '35' }
                     });
                 rank[0].selectedIndex = "35";
                 break;
 
-          case '145': this.setState({personnel: { PayGrade: '36' }
+          case '145': this.setState({personnel: {  ...personnel, PayGrade: '36' }
                     });
                 rank[0].selectedIndex = "36";
                 break;
-          case '146': this.setState({personnel: { PayGrade: '37' }
+          case '146': this.setState({personnel: {  ...personnel, PayGrade: '37' }
                     });
                 rank[0].selectedIndex = "37";
                 break;
-          case '147': this.setState({personnel: { PayGrade: '38' }
+          case '147': this.setState({personnel: {  ...personnel, PayGrade: '38' }
                     });
                 rank[0].selectedIndex = "38";
                 break;
 
-          case '148': this.setState({personnel: { PayGrade: '39' }
+          case '148': this.setState({personnel: {  ...personnel, PayGrade: '39' }
                     });
                 rank[0].selectedIndex = "39";
                 break;
 
-          case '149': this.setState({personnel: { PayGrade: '39' }
+          case '149': this.setState({personnel: {  ...personnel, PayGrade: '39' }
                     });
                 rank[0].selectedIndex = "39";
 
@@ -972,6 +983,7 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleContactInformationData = (contactInformationData) => {
+      
       const {personnel} = this.state;
       this.setState({
           personnel: {
@@ -987,6 +999,7 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleUploadImgFile(event){
+
       event.preventDefault();
       const {personnel} = this.state;
 
@@ -1083,12 +1096,26 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-      event.preventDefault();
+    event.preventDefault();
+    const {  personnel } = this.state;
+    const { editId } = this.props;
+  
+    if (editId !== undefined && editId !== '0') {
       
-      let flag;
+    //   const data = {
+    //     id: editId,
+    //     personnel: personnel
+    //   }
+
+      personnel.PersonnelID = editId;
+    //   this.props.updatePayloadInventory(editId, payloads);
+      this.props.updatePersonnel(editId, personnel);
+    } else {
       this.props.addPersonnel(this.state.personnel);
-      this.props.onClose();
-      this.props.fetchPersonnels();
+    }
+
+    this.props.onClose('0');
+    //   this.props.fetchPersonnels();
   }
 
 
@@ -1106,20 +1133,6 @@ class AddPersonnelModal extends React.Component {
         }
       }
   }
-
-  componentDidMount = () => {
-      
-    //this.setState({personnel: this.props.personnel});
-    const { editId } = this.props;
-    // if(editId!== '0'){
-    //     this.props.fetchPersonnelById(editId);
-    // }else{
-    //     this.setState({onePersonnel:{}});
-    // }
-    this.props.fetchPersonnelById(editId);    
-  }
-
-
 
   render() {
     
@@ -1157,12 +1170,13 @@ class AddPersonnelModal extends React.Component {
 
     const generalFields = [
         {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName', required:true},
+
         {name: translations['Middle Initial'], type: 'input', domID: 'MiddleInitial', valFieldID: 'MiddleInitial'},
         {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required:true},
         {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
         {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
-        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality',required:true},
-        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance',required:true},
+        {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
+        {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
         {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid'},
         {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
     ];
@@ -1247,13 +1261,13 @@ class AddPersonnelModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} />
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
               </div>
             </div>
           </div>
@@ -1290,7 +1304,7 @@ class AddPersonnelModal extends React.Component {
 AddPersonnelModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 //   show: PropTypes.bool,
-  ediId: PropTypes.string,
+  editId: PropTypes.string,
   children: PropTypes.node
 };
 
@@ -1303,6 +1317,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addPersonnel,
+  updatePersonnel,
   fetchPersonnels,
   uploadFile,
   fetchPersonnelById,

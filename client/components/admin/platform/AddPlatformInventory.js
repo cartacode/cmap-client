@@ -1,17 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-
 import { uploadFile } from 'actions/file';
-import { addPlatform, fetchPlatforms } from 'actions/platforminventory';
+import { addPlatformInventory, fetchPlatformInventoryById, updatePlatformInventory } from 'actions/platforminventory';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
+
 
 
 class AddPlatformInventory extends React.Component {
@@ -21,20 +16,22 @@ class AddPlatformInventory extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
-      platform: {
-        metaDataID: '',
-        locationID: '',
-        owningUnit: '',
-        tailNumber: '',
-        dispPlatformPayload1: '',
-        dispPlatformPayload2: '',
-        dispPlatformPayload3: '',
-        dispPlatformArmament1: '',
-        dispPlatformArmament2: '',
-        dispPlatformArmament3: '',
-        dispPlatformComs1: '',
-        dispPlatformComs2: '',
-      },
+      locationcategory: '',
+      // platform: {
+      //   metaDataID: '',
+      //   locationID: '',
+      //   owningUnit: '',
+      //   tailNumber: '',
+      //   dispPlatformPayload1: '',
+      //   dispPlatformPayload2: '',
+      //   dispPlatformPayload3: '',
+      //   dispPlatformArmament1: '',
+      //   dispPlatformArmament2: '',
+      //   dispPlatformArmament3: '',
+      //   dispPlatformComs1: '',
+      //   dispPlatformComs2: '',
+      // },
+      onePlatformInventory: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -42,15 +39,20 @@ class AddPlatformInventory extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount() {
-    //this.props.fetchMunitions();
+  componentDidMount = () => {
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchPlatformInventoryById(editId);
+    }else {
+      // this.setState({ onePlatformInventory: {} });
+    }
   }
 
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
+    this.setState({ locationcategory: generalData.locationcategory });
     this.setState({
       platform: {
-        ...platform,
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
@@ -67,13 +69,51 @@ class AddPlatformInventory extends React.Component {
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
     });
+
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
+    {
+      console.log("Category Selected");
+      this.updatelocationid(generalData);
+    }
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addPlatform(this.state.platform);
-    this.props.fetchPlatforms();
+    const { platform } = this.state;
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      platform.id = editId;
+      this.props.updatePlatformInventory(editId, platform);
+    } else {
+      this.props.addPlatformInventory(platform);
+    }
+
+    this.props.onClose('0');
   }
+
+  updatelocationid (generalData) 
+  {
+     let locationselect = document.getElementsByName('locationID')[0];
+     let items = [{'label': '--Select Item--', 'value': 0}];
+     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
+        axios.get(apiUrl)
+          .then(response => {
+            console.log(response.data);
+            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+            response.data.map(item => {
+              items.push({ 'label': item['description'], 'value': item['id'].trim() });
+            });
+            if (locationselect.length > 0) {locationselect.length = 0;}
+            for(let i in items) {
+              locationselect.add(new Option(items[i].label, items[i].value));
+            }
+            
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });   
+  }
+
 
   resetForm() {
     this.setState(this.baseState);
@@ -92,28 +132,26 @@ class AddPlatformInventory extends React.Component {
 
   render() {
     // Render nothing if the "show" prop is false
-    if (!this.props.show) {
-      return null;
-    }
-
-
-
-    const { platform } = this.state;
+    // if (!this.props.show) {
+    //   return null;
+    // }
+   
     const { translations } = this.props;
 
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: 'LocationCategory', valFieldID: 'locationID' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
-      { name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload1', valFieldID: 'PlatformPayload1' },
-      { name: translations['Payload #2'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload2', valFieldID: 'PlatformPayload2' },
-      { name: translations['Payload #3'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload3', valFieldID: 'PlatformPayload3' },
-      { name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament1', valFieldID: 'PlatformArmament1' },
-      { name: translations['Armament #2'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament2', valFieldID: 'PlatformArmament2' },
-      { name: translations['Armament #3'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament3', valFieldID: 'PlatformArmament3' },
-      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'PlatformComs1' },
-      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'PlatformComs2' }
+      { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
+      { name: translations['Payload #2'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload2', valFieldID: 'dispPlatformPayload2' },
+      { name: translations['Payload #3'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload3', valFieldID: 'dispPlatformPayload3' },
+      { name: translations['Armament #1'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
+      { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
+      { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
+      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'dispPlatformComs1' },
+      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'dispPlatformComs2' }
     ];
 
 
@@ -141,8 +179,7 @@ class AddPlatformInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate={this.state.platform} />
+              <ContentBlock fields={generalFields}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} />
             </div>
           </div>
         </div>
@@ -177,6 +214,7 @@ class AddPlatformInventory extends React.Component {
 }
 
 AddPlatformInventory.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
@@ -184,14 +222,17 @@ AddPlatformInventory.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    onePlatformInventory: state.platforminventory.onePlatformInventory,
   };
 };
 
 const mapDispatchToProps = {
-  addPlatform,
-  fetchPlatforms,
+  addPlatformInventory,
+  fetchPlatformInventoryById,
+  updatePlatformInventory,
   uploadFile,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformInventory);

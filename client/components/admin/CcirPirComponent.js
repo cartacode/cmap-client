@@ -63,15 +63,11 @@ class CcirPirComponent extends React.Component {
     const columns = [
       {
         Header: translations['Service'],
-        accessor: 'Service', 
-        filterMethod: (filter, row) =>
-                        row[filter.id].startsWith(filter.value)
+        accessor: 'Service',
       },
       {
         Header: translations['COCOM'],
-        accessor: 'cocom', 
-        filterMethod: (filter, row) =>
-                        row[filter.id].startsWith(filter.value)
+        accessor: 'cocom',
        /*  Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
@@ -84,16 +80,12 @@ class CcirPirComponent extends React.Component {
       {
         Header: translations['Region'],
         accessor: 'region',
-        filterMethod: (filter, row) =>
-                        row[filter.id].startsWith(filter.value)
         /* Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Regions" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       }, 
       {
         Header: translations['Country'],
         accessor: 'country',
-        filterMethod: (filter, row) =>
-                        row[filter.id].startsWith(filter.value)
         /* Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Countries" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       },
@@ -103,14 +95,10 @@ class CcirPirComponent extends React.Component {
         accessor: 'unit',
        /*  Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
-        filterMethod: (filter, row) =>
-                        row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['Commander'],
         accessor: 'commander',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },  
      /*  {
         Header: translations['Record Date'],
@@ -160,9 +148,11 @@ class CcirPirComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
+              filterable={true}
+						  defaultFilterMethod={(filter, row) => {
+							  const id = filter.pivotId || filter.id
+							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+						  }}
             />
           </div>
           

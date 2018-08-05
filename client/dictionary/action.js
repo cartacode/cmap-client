@@ -18,23 +18,41 @@ export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
 export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
 
 export const MUNITION__ADD = createActionType('MUNITION__ADD');
+export const MUNITION__UPDATE = createActionType('MUNITION__UPDATE');
 export const MUNITION__FETCH = createActionType('MUNITION__FETCH');
+export const MUNITION__FETCH_ONE = createActionType('MUNITION__FETCH_ONE');
+
 export const MUNITION_INVENTORY__ADD = createActionType('MUNITION_INVENTORY__ADD');
+export const MUNITION_INVENTORY__UPDATE = createActionType('MUNITION_INVENTORY__UPDATE');
 export const MUNITION_INVENTORY__FETCH = createActionType('MUNITION_INVENTORY__FETCH');
+export const MUNITION_INVENTORY__FETCH_ONE = createActionType('MUNITION_INVENTORY__FETCH_ONE');
+
 
 export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
+export const PAYLOAD__UPDATE = createActionType('PAYLOAD__UPDATE');
 export const PAYLOAD__FETCH = createActionType('PAYLOAD__FETCH');
+export const PAYLOAD__FETCH_ONE = createActionType('PAYLOAD__FETCH_ONE');
 export const PAYLOAD_LIST__FETCH = createActionType('PAYLOAD_LIST__FETCH');
 export const PAYLOAD_TYPE__FETCH = createActionType('PAYLOAD_TYPE__FETCH');
+
 export const PAYLOAD_INVENTORY__ADD = createActionType('PAYLOAD_INVENTORY__ADD');
+export const PAYLOAD_INVENTORY__UPDATE = createActionType('PAYLOAD_INVENTORY__UPDATE');
 export const PAYLOAD_INVENTORY__FETCH = createActionType('PAYLOAD_INVENTORY__FETCH');
+export const PAYLOAD_INVENTORY__FETCH_ONE = createActionType('PAYLOAD_INVENTORY__FETCH_ONE');
+
+
 
 export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
+export const PERSONNEL__UPDATE = createActionType('PERSONNEL__UPDATE');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
 
 export const PLATFORM__ADD = createActionType('PLATFORM__ADD');
+export const PLATFORM__UPDATE = createActionType('PLATFORM__UPDATE');
 export const PLATFORM__FETCH = createActionType('PLATFORM__FETCH');
+export const PLATFORM__FETCH_ONE = createActionType('PLATFORM__FETCH_ONE');
 
 export const PLATFORM_INVENTORY__ADD = createActionType('PLATFORM_INVENTORY__ADD');
+export const PLATFORM_INVENTORY__UPDATE = createActionType('PLATFORM_INVENTORY__UPDATE');
 export const PLATFORM_INVENTORY__FETCH = createActionType('PLATFORM_INVENTORY__FETCH');
+export const PLATFORM_INVENTORY__FETCH_ONE = createActionType('PLATFORM_INVENTORY__FETCH_ONE');
