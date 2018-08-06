@@ -43,6 +43,12 @@ class ContentBlock extends React.Component {
         content: initstate,
       });
     }
+    const {clearit } = this.props;
+    if(clearit)
+    {
+      this.setState({content:[]});
+      this.props.stopset();
+    }
   }
 
     handleChange = (e) => {
@@ -182,6 +188,7 @@ class ContentBlock extends React.Component {
     }
 
     render() {
+
 
       return (
         <div className="col-md-4 info-block">

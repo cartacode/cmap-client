@@ -15,6 +15,7 @@ class AddPlatformModal extends React.Component {
     super(props);
     this.state = {
       file: '',
+      clear:false,
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
        platform: {
@@ -78,7 +79,7 @@ class AddPlatformModal extends React.Component {
     }
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
-    this.baseState = this.state
+    this.baseState = this.state;
   }
 
   componentDidMount = () => {
@@ -378,11 +379,17 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.PlatformID = editId;
-      this.props.updatePlatform(editId, platform);
+      this.props.updatePlatform(editId, platform).then( () => {this.props.fetchPlatforms();})
     } else {
-      this.props.addPlatform(platform);
+      //this.props.addPlatform(platform);
+      this.props.addPlatform(platform).then( () => {this.props.fetchPlatforms();})
+      
     }
     this.props.onClose();
+  }
+
+  stopset () {
+    this.setState({clear:false});
   }
 
 
@@ -390,14 +397,24 @@ class AddPlatformModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      let inputs = document.body.getElementsByTagName('input');
-      let drops = document.body.getElementsByTagName('select');
+      console.log("It's here");
+     /* let inputs = document.getElementsByTagName('input');
+      let drops = document.getElementsByTagName('select');
       for (let item of inputs) {
+        console.log(item.value);
         item.value = '';
       }
       for (let item of drops) {
         item.value = 0;
-      }
+      } */
+      document.getElementById('platform').reset();
+      this.state.platform = this.baseState.platform;
+      console.log(this.state.platform);
+      console.log(this.state.content);
+      this.setState({clear:true});
+    }
+    else {
+
     }
   }
 
@@ -530,7 +547,7 @@ class AddPlatformModal extends React.Component {
 
     return (
 
-      <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} id="platform">
         <div className="payload-content">
           <div className="row personnel" >
             <div className="header-line">
@@ -594,20 +611,20 @@ class AddPlatformModal extends React.Component {
           <div className="row personnel" >
             <div className="under-personnel-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} />
+                data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} />
+                data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
-                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} />
+                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
             </div>
           </div>
           <div className="row personnel" >
             <div className="under-platform-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handlePlatformCrewData} initstate={this.state.platform} platform={nums} editId={this.props.editId} />
+                data={this.handlePlatformCrewData} initstate={this.state.platform} platform={nums} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
 
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
-                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} />
+                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
             </div>
           </div>
         </div>

@@ -53,11 +53,12 @@ class PlatformComponent extends React.Component {
   }
 
   closePlatformForm = () => {
-    this.props.fetchPlatformInventory();
     this.setState({
       editId: 0,
       addPlatformInventoryOpen: false,
     });
+
+    
   }
 
 
