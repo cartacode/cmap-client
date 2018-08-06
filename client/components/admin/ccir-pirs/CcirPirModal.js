@@ -8,7 +8,19 @@ class CcirPirModal extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      addClicked: false  
+      addClicked: false  ,
+      ccirpir:{
+        COCOM:'',
+        Branch:'',
+        Country:'',
+        Region:'',
+        Units:'',
+        Commander:'',
+        TypesEnum:'',
+        Opname:'',
+        KML:''
+
+      }
     }
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -28,6 +40,29 @@ class CcirPirModal extends React.Component {
 
   }
 
+  handlePlatformGeneralData = (generalData) => {
+    const { ccirpir } = this.state;
+    console.log(generalData);
+    this.setState({
+      ccirpir: {
+        ...ccirpir,
+        COCOM: generalData.COCOM,
+        Branch: generalData.Branch,
+        Country: generalData.Country,
+        Region: generalData.Region,
+        Unit: generalData.Unit,
+        Commander: generalData.Commander,
+        TypesEnum: generalData.TypesEnum,
+        Opname: generalData.Opname,
+        KML: generalData.KML
+       
+      }
+    }, () => {
+      console.log("New state in ASYNC callback:22222", this.state.platform);
+    });
+  }
+
+
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -43,17 +78,22 @@ class CcirPirModal extends React.Component {
       else {$newdiv = '';}
 
     const generalFields = [
-      {name: 'Creation Date/Time', type: 'date'},
-      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM'},
-      {name: 'Branch', type: 'dropdown', ddID: 'BranchOfService'},
-      {name: 'Country', type: 'dropdown', ddID: 'Countries'},
-      {name: 'Region', type: 'dropdown', ddID: 'Regions'},
-      {name: 'Unit', type: 'dropdown',ddID: 'Units'},
-      {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
-      {name: 'Operation/Mission Name', type: 'input'},
-      {name: 'Effective Area KML', type: 'file'}
+     /*  {name: 'Creation Date/Time', type: 'date'}, */
+      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOM', domID: 'COCOM', valField: ''},
+      {name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'Branch', domID: 'Branch', valField: ''},
+      {name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'Country', domID: 'Country', valField: ''},
+      {name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'Region', domID: 'Region', valField: ''},
+      {name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'Unit', domID: 'Unit', valField: ''},
+      {name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'Commander', domID: 'Commander', valField: ''},
+      {name: 'Type', type: 'dropdown', ddID: 'TypesEnum',  valFieldID: 'TypesEnum', domID: 'TypesEnum', valField: ''},
+      {name: 'Operation/Mission Name', type: 'input',  valFieldID: 'Opname', domID: 'Opname'},
+      {name: 'Effective Area KML', type: 'file',  valFieldID: 'KML', domID: 'KML'}
     ];
 
+    const typesEnum =[ 
+        {name : 'CCIR'},
+        {name : 'PIR'}
+      ];
    
 
     return (
@@ -68,13 +108,13 @@ class CcirPirModal extends React.Component {
              <div className="header-line addccir">
                 <img src="/assets/img/admin/upload_1.png" alt=""/>
                 <div className="header-text">
-                CCRI/PIRs
+                CCIR/PIRs
                 </div>
                 <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
               </div>
               <div className="col-md-12 info-content">
 
-            <ModalFormBlock fields={generalFields} />
+            <ModalFormBlock data={this.handlePlatformGeneralData} fields={generalFields} typesEnum={typesEnum} initstate={this.state.ccirpir}/>
             </div>
           </div>
           <div id="add"> 
@@ -83,7 +123,7 @@ class CcirPirModal extends React.Component {
                <div className="header-line addccir">
                 <img src="/assets/img/admin/upload_1.png" alt=""/>
                 <div className="header-text">
-                 CCRI
+                 CCIR
                 </div>
                 <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
               </div>

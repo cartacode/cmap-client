@@ -36,6 +36,14 @@ class Table extends React.Component {
           dropdownItems: items,
         });
       }
+      if (this.props.dropdownDataUrl === 'TypesEnum') {
+        this.props.typesEnum.map(item => {
+          items.push({'label': item['name'], 'value': item['name']});
+        });
+        this.setState({
+          dropdownItems: items,
+        });
+      }
       else {
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
         axios.get(apiUrl)

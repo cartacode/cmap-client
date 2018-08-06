@@ -26,7 +26,7 @@ class CcirRowDetailModal extends React.Component {
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
-          <div className="modal-header-text">Add New CCRI/PIRs </div>
+          <div className="modal-header-text">Add New CCIR/PIRs </div>
           <div className="col-md-12">
             <ModalFormBlock fields={generalFields} />
           </div>
