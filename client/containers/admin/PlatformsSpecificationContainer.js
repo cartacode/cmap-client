@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     allPlatforms: state.platforms.allPlatforms,
     platform: state.platforms.onePlatform,
+    isDone: state.platforms.isDone,
   };
 };
 

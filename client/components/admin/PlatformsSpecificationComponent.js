@@ -1,24 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
-import AddPlatform from './platform/AddPlatformModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import "react-table/react-table.css";
+import AddPlatform from './platform/AddPlatformModal';
+import Notify from '../reusable/Notify';
+
+
+
 
 
 class PlatformsSpecificationComponent extends React.Component {
@@ -162,6 +151,9 @@ class PlatformsSpecificationComponent extends React.Component {
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
+
+          {this.props.isDone ? <Notify isDone={this.props.isDone} type='success' message="Record added or updated successfully " ttile="Platform specification" />
+            : null }
 
           <div className="col-md-12">
             <ReactTable
