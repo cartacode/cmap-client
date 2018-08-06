@@ -756,7 +756,7 @@ body .login{
   }
 
   .ReactTable .rt-thead.-filters input, .ReactTable .rt-thead.-filters select {
-    width: 115px!important;
+    width: 100%!important;
   }
 
   .status-content {
@@ -784,17 +784,18 @@ body .login{
         text-align:center;
 
         .status-header{
-          font-size: 30px;
+          font-size: 20px!important;
           color: #ed7d31;
           text-transform: uppercase;
         }
         .status-image{
           height:200px;
           align-self:center;
+          background-size:contain!important;
         }
         .status-percent{
-          padding-top: 60px;
-          font-size: 50px;
+          padding-top: 70px;
+          font-size: 40px;
           text-align:center;
         }
         .status-number{
@@ -2056,7 +2057,7 @@ input {
 .upload-content {
   height: 84%;
   background-color: rgba(19,38,56,0.5);
-  padding: 30px 50px;
+  padding: 30px 20px;
 
   .upload-line {
     height: 50px;
@@ -2573,7 +2574,7 @@ input {
   height: 820px;
 
   .info-block {
-    height: 100%;
+    height: auto;
 
     .info-header{
       overflow: hidden;
@@ -2706,7 +2707,7 @@ input {
 }
 
 .under-platform-content {
-  height: 510px;
+  height: auto;
   margin-bottom: 25px;
 
   .info-block {
@@ -3254,7 +3255,7 @@ two-block, one-block {
   content: '';
   background: url(/assets/img/admin/photo_line_1.png) no-repeat;
   background-size: 50% 100%;
-  width: 9px;
+  width: 7px;
   height: 100%;
   display: block;
   float: left;
@@ -3264,7 +3265,7 @@ two-block, one-block {
   content: '';
   background: url(/assets/img/admin/photo_line_1.png) no-repeat;
   background-size: 50% 100%;
-  width: 9px;
+  width: 7px;
   height: 100%;
   display: block;
   float: left;
@@ -4407,6 +4408,10 @@ button.btn.btn-secondary.dropdown-toggle {
 .change-cursor-to-pointer{
   cursor: pointer;
 }
+.select-val
+{
+  position: relative;
+}
 
 @media(max-width:768px)
 {
@@ -4418,6 +4423,14 @@ button.btn.btn-secondary.dropdown-toggle {
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
    width: 100%; 
+}
+.status .status-content .status-block .each-status {
+  padding: 1%;
+      padding-top: 1%;
+  padding-top: 5%;
+  width: 100%;
+  float: left;
+  text-align: center;
 }
 .setting-user .dropdown-menu a {
  font-size:14px;
@@ -4566,11 +4579,11 @@ margin: 0px;
 /************************ personal screen ************************************************/
 
 .image-block::after {
-  width: 6px;
+  width: 4px;
   
 }
 .image-block::before {
-  width: 6px;
+  width: 4px;
   
 }
 .image-block {
@@ -4589,4 +4602,30 @@ margin: 0px;
 .upload-content .upload-line input {
    width: 100%;
 }
+.status .header-line img {
+  width: 30%;
+ }
+ .status .header-line .header-text {
+  float: left;
+  width: 39%;
+ }
 }
+@media screen and (max-width: 1366px) and (min-width: 740px) {
+
+  .check-block .check-status .check-list .check-label {
+    display: inline-block;
+    padding-left:0px;
+}
+input[type="checkbox"] + label span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0px 18px 0 0;
+}
+input[type="checkbox"]:checked + label span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+}
+
