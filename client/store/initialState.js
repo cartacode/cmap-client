@@ -49,6 +49,13 @@ export default {
     isFetchingOne: false,
   },
 
+  ccirpir: {
+    allCcirPirs: [],
+    oneCcirPir: {},
+    isFetching: false,
+    isFetchingOne: false,
+  },
+
   platforms: {
     allPlatforms: [],
     onePlatform: {},

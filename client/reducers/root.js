@@ -10,6 +10,7 @@ import payloadinventory from 'reducers/payloadinventory';
 import personnels from 'reducers/personnels';
 import platforms from 'reducers/platforms';
 import platforminventory from 'reducers/platforminventory';
+import ccirpir from 'reducers/ccirpir';
 
 export default function createReducer() {
   return combineReducers({
@@ -23,5 +24,6 @@ export default function createReducer() {
     personnels,
     platforms,
     platforminventory,
+    ccirpir
   });
 }

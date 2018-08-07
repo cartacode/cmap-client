@@ -27,14 +27,46 @@ class CcirPirComponent extends React.Component {
     super(props);
     this.state={
       ccirModalOpen:false,
-      tableRowDetailModalOpen: false      
+      tableRowDetailModalOpen: false     ,
+      addCcirPirModalOpen: false,
+      editId: '0', 
     }
   }
 
-  ccirModal = () => {
+  // ccirModal = () => {
+  //   this.setState({
+  //     ccirModalOpen: !this.state.ccirModalOpen
+  //   })
+  // }
+
+// Open form Add/Edit Rerocd
+  openCcirPirForm = (row) => {
     this.setState({
-      ccirModalOpen: !this.state.ccirModalOpen
-    })
+      editId: row,
+      addCcirPirModalOpen: true,
+    });
+  }
+
+  // Close Add/Edit Form
+closeCcirPirForm = () => {
+  this.props.fetchCcirPirs();
+  this.setState({
+    editId: '0',
+    addCcirPirModalOpen: false,
+  });
+}
+
+// Delete Record
+deleteCcirPirRecord(row){
+  this.props.deleteCcirPirById(row).then(() => {
+    this.closeCcirPirForm();
+  });
+}
+
+
+  componentDidMount() {
+    // Fetch List of Records 
+    this.props.fetchCcirPirs();
   }
 
   tableRowDetailModal = () => {
@@ -52,22 +84,24 @@ class CcirPirComponent extends React.Component {
 
     let langs = ['ccir', 'pir'] ;
     const {translations} = this.props;
+    const {allCcirPirs} = this.props;
 
     const ccirPirs = [translations['missile'], translations['rocket'], translations['gun'],];
 
-    const data = [    
-      {cocom: 'a-cocom', country:'j-country', region:'a-region', unit:'unit', commander:'c-commander', recorddate:'3/15/2018', view:'view'},
+    // const data = [    
+    //   {cocom: 'a-cocom', country:'j-country', region:'a-region', unit:'unit', commander:'c-commander', recorddate:'3/15/2018', view:'view'},
       
-    ];
+    // ];
 
+    // Set Columns and Data to display in the Table List
     const columns = [
       {
-        Header: translations['Service'],
-        accessor: 'Service',
+        Header: translations['Mission Name'],
+        accessor: 'MissionName',
       },
       {
         Header: translations['COCOM'],
-        accessor: 'cocom',
+        accessor: 'COCOM',
        /*  Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
@@ -79,40 +113,46 @@ class CcirPirComponent extends React.Component {
       },
       {
         Header: translations['Region'],
-        accessor: 'region',
+        accessor: 'RegionName',
         /* Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Regions" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       }, 
       {
         Header: translations['Country'],
-        accessor: 'country',
+        accessor: 'CountryName',
         /* Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Countries" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       },
      
       {
         Header: translations['Unit'],
-        accessor: 'unit',
+        accessor: 'UnitName',
        /*  Filter: ({ filter, onChange }) =>
                     <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       },
       {
         Header: translations['Commander'],
-        accessor: 'commander',
+        accessor: 'CommanderName',
       },  
+      {
+        Header: translations['Type'],
+        accessor: 'Type',
+       /*  Filter: ({ filter, onChange }) =>
+                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
+      },
      /*  {
         Header: translations['Record Date'],
         accessor: 'recorddate',
         filterable: false
         // filterMethod: (filter, row) =>
         //             row[filter.id].startsWith(filter.value)
-      }, 
+      }, */
       {
         Header: translations['view'],
-        accessor: 'view',
+        accessor: 'CCIRPIRId',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.tableRowDetailModal} /></span> // Custom cell components!
-      } */
+        Cell: row => <div><span className='number'><img src="/assets/img/general/pen_icon.png" /* onClick={this.tableRowDetailModal} */ onClick={() => this.openCcirPirForm(row.value)} /></span> <span className='number'><img src="/assets/img/general/trash_icon.png" /* onClick={this.tableRowDetailModal} */ onClick={() => this.deleteCcirPirRecord(row.value)} /></span></div>// Custom cell components!
+      } 
     ];
 
     const rowFields = [
@@ -138,13 +178,16 @@ class CcirPirComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line" style={{padding:'0px 17px 0px 0px'}}>
             <div className="add-button">
-              <button className="ccir-button" onClick={this.ccirModal} >{translations["Add Ccir/Pirs"]}</button>
+              <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
             </div>
           </div>
-          <CcirPirModal show={this.state.ccirModalOpen} onClose={this.ccirModal} onAdd={this.handleAdd}/>
+          {this.state.addCcirPirModalOpen ?
+          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
+          : null
+        }
           <div className="col-md-12">
             <ReactTable
-              data={data}
+              data={allCcirPirs}
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
