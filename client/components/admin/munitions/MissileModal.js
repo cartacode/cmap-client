@@ -171,19 +171,18 @@ class MissileModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.munition);
-    this.props.fetchMunitions();
     const {  munition } = this.state;
     const { editId } = this.props;
     debugger;
     if (editId !== undefined && editId !== '0') {
       debugger;
       munition.MunitionID = editId;
-      this.props.updateMunition(editId, munition);
+      this.props.updateMunition(editId, munition).then( () => {this.props.fetchMunitions(); this.props.onClose();});
     } else {
       debugger;
-      this.props.addMunition(munition);
+      this.props.addMunition(munition).then( () => {this.props.fetchMunitions(); this.props.onClose();});
     }
-    this.props.onClose();
+    
   }
 
   resetForm(){

@@ -159,8 +159,7 @@ class RocketModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addMunition(this.state.munition);
-    this.props.fetchMunitions();
+    this.props.addMunition(this.state.munition).then( () => {this.props.fetchMunitions(); this.props.onClose();});
   }
 
   resetForm(){

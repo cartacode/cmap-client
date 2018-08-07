@@ -201,8 +201,7 @@ class WamiModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.payload);
-    this.props.addPayload(this.state.payload);
-    this.props.fetchPayloads();
+    this.props.addPayload(this.state.payload).then( () => {this.props.fetchPayloads(); this.props.onClose();});
   }
 
 

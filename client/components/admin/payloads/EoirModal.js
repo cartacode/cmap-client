@@ -214,17 +214,16 @@ class EoirModal extends React.Component {
     event.preventDefault();
     console.log('---here--');
     console.log(this.state.payload);
-    this.props.fetchPayloads();
     const {  payload } = this.state;
     const { editId } = this.props;
     debugger;
     if (editId !== undefined && editId !== '0') {
       debugger;
       payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload);
+      this.props.updatePayload(editId, payload).then( () => {this.props.fetchPayloads(); this.props.onClose();});
     } else {
       debugger;
-      this.props.addPayload(payload);
+      this.props.addPayload(payload).then( () => {this.props.fetchPayloads(); this.props.onClose();});
     }
     this.props.onClose();
   //  this.props.fetchPayloads();
