@@ -20,6 +20,7 @@ class RocketModal extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      clear:false,
       munition: {
         MunitionsReferenceCode: '',
         MunitionWireframe: '',
@@ -162,19 +163,20 @@ class RocketModal extends React.Component {
     this.props.addMunition(this.state.munition).then( () => {this.props.fetchMunitions(); this.props.onClose();});
   }
 
-  resetForm(){
+  stopset () {
+    this.setState({clear:false});
+  }
+
+  resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      let inputs = document.body.getElementsByTagName('input');
-      let drops = document.body.getElementsByTagName('select');
-      for (let item of inputs) {
-        item.value = '';
-      }
-      for (let item of drops) {
-        item.value = 0;
-      }
-    }
+       this.setState({clear:true});
+       document.getElementById('munitionform').reset();
+     }
+     else {
+ 
+     }
   }
 
   render() {
@@ -234,7 +236,7 @@ class RocketModal extends React.Component {
 
     return (
 
-      <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} id="munitionform">
 
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
@@ -304,11 +306,11 @@ class RocketModal extends React.Component {
             <div className="row personnel" >
               <div className="under-munitions-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.state.munition}/>
+                data={this.handleMunitionGeneralData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handleMunitionCrewData} initstate ={this.state.munition}/>
+                data={this.handleMunitionCrewData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handleMunitionTechnicalData} initstate ={this.state.munition}/>
+                data={this.handleMunitionTechnicalData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               </div>
             </div>
           </div>

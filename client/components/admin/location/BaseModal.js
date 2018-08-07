@@ -15,6 +15,7 @@ class BaseModal extends React.Component {
     super(props);
     this.state = {
       file: '',
+      clear:false,
       locationPhotoPreviewUrl: '',
       mapImagePreviewUrl: '',
       location: {
@@ -174,19 +175,20 @@ class BaseModal extends React.Component {
     }
   }
 
-  resetForm(){
+  stopset () {
+    this.setState({clear:false});
+  }
+
+  resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      let inputs = document.body.getElementsByTagName('input');
-      let drops = document.body.getElementsByTagName('select');
-      for (let item of inputs) {
-        item.value = '';
-      }
-      for (let item of drops) {
-        item.value = 0;
-      }
-    }
+       this.setState({clear:true});
+       document.getElementById('locationform').reset();
+     }
+     else {
+ 
+     }
   }
 
   render() {
@@ -242,7 +244,7 @@ class BaseModal extends React.Component {
 
     return (
 
-      <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} id="locationform">
           <div className="close-button change-cursor-to-pointer" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -302,17 +304,17 @@ class BaseModal extends React.Component {
           <div className="row personnel" >
             <div className="under-location-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
+              data={this.handleLocationGeneralData} initstate ={this.props.oneLocation} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
+              data={this.handleLocationPositionData} initstate ={this.props.oneLocation} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
+              data={this.handleLocationInfoData} initstate ={this.props.oneLocation} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
+              <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>

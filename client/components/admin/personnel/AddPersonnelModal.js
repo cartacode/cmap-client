@@ -23,6 +23,7 @@ class AddPersonnelModal extends React.Component {
             selectedBranch: '',
             selectedRank: '',
             file: '',
+            clear:false,
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
             personnel: {
@@ -1185,20 +1186,20 @@ updatePaygrade= (rank) => {
 
 }
 
+stopset () {
+    this.setState({clear:false});
+  }
 
-  resetForm(){
-      this.setState(this.baseState);
-      console.log("FORM RESET DONE");
-      if (confirm("Do you want to clear all data from this form?")) {
-        let inputs = document.body.getElementsByTagName('input');
-        let drops = document.body.getElementsByTagName('select');
-        for (let item of inputs) {
-          item.value = '';
-        }
-        for (let item of drops) {
-          item.value = 0;
-        }
-      }
+  resetForm() {
+    this.setState(this.baseState);
+    console.log("FORM RESET DONE");
+    if (confirm("Do you want to clear all data from this form?")) {
+       this.setState({clear:true});
+       document.getElementById('personnelform').reset();
+     }
+     else {
+ 
+     }
   }
 
   render() {
@@ -1276,7 +1277,7 @@ updatePaygrade= (rank) => {
 
     return (
 
-      <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} id="personnelform">
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
@@ -1328,13 +1329,13 @@ updatePaygrade= (rank) => {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId}/>
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               </div>
             </div>
           </div>
