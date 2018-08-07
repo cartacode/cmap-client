@@ -80,17 +80,11 @@ class AddMunitionsInventory extends React.Component {
     const { editId } = this.props;
     let { munition } = this.state;
     if (editId !== undefined && editId !== '0') {
-      // const data = {
-      //   id: editId,
-      //   payloadInventory: payloads,
-      // };
       munition.id = editId;
-      this.props.updateMunitionInventory(editId, munition);
+      this.props.updateMunitionInventory(editId, munition).then( () => {this.props.onClose();});
     } else {
-      this.props.addMunitionInventory(this.state.munition);
+      this.props.addMunitionInventory(this.state.munition).then( () => {this.props.onClose();});
     }
-    this.props.onClose('0');
-    
   }
 
   updatelocationid (generalData) 
@@ -153,10 +147,9 @@ class AddMunitionsInventory extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-
-          <div className="close-button" >
+          {/* <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div>
+          </div> */}
           <div className="payload-content">
             <div className="row personnel" >
               

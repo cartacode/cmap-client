@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import AddPayloadsInventory from './payloads/AddPayloadsInventory';
+import { NotificationManager, NotificationContainer } from 'react-notifications';
 
 class PayloadsComponent extends React.Component {
   constructor(props) {
@@ -29,11 +30,21 @@ openPayloadsForm = (row) => {
 }
 
 closePayloadsForm = () => {
+	this.notify();
   this.props.fetchPayloadInventory();
   this.setState({
     editId: '0',
     addPayloadsInventoryOpen: false,
   });
+}
+
+notify =()=>{
+	 const { translations } = this.props;
+		 if (this.state.editId !== undefined && this.state.editId !== '0') {
+			NotificationManager.success(translations['Update Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
+		}else{
+			NotificationManager.success(translations['Add Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
+		}
 }
 	
 
@@ -108,7 +119,8 @@ closePayloadsForm = () => {
 					 {this.state.addPayloadsInventoryOpen ?
 					  <AddPayloadsInventory editId = {this.state.editId} onClose={this.closePayloadsForm} translations = {translations} />
 				      : null
-				     }
+						 }
+						 <NotificationContainer /> 
 			  			<div className="col-md-12">
 			  				<ReactTable
 			  					data={allPayloadInventory}

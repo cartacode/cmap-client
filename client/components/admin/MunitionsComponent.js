@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import AddMunitionsInventory from './munitions/AddMunitionsInventory';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 class MunitionsComponent extends React.Component {
 
@@ -37,11 +38,21 @@ openMunitionsForm = (row) => {
 }
 
 closeMunitionsForm = () => {
+  this.notify();
   this.props.fetchMunitionInventory();
   this.setState({
     editId: '0',
     addMunitionsInventoryOpen: false,
   });
+}
+
+notify =()=>{
+  const { translations } = this.props;
+  if (this.state.editId !== undefined && this.state.editId !== '0') {
+    NotificationManager.success(translations['Update Munition Inventory Message'], translations['Munition Inventory Title'], 5000);
+  }else{
+    NotificationManager.success(translations['Add Munition Inventory Message'], translations['Munition Inventory Title'], 5000);
+  }
 }
 
   handleForm = () => {
@@ -179,6 +190,7 @@ closeMunitionsForm = () => {
             <AddMunitionsInventory onClose={this.closeMunitionsForm} editId={this.state.editId} translations = {translations}/>
             : null
           }
+          <NotificationContainer />
           <div className="col-md-12">
             <ReactTable
               data={allMunitionInventory}
