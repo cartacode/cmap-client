@@ -18,7 +18,7 @@ const format = 'YYYY-MM-DDTHH:mm:ss';
 // const cn = location.search.indexOf('cn') !== -1;
 
 const now = moment();
-now.locale('en-ca').utcOffset(8);
+now.locale('en-gb').utcOffset(8);
 // if (cn) {
 //     now.locale('zh-cn').utcOffset(8);
 // } else {
@@ -78,7 +78,7 @@ class CustomDatePicker extends React.Component {
         showTime: true,
         showDateInput: true,
         disabled: false,
-        value: moment(props.defaultValue, format),
+        value: props.defaultValue,
       };
     }
 
