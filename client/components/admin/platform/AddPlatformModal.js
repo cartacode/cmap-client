@@ -629,7 +629,7 @@ class AddPlatformModal extends React.Component {
         <div className="row action-buttons">
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
-            <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
+            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
               {translations['clear']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
