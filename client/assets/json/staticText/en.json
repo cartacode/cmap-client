@@ -662,7 +662,11 @@
   "Update Payload Inventory Message": "Record updated successfully.",
   "Munition Inventory Title": "Munition inventory",
   "Add Munition Inventory Message": "Record add successfully.",
-  "Update Munition Inventory Message": "Record updated successfully."
+  "Update Munition Inventory Message": "Record updated successfully.",
+  "Delete CCIRPIR Message":"Record Deleted Successfully.",
+	"CCIRPIR Title":"CCIR/PIR",
+	"Update CCIRPIR Message":"Record Updated Successfully.",
+	"Add CCIRPIR Message":"Record Added Successfully."
   
   "Add Platform": "Add Platform",
   "success": "Saved Successfuly"
