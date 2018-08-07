@@ -155,6 +155,9 @@ class ContentBlock extends React.Component {
             break;
 
           case 'date':
+            if(value === '') {
+              value = new Date();
+            }
             input = (
               <div>
                 <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate}/>

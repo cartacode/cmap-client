@@ -25,7 +25,7 @@ class AddPersonnelModal extends React.Component {
             file: '',
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
-            // personnel: {
+            personnel: {
             //     PersonnelPhoto: '',
             //     FirstName: '',
             //     MiddleInitial: '',
@@ -55,9 +55,8 @@ class AddPersonnelModal extends React.Component {
             //     EmailNIPR: '',
             //     EmailSIPR: '',
             //     ChatID: ''
-            // },
+            },
             onePersonnel: {},
-
         }
         this.resetForm = this.resetForm.bind(this);
         // preserve the initial state in a new object
@@ -65,40 +64,24 @@ class AddPersonnelModal extends React.Component {
   }
 
   componentDidMount = () => {
+    // this.setState({personnel: this.props.personnel});
     const { editId } = this.props;
-    console.log('Pers Edit ' + editId);
     if(editId !== '0') {
       this.props.fetchPersonnelById(editId);
     }
   }
 
-  componentDidUpdate() {
-    
-    //const { selectedBranch } = this.state;
-    const { onePersonnel, editId } = this.props;
-    console.log('Pers '+onePersonnel.PersonnelID);
-    console.log('Pers Edit ' + editId);
-    if(onePersonnel !== undefined && onePersonnel.PersonnelID !== editId) {
-      this.props.fetchPersonnelById(editId);    
-    }
-
-    // if(Object.keys(onePersonnel).length === 0 && onePersonnel.constructor === Object && selectedBranch !== undefined && selectedRank !== onePersonnel.ServiceBranch) {
-    //   this.updateRanks(selectedBranch);
-    // }
-}
-  
   handleGeneralPersonnelData = (generalData) => {
     const { personnel } = this.state;
     
     
-    if(generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
+    if( generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
       this.updateRanks(generalData.ServiceBranch);
     }
 
-    if(generalData.Rank && generalData.Rank !== this.state.selectedRank) {
+    if( generalData.Rank && generalData.Rank !== this.state.selectedRank ) {
       this.updatePaygrade(generalData.Rank);
     }
-
 
     this.setState({
       personnel: {
@@ -117,9 +100,6 @@ class AddPersonnelModal extends React.Component {
       selectedBranch: generalData.ServiceBranch,
       selectedRank: generalData.Rank,
     });
-
-
-    
 
       //let personnell = generalData.Rank;
       //this.setPaygrade(personnell);

@@ -18,7 +18,7 @@ const format = 'YYYY-MM-DDTHH:mm:ss';
 // const cn = location.search.indexOf('cn') !== -1;
 
 const now = moment();
-now.locale('en-gb').utcOffset(8);
+now.locale('en-ca').utcOffset(8);
 // if (cn) {
 //     now.locale('zh-cn').utcOffset(8);
 // } else {
@@ -78,18 +78,18 @@ class CustomDatePicker extends React.Component {
         showTime: true,
         showDateInput: true,
         disabled: false,
-        value: props.defaultValue,
+        value: moment(props.defaultValue, format),
       };
     }
 
     componentDidUpdate = () => {
-    //   const defaultValue = moment(this.props.defaultValue, format);
-    //   const { value } = this.state;
-    //   if(!defaultValue.isSame(value)) {
-    //     this.setState({
-    //       value: defaultValue,
-    //     });
-    //   }
+      const defaultValue = moment(this.props.defaultValue, format);
+      const { value } = this.state;
+      if(!defaultValue.isSame(value)) {
+        this.setState({
+          value: defaultValue,
+        });
+      }
 
     }
 
