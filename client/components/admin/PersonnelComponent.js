@@ -4,6 +4,7 @@ import AddPersonnel from './personnel/AddPersonnelModal';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 class PersonnelComponent extends React.Component {
 
@@ -45,6 +46,8 @@ class PersonnelComponent extends React.Component {
   }
 
 closePersonnelForm = () => {
+  const { translations } = this.props;
+  NotificationManager.success(translations['success'], translations['personnel']);
   this.props.fetchPersonnels();
   this.setState({
     editId: '0',
@@ -99,6 +102,7 @@ render() {
 
   return (
     <div>
+      <NotificationContainer />
       <div className="row orders-assets">
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>

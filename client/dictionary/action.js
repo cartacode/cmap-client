@@ -2,6 +2,10 @@ import { createActionType } from 'util/action';
 
 export const COCOM_LIST__FETCH = createActionType('COCOM_LIST__FETCH');
 
+export const RANK_LIST__FETCH = createActionType('RANK_LIST__FETCH');
+
+export const PAYGRADE_LIST__FETCH = createActionType('PAYGRADE_LIST__FETCH');
+
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');

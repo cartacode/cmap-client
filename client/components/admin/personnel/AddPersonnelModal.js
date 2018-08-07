@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
-// import ButtonsList from "../../reusable/ButtonsList";
+import { baseUrl } from 'dictionary/network';
 
 // import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
 // import CustomDatePicker from '../../reusable/CustomDatePicker';
@@ -20,6 +20,8 @@ class AddPersonnelModal extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
+            selectedBranch: '',
+            selectedRank: '',
             file: '',
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
@@ -63,531 +65,676 @@ class AddPersonnelModal extends React.Component {
   }
 
   componentDidMount = () => {
-    //this.setState({personnel: this.props.personnel});
     const { editId } = this.props;
+    console.log('Pers Edit ' + editId);
     if(editId !== '0') {
       this.props.fetchPersonnelById(editId);
-    }else {
-    //   this.setState({ onePersonnel: {} });
     }
-    // this.props.fetchPersonnelById(editId);
   }
 
+  componentDidUpdate() {
+    
+    //const { selectedBranch } = this.state;
+    const { onePersonnel, editId } = this.props;
+    console.log('Pers '+onePersonnel.PersonnelID);
+    console.log('Pers Edit ' + editId);
+    if(onePersonnel !== undefined && onePersonnel.PersonnelID !== editId) {
+      this.props.fetchPersonnelById(editId);    
+    }
+
+    // if(Object.keys(onePersonnel).length === 0 && onePersonnel.constructor === Object && selectedBranch !== undefined && selectedRank !== onePersonnel.ServiceBranch) {
+    //   this.updateRanks(selectedBranch);
+    // }
+}
+  
   handleGeneralPersonnelData = (generalData) => {
     const { personnel } = this.state;
+    
+    
+    if(generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
+      this.updateRanks(generalData.ServiceBranch);
+    }
+
+    if(generalData.Rank && generalData.Rank !== this.state.selectedRank) {
+      this.updatePaygrade(generalData.Rank);
+    }
+
+
     this.setState({
       personnel: {
         ...personnel,
         FirstName: generalData.FirstName,
         MiddleInitial: generalData.MiddleInitial,
         LastName: generalData.LastName,
+        ServiceBranch: generalData.ServiceBranch,
         PayGrade: generalData.PayGrade,
         Rank: generalData.Rank,
         Nationality: generalData.Nationality,
         Clearance: generalData.Clearance,
         CACid: generalData.CACid,
-        CallSign: generalData.CallSign
-      }
-    }, () => {
-    //   console.log("New state in ASYNC callback:22222", this.props.personnel);
+        CallSign: generalData.CallSign,
+      },
+      selectedBranch: generalData.ServiceBranch,
+      selectedRank: generalData.Rank,
     });
 
-      let personnell = generalData.Rank;
-      let rank = document.getElementsByName("PayGrade");
 
-      switch (personnell) {
-          case '9':
-          case '10':
-          case '11':
-          case '12': this.setState({personnel: {  ...personnel, PayGrade: '1' }
-                });
-                rank[0].selectedIndex = "1";
-                break;
+    
 
-          case '14':
-          case '24':
-          case '15':
-          case '17':
-          case '16': this.setState({personnel: { ...personnel, PayGrade: '2' }
-                });
-                rank[0].selectedIndex = "2";
-                break;
-
-          case '19':
-          case '22':
-          case '21': this.setState({personnel: { ...personnel, PayGrade: '3' }
-              });
-              rank[0].selectedIndex = "3";
-              break;
-
-          case '26':
-          case '28':
-          case '27':
-          case '25': this.setState({personnel: { ...personnel, PayGrade: '4' }
-            });
-            rank[0].selectedIndex = "4";
-              break;
-
-
-          case '31':
-          case '33':
-          case '30':
-          case '32': this.setState({personnel: { ...personnel, PayGrade: '5' }
-            });
-            rank[0].selectedIndex = "5";
-              break;
-
-
-          case '37':
-          case '35':
-          case '38': this.setState({personnel: {  ...personnel, PayGrade: '6' }
-            });
-            rank[0].selectedIndex = "6";
-              break;
-
-          case '41':
-          case '42':
-          case '40':
-          case '43':
-          case '46': this.setState({personnel: {  ...personnel, PayGrade: '7' }
-            });
-            rank[0].selectedIndex = "7";
-             break;
-
-          case '47':
-          case '50': this.setState({personnel: {  ...personnel, PayGrade: '8' }
-            });
-            rank[0].selectedIndex = "8";
-            break;
-
-          case '55':
-          case '56':
-          case '57':
-          case '60':
-          case '59':
-          case '66':
-          case '52':
-          case '63':
-          case '53':
-          case '54':
-          case '61':
-          case '59':
-          case '62': this.setState({personnel: {  ...personnel, PayGrade: '9' }
-            });
-            rank[0].selectedIndex = "9";
-            break;
-
-          case '67': this.setState({personnel: {  ...personnel, PayGrade: '10' }
-            });
-            rank[0].selectedIndex = "10";
-            break;
-
-          case '70':
-          case '71':
-          case '69': this.setState({personnel: {  ...personnel, PayGrade: '11' }
-            });
-            rank[0].selectedIndex = "11";
-            break;
-
-
-          case '73':
-          case '74':
-          case '75': this.setState({personnel: {  ...personnel, PayGrade: '12' }
-            });
-            rank[0].selectedIndex = "12";
-            break;
-
-
-          case '77':
-          case '78': this.setState({personnel: {  ...personnel, PayGrade: '13' }
-            });
-            rank[0].selectedIndex = "13";
-            break;
-
-
-          case '81': this.setState({personnel: {  ...personnel, PayGrade: '14' }
-              });
-              rank[0].selectedIndex = "14";
-              break;
-
-
-          case '84':
-          case '87':
-          case '86':
-          case '85': this.setState({personnel: {  ...personnel, PayGrade: '15' }
-              });
-              rank[0].selectedIndex = "15";
-              break;
-
-          case '92':
-          case '93':
-          case '91':
-          case '89':
-          case '90': this.setState({personnel: {  ...personnel, PayGrade: '16' }
-              });
-              rank[0].selectedIndex = "16";
-              break;
-
-          case '94':
-          case '111':
-          case '95': this.setState({personnel: {  ...personnel, PayGrade: '17' }
-                  });
-                  rank[0].selectedIndex = "17";
-              break;
-
-          case '101':
-          case '99': this.setState({personnel: {  ...personnel, PayGrade: '18' }
-                  });
-                rank[0].selectedIndex = "18";
-              break;
-
-
-          case '105':
-          case '107':
-          case '108':
-          case '106':
-          case '104': this.setState({personnel: {  ...personnel, PayGrade: '19' }
-                        });
-                      rank[0].selectedIndex = "19";
-              break;
-
-          case '110':
-          case '112':
-          case '109': this.setState({personnel: {  ...personnel, PayGrade: '20' }
-                        });
-                      rank[0].selectedIndex = "20";
-              break;
-
-
-          case '115':
-          case '114':
-          case '118':
-          case '116':
-          case '117': this.setState({personnel: {  ...personnel, PayGrade: '21' }
-                        });
-                       rank[0].selectedIndex = "21";
-              break;
-
-
-          case '123':
-          case '120':
-          case '119':
-          case '121': this.setState({personnel: {  ...personnel, PayGrade: '22' }
-                        });
-                       rank[0].selectedIndex = "22";
-              break;
-
-          case '125':
-          case '128':
-          case '126':
-          case '124': this.setState({personnel: {  ...personnel, PayGrade: '23' }
-                        });
-                        rank[0].selectedIndex = "23";
-               break;
-
-          case '131':
-          case '129': this.setState({personnel: {  ...personnel, PayGrade: '24' }
-                            });
-                        rank[0].selectedIndex = "24";
-                break;
-
-          case '134': this.setState({personnel: {  ...personnel, PayGrade: '25' }
-                    });
-                rank[0].selectedIndex = "25";
-                break;
-
-          case '135': this.setState({personnel: {  ...personnel, PayGrade: '26' }
-                    });
-                rank[0].selectedIndex = "26";
-                break;
-
-          case '136': this.setState({personnel: {  ...personnel, PayGrade: '27' }
-                    });
-                rank[0].selectedIndex = "27";
-                break;
-
-          case '137': this.setState({personnel: {  ...personnel, PayGrade: '28' }
-                    });
-                rank[0].selectedIndex = "28";
-                break;
-
-          case '138': this.setState({personnel: {  ...personnel, PayGrade: '29' }
-                    });
-                rank[0].selectedIndex = "29";
-                break;
-
-          case '139': this.setState({personnel: {  ...personnel, PayGrade: '30' }
-                    });
-                rank[0].selectedIndex = "30";
-                break;
-
-          case '140': this.setState({personnel: {  ...personnel, PayGrade: '31' }
-                    });
-                rank[0].selectedIndex = "31";
-                break;
-
-          case '141': this.setState({personnel: {  ...personnel, PayGrade: '32' }
-                    });
-                rank[0].selectedIndex = "32";
-                break;
-
-          case '142': this.setState({personnel: {  ...personnel, PayGrade: '33' }
-                    });
-                rank[0].selectedIndex = "33";
-                break;
-
-          case '143': this.setState({personnel: {  ...personnel, PayGrade: '34' }
-                    });
-                rank[0].selectedIndex = "34";
-                break;
-
-          case '144': this.setState({personnel: {  ...personnel, PayGrade: '35' }
-                    });
-                rank[0].selectedIndex = "35";
-                break;
-
-          case '145': this.setState({personnel: {  ...personnel, PayGrade: '36' }
-                    });
-                rank[0].selectedIndex = "36";
-                break;
-          case '146': this.setState({personnel: {  ...personnel, PayGrade: '37' }
-                    });
-                rank[0].selectedIndex = "37";
-                break;
-          case '147': this.setState({personnel: {  ...personnel, PayGrade: '38' }
-                    });
-                rank[0].selectedIndex = "38";
-                break;
-
-          case '148': this.setState({personnel: {  ...personnel, PayGrade: '39' }
-                    });
-                rank[0].selectedIndex = "39";
-                break;
-
-          case '149': this.setState({personnel: {  ...personnel, PayGrade: '39' }
-                    });
-                rank[0].selectedIndex = "39";
-
-
-      }
+      //let personnell = generalData.Rank;
+      //this.setPaygrade(personnell);
   }
 
+setPaygrade = (personnell) => {
+    const { personnel } = this.state;
+    let rank = document.getElementsByName("PayGrade");
+    switch (personnell) {
+        case '9':
+        case '10':
+        case '11':
+        case '12': this.setState({personnel: {  ...personnel, PayGrade: '1' }
+              });
+              rank[0].selectedIndex = "1";
+              break;
+
+        case '14':
+        case '24':
+        case '15':
+        case '17':
+        case '16': this.setState({personnel: { ...personnel, PayGrade: '2' }
+              });
+              rank[0].selectedIndex = "2";
+              break;
+
+        case '19':
+        case '22':
+        case '21': this.setState({personnel: { ...personnel, PayGrade: '3' }
+            });
+            rank[0].selectedIndex = "3";
+            break;
+
+        case '26':
+        case '28':
+        case '27':
+        case '25': this.setState({personnel: { ...personnel, PayGrade: '4' }
+          });
+          rank[0].selectedIndex = "4";
+            break;
+
+
+        case '31':
+        case '33':
+        case '30':
+        case '32': this.setState({personnel: { ...personnel, PayGrade: '5' }
+          });
+          rank[0].selectedIndex = "5";
+            break;
+
+
+        case '37':
+        case '35':
+        case '38': this.setState({personnel: {  ...personnel, PayGrade: '6' }
+          });
+          rank[0].selectedIndex = "6";
+            break;
+
+        case '41':
+        case '42':
+        case '40':
+        case '43':
+        case '46': this.setState({personnel: {  ...personnel, PayGrade: '7' }
+          });
+          rank[0].selectedIndex = "7";
+           break;
+
+        case '47':
+        case '50': this.setState({personnel: {  ...personnel, PayGrade: '8' }
+          });
+          rank[0].selectedIndex = "8";
+          break;
+
+        case '55':
+        case '56':
+        case '57':
+        case '60':
+        case '59':
+        case '66':
+        case '52':
+        case '63':
+        case '53':
+        case '54':
+        case '61':
+        case '59':
+        case '62': this.setState({personnel: {  ...personnel, PayGrade: '9' }
+          });
+          rank[0].selectedIndex = "9";
+          break;
+
+        case '67': this.setState({personnel: {  ...personnel, PayGrade: '10' }
+          });
+          rank[0].selectedIndex = "10";
+          break;
+
+        case '70':
+        case '71':
+        case '69': this.setState({personnel: {  ...personnel, PayGrade: '11' }
+          });
+          rank[0].selectedIndex = "11";
+          break;
+
+
+        case '73':
+        case '74':
+        case '75': this.setState({personnel: {  ...personnel, PayGrade: '12' }
+          });
+          rank[0].selectedIndex = "12";
+          break;
+
+
+        case '77':
+        case '78': this.setState({personnel: {  ...personnel, PayGrade: '13' }
+          });
+          rank[0].selectedIndex = "13";
+          break;
+
+
+        case '81': this.setState({personnel: {  ...personnel, PayGrade: '14' }
+            });
+            rank[0].selectedIndex = "14";
+            break;
+
+
+        case '84':
+        case '87':
+        case '86':
+        case '85': this.setState({personnel: {  ...personnel, PayGrade: '15' }
+            });
+            rank[0].selectedIndex = "15";
+            break;
+
+        case '92':
+        case '93':
+        case '91':
+        case '89':
+        case '90': this.setState({personnel: {  ...personnel, PayGrade: '16' }
+            });
+            rank[0].selectedIndex = "16";
+            break;
+
+        case '94':
+        case '111':
+        case '95': this.setState({personnel: {  ...personnel, PayGrade: '17' }
+                });
+                rank[0].selectedIndex = "17";
+            break;
+
+        case '101':
+        case '99': this.setState({personnel: {  ...personnel, PayGrade: '18' }
+                });
+              rank[0].selectedIndex = "18";
+            break;
+
+
+        case '105':
+        case '107':
+        case '108':
+        case '106':
+        case '104': this.setState({personnel: {  ...personnel, PayGrade: '19' }
+                      });
+                    rank[0].selectedIndex = "19";
+            break;
+
+        case '110':
+        case '112':
+        case '109': this.setState({personnel: {  ...personnel, PayGrade: '20' }
+                      });
+                    rank[0].selectedIndex = "20";
+            break;
+
+
+        case '115':
+        case '114':
+        case '118':
+        case '116':
+        case '117': this.setState({personnel: {  ...personnel, PayGrade: '21' }
+                      });
+                     rank[0].selectedIndex = "21";
+            break;
+
+
+        case '123':
+        case '120':
+        case '119':
+        case '121': this.setState({personnel: {  ...personnel, PayGrade: '22' }
+                      });
+                     rank[0].selectedIndex = "22";
+            break;
+
+        case '125':
+        case '128':
+        case '126':
+        case '124': this.setState({personnel: {  ...personnel, PayGrade: '23' }
+                      });
+                      rank[0].selectedIndex = "23";
+             break;
+
+        case '131':
+        case '129': this.setState({personnel: {  ...personnel, PayGrade: '24' }
+                          });
+                      rank[0].selectedIndex = "24";
+              break;
+
+        case '134': this.setState({personnel: {  ...personnel, PayGrade: '25' }
+                  });
+              rank[0].selectedIndex = "25";
+              break;
+
+        case '135': this.setState({personnel: {  ...personnel, PayGrade: '26' }
+                  });
+              rank[0].selectedIndex = "26";
+              break;
+
+        case '136': this.setState({personnel: {  ...personnel, PayGrade: '27' }
+                  });
+              rank[0].selectedIndex = "27";
+              break;
+
+        case '137': this.setState({personnel: {  ...personnel, PayGrade: '28' }
+                  });
+              rank[0].selectedIndex = "28";
+              break;
+
+        case '138': this.setState({personnel: {  ...personnel, PayGrade: '29' }
+                  });
+              rank[0].selectedIndex = "29";
+              break;
+
+        case '139': this.setState({personnel: {  ...personnel, PayGrade: '30' }
+                  });
+              rank[0].selectedIndex = "30";
+              break;
+
+        case '140': this.setState({personnel: {  ...personnel, PayGrade: '31' }
+                  });
+              rank[0].selectedIndex = "31";
+              break;
+
+        case '141': this.setState({personnel: {  ...personnel, PayGrade: '32' }
+                  });
+              rank[0].selectedIndex = "32";
+              break;
+
+        case '142': this.setState({personnel: {  ...personnel, PayGrade: '33' }
+                  });
+              rank[0].selectedIndex = "33";
+              break;
+
+        case '143': this.setState({personnel: {  ...personnel, PayGrade: '34' }
+                  });
+              rank[0].selectedIndex = "34";
+              break;
+
+        case '144': this.setState({personnel: {  ...personnel, PayGrade: '35' }
+                  });
+              rank[0].selectedIndex = "35";
+              break;
+
+        case '145': this.setState({personnel: {  ...personnel, PayGrade: '36' }
+                  });
+              rank[0].selectedIndex = "36";
+              break;
+        case '146': this.setState({personnel: {  ...personnel, PayGrade: '37' }
+                  });
+              rank[0].selectedIndex = "37";
+              break;
+        case '147': this.setState({personnel: {  ...personnel, PayGrade: '38' }
+                  });
+              rank[0].selectedIndex = "38";
+              break;
+
+        case '148': this.setState({personnel: {  ...personnel, PayGrade: '39' }
+                  });
+              rank[0].selectedIndex = "39";
+              break;
+
+        case '149': this.setState({personnel: {  ...personnel, PayGrade: '39' }
+                  });
+              rank[0].selectedIndex = "39";
+
+
+    }
+}
+
   handleOrganizationAndDutyData = (organizationAndDutyData) => {
-      const {personnel} = this.state;
-      this.setState({
-          personnel: {
-              ...personnel,
-              ServiceBranch: organizationAndDutyData.ServiceBranch,
-              Company: organizationAndDutyData.Company,
-              AssignedUnit: organizationAndDutyData.AssignedUnit,
-              DeployedUnit: organizationAndDutyData.DeployedUnit,
-              DutyPosition1: organizationAndDutyData.DutyPosition1,
-              MOS1: organizationAndDutyData.MOS1,
-              DutyPosition2: organizationAndDutyData.DutyPosition2,
-              MOS2: organizationAndDutyData.MOS2,
-              DutyPosition3: organizationAndDutyData.DutyPosition3,
-              MOS3: organizationAndDutyData.MOS3,
-              CurrentAssignmentStart: organizationAndDutyData.CurrentAssignmentStart,
-              CurrentAssignmentEnd: organizationAndDutyData.CurrentAssignmentEnd,
-              SpecialQuals1: organizationAndDutyData.SpecialQuals1,
-              SpecialQuals2: organizationAndDutyData.SpecialQuals2,
-              SpecialQuals3: organizationAndDutyData.SpecialQuals3
+    const { personnel } = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,        
+        Company: organizationAndDutyData.Company,
+        AssignedUnit: organizationAndDutyData.AssignedUnit,
+        DeployedUnit: organizationAndDutyData.DeployedUnit,
+        DutyPosition1: organizationAndDutyData.DutyPosition1,
+        MOS1: organizationAndDutyData.MOS1,
+        DutyPosition2: organizationAndDutyData.DutyPosition2,
+        MOS2: organizationAndDutyData.MOS2,
+        DutyPosition3: organizationAndDutyData.DutyPosition3,
+        MOS3: organizationAndDutyData.MOS3,
+        CurrentAssignmentStart: organizationAndDutyData.CurrentAssignmentStart,
+        CurrentAssignmentEnd: organizationAndDutyData.CurrentAssignmentEnd,
+        SpecialQuals1: organizationAndDutyData.SpecialQuals1,
+        SpecialQuals2: organizationAndDutyData.SpecialQuals2,
+        SpecialQuals3: organizationAndDutyData.SpecialQuals3,
+      },
+    });
+     
+  }
 
+setRanks = (ServiceBranch) => {
+
+    let rankselect = document.getElementsByName("Rank")[0];
+
+    let rankitems = [
+
+      {"label":"Private",	"value":"10"},
+      {"label":"Private Second Class",	"value":"15"},
+      {"label":"Private First Class",	"value":"17"},
+      {"label":"Specialist",	"value":"25"},
+      {"label":"Corporal",	"value":"26"},
+      {"label":"Sergeant",	"value":"31"},
+      {"label":"Staff Sergeant",	"value":"30"},
+      {"label":"Sergeant First Class",	"value":"41"},
+      {"label":"Master Sergeant",	"value":"46"},
+      {"label":"First Sergeant",	"value":"47"},
+      {"label":"Sergeant Major",	"value":"55"},
+      {"label":"Command Sergeant Major",	"value":"56"},
+      {"label":"Sergeant Major of the Army",	"value":"57"},
+      {"label":"Warrant Officer 1",	"value":"67"},
+      {"label":"Chief Warrant Officer 2",	"value":"69"},
+      {"label":"Chief Warrant Officer 3",	"value":"73"},
+      {"label":"Chief Warrant Officer 4",	"value":"77"},
+      {"label":"Chief Warrant Officer 5",	"value":"81"},
+      {"label":"Second Lieutenant",	"value":"85"},
+      {"label":"First Lieutenant",	"value":"90"},
+      {"label":"Captain",	"value":"95"},
+      {"label":"Major",	"value":"99"},
+      {"label":"Lieutenant Colonel",	"value":"105"},
+      {"label":"Colonel",	"value":"109"},
+      {"label":"Brigadier General",	"value":"115"},
+      {"label":"Major General",	"value":"120"},
+      {"label":"Lieutenant General",	"value":"125"},
+      {"label":"General",	"value":"129"}
+    ];
+
+
+
+     let rankitems2 = [
+          {
+              "label": "Seaman Recruit",
+              "value": "11"
+          },
+          {
+              "label": "Seaman Apprentice",
+              "value": "16"
+          },
+          {
+              "label": "Seaman",
+              "value": "21"
+          },
+          {
+              "label": "Petty Officer Third Class",
+              "value": "27"
+          },
+          {
+              "label": "Petty Officer Second Class",
+              "value": "32"
+          },
+          {
+              "label": "Petty Officer First Class",
+              "value": "37"
+          },
+          {
+              "label": "Chief Petty Officer",
+              "value": "42"
+          },
+          {
+              "label": "Senior Chief Petty Officer",
+              "value": "48"
+          },
+          {
+              "label": "Master Chief Petty Officer",
+              "value": "58"
+          },
+          {
+              "label": "Command Master Chief Petty Officer",
+              "value": "60"
+          },
+          {
+              "label": "Master Chief Petty Officer Of The Navy",
+              "value": "66"
+          },
+          {
+              "label": "Chief Warrant Officer 2",
+              "value": "69"
+          },
+          {
+              "label": "Chief Warrant Officer 3",
+              "value": "75"
+          },
+          {
+              "label": "Chief Warrant Officer 4",
+              "value": "77"
+          },
+          {
+              "label": "Chief Warrant Officer 5",
+              "value": "81"
+          },
+          {
+              "label": "Ensign",
+              "value": "86"
+          },
+          {
+              "label": "Lieutenant Junior Grade",
+              "value": "93"
+          },
+          {
+              "label": "Lieutenant",
+              "value": "96"
+          },
+          {
+              "label": "Lieutenant Commander",
+              "value": "101"
+          },
+          {
+              "label": "Commander",
+              "value": "108"
+          },
+          {
+              "label": "Captain",
+              "value": "111"
+          },
+          {
+              "label": "Rear Admiral Lower Half",
+              "value": "118"
+          },
+          {
+              "label": "Rear Admiral",
+              "value": "123"
+          },
+          {
+              "label": "Vice Admiral",
+              "value": "128"
+          },
+          {
+              "label": "Admiral",
+              "value": "131"
           }
-      });
-
-      let rankselect = document.getElementsByName("Rank")[0];
-
-      let rankitems = [
-
-        {"label":"Private",	"value":"10"},
-        {"label":"Private Second Class",	"value":"15"},
-        {"label":"Private First Class",	"value":"17"},
-        {"label":"Specialist",	"value":"25"},
-        {"label":"Corporal",	"value":"26"},
-        {"label":"Sergeant",	"value":"31"},
-        {"label":"Staff Sergeant",	"value":"30"},
-        {"label":"Sergeant First Class",	"value":"41"},
-        {"label":"Master Sergeant",	"value":"46"},
-        {"label":"First Sergeant",	"value":"47"},
-        {"label":"Sergeant Major",	"value":"55"},
-        {"label":"Command Sergeant Major",	"value":"56"},
-        {"label":"Sergeant Major of the Army",	"value":"57"},
-        {"label":"Warrant Officer 1",	"value":"67"},
-        {"label":"Chief Warrant Officer 2",	"value":"69"},
-        {"label":"Chief Warrant Officer 3",	"value":"73"},
-        {"label":"Chief Warrant Officer 4",	"value":"77"},
-        {"label":"Chief Warrant Officer 5",	"value":"81"},
-        {"label":"Second Lieutenant",	"value":"85"},
-        {"label":"First Lieutenant",	"value":"90"},
-        {"label":"Captain",	"value":"95"},
-        {"label":"Major",	"value":"99"},
-        {"label":"Lieutenant Colonel",	"value":"105"},
-        {"label":"Colonel",	"value":"109"},
-        {"label":"Brigadier General",	"value":"115"},
-        {"label":"Major General",	"value":"120"},
-        {"label":"Lieutenant General",	"value":"125"},
-        {"label":"General",	"value":"129"}
-      ];
+      ]
 
 
-
-       let rankitems2 = [
+        let rankitems3 = [
             {
-                "label": "Seaman Recruit",
-                "value": "11"
+                "label": "Airman Basic",
+                "value": "9"
             },
             {
-                "label": "Seaman Apprentice",
-                "value": "16"
+                "label": "Airman",
+                "value": "14"
             },
             {
-                "label": "Seaman",
-                "value": "21"
+                "label": "Airman First Class",
+                "value": "19"
             },
             {
-                "label": "Petty Officer Third Class",
-                "value": "27"
+                "label": "Senior Airman",
+                "value": "24"
             },
             {
-                "label": "Petty Officer Second Class",
-                "value": "32"
+                "label": "Staff Sergeant",
+                "value": "30"
             },
             {
-                "label": "Petty Officer First Class",
-                "value": "37"
+                "label": "Technical Sergeant",
+                "value": "35"
             },
             {
-                "label": "Chief Petty Officer",
-                "value": "42"
+                "label": "Master Sergeant",
+                "value": "40"
             },
             {
-                "label": "Senior Chief Petty Officer",
-                "value": "48"
+                "label": "Senior Master Sergeant",
+                "value": "45"
             },
             {
-                "label": "Master Chief Petty Officer",
-                "value": "58"
+                "label": "Chief Master Sergeant",
+                "value": "52"
             },
             {
-                "label": "Command Master Chief Petty Officer",
-                "value": "60"
+                "label": "Command Chief Master Sergeant",
+                "value": "53"
             },
             {
-                "label": "Master Chief Petty Officer Of The Navy",
-                "value": "66"
+                "label": "Chief Master Sergeant Of The Air Force",
+                "value": "54"
             },
             {
-                "label": "Chief Warrant Officer 2",
-                "value": "69"
+                "label": "Second Lieutenant",
+                "value": "84"
             },
             {
-                "label": "Chief Warrant Officer 3",
-                "value": "75"
-            },
-            {
-                "label": "Chief Warrant Officer 4",
-                "value": "77"
-            },
-            {
-                "label": "Chief Warrant Officer 5",
-                "value": "81"
-            },
-            {
-                "label": "Ensign",
-                "value": "86"
-            },
-            {
-                "label": "Lieutenant Junior Grade",
-                "value": "93"
-            },
-            {
-                "label": "Lieutenant",
-                "value": "96"
-            },
-            {
-                "label": "Lieutenant Commander",
-                "value": "101"
-            },
-            {
-                "label": "Commander",
-                "value": "108"
+                "label": "First Lieutenant",
+                "value": "89"
             },
             {
                 "label": "Captain",
-                "value": "111"
+                "value": "94"
             },
             {
-                "label": "Rear Admiral Lower Half",
-                "value": "118"
+                "label": "Major",
+                "value": "99"
             },
             {
-                "label": "Rear Admiral",
-                "value": "123"
+                "label": "Lieutenant Colonel",
+                "value": "104"
             },
             {
-                "label": "Vice Admiral",
-                "value": "128"
+                "label": "Colonel",
+                "value": "112"
             },
             {
-                "label": "Admiral",
-                "value": "131"
+                "label": "Brigadier General",
+                "value": "114"
+            },
+            {
+                "label": "Major General",
+                "value": "119"
+            },
+            {
+                "label": "Lieutenant General",
+                "value": "124"
+            },
+            {
+                "label": "General",
+                "value": "129"
             }
         ]
 
 
-          let rankitems3 = [
+        let rankitems4 = [
               {
-                  "label": "Airman Basic",
-                  "value": "9"
+                  "label": "Private",
+                  "value": "12"
               },
               {
-                  "label": "Airman",
-                  "value": "14"
+                  "label": "Private First Class",
+                  "value": "17"
               },
               {
-                  "label": "Airman First Class",
-                  "value": "19"
+                  "label": "Lance Corporal",
+                  "value": "22"
               },
               {
-                  "label": "Senior Airman",
-                  "value": "24"
+                  "label": "Corporal",
+                  "value": "28"
+              },
+              {
+                  "label": "Sergeant",
+                  "value": "33"
               },
               {
                   "label": "Staff Sergeant",
-                  "value": "30"
+                  "value": "38"
               },
               {
-                  "label": "Technical Sergeant",
-                  "value": "35"
+                  "label": "Gunnery Sergeant",
+                  "value": "43"
               },
               {
                   "label": "Master Sergeant",
                   "value": "40"
               },
               {
-                  "label": "Senior Master Sergeant",
-                  "value": "45"
+                  "label": "First Sergeant",
+                  "value": "50"
               },
               {
-                  "label": "Chief Master Sergeant",
-                  "value": "52"
+                  "label": "Master Gunnery Sergeant",
+                  "value": "61"
               },
               {
-                  "label": "Command Chief Master Sergeant",
-                  "value": "53"
+                  "label": "Sergeant Major",
+                  "value": "62"
               },
               {
-                  "label": "Chief Master Sergeant Of The Air Force",
-                  "value": "54"
+                  "label": "Sergeant Major Of The Marine Corps",
+                  "value": "63"
+              },
+              {
+                  "label": "Warrant Officer 1",
+                  "value": "67"
+              },
+              {
+                  "label": "Chief Warrant Officer 2",
+                  "value": "71"
+              },
+              {
+                  "label": "Chief Warrant Officer 3",
+                  "value": "73"
+              },
+              {
+                  "label": "Chief Warrant Officer 4",
+                  "value": "77"
+              },
+              {
+                  "label": "Chief Warrant Officer 5",
+                  "value": "81"
               },
               {
                   "label": "Second Lieutenant",
-                  "value": "84"
+                  "value": "87"
               },
               {
                   "label": "First Lieutenant",
-                  "value": "89"
+                  "value": "92"
               },
               {
                   "label": "Captain",
@@ -599,15 +746,15 @@ class AddPersonnelModal extends React.Component {
               },
               {
                   "label": "Lieutenant Colonel",
-                  "value": "104"
+                  "value": "107"
               },
               {
                   "label": "Colonel",
-                  "value": "112"
+                  "value": "110"
               },
               {
                   "label": "Brigadier General",
-                  "value": "114"
+                  "value": "117"
               },
               {
                   "label": "Major General",
@@ -624,363 +771,252 @@ class AddPersonnelModal extends React.Component {
           ]
 
 
-          let rankitems4 = [
+       let rankitems5 = [
                 {
-                    "label": "Private",
-                    "value": "12"
+                    "label": "Seaman Recruit",
+                    "value": "11"
                 },
                 {
-                    "label": "Private First Class",
-                    "value": "17"
+                    "label": "Seaman Apprentice",
+                    "value": "16"
                 },
                 {
-                    "label": "Lance Corporal",
-                    "value": "22"
+                    "label": "Seaman",
+                    "value": "21"
                 },
                 {
-                    "label": "Corporal",
-                    "value": "28"
+                    "label": "Petty Officer Third Class",
+                    "value": "27"
                 },
                 {
-                    "label": "Sergeant",
-                    "value": "33"
+                    "label": "Petty Officer Second Class",
+                    "value": "32"
                 },
                 {
-                    "label": "Staff Sergeant",
-                    "value": "38"
+                    "label": "Petty Officer First Class",
+                    "value": "37"
                 },
                 {
-                    "label": "Gunnery Sergeant",
-                    "value": "43"
+                    "label": "Chief Petty Officer",
+                    "value": "42"
                 },
                 {
-                    "label": "Master Sergeant",
-                    "value": "40"
+                    "label": "Senior Chief Petty Officer",
+                    "value": "48"
                 },
                 {
-                    "label": "First Sergeant",
-                    "value": "50"
+                    "label": "Master Chief Petty Officer",
+                    "value": "58"
                 },
                 {
-                    "label": "Master Gunnery Sergeant",
-                    "value": "61"
+                    "label": "Command Master Chief Petty Officer",
+                    "value": "59"
                 },
                 {
-                    "label": "Sergeant Major",
-                    "value": "62"
-                },
-                {
-                    "label": "Sergeant Major Of The Marine Corps",
-                    "value": "63"
-                },
-                {
-                    "label": "Warrant Officer 1",
-                    "value": "67"
+                    "label": "Master Chief Petty Officer Of The Coast Guard",
+                    "value": "60"
                 },
                 {
                     "label": "Chief Warrant Officer 2",
-                    "value": "71"
+                    "value": "70"
                 },
                 {
                     "label": "Chief Warrant Officer 3",
-                    "value": "73"
+                    "value": "74"
                 },
                 {
                     "label": "Chief Warrant Officer 4",
-                    "value": "77"
+                    "value": "78"
                 },
                 {
-                    "label": "Chief Warrant Officer 5",
-                    "value": "81"
+                    "label": "Ensign",
+                    "value": "86"
                 },
                 {
-                    "label": "Second Lieutenant",
-                    "value": "87"
+                    "label": "Lieutenant Junior Grade",
+                    "value": "91"
                 },
                 {
-                    "label": "First Lieutenant",
-                    "value": "92"
+                    "label": "Lieutenant",
+                    "value": "96"
+                },
+                {
+                    "label": "Lieutenant Commander",
+                    "value": "101"
+                },
+                {
+                    "label": "Commander",
+                    "value": "106"
                 },
                 {
                     "label": "Captain",
-                    "value": "94"
+                    "value": "111"
                 },
                 {
-                    "label": "Major",
-                    "value": "99"
+                    "label": "Rear Admiral Lower Half",
+                    "value": "116"
                 },
                 {
-                    "label": "Lieutenant Colonel",
-                    "value": "107"
+                    "label": "Rear Admiral",
+                    "value": "121"
                 },
                 {
-                    "label": "Colonel",
-                    "value": "110"
+                    "label": "Vice Admiral",
+                    "value": "126"
                 },
                 {
-                    "label": "Brigadier General",
-                    "value": "117"
-                },
-                {
-                    "label": "Major General",
-                    "value": "119"
-                },
-                {
-                    "label": "Lieutenant General",
-                    "value": "124"
-                },
-                {
-                    "label": "General",
-                    "value": "129"
+                    "label": "Admiral",
+                    "value": "131"
                 }
             ]
 
 
-         let rankitems5 = [
+           let rankitems9 = [
                   {
-                      "label": "Seaman Recruit",
-                      "value": "11"
+                      "label": "General Schedule 1",
+                      "value": "134"
                   },
                   {
-                      "label": "Seaman Apprentice",
-                      "value": "16"
+                      "label": "General Schedule 2",
+                      "value": "135"
                   },
                   {
-                      "label": "Seaman",
-                      "value": "21"
+                      "label": "General Schedule 3",
+                      "value": "136"
                   },
                   {
-                      "label": "Petty Officer Third Class",
-                      "value": "27"
+                      "label": "General Schedule 4",
+                      "value": "137"
                   },
                   {
-                      "label": "Petty Officer Second Class",
-                      "value": "32"
+                      "label": "General Schedule 5",
+                      "value": "138"
                   },
                   {
-                      "label": "Petty Officer First Class",
-                      "value": "37"
+                      "label": "General Schedule 6",
+                      "value": "139"
                   },
                   {
-                      "label": "Chief Petty Officer",
-                      "value": "42"
+                      "label": "General Schedule 7",
+                      "value": "140"
                   },
                   {
-                      "label": "Senior Chief Petty Officer",
-                      "value": "48"
+                      "label": "General Schedule 8",
+                      "value": "141"
                   },
                   {
-                      "label": "Master Chief Petty Officer",
-                      "value": "58"
+                      "label": "General Schedule 9",
+                      "value": "142"
                   },
                   {
-                      "label": "Command Master Chief Petty Officer",
-                      "value": "59"
+                      "label": "General Schedule 10",
+                      "value": "143"
                   },
                   {
-                      "label": "Master Chief Petty Officer Of The Coast Guard",
-                      "value": "60"
+                      "label": "General Schedule 11",
+                      "value": "144"
                   },
                   {
-                      "label": "Chief Warrant Officer 2",
-                      "value": "70"
+                      "label": "General Schedule 12",
+                      "value": "145"
                   },
                   {
-                      "label": "Chief Warrant Officer 3",
-                      "value": "74"
+                      "label": "General Schedule 13",
+                      "value": "146"
                   },
                   {
-                      "label": "Chief Warrant Officer 4",
-                      "value": "78"
+                      "label": "General Schedule 14",
+                      "value": "147"
                   },
                   {
-                      "label": "Ensign",
-                      "value": "86"
+                      "label": "General Schedule 15",
+                      "value": "148"
                   },
                   {
-                      "label": "Lieutenant Junior Grade",
-                      "value": "91"
-                  },
-                  {
-                      "label": "Lieutenant",
-                      "value": "96"
-                  },
-                  {
-                      "label": "Lieutenant Commander",
-                      "value": "101"
-                  },
-                  {
-                      "label": "Commander",
-                      "value": "106"
-                  },
-                  {
-                      "label": "Captain",
-                      "value": "111"
-                  },
-                  {
-                      "label": "Rear Admiral Lower Half",
-                      "value": "116"
-                  },
-                  {
-                      "label": "Rear Admiral",
-                      "value": "121"
-                  },
-                  {
-                      "label": "Vice Admiral",
-                      "value": "126"
-                  },
-                  {
-                      "label": "Admiral",
-                      "value": "131"
+                      "label": "Senior Executive Service",
+                      "value": "149"
                   }
               ]
 
 
-             let rankitems9 = [
-                    {
-                        "label": "General Schedule 1",
-                        "value": "134"
-                    },
-                    {
-                        "label": "General Schedule 2",
-                        "value": "135"
-                    },
-                    {
-                        "label": "General Schedule 3",
-                        "value": "136"
-                    },
-                    {
-                        "label": "General Schedule 4",
-                        "value": "137"
-                    },
-                    {
-                        "label": "General Schedule 5",
-                        "value": "138"
-                    },
-                    {
-                        "label": "General Schedule 6",
-                        "value": "139"
-                    },
-                    {
-                        "label": "General Schedule 7",
-                        "value": "140"
-                    },
-                    {
-                        "label": "General Schedule 8",
-                        "value": "141"
-                    },
-                    {
-                        "label": "General Schedule 9",
-                        "value": "142"
-                    },
-                    {
-                        "label": "General Schedule 10",
-                        "value": "143"
-                    },
-                    {
-                        "label": "General Schedule 11",
-                        "value": "144"
-                    },
-                    {
-                        "label": "General Schedule 12",
-                        "value": "145"
-                    },
-                    {
-                        "label": "General Schedule 13",
-                        "value": "146"
-                    },
-                    {
-                        "label": "General Schedule 14",
-                        "value": "147"
-                    },
-                    {
-                        "label": "General Schedule 15",
-                        "value": "148"
-                    },
-                    {
-                        "label": "Senior Executive Service",
-                        "value": "149"
-                    }
-                ]
 
+    switch(ServiceBranch)
+    {
+        case '1':
+        rankselect.innerHTML = "";
 
+        for (let i=0; i<rankitems.length; i++)
+        {
 
-      switch(organizationAndDutyData.ServiceBranch)
-      {
-          case '1':
-          rankselect.innerHTML = "";
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems[i]['label'];
+              opt.value = rankitems[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
 
-          for (let i=0; i<rankitems.length; i++)
-          {
+        case '2':
+        rankselect.innerHTML = "";
+        for (let i=0; i<rankitems2.length; i++)
+        {
 
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems[i]['label'];
-                opt.value = rankitems[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems2[i]['label'];
+              opt.value = rankitems2[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
 
-          case '2':
-          rankselect.innerHTML = "";
-          for (let i=0; i<rankitems2.length; i++)
-          {
+        case '3':
+        rankselect.innerHTML = "";
+        for (let i=0; i<rankitems3.length; i++)
+        {
 
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems2[i]['label'];
-                opt.value = rankitems2[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems3[i]['label'];
+              opt.value = rankitems3[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
 
-          case '3':
-          rankselect.innerHTML = "";
-          for (let i=0; i<rankitems3.length; i++)
-          {
+        case '4':
+        rankselect.innerHTML = "";
+        for (let i=0; i<rankitems4.length; i++)
+        {
 
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems3[i]['label'];
-                opt.value = rankitems3[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems4[i]['label'];
+              opt.value = rankitems4[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
 
-          case '4':
-          rankselect.innerHTML = "";
-          for (let i=0; i<rankitems4.length; i++)
-          {
+        case '5':
+        rankselect.innerHTML = "";
+        for (let i=0; i<rankitems5.length; i++)
+        {
 
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems4[i]['label'];
-                opt.value = rankitems4[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems5[i]['label'];
+              opt.value = rankitems5[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
 
-          case '5':
-          rankselect.innerHTML = "";
-          for (let i=0; i<rankitems5.length; i++)
-          {
+        case '9':
+        rankselect.innerHTML = "";
+        for (let i=0; i<rankitems9.length; i++)
+        {
 
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems5[i]['label'];
-                opt.value = rankitems5[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
+          var opt = document.createElement('option');
+              opt.innerHTML = rankitems9[i]['label'];
+              opt.value = rankitems9[i]['value'];
+              rankselect.appendChild(opt);
+        }
+        break;
+    }
 
-          case '9':
-          rankselect.innerHTML = "";
-          for (let i=0; i<rankitems9.length; i++)
-          {
-
-            var opt = document.createElement('option');
-                opt.innerHTML = rankitems9[i]['label'];
-                opt.value = rankitems9[i]['value'];
-                rankselect.appendChild(opt);
-          }
-          break;
-      }
-  }
+}
 
   handleContactInformationData = (contactInformationData) => {
       
@@ -992,12 +1028,12 @@ class AddPersonnelModal extends React.Component {
               EmailNIPR: contactInformationData.EmailNIPR,
               EmailSIPR: contactInformationData.EmailSIPR,
               ChatID: contactInformationData.ChatID
-          }
-      }, () => {
-        //   console.log("New state in ASYNC callback3333:", this.props.personnel);
+          },
       });
   }
 
+
+  
   handleUploadImgFile(event){
 
       event.preventDefault();
@@ -1097,7 +1133,7 @@ class AddPersonnelModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const {  personnel } = this.state;
+    let {  personnel } = this.state;
     const { editId } = this.props;
   
     if (editId !== undefined && editId !== '0') {
@@ -1108,15 +1144,66 @@ class AddPersonnelModal extends React.Component {
     //   }
 
       personnel.PersonnelID = editId;
-    //   this.props.updatePayloadInventory(editId, payloads);
-      this.props.updatePersonnel(editId, personnel);
+      console.log('handle Submit '+ JSON.stringify(personnel));
+      this.props.updatePersonnel(editId, personnel).then(() => {
+        this.props.onClose();
+      });
     } else {
-      this.props.addPersonnel(this.state.personnel);
+      this.props.addPersonnel(this.state.personnel).then(() => {
+        this.props.onClose();
+      });
     }
 
-    this.props.onClose('0');
-    //   this.props.fetchPersonnels();
+    
+    
   }
+
+updateRanks= (branch) => {
+
+    let rankSelect = document.getElementsByName('Rank')[0];
+    let items = [{'label': '--Select Item--', 'value': 0}];
+    const apiUrl = `${baseUrl}/Ranks/GetRanksByBranch?branchID=${branch}`;
+       axios.get(apiUrl)
+         .then(response => {
+           console.log(response.data);
+           if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+           response.data.map(item => {
+             items.push({ 'label': item['description'], 'value': item['id'].trim() });
+           });
+           if (rankSelect.length > 0) {
+               rankSelect.length = 0;
+            }
+           for(let i in items) {
+            rankSelect.add(new Option(items[i].label, items[i].value));
+           }
+           
+         })
+         .catch((error) => {
+           console.log('Exception comes:' + error);
+         });
+
+}
+
+updatePaygrade= (rank) => {
+
+    let paygradeSelect = document.getElementsByName('PayGrade')[0];
+    const { personnel } = this.state;
+    const apiUrl = `${baseUrl}/PayGrades/GetPayGradesByRank?rankID=${rank}`;
+       axios.get(apiUrl)
+         .then(response => {
+             const paygrade = response.data[0];
+             console.log(paygrade);
+            this.setState({personnel: {  ...personnel, 
+                PayGrade: paygrade.id }
+            });
+                paygradeSelect.selectedIndex = paygrade.id;
+           
+         })
+         .catch((error) => {
+           console.log('Exception comes:' + error);
+         });
+
+}
 
 
   resetForm(){
@@ -1173,6 +1260,7 @@ class AddPersonnelModal extends React.Component {
 
         {name: translations['Middle Initial'], type: 'input', domID: 'MiddleInitial', valFieldID: 'MiddleInitial'},
         {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required:true},
+        {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: "BranchOfService", valFieldID: 'ServiceBranch'},
         {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
         {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
         {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
@@ -1182,7 +1270,6 @@ class AddPersonnelModal extends React.Component {
     ];
 
     const organisationFields = [
-        {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: "BranchOfService", valFieldID: 'ServiceBranch'},
         {name: translations['Company'], type: 'dropdown', domID: 'dispCompany', ddID: "Companies", valFieldID: 'Company'},
         {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: "Units", valFieldID: 'AssignedUnit'},
         {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units", valFieldID: 'DeployedUnit'},
@@ -1201,8 +1288,8 @@ class AddPersonnelModal extends React.Component {
 
     const contactFields = [
         {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required:true},
-        {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR',required:true},
-        {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR',required:true},
+        {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required:true},
+        {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required:true},
         {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
 
     ];

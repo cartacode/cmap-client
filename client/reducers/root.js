@@ -10,10 +10,14 @@ import payloadinventory from 'reducers/payloadinventory';
 import personnels from 'reducers/personnels';
 import platforms from 'reducers/platforms';
 import platforminventory from 'reducers/platforminventory';
+import paygrades from 'reducers/paygrade';
+import ranks from 'reducers/ranks';
 
 export default function createReducer() {
   return combineReducers({
     cocoms,
+    ranks,
+    paygrades,
     localization,
     locations,
     munitions,
@@ -23,5 +27,6 @@ export default function createReducer() {
     personnels,
     platforms,
     platforminventory,
+    
   });
 }

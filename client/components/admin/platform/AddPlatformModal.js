@@ -379,10 +379,14 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.PlatformID = editId;
-      this.props.updatePlatform(editId, platform).then( () => {this.props.fetchPlatforms();})
+      this.props.updatePlatform(editId, platform).then(() => {
+        this.props.fetchPlatforms();
+      });
     } else {
-      //this.props.addPlatform(platform);
-      this.props.addPlatform(platform).then( () => {this.props.fetchPlatforms();})
+      
+      this.props.addPlatform(platform).then(() => {
+        this.props.fetchPlatforms();
+      })
       
     }
     this.props.onClose();

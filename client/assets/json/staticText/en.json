@@ -157,7 +157,7 @@
   "ped tasking": "ped tasking",
   "mission detail": "mission detail",
   "resource": "resource",
-  "personnel": "personnel",
+  "personnel": "Personnel",
   "pending": "pending",
   "available": "available",
   "off-line": "off-line",
@@ -650,5 +650,6 @@
   "Armament Type:": "Armament Type:",
   "Qty:": "Qty:",
   "Add Personnel": "Add Personnel",
-  "Add Platform": "Add Platform"
+  "Add Platform": "Add Platform",
+  "success": "Saved Successfuly"
 }

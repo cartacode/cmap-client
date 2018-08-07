@@ -57,4 +57,14 @@ export default {
     allPlatformInventory: [],
     onePlatformInventory: {},
   },
+
+  paygrades: {
+    paygradeList: [],
+    isListFetching: false,
+  },
+
+  ranks: {
+    rankList: [],
+    isListFetching: false,
+  },
 };
