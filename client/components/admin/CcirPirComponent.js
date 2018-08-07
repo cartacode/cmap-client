@@ -19,6 +19,8 @@ import CcirRowDetailModal from './ccir-pirs/CcirRowDetailModal';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 
 class CcirPirComponent extends React.Component {
@@ -39,6 +41,8 @@ class CcirPirComponent extends React.Component {
   //   })
   // }
 
+
+
 // Open form Add/Edit Rerocd
   openCcirPirForm = (row) => {
     this.setState({
@@ -48,19 +52,47 @@ class CcirPirComponent extends React.Component {
   }
 
   // Close Add/Edit Form
-closeCcirPirForm = () => {
+closeCcirPirForm = (messageType) => {
+  //show Success Message
+  this.notify(messageType);
   this.props.fetchCcirPirs();
   this.setState({
     editId: '0',
     addCcirPirModalOpen: false,
   });
 }
+// will call from onClose in CcirPirModal
+callCloseCcirPirForm = () =>{
+  this.closeCcirPirForm('');
+}
 
 // Delete Record
 deleteCcirPirRecord(row){
   this.props.deleteCcirPirById(row).then(() => {
-    this.closeCcirPirForm();
+    //Refresh List
+    this.closeCcirPirForm('delete');
   });
+}
+
+// function to Display Success Messages
+notify =(type)=>{
+  const { translations } = this.props;
+  if(type === 'delete'){
+    NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+
+  }
+  else if(type === ''){
+    //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+
+  }
+  else{
+  
+  if (this.state.editId !== undefined && this.state.editId !== '0') {
+    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+  }else{
+    NotificationManager.success(translations['Add CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+  }
+}
 }
 
 
@@ -182,9 +214,16 @@ deleteCcirPirRecord(row){
             </div>
           </div>
           {this.state.addCcirPirModalOpen ?
-          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
+          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.callCloseCcirPirForm} translations = {translations} />
           : null
         }
+
+
+           <NotificationContainer />  
+
+
+
+
           <div className="col-md-12">
             <ReactTable
               data={allCcirPirs}
