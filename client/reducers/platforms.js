@@ -1,4 +1,4 @@
-import { PLATFORM__FETCH, PLATFORM__FETCH_ONE } from 'dictionary/action';
+import {PLATFORM__FETCH, PLATFORM__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function platforms(state = initialState.platforms, { payload, type }) {

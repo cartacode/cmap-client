@@ -1,24 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
-import AddPlatformInventory from './platform/AddPlatformInventory';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import "react-table/react-table.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
+import "react-table/react-table.css";
+import AddPlatformInventory from './platform/AddPlatformInventory';
+
+
+
 
 
 class PlatformComponent extends React.Component {
@@ -53,11 +42,21 @@ class PlatformComponent extends React.Component {
   }
 
   closePlatformForm = () => {
+    this.notify();
     this.props.fetchPlatformInventory();
     this.setState({
       editId: 0,
       addPlatformInventoryOpen: false,
     });
+  }
+
+  notify =()=>{
+    const { translations } = this.props;
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
+      NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+    }else{
+      NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+    }
   }
 
 
@@ -84,7 +83,6 @@ class PlatformComponent extends React.Component {
 
     const { translations } = this.props;
     const { allPlatformInventory } = this.props;
-    
     const columns = [
 
       {
@@ -157,6 +155,9 @@ class PlatformComponent extends React.Component {
           {this.state.addPlatformInventoryOpen ?
             <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
+
+           <NotificationContainer />  
+
           <div className="col-md-12">
             <ReactTable
               data={allPlatformInventory}
@@ -166,7 +167,7 @@ class PlatformComponent extends React.Component {
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id
-							  return row[id] !== undefined ? String(row[id.toLowerCase()]).startsWith(filter.value.toLowerCase()) : true;
+							  return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
 						  }}
             />
           </div>

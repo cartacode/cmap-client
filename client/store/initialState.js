@@ -13,6 +13,7 @@ export default {
   },
   locations: {
     allLocations: [],
+    oneLocation: {},
     isFetching: false,
     isListFetching: false,
     isTypesFetching: false,
@@ -48,6 +49,13 @@ export default {
     isFetchingOne: false,
   },
 
+  ccirpir: {
+    allCcirPirs: [],
+    oneCcirPir: {},
+    isFetching: false,
+    isFetchingOne: false,
+  },
+
   platforms: {
     allPlatforms: [],
     onePlatform: {},
@@ -55,5 +63,15 @@ export default {
     isFetchingOne: false,
     allPlatformInventory: [],
     onePlatformInventory: {},
+  },
+
+  paygrades: {
+    paygradeList: [],
+    isListFetching: false,
+  },
+
+  ranks: {
+    rankList: [],
+    isListFetching: false,
   },
 };

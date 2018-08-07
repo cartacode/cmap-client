@@ -36,12 +36,20 @@ class ContentBlock extends React.Component {
     
     const { content } = this.state;
     const { initstate, editId } = this.props;
-    console.log('edit id'+editId);
+    
     if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
-      this.props.data(this.state.content);
+      // if(editId !== undefined && editId !== '0') {
       this.setState({
         content: initstate,
       });
+      this.props.data(this.state.content);
+    }
+    
+    const {clearit } = this.props;
+    if(clearit)
+    {
+      this.setState({content:[]});
+      this.props.stopset();
     }
   }
 
@@ -121,7 +129,7 @@ class ContentBlock extends React.Component {
             break;
 
           case 'email':
-            input = (<input type="email" className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
+            input = (<input type="email" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
             break;    
 
           case 'number':
@@ -129,7 +137,7 @@ class ContentBlock extends React.Component {
             if(item.minValue) {
               minValue = item.minValue;
             }
-            input = (<input type="number" min={minValue} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
+            input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             break;
 
           case 'dropdown':
@@ -147,9 +155,12 @@ class ContentBlock extends React.Component {
             break;
 
           case 'date':
+            if(value === '') {
+              value = new Date();
+            }
             input = (
               <div>
-                <CustomDatePicker name={item.valFieldID} initValue={value} changeDate={this.handleChangeDate}/>
+                <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate}/>
               </div>
             );
             break;
@@ -182,6 +193,7 @@ class ContentBlock extends React.Component {
     }
 
     render() {
+
 
       return (
         <div className="col-md-4 info-block">

@@ -16,8 +16,25 @@ class ModalFormBlock extends React.Component {
     }
 
     componentWillMount() {
-       this.state.content = this.props.initstate ;
+       //this.state.content = this.props.initstate ;
+       this.setState({
+        content: this.props.initstate,
+      });
     }
+
+    componentDidUpdate() {
+    
+        const { content } = this.state;
+        const { initstate, editId } = this.props;
+        console.log('edit id'+editId);
+        if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
+          this.props.data(this.state.content);
+          this.setState({
+            content: initstate,
+          });
+        }
+      }
+
 
     handleChange = (e) =>{
        const { name, value } = e.target;
@@ -30,7 +47,6 @@ class ModalFormBlock extends React.Component {
                 [name]: value
             }
         }, () =>{
-           
            this.props.data(this.state.content);
        });
         
@@ -134,6 +150,7 @@ class ModalFormBlock extends React.Component {
     renderFields() {
       return this.props.fields.map((item, i) => {
         let input;
+       
         switch (item.type) {
           case 'input':
             input = (<input type="text" className="form-control" name={item.valFieldID} onChange={this.handleChange} value={item.valField}/>);
@@ -149,7 +166,7 @@ class ModalFormBlock extends React.Component {
 
           case 'dropdown':
             input = (
-                <Dropdown id={item.valFieldID} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} dropdownData={this.handleDropdownSelectedData}/>
+                <Dropdown id={item.valFieldID} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} typesEnum={this.props.typesEnum} dropdownData={this.handleDropdownSelectedData}/>
             );
             break;
 

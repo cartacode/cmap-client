@@ -28,34 +28,50 @@ class Table extends React.Component {
     componentWillMount() {
       let items = [{'label': '--Select Item--', 'value': 0}];
 
-      if (this.props.dropdownDataUrl === 'CrewReq') {
-        this.props.nums.map(item => {
-          items.push({'label': item['name'], 'value': item['name']});
-        });
-        this.setState({
-          dropdownItems: items,
-        });
-      }
-      else {
-        const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
-        axios.get(apiUrl)
-          .then(response => {
-            response.data.map(item => {
-              items.push({ 'label': item[this.labelField], 'value': item[this.valueField].trim() });
-            });
-            this.setState({
-              dropdownItems: items,
-            });
-          })
-          .catch((error) => {
-            console.log('Exception comes:' + error);
+      if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl != null && this.props.dropdownDataUrl !== '') {
+
+        if (this.props.dropdownDataUrl === 'CrewReq') {
+          this.props.nums.map(item => {
+            items.push({'label': item['name'], 'value': item['name']});
           });
+          this.setState({
+            dropdownItems: items,
+          });
+        }
+        if (this.props.dropdownDataUrl === 'TypesEnum') {
+          this.props.typesEnum.map(item => {
+            items.push({'label': item['name'], 'value': item['name']});
+          });
+          this.setState({
+            dropdownItems: items,
+          });
+        }
+        else {
+          const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
+          axios.get(apiUrl)
+            .then(response => {
+              response.data.map(item => {
+                items.push({ 'label': item[this.labelField], 'value': item[this.valueField].trim() });
+              });
+              this.setState({
+                dropdownItems: items,
+              });
+            })
+            .catch((error) => {
+              console.log('Exception comes:' + error);
+            });
+        }
+
       }
+
     }
 
     componentDidUpdate = () => {
-      const { initValue } = this.props;
+      let { initValue } = this.props;
       const { selectedDropDownValue } = this.state;
+      if(typeof initValue === 'string') {
+        initValue = initValue.trim();
+      }
       if(initValue !== selectedDropDownValue) {
         this.setState({
           selectedDropDownValue: initValue,
@@ -88,6 +104,7 @@ class Table extends React.Component {
       const key = this.props.id || 0;
       return (
         <div>
+          
           {/* State {this.state.selectedDropDownValue} value
         Props {this.props.initValue} Value */}
 

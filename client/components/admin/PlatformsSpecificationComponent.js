@@ -1,24 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
-import AddPlatform from './platform/AddPlatformModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import "react-table/react-table.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
+import "react-table/react-table.css";
+import AddPlatform from './platform/AddPlatformModal';
+
+
+
 
 
 class PlatformsSpecificationComponent extends React.Component {
@@ -33,6 +22,10 @@ class PlatformsSpecificationComponent extends React.Component {
       addshow: false,
       editId: '0',
     }
+  }
+
+  componentWillMount() {
+    this.props.fetchPlatforms();
   }
 
   onFind() {
@@ -59,16 +52,24 @@ class PlatformsSpecificationComponent extends React.Component {
   }
 
   closePlatformForm = () => {
+    this.notify();
+    this.props.fetchPlatforms();
     this.setState({
       editId: 0,
       addPlatformModalOpen: false,
     });
   }
 
-  componentWillMount() {
-
-    this.props.fetchPlatforms();
+  notify =()=>{
+    const { translations } = this.props;
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
+      NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+    }else{
+      NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+    }
   }
+
+  
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -162,6 +163,7 @@ class PlatformsSpecificationComponent extends React.Component {
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
+          <NotificationContainer /> 
 
           <div className="col-md-12">
             <ReactTable

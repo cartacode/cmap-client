@@ -2,6 +2,10 @@ import { createActionType } from 'util/action';
 
 export const COCOM_LIST__FETCH = createActionType('COCOM_LIST__FETCH');
 
+export const RANK_LIST__FETCH = createActionType('RANK_LIST__FETCH');
+
+export const PAYGRADE_LIST__FETCH = createActionType('PAYGRADE_LIST__FETCH');
+
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
@@ -13,7 +17,9 @@ export const INTEL_REQUEST__FETCH = createActionType('INTEL_REQUEST__FETCH');
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
 
 export const LOCATION__ADD = createActionType('LOCATION__ADD');
+export const LOCATION__UPDATE = createActionType('LOCATION__UPDATE');
 export const LOCATION__FETCH = createActionType('LOCATION__FETCH');
+export const LOCATION__FETCH_ONE = createActionType('LOCATION__FETCH_ONE');
 export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
 export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
 
@@ -46,6 +52,13 @@ export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
 export const PERSONNEL__UPDATE = createActionType('PERSONNEL__UPDATE');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
+
+export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
+export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');
+export const CCIRPIR__FETCH = createActionType('CCIRPIR__FETCH');
+export const CCIRPIR__FETCH_ONE = createActionType('CCIRPIR__FETCH_ONE');
+export const CCIRPIR__DELETE = createActionType('CCIRPIR__DELETE');
+
 
 export const PLATFORM__ADD = createActionType('PLATFORM__ADD');
 export const PLATFORM__UPDATE = createActionType('PLATFORM__UPDATE');

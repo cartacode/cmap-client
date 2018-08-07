@@ -15,6 +15,7 @@ class AddPlatformInventory extends React.Component {
     super(props);
     this.state = {
       file: '',
+      clear:false,
       imagePreviewUrl: '',
       locationcategory: '',
       // platform: {
@@ -83,12 +84,10 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform);
+      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose();});
     } else {
-      this.props.addPlatformInventory(platform);
+      this.props.addPlatformInventory(platform).then( () => {this.props.onClose();});
     }
-
-    this.props.onClose('0');
   }
 
   updatelocationid (generalData) 
@@ -114,20 +113,20 @@ class AddPlatformInventory extends React.Component {
           });   
   }
 
+  stopset () {
+    this.setState({clear:false});
+  }
+
 
   resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      let inputs = document.body.getElementsByTagName('input');
-      let drops = document.body.getElementsByTagName('select');
-      for (let item of inputs) {
-        item.value = '';
-      }
-      for (let item of drops) {
-        item.value = 0;
-      }
-    }
+       this.setState({clear:true});
+     }
+     else {
+ 
+     }
   }
 
   render() {
@@ -158,10 +157,9 @@ class AddPlatformInventory extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-
-        <div className="close-button" >
+       {/*  <div className="close-button" >
           <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-        </div>
+        </div> */}
         <div className="payload-content">
           <div className="row personnel" >
 
@@ -179,14 +177,14 @@ class AddPlatformInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} />
+              <ContentBlock fields={generalFields}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
         </div>
         <div className="row action-buttons">
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
-            <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
+            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
               {translations['clear']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
