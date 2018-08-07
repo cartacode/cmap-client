@@ -1,4 +1,4 @@
-import { LOCATION__FETCH, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH } from 'dictionary/action';
+import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function locations(state = initialState.locations, { payload, type }) {
@@ -13,6 +13,17 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isFetching: false,
         allLocations: payload.data,
+      };
+      case LOCATION__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case LOCATION__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        oneLocation: payload.data,
       };
     case LOCATION_LIST__FETCH.REQUEST:
       return {

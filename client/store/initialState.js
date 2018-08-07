@@ -13,6 +13,7 @@ export default {
   },
   locations: {
     allLocations: [],
+    oneLocation: {},
     isFetching: false,
     isListFetching: false,
     isTypesFetching: false,
@@ -48,10 +49,16 @@ export default {
     isFetchingOne: false,
   },
 
+  ccirpir: {
+    allCcirPirs: [],
+    oneCcirPir: {},
+    isFetching: false,
+    isFetchingOne: false,
+  },
+
   platforms: {
     allPlatforms: [],
     onePlatform: {},
-    isDone: false,
     isFetching: false,
     isFetchingOne: false,
     allPlatformInventory: [],

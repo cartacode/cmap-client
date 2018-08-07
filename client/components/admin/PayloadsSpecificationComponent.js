@@ -23,6 +23,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import { NotificationManager, NotificationContainer } from 'react-notifications';
 
 class PayloadsSpecificationComponent extends React.Component {
 	constructor(props) {
@@ -82,9 +83,22 @@ class PayloadsSpecificationComponent extends React.Component {
 	}
 
 	tableRowDetailModal = () => {
+		this.notify();
+		this.props.fetchPayloads();
+		this.props.fetchPayloadList();
 		this.setState({
-			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
+			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen,
+			editId: 0,
 		})
+	}
+
+	notify =()=>{
+		const { translations } = this.props;
+			if (this.state.editId !== undefined && this.state.editId !== '0') {
+				NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+			}else{
+				NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+			}
 	}
 
 	componentWillMount() {
@@ -275,7 +289,7 @@ class PayloadsSpecificationComponent extends React.Component {
 				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
 				: null }
 				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
-
+				<NotificationContainer />
 				<div className="col-md-12">
 					<ReactTable
 						data={allPayloads}

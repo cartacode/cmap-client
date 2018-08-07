@@ -643,5 +643,17 @@
   "Pre-Deploy Reqs:": "dPre-Deploy Reqs:",
   "Air Base Support:": "dAir Base Support:",
   "Armament Type:": "dArmament Type:",
-  "Qty:": "dQty:"
+  "Qty:": "dQty:",
+  "Platform Inventory Title": "Platform inventory",
+  "Add Platform Inventory Message": "Record add successfully.",
+  "Update Platform Inventory Message": "Record updated successfully.",
+  "Platform Specification Title": "Platform specification",
+  "Add Platform Specification Message": "Record add successfully.",
+  "Update Platform Specification Message": "Record updated successfully.",
+  "Payload Inventory Title": "Payload inventory",
+  "Add Payload Inventory Message": "Record add successfully.",
+  "Update Payload Inventory Message": "Record updated successfully.",
+  "Munition Inventory Title": "Munition inventory",
+  "Add Munition Inventory Message": "Record add successfully.",
+  "Update Munition Inventory Message": "Record updated successfully."
 }

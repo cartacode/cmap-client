@@ -83,12 +83,10 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform);
+      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose();});
     } else {
-      this.props.addPlatformInventory(platform);
+      this.props.addPlatformInventory(platform).then( () => {this.props.onClose();});
     }
-
-    this.props.onClose('0');
   }
 
   updatelocationid (generalData) 
@@ -158,10 +156,9 @@ class AddPlatformInventory extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-
-        <div className="close-button" >
+       {/*  <div className="close-button" >
           <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-        </div>
+        </div> */}
         <div className="payload-content">
           <div className="row personnel" >
 

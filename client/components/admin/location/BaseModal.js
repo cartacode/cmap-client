@@ -7,7 +7,7 @@ import ContentBlock from "../../reusable/ContentBlock";
 import ButtonsList from "../../reusable/ButtonsList";
 
 import { uploadFile } from 'actions/file';
-import { addLocation, fetchLocations } from 'actions/location';
+import { addLocation, updateLocation, fetchLocations, fetchLocationById } from 'actions/location';
 
 class BaseModal extends React.Component {
 
@@ -37,7 +37,8 @@ class BaseModal extends React.Component {
         LocationPointofContact: '',
         LocationFrequency: '',
         KML: '',
-      }
+      },
+      oneLocation: {}
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -46,8 +47,17 @@ class BaseModal extends React.Component {
   }
 
   componentWillMount(){
-    // console.log("---hereis eoirmodal---------");
-    // this.props.fetchLocations();
+  }
+
+
+  componentDidMount(){
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchLocationById(editId);
+      const value =  this.props.oneLocation;
+    } else {
+      this.setState({ oneLocation: {} });
+    }
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -73,6 +83,7 @@ class BaseModal extends React.Component {
     this.setState({
       location: {
         ...location,
+        LocationCategory: positionData.LocationCategory,
         LocationLatitude: positionData.LocationLatitude,
         LocationLongitude: positionData.LocationLongitude,
         LocationMGRS: positionData.LocationMGRS,
@@ -149,10 +160,18 @@ class BaseModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('---here--');
-    console.log(this.state.location);
-    this.props.addLocation(this.state.location);
-    this.props.fetchLocations();
+    const {  location } = this.state;
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      location.LocationID = editId;
+      this.props.updateLocation(editId, location).then(() => {
+        this.props.onClose();
+      });
+    }else{
+      this.props.addLocation(location).then(() => {
+        this.props.onClose();
+      });
+    }
   }
 
   resetForm(){
@@ -172,10 +191,7 @@ class BaseModal extends React.Component {
 
   render() {
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
-      return null;
-    }
-
+    
     let {locationPhotoPreviewUrl, mapImagePreviewUrl} = this.state;
     let $locationPhoto = '';
     let $mpaImage = '';
@@ -194,7 +210,6 @@ class BaseModal extends React.Component {
       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt=""/>);
     }
 
-    const {munition} = this.state;
     const {translations} = this.props;
 
 
@@ -208,14 +223,12 @@ class BaseModal extends React.Component {
     ];
 
     const locationFields = [
+      {name: translations['LocationType'], type: 'dropdown', domID: 'LocationType',ddID: 'LocationCategory', valFieldID: 'LocationCategory'},
       {name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude'},
       {name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude'},
       {name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation'},
       {name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS'},
-      {name: translations['LocationType'], type: 'dropdown', domID: 'LocationType',ddID: 'LocationCategory', valFieldID: 'LocationType'},
       {name: translations['LocationID'], type: 'input', domID: 'LocationID', valFieldID: 'LocationID'},
-      
-
     ];
 
     const contactFields = [
@@ -230,8 +243,7 @@ class BaseModal extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-
-          <div className="close-button" >
+          <div className="close-button change-cursor-to-pointer" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
           <div className="row personnel" >
@@ -262,25 +274,25 @@ class BaseModal extends React.Component {
                     <div>
                       {translations['Photo Image']}
                     </div>
-                    <input type="file"  name="file" id="LocationPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                    <input type="file"  name="file" id="LocationPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Map Image']}
                     </div>
-                    <input type="file"  name="file" id="LocationMapImage" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                    <input type="file"  name="file" id="LocationMapImage" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Document']}
                     </div>
-                    <input type="file"  name="file" id="LocationDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                    <input type="file"  name="file" id="LocationDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['KML']}
                     </div>
-                    <input type="file"  name="file" id="LocationKMLDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" required />
+                    <input type="file"  name="file" id="LocationKMLDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   
                 </div>
@@ -290,11 +302,11 @@ class BaseModal extends React.Component {
           <div className="row personnel" >
             <div className="under-location-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate ={this.state.location}/>
+              data={this.handleLocationGeneralData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate ={this.state.location}/>
+              data={this.handleLocationPositionData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate ={this.state.location}/>
+              data={this.handleLocationInfoData} initstate ={this.props.oneLocation} editId = {this.props.editId}/>
             </div>
           </div>
           <div className="row action-buttons">
@@ -328,6 +340,7 @@ class BaseModal extends React.Component {
 }
 
 BaseModal.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
@@ -335,13 +348,16 @@ BaseModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    oneLocation: state.locations.oneLocation
   };
 };
 
 const mapDispatchToProps = {
   addLocation,
+  updateLocation,
   fetchLocations,
+  fetchLocationById,
   uploadFile,
 };
 
