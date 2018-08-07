@@ -83,13 +83,13 @@ class CustomDatePicker extends React.Component {
     }
 
     componentDidUpdate = () => {
-      const defaultValue = moment(this.props.defaultValue, format);
-      const { value } = this.state;
-      if(!defaultValue.isSame(value)) {
-        this.setState({
-          value: defaultValue,
-        });
-      }
+    //   const defaultValue = moment(this.props.defaultValue, format);
+    //   const { value } = this.state;
+    //   if(!defaultValue.isSame(value)) {
+    //     this.setState({
+    //       value: defaultValue,
+    //     });
+    //   }
 
     }
 

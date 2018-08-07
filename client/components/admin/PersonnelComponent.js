@@ -47,7 +47,7 @@ class PersonnelComponent extends React.Component {
 
 closePersonnelForm = () => {
   const { translations } = this.props;
-  NotificationManager.success(translations['success'], translations['personnel']);
+  NotificationManager.success(translations['Add Personnel Success'], translations['personnel']);
   this.props.fetchPersonnels();
   this.setState({
     editId: '0',

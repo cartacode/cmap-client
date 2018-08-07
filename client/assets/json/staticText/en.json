@@ -157,7 +157,7 @@
   "ped tasking": "ped tasking",
   "mission detail": "mission detail",
   "resource": "resource",
-  "personnel": "Personnel",
+  "personnel": "personnel",
   "pending": "pending",
   "available": "available",
   "off-line": "off-line",
@@ -650,6 +650,7 @@
   "Armament Type:": "Armament Type:",
   "Qty:": "Qty:",
   "Add Personnel": "Add Personnel",
+  "Add Personnel Success": "Record Added Successfully",
   "Add Platform": "Add Platform",
   "Platform Inventory Title": "Platform inventory",
   "Add Platform Inventory Message": "Record add successfully.",
@@ -664,6 +665,4 @@
   "Add Munition Inventory Message": "Record add successfully.",
   "Update Munition Inventory Message": "Record updated successfully."
   
-  "Add Platform": "Add Platform",
-  "success": "Saved Successfuly"
 }
