@@ -650,5 +650,11 @@
   "Armament Type:": "Armament Type:",
   "Qty:": "Qty:",
   "Add Personnel": "Add Personnel",
-  "Add Platform": "Add Platform"
+  "Add Platform": "Add Platform",
+  "Platform Inventory Title": "Platform inventory",
+  "Add Platform Inventory Message": "Record add successfully.",
+  "Update Platform Inventory Message": "Record updated successfully.",
+  "Platform Specification Title": "Platform specification",
+  "Add Platform Specification Message": "Record add successfully.",
+  "Update Platform Specification Message": "Record updated successfully."
 }

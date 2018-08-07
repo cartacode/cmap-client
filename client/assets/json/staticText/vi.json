@@ -453,5 +453,11 @@
 	"language mgmt.": "quản trị viên ngôn ngữ",
 	"language admin": "ngôn ngữ người dùng / đơn vị",
 	"user/unit language": "cấu hình bảo mật",
-	"security config": "gắn thẻ dữ liệu"
+	"security config": "gắn thẻ dữ liệu",
+	"Platform Inventory Title": "Platform inventory",
+	"Add Platform Inventory Message": "Record add successfully.",
+	"Update Platform Inventory Message": "Record updated successfully.",
+	"Platform Specification Title": "Platform specification",
+	"Add Platform Specification Message": "Record add successfully.",
+	"Update Platform Specification Message": "Record updated successfully."
 }

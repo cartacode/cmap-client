@@ -83,12 +83,10 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform);
+      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose();});
     } else {
-      this.props.addPlatformInventory(platform);
+      this.props.addPlatformInventory(platform).then( () => {this.props.onClose();});
     }
-
-    this.props.onClose('0');
   }
 
   updatelocationid (generalData) 

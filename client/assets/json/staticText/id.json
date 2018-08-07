@@ -454,5 +454,11 @@
 	"language admin": "admin bahasa",
 	"user/unit language": "bahasa pengguna / unit",
 	"security config": "konfigurasi keamanan",
-	"data tagging": "penandaan data"
+	"data tagging": "penandaan data",
+	"Platform Inventory Title": "Platform inventory",
+	"Add Platform Inventory Message": "Record add successfully.",
+	"Update Platform Inventory Message": "Record updated successfully.",
+	"Platform Specification Title": "Platform specification",
+	"Add Platform Specification Message": "Record add successfully.",
+	"Update Platform Specification Message": "Record updated successfully."
 }

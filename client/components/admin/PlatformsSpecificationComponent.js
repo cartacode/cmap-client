@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
-import Notify from '../reusable/Notify';
 
 
 
@@ -22,6 +22,10 @@ class PlatformsSpecificationComponent extends React.Component {
       addshow: false,
       editId: '0',
     }
+  }
+
+  componentWillMount() {
+    this.props.fetchPlatforms();
   }
 
   onFind() {
@@ -48,16 +52,24 @@ class PlatformsSpecificationComponent extends React.Component {
   }
 
   closePlatformForm = () => {
+    this.notify();
+    this.props.fetchPlatforms();
     this.setState({
       editId: 0,
       addPlatformModalOpen: false,
     });
   }
 
-  componentWillMount() {
-
-    this.props.fetchPlatforms();
+  notify =()=>{
+    const { translations } = this.props;
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
+      NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+    }else{
+      NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+    }
   }
+
+  
 
   // renderItems(optionItem) {
   //   let items = [{"label": "-Select Item-", "value": 0}];
@@ -151,9 +163,7 @@ class PlatformsSpecificationComponent extends React.Component {
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
-
-          {this.props.isDone ? <Notify isDone={this.props.isDone} type='success' message="Record added or updated successfully " ttile="Platform specification" />
-            : null }
+          <NotificationContainer /> 
 
           <div className="col-md-12">
             <ReactTable

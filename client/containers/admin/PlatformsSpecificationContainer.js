@@ -1,7 +1,7 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import PlatformsSpecificationComponent from '../../components/admin/PlatformsSpecificationComponent';
-import { addPlatform, fetchPlatforms, fetchPlatformById } from 'actions/platform';
+import { addPlatform, fetchPlatforms } from 'actions/platform';
 
 const mapStateToProps = state => {
   return {

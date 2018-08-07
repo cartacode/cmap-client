@@ -454,5 +454,11 @@
 	"language admin": "lugha ya admin",
 	"user/unit language": "lugha / kitengo cha lugha",
 	"security config": "Configuration ya usalama",
-	"data tagging": "tagging data"
+	"data tagging": "tagging data",
+	"Platform Inventory Title": "Platform inventory",
+	"Add Platform Inventory Message": "Record add successfully.",
+	"Update Platform Inventory Message": "Record updated successfully.",
+	"Platform Specification Title": "Platform specification",
+	"Add Platform Specification Message": "Record add successfully.",
+	"Update Platform Specification Message": "Record updated successfully."
 }

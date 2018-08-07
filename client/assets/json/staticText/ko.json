@@ -454,5 +454,11 @@
 	"language admin": "language admin",
 	"user/unit language": "user/unit language",
 	"security config": "security config",
-	"data tagging": "data tagging"
+	"data tagging": "data tagging",
+	"Platform Inventory Title": "Platform inventory",
+	"Add Platform Inventory Message": "Record add successfully.",
+	"Update Platform Inventory Message": "Record updated successfully.",
+	"Platform Specification Title": "Platform specification",
+	"Add Platform Specification Message": "Record add successfully.",
+	"Update Platform Specification Message": "Record updated successfully."
 }

@@ -51,7 +51,6 @@ export default {
   platforms: {
     allPlatforms: [],
     onePlatform: {},
-    isDone: false,
     isFetching: false,
     isFetchingOne: false,
     allPlatformInventory: [],

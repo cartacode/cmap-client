@@ -453,5 +453,11 @@
 	"language mgmt.": "مشرف اللغة",
 	"language admin": "لغة المستخدم / الوحدة",
 	"user/unit language": "التكوين الأمن",
-	"security config": "توصيف البيانات"
+	"security config": "توصيف البيانات",
+	"Platform Inventory Title": "Platform inventory",
+	"Add Platform Inventory Message": "Record add successfully.",
+	"Update Platform Inventory Message": "Record updated successfully.",
+	"Platform Specification Title": "Platform specification",
+	"Add Platform Specification Message": "Record add successfully.",
+	"Update Platform Specification Message": "Record updated successfully."
 }
