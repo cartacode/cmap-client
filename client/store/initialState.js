@@ -13,6 +13,7 @@ export default {
   },
   locations: {
     allLocations: [],
+    oneLocation: {},
     isFetching: false,
     isListFetching: false,
     isTypesFetching: false,

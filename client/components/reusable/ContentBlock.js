@@ -15,7 +15,6 @@ class ContentBlock extends React.Component {
   }
 
   componentWillMount() {
-    //    this.state.content = this.props.initstate ;
     this.setState({
       content: this.props.initstate,
     });
@@ -135,7 +134,7 @@ class ContentBlock extends React.Component {
             if(item.minValue) {
               minValue = item.minValue;
             }
-            input = (<input type="number" min={minValue} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
+            input = (<input type="number" min={minValue} className="form-control" value={value} name={item.valFieldID} onChange={this.handleChangeNumber} />);
             break;
 
           case 'dropdown':
