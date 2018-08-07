@@ -408,7 +408,6 @@ class AddPlatformModal extends React.Component {
       document.getElementById('platform').reset();
       this.state.platform = this.baseState.platform;
       console.log(this.state.platform);
-      console.log(this.state.content);
       this.setState({clear:true});
     }
     else {

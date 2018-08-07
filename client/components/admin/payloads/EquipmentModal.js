@@ -21,6 +21,7 @@ class EquipmentModal extends React.Component {
         file: '',
         imagePreviewUrl: '',
         imagePreviewUrl2: '',
+        clear:false,
         payload: {
           PayloadID: '',
           PayloadReferenceCode: '',
@@ -194,22 +195,21 @@ class EquipmentModal extends React.Component {
   }
 
 
-  resetForm(){
+  stopset () {
+    this.setState({clear:false});
+  }
+
+
+  resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      let inputs = document.body.getElementsByTagName('input');
-      let drops = document.body.getElementsByTagName('select');
-      for (let item of inputs) {
-        if (item.id != 'dropdown1')
-        {
-        item.value = '';
-        }
-      }
-      for (let item of drops) {
-        item.value = 0;
-      }
-    }
+       this.setState({clear:true});
+       document.getElementById('payloadform').reset();
+     }
+     else {
+ 
+     }
   }
 
 
@@ -274,7 +274,7 @@ class EquipmentModal extends React.Component {
 
     return (
 
-      <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} id="payloadform">
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -346,18 +346,18 @@ class EquipmentModal extends React.Component {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields}
-                data={this.handlePayloadGeneralData} initstate ={this.state.payload}/>
+                data={this.handlePayloadGeneralData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields}
-                data={this.handlePayloadTechnicalData} initstate ={this.state.payload}/>
+                data={this.handlePayloadTechnicalData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
                 <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription}
-                data={this.handlePayloadFeatureData} initstate ={this.state.payload}/>
+                data={this.handlePayloadFeatureData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               </div>
             </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
+              <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
