@@ -51,8 +51,8 @@ class PlatformsSpecificationComponent extends React.Component {
     });
   }
 
-  closePlatformForm = () => {
-    this.notify();
+  closePlatformForm = (actionType) => {
+    this.notify(actionType);
     this.props.fetchPlatforms();
     this.setState({
       editId: 0,
@@ -60,14 +60,38 @@ class PlatformsSpecificationComponent extends React.Component {
     });
   }
 
-  notify =()=>{
+
+  loadData = (actionType) => {
+		this.notify(actionType);
+		this.props.fetchPlatforms();
+	}
+
+	deletePayload = (value) => {
+		if (value !== undefined && value !== '0') {
+			this.props.deletePlatformById(value).then(() => {
+				this.setState({ editId: '0' });
+        this.notify('DELETE');
+        this.props.fetchPlatforms();
+			});
+		}
+	}
+
+  notify =(actionType)=>{
     const { translations } = this.props;
-    if (this.state.editId !== undefined && this.state.editId !== '0') {
-      NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
-    }else{
-      NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
-    }
+    if ('DELETE' != actionType) {
+        if (this.state.editId !== undefined && this.state.editId !== '0') {
+          NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+        }else{
+          NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+        }
+      }else{
+        NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+      }
+
   }
+
+
+  
 
   
 
@@ -139,7 +163,7 @@ class PlatformsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span>// Custom cell components!
+        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayload(row.value)} /></span></div>
       }
     ];
 

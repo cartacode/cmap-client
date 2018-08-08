@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PLATFORM__ADD, PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__UPDATE } from 'dictionary/action';
+import { PLATFORM__ADD, PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__UPDATE, PLATFORM__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -33,3 +33,12 @@ export function fetchPlatformById(id) {
     action: () => axios.get(`${baseUrl}/Platform/GetPlatform/${id}`, requestHeaders),
   });
 }
+
+export function deletePlatformById(id) {
+  return createAction({
+    type: PLATFORM__DELETE_ONE,
+    action: () => axios.delete(`${baseUrl}/Platform/DeletePlatform/${id}`, requestHeaders),
+  });
+}
+
+
