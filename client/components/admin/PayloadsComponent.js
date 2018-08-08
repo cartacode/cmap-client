@@ -85,7 +85,12 @@ class PayloadsComponent extends React.Component {
 
 		const columns = [{
 			Header: translations["type"],
-			accessor: 'type',
+			accessor: 'typeDesc',
+		},
+		{
+			Header: translations['Manufacture'],
+			accessor: 'manufacturer',
+
 		},
 		{
 			Header: translations['Name'],
@@ -97,18 +102,20 @@ class PayloadsComponent extends React.Component {
 			accessor: 'serialNumber',
 		},
 		{
+			Header: translations['Branch'],
+			accessor: 'branch',
+		},
+		{
 			Header: translations['cocom'],
 			accessor: 'COCOM',
 		},
 		{
-			Header: translations['Location'],
-			accessor: 'location',
+			Header: translations['Owning Unit'],
+			accessor: 'owningUnit',
 		},
 		{
-			Header: translations['Record Date'],
-			accessor: 'recordDate',
-			Filter: ({ filter, onChange }) =>
-				<FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""} />
+			Header: translations['Location'],
+			accessor: 'location',
 		},
 		{
 			Header: translations['view'],
@@ -144,6 +151,7 @@ class PayloadsComponent extends React.Component {
 							data={allPayloadInventory}
 							columns={columns}
 							defaultPageSize={5}
+							loading={this.props.isLoading}
 							className="-striped -highlight"
 							filterable={true}
 							defaultFilterMethod={(filter, row) => {

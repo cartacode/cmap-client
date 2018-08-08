@@ -229,78 +229,33 @@ class PayloadsSpecificationComponent extends React.Component {
 
 		const columns = [
 			{
-				Header: "ID",
-				accessor: 'ID',
-				// filterMethod: (filter, row) =>
-				// 			row[filter.id].startsWith(filter.value),
-				// Filter: ({ filter, onChange}) =>
-				// 		<select
-				// 			onChange={event => onChange(event.target.value)}
-				// 			style={{ width: "100%" }}
-				// 			value={filter ? filter.value : ""} >
-				// 			{this.renderItems([])}
-				// 			<option key={'1'} value={'eo/ir'}>{'eo/ir'}</option>
-				// 			<option key={'2'} value={'sar/gmti'}>{'sar/gmti'}</option>
-				// 			<option key={'3'} value={'wami'}>{'wami'}</option>
-				// 			<option key={'4'} value={'sigint'}>{'sigint'}</option>
-				// 			<option key={'5'} value={'equipment'}>{'equipment'}</option>
-				// 		</select>,
-				// sortMethod: (a, b) => {
-				// 			  if (a.length === b.length) {
-				// 				return a > b ? 1 : -1;
-				// 			  }
-				// 			  return a.length > b.length ? 1 : -1;
-				// 			}// String-based value accessors!
-			  },
-			{
-				Header: "Payload",
-				accessor: 'payload',
-				// Filter: ({ filter, onChange }) =>
-				// 		   <select
-				// 			onChange={event => onChange(event.target.value)}
-				// 			style={{ width: "100%" }}
-				// 			value={filter ? filter.value : ""}
-				// 		  >
-				// 			{this.renderItems([])}
-				// 			{allPayloads.map(function(data, key){
-				// 				return (<option key={key} value={data.payload}>{data.payload}</option> );
-				// 			})}
-				// 		  </select>
+				Header: "Type",
+				accessor: 'type',
 			},
 			{
-				Header: "Nomenclature",
-				accessor: 'nomenclature',
+				Header: "Branch",
+				accessor: 'branch',
 			},
 			{
 				Header: "Manufacturer",
 				accessor: 'manufacturer',
-				// Filter: ({ filter, onChange }) =>
-				// 		  <select
-				// 			  onChange={event => onChange(event.target.value)}
-				// 			  style={{ width: "100%" }}
-				// 			  value={filter ? filter.value : ""}
-				// 		  >
-				// 			  {this.renderItems(cocomList)}
-				// 		  </select>
 			},
 			{
-				Header: "Abbreviation",
-				accessor: 'type',
-				// Filter: ({ filter, onChange }) =>
-				// 		  <select
-				// 			  onChange={event => onChange(event.target.value)}
-				// 			  style={{ width: "100%" }}
-				// 			  value={filter ? filter.value : ""}
-				// 		  >
-				// 			{this.renderItems([])}
-				// 			{allPayloads.map(function(data, key){
-				// 				return (<option key={key} value={data.location}>{data.location}</option> );
-				// 			})}
-				// 		  </select>
+				Header: "Payload Name",
+				accessor: 'name',
+				
 			},
 			{
-			  Header: "Description",
-			  accessor: 'typeDescription',
+				Header: "Mission Role",
+				accessor: 'role',
+			},
+			{
+			  Header: "Weight (lbs.)",
+			  accessor: 'weigth',
+			},
+			{
+				Header: "Power(W)",
+				accessor: 'power',
 			},
 			{
 				Header: translations['view'],
@@ -362,9 +317,10 @@ class PayloadsSpecificationComponent extends React.Component {
 						defaultPageSize={5}
 						className="-striped -highlight"
 						filterable={true}
+						loading={this.props.isLoading}
 						defaultFilterMethod={(filter, row) => {
 							const id = filter.pivotId || filter.id
-							return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+							return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
 						  }}
 					/>
 				</div>

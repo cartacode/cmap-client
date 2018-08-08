@@ -83,7 +83,7 @@ class SargmtiModal extends React.Component {
     this.setState({
       payload: {
         ...payload,
-        PayloadSerial: generalData.PayloadSerial,
+        // PayloadSerial: generalData.PayloadSerial,
         // PayloadOwningUnit: generalData.PayloadOwningUnit,
         PayloadName: generalData.PayloadName,
         PayloadNomenclature: generalData.PayloadNomenclature,
@@ -258,8 +258,8 @@ class SargmtiModal extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial', required: true },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' },
+      // { name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial', required: true },
+      // { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' },
       { name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required: true },
       { name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole', required: true },

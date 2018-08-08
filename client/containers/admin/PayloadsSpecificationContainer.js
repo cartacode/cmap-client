@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     allPayloads: state.payloads.allPayloads,
     payloadList: state.payloads.payloadList,
     payloadTypes: state.payloads.payloadTypes,
-    fetchingPayloads: state.payloads.isFetching,
+    isLoading: state.payloads.isFetching,
     locationList: state.locations.locationList,
     cocomList: state.cocoms.cocomList,
     payload: state.payloads.onePayload,
