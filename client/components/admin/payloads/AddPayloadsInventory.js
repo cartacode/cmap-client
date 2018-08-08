@@ -72,9 +72,9 @@ class AddPayloadsInventory extends React.Component {
     let { payloads } = this.state;
     if (editId !== undefined && editId !== '0') {
       payloads.id = editId;
-      this.props.updatePayloadInventory(editId, payloads).then( () => {this.props.onClose();});
+      this.props.updatePayloadInventory(editId, payloads).then( () => {this.props.onClose('UPDATE');});
     } else {
-      this.props.addPayloadInventory(this.state.payloads).then( () => {this.props.onClose();});
+      this.props.addPayloadInventory(this.state.payloads).then( () => {this.props.onClose('ADD');});
     }
     
   }
@@ -172,17 +172,11 @@ class AddPayloadsInventory extends React.Component {
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button">
-              {translations.Delete}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-          </div>
+          
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button type="submit" className="highlighted-button">
-              {translations.save}
+            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>

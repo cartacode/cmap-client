@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_INVENTORY__UPDATE, PAYLOAD_LIST__FETCH } from 'dictionary/action';
+import { PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_INVENTORY__UPDATE, PAYLOAD_LIST__FETCH, PAYLOAD_INVENTORY__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -34,6 +34,14 @@ export function fetchPayloadInventoryById(id) {
     action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventory/${id}`, requestHeaders),
   });
 }
+
+export function deletePayloadInventoryById(id) {
+  return createAction({
+    type: PAYLOAD_INVENTORY__DELETE_ONE,
+    action: () => axios.delete(`${baseUrl}/PayloadInventory/DeletePayloadInventory/${id}`, requestHeaders),
+  });
+}
+
 
 export function fetchPayloadList() {
   return createAction({
