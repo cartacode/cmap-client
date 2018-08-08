@@ -17,6 +17,8 @@ class PersonnelComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
+      editForm:false,
+      counter:0
     };
   }
 
@@ -38,11 +40,30 @@ class PersonnelComponent extends React.Component {
   //   })
   // }
 
+
+
   openPersonnelForm = (row) => {
-    this.setState({
+    this.setState({counter:this.state.counter + 1});
+    console.log("Invoked");
+    console.log("Row"+row);
+    console.log("Edit ID"+this.state.editId);
+    console.log("Counter"+this.state.counter);
+
+    if (this.state.counter == 0)
+    {
+      this.setState({
       editId: row,
-      addPersonnelModalOpen: true,
+      addPersonnelModalOpen: true
     });
+  }
+  else {
+    this.setState({
+      editId: row
+    }, () => { console.log("State Updated");
+      this.setState({
+        editForm: true
+      }); });
+  }
   }
 
 closePersonnelForm = () => {
@@ -54,6 +75,13 @@ closePersonnelForm = () => {
     addPersonnelModalOpen: false,
   });
 }
+
+stopupdate = () => 
+  {
+    console.log("Stop Update Called");
+    this.setState({editForm:false});
+  }
+  
 
 render() {
 
@@ -122,7 +150,7 @@ render() {
           </div>
         </div>
         {this.state.addPersonnelModalOpen ?
-          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations}/>
+          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
           : null
         }
         <div className="col-md-12">
