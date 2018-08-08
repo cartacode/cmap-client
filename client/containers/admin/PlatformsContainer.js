@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import PlatformsComponent from '../../components/admin/PlatformsComponent';
-import { fetchPlatformInventory } from 'actions/platforminventory';
+import { fetchPlatformInventory, deletePlatformInventoryById } from 'actions/platforminventory';
 
 const mapStateToProps = state => {
   return {
@@ -12,6 +12,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchPlatformInventory,
+  deletePlatformInventoryById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsComponent);

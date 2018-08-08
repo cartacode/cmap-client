@@ -121,7 +121,7 @@ class PayloadsComponent extends React.Component {
 			Header: translations['view'],
 			accessor: 'ID',
 			filterable: false,
-			Cell: row => <div><span className="number change-cursor-to-pointer'"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
+			Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
 		}
 		];
 
