@@ -38,6 +38,7 @@ export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
 export const PAYLOAD__UPDATE = createActionType('PAYLOAD__UPDATE');
 export const PAYLOAD__FETCH = createActionType('PAYLOAD__FETCH');
 export const PAYLOAD__FETCH_ONE = createActionType('PAYLOAD__FETCH_ONE');
+export const PAYLOAD__DELETE_ONE = createActionType('PAYLOAD__DELETE_ONE');
 export const PAYLOAD_LIST__FETCH = createActionType('PAYLOAD_LIST__FETCH');
 export const PAYLOAD_TYPE__FETCH = createActionType('PAYLOAD_TYPE__FETCH');
 
@@ -45,7 +46,7 @@ export const PAYLOAD_INVENTORY__ADD = createActionType('PAYLOAD_INVENTORY__ADD')
 export const PAYLOAD_INVENTORY__UPDATE = createActionType('PAYLOAD_INVENTORY__UPDATE');
 export const PAYLOAD_INVENTORY__FETCH = createActionType('PAYLOAD_INVENTORY__FETCH');
 export const PAYLOAD_INVENTORY__FETCH_ONE = createActionType('PAYLOAD_INVENTORY__FETCH_ONE');
-
+export const PAYLOAD_INVENTORY__DELETE_ONE = createActionType('PAYLOAD_INVENTORY__DELETE_ONE');
 
 
 export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
