@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PLATFORM_INVENTORY__ADD, PLATFORM_INVENTORY__UPDATE, PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE } from 'dictionary/action';
+import { PLATFORM_INVENTORY__ADD, PLATFORM_INVENTORY__UPDATE, PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE, PLATFORM_INVENTORY__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -30,5 +30,12 @@ export function fetchPlatformInventoryById(id) {
   return createAction({
     type: PLATFORM_INVENTORY__FETCH_ONE,
     action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventory/${id}`, requestHeaders),
+  });
+}
+
+export function deletePlatformInventoryById(id) {
+  return createAction({
+    type: PLATFORM_INVENTORY__DELETE_ONE,
+    action: () => axios.delete(`${baseUrl}/PlatformInventory/DeletePlatformInventory/${id}`, requestHeaders),
   });
 }

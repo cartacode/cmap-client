@@ -41,22 +41,40 @@ class PlatformComponent extends React.Component {
     });
   }
 
-  closePlatformForm = () => {
-    this.notify();
-    this.props.fetchPlatformInventory();
+  closePlatformForm = (actionType) => {
+    this.loadData(actionType);
     this.setState({
       editId: 0,
       addPlatformInventoryOpen: false,
     });
   }
 
-  notify =()=>{
+  loadData = (actionType) => {
+		this.notify(actionType);
+		this.props.fetchPlatformInventory();
+	}
+
+	deletePayloadInventory = (value) => {
+		if (value !== undefined && value !== '0') {
+			this.props.deletePlatformInventoryById(value).then(() => {
+				this.setState({ editId: '0' });
+        this.notify('DELETE');
+        this.props.fetchPlatformInventory();
+			});
+		}
+	}
+
+  notify =(actionType)=>{
     const { translations } = this.props;
-    if (this.state.editId !== undefined && this.state.editId !== '0') {
-      NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
-    }else{
-      NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
-    }
+      if ('DELETE' != actionType) {
+      if (this.state.editId !== undefined && this.state.editId !== '0') {
+        NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+      }else{
+        NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+      }
+      }else{
+        NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+      }
   }
 
 
@@ -123,10 +141,9 @@ class PlatformComponent extends React.Component {
         Header: translations['view'],
         accessor: 'id',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span>// Custom cell components!
+        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
       }
     ];
-
     const rowFields = [
       { name: translations['Tail#'], type: 'input', valField: 'aaa' },
       { name: translations['Platform Name'], type: 'input' },
