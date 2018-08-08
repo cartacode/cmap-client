@@ -471,5 +471,6 @@
 	"Delete CCIRPIR Message":"Record Deleted Successfully.",
 	"CCIRPIR Title":"CCIR/PIR",
 	"Update CCIRPIR Message":"Record Updated Successfully.",
-	"Add CCIRPIR Message":"Record Added Successfully."
+	"Add CCIRPIR Message":"Record Added Successfully.",
+	"Manufacturer": "Manufacturer"
 }

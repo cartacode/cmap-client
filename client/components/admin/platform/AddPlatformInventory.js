@@ -137,16 +137,22 @@ class AddPlatformInventory extends React.Component {
    
     const { translations } = this.props;
 
-    const generalFields = [
+    const generalFieldsSectionOne = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
+    ];
+
+    const generalFieldsSectionTwo = [
       { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
       { name: translations['Payload #2'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload2', valFieldID: 'dispPlatformPayload2' },
       { name: translations['Payload #3'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload3', valFieldID: 'dispPlatformPayload3' },
       { name: translations['Armament #1'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
+    ];
+
+    const generalFieldsSectionThree = [
       { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
       { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
       { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'dispPlatformComs1' },
@@ -174,12 +180,13 @@ class AddPlatformInventory extends React.Component {
           </div>
 
           <div className="row personnel" >
-
             <div className="under-munitions-content">
-              <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFieldsSectionOne}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFieldsSectionTwo}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFieldsSectionThree}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
+          
         </div>
         <div className="row action-buttons">
           <div className="menu-button">

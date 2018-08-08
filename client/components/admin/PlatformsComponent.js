@@ -101,11 +101,12 @@ class PlatformComponent extends React.Component {
 
     const { translations } = this.props;
     const { allPlatformInventory } = this.props;
+
     const columns = [
 
       {
         Header: translations["Tail#"],
-        accessor: 'description',
+        accessor: 'tailNbr',
         // filterMethod: (filter, row) =>
         //   row[filter.id].startsWith(filter.value),
 
@@ -117,12 +118,12 @@ class PlatformComponent extends React.Component {
         // }// String-based value accessors!
       },
       {
-        Header: translations['status'],
-        accessor: 'status',
+        Header: translations['Manufacturer'],
+        accessor: 'manufacturer',
       },
       {
-        Header: translations['unit'],
-        accessor: 'owningUnit',
+        Header: translations['Platform Name'],
+        accessor: 'name',
       },
       {
         Header: translations['Category'],
@@ -130,8 +131,16 @@ class PlatformComponent extends React.Component {
         
       },
       {
-        Header: translations['Service'],
+        Header: translations['Branch'],
         accessor: 'branchOfService'
+      },
+      {
+        Header: translations['COCOM'],
+        accessor: 'COCOM'
+      },
+      {
+        Header: translations['Owning Unit'],
+        accessor: 'owningUnit'
       },
       {
         Header: translations['Location'],
