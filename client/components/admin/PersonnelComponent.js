@@ -69,17 +69,22 @@ render() {
       accessor: 'lastName',
     },
     {
-      Header: translations['Rank'],
-      accessor: 'rank.description',
-
+      Header: translations['Branch'],
+      accessor: 'branchOfService',
     },
     {
-      Header: translations['Service'],
-      accessor: 'branchOfService.description',
+      Header: translations['Assigned Unit'],
+      accessor: 'assignedUnit',
     },
     {
       Header: translations['Deployed Unit'],
-      accessor: 'deployedUnit.description',
+      accessor: 'deployedUnit',
+    },
+    
+    {
+      Header: translations['Rank'],
+      accessor: 'rank',
+
     },
     {
       Header: translations['CAC ID'],
@@ -123,13 +128,14 @@ render() {
         <div className="col-md-12">
           <ReactTable
             data={allPersonnels}
-            columns={columns}            
+            columns={columns}
             defaultPageSize={10}
+            loading={this.props.isLoading}
             className="-striped -highlight"
             filterable={true}
             defaultFilterMethod={(filter, row) => {
               const id = filter.pivotId || filter.id
-              return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+              return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
             }}
           />
         </div>
