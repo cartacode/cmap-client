@@ -1,67 +1,63 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-
 import { uploadFile } from 'actions/file';
-import { addPayload, fetchPayloads } from 'actions/payload';
+import { addPayload, fetchPayloads, fetchPayloadsById, updatePayload } from 'actions/payload';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+
+
 
 class EquipmentModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        file: '',
-        imagePreviewUrl: '',
-        imagePreviewUrl2: '',
-        clear:false,
-        payload: {
-          PayloadID: '',
-          PayloadReferenceCode: '',
-          PaylodWireframe: '',
-          PayloadPhoto: '',
-          Payload3D: '',
-          PayloadIcon: '',
-          Payload2525B: '',
-          PayloadDatasheet: '',
-          PayloadName: '',
-          PayloadNomenclature: '',
-          PayloadRole: '',
-          PayloadManufacturer: '',
-          PayloadExecutiveAgent: '',
-          PayloadContractProgram: '',
-          PayloadCost: '',
-          PayloadCostNotes: '',
-          PayloadLength: '',
-          PayloadWidth: '',
-          PayloadHeight: '',
-          PayloadWeight: '',
-          PayloadPower: '',
-          PayloadConnector1: '',
-          PayloadConnector2: '',
-          PayloadDaySpotter: '',
-          PayloadThermalImager: '',
-          PayloadLaserDesginator: '',
-          PayloadContinuousZoom: '',
-          PayloadStabalization: '',
-          PayloadVibrationIsolation: '',
-          PayloadAutoTracker: '',
-          PayloadGPSTimeSync: '',
-          PayloadInternalGPS: '',
-          PayloadInternalINS: '',
-          PayloadMetadata: '',
-          PayloadCrewCount: '',
-          PayloadMOS1: '',
-          PayloadMOS2: '',
-          PayloadMOS3: '',
-        }
+      file: '',
+      imagePreviewUrl: '',
+      imagePreviewUrl2: '',
+      clear: false,
+      payload: {
+        PayloadID: '',
+        PayloadReferenceCode: '',
+        PaylodWireframe: '',
+        PayloadPhoto: '',
+        Payload3D: '',
+        PayloadIcon: '',
+        Payload2525B: '',
+        PayloadDatasheet: '',
+        PayloadName: '',
+        PayloadNomenclature: '',
+        PayloadRole: '',
+        PayloadManufacturer: '',
+        PayloadExecutiveAgent: '',
+        PayloadContractProgram: '',
+        PayloadCost: '',
+        PayloadCostNotes: '',
+        PayloadLength: '',
+        PayloadWidth: '',
+        PayloadHeight: '',
+        PayloadWeight: '',
+        PayloadPower: '',
+        PayloadConnector1: '',
+        PayloadConnector2: '',
+        PayloadDaySpotter: '',
+        PayloadThermalImager: '',
+        PayloadLaserDesginator: '',
+        PayloadContinuousZoom: '',
+        PayloadStabalization: '',
+        PayloadVibrationIsolation: '',
+        PayloadAutoTracker: '',
+        PayloadGPSTimeSync: '',
+        PayloadInternalGPS: '',
+        PayloadInternalINS: '',
+        PayloadMetadata: '',
+        PayloadCrewCount: '',
+        PayloadMOS1: '',
+        PayloadMOS2: '',
+        PayloadMOS3: '',
+      },
+
+      onePayload: {},
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -69,13 +65,22 @@ class EquipmentModal extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount(){
+  componentWillMount() {
     console.log("---hereis eoirmodal---------");
-    //this.props.fetchPayloads();
+  }
+
+  componentDidMount = () => {
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      this.props.fetchPayloadsById(editId);
+    } else {
+      // this.setState({ onePayload: {} });
+    }
+    console.log("variable" + editId);
   }
 
   handlePayloadGeneralData = (generalData) => {
-    const {payload} = this.state;
+    const { payload } = this.state;
     this.setState({
       payload: {
         ...payload,
@@ -96,7 +101,7 @@ class EquipmentModal extends React.Component {
   }
 
   handlePayloadTechnicalData = (technicalData) => {
-    const {payload} = this.state;
+    const { payload } = this.state;
     this.setState({
       payload: {
         ...payload,
@@ -114,7 +119,7 @@ class EquipmentModal extends React.Component {
   }
 
   handlePayloadFeatureData = (featureData) => {
-    const {payload} = this.state;
+    const { payload } = this.state;
     this.setState({
       payload: {
         ...payload,
@@ -125,7 +130,7 @@ class EquipmentModal extends React.Component {
     });
   }
   handlePayloadCrewData = (crewData) => {
-    const {payload} = this.state;
+    const { payload } = this.state;
     this.setState({
       payload: {
         ...payload,
@@ -140,63 +145,75 @@ class EquipmentModal extends React.Component {
   }
 
 
-  handleUploadFile(event){
-      event.preventDefault();
-      const {payload} = this.state;
-      if(event.target.id == "PayloadPhoto") {
-        let reader = new FileReader();
-        let file = event.target.files[0];
-        reader.onloadend =() =>{
-            this.setState({
-                file:file,
-                imagePreviewUrl: reader.result
-            });
-        }
-        reader.readAsDataURL(file)
+  handleUploadFile(event) {
+    event.preventDefault();
+    const { payload } = this.state;
+    if (event.target.id == "PayloadPhoto") {
+      let reader = new FileReader();
+      let file = event.target.files[0];
+      reader.onloadend = () => {
+        this.setState({
+          file: file,
+          imagePreviewUrl: reader.result
+        });
       }
+      reader.readAsDataURL(file)
+    }
 
-      else if(event.target.id == "PaylodWireframe") {
-        let reader = new FileReader();
-        let file = event.target.files[0];
-        reader.onloadend =() =>{
-            this.setState({
-                file:file,
-                imagePreviewUrl2: reader.result
-            });
-        }
-        reader.readAsDataURL(file)
+    else if (event.target.id == "PaylodWireframe") {
+      let reader = new FileReader();
+      let file = event.target.files[0];
+      reader.onloadend = () => {
+        this.setState({
+          file: file,
+          imagePreviewUrl2: reader.result
+        });
       }
+      reader.readAsDataURL(file)
+    }
 
 
-      let parametername = event.target.id;
+    let parametername = event.target.id;
 
-      this.setState({
-          payload: {
-              ...payload,
-              [parametername] : event.target.files[0].name
-          }
-      }, () => {
-          console.log("New state in ASYNC callback:", this.state.payload);
-      });
+    this.setState({
+      payload: {
+        ...payload,
+        [parametername]: event.target.files[0].name
+      }
+    }, () => {
+      console.log("New state in ASYNC callback:", this.state.payload);
+    });
 
-      const data = new FormData();
+    const data = new FormData();
 
-      data.append('file', event.target.files[0]);
-      data.append('name', event.target.files[0].name);
+    data.append('file', event.target.files[0]);
+    data.append('name', event.target.files[0].name);
 
-      // this.props.uploadFile(data);
+    // this.props.uploadFile(data);
   }
 
   handleSubmit = event => {
     event.preventDefault();
+    /*  console.log('---here--');
+     console.log(this.state.payload);
+     this.props.addPayload(this.state.payload).then( () => {this.props.onClose();}); */
+
     console.log('---here--');
     console.log(this.state.payload);
-    this.props.addPayload(this.state.payload).then( () => {this.props.fetchPayloads(); this.props.onClose();});
+    const { payload } = this.state;
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      payload.PayloadID = editId;
+      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
+    } else {
+      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+    }
+
   }
 
 
-  stopset () {
-    this.setState({clear:false});
+  stopset() {
+    this.setState({ clear: false });
   }
 
 
@@ -204,70 +221,70 @@ class EquipmentModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-       this.setState({clear:true});
-       document.getElementById('payloadform').reset();
-     }
-     else {
- 
-     }
+      this.setState({ clear: true });
+      document.getElementById('payloadform').reset();
+    }
+    else {
+
+    }
   }
 
 
   render() {
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
+    if (!this.props.show) {
       return null;
     }
 
-    let {imagePreviewUrl} = this.state;
+    let { imagePreviewUrl } = this.state;
     let $imagePreview = '';
 
     if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
+      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt="" />);
     }
     else {
-      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
 
-    let {imagePreviewUrl2} = this.state;
+    let { imagePreviewUrl2 } = this.state;
     let $imagePreview2 = '';
 
     if (imagePreviewUrl2) {
-      $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
+      $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
     }
     else {
-      $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt=""/>);
+      $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt="" />);
     }
 
-    const {payload} = this.state;
-    const {translations} = this.props;
+    /* const {payload} = this.state; */
+    const { translations } = this.props;
 
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial',required:true },
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit'},
-      {name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName',required:true},
-      {name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature',required:true},
-      {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles', valFieldID: 'PayloadRole',required:true},
-      {name: translations['Manufacture'], type: 'input', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer',required:true},
-      {name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent',required:true},
-      {name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram',required:true},
-      {name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost'},
-      {name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes'},
+      { name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial', required: true },
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' },
+      { name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required: true },
+      { name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature', required: true },
+      { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole', required: true },
+      { name: translations['Manufacture'], type: 'number', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer', required: true },
+      { name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent', required: true },
+      { name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram', required: true },
+      { name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost' },
+      { name: translations['Cost notes'], type: 'input', domID: 'PayloadCostNotes', valFieldID: 'PayloadCostNotes' },
     ];
 
     const technicalFields = [
-      {name: translations['Length (in.)'], type: 'number', domID: 'PayloadLength', valFieldID: 'PayloadLength',required:true},
-      {name: translations['Width (in.)'], type: 'number', domID: 'PayloadWidth', valFieldID: 'PayloadWidth',required:true},
-      {name: translations['Height (in.)'], type: 'number', domID: 'PayloadHeight', valFieldID: 'PayloadHeight',required:true},
-      {name: translations['Weight (lbs.)'], type: 'number', domID: 'PayloadWeight', valFieldID: 'PayloadWeight',required:true},
-      {name: translations['Power(W)'], type: 'number', domID: 'PayloadPower', valFieldID: 'PayloadPower',required:true},
-      {name: translations['Connector']+ "1", type: 'input', domID: 'PayloadConnector1', valFieldID: 'PayloadConnector1'},
-      {name: translations['Connector']+ "2", type: 'input', domID: 'PayloadConnector2', valFieldID: 'PayloadConnector2'},
+      { name: translations['Length (in.)'], type: 'number', domID: 'PayloadLength', valFieldID: 'PayloadLength', required: true },
+      { name: translations['Width (in.)'], type: 'number', domID: 'PayloadWidth', valFieldID: 'PayloadWidth', required: true },
+      { name: translations['Height (in.)'], type: 'number', domID: 'PayloadHeight', valFieldID: 'PayloadHeight', required: true },
+      { name: translations['Weight (lbs.)'], type: 'number', domID: 'PayloadWeight', valFieldID: 'PayloadWeight', required: true },
+      { name: translations['Power(W)'], type: 'number', domID: 'PayloadPower', valFieldID: 'PayloadPower', required: true },
+      { name: translations['Connector'] + "1", type: 'input', domID: 'PayloadConnector1', valFieldID: 'PayloadConnector1' },
+      { name: translations['Connector'] + "2", type: 'input', domID: 'PayloadConnector2', valFieldID: 'PayloadConnector2' },
     ];
 
     const itemDescription = [
-      {name: 'Lens Count:', type: 'number', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount'},
+      { name: 'Lens Count:', type: 'number', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount' },
     ];
 
 
@@ -275,108 +292,101 @@ class EquipmentModal extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="payloadform">
-          <div className="close-button" >
+        {/*  <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div>
-          <div className="payload-content">
-            <div className="row personnel" >
-              <div className="header-line">
-                <img src="/assets/img/admin/personnel_1.png" alt=""/>
-                <div className="header-text">
-                  equipment payloads administration
+          </div> */}
+        <div className="payload-content">
+          <div className="row personnel" >
+            <div className="header-line">
+              <img src="/assets/img/admin/personnel_1.png" alt="" />
+              <div className="header-text">
+                equipment payloads administration
                 </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
+            </div>
+            <div className="personnel-content">
+              <div className="col-md-4 image-block">
+                {$imagePreview}
               </div>
-              <div className="personnel-content">
-                <div className="col-md-4 image-block">
-                  {$imagePreview}
-                </div>
-                <div className="col-md-4 image-block">
-                  {$imagePreview2}
-                </div>
-                <div className="col-md-4 upload-block">
-                  <div className="upload-imagery">
-                    <img src="/assets/img/admin/upload_1.png" alt=""/>
-                    <div className="header-text">
-                      upload imagery & datasheets
+              <div className="col-md-4 image-block">
+                {$imagePreview2}
+              </div>
+              <div className="col-md-4 upload-block">
+                <div className="upload-imagery">
+                  <img src="/assets/img/admin/upload_1.png" alt="" />
+                  <div className="header-text">
+                    upload imagery & datasheets
                     </div>
-                    <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
+                  <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt="" />
+                </div>
+                <div className="upload-content">
+                  <div className="upload-line">
+                    <div>
+                      {translations['Photo Image']}
+                    </div>
+                    <input type="file" name="file" id="PayloadPhoto" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                   </div>
-                  <div className="upload-content">
-                    <div className="upload-line">
-                      <div>
-                        {translations['Photo Image']}
-                      </div>
-                      <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                  <div className="upload-line">
+                    <div>
+                      {translations['Wireframe Image']}
                     </div>
-                    <div className="upload-line">
-                      <div>
-                        {translations['Wireframe Image']}
-                      </div>
-                      <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="PaylodWireframe" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
+                  </div>
+                  <div className="upload-line">
+                    <div>
+                      {translations['3D Model']}
                     </div>
-                    <div className="upload-line">
-                      <div>
-                        {translations['3D Model']}
-                      </div>
-                      <input type="file"  name="file" id="Payload3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="Payload3D" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
+                  </div>
+                  <div className="upload-line">
+                    <div>
+                      {translations['2D Icon']}
                     </div>
-                    <div className="upload-line">
-                      <div>
-                        {translations['2D Icon']}
-                      </div>
-                      <input type="file"  name="file" id="PayloadIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="PayloadIcon" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
+                  </div>
+                  <div className="upload-line">
+                    <div>
+                      {translations['Milspec Icon']}
                     </div>
-                    <div className="upload-line">
-                      <div>
-                        {translations['Milspec Icon']}
-                      </div>
-                      <input type="file"  name="file" id="Payload2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                    <input type="file" name="file" id="Payload2525B" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
+                  </div>
+                  <div className="upload-line">
+                    <div>
+                      {translations['Datasheets']}
                     </div>
-                    <div className="upload-line">
-                      <div>
-                        {translations['Datasheets']}
-                      </div>
-                      <input type="file"  name="file" id="PayloadDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
-                    </div>
+                    <input type="file" name="file" id="PayloadDatasheet" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row personnel" >
-              <div className="under-payload-content">
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields}
-                data={this.handlePayloadGeneralData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-                <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields}
-                data={this.handlePayloadTechnicalData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-                <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription}
-                data={this.handlePayloadFeatureData} initstate ={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              </div>
+          </div>
+          <div className="row personnel" >
+            <div className="under-payload-content">
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields}
+                data={this.handlePayloadGeneralData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields}
+                data={this.handlePayloadTechnicalData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription}
+                data={this.handlePayloadFeatureData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
-          <div className="row action-buttons">
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
-                {translations['clear']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='highlighted-button'>
-                {translations['Delete']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="submit" className='highlighted-button'>
-                {translations['save']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+        </div>
+        <div className="row action-buttons">
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
+              {translations['clear']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="submit" className='highlighted-button'>
+            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+          </div>
+        </div>
       </form>
 
     );
@@ -384,14 +394,16 @@ class EquipmentModal extends React.Component {
 }
 
 EquipmentModal.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    onePayload: state.payloads.onePayload,
   };
 };
 
@@ -399,6 +411,8 @@ const mapDispatchToProps = {
   addPayload,
   fetchPayloads,
   uploadFile,
+  updatePayload,
+  fetchPayloadsById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EquipmentModal);
