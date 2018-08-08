@@ -23,6 +23,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 
+
 class CcirPirComponent extends React.Component {
 
   constructor(props) {
@@ -40,6 +41,11 @@ class CcirPirComponent extends React.Component {
   //     ccirModalOpen: !this.state.ccirModalOpen
   //   })
   // }
+
+  componentDidMount() {
+    // Fetch List of Records 
+    this.props.fetchCcirPirs();
+  }
 
 
 
@@ -96,20 +102,15 @@ notify =(type)=>{
 }
 
 
-  componentDidMount() {
-    // Fetch List of Records 
-    this.props.fetchCcirPirs();
-  }
+  // tableRowDetailModal = () => {
+  //   this.setState({
+  //     tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
+  //   })
+  // }
 
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
-  }
-
-  onFind(){
-    console.log("find");
-  }
+  // onFind(){
+  //   console.log("find");
+  // }
 
 
   render() {
@@ -187,16 +188,16 @@ notify =(type)=>{
       } 
     ];
 
-    const rowFields = [
-      {name: 'Creation Date/Time', type: 'date'},
-      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
-      {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
-      {name: 'Country', type: 'dropdown', ddID: 'Countries'},
-      {name: 'Region', type: 'dropdown', ddID: 'Regions'},
-      {name: 'Unit', type: 'dropdown',ddID: 'Units'},
-      {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
-      {name: 'Mission/Operation name', type: 'input'}
-    ];
+    // const rowFields = [
+    //   {name: 'Creation Date/Time', type: 'date'},
+    //   {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
+    //   {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
+    //   {name: 'Country', type: 'dropdown', ddID: 'Countries'},
+    //   {name: 'Region', type: 'dropdown', ddID: 'Regions'},
+    //   {name: 'Unit', type: 'dropdown',ddID: 'Units'},
+    //   {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
+    //   {name: 'Mission/Operation name', type: 'input'}
+    // ];
 
     return (
       <div>
@@ -238,7 +239,7 @@ notify =(type)=>{
             />
           </div>
           
-          <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} />
+          {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} /> */}
         </div>
       </div>
     );

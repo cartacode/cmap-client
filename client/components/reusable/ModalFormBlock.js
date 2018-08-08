@@ -54,33 +54,35 @@ class ModalFormBlock extends React.Component {
     /**
      * This method is uses to handle file handle events.
      */
-    handleUploadFile(event){
+    handleUploadFile(e){
         event.preventDefault();
-        const {location} = this.state;
-  
-        let parametername = event.target.id;
-  
+        const {content} = this.state;
+        
+        let parametername = e.target.name;
+        
         this.setState({
-            location: {
-                ...location,
-                [parametername] : event.target.files[0].name
+            content: {
+                ...content,
+                [parametername] : e.target.files[0].name
             }
         }, () => {
-            console.log("New state in ASYNC callback:", this.state.location);
+            
+            this.props.data(this.state.content);
+
+            //console.log("New state in ASYNC callback:", this.state.content);
         });
   
         const data = new FormData();
   
-        data.append('file', event.target.files[0]);
-        data.append('name', event.target.files[0].name);
+        //data.append('file', event.target.files[0]);
+        //data.append('name', event.target.files[0].name);
   
       //  this.props.uploadFile(data);
     }
 
     handleChangeNumber = (e) =>{
        const { name, value } = e.target;
-       console.log(", Value: "+e.target.value);
-       console.log(", name: "+e.target.name);
+       
        const { content } = this.state;
        this.setState({
             content: {
@@ -96,8 +98,7 @@ class ModalFormBlock extends React.Component {
 
     handleChangeCheck = (e) =>{
        const { name, value } = e.target;
-       console.log(", Value: "+e.target.value);
-       console.log(", name: "+e.target.name);
+       
        let parameterValue = '';
        if (e.target.value  == 'on') {
           parameterValue = true;
@@ -120,9 +121,8 @@ class ModalFormBlock extends React.Component {
 
 
     handleDropdownSelectedData = (dropdownData, name) => {
-        debugger;
         const { content } = this.state;
-        console.log("Dropdown actual data: "+dropdownData+", Name : "+name);
+        //console.log("Dropdown actual data: "+dropdownData+", Name : "+name);
         this.setState({
             content: {
                 ...content,
@@ -134,9 +134,8 @@ class ModalFormBlock extends React.Component {
     }
 
     handleChangeDate = (changeDate, name) => {
-        debugger;
         const { content } = this.state;
-        console.log("actual date: "+changeDate+", Name : "+name);
+        //console.log("actual date: "+changeDate+", Name : "+name);
         this.setState({
             content: {
                 ...content,
