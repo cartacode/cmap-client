@@ -85,31 +85,20 @@ class CcirPirModal extends React.Component {
 
 
   handleSubmit = event => {
-    debugger;
     event.preventDefault();
     const { editId } = this.props;
     let { ccirpir } = this.state;
     if (editId !== undefined && editId !== '0') {
       ccirpir.CCIRPIRId = editId;
       ccirpir.LastUpdateUserId =  null;
-      //ccirpir.Description =  "string";
-      //ccirpir.Description2 =  "Description 2";
-      //ccirpir.Description3 =  "Description 3";
-      //ccirpir.Description4 =  "Description 4";
-      console.log(ccirpir);
-      console.log(JSON.stringify(ccirpir));
-      this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose();});
+     
+      this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
     } else {
       ccirpir.LastUpdateUserId =  null;
-      //ccirpir.Description =  "Description 1";
-      //ccirpir.Description2 =  "Description 2";
-      //ccirpir.Description3 =  "Description 3";
-      //ccirpir.Description4 =  "Description 4";
+     
 
 
-      console.log(ccirpir);
-      console.log(JSON.stringify(ccirpir));
-      this.props.addCcirPir(this.state.ccirpir).then( () => {this.props.onClose();});
+      this.props.addCcirPir(this.state.ccirpir).then( () => {this.props.onClose('ADD');});
     }
     
   }

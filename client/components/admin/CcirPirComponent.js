@@ -60,13 +60,20 @@ class CcirPirComponent extends React.Component {
   // Close Add/Edit Form
 closeCcirPirForm = (messageType) => {
   //show Success Message
-  this.notify(messageType);
-  this.props.fetchCcirPirs();
+  this.loadData(messageType);
+  //this.props.fetchCcirPirs();
   this.setState({
     editId: '0',
     addCcirPirModalOpen: false,
   });
 }
+
+
+loadData = (actionType) => {
+  this.notify(actionType);
+  this.props.fetchCcirPirs();
+}
+
 // will call from onClose in CcirPirModal
 callCloseCcirPirForm = () =>{
   this.closeCcirPirForm('');
@@ -76,29 +83,27 @@ callCloseCcirPirForm = () =>{
 deleteCcirPirRecord(row){
   this.props.deleteCcirPirById(row).then(() => {
     //Refresh List
-    this.closeCcirPirForm('delete');
+    this.closeCcirPirForm('DELETE');
   });
 }
 
 // function to Display Success Messages
 notify =(type)=>{
   const { translations } = this.props;
-  if(type === 'delete'){
+  if(type === 'DELETE'){
     NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
 
   }
-  else if(type === ''){
+  else if(type === 'ADD'){
     //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-
-  }
-  else{
-  
-  if (this.state.editId !== undefined && this.state.editId !== '0') {
-    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-  }else{
     NotificationManager.success(translations['Add CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
   }
-}
+  else if(type === 'UPDATE'){
+    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+  }
+  else{
+
+  }
 }
 
 
@@ -215,7 +220,7 @@ notify =(type)=>{
             </div>
           </div>
           {this.state.addCcirPirModalOpen ?
-          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.callCloseCcirPirForm} translations = {translations} />
+          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
           : null
         }
 
