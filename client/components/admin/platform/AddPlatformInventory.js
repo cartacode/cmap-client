@@ -66,6 +66,9 @@ class AddPlatformInventory extends React.Component {
         dispPlatformArmament3: generalData.dispPlatformArmament3,
         dispPlatformComs1: generalData.dispPlatformComs1,
         dispPlatformComs2: generalData.dispPlatformComs2,
+        platformTailNumber: generalData.platformTailNumber,
+        platformService: generalData.platformService,
+        locationCOCOM: generalData.locationCOCOM,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
@@ -139,9 +142,12 @@ class AddPlatformInventory extends React.Component {
 
     const generalFieldsSectionOne = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'platformTailNumber', required: true },
+      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'locationCOCOM',required:true},
+      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'platformService', required: true },
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID' },
-      { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
     ];
 

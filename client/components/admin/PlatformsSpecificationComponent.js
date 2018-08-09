@@ -123,8 +123,8 @@ class PlatformsSpecificationComponent extends React.Component {
     const columns = [
 
       {
-        Header: "ID",
-        accessor: 'ID',
+        Header: "Branch",
+        accessor: 'branch',
         // filterMethod: (filter, row) =>
         //             row[filter.id].startsWith(filter.value),
 
@@ -137,11 +137,7 @@ class PlatformsSpecificationComponent extends React.Component {
       },
       {
         Header: translations['Platform Name'],
-        accessor: 'platform',
-      },
-      {
-        Header: "Nomenclature",
-        accessor: 'nomenclature',
+        accessor: 'name',
       },
       {
         Header: "Manufacturer",
@@ -156,8 +152,16 @@ class PlatformsSpecificationComponent extends React.Component {
         accessor: 'categoryDesc'
       },
       {
-        Header: "Role",
+        Header: "Mission Role",
         accessor: 'role'
+      },
+      {
+        Header: "Payload Capacity",
+        accessor: 'payloadCapacity'
+      },
+      {
+        Header: "Armament Capacity",
+        accessor: 'armamentCapacity'
       },
       {
         Header: translations['view'],
