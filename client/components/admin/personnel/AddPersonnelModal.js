@@ -96,7 +96,10 @@ class AddPersonnelModal extends React.Component {
   
   handleGeneralPersonnelData = (generalData) => {
     const { personnel } = this.state;
-    
+    console.log("Genera data is");
+    console.log(generalData);
+    console.log("Personnel State is");
+    console.log(personnel);
     
     if( generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
       this.updateRanks(generalData.ServiceBranch);
@@ -1145,7 +1148,7 @@ setRanks = (ServiceBranch) => {
     //     id: editId,
     //     personnel: personnel
     //   }
-
+        
       personnel.PersonnelID = editId;
       console.log('handle Submit '+ JSON.stringify(personnel));
       this.props.updatePersonnel(editId, personnel).then(() => {

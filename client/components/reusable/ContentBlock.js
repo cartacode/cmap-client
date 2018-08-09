@@ -40,6 +40,7 @@ class ContentBlock extends React.Component {
     
     if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
       // if(editId !== undefined && editId !== '0') {
+        console.log("Is it called?");
       this.setState({
         content: initstate,
       });
