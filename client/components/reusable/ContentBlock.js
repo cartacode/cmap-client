@@ -38,14 +38,14 @@ class ContentBlock extends React.Component {
     const { initstate, editId } = this.props;
     const { editF } = this.props;
     
-    if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
-      // if(editId !== undefined && editId !== '0') {
-      this.setState({
-        content: initstate,
-      });
-      this.props.data(this.state.content);
-    }
-
+    // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
+    //   // if(editId !== undefined && editId !== '0') {
+    //   this.setState({
+    //     content: initstate,
+    //   });
+    //   this.props.data(this.state.content);
+    // }
+    console.log('editF '+editF);
     if (editF)
     {
       console.log(this.state.initstate);

@@ -50,31 +50,31 @@ class PlatformComponent extends React.Component {
   }
 
   loadData = (actionType) => {
-		this.notify(actionType);
-		this.props.fetchPlatformInventory();
-	}
+	  this.notify(actionType);
+	  this.props.fetchPlatformInventory();
+  }
 
 	deletePayloadInventory = (value) => {
-		if (value !== undefined && value !== '0') {
-			this.props.deletePlatformInventoryById(value).then(() => {
-				this.setState({ editId: '0' });
-        this.notify('DELETE');
-        this.props.fetchPlatformInventory();
-			});
-		}
+	  if (value !== undefined && value !== '0') {
+	    this.props.deletePlatformInventoryById(value).then(() => {
+	      this.setState({ editId: '0' });
+	      this.notify('DELETE');
+	      this.props.fetchPlatformInventory();
+	    });
+	  }
 	}
 
   notify =(actionType)=>{
     const { translations } = this.props;
-      if ('DELETE' != actionType) {
+    if ('DELETE' != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
       }else{
         NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
       }
-      }else{
-        NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
-      }
+    }else{
+      NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+    }
   }
 
 
@@ -153,15 +153,6 @@ class PlatformComponent extends React.Component {
         Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
       }
     ];
-    const rowFields = [
-      { name: translations['Tail#'], type: 'input', valField: 'aaa' },
-      { name: translations['Platform Name'], type: 'input' },
-      { name: translations['Category'], type: 'input' },
-      { name: translations['Service'], type: 'input' },
-      { name: translations['Owning Unit'], type: 'input' },
-      { name: translations['Location'], type: 'dropdown' },
-      { name: translations['Record Date'], type: 'date' },
-    ];
 
     return (
       <div>
@@ -182,8 +173,8 @@ class PlatformComponent extends React.Component {
             <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
 
-           <NotificationContainer />  
-
+          <NotificationContainer />
+          
           <div className="col-md-12">
             <ReactTable
               data={allPlatformInventory}
@@ -191,6 +182,7 @@ class PlatformComponent extends React.Component {
               defaultPageSize={5}
               className="-striped -highlight"              
               filterable={true}
+              loading={this.props.isLoading}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id
 							  return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;

@@ -61,7 +61,7 @@ class CcirPirComponent extends React.Component {
 closeCcirPirForm = (messageType) => {
   //show Success Message
   this.loadData(messageType);
-  //this.props.fetchCcirPirs();
+  this.props.fetchCcirPirs();
   this.setState({
     editId: '0',
     addCcirPirModalOpen: false,

@@ -18,7 +18,9 @@ class AddPlatformInventory extends React.Component {
       clear:false,
       imagePreviewUrl: '',
       locationcategory: '',
-      // platform: {
+      inventoryId: '0',
+      isUpdated: false,
+       platform: {
       //   metaDataID: '',
       //   locationID: '',
       //   owningUnit: '',
@@ -31,7 +33,7 @@ class AddPlatformInventory extends React.Component {
       //   dispPlatformArmament3: '',
       //   dispPlatformComs1: '',
       //   dispPlatformComs2: '',
-      // },
+      },
       onePlatformInventory: {},
     };
 
@@ -42,49 +44,87 @@ class AddPlatformInventory extends React.Component {
 
   componentDidMount = () => {
     const { editId } = this.props;
-    if (editId !== undefined && editId !== '0') {
-      this.props.fetchPlatformInventoryById(editId);
-    }else {
-      // this.setState({ onePlatformInventory: {} });
+    if (editId !== '0') {
+      this.props.fetchPlatformInventoryById(editId).then(() => {
+        this.setState({ isUpdated: true });
+      });
     }
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    const { editId } = this.props;
+    if(editId !== '0' && prevProps.editId !== editId) {
+      this.props.fetchPlatformInventoryById(this.props.editId).then(() => {
+        this.setState({ isUpdated: true });
+      });
+    }
+  }
+
+  stopUpdate = ()=> {
+    this.setState({
+      isUpdated: false,
+    });
+  }
+  
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
     this.setState({ locationcategory: generalData.locationcategory });
     this.setState({
       platform: {
+        ...platform,
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         tailNumber: generalData.tailNumber,
-        dispPlatformPayload1: generalData.dispPlatformPayload1,
-        dispPlatformPayload2: generalData.dispPlatformPayload2,
-        dispPlatformPayload3: generalData.dispPlatformPayload3,
-        dispPlatformArmament1: generalData.dispPlatformArmament1,
-        dispPlatformArmament2: generalData.dispPlatformArmament2,
-        dispPlatformArmament3: generalData.dispPlatformArmament3,
-        dispPlatformComs1: generalData.dispPlatformComs1,
-        dispPlatformComs2: generalData.dispPlatformComs2,
-        platformTailNumber: generalData.platformTailNumber,
-        platformService: generalData.platformService,
-        locationCOCOM: generalData.locationCOCOM,
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.platform);
+        payload1: generalData.payload1,
+        payload2: generalData.payload2,
+        payload3: generalData.payload3,
+        armament1: generalData.armament1,
+        armament2: generalData.armament2,
+        armament3: generalData.armament3,
+        coms1: generalData.coms1,
+        coms2: generalData.coms2,       
+        branch: generalData.branch,
+        cocom: generalData.cocom,
+      },
     });
 
-    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
-    {
-      console.log("Category Selected");
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) {
       this.updatelocationid(generalData);
     }
   }
 
+  handlePayloadData = (generalData) => {
+    const { platform } = this.state;
+    this.setState({
+      platform: {
+        ...platform,
+        payload1: generalData.payload1,
+        payload2: generalData.payload2,
+        payload3: generalData.payload3,
+        coms1: generalData.coms1,
+      },
+    });
+  }
+
+  handleArmsData = (generalData) => {
+    const { platform } = this.state;
+    this.setState({
+      platform: {
+        ...platform,
+        armament1: generalData.armament1,
+        armament2: generalData.armament2,
+        armament3: generalData.armament3,
+        coms2: generalData.coms2,
+      },
+    });
+  }
+
   handleSubmit = event => {
     event.preventDefault();
-    const { platform } = this.state;
+    let { platform } = this.state;
     const { editId } = this.props;
+    console.log(JSON.stringify(platform));
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
       this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose('UPDATE');});
@@ -93,27 +133,39 @@ class AddPlatformInventory extends React.Component {
     }
   }
 
-  updatelocationid (generalData) 
-  {
-     let locationselect = document.getElementsByName('locationID')[0];
-     let items = [{'label': '--Select Item--', 'value': 0}];
-     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
-        axios.get(apiUrl)
-          .then(response => {
-            console.log(response.data);
-            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
-            response.data.map(item => {
-              items.push({ 'label': item['description'], 'value': item['id'].trim() });
-            });
-            if (locationselect.length > 0) {locationselect.length = 0;}
-            for(let i in items) {
-              locationselect.add(new Option(items[i].label, items[i].value));
-            }
-            
-          })
-          .catch((error) => {
-            console.log('Exception comes:' + error);
-          });   
+  updatelocationid (generalData) {
+    let locationselect = document.getElementsByName('locationID')[0];
+    if (locationselect.length > 0) {
+      locationselect.length = 0;
+      locationselect.add(new Option('--Fetching Locations--', 0));
+    }
+    let items = [{'label': 'Loading Locations', 'value': 0}];
+    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
+    axios.get(apiUrl)
+      .then(response => {
+        locationselect.length = 0;
+        if(response.data) {
+          locationselect.add(new Option('--Select Location--', 0));
+          response.data.map(item => {
+            locationselect.add(new Option(item.description, item.id.trim()));
+          });
+        }else{
+          locationselect.add(new Option('No Location Found', 0));
+        }
+        // if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+        // response.data.map(item => {
+        //   items.push({ 'label': item['description'], 'value': item['id'].trim() });
+        // });
+        // if (locationselect.length > 0) {locationselect.length = 0;}
+        // for(let i in items) {
+        //   locationselect.add(new Option(items[i].label, items[i].value));
+        // }
+      })
+      .catch((error) => {
+        locationselect.length = 0;
+        locationselect.add(new Option('Error Fetching Locations', 0));
+        console.log('Exception comes:' + error);
+      });
   }
 
   stopset () {
@@ -125,11 +177,11 @@ class AddPlatformInventory extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-       this.setState({clear:true});
-     }
-     else {
+      this.setState({clear:true});
+    }
+    else {
  
-     }
+    }
   }
 
   render() {
@@ -140,36 +192,35 @@ class AddPlatformInventory extends React.Component {
    
     const { translations } = this.props;
 
-    const generalFieldsSectionOne = [
+    const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'platformTailNumber', required: true },
-      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'locationCOCOM',required:true},
-      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'platformService', required: true },
+      { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true },
+      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'cocom',required:true},
+      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: 'Locations/GetLocationsByCategory?Category=2', valFieldID: 'locationID' },
-      { name: "Tail Number", type: 'input', domID: 'tailNumber', valFieldID: 'tailNumber', required: true },
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
     ];
 
-    const generalFieldsSectionTwo = [
-      { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'dispPlatformPayload1' },
-      { name: translations['Payload #2'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload2', valFieldID: 'dispPlatformPayload2' },
-      { name: translations['Payload #3'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload3', valFieldID: 'dispPlatformPayload3' },
-      { name: translations['Armament #1'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament1', valFieldID: 'dispPlatformArmament1' },
+    const payloadFields = [
+      { name: translations['Payload #1'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload1', valFieldID: 'payload1' },
+      { name: translations['Payload #2'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload2', valFieldID: 'payload2' },
+      { name: translations['Payload #3'], type: 'dropdown', ddID: 'PayloadInventory/GetPayloadInventory', domID: 'dispPlatformPayload3', valFieldID: 'payload3' },
+      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'coms1' },
     ];
 
-    const generalFieldsSectionThree = [
-      { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'dispPlatformArmament2' },
-      { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'dispPlatformArmament3' },
-      { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'dispPlatformComs1' },
-      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'dispPlatformComs2' }
+    const armsFields = [
+      { name: translations['Armament #1'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament1', valFieldID: 'armament1' },
+      { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'armament2' },
+      { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'armament3' },
+      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'coms2' },
     ];
 
 
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-       {/*  <div className="close-button" >
+        {/*  <div className="close-button" >
           <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
         </div> */}
         <div className="payload-content">
@@ -179,7 +230,7 @@ class AddPlatformInventory extends React.Component {
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
                 Add Platform Inventory
-                </div>
+              </div>
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
@@ -187,9 +238,9 @@ class AddPlatformInventory extends React.Component {
 
           <div className="row personnel" >
             <div className="under-munitions-content">
-              <ContentBlock fields={generalFieldsSectionOne}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={generalFieldsSectionTwo}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={generalFieldsSectionThree}  data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={payloadFields} data={this.handlePayloadData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={armsFields} data={this.handleArmsData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
           
@@ -205,7 +256,7 @@ class AddPlatformInventory extends React.Component {
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+              {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
@@ -218,10 +269,10 @@ class AddPlatformInventory extends React.Component {
 }
 
 AddPlatformInventory.propTypes = {
+  children: PropTypes.node,
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
-  children: PropTypes.node
 };
 
 const mapStateToProps = state => {

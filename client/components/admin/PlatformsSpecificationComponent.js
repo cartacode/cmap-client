@@ -199,6 +199,7 @@ class PlatformsSpecificationComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
+              loading={this.props.isLoading}
               filterable={true}
               defaultFilterMethod={(filter, row) => {
                 const id = filter.pivotId || filter.id

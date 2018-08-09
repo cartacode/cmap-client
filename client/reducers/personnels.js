@@ -17,12 +17,12 @@ export default function personnels(state = initialState.personnels, { payload, t
     case PERSONNEL__FETCH_ONE.REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isFetchingOne: true,
       };
     case PERSONNEL__FETCH_ONE.SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isFetchingOne: false,
         onePersonnel: payload.data,
       };
 

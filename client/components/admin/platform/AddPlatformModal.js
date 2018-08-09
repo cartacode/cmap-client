@@ -18,6 +18,7 @@ class AddPlatformModal extends React.Component {
       clear:false,
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
+      isUpdated: false,
        platform: {
          PlatformID: '',
          PlatformWireframe: '',
@@ -85,10 +86,25 @@ class AddPlatformModal extends React.Component {
   componentDidMount = () => {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
-      this.props.fetchPlatformById(editId);
-    }/* else {
-      this.setState({ onePlatform: {} });
-    } */
+      this.props.fetchPlatformById(editId).then(() => {
+        this.setState({ isUpdated: true });
+      });
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { editId } = this.props;
+    if(editId !== '0' && prevProps.editId !== editId) {
+      this.props.fetchPlatformById(editId).then(() => {
+        this.setState({ isUpdated: true });
+      });
+    }
+  }
+
+  stopUpdate = ()=> {
+    this.setState({
+      isUpdated: false,
+    });
   }
 
   handlePlatformGeneralData = (generalData) => {
@@ -606,17 +622,17 @@ class AddPlatformModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-personnel-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
                 data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
                 data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
                 data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
             </div>
           </div>
           <div className="row personnel" >
-            <div className="under-platform-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
+            <div className="under-personnel-content">
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
                 data={this.handlePlatformCrewData} initstate={this.state.platform} platform={nums} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
 
              {/*  <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
@@ -649,9 +665,10 @@ class AddPlatformModal extends React.Component {
 }
 
 AddPlatformModal.propTypes = {
+  children: PropTypes.node,
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.node
+  
 };
 
 

@@ -23,8 +23,8 @@ class AddPersonnelModal extends React.Component {
             selectedBranch: '',
             selectedRank: '',
             file: '',
-            clear:false,
-            editF:false,
+            clear: false,
+            isUpdated: false,
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
             personnel: {
