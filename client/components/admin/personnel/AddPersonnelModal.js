@@ -72,7 +72,7 @@ class AddPersonnelModal extends React.Component {
     if(editId !== '0') {
         console.log("this is called");
         console.log("Edit ID is"+editId);
-      this.props.fetchPersonnelById(editId);
+      this.props.fetchPersonnelById(editId).then(() => { this.state.personnel = this.props.onePersonnel; });
     }
   }
 
@@ -84,7 +84,7 @@ class AddPersonnelModal extends React.Component {
     if(editForm) {
         console.log("Inner Update Called");
         this.props.stopupdate();
-        this.props.fetchPersonnelById(editId).then(() => {this.setState({editF:true})});
+        this.props.fetchPersonnelById(editId).then(() => {this.setState({editF:true}); this.state.personnel = this.props.onePersonnel;});
         
     }
   }
