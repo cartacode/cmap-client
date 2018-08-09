@@ -147,6 +147,10 @@ class ContentBlock extends React.Component {
             }
             input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             break;
+          
+          case 'textarea':
+            input = (<textarea value={value} className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
+            break;
 
           case 'dropdown':
             let req = false;

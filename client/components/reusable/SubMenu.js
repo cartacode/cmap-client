@@ -13,10 +13,10 @@ class SubMenu extends React.Component {
         return (
             <ul className="sub-list">
                 <li className="submenu ">
-                <NavLink to={this.props.link}>Inventory</NavLink>
+                <NavLink to={this.props.link}>{this.props.names[0]}</NavLink>
                 </li>
                 <li className="submenu ">
-                <NavLink to={this.props.link+'spec'}>Specifications</NavLink>
+                <NavLink to={this.props.link+'spec'}>{this.props.names[1]}</NavLink>
                 </li>
             </ul>
         );

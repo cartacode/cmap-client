@@ -41,9 +41,11 @@ class AdminComponent extends React.Component {
 
     const {translations, match} = this.props;
 
+    const subMenuNames = [translations['inventory'],translations['library']];
+
     const menuItems = [
-      {title: translations['personnel'], url: `${match.url}/personnel`},
-      {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true},
+      {title: translations['personnel'], url: `${match.url}/personnel` },
+      {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true, },
       {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
       {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
       {title: translations['status'], url: `${match.url}/admin-status`},
@@ -79,7 +81,7 @@ class AdminComponent extends React.Component {
               null}
                
           </NavLink>
-          {this.state.key==i && item.submenu ? <SubMenu link={item.url}/> : null }
+          {this.state.key==i && item.submenu ? <SubMenu link={item.url} names={subMenuNames}/> : null }
         </div>
       );
     });

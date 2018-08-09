@@ -120,7 +120,7 @@ notify =(type)=>{
 
   render() {
 
-    let langs = ['ccir', 'pir'] ;
+    
     const {translations} = this.props;
     const {allCcirPirs} = this.props;
 
@@ -140,33 +140,20 @@ notify =(type)=>{
       {
         Header: translations['COCOM'],
         accessor: 'COCOM',
-       /*  Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>,
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors! */
       },
       {
         Header: translations['Region'],
         accessor: 'RegionName',
-        /* Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Regions" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       }, 
       {
         Header: translations['Country'],
         accessor: 'CountryName',
-        /* Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Countries" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
       },
      
       {
         Header: translations['Unit'],
         accessor: 'UnitName',
-       /*  Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
+       
       },
       {
         Header: translations['Commander'],
@@ -175,16 +162,8 @@ notify =(type)=>{
       {
         Header: translations['Type'],
         accessor: 'Type',
-       /*  Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/> */
+       
       },
-     /*  {
-        Header: translations['Record Date'],
-        accessor: 'recorddate',
-        filterable: false
-        // filterMethod: (filter, row) =>
-        //             row[filter.id].startsWith(filter.value)
-      }, */
       {
         Header: translations['view'],
         accessor: 'CCIRPIRId',
@@ -193,43 +172,27 @@ notify =(type)=>{
       } 
     ];
 
-    // const rowFields = [
-    //   {name: 'Creation Date/Time', type: 'date'},
-    //   {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
-    //   {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
-    //   {name: 'Country', type: 'dropdown', ddID: 'Countries'},
-    //   {name: 'Region', type: 'dropdown', ddID: 'Regions'},
-    //   {name: 'Unit', type: 'dropdown',ddID: 'Units'},
-    //   {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
-    //   {name: 'Mission/Operation name', type: 'input'}
-    // ];
-
-    return (
-      <div>
-        <div className="row orders-assets">
-          <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
-            <div className="header-text">
-              {translations["Ccir/Pir"]}
-            </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+  return (
+    <div>
+      <NotificationContainer />
+      <div className="row orders-assets">
+        <div className="header-line">
+          <img src="/assets/img/admin/personnel_1.png" alt=""/>
+          <div className="header-text">
+            {translations["Ccir/Pir"]}
           </div>
-          <div className="col-md-12 filter-line" style={{padding:'0px 17px 0px 0px'}}>
-            <div className="add-button">
-              <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
-            </div>
+          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+        </div>
+        <div className="col-md-12 filter-line">
+          <div className="add-button">
+            <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
           </div>
-          {this.state.addCcirPirModalOpen ?
-          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
+        </div>
+        {this.state.addCcirPirModalOpen ?
+          <CcirPirModal  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
           : null
         }
-
-
-           <NotificationContainer />  
-
-
-
-
+        
           <div className="col-md-12">
             <ReactTable
               data={allCcirPirs}
@@ -243,12 +206,10 @@ notify =(type)=>{
 						  }}
             />
           </div>
-          
-          {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} /> */}
         </div>
       </div>
-    );
-  }
+  );
+}
 }
 
 CcirPirComponent.propTypes = {
