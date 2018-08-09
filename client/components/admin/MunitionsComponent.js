@@ -103,6 +103,10 @@ notify =()=>{
         //               return a.length > b.length ? 1 : -1;
         //             }// String-based value accessors!
       },
+      {
+        Header: translations["Manufacturer"],
+        accessor: 'manufacturer',
+      },
       /*{
         Header: translations['Name'],
         accessor: 'munition',
@@ -126,6 +130,10 @@ notify =()=>{
       {
         Header: translations['serial#'],
         accessor: 'serialNumber',
+      },
+      {
+        Header: translations["Branch"],
+        accessor: 'branch',
       },
       {
         Header: translations['cocom'],
@@ -157,12 +165,6 @@ notify =()=>{
 		// 			})}
 		// 		  </select>
 	  },
-      {
-        Header: translations['Record Date'],
-        accessor: 'recordDate',
-        // Filter: ({ filter, onChange }) =>
-        //           <FilterDatePicker onChange={this.handleChange} value={filter ? filter.value : ""}/>
-      },
       {
         Header: translations['view'],
         accessor: 'ID',
