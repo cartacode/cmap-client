@@ -24,7 +24,7 @@ class AddPersonnelModal extends React.Component {
             selectedRank: '',
             file: '',
             clear:false,
-            editF:false,
+            editFetched:false,
             imagePreviewUrl: '',
             imagePreviewUrl2: '',
             personnel: {
@@ -84,13 +84,13 @@ class AddPersonnelModal extends React.Component {
     if(editForm) {
         console.log("Inner Update Called");
         this.props.stopupdate();
-        this.props.fetchPersonnelById(editId).then(() => {this.setState({editF:true}); this.state.personnel = this.props.onePersonnel;});
+        this.props.fetchPersonnelById(editId).then(() => {this.setState({editFetched:true}); this.state.personnel = this.props.onePersonnel;});
         
     }
   }
 
   stopupd = () => {
-    this.setState({editF:false});
+    this.setState({editFetched:false});
   }
 
   
@@ -485,13 +485,13 @@ stopset () {
             <div className="row personnel" >
               <div className="under-payload-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editF = {this.state.editF} stopupd = {this.stopupd}/>
+                                      fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title="Organization & Duty" fields={organisationFields}
-                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editF = {this.state.editF} stopupd = {this.stopupd}/>
+                              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png"
                               title={translations["Contact Information"]} fields={contactFields}
-                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editF = {this.state.editF} stopupd = {this.stopupd}/>
+                              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
               </div>
             </div>
           </div>
