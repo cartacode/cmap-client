@@ -15,6 +15,8 @@ class PayloadsComponent extends React.Component {
 			filter: [],
 			addPayloadsInventoryOpen: false,
 			editId: '0',
+			editForm:false,
+      		counter:0
 		};
 	}
 
@@ -23,10 +25,23 @@ class PayloadsComponent extends React.Component {
 	}
 
 	openPayloadsForm = (row) => {
-		this.setState({
-			editId: row,
-			addPayloadsInventoryOpen: true,
-		});
+		this.setState({counter:this.state.counter + 1});
+		if (this.state.counter == 0)
+    	{
+			this.setState({
+				editId: row,
+				addPayloadsInventoryOpen: true,
+			});
+		}
+		else {
+				this.setState({
+			 	editId: row,
+				addPayloadsInventoryOpen: true
+				}, () => { 
+			 	 this.setState({
+				 editForm: true
+			  	}); });
+		     }
 	}
 
 	closePayloadsForm = (actionType) => {
@@ -79,6 +94,11 @@ class PayloadsComponent extends React.Component {
 	// 		}
 	// 	})
 	// }
+
+	stopupdate = () => 
+	{
+	  this.setState({editForm:false});
+	}
 
 	render() {
 		const { translations, allPayloadInventory } = this.props;
@@ -142,7 +162,7 @@ class PayloadsComponent extends React.Component {
 						</div>
 					</div>
 					{this.state.addPayloadsInventoryOpen ?
-						<AddPayloadsInventory editId={this.state.editId} onClose={this.closePayloadsForm} translations={translations} />
+						<AddPayloadsInventory editId={this.state.editId} onClose={this.closePayloadsForm} translations={translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
 						: null
 					}
 					<NotificationContainer />
