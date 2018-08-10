@@ -58,7 +58,8 @@ class PersonnelComponent extends React.Component {
   }
   else {
     this.setState({
-      editId: row
+      editId: row,
+      addPersonnelModalOpen: true
     }, () => { console.log("State Updated");
       this.setState({
         editForm: true

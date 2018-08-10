@@ -36,17 +36,18 @@ class ContentBlock extends React.Component {
     
     const { content } = this.state;
     const { initstate, editId } = this.props;
-    const { editF } = this.props;
+    const { editFetched } = this.props;
     
-    // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
-    //   // if(editId !== undefined && editId !== '0') {
-    //   this.setState({
-    //     content: initstate,
-    //   });
-    //   this.props.data(this.state.content);
-    // }
-    console.log('editF '+editF);
-    if (editF)
+    if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
+      // if(editId !== undefined && editId !== '0') {
+        console.log("Is it called?");
+      this.setState({
+        content: initstate,
+      });
+      this.props.data(this.state.content);
+    }
+
+    if (editFetched)
     {
       console.log(this.state.initstate);
       this.props.stopupd();
@@ -147,10 +148,6 @@ class ContentBlock extends React.Component {
               minValue = item.minValue;
             }
             input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
-            break;
-          
-          case 'textarea':
-            input = (<textarea value={value} className="form-control" name={item.valFieldID} onChange={this.handleChange} />);
             break;
 
           case 'dropdown':

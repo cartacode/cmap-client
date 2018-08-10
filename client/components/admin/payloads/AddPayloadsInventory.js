@@ -16,6 +16,7 @@ class AddPayloadsInventory extends React.Component {
     this.state = {
       file: '',
       clear:false,
+      editFetched:false,
       imagePreviewUrl: '',
       locationcategory: '',
       onePayloadInventory: {},
@@ -41,6 +42,24 @@ class AddPayloadsInventory extends React.Component {
       // this.setState({ onePayloadInventory: {} });
     }
   }
+
+  componentDidUpdate = () => {
+    
+    let {editForm} = this.props;
+    let { editId } = this.props;
+    
+    if(editForm) {
+        
+        this.props.stopupdate();
+        this.props.fetchPayloadInventoryById(editId).then(() => {this.setState({editFetched:true}); this.state.payloads = this.props.onePayloadInventory;});
+        
+    }
+  }
+
+  stopupd = () => {
+    this.setState({editFetched:false});
+  }
+
 
   handlePayloadGeneralData = (generalData) => {
     const { payloads } = this.state;
@@ -160,7 +179,7 @@ class AddPayloadsInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4" />
-              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             </div>
           </div>
         </div>
