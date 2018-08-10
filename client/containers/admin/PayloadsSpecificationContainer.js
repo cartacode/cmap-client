@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PayloadsSpecificationComponent from '../../components/admin/PayloadsSpecificationComponent';
 import { fetchCocoms } from 'actions/cocom';
 import { fetchLocationList } from 'actions/location';
-import { addPayload, fetchPayloadList, fetchPayloads, fetchPayloadTypes } from 'actions/payload';
+import { addPayload, fetchPayloadList, fetchPayloads, fetchPayloadTypes, deletePayloadsById } from 'actions/payload';
 
 const mapStateToProps = state => {
   return {
@@ -11,10 +11,10 @@ const mapStateToProps = state => {
     allPayloads: state.payloads.allPayloads,
     payloadList: state.payloads.payloadList,
     payloadTypes: state.payloads.payloadTypes,
-    fetchingPayloads: state.payloads.isFetching,
+    isLoading: state.payloads.isFetching,
     locationList: state.locations.locationList,
     cocomList: state.cocoms.cocomList,
-    payload: state.payloads.onePayload
+    payload: state.payloads.onePayload,
   };
 };
 
@@ -25,6 +25,7 @@ const mapDispatchToProps = {
   fetchPayloads,
   fetchCocoms,
   fetchLocationList,
+  deletePayloadsById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PayloadsSpecificationComponent);

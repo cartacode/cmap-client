@@ -17,6 +17,8 @@ class PersonnelComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
+      editForm:false,
+      counter:0
     };
   }
 
@@ -38,11 +40,30 @@ class PersonnelComponent extends React.Component {
   //   })
   // }
 
+
+
   openPersonnelForm = (row) => {
-    this.setState({
+    this.setState({counter:this.state.counter + 1});
+    console.log("Invoked");
+    console.log("Row"+row);
+    console.log("Edit ID"+this.state.editId);
+    console.log("Counter"+this.state.counter);
+
+    if (this.state.counter == 0)
+    {
+      this.setState({
       editId: row,
-      addPersonnelModalOpen: true,
+      addPersonnelModalOpen: true
     });
+  }
+  else {
+    this.setState({
+      editId: row
+    }, () => { console.log("State Updated");
+      this.setState({
+        editForm: true
+      }); });
+  }
   }
 
 closePersonnelForm = () => {
@@ -54,6 +75,13 @@ closePersonnelForm = () => {
     addPersonnelModalOpen: false,
   });
 }
+
+stopupdate = () => 
+  {
+    console.log("Stop Update Called");
+    this.setState({editForm:false});
+  }
+  
 
 render() {
 
@@ -69,17 +97,22 @@ render() {
       accessor: 'lastName',
     },
     {
-      Header: translations['Rank'],
-      accessor: 'rank.description',
-
+      Header: translations['Branch'],
+      accessor: 'branchOfService',
     },
     {
-      Header: translations['Service'],
-      accessor: 'branchOfService.description',
+      Header: translations['Assigned Unit'],
+      accessor: 'assignedUnit',
     },
     {
       Header: translations['Deployed Unit'],
-      accessor: 'deployedUnit.description',
+      accessor: 'deployedUnit',
+    },
+    
+    {
+      Header: translations['Rank'],
+      accessor: 'rank',
+
     },
     {
       Header: translations['CAC ID'],
@@ -117,19 +150,20 @@ render() {
           </div>
         </div>
         {this.state.addPersonnelModalOpen ?
-          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations}/>
+          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
           : null
         }
         <div className="col-md-12">
           <ReactTable
             data={allPersonnels}
-            columns={columns}            
+            columns={columns}
             defaultPageSize={10}
+            loading={this.props.isLoading}
             className="-striped -highlight"
             filterable={true}
             defaultFilterMethod={(filter, row) => {
               const id = filter.pivotId || filter.id
-              return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+              return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
             }}
           />
         </div>

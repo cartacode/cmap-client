@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactTable from 'react-table';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
 
@@ -32,19 +33,30 @@ class LocationComponent extends React.Component {
   };
 
   openBaseModalFrom = row => {
-    this.setState({
+     this.setState({
       editId: row,
       baseModalOpen: true
     });
   };
 
   closeBaseModalFrom = () => {
+    this.notify();
     this.props.fetchLocations();
     this.setState({
       editId: "0",
       baseModalOpen: false
     });
   };
+
+
+  notify =()=>{
+    const { translations } = this.props;
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
+      NotificationManager.success(translations['Update Locations Message'], translations['Location Title'], 5000);
+    }else{
+      NotificationManager.success(translations['Add Locations Message'], translations['Location Title'], 5000);
+    }
+  }
 
   render() {
     const { translations } = this.props;
@@ -255,6 +267,7 @@ class LocationComponent extends React.Component {
               translations={translations}
             />
           ) : null}
+        {/*   <NotificationContainer />  */}
           <br />
           <div className="row personnel">
             <div className="col-md-12">

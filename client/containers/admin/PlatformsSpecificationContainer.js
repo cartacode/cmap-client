@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import PlatformsSpecificationComponent from '../../components/admin/PlatformsSpecificationComponent';
-import { addPlatform, fetchPlatforms } from 'actions/platform';
+import { addPlatform, fetchPlatforms, deletePlatformById } from 'actions/platform';
 
 const mapStateToProps = state => {
   return {
@@ -15,6 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addPlatform,
   fetchPlatforms,
+  deletePlatformById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsSpecificationComponent);

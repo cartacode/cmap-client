@@ -1,29 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import FilterDropdown from '../reusable/FilterDropdown';
-import Dropdown from '../reusable/Dropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
-
-import EoirModal from './payloads/EoirModal';
-import SargmtiModal from './payloads/SargmtiModal';
-import WamiModal from './payloads/WamiModal';
-import SigintModal from './payloads/SigintModal';
-import EquipmentModal from './payloads/EquipmentModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import "react-table/react-table.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
-import { NotificationManager, NotificationContainer } from 'react-notifications';
+import "react-table/react-table.css";
+import DropDownButton from '../reusable/DropDownButton';
+import TableRowDetailModal from '../reusable/TableRowDetailModal';
+import EoirModal from './payloads/EoirModal';
+import EquipmentModal from './payloads/EquipmentModal';
+import SargmtiModal from './payloads/SargmtiModal';
+import SigintModal from './payloads/SigintModal';
+import WamiModal from './payloads/WamiModal';
+
+
+
 
 class PayloadsSpecificationComponent extends React.Component {
 	constructor(props) {
@@ -43,7 +33,8 @@ class PayloadsSpecificationComponent extends React.Component {
 			form : {
 				type: 'Test'
 			  },
-			editId: '0'
+			editId: '0',
+			payloadSpecType: '',
 			
 		}
 	}
@@ -52,53 +43,103 @@ class PayloadsSpecificationComponent extends React.Component {
 		console.log("find");
 	}
 
-	eoirModal = () => {
+	openEoirModal = () => {
 		this.setState({
-			eoirModalOpen: !this.state.eoirModalOpen
+			editId: '0',
+			eoirModalOpen: true,
+			sargmtiModalOpen: false,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
+			
 		});
 	}
 
-	sargmtiModal = () => {
+	openSargmtiModal = () => {
 		this.setState({
-			sargmtiModalOpen: !this.state.sargmtiModalOpen
+			editId: '0',
+			eoirModalOpen: false,
+			sargmtiModalOpen: true,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
 		});
 	}
 
-	wamiModal = () => {
+	openWamiModal = () => {
 		this.setState({
-			wamiModalOpen: !this.state.wamiModalOpen
+			editId: '0',
+			eoirModalOpen: false,
+			sargmtiModalOpen: false,
+			wamiModalOpen: true,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
 		});
 	}
 
-	sigintModal = () =>{
+	openSigintModal = () =>{
 		this.setState({
-			sigintModalOpen: !this.state.sigintModalOpen
+			editId: '0',
+			eoirModalOpen: false,
+			sargmtiModalOpen: false,
+			wamiModalOpen: false,
+			sigintModalOpen: true,
+			equipmentModalOpen: false,
 		});
 	}
 
-	equipmentModal = () => {
+	openEquipmentModal = () => {
 		this.setState({
-			equipmentModalOpen: !this.state.equipmentModalOpen
+			editId: '0',
+			eoirModalOpen: false,
+			sargmtiModalOpen: false,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: true,
 		});
 	}
 
 	tableRowDetailModal = () => {
-		this.notify();
-		this.props.fetchPayloads();
-		this.props.fetchPayloadList();
+		this.loadData();
 		this.setState({
 			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen,
 			editId: 0,
 		})
 	}
 
-	notify =()=>{
+	
+	closePayloadSpecifiction=(actionType)=>{
+		this.loadData(actionType);
+		this.setState({
+			payloadSpecType: '',
+			editId: '0',
+			eoirModalOpen: false,
+			sargmtiModalOpen: false,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
+		});
+
+	}
+
+	loadData = (actionType) =>{
+		this.notify(actionType);
+		this.props.fetchPayloads();
+		this.props.fetchPayloadList();
+	}
+
+	//actionType means ADD, UPDATE, DELETE
+	notify =(actionType)=>{
 		const { translations } = this.props;
+		if('DELETE' != actionType){
 			if (this.state.editId !== undefined && this.state.editId !== '0') {
-				NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+				NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
 			}else{
-				NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+				NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
 			}
+		}else{
+			NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+		}
 	}
 
 	componentWillMount() {
@@ -108,15 +149,31 @@ class PayloadsSpecificationComponent extends React.Component {
 	//	this.props.fetchLocationList();
 	}
 
-	openPayloadsSpecificationForm = (row) => {
-		console.log(row);
+	modelStateReset = ()=>{
 		this.setState({
-		    editId: row,
-		  	eoirModalOpen:true,
+			payloadSpecType: '',
+			eoirModalOpen: false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
 			sigintModalOpen: false,
 			equipmentModalOpen: false,
+		});
+	}
+
+	openPayloadsSpecificationForm = (row) => {
+		let value = row.value;
+		//@Note:- types like as EO/IR, SAR, WAMI, SIGINT, GMTI, FMV, COMINT, LIDAR, PeARL, WAPS, OCD, CCD, MASINT, HSI, DMTI, ELINT, IMINT.
+		let payloadSpecType = row.original.type;
+		console.log(value);
+		this.modelStateReset();
+		this.setState({
+			payloadSpecType:payloadSpecType,
+		    editId: value,
+		  	eoirModalOpen: 'EO/IR' == payloadSpecType ? true : false,
+			sargmtiModalOpen: ('SAR' == payloadSpecType || 'GMTI' == payloadSpecType) ? true : false,
+			wamiModalOpen: 'WAMI' == payloadSpecType ? true : false,
+			sigintModalOpen: 'SIGINT' == payloadSpecType ? true : false,
+			equipmentModalOpen: 'EQUIPMENT' == payloadSpecType ? true : false,
 		});
 		console.log(this.state.editId);
 	  }
@@ -146,6 +203,15 @@ class PayloadsSpecificationComponent extends React.Component {
 		})
 	}
 
+	deletePayload= (value)=> {
+		if (value !== undefined && value !== '0') {
+		  this.props.deletePayloadsById(value).then(() => { 
+			this.setState({	editId: '0'});
+			  this.loadData('DELETE'); 
+			});
+		} 
+	  }
+
 	handleChange(value) {
 		console.log(value);
 	}
@@ -153,95 +219,49 @@ class PayloadsSpecificationComponent extends React.Component {
 	render() {
 		const {translations} = this.props;
 		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
-
 		const addPayloads = [
-			{name:translations['eo/ir'], onClick:this.eoirModal},
-			{name:translations['sar/gmti'], onClick:this.sargmtiModal},
-			{name:translations['wami'], onClick:this.wamiModal},
-			{name:translations['sigint'], onClick:this.sigintModal},
-			{name:translations['equipment'], onClick:this.equipmentModal},
+			{name:translations['eo/ir'], onClick:this.openEoirModal, typeSpec: 'EO/IR'},
+			{name:translations['sar/gmti'], onClick:this.openSargmtiModal, typeSpec: 'SAR/GMTI'},
+			{name:translations['wami'], onClick:this.openWamiModal, typeSpec: 'WAMI' },
+			{name:translations['sigint'], onClick:this.openSigintModal, typeSpec: 'SIGINT' },
+			{name:translations['equipment'], onClick:this.openEquipmentModal, typeSpec:'EQUIPMENT' },
 		];
 
 		const columns = [
 			{
-				Header: "ID",
-				accessor: 'ID',
-				// filterMethod: (filter, row) =>
-				// 			row[filter.id].startsWith(filter.value),
-				// Filter: ({ filter, onChange}) =>
-				// 		<select
-				// 			onChange={event => onChange(event.target.value)}
-				// 			style={{ width: "100%" }}
-				// 			value={filter ? filter.value : ""} >
-				// 			{this.renderItems([])}
-				// 			<option key={'1'} value={'eo/ir'}>{'eo/ir'}</option>
-				// 			<option key={'2'} value={'sar/gmti'}>{'sar/gmti'}</option>
-				// 			<option key={'3'} value={'wami'}>{'wami'}</option>
-				// 			<option key={'4'} value={'sigint'}>{'sigint'}</option>
-				// 			<option key={'5'} value={'equipment'}>{'equipment'}</option>
-				// 		</select>,
-				// sortMethod: (a, b) => {
-				// 			  if (a.length === b.length) {
-				// 				return a > b ? 1 : -1;
-				// 			  }
-				// 			  return a.length > b.length ? 1 : -1;
-				// 			}// String-based value accessors!
-			  },
-			{
-				Header: "Payload",
-				accessor: 'payload',
-				// Filter: ({ filter, onChange }) =>
-				// 		   <select
-				// 			onChange={event => onChange(event.target.value)}
-				// 			style={{ width: "100%" }}
-				// 			value={filter ? filter.value : ""}
-				// 		  >
-				// 			{this.renderItems([])}
-				// 			{allPayloads.map(function(data, key){
-				// 				return (<option key={key} value={data.payload}>{data.payload}</option> );
-				// 			})}
-				// 		  </select>
+				Header: "Type",
+				accessor: 'type',
 			},
 			{
-				Header: "Nomenclature",
-				accessor: 'nomenclature',
+				Header: "Branch",
+				accessor: 'branch',
 			},
 			{
 				Header: "Manufacturer",
 				accessor: 'manufacturer',
-				// Filter: ({ filter, onChange }) =>
-				// 		  <select
-				// 			  onChange={event => onChange(event.target.value)}
-				// 			  style={{ width: "100%" }}
-				// 			  value={filter ? filter.value : ""}
-				// 		  >
-				// 			  {this.renderItems(cocomList)}
-				// 		  </select>
 			},
 			{
-				Header: "Abbreviation",
-				accessor: 'type',
-				// Filter: ({ filter, onChange }) =>
-				// 		  <select
-				// 			  onChange={event => onChange(event.target.value)}
-				// 			  style={{ width: "100%" }}
-				// 			  value={filter ? filter.value : ""}
-				// 		  >
-				// 			{this.renderItems([])}
-				// 			{allPayloads.map(function(data, key){
-				// 				return (<option key={key} value={data.location}>{data.location}</option> );
-				// 			})}
-				// 		  </select>
+				Header: "Payload Name",
+				accessor: 'name',
+				
 			},
 			{
-			  Header: "Description",
-			  accessor: 'typeDescription',
+				Header: "Mission Role",
+				accessor: 'role',
+			},
+			{
+			  Header: "Weight (lbs.)",
+			  accessor: 'weigth',
+			},
+			{
+				Header: "Power(W)",
+				accessor: 'power',
 			},
 			{
 				Header: translations['view'],
 				accessor: 'ID',
 				filterable: false,
-				Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsSpecificationForm(row.value)} /></span> // Custom cell components!
+				Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsSpecificationForm(row)} /></span> <span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayload(row.value)} /></span></div>
 			}
 		];
 
@@ -274,21 +294,21 @@ class PayloadsSpecificationComponent extends React.Component {
 					</div>
 				</div>
 				{this.state.eoirModalOpen ?
-				<EoirModal editId={this.state.editId} show={this.state.eoirModalOpen} onClose={this.eoirModal} translations = {translations}/>
+				<EoirModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.sargmtiModalOpen ?
-				<SargmtiModal show={this.state.sargmtiModalOpen} onClose={this.sargmtiModal} translations = {translations}/>
+				<SargmtiModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sargmtiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.wamiModalOpen ?
-				<WamiModal show={this.state.wamiModalOpen} onClose={this.wamiModal} translations = {translations}/>
+				<WamiModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.wamiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.sigintModalOpen ?
-				<SigintModal show={this.state.sigintModalOpen} onClose={this.sigintModal} translations = {translations}/>
+				<SigintModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sigintModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.equipmentModalOpen ? 
-				<EquipmentModal show={this.state.equipmentModalOpen} onClose={this.equipmentModal} translations = {translations}/>
+				<EquipmentModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.equipmentModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
-				<TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/>
+				{/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.closePayloadSpecifiction} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/> */}
 				<NotificationContainer />
 				<div className="col-md-12">
 					<ReactTable
@@ -297,9 +317,10 @@ class PayloadsSpecificationComponent extends React.Component {
 						defaultPageSize={5}
 						className="-striped -highlight"
 						filterable={true}
+						loading={this.props.isLoading}
 						defaultFilterMethod={(filter, row) => {
 							const id = filter.pivotId || filter.id
-							return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+							return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
 						  }}
 					/>
 				</div>

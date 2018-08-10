@@ -9,17 +9,15 @@ import { createAction } from 'util/action';
 export function addCcirPir(ccirpir) {
   return createAction({
     type: CCIRPIR__ADD,
-    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, qs.stringify(ccirpir), requestHeaders),
+    action: () => axios.post(`${baseUrl}/CCIRPIR`, qs.stringify(ccirpir), requestHeaders),
   });
 }
 
 // function to update  CCIRPIR Record by Id
 export function updateCcirPir(id, data) {
-  console.log('updating'+JSON.stringify(data));
-  
   return createAction({
     type: CCIRPIR__UPDATE,
-    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR/${id}`, qs.stringify(data), requestHeaders),
   });
 }
 
@@ -35,7 +33,7 @@ export function fetchCcirPirs() {
 export function fetchCcirPirById(id) {
   return createAction({
     type: CCIRPIR__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventory/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/CCIRPIR/GetCCIRPIRData/${id}`, requestHeaders),
   });
 }
 

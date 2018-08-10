@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalFormBlock from '../../reusable/ModalFormBlock';
 import CustomButton from '../../reusable/CustomButton';
+import { connect } from 'react-redux';
+import { addCcirPir,  updateCcirPir,  fetchCcirPirById } from 'actions/ccirpir';
 
 class CcirPirModal extends React.Component {
 
@@ -9,85 +11,145 @@ class CcirPirModal extends React.Component {
     super(props);
     this.state={
       addClicked: false  ,
-      ccirpir:{
-        COCOM:'',
-        Branch:'',
-        Country:'',
-        Region:'',
-        Units:'',
-        Commander:'',
-        TypesEnum:'',
-        Opname:'',
-        KML:''
+      //  ccirpir:{
+      //   COCOMId:'',
+      //   BranchId:'',
+      //   CountryId:'',
+      //   RegionId:'',
+      //   UnitId:'',
+      //   CommanderId:'',
+      //   Type:'',
+      //   MissionName:'',
+      //   EffectiveAreaKML:''
 
-      }
+      //  },
+     // ccirpir:{},
+      oneCcirPir: {}
     }
 
-    this.handleAdd = this.handleAdd.bind(this);
-  }
+    // this.handleAdd = this.handleAdd.bind(this);
 
-  handleAdd () 
-  { 
-      console.log("Is it here?");
-    /*  let divid = document.getElementById("add");
-      var div = document.createElement('div');
-      div.innerHTML = '<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3"/></div><div className="add-buttion"><button onClick={this.props.onAdd}> add </button></div></div></div>';
-      divid.appendChild(div);
-      this.forceUpdate(); */
-      this.setState({
-        addClicked: true
-      });
+    this.handleChange = this.handleChange.bind(this);
+
+    // preserve the initial state in a new object
+    this.baseState = this.state;
 
   }
 
-  handlePlatformGeneralData = (generalData) => {
-    const { ccirpir } = this.state;
-    console.log(generalData);
+
+  componentDidMount() {
+    const { editId } = this.props;
+    if(editId !== '0') {
+      this.props.fetchCcirPirById(editId);
+    }else {
+      // this.setState({ onePayloadInventory: {} });
+    }
+  }
+
+
+  // handleAdd () 
+  // { 
+  //     console.log("Is it here?");
+  //   /*  let divid = document.getElementById("add");
+  //     var div = document.createElement('div');
+  //     div.innerHTML = '<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3"/></div><div className="add-buttion"><button onClick={this.props.onAdd}> add </button></div></div></div>';
+  //     divid.appendChild(div);
+  //     this.forceUpdate(); */
+  //     this.setState({
+  //       addClicked: true
+  //     });
+
+  // }
+
+  handleCcirPirGeneralData = (generalData) => {
+    let { ccirpir } = this.state;
     this.setState({
       ccirpir: {
         ...ccirpir,
-        COCOM: generalData.COCOM,
-        Branch: generalData.Branch,
-        Country: generalData.Country,
-        Region: generalData.Region,
-        Unit: generalData.Unit,
-        Commander: generalData.Commander,
-        TypesEnum: generalData.TypesEnum,
-        Opname: generalData.Opname,
-        KML: generalData.KML
-       
+        COCOMId: generalData.COCOMId,
+        BranchId: generalData.BranchId,
+        CountryId: generalData.CountryId,
+        RegionId: generalData.RegionId,
+        UnitId: generalData.UnitId,
+        CommanderId: generalData.CommanderId,
+        Type: generalData.Type,
+        MissionName: generalData.MissionName,
+        EffectiveAreaKML: generalData.EffectiveAreaKML,
+        CCIRPIRId: this.props.editId,
+
       }
     }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.platform);
+      console.log("New state in ASYNC callback:22222", this.state.ccirpir);
     });
   }
 
 
+  handleSubmit = event => {
+    event.preventDefault();
+    const { editId } = this.props;
+    let { ccirpir } = this.state;
+    if (editId !== undefined && editId !== '0') {
+      ccirpir.CCIRPIRId = editId;
+      ccirpir.LastUpdateUserId =  null;
+     
+      this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
+    } else {
+      ccirpir.LastUpdateUserId =  null;
+     
+
+
+      this.props.addCcirPir(this.state.ccirpir).then( () => {this.props.onClose('ADD');});
+    }
+    
+  }
+
+
+  handleChange = (e) =>{
+    const { name, value } = e.target;
+   
+    const { ccirpir } = this.state;
+    this.setState({
+      ccirpir: {
+             ...ccirpir,
+             [name]: value
+         }
+     }, () =>{
+       //console.log("m   m m m m    "+JSON.stringify(this.state.ccirpir) );
+        //this.props.data(this.state.ccirpir);
+    });
+     
+ }
+
+ 
+
+
   render() {
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
-      return null;
-    }
+    // if(!this.props.show) {
+    //   return null;
+    // }
 
-    let $newdiv = '';
+    // let $newdiv = '';
 
-    if(this.state.addClicked)
-      {
-      $newdiv=(<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3" className="description"/></div><div className="add-buttion"><button> add </button></div></div></div>);
-      }
-      else {$newdiv = '';}
+    // if(this.state.addClicked)
+    //   {
+    //   $newdiv=(<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3" className="description"/></div><div className="add-buttion"><button> add </button></div></div></div>);
+    //   }
+    //   else {$newdiv = '';}
+
+    const { translations } = this.props;
 
     const generalFields = [
      /*  {name: 'Creation Date/Time', type: 'date'}, */
-      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOM', domID: 'COCOM', valField: ''},
-      {name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'Branch', domID: 'Branch', valField: ''},
-      {name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'Country', domID: 'Country', valField: ''},
-      {name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'Region', domID: 'Region', valField: ''},
-      {name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'Unit', domID: 'Unit', valField: ''},
-      {name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'Commander', domID: 'Commander', valField: ''},
-      {name: 'Type', type: 'dropdown', ddID: 'TypesEnum',  valFieldID: 'TypesEnum', domID: 'TypesEnum', valField: ''},
-      {name: 'Operation/Mission Name', type: 'input',  valFieldID: 'Opname', domID: 'Opname'},
-      {name: 'Effective Area KML', type: 'file',  valFieldID: 'KML', domID: 'KML'}
+      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM'},
+      {name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch'},
+      {name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country'},
+      {name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region'},
+      {name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'UnitId', domID: 'Unit'},
+      {name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander'},
+      {name: 'Type', type: 'dropdown', ddID: 'TypesEnum',  valFieldID: 'Type', domID: 'TypesEnum'},
+      {name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname'},
+      {name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
     ];
 
     const typesEnum =[ 
@@ -99,6 +161,8 @@ class CcirPirModal extends React.Component {
     return (
       
         <div>
+                <form action="" onSubmit={this.handleSubmit} >
+
           <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div>
@@ -114,7 +178,7 @@ class CcirPirModal extends React.Component {
               </div>
               <div className="col-md-12 info-content">
 
-            <ModalFormBlock data={this.handlePlatformGeneralData} fields={generalFields} typesEnum={typesEnum} initstate={this.state.ccirpir}/>
+            <ModalFormBlock editId={this.props.editId} data={this.handleCcirPirGeneralData} fields={generalFields} typesEnum={typesEnum} initstate={this.props.oneCcirPir}/>
             </div>
           </div>
           <div id="add"> 
@@ -129,21 +193,45 @@ class CcirPirModal extends React.Component {
               </div>
               <div className="col-md-12 info-content">
             <div className="entry-field">
-              <div className="entry-detail col-md-8">
-                <textarea rows="3" className="description ccir"/>
+            <div className="entry-detail col-md-12">
+                <label>Description 1</label>
+            </div>
+              <div className="entry-detail col-md-12">
+                <textarea rows="3" className="description ccir"  name="Description" onChange={this.handleChange.bind(this)} />
               </div>
-              <div className="add-buttion col-md-4">
-               
+            
+            </div>
 
-                          <div className="action-buttons ccir" >
-        <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-        <button className="highlighted-button" onClick={this.handleAdd}>
-        add
-        </button>
-        <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-      </div>
+
+            <div className="entry-field">
+              <div className="entry-detail col-md-12">
+                <label>Description 2</label>
+              </div>
+              <div className="entry-detail col-md-12">
+                <textarea rows="3" className="description ccir" name="Description2" onChange={this.handleChange.bind(this)}/>
               </div>
             </div>
+
+            <div className="entry-field">
+              <div className="entry-detail col-md-12">
+                <label>Description 3</label>
+              </div>
+              <div className="entry-detail col-md-12">
+                <textarea rows="3" className="description ccir" name="Description3" onChange={this.handleChange.bind(this)}/>
+              </div>
+            </div>
+
+            <div className="entry-field">
+              <div className="entry-detail col-md-12">
+                <label>Description 4</label>
+              </div>
+              <div className="entry-detail col-md-12">
+                <textarea rows="3" className="description ccir" name="Description4" onChange={this.handleChange.bind(this)}/>
+              </div>
+            </div>
+
+
+
             </div>
           </div>
           <div className="col-md-4">
@@ -155,28 +243,56 @@ class CcirPirModal extends React.Component {
                 <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
               </div>
               <div className="col-md-12 info-content">
-            <div className="entry-field ">
-              <div className="entry-detail col-md-8">
-                <textarea rows="3" className="description ccir"  />
-              </div>
-              <div className="add-buttion col-md-4 text-center">
-               
-                <div className="action-buttons ccir" >
-        <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-        <button className="highlighted-button">
-        add
-        </button>
-        <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-      </div>
-              </div>
-              </div>
+                <div className="entry-field ">
+                  <div className="entry-detail col-md-12">
+                    <label>Description 1</label>
+                  </div>
+                  <div className="entry-detail col-md-12">
+                   <textarea rows="3" className="description ccir"  name="Description" onChange={this.handleChange.bind(this)}/>
+                  </div>
+             
+                </div>
+
+                <div className="entry-field ">
+                  <div className="entry-detail col-md-12">
+                    <label>Description 2</label>
+                  </div>
+                  <div className="entry-detail col-md-12">
+                   <textarea rows="3" className="description ccir"  name="Description2" onChange={this.handleChange.bind(this)}/>
+                  </div>
+             
+                </div>
+
+                <div className="entry-field ">
+                  <div className="entry-detail col-md-12">
+                    <label>Description 3</label>
+                  </div>
+                  <div className="entry-detail col-md-12">
+                   <textarea rows="3" className="description ccir"  name="Description3" onChange={this.handleChange.bind(this)} />
+                  </div>
+             
+                </div>
+
+                <div className="entry-field ">
+                  <div className="entry-detail col-md-12">
+                    <label>Description 4</label>
+                  </div>
+                  <div className="entry-detail col-md-12">
+                   <textarea rows="3" className="description ccir"  name="Description4" onChange={this.handleChange.bind(this)} />
+                  </div>
+             
+                </div>
+
+
+              
             </div>
           </div>
-          {$newdiv}
+          
           </div>
           <div className="col-md-12" style={{textAlign:'center'}}>
             <CustomButton buttonName="save" />
           </div>
+          </form>
         </div>
       
     );
@@ -186,7 +302,25 @@ class CcirPirModal extends React.Component {
 CcirPirModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
+  editId: PropTypes.string,
+
 };
 
-export default CcirPirModal;
+
+const mapStateToProps = state => {
+  return {
+    translations: state.localization.staticText,
+    oneCcirPir: state.ccirpir.oneCcirPir,
+  };
+};
+
+const mapDispatchToProps = {
+  addCcirPir,
+  updateCcirPir,
+  fetchCcirPirById,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CcirPirModal);
+
+//export default CcirPirModal;

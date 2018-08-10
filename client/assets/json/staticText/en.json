@@ -656,7 +656,8 @@
   "Add Platform Inventory Message": "Record add successfully.",
   "Update Platform Inventory Message": "Record updated successfully.",
   "Platform Specification Title": "Platform specification",
-  "Add Platform Specification Message": "Record add successfully.",
+  "Add Platform Specification Message": "Record added successfully.",
+  "Delete Platform Specification Message": "Record deleted successfully.",
   "Update Platform Specification Message": "Record updated successfully.",
   "Payload Inventory Title": "Payload inventory",
   "Add Payload Inventory Message": "Record add successfully.",
@@ -667,6 +668,9 @@
   "Delete CCIRPIR Message":"Record Deleted Successfully.",
 	"CCIRPIR Title":"CCIR/PIR",
 	"Update CCIRPIR Message":"Record Updated Successfully.",
-	"Add CCIRPIR Message":"Record Added Successfully."
-  
+	"Add CCIRPIR Message":"Record Added Successfully.",
+  "Location Title":"Locations",
+  "Add Locations Message": "Record add successfully.",
+  "Update Locations Message": "Record update successfully.",
+  "Manufacturer": "Manufacturer"
 }

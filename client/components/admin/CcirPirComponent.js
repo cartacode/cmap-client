@@ -23,6 +23,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 
+
 class CcirPirComponent extends React.Component {
 
   constructor(props) {
@@ -41,6 +42,11 @@ class CcirPirComponent extends React.Component {
   //   })
   // }
 
+  componentDidMount() {
+    // Fetch List of Records 
+    this.props.fetchCcirPirs();
+  }
+
 
 
 // Open form Add/Edit Rerocd
@@ -54,13 +60,20 @@ class CcirPirComponent extends React.Component {
   // Close Add/Edit Form
 closeCcirPirForm = (messageType) => {
   //show Success Message
-  this.notify(messageType);
-  this.props.fetchCcirPirs();
+  this.loadData(messageType);
+  //this.props.fetchCcirPirs();
   this.setState({
     editId: '0',
     addCcirPirModalOpen: false,
   });
 }
+
+
+loadData = (actionType) => {
+  this.notify(actionType);
+  this.props.fetchCcirPirs();
+}
+
 // will call from onClose in CcirPirModal
 callCloseCcirPirForm = () =>{
   this.closeCcirPirForm('');
@@ -70,46 +83,39 @@ callCloseCcirPirForm = () =>{
 deleteCcirPirRecord(row){
   this.props.deleteCcirPirById(row).then(() => {
     //Refresh List
-    this.closeCcirPirForm('delete');
+    this.closeCcirPirForm('DELETE');
   });
 }
 
 // function to Display Success Messages
 notify =(type)=>{
   const { translations } = this.props;
-  if(type === 'delete'){
+  if(type === 'DELETE'){
     NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
 
   }
-  else if(type === ''){
+  else if(type === 'ADD'){
     //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-
-  }
-  else{
-  
-  if (this.state.editId !== undefined && this.state.editId !== '0') {
-    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-  }else{
     NotificationManager.success(translations['Add CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
   }
+  else if(type === 'UPDATE'){
+    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+  }
+  else{
+
+  }
 }
-}
 
 
-  componentDidMount() {
-    // Fetch List of Records 
-    this.props.fetchCcirPirs();
-  }
+  // tableRowDetailModal = () => {
+  //   this.setState({
+  //     tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
+  //   })
+  // }
 
-  tableRowDetailModal = () => {
-    this.setState({
-      tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-    })
-  }
-
-  onFind(){
-    console.log("find");
-  }
+  // onFind(){
+  //   console.log("find");
+  // }
 
 
   render() {
@@ -187,16 +193,16 @@ notify =(type)=>{
       } 
     ];
 
-    const rowFields = [
-      {name: 'Creation Date/Time', type: 'date'},
-      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
-      {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
-      {name: 'Country', type: 'dropdown', ddID: 'Countries'},
-      {name: 'Region', type: 'dropdown', ddID: 'Regions'},
-      {name: 'Unit', type: 'dropdown',ddID: 'Units'},
-      {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
-      {name: 'Mission/Operation name', type: 'input'}
-    ];
+    // const rowFields = [
+    //   {name: 'Creation Date/Time', type: 'date'},
+    //   {name: 'COCOM', type: 'dropdown', ddID: 'COCOM', },
+    //   {name: 'Service', type: 'dropdown', ddID: 'BranchOfService'},
+    //   {name: 'Country', type: 'dropdown', ddID: 'Countries'},
+    //   {name: 'Region', type: 'dropdown', ddID: 'Regions'},
+    //   {name: 'Unit', type: 'dropdown',ddID: 'Units'},
+    //   {name: 'Commander', type: 'dropdown', ddID: 'Commander'},
+    //   {name: 'Mission/Operation name', type: 'input'}
+    // ];
 
     return (
       <div>
@@ -214,7 +220,7 @@ notify =(type)=>{
             </div>
           </div>
           {this.state.addCcirPirModalOpen ?
-          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.callCloseCcirPirForm} translations = {translations} />
+          <CcirPirModal  show={this.state.addCcirPirModalOpen} /*onClose={this.ccirModal} onAdd={this.handleAdd} */  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
           : null
         }
 
@@ -238,7 +244,7 @@ notify =(type)=>{
             />
           </div>
           
-          <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} />
+          {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} /> */}
         </div>
       </div>
     );

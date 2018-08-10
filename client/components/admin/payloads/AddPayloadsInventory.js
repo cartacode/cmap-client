@@ -72,9 +72,9 @@ class AddPayloadsInventory extends React.Component {
     let { payloads } = this.state;
     if (editId !== undefined && editId !== '0') {
       payloads.id = editId;
-      this.props.updatePayloadInventory(editId, payloads).then( () => {this.props.onClose();});
+      this.props.updatePayloadInventory(editId, payloads).then( () => {this.props.onClose('UPDATE');});
     } else {
-      this.props.addPayloadInventory(this.state.payloads).then( () => {this.props.onClose();});
+      this.props.addPayloadInventory(this.state.payloads).then( () => {this.props.onClose('ADD');});
     }
     
   }
@@ -95,7 +95,6 @@ class AddPayloadsInventory extends React.Component {
             for(let i in items) {
               locationselect.add(new Option(items[i].label, items[i].value));
             }
-            
           })
           .catch((error) => {
             console.log('Exception comes:' + error);
@@ -131,10 +130,11 @@ class AddPayloadsInventory extends React.Component {
 
     const generalFields = [
       { name: 'Payload Specifications', type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name: translations['Serial#'], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
+      // { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM', required:true},
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
-      { name: 'Owning Unit', type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
-      { name: 'Serial Number', type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
     ];
 
     return (
@@ -172,17 +172,11 @@ class AddPayloadsInventory extends React.Component {
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button">
-              {translations.Delete}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-          </div>
+          
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button type="submit" className="highlighted-button">
-              {translations.save}
+              {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
