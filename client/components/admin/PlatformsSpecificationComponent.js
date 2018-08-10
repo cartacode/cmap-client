@@ -158,14 +158,14 @@ class PlatformsSpecificationComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              Platforms Specification
+              Platforms Library
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Specification</button>
+              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Library</button>
             </div>
           </div>
 

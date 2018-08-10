@@ -279,13 +279,13 @@ class PayloadsSpecificationComponent extends React.Component {
 					<div className="header-line">
 						<img src="/assets/img/admin/personnel_1.png" alt=""/>
 						<div className="header-text">
-							Payloads Specification
+							Payloads Library
 						</div>
 						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
 				<div className="col-md-12 filter-line">
 					<div className="add-button">
-						<DropDownButton key = '1' label="Add Specification" id="1" items={addPayloads} />
+						<DropDownButton key = '1' label="Add Library" id="1" items={addPayloads} />
 					</div>
 				</div>
 				{this.state.eoirModalOpen ?
