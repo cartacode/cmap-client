@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import LocationComponent from '../../components/admin/LocationComponent';
-import { addLocation, fetchLocations } from 'actions/location';
+import { addLocation, fetchLocations, deleteLocationById } from 'actions/location';
 
 const mapStateToProps = state => {
   return {
@@ -15,6 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addLocation,
   fetchLocations,
+  deleteLocationById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationComponent);

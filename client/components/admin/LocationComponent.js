@@ -55,14 +55,29 @@ class LocationComponent
     console.log("Stop Update Called");
     this.setState({editForm:false});
   }
+
+  deleteLocations = (value) => {
+    if (value !== undefined && value !== '0') {
+      this.props.deleteLocationById(value).then(() => {
+        this.setState({ editId: '0' });
+        this.props.fetchLocations();
+        this.notify('DELETE');
+      });
+    }
+  }
   
-  notify =()=>{
+  notify =(actionType)=>{
     const { translations } = this.props;
+    if ('DELETE' != actionType) { 
     if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['Update Locations Message'], translations['Location Title'], 5000);
     }else{
       NotificationManager.success(translations['Add Locations Message'], translations['Location Title'], 5000);
     }
+  }
+  else{
+    NotificationManager.success(translations['Delete Platform Specification Message'],translations['Location Title'], 5000);
+  }
   }
 
   render() {
@@ -112,12 +127,16 @@ class LocationComponent
         accessor: "id",
         filterable: false,
         Cell: row => (
-          <span className="number change-cursor-to-pointer">
+          <div><span className="number change-cursor-to-pointer">
             <img
               src="/assets/img/general/pen_icon.png"
               onClick={() => this.openBaseModalFrom(row.row.id)}
             />
           </span>
+          <span className='number change-cursor-to-pointer'>
+            <img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteLocations(row.value)} />
+          </span>
+          </div>
         ) // Custom cell components!
       }
     ];
