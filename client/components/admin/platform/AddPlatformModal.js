@@ -19,75 +19,78 @@ class AddPlatformModal extends React.Component {
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       isUpdated: false,
-       platform: {
-         PlatformID: '',
-         PlatformWireframe: '',
-         PlatformPhoto: '',
-         Platform3D: '',
-         PlatformIcon: '',
-         Platform2525B: '',
-         PlatformDatasheet: '',
-         PlatformTailNumber: '',
-         PlatformName: '',
-         PlatformNomenclature: '',
-         PlatformCategory: '',
-         PlatformService: '',
-         PlatformRole: '',
-         PlatformManufacturer: '',
-         PlatformExecutiveAgent: '',
-         PlatformContractProgram: '',
-         PlatformCost: '',
-         PlatformCostNotes: '',
-         PlatformIOCDate: '',
-         // PlatformGroundStation: '',
-         PlatformLength: '',
-         PlatformWingspan: '',
-         PlatformHeight: '',
-         PlatformWeight: '',
-         PlatformPowerPlant: '',
-         PlatformFuelCapacity: '',
-         PlatformCruisingSpeed: '',
-         PlatformRange: '',
-         PlatformCeiling: '',
-         PlatformMaxTakeOff: '',
-         // PlatformMinRunway: '',
-         PlatformPayloadCapacity: '',
-         PlatformPayloadCount: '',
-         PlatformPayload1: '',
-         PlatformPayload2: '',
-         PlatformPayload3: '',
-         PlatformPayload4: '',
-         PlatformPayload5: '',
-         PlatformPayload6: '',
-         PlatformArmamentCapacity: '',
-         PlatformArmamentCount: '',
-         PlatformArmament1: '',
-         PlatformArmament2: '',
-         PlatformArmament3: '',
-         // PlatformComs1: '',
-         // PlatformComs2: '',
-         PlatformFlightCrewReq: '',
-         PlatformLineCrewReq: '',
-         PlatformPayloadCrewReq: '',
-         PlatformPEDCrewReq: '',
-         PlatformFlightCrewMOS: '',
-         PlatformLineCrewMOS: '',
-         PlatformPayloadCrewMOS: '',
-         PlatformPEDCrewMOS: ''
-       },
+      platform: {
+        //  PlatformID: '',
+        //  PlatformWireframe: '',
+        //  PlatformPhoto: '',
+        //  Platform3D: '',
+        //  PlatformIcon: '',
+        //  Platform2525B: '',
+        //  PlatformDatasheet: '',
+        //  PlatformTailNumber: '',
+        //  PlatformName: '',
+        //  PlatformNomenclature: '',
+        //  PlatformCategory: '',
+        //  PlatformService: '',
+        //  PlatformRole: '',
+        //  PlatformManufacturer: '',
+        //  PlatformExecutiveAgent: '',
+        //  PlatformContractProgram: '',
+        //  PlatformCost: '',
+        //  PlatformCostNotes: '',
+        //  PlatformIOCDate: '',
+        //  // PlatformGroundStation: '',
+        //  PlatformLength: '',
+        //  PlatformWingspan: '',
+        //  PlatformHeight: '',
+        //  PlatformWeight: '',
+        //  PlatformPowerPlant: '',
+        //  PlatformFuelCapacity: '',
+        //  PlatformCruisingSpeed: '',
+        //  PlatformRange: '',
+        //  PlatformCeiling: '',
+        //  PlatformMaxTakeOff: '',
+        //  // PlatformMinRunway: '',
+        //  PlatformPayloadCapacity: '',
+        //  PlatformPayloadCount: '',
+        //  PlatformPayload1: '',
+        //  PlatformPayload2: '',
+        //  PlatformPayload3: '',
+        //  PlatformPayload4: '',
+        //  PlatformPayload5: '',
+        //  PlatformPayload6: '',
+        //  PlatformArmamentCapacity: '',
+        //  PlatformArmamentCount: '',
+        //  PlatformArmament1: '',
+        //  PlatformArmament2: '',
+        //  PlatformArmament3: '',
+        //  // PlatformComs1: '',
+        //  // PlatformComs2: '',
+        //  PlatformFlightCrewReq: '',
+        //  PlatformLineCrewReq: '',
+        //  PlatformPayloadCrewReq: '',
+        //  PlatformPEDCrewReq: '',
+        //  PlatformFlightCrewMOS: '',
+        //  PlatformLineCrewMOS: '',
+        //  PlatformPayloadCrewMOS: '',
+        //  PlatformPEDCrewMOS: ''
+      },
 
       onePlatform: {},
-    }
+    };
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
-    this.baseState = this.state;
+    // this.baseState = this.state;
   }
 
   componentDidMount = () => {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       this.props.fetchPlatformById(editId).then(() => {
-        this.setState({ isUpdated: true });
+        this.setState(
+          { isUpdated: true,
+            platform: this.props.onePlatform, 
+          });
       });
     }
   }
@@ -96,7 +99,10 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
       this.props.fetchPlatformById(editId).then(() => {
-        this.setState({ isUpdated: true });
+        this.setState(
+          { isUpdated: true,
+            platform: this.props.onePlatform, 
+          });
       });
     }
   }
@@ -113,7 +119,6 @@ class AddPlatformModal extends React.Component {
     this.setState({
       platform: {
         ...platform,
-        PlatformTailNumber: generalData.PlatformTailNumber,
         PlatformName: generalData.PlatformName,
         PlatformNomenclature: generalData.PlatformNomenclature,
         PlatformCategory: generalData.PlatformCategory,
@@ -148,7 +153,11 @@ class AddPlatformModal extends React.Component {
         PlatformCruisingSpeed: technicalData.PlatformCruisingSpeed,
         PlatformRange: technicalData.PlatformRange,
         PlatformCeiling: technicalData.PlatformCeiling,
-        PlatformMaxTakeOff: technicalData.PlatformMaxTakeOff
+        PlatformMaxTakeOff: technicalData.PlatformMaxTakeOff,
+        PlatformPayloadCapacity: technicalData.PlatformPayloadCapacity,
+        PlatformPayloadCount: technicalData.PlatformPayloadCount,
+        PlatformArmamentCapacity: technicalData.PlatformArmamentCapacity,
+        PlatformArmamentCount: technicalData.PlatformArmamentCount,
         //  PlatformMinRunway: technicalData.PlatformMin
 
       }
@@ -169,9 +178,9 @@ class AddPlatformModal extends React.Component {
         // PlatformPayload3: payloadData.PlatformPayload3,
         PlatformArmamentCapacity: payloadData.PlatformArmamentCapacity,
         PlatformArmamentCount: payloadData.PlatformArmamentCount,
-        PlatformArmament1: payloadData.PlatformArmament1,
-        PlatformArmament2: payloadData.PlatformArmament2,
-        PlatformArmament3: payloadData.PlatformArmament3,
+        // PlatformArmament1: payloadData.PlatformArmament1,
+        // PlatformArmament2: payloadData.PlatformArmament2,
+        // PlatformArmament3: payloadData.PlatformArmament3,
         // PlatformComs1: payloadData.PlatformComs1,
         // PlatformComs2: payloadData.PlatformComs2,
 
@@ -391,14 +400,14 @@ class AddPlatformModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { platform } = this.state;
+    let { platform } = this.state;
     const { editId } = this.props;
+    console.log('submitting'+JSON.stringify(platform));
     if (editId !== undefined && editId !== '0') {
       platform.PlatformID = editId;
-      this.props.updatePlatform(editId, platform).then( () => {this.props.onClose('UPDATE');});
+      this.props.updatePlatform(editId, platform).then(() => {this.props.onClose('UPDATE');});
     } else {
-      this.props.addPlatform(platform).then( () => {this.props.onClose('ADD'); });
-      
+      this.props.addPlatform(platform).then(() => {this.props.onClose('ADD'); });
     }
   }
 
@@ -424,9 +433,6 @@ class AddPlatformModal extends React.Component {
       this.state.platform = this.baseState.platform;
       console.log(this.state.platform);
       this.setState({clear:true});
-    }
-    else {
-
     }
   }
 
@@ -458,9 +464,13 @@ class AddPlatformModal extends React.Component {
     }
 
 
+    let nums = [];
+    for(let i = 20; i > 0; i--) {
+      nums.push({ 'label': i, 'value': i });
+    }
+
     //let { platform } = this.state;
     const { translations } = this.props;
-    debugger;
 
     const generalFields = [
       /* { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber', required: true }, */
@@ -469,14 +479,14 @@ class AddPlatformModal extends React.Component {
       { name: translations['Category'], type: 'dropdown', domID: 'Category', ddID: 'PlatformCategory', valFieldID: 'PlatformCategory', required: true },
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'PlatformService', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PlatformRole', required: true },
-      { name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID: 'Manufacturer', valFieldID: 'PlatformManufacturer', required: true },
+      { name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PlatformManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PlatformExecutiveAgent', valFieldID: 'PlatformExecutiveAgent' },
       { name: 'Contact Program', type: 'input', domID: 'PlatformContractProgram', valFieldID: 'PlatformContractProgram' },
       { name: translations['Cost'], type: 'number', domID: 'PlatformCost', valFieldID: 'PlatformCost' },
       { name: translations['Cost notes'], type: 'input', domID: 'PlatformCostNotes', valFieldID: 'PlatformCostNotes' },
       { name: translations['Initial Op Capability'], type: 'date', domID: 'PlatformIOCDate', valFieldID: 'PlatformIOCDate' },
       // {name: translations['Inventory'], type: 'dropdown', domID: 'PlatformInventory', ddID: 'PlatformInventory'},
-      { name: translations['Ground Control Station'], type: 'dropdown', domID: 'PlatformGroundStation', ddID: 'PlatformGroundStation', valFieldID: 'PlatformGroundStation', valField: '18' }
+      // { name: translations['Ground Control Station'], type: 'dropdown', domID: 'PlatformGroundStation', ddID: 'PlatformGroundStation', valFieldID: 'PlatformGroundStation', valField: '18' }
     ];
 
     const technicalFields = [
@@ -489,7 +499,11 @@ class AddPlatformModal extends React.Component {
       { name: translations['Cruising Speed(mph)'], type: 'number', domID: 'CruisingSpeed', valFieldID: 'PlatformCruisingSpeed' },
       { name: translations['Range(miles)'], type: 'number', domID: 'Range', valFieldID: 'PlatformRange', required: true },
       { name: translations['Ceiling(ft.)'], type: 'number', domID: 'Ceiling', valFieldID: 'PlatformCeiling', required: true },
-      { name: translations['Max Takeoff Weight(lbs.)'], type: 'number', domID: 'MaxTakeoffWeight', valFieldID: 'PlatformMaxTakeOff', required: true }
+      { name: translations['Max Takeoff Weight(lbs.)'], type: 'number', domID: 'MaxTakeoffWeight', valFieldID: 'PlatformMaxTakeOff', required: true },
+      { name: translations['Payload Capacity(lbs.)'], type: 'number', domID: 'PlatformPayloadCapacity', valFieldID: 'PlatformPayloadCapacity', required: true },
+      { name: translations['Payload Count'], type: 'number', domID: 'PlatformPayloadCount', valFieldID: 'PlatformPayloadCount' },
+      { name: translations['Armament Capacity(lbs.)'], type: 'number', domID: 'PlatformArmamentCapacity', valFieldID: 'PlatformArmamentCapacity', required: true },
+      { name: translations['Armament Count'], type: 'number', domID: 'PlatformArmamentCount', valFieldID: 'PlatformArmamentCount' },
       //  {name: translations['Min Runway(ft.)'], type: 'input', domID: 'MinRunway', valFieldID: 'PlatformMinRunway'},
     ];
 
@@ -513,13 +527,13 @@ class AddPlatformModal extends React.Component {
     ];
 
     const crewFields = [
-      { name: translations['Flight Crew Req'], type: 'dropdown', domID: 'PlatformFlightCrewReq', valFieldID: 'PlatformFlightCrewReq', ddID: 'CrewReq', valField: '15' },
+      { name: translations['Flight Crew Req'], type: 'dropdown', domID: 'PlatformFlightCrewReq', valFieldID: 'PlatformFlightCrewReq', ddID: '', options: nums },
       { name: translations['Flight Crew Mos'], type: 'dropdown', domID: 'PlatformFlightCrewMOS', valFieldID: 'PlatformFlightCrewMOS', ddID: 'MOS', required: true },
-      { name: translations['Line Crew Req'], type: 'dropdown', domID: 'PlatformLineCrewReq', valFieldID: 'PlatformLineCrewReq', ddID: 'CrewReq', valField: '15' },
+      { name: translations['Line Crew Req'], type: 'dropdown', domID: 'PlatformLineCrewReq', valFieldID: 'PlatformLineCrewReq', ddID: '', options: nums },
       { name: translations['Line Crew Mos'], type: 'dropdown', domID: 'PlatformLineCrewMOS', valFieldID: 'PlatformLineCrewMOS', ddID: 'MOS', required: true },
-      { name: translations['Payload Crew Req'], type: 'dropdown', domID: 'PlatformPayloadCrewReq', valFieldID: 'PlatformPayloadCrewReq', ddID: 'CrewReq', valField: '15' },
+      { name: translations['Payload Crew Req'], type: 'dropdown', domID: 'PlatformPayloadCrewReq', valFieldID: 'PlatformPayloadCrewReq', ddID: '', options: nums},
       { name: translations['Payload Crew Mos'], type: 'dropdown', domID: 'PlatformPayloadCrewMOS', valFieldID: 'PlatformPayloadCrewMOS', ddID: 'MOS', required: true },
-      { name: translations['PED Crew Req'], type: 'dropdown', domID: 'PlatformPEDCrewReq', valFieldID: 'PlatformPEDCrewReq', ddID: 'CrewReq', valField: '15' },
+      { name: translations['PED Crew Req'], type: 'dropdown', domID: 'PlatformPEDCrewReq', valFieldID: 'PlatformPEDCrewReq', ddID: '', options: nums },
       { name: translations['PED Crew Mos'], type: 'dropdown', domID: 'PlatformPEDCrewMOS', valFieldID: 'PlatformPEDCrewMOS', ddID: 'MOS', required: true },
 
     ];
@@ -533,29 +547,32 @@ class AddPlatformModal extends React.Component {
       // {name: translations['Add Munition']+" #3", type: 'dropdown', domID: 'AddMunition3', ddID: 'Munition/GetMunitions', valFieldID: 'Munition3'},
     ];
 
-    const nums = [
-      { name: '0' },
-      { name: '1' },
-      { name: '2' },
-      { name: '3' },
-      { name: '4' },
-      { name: '5' },
-      { name: '6' },
-      { name: '7' },
-      { name: '8' },
-      { name: '9' },
-      { name: '10' },
-      { name: '11' },
-      { name: '12' },
-      { name: '13' },
-      { name: '14' },
-      { name: '15' },
-      { name: '16' },
-      { name: '17' },
-      { name: '18' },
-      { name: '19' },
-      { name: '20' }
-    ];
+
+    
+
+    // const nums = [
+    //   { name: '0' },
+    //   { name: '1' },
+    //   { name: '2' },
+    //   { name: '3' },
+    //   { name: '4' },
+    //   { name: '5' },
+    //   { name: '6' },
+    //   { name: '7' },
+    //   { name: '8' },
+    //   { name: '9' },
+    //   { name: '10' },
+    //   { name: '11' },
+    //   { name: '12' },
+    //   { name: '13' },
+    //   { name: '14' },
+    //   { name: '15' },
+    //   { name: '16' },
+    //   { name: '17' },
+    //   { name: '18' },
+    //   { name: '19' },
+    //   { name: '20' }
+    // ];
 
     return (
 
@@ -622,23 +639,26 @@ class AddPlatformModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-personnel-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
                 data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
                 data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
-                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
+                data={this.handlePlatformCrewData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+              {/* <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
+                data={this.handlePlatformPayloadData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/> */}
+            
             </div>
           </div>
-          <div className="row personnel" >
+          {/* <div className="row personnel" >
             <div className="under-personnel-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editF={this.state.isUpdated}
-                data={this.handlePlatformCrewData} initstate={this.state.platform} platform={nums} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
+                data={this.handlePlatformCrewData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
 
-             {/*  <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
-                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/> */}
+               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
+                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/> 
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="row action-buttons">
           <div className="menu-button">
@@ -688,4 +708,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlatformModal);
-

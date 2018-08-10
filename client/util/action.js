@@ -13,6 +13,7 @@ export function createAction({ action, header = {}, type }) {
     try {
       dispatch({ type: type.SUCCESS, header, payload: await action() });
     } catch (error) {
+      alert('API ERROR OCCURRED');
       dispatch({ type: type.FAILURE, header, error });
     }
   };

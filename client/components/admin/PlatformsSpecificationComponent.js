@@ -118,50 +118,35 @@ class PlatformsSpecificationComponent extends React.Component {
     const { translations } = this.props;
     const { allPlatforms } = this.props;
 
-    console.log(allPlatforms);
-
     const columns = [
 
       {
-        Header: "Branch",
+        Header: translations['Branch'],
         accessor: 'branch',
-        // filterMethod: (filter, row) =>
-        //             row[filter.id].startsWith(filter.value),
-
-        // sortMethod: (a, b) => {
-        //           if (a.length === b.length) {
-        //               return a > b ? 1 : -1;
-        //             }
-        //           return a.length > b.length ? 1 : -1;
-        //       }// String-based value accessors!
       },
       {
         Header: translations['Platform Name'],
         accessor: 'name',
       },
       {
-        Header: "Manufacturer",
+        Header: translations['Manufacturer'],
         accessor: 'manufacturer'
       },
       {
-        Header: "Category",
+        Header: translations['Category'],
         accessor: 'category'
       },
       {
-        Header: "Category Desc",
-        accessor: 'categoryDesc'
-      },
-      {
-        Header: "Mission Role",
+        Header: translations['Mission Role'],
         accessor: 'role'
       },
       {
-        Header: "Payload Capacity",
-        accessor: 'payloadCapacity'
+        Header: translations['Payload Capacity(lbs.)'],
+        accessor: 'payloadCapacity',
       },
       {
-        Header: "Armament Capacity",
-        accessor: 'armamentCapacity'
+        Header: translations['Armament Capacity(lbs.)'],
+        accessor: 'armamentCapacity',
       },
       {
         Header: translations['view'],

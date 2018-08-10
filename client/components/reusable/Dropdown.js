@@ -29,15 +29,6 @@ class Table extends React.Component {
       let items = [{'label': '--Select Item--', 'value': 0}];
 
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl != null && this.props.dropdownDataUrl !== '') {
-
-        if (this.props.dropdownDataUrl === 'CrewReq') {
-          this.props.nums.map(item => {
-            items.push({'label': item['name'], 'value': item['name']});
-          });
-          this.setState({
-            dropdownItems: items,
-          });
-        }
         if (this.props.dropdownDataUrl === 'TypesEnum') {
           this.props.typesEnum.map(item => {
             items.push({'label': item['name'], 'value': item['name']});
@@ -62,6 +53,12 @@ class Table extends React.Component {
             });
         }
 
+      }
+
+      if(this.props.items) {
+        this.setState({
+          dropdownItems: this.props.items,
+        });
       }
 
     }
