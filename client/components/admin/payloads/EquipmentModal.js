@@ -16,6 +16,7 @@ class EquipmentModal extends React.Component {
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       clear: false,
+      editFetched: false,
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
@@ -65,19 +66,44 @@ class EquipmentModal extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount() {
-    console.log("---hereis eoirmodal---------");
-  }
 
   componentDidMount = () => {
     const { editId } = this.props;
-    if (editId !== undefined && editId !== '0') {
-      this.props.fetchPayloadsById(editId);
-    } else {
-      // this.setState({ onePayload: {} });
+    if (editId !== '0') {
+      this.props.editComponent(editId);
     }
-    console.log("variable" + editId);
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { editId } = this.props;
+    if(editId !== '0' && prevProps.editId !== editId) {
+      this.editComponent(editId);
+    }
+  }
+
+  stopUpdate = () => {
+    this.setState({editFetched:false});
+  }
+
+  editComponent = (editId) => {
+    this.props.fetchPayloadsById(editId).then(() => {
+      this.setState({
+        editFetched: true,
+        payloads: this.props.onePayload,
+      });
+    });
+  }
+
+
+  // componentDidMount = () => {
+  //   const { editId } = this.props;
+  //   if (editId !== undefined && editId !== '0') {
+  //     this.props.fetchPayloadsById(editId);
+  //   } else {
+  //     // this.setState({ onePayload: {} });
+  //   }
+  //   console.log("variable" + editId);
+  // }
 
   handlePayloadGeneralData = (generalData) => {
     const { payload } = this.state;
@@ -266,7 +292,7 @@ class EquipmentModal extends React.Component {
       { name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required: true },
       { name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole', required: true },
-      { name: translations['Manufacture'], type: 'number', domID: 'PayloadManufacture', valFieldID: 'PayloadManufacturer', required: true },
+      { name: translations['Manufacture'], type: 'dropdown', domID: 'PayloadManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PayloadManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent', required: true },
       { name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram', required: true },
       { name: translations['Cost'], type: 'number', domID: 'PayloadCost', valFieldID: 'PayloadCost' },
@@ -362,11 +388,11 @@ class EquipmentModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-payload-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadGeneralData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadTechnicalData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription}
+              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadFeatureData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
