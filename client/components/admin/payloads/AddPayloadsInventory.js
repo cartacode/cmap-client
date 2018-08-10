@@ -37,26 +37,40 @@ class AddPayloadsInventory extends React.Component {
     const { editId } = this.props;
     console.log('edit id'+editId);
     if(editId !== '0') {
-      this.props.fetchPayloadInventoryById(editId);
-    }else {
-      // this.setState({ onePayloadInventory: {} });
+      this.editComponent(editId);
     }
   }
 
-  componentDidUpdate = () => {
-    
-    let {editForm} = this.props;
-    let { editId } = this.props;
-    
-    if(editForm) {
-        
-        this.props.stopupdate();
-        this.props.fetchPayloadInventoryById(editId).then(() => {this.setState({editFetched:true}); this.state.payloads = this.props.onePayloadInventory;});
-        
+  componentDidUpdate = (prevProps, prevState) => {
+    const { editId } = this.props;
+    if(editId !== '0' && prevProps.editId !== editId) {
+      this.editComponent(editId);
     }
   }
 
-  stopupd = () => {
+  editComponent = (editId) => {
+    this.props.fetchPayloadInventoryById(editId).then(() => {
+      this.setState({
+        editFetched: true,
+        payloads: this.props.onePayloadInventory,
+      });
+    });
+  }
+
+  // componentDidUpdate = () => {
+    
+  //   let {editForm} = this.props;
+  //   let { editId } = this.props;
+    
+  //   if(editForm) {
+        
+  //       this.props.stopupdate();
+  //       this.props.fetchPayloadInventoryById(editId).then(() => {this.setState({editFetched:true}); this.state.payloads = this.props.onePayloadInventory;});
+        
+  //   }
+  // }
+
+  stopUpdate = () => {
     this.setState({editFetched:false});
   }
 
@@ -71,6 +85,8 @@ class AddPayloadsInventory extends React.Component {
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber,
+        COCOM: generalData.COCOM,
+        branch: generalData.branch,
         id: this.props.editId,
       },
     }, () => {
@@ -98,26 +114,28 @@ class AddPayloadsInventory extends React.Component {
     
   }
 
-  updatelocationid (generalData) 
-  {
-     let locationselect = document.getElementsByName('locationID')[0];
-     let items = [{'label': '--Select Item--', 'value': 0}];
-     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
-        axios.get(apiUrl)
-          .then(response => {
-            console.log(response.data);
-            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
-            response.data.map(item => {
-              items.push({ 'label': item['description'], 'value': item['id'].trim() });
-            });
-            if (locationselect.length > 0) {locationselect.length = 0;}
-            for(let i in items) {
-              locationselect.add(new Option(items[i].label, items[i].value));
-            }
-          })
-          .catch((error) => {
-            console.log('Exception comes:' + error);
-          });   
+  updatelocationid (generalData) {
+    let locationselect = document.getElementsByName('locationID')[0];
+    locationselect.length = 0;
+    locationselect.add(new Option('--Fetching Locations--', 0));
+    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
+    axios.get(apiUrl)
+      .then(response => {
+        locationselect.length = 0;
+        if(response.data) {
+          locationselect.add(new Option('--Select Location--', 0));
+          response.data.map(item => {
+            locationselect.add(new Option(item.description, item.id.trim()));
+          });
+        }else{
+          locationselect.add(new Option('No Location Found', 0));
+        }
+      })
+      .catch((error) => {
+        locationselect.length = 0;
+        locationselect.add(new Option('Error Fetching Locations', 0));
+        console.log('Exception comes:' + error);
+      });
   }
 
   stopset () {
@@ -150,7 +168,8 @@ class AddPayloadsInventory extends React.Component {
     const generalFields = [
       { name: 'Payload Specifications', type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: translations['Serial#'], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
-      // { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM', required:true},
+      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'COCOM', required:true},
+      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
@@ -179,7 +198,7 @@ class AddPayloadsInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4" />
-              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopUpdate}/>
             </div>
           </div>
         </div>

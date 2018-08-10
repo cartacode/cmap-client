@@ -55,7 +55,7 @@ class Table extends React.Component {
 
       }
 
-      if(this.props.items) {
+      if(this.props.options) {
         this.setState({
           dropdownItems: this.props.items,
         });

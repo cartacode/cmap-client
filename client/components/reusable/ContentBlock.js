@@ -149,7 +149,7 @@ class ContentBlock extends React.Component {
             //   value = 11;
             // }
             input = ( 
-              <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} items={item.options} dropdownData={this.handleDropdownSelectedData} required={req}/>
+              <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req}/>
             
             );
             break;

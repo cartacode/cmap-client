@@ -142,10 +142,8 @@ class AddPlatformInventory extends React.Component {
 
   updatelocationid (generalData) {
     let locationselect = document.getElementsByName('locationID')[0];
-    if (locationselect.length > 0) {
-      locationselect.length = 0;
-      locationselect.add(new Option('--Fetching Locations--', 0));
-    }
+    locationselect.length = 0;
+    locationselect.add(new Option('--Fetching Locations--', 0));
     let items = [{'label': 'Loading Locations', 'value': 0}];
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
     axios.get(apiUrl)
