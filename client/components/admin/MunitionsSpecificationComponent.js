@@ -137,6 +137,16 @@ class MunitionsSpecificationComponent extends React.Component {
     this.props.fetchMunitions();
   }
 
+  deleteMunitions = (value) => {
+    if (value !== undefined && value !== '0') {
+      this.props.deleteMunitionsById(value).then(() => {
+        this.setState({ editId: '0' });
+        this.props.fetchMunitions();
+        this.notify('DELETE');
+      });
+    }
+  }
+
   //actionType means ADD, UPDATE, DELETE
   notify = (actionType) => {
     const { translations } = this.props;
@@ -210,7 +220,7 @@ class MunitionsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row)} /></span> // Custom cell components!
+        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteMunitions(row.value)} /></span></div> // Custom cell components!
       }
     ];
     

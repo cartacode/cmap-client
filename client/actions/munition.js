@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { MUNITION__ADD, MUNITION__UPDATE, MUNITION__FETCH, MUNITION__FETCH_ONE } from 'dictionary/action';
+import { MUNITION__ADD, MUNITION__UPDATE, MUNITION__FETCH, MUNITION__FETCH_ONE, MUNITION__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -31,5 +31,12 @@ export function fetchMunitionsById(id) {
   return createAction({
     type: MUNITION__FETCH_ONE,
     action: () => axios.get(`${baseUrl}/Munition/GetMunition/${id}`, requestHeaders),
+  });
+}
+
+export function deleteMunitionsById(id) {
+  return createAction({
+    type: MUNITION__DELETE_ONE,
+    action: () => axios.delete(`${baseUrl}/Munition/DeleteMunition/${id}`, requestHeaders),
   });
 }

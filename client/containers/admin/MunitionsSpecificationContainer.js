@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import MunitionsSpecificationComponent from '../../components/admin/MunitionsSpecificationComponent';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitions, deleteMunitionsById } from 'actions/munition';
 
 const mapStateToProps = state => {
   return {
@@ -16,6 +16,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addMunition,
   fetchMunitions,
+  deleteMunitionsById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsSpecificationComponent);
