@@ -464,7 +464,7 @@ class AddPlatformModal extends React.Component {
     }
 
 
-    let nums = [];
+    let nums = [{label:'--Select--', value:''}];
     for(let i = 20; i > 0; i--) {
       nums.push({ 'label': i, 'value': i });
     }
@@ -477,7 +477,7 @@ class AddPlatformModal extends React.Component {
       { name: translations['Platform Name'], type: 'input', domID: 'PlatformName', valFieldID: 'PlatformName', required: true },
       { name: translations['Platform Nomenclature'], type: 'input', domID: 'PlatformNomenclature', valFieldID: 'PlatformNomenclature', required: true },
       { name: translations['Category'], type: 'dropdown', domID: 'Category', ddID: 'PlatformCategory', valFieldID: 'PlatformCategory', required: true },
-      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'PlatformService', required: true },
+      /* { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'PlatformService', required: true }, */
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PlatformRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PlatformManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PlatformExecutiveAgent', valFieldID: 'PlatformExecutiveAgent' },

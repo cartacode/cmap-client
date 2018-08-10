@@ -28,36 +28,29 @@ class Table extends React.Component {
     componentWillMount() {
       let items = [{'label': '--Select Item--', 'value': 0}];
 
-      if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl != null && this.props.dropdownDataUrl !== '') {
-        if (this.props.dropdownDataUrl === 'TypesEnum') {
-          this.props.typesEnum.map(item => {
-            items.push({'label': item['name'], 'value': item['name']});
-          });
-          this.setState({
-            dropdownItems: items,
-          });
-        }
-        else {
-          const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
-          axios.get(apiUrl)
-            .then(response => {
+      if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
+        
+        const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
+        axios.get(apiUrl)
+          .then(response => {
+            if(response.data) {
               response.data.map(item => {
                 items.push({ 'label': item[this.labelField], 'value': item[this.valueField].trim() });
               });
               this.setState({
                 dropdownItems: items,
               });
-            })
-            .catch((error) => {
-              console.log('Exception comes:' + error);
-            });
-        }
+            }
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });
 
       }
-
+        
       if(this.props.options) {
         this.setState({
-          dropdownItems: this.props.items,
+          dropdownItems: this.props.options,
         });
       }
 
@@ -78,7 +71,7 @@ class Table extends React.Component {
 
     // Generates optins array
     renderItems = () => {
-    //   const req = this.props.required;
+    
       return this.state.dropdownItems.map((data, key) => {
         if(key === 0) { data.value = ''; }
         return (
