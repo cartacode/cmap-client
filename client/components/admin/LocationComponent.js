@@ -66,10 +66,11 @@ class LocationComponent extends React.Component {
       { name: translations["POI"], onClick: this.poiModal }
     ];
     const { allLocations } = this.props;
+    debugger;
     const columns = [
       {
         Header: translations["type"],
-        accessor: "category"
+        accessor: "type"
       },
       {
         Header: translations["Name"],
@@ -80,20 +81,24 @@ class LocationComponent extends React.Component {
         accessor: "COCOM"
       },
       {
-        Header: translations["Country"],
-        accessor: "country"
-      },
-      {
         Header: translations["Region"],
         accessor: "region"
       },
       {
-        Header: translations["unit"],
-        accessor: "region"
+        Header: translations["Country"],
+        accessor: "country"
       },
       {
-        Header: translations["Record Date"],
-        accessor: "region"
+        Header: translations["City/Town"],
+        accessor: "city"
+      },
+      {
+        Header: translations["MGRS"],
+        accessor: "MGRS"
+      },
+      {
+        Header: translations["LocationID"],
+        accessor: "id"
       },
       {
         Header: translations["view"],

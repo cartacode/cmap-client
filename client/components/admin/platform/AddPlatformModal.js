@@ -447,11 +447,11 @@ class AddPlatformModal extends React.Component {
     debugger;
 
     const generalFields = [
-      { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber', required: true },
+      /* { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'PlatformTailNumber', required: true }, */
       { name: translations['Platform Name'], type: 'input', domID: 'PlatformName', valFieldID: 'PlatformName', required: true },
       { name: translations['Platform Nomenclature'], type: 'input', domID: 'PlatformNomenclature', valFieldID: 'PlatformNomenclature', required: true },
       { name: translations['Category'], type: 'dropdown', domID: 'Category', ddID: 'PlatformCategory', valFieldID: 'PlatformCategory', required: true },
-      { name: translations['Military Service'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'PlatformService', required: true },
+      { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'PlatformService', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PlatformRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID: 'Manufacturer', valFieldID: 'PlatformManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PlatformExecutiveAgent', valFieldID: 'PlatformExecutiveAgent' },
@@ -480,19 +480,19 @@ class AddPlatformModal extends React.Component {
     const payloadsFields = [
       { name: translations['Payload Capacity(lbs.)'], type: 'number', domID: 'PlatformPayloadCapacity', valFieldID: 'PlatformPayloadCapacity', required: true },
       { name: translations['Payload Count'], type: 'number', domID: 'PlatformPayloadCount', valFieldID: 'PlatformPayloadCount' },
-      { name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload1', valFieldID: 'PlatformPayload1' },
+      /* { name: translations['Payload #1'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload1', valFieldID: 'PlatformPayload1' },
       { name: translations['Payload #2'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload2', valFieldID: 'PlatformPayload2' },
       { name: translations['Payload #3'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload3', valFieldID: 'PlatformPayload3' },
       { name: translations['Payload #4'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload4', valFieldID: 'PlatformPayload4' },
       { name: translations['Payload #5'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload5', valFieldID: 'PlatformPayload5' },
-      { name: translations['Payload #6'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload6', valFieldID: 'PlatformPayload6' },
+      { name: translations['Payload #6'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'dispPlatformPayload6', valFieldID: 'PlatformPayload6' }, */
       { name: translations['Armament Capacity(lbs.)'], type: 'number', domID: 'PlatformArmamentCapacity', valFieldID: 'PlatformArmamentCapacity', required: true },
       { name: translations['Armament Count'], type: 'number', domID: 'PlatformArmamentCount', valFieldID: 'PlatformArmamentCount' },
-      { name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament1', valFieldID: 'PlatformArmament1' },
+      /* { name: translations['Armament #1'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament1', valFieldID: 'PlatformArmament1' },
       { name: translations['Armament #2'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament2', valFieldID: 'PlatformArmament2' },
       { name: translations['Armament #3'], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'dispPlatformArmament3', valFieldID: 'PlatformArmament3' },
       { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'PlatformComs1' },
-      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'PlatformComs2' },
+      { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'PlatformComs2' }, */
 
     ];
 
@@ -619,8 +619,8 @@ class AddPlatformModal extends React.Component {
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
                 data={this.handlePlatformCrewData} initstate={this.state.platform} platform={nums} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
 
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
-                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+             {/*  <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Configure Aircraft"]} fields={configureFields}
+                data={this.handlePlatformConfigData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/> */}
             </div>
           </div>
         </div>

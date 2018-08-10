@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import qs from 'qs';
+
 
 import UploadBlock from "../../reusable/UploadBlock";
 import ContentBlock from "../../reusable/ContentBlock";
@@ -38,8 +40,21 @@ class BaseModal extends React.Component {
         LocationPointofContact: '',
         LocationFrequency: '',
         KML: '',
+        LocationCategory: '',
+        LocationDescription: '',
+        LastUpdate: '',
+        LocationNai: '',
+        StateAbbrev: '',
+        webAddress: '',
+        IATA: '',
+        ICAO: '',
+        FAA: ''
       },
-      oneLocation: {}
+      oneLocation: {},
+      locationPhotoFile : null,
+      locationMapFile : null,
+      locationDocumentFile : null,
+      locationKMLFile : null,
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -113,9 +128,26 @@ class BaseModal extends React.Component {
   }
 
 
-  handleUploadFile(event){
+  handleUploadFile = (event) => {
       event.preventDefault();
-      const {location} = this.state;
+
+      //PHOTO IMAGE
+      //MAP IMAGE
+      //DOCUMENT
+      //KML
+      if(event.target.id == "LocationPhotoFile") {
+        this.setState({locationPhotoFile: event.target.files[0]})
+      }
+      if(event.target.id == "LocationMapFile") {
+        this.setState({locationMapFile: event.target.files[0]})
+      }
+      if(event.target.id == "LocationDocumentFile") {
+        this.setState({locationDocumentFile: event.target.files[0]})
+      }
+      if(event.target.id == "LocationKMLFile") {
+        this.setState({locationKMLFile: event.target.files[0]})
+      }
+      /* const {location} = this.state;
       if(event.target.id == "LocationPhoto") {
         let reader = new FileReader();
         let file = event.target.files[0];
@@ -154,7 +186,7 @@ class BaseModal extends React.Component {
       const data = new FormData();
 
       data.append('file', event.target.files[0]);
-      data.append('name', event.target.files[0].name);
+      data.append('name', event.target.files[0].name); */
 
     //  this.props.uploadFile(data);
   }
@@ -163,16 +195,26 @@ class BaseModal extends React.Component {
     event.preventDefault();
     const {  location } = this.state;
     const { editId } = this.props;
-    if (editId !== undefined && editId !== '0') {
+
+    //We are trying to upload file with JSON request body.
+    const formData = new FormData();
+    formData.append('locationPhotoFile', this.state.locationPhotoFile, this.state.locationPhotoFile.name)
+    formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name)
+    formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name)
+    formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name)
+
+     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;
+      formData.append("locationFormData",  qs.stringify(location)); 
       this.props.updateLocation(editId, location).then(() => {
         this.props.onClose();
       });
     }else{
+      formData.append("locationFormData",  qs.stringify(location)); 
       this.props.addLocation(location).then(() => {
         this.props.onClose();
       });
-    }
+    } 
   }
 
   stopset () {
@@ -276,25 +318,25 @@ class BaseModal extends React.Component {
                     <div>
                       {translations['Photo Image']}
                     </div>
-                    <input type="file"  name="file" id="LocationPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" />
+                    <input type="file"  name="file" id="LocationPhotoFile" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Map Image']}
                     </div>
-                    <input type="file"  name="file" id="LocationMapImage" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                    <input type="file"  name="file" id="LocationMapFile" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['Document']}
                     </div>
-                    <input type="file"  name="file" id="LocationDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                    <input type="file"  name="file" id="LocationDocumentFile" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   <div className="upload-line">
                     <div>
                       {translations['KML']}
                     </div>
-                    <input type="file"  name="file" id="LocationKMLDocument" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
+                    <input type="file"  name="file" id="LocationKMLFile" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right"  />
                   </div>
                   
                 </div>

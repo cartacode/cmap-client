@@ -36,19 +36,21 @@ class ContentBlock extends React.Component {
     
     const { content } = this.state;
     const { initstate, editId } = this.props;
-    const { editForm } = this.props;
+    const { editFetched } = this.props;
     
     if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
       // if(editId !== undefined && editId !== '0') {
+        console.log("Is it called?");
       this.setState({
         content: initstate,
       });
       this.props.data(this.state.content);
     }
 
-    if (editForm)
+    if (editFetched)
     {
       console.log(this.state.initstate);
+      this.props.stopupd();
       this.setState({content:initstate}, () => { console.log("Init State Updated"); this.props.data(this.state.content); });
   
     }

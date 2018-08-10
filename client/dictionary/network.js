@@ -4,3 +4,9 @@ export const requestHeaders = {
   'Accept': 'application/json,text/plain',
   'Content-Type': 'application/json',
 };
+
+export const requestHeader = {
+  'Accept': 'application/json,text/plain',
+  'Content-Type': '',
+};
+

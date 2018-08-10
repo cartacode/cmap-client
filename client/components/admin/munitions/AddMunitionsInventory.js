@@ -1,20 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-import Dropdown from "../../reusable/Dropdown";
-import { baseUrl } from 'dictionary/network';
-import axios from 'axios';
-
 import { uploadFile } from 'actions/file';
-import { addMunitionInventory, updateMunitionInventory, fetchMunitionInventoryById } from 'actions/munitionsinventory';
+import { addMunitionInventory, fetchMunitionInventoryById, updateMunitionInventory } from 'actions/munitionsinventory';
+import axios from 'axios';
+import { baseUrl } from 'dictionary/network';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+
+
 
 
 
@@ -24,10 +17,10 @@ class AddMunitionsInventory extends React.Component {
     super(props);
     this.state = {
       file: '',
-      clear:false,
+      clear: false,
       locationcategory: '',
       imagePreviewUrl: '',
-      locationUpdate:true,
+      locationUpdate: true,
       oneMunitionInventory: {},
       // munition: {
       //   metaDataID: '',
@@ -52,10 +45,10 @@ class AddMunitionsInventory extends React.Component {
   }
 
   handleMunitionGeneralData = (generalData) => {
-    const {munition} = this.state;
-    this.setState({locationcategory: generalData.locationcategory});
+    const { munition } = this.state;
+    this.setState({ locationcategory: generalData.locationcategory });
     this.setState({
-      munition: { 
+      munition: {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
@@ -66,11 +59,10 @@ class AddMunitionsInventory extends React.Component {
     }, () => {
       console.log('New state in ASYNC callback:22222', this.state.munition);
     });
-    
-      
-    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
-    {
-      
+
+
+    if (generalData.locationcategory && generalData.locationcategory != this.state.locationcategory) {
+
       console.log("Category Selected");
       this.updatelocationid(generalData);
     }
@@ -82,48 +74,47 @@ class AddMunitionsInventory extends React.Component {
     let { munition } = this.state;
     if (editId !== undefined && editId !== '0') {
       munition.id = editId;
-      this.props.updateMunitionInventory(editId, munition).then( () => {this.props.onClose();});
+      this.props.updateMunitionInventory(editId, munition).then(() => { this.props.onClose(); });
     } else {
-      this.props.addMunitionInventory(this.state.munition).then( () => {this.props.onClose();});
+      this.props.addMunitionInventory(this.state.munition).then(() => { this.props.onClose(); });
     }
   }
 
-  updatelocationid (generalData) 
-  {
-     let locationselect = document.getElementsByName('locationID')[0];
-     let items = [{'label': '--Select Item--', 'value': 0}];
-     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=`+generalData.locationcategory;
-        axios.get(apiUrl)
-          .then(response => {
-            console.log(response.data);
-            if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
-            response.data.map(item => {
-              items.push({ 'label': item['description'], 'value': item['id'].trim() });
-            });
-            if (locationselect.length > 0) {locationselect.length = 0;}
-            for(let i in items) {
-              locationselect.add(new Option(items[i].label, items[i].value));
-            }
-            
-          })
-          .catch((error) => {
-            console.log('Exception comes:' + error);
-          });   
+  updatelocationid(generalData) {
+    let locationselect = document.getElementsByName('locationID')[0];
+    let items = [{ 'label': '--Select Item--', 'value': 0 }];
+    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
+    axios.get(apiUrl)
+      .then(response => {
+        console.log(response.data);
+        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': 0 }]; }
+        response.data.map(item => {
+          items.push({ 'label': item['description'], 'value': item['id'].trim() });
+        });
+        if (locationselect.length > 0) { locationselect.length = 0; }
+        for (let i in items) {
+          locationselect.add(new Option(items[i].label, items[i].value));
+        }
+
+      })
+      .catch((error) => {
+        console.log('Exception comes:' + error);
+      });
   }
 
-  stopset () {
-    this.setState({clear:false});
+  stopset() {
+    this.setState({ clear: false });
   }
 
   resetForm() {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-       this.setState({clear:true});
-     }
-     else {
- 
-     }
+      this.setState({ clear: true });
+    }
+    else {
+
+    }
   }
 
   render() {
@@ -132,68 +123,72 @@ class AddMunitionsInventory extends React.Component {
     //   return null;
     // }
 
-    const {translations} = this.props;
+    const { translations } = this.props;
 
-    let {locationcategory} = this.state;
+    let { locationcategory } = this.state;
+
+    let generalFields = [
+      { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name: "Serial #", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
+      { name: "COCOM", type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM' },
+      { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch' },
+      { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
+      /*       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
     
-   let generalFields = [
-      {name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID',required:true},
-      {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
-      {name: "Location ID", type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID'},
-      {name: "Type", type: 'dropdown', domID: 'typeId', ddID: 'MunitionRoles/GetMunitionRoles', valFieldID: 'type'},
-      {name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit'},
-      {name: "Serial Number", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required:true}
+      {name: "Type", type: 'dropdown', domID: 'typeId', ddID: 'MunitionRoles/GetMunitionRoles', valFieldID: 'type'}, */
     ];
 
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-          {/* <div className="close-button" >
+        {/* <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div> */}
-          <div className="payload-content">
-            <div className="row personnel" >
-              
-              <div className="header-line">
-                <img src="/assets/img/admin/personnel_1.png" alt=""/>
-                <div className="header-text">
-                  Add Munitions Inventory
+        <div className="payload-content">
+          <div className="row personnel" >
+
+            <div className="header-line">
+              <img src="/assets/img/admin/personnel_1.png" alt="" />
+              <div className="header-text">
+                Add Munitions Inventory
                 </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
-              </div>
-              </div>
-            
-            <div className="row personnel" >
-            
-              <div className="under-munitions-content">
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
+            </div>
+          </div>
+
+          <div className="row personnel" >
+
+            <div className="under-munitions-content">
               <div className="col-md-4"></div>
-                <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate ={this.props.oneMunitionInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
-              </div>
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate={this.props.oneMunitionInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
-          <div className="row action-buttons">
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
-                {translations['clear']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='highlighted-button'>
-                {translations['Delete']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="submit" className='highlighted-button'>
-                {translations['save']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+        </div>
+        <div className="row action-buttons">
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
+              {translations['clear']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button className='highlighted-button'>
+              {translations['Delete']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+          </div>
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="submit" className='highlighted-button'>
+              {translations['save']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+          </div>
+        </div>
 
       </form>
 
@@ -215,8 +210,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  addMunitionInventory, 
-  updateMunitionInventory, 
+  addMunitionInventory,
+  updateMunitionInventory,
   fetchMunitionInventoryById,
   uploadFile,
 };
