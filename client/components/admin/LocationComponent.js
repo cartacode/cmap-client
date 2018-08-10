@@ -294,7 +294,7 @@ class LocationComponent
                 defaultFilterMethod={(filter, row) => {
                   const id = filter.pivotId || filter.id;
                   return row[id] !== undefined
-                    ? String(row[id]).startsWith(filter.value)
+                    ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase())
                     : true;
                 }}
               />

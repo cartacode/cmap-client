@@ -62,48 +62,33 @@ class BaseModal extends React.Component {
     this.baseState = this.state;
   }
 
-  componentWillMount() {
-  }
-
-
   componentDidMount() {
     const { editId } = this.props;
-    if (editId !== undefined && editId !== '0') {
-      this.props.fetchLocationById(editId).then(() => { 
-        this.setState(
-          { 
-            editFetched:true,
-            location: this.props.oneLocation,
-          });
-        });
+    if (editId !== '0') {
+      this.editComponent(editId);
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    let { editId } = this.props;
-    console.log("Outer Update Called");
-    /* if(editForm) {
-        console.log("Inner Update Called");
-        this.props.stopupdate();
-        this.props.fetchLocationById(editId).then(() => {this.setState({editF:true})});
-        
-    } */
+    const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      //this.props.stopupdate();
-      this.props.fetchLocationById(editId).then(() => {
-        this.setState(
-          {
-            editFetched:true,
-            location: this.props.oneLocation,
-          });
-      });
+      this.editComponent(editId);
     }
+  }
+
+  editComponent = (editId) => {
+    this.props.fetchLocationById(editId).then(() => {
+      this.setState(
+        {
+          editFetched:true,
+          location: this.props.oneLocation,
+        });
+    });
   }
 
   stopupd = () => {
     this.setState({editFetched:false});
   }
-  
 
   handleLocationGeneralData = (generalData) => {
     const { location } = this.state;
@@ -227,10 +212,24 @@ class BaseModal extends React.Component {
 
     //We are going to upload files with JSON request body.
     const formData = new FormData();
-    formData.append('locationPhotoFile', this.state.locationPhotoFile, this.state.locationPhotoFile.name)
-    formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name)
-    formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name)
-    formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name)
+  
+    if(this.state.locationPhotoFile) {
+      formData.append('locationPhotoFile', this.state.locationPhotoFile, this.state.locationPhotoFile.name);
+    }
+
+    if(this.state.locationMapFile) {
+      formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name);
+    }
+
+    if(this.state.locationDocumentFile) {
+      formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name);
+    }
+    
+    if(this.state.locationKMLFile) {
+      formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name);
+    }
+    
+    
     if (editId !== undefined && editId !== '0') {
        location.LocationID = editId;
        formData.append("locationFormData",qs.stringify(location));
@@ -298,11 +297,12 @@ class BaseModal extends React.Component {
 
     const locationFields = [
       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory' },
+      // { name: translations['Location ID'], type: 'dropdown', domID: 'LocationID', ddID: '', valFieldID: 'LocationID' },
       { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude' },
       { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude' },
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
-      { name: translations['LocationID'], type: 'input', domID: 'LocationID', valFieldID: 'LocationID' },
+      
     ];
 
     const contactFields = [
@@ -348,19 +348,19 @@ class BaseModal extends React.Component {
                   <div>
                     {translations['Photo Image']}
                   </div>
-                  <input type="file" name="file" id="LocationPhotoFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                  <input type="file" name="file" id="LocationPhotoFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                 </div>
                 <div className="upload-line">
                   <div>
                     {translations['Map Image']}
                   </div>
-                  <input type="file" name="file" id="LocationMapFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                  <input type="file" name="file" id="LocationMapFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                 </div>
                 <div className="upload-line">
                   <div>
                     {translations['Document']}
                   </div>
-                  <input type="file" name="file" id="LocationDocumentFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                  <input type="file" name="file" id="LocationDocumentFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                 </div>
                 <div className="upload-line">
                   <div>

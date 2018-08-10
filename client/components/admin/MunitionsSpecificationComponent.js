@@ -179,73 +179,33 @@ class MunitionsSpecificationComponent extends React.Component {
     const { allMunitions } = this.props;
 
     const columns = [
-      /*{
-        Header: translations["type"],
-        accessor: 'role',
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="MunitionRoles" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
-      },*/
+      
       {
-        Header: "ID",
-        accessor: 'ID',
-        // Filter: ({ filter, onChange }) =>
-        //             <FilterDropdown dropdownDataUrl="MunitionRoles" munitions={munitions} dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
-        // sortMethod: (a, b) => {
-        //               if (a.length === b.length) {
-        //                 return a > b ? 1 : -1;
-        //               }
-        //               return a.length > b.length ? 1 : -1;
-        //             }// String-based value accessors!
+        Header: "Type",
+        accessor: 'munitionType',
       },
-      /*{
-        Header: translations['Name'],
-        accessor: 'munition',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-      },*/
-      {
-        Header: "Munition",
-        accessor: 'munition',
-        // Filter: ({ filter, onChange }) =>
-        // 		   <select
-        // 			onChange={event => onChange(event.target.value)}
-        // 			style={{ width: "100%" }}
-        // 			value={filter ? filter.value : ""}
-        // 		  >
-        // 			{allMunitions.map(function(data, key){
-        // 				return (<option key={key} value={data.munition}>{data.munition}</option> );
-        // 			})}
-        // 		  </select>
-      },
-      {
-        Header: "Nomenclature",
-        accessor: 'nomenclature',
-      },
+      
       {
         Header: "Manufacturer",
-        accessor: 'manufacturer',
-        // Filter: ({ filter, onChange }) =>
-        //             <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
+        accessor: 'company',
       },
       {
-        Header: "Role",
+        Header: "Munition",
+        accessor: 'name',
+      
+      },
+      {
+        Header: "Mission Role",
         accessor: 'role',
       },
-      /*{
-        Header: translations['Location'],
-        accessor: 'location'
-      },*/
       {
-        Header: "Reference",
-        accessor: 'reference',
+        Header: "Ops range",
+        accessor: 'opsRange',
       },
-
+      {
+        Header: "Weight",
+        accessor: 'weight',
+      },
       {
         Header: translations['view'],
         accessor: 'ID',
@@ -253,23 +213,7 @@ class MunitionsSpecificationComponent extends React.Component {
         Cell: row => <span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row)} /></span> // Custom cell components!
       }
     ];
-
-    let serialval = this.state.serialVal;
-    let nameval = this.state.nameVal;
-
-    const rowFields = [
-      { name: translations['Type'], type: 'dropdown', ddID: 'MunitionRoles' },
-      { name: translations['Name'], type: 'input', valField: nameval },
-      { name: translations['Serial#'], type: 'input', valField: serialval },
-      { name: translations['COCOM'], type: 'dropdown', ddID: 'COCOM' },
-      { name: translations['Unit'], type: 'dropdown', ddID: 'Units' },
-      { name: translations['Location'], type: 'dropdown', ddID: 'Locations' },
-      { name: translations['Record Date'], type: 'date' },
-    ];
-
-    console.log('allMunitions:');
-    console.log(allMunitions);
-
+    
     return (
       <div>
         <div className="row orders-assets">

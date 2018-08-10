@@ -68,7 +68,7 @@ class WamiModal extends React.Component {
   componentDidMount = () => {
     const { editId } = this.props;
     if (editId !== '0') {
-      this.props.editComponent(editId);
+      this.editComponent(editId);
     }
   }
 

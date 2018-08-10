@@ -163,12 +163,13 @@ class PayloadsSpecificationComponent extends React.Component {
 		let value = row.value;
 		//@Note:- types like as EO/IR, SAR, WAMI, SIGINT, GMTI, FMV, COMINT, LIDAR, PeARL, WAPS, OCD, CCD, MASINT, HSI, DMTI, ELINT, IMINT.
 		const payloadSpecType = row.original.type;
-		const payloadTypeId = row.original.payloadTypeId;
+		const payloadTypeId = row.original.typeID;
 		//console.log(value);
 		this.modelStateReset();
 		this.setState({
-			payloadSpecType,		
-		    editId: value,			  
+			payloadSpecType,
+			editId: value,
+			payloadTypeId,	  
 			// eoirModalOpen: 'EO/IR' == payloadSpecType ? true : false,
 			// sargmtiModalOpen: ('SAR' == payloadSpecType || 'GMTI' == payloadSpecType) ? true : false,
 			// wamiModalOpen: 'WAMI' == payloadSpecType ? true : false,

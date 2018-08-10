@@ -128,6 +128,10 @@ class ContentBlock extends React.Component {
             }
             break;
 
+          case 'textarea':
+            input = (<textarea rows="3" className="description" value={value} name={item.valFieldID} onChange={this.handleChange} /> );
+            break;    
+            
           case 'email':
             input = (<input type="email" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
             break;    
