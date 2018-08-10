@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import MunitionsComponent from '../../components/admin/MunitionsComponent';
-import { fetchMunitionInventory } from 'actions/munitionsinventory';
+import { fetchMunitionInventory, deleteMunitionInventoryById } from 'actions/munitionsinventory';
 
 const mapStateToProps = state => {
   return {
@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchMunitionInventory,
+  deleteMunitionInventoryById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsComponent);
