@@ -65,6 +65,11 @@ class AddPlatformInventory extends React.Component {
 
       });
     }
+
+    if(editId === '0' && prevProps.editId !== editId) {
+      console.log("It's here");
+      this.setState({clear:true});
+    }
   }
 
   stopUpdate = ()=> {
