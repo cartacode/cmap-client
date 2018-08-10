@@ -10,6 +10,7 @@ class CcirPirModal extends React.Component {
     super(props);
     this.state = {
       addClicked: false,
+      editFetched:false,
       //  ccirpir:{
       //   COCOMId:'',
       //   BranchId:'',
@@ -31,8 +32,35 @@ class CcirPirModal extends React.Component {
   componentDidMount() {
     const { editId } = this.props;
     if(editId !== '0') {
-      this.props.fetchCcirPirById(editId);
+      this.props.fetchCcirPirById(editId).then(() => {
+
+        this.setState(
+          { 
+            editFetched:true,
+            ccirpir: this.props.oneCcirPir,
+          });
+
+      });
     }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.props;
+    
+    if(editId !== '0' && prevProps.editId !== editId) {
+      //this.props.stopupdate();
+      this.props.fetchPersonnelById(editId).then(() => {
+        this.setState(
+          {
+            editFetched:true,
+            ccirpir: this.props.oneCcirPir,
+          });
+      });
+    }
+  }
+
+  stopupd = () => {
+    this.setState({editFetched:false});
   }
 
   handleCcirPirGeneralData = (generalData) => {
@@ -170,15 +198,15 @@ resetForm = () => {
             <div className="under-payload-content">
               <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleCcirPirGeneralData}
                 headerLine="/assets/img/admin/upload_1.png" title={translations["Ccir/Pir"]}
-                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
 
               <ContentBlock fields={ccirFields} editId={this.props.editId} data={this.handleCcirData}
                 headerLine="/assets/img/admin/upload_1.png" title={translations["ccir"]}
-                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             
               <ContentBlock fields={pirFields} editId={this.props.editId} data={this.handlePirData}
                 headerLine="/assets/img/admin/upload_1.png" title={translations["pir"]}
-                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             </div>
           </div>
         </div>
