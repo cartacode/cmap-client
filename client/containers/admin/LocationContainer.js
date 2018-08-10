@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     allLocations: state.locations.allLocations,
     fetchingLocations: state.locations.isFetching,
+    isLoading: state.locations.isFetching,
   };
 };
 

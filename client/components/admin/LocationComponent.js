@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
 
 
-class LocationComponent extends React.Component {
+class LocationComponent
+ extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +15,8 @@ class LocationComponent extends React.Component {
       filter: [],
       baseModalOpen: false,
       baseshow: false,
-      editId: "0"
+      editId: "0",
+      editForm:false,
     };
   }
 
@@ -48,7 +50,12 @@ class LocationComponent extends React.Component {
     });
   };
 
-
+  stopupdate = () => 
+  {
+    console.log("Stop Update Called");
+    this.setState({editForm:false});
+  }
+  
   notify =()=>{
     const { translations } = this.props;
     if (this.state.editId !== undefined && this.state.editId !== '0') {
@@ -270,6 +277,7 @@ class LocationComponent extends React.Component {
               show={this.state.baseModalOpen}
               onClose={this.closeBaseModalFrom}
               translations={translations}
+              stopupdate={this.stopupdate}
             />
           ) : null}
         {/*   <NotificationContainer />  */}
@@ -281,6 +289,7 @@ class LocationComponent extends React.Component {
                 columns={columns}
                 defaultPageSize={5}
                 className="-striped -highlight"
+                loading={this.props.isLoading}
                 filterable={true}
                 defaultFilterMethod={(filter, row) => {
                   const id = filter.pivotId || filter.id;

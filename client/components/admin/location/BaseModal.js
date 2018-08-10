@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
+import qs from 'qs';
+
 
 
 
@@ -17,6 +19,7 @@ class BaseModal extends React.Component {
       clear: false,
       locationPhotoPreviewUrl: '',
       mapImagePreviewUrl: '',
+      editFetched:false,
       location: {
         LocationID: '',
         LocationReferenceCode: '',
@@ -66,12 +69,41 @@ class BaseModal extends React.Component {
   componentDidMount() {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
-      this.props.fetchLocationById(editId);
-      const value = this.props.oneLocation;
-    } else {
-      this.setState({ oneLocation: {} });
+      this.props.fetchLocationById(editId).then(() => { 
+        this.setState(
+          { 
+            editFetched:true,
+            location: this.props.oneLocation,
+          });
+        });
     }
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.props;
+    console.log("Outer Update Called");
+    /* if(editForm) {
+        console.log("Inner Update Called");
+        this.props.stopupdate();
+        this.props.fetchLocationById(editId).then(() => {this.setState({editF:true})});
+        
+    } */
+    if(editId !== '0' && prevProps.editId !== editId) {
+      //this.props.stopupdate();
+      this.props.fetchLocationById(editId).then(() => {
+        this.setState(
+          {
+            editFetched:true,
+            location: this.props.oneLocation,
+          });
+      });
+    }
+  }
+
+  stopupd = () => {
+    this.setState({editFetched:false});
+  }
+  
 
   handleLocationGeneralData = (generalData) => {
     const { location } = this.state;
@@ -199,16 +231,17 @@ class BaseModal extends React.Component {
     formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name)
     formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name)
     formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name)
-
     if (editId !== undefined && editId !== '0') {
        location.LocationID = editId;
-       formData.append("locationFormData", qs.stringify(location));
-       this.props.updateLocation(editId, formData).then(() => {
+       formData.append("locationFormData",qs.stringify(location));
+       //TODO: When upload files api will work thn we will pass formData.
+       this.props.updateLocation(editId, location).then(() => {
          this.props.onClose();
        });
      } else {
        formData.append("locationFormData", qs.stringify(location));
-       this.props.addLocation(formData).then(() => {
+      //TODO: When upload files api will work thn we will pass formData.
+       this.props.addLocation(location).then(() => {
          this.props.onClose();
        });
      }
@@ -343,11 +376,11 @@ class BaseModal extends React.Component {
         <div className="row personnel" >
           <div className="under-location-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>
         <div className="row action-buttons">
