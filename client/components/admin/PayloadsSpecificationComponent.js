@@ -258,7 +258,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 			  Header: "Weight (lbs.)",
-			  accessor: 'weigth',
+			  accessor: 'weight',
 			},
 			{
 				Header: "Power(W)",
