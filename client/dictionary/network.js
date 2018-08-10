@@ -5,8 +5,9 @@ export const requestHeaders = {
   'Content-Type': 'application/json',
 };
 
-export const requestHeader = {
+export const formDataRequestHeader = {
   'Accept': 'application/json,text/plain',
   'Content-Type': '',
+  //'Content-Type': 'multipart/form-data',
 };
 
