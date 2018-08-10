@@ -137,12 +137,12 @@ class PayloadsSpecificationComponent extends React.Component {
 		const { translations } = this.props;
 		if('DELETE' != actionType){
 			if (this.state.editId !== undefined && this.state.editId !== '0') {
-				NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+				NotificationManager.success(translations['Update Payload Inventory Message'], translations['Payload Library Title'], 5000);
 			}else{
-				NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+				NotificationManager.success(translations['Add Payload Inventory Message'], translations['Payload Library Title'], 5000);
 			}
 		}else{
-			NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+			NotificationManager.success(translations['Delete Payload Inventory Message'],translations['Payload Library Title'], 5000);
 		}
 	}
 

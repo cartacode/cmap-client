@@ -83,7 +83,7 @@ class PayloadsComponent extends React.Component {
 	      NotificationManager.success(translations['Add Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
 	    }
 	  } else {
-	    NotificationManager.success(translations['Delete Platform Specification Message'], translations['Platform Specification Title'], 5000);
+	    NotificationManager.success(translations['Delete Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
 	  }
 	}
 
