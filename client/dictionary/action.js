@@ -53,6 +53,7 @@ export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
 export const PERSONNEL__UPDATE = createActionType('PERSONNEL__UPDATE');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
+export const PERSONNEL__DELETE_ONE = createActionType('PERSONNEL__DELETE_ONE');
 
 export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
 export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');

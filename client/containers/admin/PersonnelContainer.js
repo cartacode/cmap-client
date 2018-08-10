@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 import PersonnelComponent from '../../components/admin/PersonnelComponent';
-import { fetchPersonnels } from 'actions/personnel';
+import { fetchPersonnels, deletePersonnelById } from 'actions/personnel';
 
 const mapStateToProps = state => {
   return {
@@ -14,6 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchPersonnels,
+  deletePersonnelById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonnelComponent);
