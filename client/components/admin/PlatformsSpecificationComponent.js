@@ -121,10 +121,6 @@ class PlatformsSpecificationComponent extends React.Component {
     const columns = [
 
       {
-        Header: translations['Branch'],
-        accessor: 'branch',
-      },
-      {
         Header: translations['Platform Name'],
         accessor: 'name',
       },
