@@ -41,31 +41,40 @@ class PersonnelComponent extends React.Component {
   // }
 
 
-
   openPersonnelForm = (row) => {
     this.setState({counter:this.state.counter + 1});
-    console.log("Invoked");
-    console.log("Row"+row);
-    console.log("Edit ID"+this.state.editId);
-    console.log("Counter"+this.state.counter);
-
-    if (this.state.counter == 0)
-    {
-      this.setState({
-      editId: row,
-      addPersonnelModalOpen: true
-    });
-  }
-  else {
     this.setState({
       editId: row,
-      addPersonnelModalOpen: true
-    }, () => { console.log("State Updated");
-      this.setState({
-        editForm: true
-      }); });
+      addPersonnelModalOpen: true,
+    });
+  
   }
-  }
+
+
+  // openPersonnelForm = (row) => {
+  //   this.setState({counter:this.state.counter + 1});
+  //   console.log("Invoked");
+  //   console.log("Row"+row);
+  //   console.log("Edit ID"+this.state.editId);
+  //   console.log("Counter"+this.state.counter);
+
+  //   if (this.state.counter == 0)
+  //   {
+  //     this.setState({
+  //     editId: row,
+  //     addPersonnelModalOpen: true
+  //   });
+  // }
+  // else {
+  //   this.setState({
+  //     editId: row,
+  //     addPersonnelModalOpen: true
+  //   }, () => { console.log("State Updated");
+  //     this.setState({
+  //       editForm: true
+  //     }); });
+  // }
+  // }
 
 closePersonnelForm = () => {
   const { translations } = this.props;
@@ -151,7 +160,7 @@ render() {
           </div>
         </div>
         {this.state.addPersonnelModalOpen ?
-          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
+          <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} /* editForm = {this.state.editForm} */ stopupdate={this.stopupdate}/>
           : null
         }
         <div className="col-md-12">

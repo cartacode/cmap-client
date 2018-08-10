@@ -22,30 +22,20 @@ class ContentBlock extends React.Component {
   }
 
 
-//   componentWillReceiveProps(nextProps) {
-//     // You don't have to do this check first, but it can help prevent an unneeded render
-//     console.log('abc ');
-//     if (nextProps.initstate !== this.state.content) {
-//       this.setState({
-//         content: nextProps.initstate,
-//       });
-//     }
-//   }
-
   componentDidUpdate() {
     
     const { content } = this.state;
     const { initstate, editId } = this.props;
     const { editFetched } = this.props;
     
-    if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
-      // if(editId !== undefined && editId !== '0') {
-        console.log("Is it called?");
-      this.setState({
-        content: initstate,
-      });
-      this.props.data(this.state.content);
-    }
+    // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
+    //   // if(editId !== undefined && editId !== '0') {
+    //     console.log("Is it called?");
+    //   this.setState({
+    //     content: initstate,
+    //   });
+    //   this.props.data(this.state.content);
+    // }
 
     if (editFetched)
     {
@@ -222,10 +212,10 @@ class ContentBlock extends React.Component {
     }
 }
 
-ContentBlock.propTypes = {  
+ContentBlock.propTypes = {
   children: PropTypes.element,
   data: PropTypes.func,
-  editId: PropTypes.any
+  editFetched: PropTypes.bool,
 };
 
 export default ContentBlock;

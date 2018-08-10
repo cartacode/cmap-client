@@ -46,7 +46,10 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if (editId !== '0') {
       this.props.fetchPlatformInventoryById(editId).then(() => {
-        this.setState({ isUpdated: true });
+        this.setState({
+          isUpdated: true,
+          platform: this.props.onePlatformInventory,
+        });
       });
     }
   }
@@ -55,7 +58,11 @@ class AddPlatformInventory extends React.Component {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
       this.props.fetchPlatformInventoryById(this.props.editId).then(() => {
-        this.setState({ isUpdated: true });
+        this.setState({
+          isUpdated: true,
+          platform: this.props.onePlatformInventory,
+        });
+
       });
     }
   }
@@ -85,7 +92,7 @@ class AddPlatformInventory extends React.Component {
         coms1: generalData.coms1,
         coms2: generalData.coms2,       
         branch: generalData.branch,
-        cocom: generalData.cocom,
+        COCOM: generalData.COCOM,
       },
     });
 
@@ -195,7 +202,7 @@ class AddPlatformInventory extends React.Component {
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true },
-      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'cocom',required:true},
+      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'COCOM',required:true},
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
@@ -238,9 +245,9 @@ class AddPlatformInventory extends React.Component {
 
           <div className="row personnel" >
             <div className="under-munitions-content">
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={payloadFields} data={this.handlePayloadData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={armsFields} data={this.handleArmsData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editF={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={payloadFields} data={this.handlePayloadData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={armsFields} data={this.handleArmsData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
           

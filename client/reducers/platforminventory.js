@@ -17,12 +17,12 @@ export default function platforms(state = initialState.platforms, { payload, typ
     case PLATFORM_INVENTORY__FETCH_ONE.REQUEST:
       return {
         ...state,
-        isFetchingOne: true,
+        isFetching: true,
       };
     case PLATFORM_INVENTORY__FETCH_ONE.SUCCESS:
       return {
         ...state,
-        isFetchingOne: false,
+        isFetching: false,
         onePlatformInventory: payload.data,
       };
     default:
