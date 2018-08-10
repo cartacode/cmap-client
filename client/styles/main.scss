@@ -2204,7 +2204,12 @@ input {
     }
   }
 }
-
+/*********************************** for playloads checkbox issue ******************************/
+#payloadform label {
+  position: absolute;
+right: 0px;
+top: -18px;
+}
 .coms-net {
   margin: 20px;
 
@@ -4622,6 +4627,14 @@ margin: 0px;
   flex-wrap: unset;
   margin-top: 10px 0px 10px 0px;
 }
+/*********************************** playloads *************************************************/
+
+#payloadform label {
+  position: absolute;
+  right: 0px;
+  top: -26px;
+}
+
 
 }
 @media(max-width:320px)
