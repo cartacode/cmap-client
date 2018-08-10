@@ -11,7 +11,7 @@ import DropDownButton from '../../reusable/DropDownButton';
 import StatusTable from '../../reusable/StatusTable';
 
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitionsById, fetchMunitions, updateMunition } from 'actions/munition';
 
 class RocketModal extends React.Component {
 
@@ -20,6 +20,8 @@ class RocketModal extends React.Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      editFetched: false ,
+      oneMunition: {},
       clear:false,
       munition: {
         MunitionsReferenceCode: '',
@@ -60,10 +62,42 @@ class RocketModal extends React.Component {
     this.baseState = this.state;
   }
 
-
-  componentWillMount(){
-    //this.props.fetchMunitions();
+   /**
+   * Auto invoked functions and Once initialized.
+   */
+  componentDidMount = () => {
+    let { editId } = this.props;
+    if (editId !== '0') {
+      this.props.fetchMunitionsById(editId).then(() => {
+        this.setState(
+          {
+            editFetched: true,
+            munition: this.props.oneMunition,
+          });
+      });
+    }
   }
+
+  /**
+   * Auto invoked functions. This Function works like as listener. This will update or call during changes in the value of input fields.
+   */
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.props;
+    if (editId !== '0' && prevProps.editId !== editId) {
+      this.props.fetchMunitionsById(editId).then(() => {
+        this.setState(
+          {
+            editFetched: true,
+            munition: this.props.oneMunition,
+          });
+      });
+    }
+  }
+
+  stopupd = () => {
+    this.setState({ editFetched: false });
+  }
+
 
   handleMunitionGeneralData = (generalData) => {
     const {munition} = this.state;
@@ -79,7 +113,8 @@ class RocketModal extends React.Component {
         MunitionExecutiveAgent: generalData.MunitionExecutiveAgent,
         MunitionContractProgram: generalData.MunitionContractProgram,
         MunitionCost: generalData.MunitionCost,
-        MunitionCostNotes: generalData.MunitionCostNotes
+        MunitionCostNotes: generalData.MunitionCostNotes,
+        MunitionType: this.props.munitionType,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.munition);
@@ -160,11 +195,21 @@ class RocketModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addMunition(this.state.munition).then( () => {this.props.fetchMunitions(); this.props.onClose();});
+    console.log('---here--');
+    console.log(this.state.munition);
+    const {  munition } = this.state;
+    const { editId } = this.props;
+    if (editId !== undefined && editId !== '0') {
+      munition.MunitionID = editId;
+      this.props.updateMunition(editId, munition).then( () => {this.props.onClose('UPDATE');});
+    } else {
+      this.props.addMunition(munition).then( () => {this.props.onClose('ADD');});
+    }
+    
   }
 
   stopset () {
-    this.setState({clear:false});
+    this.setState({clear: false });
   }
 
   resetForm() {
@@ -195,8 +240,11 @@ class RocketModal extends React.Component {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt=""/>);
     }
 
-    const {munition} = this.state;
+    let {munition} = this.state;
     const {translations} = this.props;
+
+    const { munitionType } = this.props;
+    console.log("**************************************************Rocket munitionType*************************************"+munitionType);
 
 
     const generalFields = [
@@ -205,7 +253,7 @@ class RocketModal extends React.Component {
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName',required:true},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature',required:true},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole',required:true},
-      {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Manufacturer', valFieldID:'MunitionManufacturer'},
+      {name: translations['Manufacture'], type: 'number', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID:'MunitionManufacturer'},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram'},
       {name: translations['Cost'], type: 'number', domID: 'MunitionCost', valFieldID: 'MunitionCost'},
@@ -238,9 +286,9 @@ class RocketModal extends React.Component {
 
       <form action="" onSubmit={this.handleSubmit} id="munitionform">
 
-          <div className="close-button" >
+          {/* <div className="close-button" >
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div>
+          </div> */}
           <div className="payload-content">
             <div className="row personnel" >
               <div className="header-line">
@@ -267,37 +315,37 @@ class RocketModal extends React.Component {
                       <div>
                         {translations['Photo Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="MunitionPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Wireframe Image']}
                       </div>
-                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="MunitionWireframe" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['3D Model']}
                       </div>
-                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="Munition3D" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['2D Icon']}
                       </div>
-                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="MunitionIcon" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Milspec Icon']}
                       </div>
-                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="Munition2525B" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                     <div className="upload-line">
                       <div>
                         {translations['Datasheets']}
                       </div>
-                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" required />
+                      <input type="file"  name="file" id="MunitionDatasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                     </div>
                   </div>
                 </div>
@@ -306,11 +354,14 @@ class RocketModal extends React.Component {
             <div className="row personnel" >
               <div className="under-munitions-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                data={this.handleMunitionGeneralData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                editFetched={this.state.editFetched} stopupd={this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handleMunitionCrewData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                data={this.handleMunitionCrewData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
+                editFetched={this.state.editFetched} stopupd={this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handleMunitionTechnicalData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                data={this.handleMunitionTechnicalData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
+                editFetched={this.state.editFetched} stopupd={this.stopupd}/>
               </div>
             </div>
           </div>
@@ -345,6 +396,7 @@ class RocketModal extends React.Component {
 }
 
 RocketModal.propTypes = {
+  editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node
@@ -352,7 +404,8 @@ RocketModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    oneMunition: state.munitions.oneMunition,
   };
 };
 
@@ -360,6 +413,8 @@ const mapDispatchToProps = {
   addMunition,
   fetchMunitions,
   uploadFile,
+  fetchMunitionsById,
+  updateMunition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RocketModal);

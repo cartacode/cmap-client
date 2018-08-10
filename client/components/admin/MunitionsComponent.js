@@ -198,6 +198,7 @@ notify =()=>{
               data={allMunitionInventory}
               columns={columns}
               defaultPageSize={5}
+              loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {

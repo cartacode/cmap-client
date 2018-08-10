@@ -7,15 +7,15 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     allMunitions: state.munitions.allMunitions,
-    fetchingMunitions: state.munitions.isFetching,
-    munition: state.munitions.oneMunition
+    munition: state.munitions.oneMunition,
+    isLoading: state.munitions.isFetching,
 
   };
 };
 
 const mapDispatchToProps = {
   addMunition,
-  fetchMunitions
+  fetchMunitions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsSpecificationComponent);

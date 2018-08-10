@@ -18,7 +18,8 @@ class AddMunitionsInventory extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      locationcategory: '',
+      editFetched: false,
+      locationCatg: '',
       imagePreviewUrl: '',
       locationUpdate: true,
       oneMunitionInventory: {},
@@ -36,17 +37,45 @@ class AddMunitionsInventory extends React.Component {
     this.baseState = this.state;
   }
 
-  componentDidMount() {
-    const { editId } = this.props;
-    console.log('edit id' + editId);
+  /**
+   * Auto invoked functions and Once initialized.
+   */
+  componentDidMount = () => {
+    let { editId } = this.props;
     if (editId !== '0') {
-      this.props.fetchMunitionInventoryById(editId);
+      this.props.fetchMunitionInventoryById(editId).then(() => {
+        this.setState(
+          {
+            editFetched: true,
+            munition: this.props.onePayloadInventory ,
+          });
+      });
     }
+  }
+
+  /**
+   * Auto invoked functions. This Function works like as listener. This will update or call during changes in the value of input fields.
+   */
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.props;
+    if (editId !== '0' && prevProps.editId !== editId) {
+      this.props.fetchMunitionInventoryById(editId).then(() => {
+        this.setState(
+          {
+            editFetched: true,
+            munition: this.props.onePayloadInventory,
+          });
+      });
+    }
+  }
+
+  stopupd = () => {
+    this.setState({ editFetched: false });
   }
 
   handleMunitionGeneralData = (generalData) => {
     const { munition } = this.state;
-    this.setState({ locationcategory: generalData.locationcategory });
+    this.setState({ locationCatg: generalData.locationCatg });
     this.setState({
       munition: {
         metaDataID: generalData.metaDataID,
@@ -61,7 +90,7 @@ class AddMunitionsInventory extends React.Component {
     });
 
 
-    if (generalData.locationcategory && generalData.locationcategory != this.state.locationcategory) {
+    if (generalData.locationCatg && generalData.locationCatg != this.state.locationCatg) {
 
       console.log("Category Selected");
       this.updatelocationid(generalData);
@@ -83,7 +112,7 @@ class AddMunitionsInventory extends React.Component {
   updatelocationid(generalData) {
     let locationselect = document.getElementsByName('locationID')[0];
     let items = [{ 'label': '--Select Item--', 'value': 0 }];
-    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
+    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationCatg;
     axios.get(apiUrl)
       .then(response => {
         console.log(response.data);
@@ -93,9 +122,12 @@ class AddMunitionsInventory extends React.Component {
         });
         if (locationselect.length > 0) { locationselect.length = 0; }
         for (let i in items) {
-          locationselect.add(new Option(items[i].label, items[i].value));
+           let selected = false;
+            if( items[i].value === generalData.locationID) {
+              selected = true;
+            }
+          locationselect.add(new Option(items[i].label, items[i].value, selected, selected));
         }
-
       })
       .catch((error) => {
         console.log('Exception comes:' + error);
@@ -125,7 +157,9 @@ class AddMunitionsInventory extends React.Component {
 
     const { translations } = this.props;
 
-    let { locationcategory } = this.state;
+    let { locationCatg } = this.state;
+
+    let { munition } = this.state;
 
     let generalFields = [
       { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
@@ -133,7 +167,7 @@ class AddMunitionsInventory extends React.Component {
       { name: "COCOM", type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM' },
       { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg' },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
       /*       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
     
@@ -162,7 +196,8 @@ class AddMunitionsInventory extends React.Component {
 
             <div className="under-munitions-content">
               <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate={this.props.oneMunitionInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate={this.props.oneMunitionInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                editFetched={this.state.editFetched} stopupd={this.stopupd} />
             </div>
           </div>
         </div>
