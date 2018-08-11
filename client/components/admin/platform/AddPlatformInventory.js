@@ -158,7 +158,11 @@ class AddPlatformInventory extends React.Component {
         if(response.data) {
           locationselect.add(new Option('--Select Location--', 0));
           response.data.map(item => {
-            locationselect.add(new Option(item.description, item.id.trim()));
+            let selected = false;
+            if(item.id === generalData.locationID) {
+              selected = true;
+            }
+            locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
           locationselect.add(new Option('No Location Found', 0));
