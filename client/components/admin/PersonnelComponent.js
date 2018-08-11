@@ -18,7 +18,6 @@ class PersonnelComponent extends React.Component {
       addshow: false,
       editId: '0',
       editForm:false,
-      counter:0
     };
   }
 
@@ -42,7 +41,6 @@ class PersonnelComponent extends React.Component {
 
 
   openPersonnelForm = (row) => {
-    //this.setState({counter:this.state.counter + 1});
     this.setState({
       editId: row,
       addPersonnelModalOpen: true,
@@ -88,7 +86,6 @@ closePersonnelForm = () => {
 
 stopupdate = () => 
   {
-    console.log("Stop Update Called");
     this.setState({editForm:false});
   }
   
@@ -154,7 +151,8 @@ render() {
       Header: translations['view'],
       accessor: 'ID',
       filterable: false,
-      Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
+      // Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
+      Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
     },
   ];
 
@@ -195,7 +193,7 @@ render() {
             filterable={true}
             defaultFilterMethod={(filter, row) => {
               const id = filter.pivotId || filter.id
-              return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+              return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
             }}
           />
         </div>

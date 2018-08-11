@@ -65,15 +65,16 @@ class AddPersonnelModal extends React.Component {
     this.baseState = this.state;
   }
 
-
+  
   componentDidMount = () => {
-    // this.setState({personnel: this.props.personnel});
+    
     let { editId } = this.props;
+    this.setState({ clear: true });
     if(editId !== '0') {
       this.props.fetchPersonnelById(editId).then(() => { 
         this.setState(
-          { 
-            editFetched:true,
+          {
+            editFetched: true,
             personnel: this.props.onePersonnel,
           });
         //this.state.personnel = this.props.onePersonnel; 
@@ -94,6 +95,7 @@ class AddPersonnelModal extends React.Component {
           });
       });
     }
+    
   }
 
   // componentDidMount = () => {
@@ -424,10 +426,10 @@ render() {
   const {translations} = this.props;
 
   const generalFields = [
-    {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName', required:true},
+    {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName', required: true },
 
     {name: translations['Middle Initial'], type: 'input', domID: 'MiddleInitial', valFieldID: 'MiddleInitial'},
-    {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required:true},
+    {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required: true },
     {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: "BranchOfService", valFieldID: 'ServiceBranch'},
     {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
     {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
@@ -456,8 +458,8 @@ render() {
 
   const contactFields = [
     {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required:true},
-    {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required:true},
-    {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required:true},
+    {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required: true },
+    {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required: true },
     {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
 
   ];
@@ -531,13 +533,6 @@ render() {
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
           <button className='highlighted-button' onClick={this.resetForm.bind(this)}>
             {translations['clear']}
-          </button>
-          <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-        </div>
-        <div className="menu-button">
-          <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-          <button className='highlighted-button'>
-            {translations['Delete']}
           </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>

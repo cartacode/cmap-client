@@ -83,8 +83,10 @@ class AddPlatformModal extends React.Component {
     // this.baseState = this.state;
   }
 
+ 
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== undefined && editId !== '0') {
       this.props.fetchPlatformById(editId).then(() => {
         this.setState(
@@ -411,8 +413,8 @@ class AddPlatformModal extends React.Component {
     }
   }
 
-  stopset () {
-    this.setState({clear:false});
+  stopset = () => {
+    this.setState({ clear: false });
   }
 
 

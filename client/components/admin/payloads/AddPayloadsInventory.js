@@ -35,7 +35,7 @@ class AddPayloadsInventory extends React.Component {
 
   componentDidMount() {
     const { editId } = this.props;
-    console.log('edit id'+editId);
+    this.setState({ clear: true });
     if(editId !== '0') {
       this.editComponent(editId);
     }

@@ -44,6 +44,7 @@ class AddPlatformInventory extends React.Component {
 
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchPlatformInventoryById(editId).then(() => {
         this.setState({
@@ -66,10 +67,9 @@ class AddPlatformInventory extends React.Component {
       });
     }
 
-    if(editId === '0' && prevProps.editId !== editId) {
-      console.log("It's here");
-      this.setState({clear:true});
-    }
+    // if(editId === '0' && prevProps.editId !== editId) {
+    //   this.setState({ clear: true });
+    // }
   }
 
   stopUpdate = ()=> {

@@ -77,6 +77,7 @@ class EoirModal extends React.Component {
   
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.editComponent(editId);
     }
