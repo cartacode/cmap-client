@@ -31,12 +31,9 @@ class CcirPirModal extends React.Component {
 
   componentDidMount() {
     const { editId } = this.props;
-    this.setState({
-      clear: true,
-    });
+    this.setState({ clear: true });
     if(editId !== '0') {
       this.props.fetchCcirPirById(editId).then(() => {
-
         this.setState(
           { 
             editFetched:true,
@@ -51,7 +48,6 @@ class CcirPirModal extends React.Component {
     let { editId } = this.props;
     
     if(editId !== '0' && prevProps.editId !== editId) {
-      //this.props.stopupdate();
       this.props.fetchPersonnelById(editId).then(() => {
         this.setState(
           {
@@ -59,6 +55,9 @@ class CcirPirModal extends React.Component {
             ccirpir: this.props.oneCcirPir,
           });
       });
+    }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
@@ -90,10 +89,10 @@ handleCcirData = (ccirData) => {
   this.setState({
     ccirpir: {
       ...ccirpir,
-      description1: ccirData.description1,
-      description2: ccirData.description2,
-      description3: ccirData.description3,
-      description4: ccirData.description4,
+      Description1: ccirData.Description1,
+      Description2: ccirData.Description2,
+      Description3: ccirData.Description3,
+      Description4: ccirData.Description4,
     },
   });
 }
@@ -103,10 +102,10 @@ handlePirData = (pirData) => {
   this.setState({
     ccirpir: {
       ...ccirpir,
-      description5: pirData.description5,
-      description6: pirData.description6,
-      description7: pirData.description7,
-      description8: pirData.description8,
+      Description5: pirData.Description5,
+      Description6: pirData.Description6,
+      Description7: pirData.Description7,
+      Description8: pirData.Description8,
     },
   });
 }
@@ -126,17 +125,16 @@ resetForm = () => {
 
   handleSubmit = event => {
     event.preventDefault();
+    debugger;
     const { editId } = this.props;
     let { ccirpir } = this.state;
     if (editId !== undefined && editId !== '0') {
       ccirpir.CCIRPIRId = editId;
       ccirpir.LastUpdateUserId =  null;
-     
       this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
     } else {
       ccirpir.LastUpdateUserId =  null;
-
-      this.props.addCcirPir(this.state.ccirpir).then( () => {this.props.onClose('ADD');});
+      this.props.addCcirPir(ccirpir).then( () => {this.props.onClose('ADD');});
     }
     
   }
@@ -169,17 +167,17 @@ resetForm = () => {
     ];
 
     const ccirFields = [
-      { name: translations['ccir1'], type: 'textarea',  valFieldID: 'description1', domID: 'desc1' },
-      { name: translations['ccir2'], type: 'textarea',  valFieldID: 'description2', domID: 'desc2' },
-      { name: translations['ccir3'], type: 'textarea',  valFieldID: 'description3', domID: 'desc3' },
-      { name: translations['ccir4'], type: 'textarea',  valFieldID: 'description4', domID: 'desc4' },
+      { name: translations['ccir1'], type: 'textarea',  valFieldID: 'Description1', domID: 'desc1' },
+      { name: translations['ccir2'], type: 'textarea',  valFieldID: 'Description2', domID: 'desc2' },
+      { name: translations['ccir3'], type: 'textarea',  valFieldID: 'Description3', domID: 'desc3' },
+      { name: translations['ccir4'], type: 'textarea',  valFieldID: 'Description4', domID: 'desc4' },
     ];
 
     const pirFields = [
-      { name: translations['pir1'], type: 'textarea',  valFieldID: 'description5', domID: 'desc5' },
-      { name: translations['pir2'], type: 'textarea',  valFieldID: 'description6', domID: 'desc6' },
-      { name: translations['pir3'], type: 'textarea',  valFieldID: 'description7', domID: 'desc7' },
-      { name: translations['pir4'], type: 'textarea',  valFieldID: 'description8', domID: 'desc8' },
+      { name: translations['pir1'], type: 'textarea',  valFieldID: 'Description5', domID: 'desc5' },
+      { name: translations['pir2'], type: 'textarea',  valFieldID: 'Description6', domID: 'desc6' },
+      { name: translations['pir3'], type: 'textarea',  valFieldID: 'Description7', domID: 'desc7' },
+      { name: translations['pir4'], type: 'textarea',  valFieldID: 'Description8', domID: 'desc8' },
     ];
 
     return (
