@@ -202,7 +202,7 @@ notify =(type)=>{
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id
-							  return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+							  return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;
 						  }}
             />
           </div>

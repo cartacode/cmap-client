@@ -316,7 +316,7 @@ class PayloadsSpecificationComponent extends React.Component {
 						loading={this.props.isLoading}
 						defaultFilterMethod={(filter, row) => {
 							const id = filter.pivotId || filter.id
-							return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+							return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
 						  }}
 					/>
 				</div>
