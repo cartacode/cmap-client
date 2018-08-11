@@ -197,6 +197,13 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Type",
         accessor: 'munitionType',
+        Cell: row => <div>{
+          row.value === 1 ? translations['Missile']
+          :row.value === 2 ? translations['Rocket']
+          :row.value === 3 ? translations['Guns']
+          : 'Unknown'
+        }
+        </div>,
       },
       
       {
@@ -273,7 +280,7 @@ class MunitionsSpecificationComponent extends React.Component {
             />
           </div>
         </div>
-        {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/> */}
+        
       </div>
     );
   }

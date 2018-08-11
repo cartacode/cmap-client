@@ -252,7 +252,7 @@ class RocketModal extends React.Component {
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName',required:true},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature',required:true},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole',required:true},
-      {name: translations['Manufacture'], type: 'number', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID:'MunitionManufacturer'},
+      {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID:'MunitionManufacturer',required:true},
       {name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent'},
       {name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram'},
       {name: translations['Cost'], type: 'number', domID: 'MunitionCost', valFieldID: 'MunitionCost'},
