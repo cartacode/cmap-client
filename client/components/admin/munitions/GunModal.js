@@ -108,8 +108,6 @@ class GunModal extends React.Component {
     this.setState({
       munition: {
         ...munition,
-        MunitionSerial: generalData.MunitionSerial,
-        MunitionOwningUnit: generalData.MunitionOwningUnit,
         MunitionName: generalData.MunitionName,
         MunitionNomenclature: generalData.MunitionNomenclature,
         MunitionRole: generalData.MunitionRole,
@@ -253,8 +251,6 @@ class GunModal extends React.Component {
     const { munitionType } = this.props;
 
     const generalFields = [
-      { name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial', required: true },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit' },
       { name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName', required: true },
       { name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole', required: true },
