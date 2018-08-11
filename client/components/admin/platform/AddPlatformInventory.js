@@ -87,6 +87,7 @@ class AddPlatformInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
+        locationcategory: generalData.locationcategory,
         tailNumber: generalData.tailNumber,
         payload1: generalData.payload1,
         payload2: generalData.payload2,

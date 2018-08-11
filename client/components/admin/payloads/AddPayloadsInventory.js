@@ -85,6 +85,7 @@ class AddPayloadsInventory extends React.Component {
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber,
+        locationcategory: generalData.locationcategory,
         COCOM: generalData.COCOM,
         branch: generalData.branch,
         id: this.props.editId,
