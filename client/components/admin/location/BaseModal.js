@@ -153,7 +153,15 @@ class BaseModal extends React.Component {
    
     //PHOTO IMAGE
     if (event.target.id == "LocationPhotoFile") {
-      this.setState({ locationPhotoFile: event.target.files[0] })
+      this.setState({ locationPhotoFile: event.target.files[0] });
+      let reader = new FileReader();
+      let file = event.target.files[0];
+      reader.onloadend =() =>{
+          this.setState({
+              locationPhotoPreviewUrl: reader.result
+          });
+      }
+      reader.readAsDataURL(file)
     }
     //MAP IMAGE
     if (event.target.id == "LocationMapFile") {
@@ -167,18 +175,12 @@ class BaseModal extends React.Component {
     if (event.target.id == "LocationKMLFile") {
       this.setState({ locationKMLFile: event.target.files[0] })
     }
-    /* const {location} = this.state;
-    if(event.target.id == "LocationPhoto") {
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend =() =>{
-          this.setState({
-              file:file,
-              locationPhotoPreviewUrl: reader.result
-          });
-      }
-      reader.readAsDataURL(file)
-    }
+  /*   const {location} = this.state;
+    if(event.target.id == "LocationPhotoFile") {
+     
+    } */
+
+    /*
 
     if(event.target.id == "LocationMapImage") {
       let reader = new FileReader();
