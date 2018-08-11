@@ -37,8 +37,8 @@ openMunitionsForm = (row) => {
   });
 }
 
-closeMunitionsForm = () => {
-  this.notify();
+closeMunitionsForm = (actionType) => {
+  this.notify(actionType);
   this.props.fetchMunitionInventory();
   this.setState({
     editId: '0',
