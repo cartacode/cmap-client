@@ -64,6 +64,9 @@ class BaseModal extends React.Component {
 
   componentDidMount() {
     const { editId } = this.props;
+    this.setState({
+      clear: true,
+    });
     if (editId !== '0') {
       this.editComponent(editId);
     }
@@ -73,6 +76,9 @@ class BaseModal extends React.Component {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
+    }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 

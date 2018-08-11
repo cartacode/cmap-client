@@ -17,7 +17,7 @@ export function addCcirPir(ccirpir) {
 export function updateCcirPir(id, data) {
   return createAction({
     type: CCIRPIR__UPDATE,
-    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR?id=${id}`, qs.stringify(data), requestHeaders),
   });
 }
 

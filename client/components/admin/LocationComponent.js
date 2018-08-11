@@ -141,131 +141,8 @@ class LocationComponent
       }
     ];
 
-    const rowFields = [
-      { name: translations["Type"], type: "dropdown", valFieldID: "Type" },
-      { name: translations["Name"], type: "input", valFieldID: "Name" },
-      { name: translations["COCOM"], type: "dropdown", valFieldID: "Cocom" },
-      {
-        name: translations["Country"],
-        type: "dropdown",
-        valFieldID: "Country"
-      },
-      { name: translations["Region"], type: "dropdown", valFieldID: "Region" },
-      { name: translations["Unit"], type: "dropdown", valFieldID: "Unit" },
-      {
-        name: translations["Record Date"],
-        type: "date",
-        valFieldID: "RecordDate"
-      }
-    ];
 
-    const generalFields = [
-      {
-        name: translations["Name"],
-        type: "input",
-        domID: "LocationName",
-        valFieldID: "LocationName"
-      },
-      {
-        name: translations["Street/Road"],
-        type: "input",
-        domID: "LocationStreet",
-        valFieldID: "LocationStreet"
-      },
-      {
-        name: translations["City/Town"],
-        type: "input",
-        domID: "LocationCity",
-        valFieldID: "LocationCity"
-      },
-      {
-        name: translations["Country"],
-        type: "dropdown",
-        domID: "dispLocationCountry",
-        ddID: "Countries",
-        valFieldID: "LocationCountry"
-      },
-      {
-        name: translations["COCOM"],
-        type: "dropdown",
-        domID: "dispLocationCOCOM",
-        ddID: "COCOM",
-        valFieldID: "LocationCOCOM"
-      },
-      {
-        name: translations["Region"],
-        type: "dropdown",
-        domID: "dispLocationRegion",
-        ddID: "Regions",
-        valFieldID: "LocationRegion"
-      }
-    ];
-
-    const locationFields = [
-      {
-        name: translations["Lat"],
-        type: "number",
-        domID: "LocationLat",
-        valFieldID: "LocationLatitude"
-      },
-      {
-        name: translations["Lon"],
-        type: "number",
-        domID: "LocationLon",
-        valFieldID: "LocationLongitude"
-      },
-      {
-        name: translations["Elevation"],
-        type: "number",
-        domID: "LocationElevation",
-        valFieldID: "LocationElevation"
-      },
-      {
-        name: translations["MGRS"],
-        type: "input",
-        domID: "LocationMGRS",
-        valFieldID: "LocationMGRS"
-      }
-    ];
-
-    const contactFields = [
-      {
-        name: translations["Point of Contact"],
-        type: "input",
-        domID: "dispLocationPointofContact",
-        valFieldID: "LocationPointofContact"
-      },
-      {
-        name: translations["DSN"],
-        type: "input",
-        domID: "DSN",
-        valFieldID: "LocationDSN"
-      },
-      {
-        name: translations["Email-NIPR"],
-        type: "input",
-        domID: "EmailNIPR",
-        valFieldID: "LocationEmailNIPR"
-      },
-      {
-        name: translations["Email-SIPR"],
-        type: "input",
-        domID: "EmailSIPR",
-        valFieldID: "LocationEmailSIPR"
-      },
-      {
-        name: translations["Frequency"],
-        type: "number",
-        domID: "LocationFrequency",
-        valFieldID: "LocationFrequency"
-      },
-      {
-        name: translations["Chat ID"],
-        type: "input",
-        domID: "ChatID",
-        valFieldID: "LocationChatID"
-      }
-    ];
+    
 
     return (
       <div>
@@ -312,7 +189,7 @@ class LocationComponent
                 filterable={true}
                 defaultFilterMethod={(filter, row) => {
                   const id = filter.pivotId || filter.id;
-                  return row[id] !== undefined
+                  return (row[id] !== undefined && row[id] !== null)
                     ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase())
                     : true;
                 }}

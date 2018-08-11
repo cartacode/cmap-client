@@ -37,8 +37,8 @@ openMunitionsForm = (row) => {
   });
 }
 
-closeMunitionsForm = () => {
-  this.notify();
+closeMunitionsForm = (actionType) => {
+  this.notify(actionType);
   this.props.fetchMunitionInventory();
   this.setState({
     editId: '0',
@@ -157,7 +157,7 @@ else{
         //             <FilterDropdown dropdownDataUrl="COCOM" dropdownData={(value)=>{onChange({filterValue:value});}} value={this.state.filterValue}/>
       },
       {
-        Header: translations['unit'],
+        Header: translations['Owning Unit'],
         accessor: 'owningUnit',
         // Filter: ({ filter, onChange }) =>
         //             <FilterDropdown dropdownDataUrl="Units" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>
@@ -218,7 +218,7 @@ else{
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id;
-							  return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+							  return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
               }}
             />
           </div>

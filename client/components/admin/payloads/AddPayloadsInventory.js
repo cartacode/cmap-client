@@ -35,7 +35,7 @@ class AddPayloadsInventory extends React.Component {
 
   componentDidMount() {
     const { editId } = this.props;
-    console.log('edit id'+editId);
+    this.setState({ clear: true });
     if(editId !== '0') {
       this.editComponent(editId);
     }
@@ -45,6 +45,9 @@ class AddPayloadsInventory extends React.Component {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
+    }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
@@ -85,6 +88,7 @@ class AddPayloadsInventory extends React.Component {
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber,
+        locationcategory: generalData.locationcategory,
         COCOM: generalData.COCOM,
         branch: generalData.branch,
         id: this.props.editId,
@@ -125,7 +129,11 @@ class AddPayloadsInventory extends React.Component {
         if(response.data) {
           locationselect.add(new Option('--Select Location--', 0));
           response.data.map(item => {
-            locationselect.add(new Option(item.description, item.id.trim()));
+            let selected = false;
+            if(item.id === generalData.locationID) {
+              selected = true;
+            }
+            locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
           locationselect.add(new Option('No Location Found', 0));

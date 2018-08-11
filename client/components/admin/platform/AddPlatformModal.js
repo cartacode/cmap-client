@@ -83,8 +83,10 @@ class AddPlatformModal extends React.Component {
     // this.baseState = this.state;
   }
 
+ 
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== undefined && editId !== '0') {
       this.props.fetchPlatformById(editId).then(() => {
         this.setState(
@@ -104,6 +106,9 @@ class AddPlatformModal extends React.Component {
             platform: this.props.onePlatform, 
           });
       });
+    }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
@@ -411,8 +416,8 @@ class AddPlatformModal extends React.Component {
     }
   }
 
-  stopset () {
-    this.setState({clear:false});
+  stopset = () => {
+    this.setState({ clear: false });
   }
 
 
@@ -420,19 +425,7 @@ class AddPlatformModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-     /* let inputs = document.getElementsByTagName('input');
-      let drops = document.getElementsByTagName('select');
-      for (let item of inputs) {
-        console.log(item.value);
-        item.value = '';
-      }
-      for (let item of drops) {
-        item.value = 0;
-      } */
-      document.getElementById('platform').reset();
-      this.state.platform = this.baseState.platform;
-      console.log(this.state.platform);
-      this.setState({clear:true});
+      this.setState({ clear: true });
     }
   }
 

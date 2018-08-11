@@ -24,48 +24,48 @@ class EoirModal extends React.Component {
       clear: false,
       editFetched: false,
       payload: {
-        PayloadID: '',
-        PayloadReferenceCode: '',
-        PaylodWireframe: '',
-        PayloadPhoto: '',
-        Payload3D: '',
-        PayloadIcon: '',
-        Payload2525B: '',
-        PayloadDatasheet: '',
-        PayloadSerialNumber: '',
-        PayloadName: '',
-        PayloadNomenclature: '',
-        PayloadRole: '',
-        PayloadManufacturer: '',
-        PayloadExecutiveAgent: '',
-        PayloadContractProgram: '',
-        PayloadCost: '',
-        PayloadCostNotes: '',
-        PayloadLength: '',
-        PayloadWidth: '',
-        PayloadHeight: '',
-        PayloadWeight: '',
-        PayloadPower: '',
-        PayloadConnector1: '',
-        PayloadConnector2: '',
-        PayloadDaySpotter: '',
-        PayloadThermalImager: '',
-        PayloadLaserDesginator: '',
-        PayloadContinuousZoom: '',
-        PayloadStabalization: '',
-        PayloadVibrationIsolation: '',
-        PayloadAutoTracker: '',
-        PayloadGPSTimeSync: '',
-        PayloadInternalGPS: '',
-        PayloadInternalINS: '',
-        PayloadMetadata: '',
-        PayloadCrewCount: '',
-        PayloadMOS1: '',
-        PayloadMOS2: '',
-        PayloadMOS3: '',
-        PayloadType: '',
-        PayloadCOCOM: '2',
-        PayloadLocation: 'd0386ac6-1609-444e-aa7f-91a17f5a42aa',
+        // PayloadID: '',
+        // PayloadReferenceCode: '',
+        // PaylodWireframe: '',
+        // PayloadPhoto: '',
+        // Payload3D: '',
+        // PayloadIcon: '',
+        // Payload2525B: '',
+        // PayloadDatasheet: '',
+        // PayloadSerialNumber: '',
+        // PayloadName: '',
+        // PayloadNomenclature: '',
+        // PayloadRole: '',
+        // PayloadManufacturer: '',
+        // PayloadExecutiveAgent: '',
+        // PayloadContractProgram: '',
+        // PayloadCost: '',
+        // PayloadCostNotes: '',
+        // PayloadLength: '',
+        // PayloadWidth: '',
+        // PayloadHeight: '',
+        // PayloadWeight: '',
+        // PayloadPower: '',
+        // PayloadConnector1: '',
+        // PayloadConnector2: '',
+        // PayloadDaySpotter: '',
+        // PayloadThermalImager: '',
+        // PayloadLaserDesginator: '',
+        // PayloadContinuousZoom: '',
+        // PayloadStabalization: '',
+        // PayloadVibrationIsolation: '',
+        // PayloadAutoTracker: '',
+        // PayloadGPSTimeSync: '',
+        // PayloadInternalGPS: '',
+        // PayloadInternalINS: '',
+        // PayloadMetadata: '',
+        // PayloadCrewCount: '',
+        // PayloadMOS1: '',
+        // PayloadMOS2: '',
+        // PayloadMOS3: '',
+        // PayloadType: '',
+        // PayloadCOCOM: '2',
+        // PayloadLocation: 'd0386ac6-1609-444e-aa7f-91a17f5a42aa',
       },
       onePayload: {},
     }
@@ -77,6 +77,7 @@ class EoirModal extends React.Component {
   
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.editComponent(editId);
     }
@@ -84,9 +85,13 @@ class EoirModal extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
     }
+    
   }
 
   stopUpdate = () => {
@@ -97,7 +102,7 @@ class EoirModal extends React.Component {
     this.props.fetchPayloadsById(editId).then(() => {
       this.setState({
         editFetched: true,
-        payloads: this.props.onePayload,
+        payload: this.props.onePayload,
       });
     });
   }
@@ -114,13 +119,12 @@ class EoirModal extends React.Component {
         // PayloadOwningUnit: generalData.PayloadOwningUnit,
         PayloadName: generalData.PayloadName,
         PayloadNomenclature: generalData.PayloadNomenclature,
-        PayloadRole: generalData.PayloadRole,
+        MissionRole: generalData.MissionRole,
         PayloadManufacturer: generalData.PayloadManufacturer,
         PayloadExecutiveAgent: generalData.PayloadExecutiveAgent,
         PayloadContractProgram: generalData.PayloadContractProgram,
         PayloadCost: generalData.PayloadCost,
-        PayloadCostNotes: generalData.PayloadCostNotes,
-        PayloadType: 1
+        PayloadCostNotes: generalData.PayloadCostNotes,        
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
@@ -229,11 +233,11 @@ class EoirModal extends React.Component {
   }
 
   handleSubmit = event => {
-    debugger;
     event.preventDefault();
   
     let { payload } = this.state;
     const { editId, payloadTypeId } = this.props;
+    
     payload.PayloadType = payloadTypeId;
     console.log('submitting'+JSON.stringify(payload));
     if (editId !== undefined && editId !== '0') {
@@ -297,7 +301,7 @@ class EoirModal extends React.Component {
       /* { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' }, */
       { name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required: true },
       { name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature', required: true },
-      { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole', required: true },
+      { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles/GetPayloadRoles', valFieldID: 'MissionRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'PayloadManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PayloadManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent', required: true },
       { name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram', required: true },

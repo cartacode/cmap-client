@@ -44,6 +44,7 @@ class AddPlatformInventory extends React.Component {
 
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchPlatformInventoryById(editId).then(() => {
         this.setState({
@@ -67,8 +68,7 @@ class AddPlatformInventory extends React.Component {
     }
 
     if(editId === '0' && prevProps.editId !== editId) {
-      console.log("It's here");
-      this.setState({clear:true});
+      this.setState({ clear: true });
     }
   }
 
@@ -87,6 +87,7 @@ class AddPlatformInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
+        locationcategory: generalData.locationcategory,
         tailNumber: generalData.tailNumber,
         payload1: generalData.payload1,
         payload2: generalData.payload2,
@@ -157,7 +158,11 @@ class AddPlatformInventory extends React.Component {
         if(response.data) {
           locationselect.add(new Option('--Select Location--', 0));
           response.data.map(item => {
-            locationselect.add(new Option(item.description, item.id.trim()));
+            let selected = false;
+            if(item.id === generalData.locationID) {
+              selected = true;
+            }
+            locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
           locationselect.add(new Option('No Location Found', 0));

@@ -133,7 +133,11 @@ class ContentBlock extends React.Component {
             break;    
             
           case 'email':
-            input = (<input type="email" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
+            if(item.required) {
+              input = (<input type="email" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required/>);
+            }else {
+              input = (<input type="email" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
+            }  
             break;    
 
           case 'number':
@@ -141,7 +145,11 @@ class ContentBlock extends React.Component {
             if(item.minValue) {
               minValue = item.minValue;
             }
-            input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
+            if(item.required) {
+              input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
+            }else {
+              input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} required/>);
+            }
             break;
 
           case 'dropdown':
@@ -171,6 +179,7 @@ class ContentBlock extends React.Component {
           case 'checkbox':
             input = (
               <div>
+                
                 <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}/>
                 <label htmlFor={`checkbox${i}`}><span/></label>
               </div>

@@ -58,6 +58,7 @@ class MunitionsSpecificationComponent extends React.Component {
 
   missileModal = () => {
     this.setState({
+      editId: '0',
       munitionType: this.state.munitionTypes.missile,
       missileModalOpen: true,
       rocketModalOpen: false,
@@ -67,6 +68,7 @@ class MunitionsSpecificationComponent extends React.Component {
 
   rocketModal = () => {
     this.setState({
+      editId: '0',
       munitionType: this.state.munitionTypes.rocket,
       missileModalOpen: false,
       rocketModalOpen: true,
@@ -76,6 +78,7 @@ class MunitionsSpecificationComponent extends React.Component {
 
   gunModal = () => {
     this.setState({
+      editId: '0',
       munitionType: this.state.munitionTypes.gun,
       missileModalOpen: false,
       rocketModalOpen: false,
@@ -110,10 +113,11 @@ class MunitionsSpecificationComponent extends React.Component {
   //So for now i am using Missile Scetion.
   openMunitionsSpecificationForm = (row) => {
     let value = row.value;
-    let munitionType = 1;//row.original.munitionType;
+    let munitionType = row.original.munitionType;
     console.log(value);
     this.setState({
       editId: value,
+      munitionType:munitionType,
       missileModalOpen: 1 === munitionType ? true : false,
       rocketModalOpen: 2 === munitionType ? true : false,
       gunModalOpen: 3 === munitionType ? true : false,
@@ -200,7 +204,7 @@ class MunitionsSpecificationComponent extends React.Component {
         accessor: 'company',
       },
       {
-        Header: "Munition",
+        Header: "Munition Name",
         accessor: 'name',
       
       },
@@ -263,7 +267,7 @@ class MunitionsSpecificationComponent extends React.Component {
               filterable={true}
               defaultFilterMethod={(filter, row) => {
                 const id = filter.pivotId || filter.id
-                return row[id] !== undefined ? String(row[id]).startsWith(filter.value) : true;
+                return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;
               }}
 
             />

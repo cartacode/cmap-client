@@ -23,7 +23,7 @@ class RocketModal extends React.Component {
       editFetched: false ,
       oneMunition: {},
       clear:false,
-      munition: {
+      /* munition: {
         MunitionsReferenceCode: '',
         MunitionWireframe: '',
         MunitionPhoto: '',
@@ -54,7 +54,7 @@ class RocketModal extends React.Component {
         MunitionMOS1: '',
         MunitionMOS2: '',
         MunitionMOS3: '',
-      }
+      } */
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -66,7 +66,9 @@ class RocketModal extends React.Component {
    * Auto invoked functions and Once initialized.
    */
   componentDidMount = () => {
+    this.setState({ clear: true });
     let { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
@@ -92,6 +94,9 @@ class RocketModal extends React.Component {
           });
       });
     }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
   }
 
   stopupd = () => {
@@ -104,8 +109,6 @@ class RocketModal extends React.Component {
     this.setState({
       munition: {
         ...munition,
-        MunitionSerial: generalData.MunitionSerial,
-        MunitionOwningUnit: generalData.MunitionOwningUnit,
         MunitionName: generalData.MunitionName,
         MunitionNomenclature: generalData.MunitionNomenclature,
         MunitionRole: generalData.MunitionRole,
@@ -114,7 +117,6 @@ class RocketModal extends React.Component {
         MunitionContractProgram: generalData.MunitionContractProgram,
         MunitionCost: generalData.MunitionCost,
         MunitionCostNotes: generalData.MunitionCostNotes,
-        MunitionType: this.props.munitionType,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.munition);
@@ -199,6 +201,7 @@ class RocketModal extends React.Component {
     console.log(this.state.munition);
     const {  munition } = this.state;
     const { editId } = this.props;
+    munition.MunitionType =  this.props.munitionType;
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       this.props.updateMunition(editId, munition).then( () => {this.props.onClose('UPDATE');});
@@ -244,12 +247,8 @@ class RocketModal extends React.Component {
     const {translations} = this.props;
 
     const { munitionType } = this.props;
-    console.log("**************************************************Rocket munitionType*************************************"+munitionType);
-
 
     const generalFields = [
-      {name: translations['Serial#'], type: 'number', domID: 'MunitionSerial', valFieldID: 'MunitionSerial',required:true},
-      {name: translations['Owning Unit'], type: 'dropdown', domID: 'MunitionOwningUnit', ddID: 'Units', valFieldID: 'MunitionOwningUnit'},
       {name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName',required:true},
       {name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature',required:true},
       {name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole',required:true},
@@ -354,13 +353,13 @@ class RocketModal extends React.Component {
             <div className="row personnel" >
               <div className="under-munitions-content">
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                data={this.handleMunitionGeneralData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
                 editFetched={this.state.editFetched} stopupd={this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handleMunitionCrewData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
+                data={this.handleMunitionCrewData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
                 editFetched={this.state.editFetched} stopupd={this.stopupd}/>
                 <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handleMunitionTechnicalData} initstate ={this.state.munition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
+                data={this.handleMunitionTechnicalData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)} 
                 editFetched={this.state.editFetched} stopupd={this.stopupd}/>
               </div>
             </div>
@@ -373,17 +372,11 @@ class RocketModal extends React.Component {
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='highlighted-button'>
-                {translations['Delete']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+            
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='highlighted-button'>
-                {translations['save']}
+              {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>

@@ -66,6 +66,7 @@ class SargmtiModal extends React.Component {
   }
   componentDidMount = () => {
     const { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.editComponent(editId);
     }
@@ -75,6 +76,9 @@ class SargmtiModal extends React.Component {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
+    }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
@@ -86,7 +90,7 @@ class SargmtiModal extends React.Component {
     this.props.fetchPayloadsById(editId).then(() => {
       this.setState({
         editFetched: true,
-        payloads: this.props.onePayload,
+        payload: this.props.onePayload,
       });
     });
   }
@@ -105,6 +109,8 @@ class SargmtiModal extends React.Component {
         PayloadContractProgram: generalData.PayloadContractProgram,
         PayloadCost: generalData.PayloadCost,
         PayloadCostNotes: generalData.PayloadCostNotes,
+        MissionRole: generalData.MissionRole,
+       
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
@@ -157,7 +163,7 @@ class SargmtiModal extends React.Component {
         PayloadCrewCount: crewData.PayloadCrewCount,
         PayloadMOS1: crewData.PayloadMOS1,
         PayloadMOS2: crewData.PayloadMOS2,
-        PayloadMOS3: crewData.PayloadMOS3
+        PayloadMOS3: crewData.PayloadMOS3,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
@@ -213,10 +219,10 @@ class SargmtiModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('---here--');
     console.log(this.state.payload);
     const { payload } = this.state;
-    const { editId } = this.props;
+    const { editId, payloadTypeId } = this.props;
+    payload.PayloadType = payloadTypeId;
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
       this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
@@ -274,7 +280,7 @@ class SargmtiModal extends React.Component {
       // { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' },
       { name: translations['Payload Name'], type: 'input', domID: 'PayloadName', valFieldID: 'PayloadName', required: true },
       { name: translations['Payload Nomenclature'], type: 'input', domID: 'PayloadNomenclature', valFieldID: 'PayloadNomenclature', required: true },
-      { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PayloadRole', required: true },
+      { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PayloadRoles/GetPayloadRoles', valFieldID: 'MissionRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'PayloadManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PayloadManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PayloadExecutiveAgent', valFieldID: 'PayloadExecutiveAgent', required: true },
       { name: translations['Contract Program'], type: 'input', domID: 'PayloadContractProgram', valFieldID: 'PayloadContractProgram', required: true },
@@ -307,9 +313,9 @@ class SargmtiModal extends React.Component {
 
     const crewFields = [
       { name: translations['Payload Crew Count'], type: 'number', domID: 'PayloadCrewCount', valFieldID: 'PayloadCrewCount', required: true },
-      { name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'MOS1' },
-      { name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: "MOS", valFieldID: 'MOS2' },
-      { name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'MOS3' },
+      { name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'PayloadMOS1' },
+      { name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: "MOS", valFieldID: 'PayloadMOS2' },
+      { name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'PayloadMOS3' },
     ];
 
     return (

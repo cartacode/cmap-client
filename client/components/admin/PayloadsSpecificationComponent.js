@@ -73,6 +73,18 @@ class PayloadsSpecificationComponent extends React.Component {
 		});
 	}
 
+	openGmtiModal = () => {
+		this.setState({
+			editId: '0',
+			payloadTypeId: 5,
+			eoirModalOpen: false,
+			sargmtiModalOpen: true,
+			wamiModalOpen: false,
+			sigintModalOpen: false,
+			equipmentModalOpen: false,
+		});
+	}
+
 	openWamiModal = () => {
 		this.setState({
 			editId: '0',
@@ -100,7 +112,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	openEquipmentModal = () => {
 		this.setState({
 			editId: '0',
-			payloadTypeId: 5,
+			payloadTypeId: 18,
 			eoirModalOpen: false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
@@ -177,10 +189,10 @@ class PayloadsSpecificationComponent extends React.Component {
 			// equipmentModalOpen: 'EQUIPMENT' == payloadSpecType ? true : false,
 
 			eoirModalOpen: payloadTypeId === 1 ? true : false,
-			sargmtiModalOpen: payloadTypeId === 2 ? true : false,
+			sargmtiModalOpen: (payloadTypeId === 2 || payloadTypeId === 5) ? true : false,
 			wamiModalOpen: payloadTypeId === 3 ? true : false,
 			sigintModalOpen: payloadTypeId === 4 ? true : false,
-			equipmentModalOpen: payloadTypeId === 5 ? true : false,
+			equipmentModalOpen: payloadTypeId === 18 ? true : false,
 		});
 		console.log(this.state.editId);
 	  }
@@ -228,10 +240,11 @@ class PayloadsSpecificationComponent extends React.Component {
 		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
 		const addPayloads = [
 			{name:translations['eo/ir'], onClick:this.openEoirModal, typeSpec: 'EO/IR', id:1},
-			{name:translations['sar/gmti'], onClick:this.openSargmtiModal, typeSpec: 'SAR/GMTI', id:2},
+			{name:translations['sar'], onClick:this.openSargmtiModal, typeSpec: 'SAR/GMTI', id:2},
 			{name:translations['wami'], onClick:this.openWamiModal, typeSpec: 'WAMI' , id:3},
-			{name:translations['sigint'], onClick:this.openSigintModal, typeSpec: 'SIGINT', id:3 },
-			{name:translations['equipment'], onClick:this.openEquipmentModal, typeSpec:'EQUIPMENT', id:3 },
+			{name:translations['sigint'], onClick:this.openSigintModal, typeSpec: 'SIGINT', id:4 },
+			{name:translations['gmti'], onClick:this.openGmtiModal, typeSpec: 'GMTI', id:5},
+			{name:translations['equipment'], onClick:this.openEquipmentModal, typeSpec:'EQUIPMENT', id: 18 },
 		];
 
 		const columns = [
@@ -316,7 +329,7 @@ class PayloadsSpecificationComponent extends React.Component {
 						loading={this.props.isLoading}
 						defaultFilterMethod={(filter, row) => {
 							const id = filter.pivotId || filter.id
-							return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+							return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
 						  }}
 					/>
 				</div>

@@ -42,6 +42,7 @@ class AddMunitionsInventory extends React.Component {
    */
   componentDidMount = () => {
     let { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchMunitionInventoryById(editId).then(() => {
         this.setState(
@@ -67,6 +68,10 @@ class AddMunitionsInventory extends React.Component {
           });
       });
     }
+
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
   }
 
   stopupd = () => {
@@ -81,6 +86,8 @@ class AddMunitionsInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
+        COCOM: generalData.COCOM,
+        branch: generalData.branch,
         serialNumber: generalData.serialNumber,
         lastUpdateUserId: '000',
         lastUpdate: new Date(),
@@ -105,7 +112,7 @@ class AddMunitionsInventory extends React.Component {
       munition.id = editId;
       this.props.updateMunitionInventory(editId, munition).then(() => { this.props.onClose(); });
     } else {
-      this.props.addMunitionInventory(this.state.munition).then(() => { this.props.onClose(); });
+      this.props.addMunitionInventory(munition).then(() => { this.props.onClose(); });
     }
   }
 
@@ -161,6 +168,8 @@ class AddMunitionsInventory extends React.Component {
 
     let { munition } = this.state;
 
+    debugger;
+
     let generalFields = [
       { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: "Serial #", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
@@ -211,15 +220,8 @@ class AddMunitionsInventory extends React.Component {
           </div>
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
-            <button className='highlighted-button'>
-              {translations['Delete']}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
-          </div>
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-              {translations['save']}
+            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
