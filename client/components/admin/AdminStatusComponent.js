@@ -237,7 +237,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -293,7 +293,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -348,7 +348,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Equipment"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Equipment"/></span>// Custom cell components!
       }
     ];
 
@@ -407,7 +407,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="PED"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
       }
     ];
 
@@ -525,7 +525,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" id="Personnel"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel"/></span>// Custom cell components!
       }
     ];
 
