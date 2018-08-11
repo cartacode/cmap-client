@@ -137,9 +137,8 @@ class AddPersonnelModal extends React.Component {
     console.log(generalData);
     console.log("Personnel State is");
     console.log(personnel);
-    
     if( generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
-      this.updateRanks(generalData.ServiceBranch);
+      this.updateRanks(generalData.ServiceBranch,generalData.Rank);
     }
 
     if( generalData.Rank && generalData.Rank !== this.state.selectedRank ) {
@@ -332,8 +331,7 @@ class AddPersonnelModal extends React.Component {
     
   }
 
-updateRanks= (branch) => {
-
+updateRanks= (branch,rank) => {
   let rankSelect = document.getElementsByName('Rank')[0];
   let items = [{'label': '--Select Item--', 'value': 0}];
   const apiUrl = `${baseUrl}/Ranks/GetRanksByBranch?branchID=${branch}`;
@@ -348,7 +346,11 @@ updateRanks= (branch) => {
         rankSelect.length = 0;
       }
       for(let i in items) {
-        rankSelect.add(new Option(items[i].label, items[i].value));
+        let selected = false;
+            if( items[i].value == rank.toString()) {
+              selected = true;
+            }
+            rankSelect.add(new Option(items[i].label, items[i].value, selected, selected));
       }
            
     })
@@ -543,7 +545,7 @@ render() {
         <div className="menu-button">
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
           <button type="submit" className='highlighted-button'>
-            {translations['save']}
+          {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
           </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>
