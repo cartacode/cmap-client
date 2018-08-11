@@ -109,11 +109,13 @@ class MunitionsSpecificationComponent extends React.Component {
   //TODO: i found there is no chnages in UI in Missile, Rocket and Gun Section all showing same UI. 
   //So for now i am using Missile Scetion.
   openMunitionsSpecificationForm = (row) => {
+    debugger;
     let value = row.value;
-    let munitionType = 1;//row.original.munitionType;
+    let munitionType = row.original.munitionType;
     console.log(value);
     this.setState({
       editId: value,
+      munitionType:munitionType,
       missileModalOpen: 1 === munitionType ? true : false,
       rocketModalOpen: 2 === munitionType ? true : false,
       gunModalOpen: 3 === munitionType ? true : false,
