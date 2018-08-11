@@ -1,25 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import ButtonsList from "../reusable/ButtonsList";
-import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../reusable/CustomDatePicker';
-import DropDownButton from '../reusable/DropDownButton';
-
-import Modal from '../reusable/Modal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-import Dropdown from '../reusable/Dropdown';
-import FilterDropdown from '../reusable/FilterDropdown';
-import CustomButton from '../reusable/CustomButton';
-
-import CcirPirModal from './ccir-pirs/CcirPirModal';
-import CcirRowDetailModal from './ccir-pirs/CcirRowDetailModal';
-
-import "react-table/react-table.css";
-import ReactTable from 'react-table';
+import React from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import ReactTable from 'react-table';
+import "react-table/react-table.css";
+import CcirPirModal from './ccir-pirs/CcirPirModal';
+
+
+
 
 
 
@@ -168,7 +155,7 @@ notify =(type)=>{
         Header: translations['view'],
         accessor: 'CCIRPIRId',
         filterable: false,
-        Cell: row => <div><span className='number'><img src="/assets/img/general/pen_icon.png" /* onClick={this.tableRowDetailModal} */ onClick={() => this.openCcirPirForm(row.value)} /></span> <span className='number'><img src="/assets/img/general/trash_icon.png" /* onClick={this.tableRowDetailModal} */ onClick={() => this.deleteCcirPirRecord(row.value)} /></span></div>// Custom cell components!
+        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openCcirPirForm(row.value)} /></span> <span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png"  onClick={() => this.deleteCcirPirRecord(row.value)} /></span></div>
       } 
     ];
 
