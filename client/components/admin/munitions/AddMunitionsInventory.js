@@ -42,6 +42,7 @@ class AddMunitionsInventory extends React.Component {
    */
   componentDidMount = () => {
     let { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchMunitionInventoryById(editId).then(() => {
         this.setState(
@@ -66,6 +67,10 @@ class AddMunitionsInventory extends React.Component {
             munition: this.props.onePayloadInventory,
           });
       });
+    }
+
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 

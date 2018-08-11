@@ -107,6 +107,9 @@ class AddPlatformModal extends React.Component {
           });
       });
     }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
   }
 
   stopUpdate = ()=> {

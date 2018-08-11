@@ -72,6 +72,7 @@ class MissileModal extends React.Component {
   componentDidMount = () => {
     this.setState({clear:true});
     let { editId } = this.props;
+    this.setState({ clear: true });
     if (editId !== '0') {
       this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
@@ -96,6 +97,10 @@ class MissileModal extends React.Component {
             munition: this.props.oneMunition,
           });
       });
+    }
+
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
