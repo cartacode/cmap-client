@@ -31,6 +31,9 @@ class CcirPirModal extends React.Component {
 
   componentDidMount() {
     const { editId } = this.props;
+    this.setState({
+      clear: true,
+    });
     if(editId !== '0') {
       this.props.fetchCcirPirById(editId).then(() => {
 
