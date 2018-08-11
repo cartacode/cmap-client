@@ -1,5 +1,6 @@
 import Cesium from 'cesium/Cesium'; // eslint-disable-line import/no-unresolved
 import React from 'react';
+import uuid from 'uuid/v4';
 
 Cesium.BingMapsApi.defaultKey =
   'KfV8wdPtnDWQhBokvFQu~XZLc5YQAVAZ9fPUgPdXJPg~At-c_UY2pdQYIGTUDYUL8ynhX4LXwO4TamJi-LhAny8yTUne6oPIjzttr1enFUez';
@@ -8,7 +9,7 @@ export default class Map extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._id = 'test';
+    this._id = `Map_${uuid()}`;
     this._viewer = null;
   }
 

@@ -72,6 +72,8 @@ module.exports = function getWebpackConfig() {
           loader: 'url-loader?limit=10000&mimetype=application/font-woff',
         },
       ],
+
+      unknownContextCritical: false,
     },
 
     node: {
