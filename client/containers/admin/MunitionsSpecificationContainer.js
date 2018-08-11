@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addMunition,
   fetchMunitions,
-  deleteMunitionsById
+  deleteMunitionsById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsSpecificationComponent);
