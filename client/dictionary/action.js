@@ -77,3 +77,7 @@ export const PLATFORM_INVENTORY__FETCH = createActionType('PLATFORM_INVENTORY__F
 export const PLATFORM_INVENTORY__FETCH_ONE = createActionType('PLATFORM_INVENTORY__FETCH_ONE');
 export const PLATFORM_INVENTORY__DELETE_ONE = createActionType('PLATFORM_INVENTORY__DELETE_ONE');
 
+
+export const STATUS_PLATFORM__FETCH = createActionType('STATUS_PLATFORM__FETCH');
+export const STATUS_PAYLOAD__FETCH = createActionType('STATUS_PAYLOAD__FETCH');
+export const STATUS_PERSONNEL__FETCH = createActionType('STATUS_PERSONNEL__FETCH');

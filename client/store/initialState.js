@@ -74,4 +74,11 @@ export default {
     rankList: [],
     isListFetching: false,
   },
+
+  status: {
+    platforms: [],
+    payloads: [],
+    personnels: [],
+    isFetching: false
+  }
 };
