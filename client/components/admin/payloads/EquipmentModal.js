@@ -71,7 +71,7 @@ class EquipmentModal extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.editComponent(editId);
+      this.editComponent(editId);
     }
     
   }

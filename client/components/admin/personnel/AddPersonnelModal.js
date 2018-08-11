@@ -347,7 +347,7 @@ updateRanks= (branch,rank) => {
       }
       for(let i in items) {
         let selected = false;
-            if( items[i].value == rank.toString()) {
+            if(rank && items[i].value === rank.toString()) {
               selected = true;
             }
             rankSelect.add(new Option(items[i].label, items[i].value, selected, selected));
