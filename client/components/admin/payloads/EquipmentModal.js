@@ -125,6 +125,7 @@ class EquipmentModal extends React.Component {
         PayloadContractProgram: generalData.PayloadContractProgram,
         PayloadCost: generalData.PayloadCost,
         PayloadCostNotes: generalData.PayloadCostNotes,
+        PayloadType: 2,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
