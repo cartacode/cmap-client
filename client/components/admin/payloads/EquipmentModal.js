@@ -97,7 +97,7 @@ class EquipmentModal extends React.Component {
     this.props.fetchPayloadsById(editId).then(() => {
       this.setState({
         editFetched: true,
-        payloads: this.props.onePayload,
+        payload: this.props.onePayload,
       });
     });
   }
@@ -128,8 +128,7 @@ class EquipmentModal extends React.Component {
         PayloadContractProgram: generalData.PayloadContractProgram,
         PayloadCost: generalData.PayloadCost,
         PayloadCostNotes: generalData.PayloadCostNotes,
-        MissionRole: generalData.MissionRole,
-        PayloadType: 2,
+        MissionRole: generalData.MissionRole,        
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
@@ -234,10 +233,10 @@ class EquipmentModal extends React.Component {
      console.log(this.state.payload);
      this.props.addPayload(this.state.payload).then( () => {this.props.onClose();}); */
 
-    console.log('---here--');
     console.log(this.state.payload);
     const { payload } = this.state;
-    const { editId } = this.props;
+    const { editId, payloadTypeId } = this.props;
+    payload.PayloadType = payloadTypeId;
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
       this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });

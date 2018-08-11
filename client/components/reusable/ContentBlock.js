@@ -179,7 +179,7 @@ class ContentBlock extends React.Component {
           case 'checkbox':
             input = (
               <div>
-                check {value} check
+                
                 <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}/>
                 <label htmlFor={`checkbox${i}`}><span/></label>
               </div>
