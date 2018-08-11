@@ -118,50 +118,31 @@ class PlatformsSpecificationComponent extends React.Component {
     const { translations } = this.props;
     const { allPlatforms } = this.props;
 
-    console.log(allPlatforms);
-
     const columns = [
 
-      {
-        Header: "Branch",
-        accessor: 'branch',
-        // filterMethod: (filter, row) =>
-        //             row[filter.id].startsWith(filter.value),
-
-        // sortMethod: (a, b) => {
-        //           if (a.length === b.length) {
-        //               return a > b ? 1 : -1;
-        //             }
-        //           return a.length > b.length ? 1 : -1;
-        //       }// String-based value accessors!
-      },
       {
         Header: translations['Platform Name'],
         accessor: 'name',
       },
       {
-        Header: "Manufacturer",
+        Header: translations['Manufacturer'],
         accessor: 'manufacturer'
       },
       {
-        Header: "Category",
+        Header: translations['Category'],
         accessor: 'category'
       },
       {
-        Header: "Category Desc",
-        accessor: 'categoryDesc'
-      },
-      {
-        Header: "Mission Role",
+        Header: translations['Mission Role'],
         accessor: 'role'
       },
       {
-        Header: "Payload Capacity",
-        accessor: 'payloadCapacity'
+        Header: translations['Payload Capacity(lbs.)'],
+        accessor: 'payloadCapacity',
       },
       {
-        Header: "Armament Capacity",
-        accessor: 'armamentCapacity'
+        Header: translations['Armament Capacity(lbs.)'],
+        accessor: 'armamentCapacity',
       },
       {
         Header: translations['view'],
@@ -177,14 +158,14 @@ class PlatformsSpecificationComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              Platforms Specification
+              Platforms Library
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
           <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Specification</button>
+              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Library</button>
             </div>
           </div>
 
@@ -199,6 +180,7 @@ class PlatformsSpecificationComponent extends React.Component {
               columns={columns}
               defaultPageSize={5}
               className="-striped -highlight"
+              loading={this.props.isLoading}
               filterable={true}
               defaultFilterMethod={(filter, row) => {
                 const id = filter.pivotId || filter.id

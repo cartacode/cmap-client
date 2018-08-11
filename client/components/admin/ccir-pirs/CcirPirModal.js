@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalFormBlock from '../../reusable/ModalFormBlock';
-import CustomButton from '../../reusable/CustomButton';
+import ContentBlock from '../../reusable/ContentBlock';
 import { connect } from 'react-redux';
-import { addCcirPir,  updateCcirPir,  fetchCcirPirById } from 'actions/ccirpir';
+import { addCcirPir, updateCcirPir, fetchCcirPirById } from 'actions/ccirpir';
 
 class CcirPirModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
-      addClicked: false  ,
+    this.state = {
+      addClicked: false,
+      editFetched:false,
       //  ccirpir:{
       //   COCOMId:'',
       //   BranchId:'',
@@ -23,46 +23,48 @@ class CcirPirModal extends React.Component {
       //   EffectiveAreaKML:''
 
       //  },
-     // ccirpir:{},
-      oneCcirPir: {}
-    }
-
-    // this.handleAdd = this.handleAdd.bind(this);
-
-    this.handleChange = this.handleChange.bind(this);
-
-    // preserve the initial state in a new object
-    this.baseState = this.state;
+      ccirpir:{},
+      oneCcirPir: {},
+    };
 
   }
-
 
   componentDidMount() {
     const { editId } = this.props;
     if(editId !== '0') {
-      this.props.fetchCcirPirById(editId);
-    }else {
-      // this.setState({ onePayloadInventory: {} });
+      this.props.fetchCcirPirById(editId).then(() => {
+
+        this.setState(
+          { 
+            editFetched:true,
+            ccirpir: this.props.oneCcirPir,
+          });
+
+      });
     }
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.props;
+    
+    if(editId !== '0' && prevProps.editId !== editId) {
+      //this.props.stopupdate();
+      this.props.fetchPersonnelById(editId).then(() => {
+        this.setState(
+          {
+            editFetched:true,
+            ccirpir: this.props.oneCcirPir,
+          });
+      });
+    }
+  }
 
-  // handleAdd () 
-  // { 
-  //     console.log("Is it here?");
-  //   /*  let divid = document.getElementById("add");
-  //     var div = document.createElement('div');
-  //     div.innerHTML = '<div className="col-md-12"><div className="entry-field"><div className="entry-detail"><textarea rows="3"/></div><div className="add-buttion"><button onClick={this.props.onAdd}> add </button></div></div></div>';
-  //     divid.appendChild(div);
-  //     this.forceUpdate(); */
-  //     this.setState({
-  //       addClicked: true
-  //     });
-
-  // }
+  stopupd = () => {
+    this.setState({editFetched:false});
+  }
 
   handleCcirPirGeneralData = (generalData) => {
-    let { ccirpir } = this.state;
+    const { ccirpir } = this.state;
     this.setState({
       ccirpir: {
         ...ccirpir,
@@ -76,13 +78,48 @@ class CcirPirModal extends React.Component {
         MissionName: generalData.MissionName,
         EffectiveAreaKML: generalData.EffectiveAreaKML,
         CCIRPIRId: this.props.editId,
-
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.ccirpir);
+      },
     });
   }
 
+handleCcirData = (ccirData) => {
+  const { ccirpir } = this.state;
+  this.setState({
+    ccirpir: {
+      ...ccirpir,
+      description1: ccirData.description1,
+      description2: ccirData.description2,
+      description3: ccirData.description3,
+      description4: ccirData.description4,
+    },
+  });
+}
+
+handlePirData = (pirData) => {
+  const { ccirpir } = this.state;
+  this.setState({
+    ccirpir: {
+      ...ccirpir,
+      description5: pirData.description5,
+      description6: pirData.description6,
+      description7: pirData.description7,
+      description8: pirData.description8,
+    },
+  });
+}
+
+stopset = () => {
+  this.setState({clear:false});
+}
+
+resetForm = () => {
+  this.setState(this.baseState);
+  console.log("FORM RESET DONE");
+  if (confirm("Do you want to clear all data from this form?")) {
+    this.setState( {clear: true} );
+    document.getElementById('personnelform').reset();
+  }
+}
 
   handleSubmit = event => {
     event.preventDefault();
@@ -95,33 +132,11 @@ class CcirPirModal extends React.Component {
       this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
     } else {
       ccirpir.LastUpdateUserId =  null;
-     
-
 
       this.props.addCcirPir(this.state.ccirpir).then( () => {this.props.onClose('ADD');});
     }
     
   }
-
-
-  handleChange = (e) =>{
-    const { name, value } = e.target;
-   
-    const { ccirpir } = this.state;
-    this.setState({
-      ccirpir: {
-             ...ccirpir,
-             [name]: value
-         }
-     }, () =>{
-       //console.log("m   m m m m    "+JSON.stringify(this.state.ccirpir) );
-        //this.props.data(this.state.ccirpir);
-    });
-     
- }
-
- 
-
 
   render() {
     // Render nothing if the "show" prop is false
@@ -140,171 +155,98 @@ class CcirPirModal extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-     /*  {name: 'Creation Date/Time', type: 'date'}, */
-      {name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM'},
-      {name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch'},
-      {name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country'},
-      {name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region'},
-      {name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'UnitId', domID: 'Unit'},
-      {name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander'},
-      {name: 'Type', type: 'dropdown', ddID: 'TypesEnum',  valFieldID: 'Type', domID: 'TypesEnum'},
-      {name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname'},
-      {name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
+      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM'},
+      { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch'},
+      { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country'},
+      { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region'},
+      { name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'UnitId', domID: 'Unit'},
+      { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander'},
+      { name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname'},
+      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
     ];
 
-    const typesEnum =[ 
-        {name : 'CCIR'},
-        {name : 'PIR'}
-      ];
-   
+    const ccirFields = [
+      { name: translations['ccir1'], type: 'textarea',  valFieldID: 'description1', domID: 'desc1' },
+      { name: translations['ccir2'], type: 'textarea',  valFieldID: 'description2', domID: 'desc2' },
+      { name: translations['ccir3'], type: 'textarea',  valFieldID: 'description3', domID: 'desc3' },
+      { name: translations['ccir4'], type: 'textarea',  valFieldID: 'description4', domID: 'desc4' },
+    ];
+
+    const pirFields = [
+      { name: translations['pir1'], type: 'textarea',  valFieldID: 'description5', domID: 'desc5' },
+      { name: translations['pir2'], type: 'textarea',  valFieldID: 'description6', domID: 'desc6' },
+      { name: translations['pir3'], type: 'textarea',  valFieldID: 'description7', domID: 'desc7' },
+      { name: translations['pir4'], type: 'textarea',  valFieldID: 'description8', domID: 'desc8' },
+    ];
 
     return (
       
-        <div>
-                <form action="" onSubmit={this.handleSubmit} >
+      <form action="" onSubmit={this.handleSubmit} >
+        <div className="payload-content">
+          <div className="row personnel" >
 
-          <div className="close-button" >
-            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div>
-          <div className="modal-header-text"> </div>
-          <div className="col-md-4 ">
-
-             <div className="header-line addccir">
-                <img src="/assets/img/admin/upload_1.png" alt=""/>
-                <div className="header-text">
-                CCIR/PIRs
-                </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
+            <div className="header-line">
+              <img src="/assets/img/admin/personnel_1.png" alt=""/>
+              <div className="header-text">
+                {translations['Add Ccir/Pirs']}
               </div>
-              <div className="col-md-12 info-content">
-
-            <ModalFormBlock editId={this.props.editId} data={this.handleCcirPirGeneralData} fields={generalFields} typesEnum={typesEnum} initstate={this.props.oneCcirPir}/>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
           </div>
-          <div id="add"> 
-          <div className="col-md-4 ">
 
-               <div className="header-line addccir">
-                <img src="/assets/img/admin/upload_1.png" alt=""/>
-                <div className="header-text">
-                 CCIR
-                </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
-              </div>
-              <div className="col-md-12 info-content">
-            <div className="entry-field">
-            <div className="entry-detail col-md-12">
-                <label>Description 1</label>
-            </div>
-              <div className="entry-detail col-md-12">
-                <textarea rows="3" className="description ccir"  name="Description" onChange={this.handleChange.bind(this)} />
-              </div>
+          <div className="row personnel" >
+            <div className="under-payload-content">
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleCcirPirGeneralData}
+                headerLine="/assets/img/admin/upload_1.png" title={translations["Ccir/Pir"]}
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+
+              <ContentBlock fields={ccirFields} editId={this.props.editId} data={this.handleCcirData}
+                headerLine="/assets/img/admin/upload_1.png" title={translations["ccir"]}
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             
-            </div>
-
-
-            <div className="entry-field">
-              <div className="entry-detail col-md-12">
-                <label>Description 2</label>
-              </div>
-              <div className="entry-detail col-md-12">
-                <textarea rows="3" className="description ccir" name="Description2" onChange={this.handleChange.bind(this)}/>
-              </div>
-            </div>
-
-            <div className="entry-field">
-              <div className="entry-detail col-md-12">
-                <label>Description 3</label>
-              </div>
-              <div className="entry-detail col-md-12">
-                <textarea rows="3" className="description ccir" name="Description3" onChange={this.handleChange.bind(this)}/>
-              </div>
-            </div>
-
-            <div className="entry-field">
-              <div className="entry-detail col-md-12">
-                <label>Description 4</label>
-              </div>
-              <div className="entry-detail col-md-12">
-                <textarea rows="3" className="description ccir" name="Description4" onChange={this.handleChange.bind(this)}/>
-              </div>
-            </div>
-
-
-
+              <ContentBlock fields={pirFields} editId={this.props.editId} data={this.handlePirData}
+                headerLine="/assets/img/admin/upload_1.png" title={translations["pir"]}
+                initstate ={this.props.oneCcirPir} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             </div>
           </div>
-          <div className="col-md-4">
-             <div className="header-line addccir">
-                <img src="/assets/img/admin/upload_1.png" alt=""/>
-                <div className="header-text">
-                PIRs
-                </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
-              </div>
-              <div className="col-md-12 info-content">
-                <div className="entry-field ">
-                  <div className="entry-detail col-md-12">
-                    <label>Description 1</label>
-                  </div>
-                  <div className="entry-detail col-md-12">
-                   <textarea rows="3" className="description ccir"  name="Description" onChange={this.handleChange.bind(this)}/>
-                  </div>
-             
-                </div>
-
-                <div className="entry-field ">
-                  <div className="entry-detail col-md-12">
-                    <label>Description 2</label>
-                  </div>
-                  <div className="entry-detail col-md-12">
-                   <textarea rows="3" className="description ccir"  name="Description2" onChange={this.handleChange.bind(this)}/>
-                  </div>
-             
-                </div>
-
-                <div className="entry-field ">
-                  <div className="entry-detail col-md-12">
-                    <label>Description 3</label>
-                  </div>
-                  <div className="entry-detail col-md-12">
-                   <textarea rows="3" className="description ccir"  name="Description3" onChange={this.handleChange.bind(this)} />
-                  </div>
-             
-                </div>
-
-                <div className="entry-field ">
-                  <div className="entry-detail col-md-12">
-                    <label>Description 4</label>
-                  </div>
-                  <div className="entry-detail col-md-12">
-                   <textarea rows="3" className="description ccir"  name="Description4" onChange={this.handleChange.bind(this)} />
-                  </div>
-             
-                </div>
-
-
-              
-            </div>
-          </div>
-          
-          </div>
-          <div className="col-md-12" style={{textAlign:'center'}}>
-            <CustomButton buttonName="save" />
-          </div>
-          </form>
         </div>
+        <div className="row action-buttons">
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+            <button type="button" className="highlighted-button" onClick={this.resetForm.bind(this)}>
+              {translations.clear}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          </div>
+         
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+            <button type="submit" className="highlighted-button">
+              {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          </div>
+
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+            <button type="submit" className="highlighted-button" onClick={() => this.props.onClose()}>
+              {translations['close']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          </div>
+        </div>
+
+      </form>
       
     );
   }
 }
 
 CcirPirModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
   children: PropTypes.node,
   editId: PropTypes.string,
-
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool,
 };
 
 

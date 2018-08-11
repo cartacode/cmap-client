@@ -1,18 +1,19 @@
 import {connect} from 'react-redux';
 
 import MunitionsComponent from '../../components/admin/MunitionsComponent';
-import { fetchMunitionInventory } from 'actions/munitionsinventory';
+import { fetchMunitionInventory, deleteMunitionInventoryById } from 'actions/munitionsinventory';
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,    
     allMunitionInventory: state.munitionsinventory.allMunitionInventory,
-    isFetching: state.munitionsinventory.isFetching,
+    isLoading: state.munitionsinventory.isFetching,
   };
 };
 
 const mapDispatchToProps = {
   fetchMunitionInventory,
+  deleteMunitionInventoryById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsComponent);

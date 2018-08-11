@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import DropDownButton from '../reusable/DropDownButton';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
+
 import EoirModal from './payloads/EoirModal';
 import EquipmentModal from './payloads/EquipmentModal';
 import SargmtiModal from './payloads/SargmtiModal';
@@ -26,7 +26,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			wamiModalOpen: false,
 			sigintModalOpen: false,
 			equipmentModalOpen: false,
-			tableRowDetailModalOpen: false,
+			//tableRowDetailModalOpen: false,
 			payload_list_name: [],
 			serialVal:'',
       		nameVal:'',
@@ -35,22 +35,28 @@ class PayloadsSpecificationComponent extends React.Component {
 			  },
 			editId: '0',
 			payloadSpecType: '',
+			payloadTypeId: 0
 			
 		}
 	}
 
-	onFind(){
-		console.log("find");
+	componentDidMount() {
+		this.props.fetchPayloads();
+		// this.props.fetchPayloadList();
+	//	this.props.fetchCocoms();
+	//	this.props.fetchLocationList();
 	}
 
 	openEoirModal = () => {
 		this.setState({
 			editId: '0',
+			payloadTypeId: 1,
 			eoirModalOpen: true,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
 			sigintModalOpen: false,
 			equipmentModalOpen: false,
+			type:'EO/IR',
 			
 		});
 	}
@@ -58,6 +64,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	openSargmtiModal = () => {
 		this.setState({
 			editId: '0',
+			payloadTypeId: 2,
 			eoirModalOpen: false,
 			sargmtiModalOpen: true,
 			wamiModalOpen: false,
@@ -69,6 +76,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	openWamiModal = () => {
 		this.setState({
 			editId: '0',
+			payloadTypeId: 3,
 			eoirModalOpen: false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: true,
@@ -80,6 +88,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	openSigintModal = () =>{
 		this.setState({
 			editId: '0',
+			payloadTypeId: 4,
 			eoirModalOpen: false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
@@ -91,6 +100,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	openEquipmentModal = () => {
 		this.setState({
 			editId: '0',
+			payloadTypeId: 5,
 			eoirModalOpen: false,
 			sargmtiModalOpen: false,
 			wamiModalOpen: false,
@@ -99,19 +109,13 @@ class PayloadsSpecificationComponent extends React.Component {
 		});
 	}
 
-	tableRowDetailModal = () => {
-		this.loadData();
-		this.setState({
-			tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen,
-			editId: 0,
-		})
-	}
 
 	
 	closePayloadSpecifiction=(actionType)=>{
 		this.loadData(actionType);
 		this.setState({
 			payloadSpecType: '',
+			payloadTypeId: 0,
 			editId: '0',
 			eoirModalOpen: false,
 			sargmtiModalOpen: false,
@@ -125,7 +129,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	loadData = (actionType) =>{
 		this.notify(actionType);
 		this.props.fetchPayloads();
-		this.props.fetchPayloadList();
+		// this.props.fetchPayloadList();
 	}
 
 	//actionType means ADD, UPDATE, DELETE
@@ -133,21 +137,16 @@ class PayloadsSpecificationComponent extends React.Component {
 		const { translations } = this.props;
 		if('DELETE' != actionType){
 			if (this.state.editId !== undefined && this.state.editId !== '0') {
-				NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+				NotificationManager.success(translations['Update Payload Inventory Message'], translations['Payload Library Title'], 5000);
 			}else{
-				NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+				NotificationManager.success(translations['Add Payload Inventory Message'], translations['Payload Library Title'], 5000);
 			}
 		}else{
-			NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+			NotificationManager.success(translations['Delete Payload Inventory Message'],translations['Payload Library Title'], 5000);
 		}
 	}
 
-	componentWillMount() {
-		this.props.fetchPayloads();
-		this.props.fetchPayloadList();
-	//	this.props.fetchCocoms();
-	//	this.props.fetchLocationList();
-	}
+	
 
 	modelStateReset = ()=>{
 		this.setState({
@@ -163,17 +162,25 @@ class PayloadsSpecificationComponent extends React.Component {
 	openPayloadsSpecificationForm = (row) => {
 		let value = row.value;
 		//@Note:- types like as EO/IR, SAR, WAMI, SIGINT, GMTI, FMV, COMINT, LIDAR, PeARL, WAPS, OCD, CCD, MASINT, HSI, DMTI, ELINT, IMINT.
-		let payloadSpecType = row.original.type;
-		console.log(value);
+		const payloadSpecType = row.original.type;
+		const payloadTypeId = row.original.typeID;
+		//console.log(value);
 		this.modelStateReset();
 		this.setState({
-			payloadSpecType:payloadSpecType,
-		    editId: value,
-		  	eoirModalOpen: 'EO/IR' == payloadSpecType ? true : false,
-			sargmtiModalOpen: ('SAR' == payloadSpecType || 'GMTI' == payloadSpecType) ? true : false,
-			wamiModalOpen: 'WAMI' == payloadSpecType ? true : false,
-			sigintModalOpen: 'SIGINT' == payloadSpecType ? true : false,
-			equipmentModalOpen: 'EQUIPMENT' == payloadSpecType ? true : false,
+			payloadSpecType,
+			editId: value,
+			payloadTypeId,	  
+			// eoirModalOpen: 'EO/IR' == payloadSpecType ? true : false,
+			// sargmtiModalOpen: ('SAR' == payloadSpecType || 'GMTI' == payloadSpecType) ? true : false,
+			// wamiModalOpen: 'WAMI' == payloadSpecType ? true : false,
+			// sigintModalOpen: 'SIGINT' == payloadSpecType ? true : false,
+			// equipmentModalOpen: 'EQUIPMENT' == payloadSpecType ? true : false,
+
+			eoirModalOpen: payloadTypeId === 1 ? true : false,
+			sargmtiModalOpen: payloadTypeId === 2 ? true : false,
+			wamiModalOpen: payloadTypeId === 3 ? true : false,
+			sigintModalOpen: payloadTypeId === 4 ? true : false,
+			equipmentModalOpen: payloadTypeId === 5 ? true : false,
 		});
 		console.log(this.state.editId);
 	  }
@@ -220,11 +227,11 @@ class PayloadsSpecificationComponent extends React.Component {
 		const {translations} = this.props;
 		const {allPayloads, payloadList, payloadTypes, cocomList, locationList} = this.props;
 		const addPayloads = [
-			{name:translations['eo/ir'], onClick:this.openEoirModal, typeSpec: 'EO/IR'},
-			{name:translations['sar/gmti'], onClick:this.openSargmtiModal, typeSpec: 'SAR/GMTI'},
-			{name:translations['wami'], onClick:this.openWamiModal, typeSpec: 'WAMI' },
-			{name:translations['sigint'], onClick:this.openSigintModal, typeSpec: 'SIGINT' },
-			{name:translations['equipment'], onClick:this.openEquipmentModal, typeSpec:'EQUIPMENT' },
+			{name:translations['eo/ir'], onClick:this.openEoirModal, typeSpec: 'EO/IR', id:1},
+			{name:translations['sar/gmti'], onClick:this.openSargmtiModal, typeSpec: 'SAR/GMTI', id:2},
+			{name:translations['wami'], onClick:this.openWamiModal, typeSpec: 'WAMI' , id:3},
+			{name:translations['sigint'], onClick:this.openSigintModal, typeSpec: 'SIGINT', id:3 },
+			{name:translations['equipment'], onClick:this.openEquipmentModal, typeSpec:'EQUIPMENT', id:3 },
 		];
 
 		const columns = [
@@ -232,10 +239,10 @@ class PayloadsSpecificationComponent extends React.Component {
 				Header: "Type",
 				accessor: 'type',
 			},
-			{
-				Header: "Branch",
-				accessor: 'branch',
-			},
+			// {
+			// 	Header: "Branch",
+			// 	accessor: 'branch',
+			// },
 			{
 				Header: "Manufacturer",
 				accessor: 'manufacturer',
@@ -251,7 +258,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			},
 			{
 			  Header: "Weight (lbs.)",
-			  accessor: 'weigth',
+			  accessor: 'weight',
 			},
 			{
 				Header: "Power(W)",
@@ -265,18 +272,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			}
 		];
 
-		let serialval = this.state.serialVal;
-    	let nameval = this.state.nameVal;
 
-		const rowFields = [
-			{name: translations['Type'], type: 'dropdown'},
-			{name: translations['Name'], type: 'input', valField:nameval},
-			{name: translations['Serial#'], type: 'input', valField:serialval},
-			{name: translations['COCOM'], type: 'dropdown'},
-			{name: translations['Unit'], type: 'dropdown'},
-			{name: translations['Location'], type: 'dropdown'},
-			{name: translations['Record Date'], type: 'date'},
-		];
 
 		return (
 			<div>
@@ -284,31 +280,31 @@ class PayloadsSpecificationComponent extends React.Component {
 					<div className="header-line">
 						<img src="/assets/img/admin/personnel_1.png" alt=""/>
 						<div className="header-text">
-							Payloads Specification
+							Payloads Library
 						</div>
 						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
 				<div className="col-md-12 filter-line">
 					<div className="add-button">
-						<DropDownButton key = '1' label="Add Specification" id="1" items={addPayloads} />
+						<DropDownButton key = '1' label="Add Library" id="1" items={addPayloads} />
 					</div>
 				</div>
 				{this.state.eoirModalOpen ?
-				<EoirModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+				<EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.sargmtiModalOpen ?
-				<SargmtiModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sargmtiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+				<SargmtiModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sargmtiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.wamiModalOpen ?
-				<WamiModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.wamiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+				<WamiModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} payloadTypeId={this.state.payloadTypeId} show={this.state.wamiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.sigintModalOpen ?
-				<SigintModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sigintModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+				<SigintModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} payloadTypeId={this.state.payloadTypeId} show={this.state.sigintModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				{this.state.equipmentModalOpen ? 
-				<EquipmentModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} show={this.state.equipmentModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+				<EquipmentModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} payloadTypeId={this.state.payloadTypeId} show={this.state.equipmentModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
-				{/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.closePayloadSpecifiction} rowdata = {rowFields} translations = {translations} rowvalues = {this.handleForm} init = {this.state.form}/> */}
+				
 				<NotificationContainer />
 				<div className="col-md-12">
 					<ReactTable

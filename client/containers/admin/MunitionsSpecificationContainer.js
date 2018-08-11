@@ -1,21 +1,22 @@
 import {connect} from 'react-redux';
 
 import MunitionsSpecificationComponent from '../../components/admin/MunitionsSpecificationComponent';
-import { addMunition, fetchMunitions } from 'actions/munition';
+import { addMunition, fetchMunitions, deleteMunitionsById } from 'actions/munition';
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     allMunitions: state.munitions.allMunitions,
-    fetchingMunitions: state.munitions.isFetching,
-    munition: state.munitions.oneMunition
+    munition: state.munitions.oneMunition,
+    isLoading: state.munitions.isFetching,
 
   };
 };
 
 const mapDispatchToProps = {
   addMunition,
-  fetchMunitions
+  fetchMunitions,
+  deleteMunitionsById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MunitionsSpecificationComponent);

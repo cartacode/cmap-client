@@ -7,15 +7,15 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     allPlatforms: state.platforms.allPlatforms,
-    platform: state.platforms.onePlatform,
-    isDone: state.platforms.isDone,
+    //platform: state.platforms.onePlatform,
+    isLoading: state.platforms.isFetching,
   };
 };
 
 const mapDispatchToProps = {
-  addPlatform,
+  // addPlatform,
   fetchPlatforms,
-  deletePlatformById,
+   deletePlatformById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlatformsSpecificationComponent);

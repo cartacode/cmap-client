@@ -46,13 +46,28 @@ closeMunitionsForm = () => {
   });
 }
 
-notify =()=>{
+deleteMunitions = (value) => {
+  if (value !== undefined && value !== '0') {
+    this.props.deleteMunitionInventoryById(value).then(() => {
+      this.setState({ editId: '0' });
+      this.props.fetchMunitionInventory();
+      this.notify('DELETE');
+    });
+  }
+}
+
+notify =(actionType)=>{
   const { translations } = this.props;
+  if ('DELETE' != actionType) {
   if (this.state.editId !== undefined && this.state.editId !== '0') {
     NotificationManager.success(translations['Update Munition Inventory Message'], translations['Munition Inventory Title'], 5000);
   }else{
     NotificationManager.success(translations['Add Munition Inventory Message'], translations['Munition Inventory Title'], 5000);
   }
+}
+else{
+  NotificationManager.success(translations['Delete Platform Specification Message'],translations['Munition Inventory Title'], 5000);
+}
 }
 
   handleForm = () => {
@@ -169,7 +184,7 @@ notify =()=>{
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className="number"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsForm(row.value)}/></span>
+        Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsForm(row.value)}/></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteMunitions(row.value)} /></span></div>
       }
     ];
 
@@ -198,6 +213,7 @@ notify =()=>{
               data={allMunitionInventory}
               columns={columns}
               defaultPageSize={5}
+              loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
 						  defaultFilterMethod={(filter, row) => {

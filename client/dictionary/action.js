@@ -22,16 +22,19 @@ export const LOCATION__FETCH = createActionType('LOCATION__FETCH');
 export const LOCATION__FETCH_ONE = createActionType('LOCATION__FETCH_ONE');
 export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
 export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
+export const LOCATION__DELETE_ONE = createActionType('LOCATION__DELETE_ONE');
 
 export const MUNITION__ADD = createActionType('MUNITION__ADD');
 export const MUNITION__UPDATE = createActionType('MUNITION__UPDATE');
 export const MUNITION__FETCH = createActionType('MUNITION__FETCH');
 export const MUNITION__FETCH_ONE = createActionType('MUNITION__FETCH_ONE');
+export const MUNITION__DELETE_ONE = createActionType('MUNITION__DELETE_ONE');
 
 export const MUNITION_INVENTORY__ADD = createActionType('MUNITION_INVENTORY__ADD');
 export const MUNITION_INVENTORY__UPDATE = createActionType('MUNITION_INVENTORY__UPDATE');
 export const MUNITION_INVENTORY__FETCH = createActionType('MUNITION_INVENTORY__FETCH');
 export const MUNITION_INVENTORY__FETCH_ONE = createActionType('MUNITION_INVENTORY__FETCH_ONE');
+export const MUNITION_INVENTORY__DELETE_ONE = createActionType('MUNITION_INVENTORY__DELETE_ONE');
 
 
 export const PAYLOAD__ADD = createActionType('PAYLOAD__ADD');
@@ -53,6 +56,7 @@ export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
 export const PERSONNEL__UPDATE = createActionType('PERSONNEL__UPDATE');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
+export const PERSONNEL__DELETE_ONE = createActionType('PERSONNEL__DELETE_ONE');
 
 export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
 export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');

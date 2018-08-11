@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
 
 
-class LocationComponent extends React.Component {
+class LocationComponent
+ extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +15,8 @@ class LocationComponent extends React.Component {
       filter: [],
       baseModalOpen: false,
       baseshow: false,
-      editId: "0"
+      editId: "0",
+      editForm:false,
     };
   }
 
@@ -48,14 +50,34 @@ class LocationComponent extends React.Component {
     });
   };
 
+  stopupdate = () => 
+  {
+    console.log("Stop Update Called");
+    this.setState({editForm:false});
+  }
 
-  notify =()=>{
+  deleteLocations = (value) => {
+    if (value !== undefined && value !== '0') {
+      this.props.deleteLocationById(value).then(() => {
+        this.setState({ editId: '0' });
+        this.props.fetchLocations();
+        this.notify('DELETE');
+      });
+    }
+  }
+  
+  notify =(actionType)=>{
     const { translations } = this.props;
+    if ('DELETE' != actionType) { 
     if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['Update Locations Message'], translations['Location Title'], 5000);
     }else{
       NotificationManager.success(translations['Add Locations Message'], translations['Location Title'], 5000);
     }
+  }
+  else{
+    NotificationManager.success(translations['Delete Platform Specification Message'],translations['Location Title'], 5000);
+  }
   }
 
   render() {
@@ -105,12 +127,16 @@ class LocationComponent extends React.Component {
         accessor: "id",
         filterable: false,
         Cell: row => (
-          <span className="number change-cursor-to-pointer">
+          <div><span className="number change-cursor-to-pointer">
             <img
               src="/assets/img/general/pen_icon.png"
               onClick={() => this.openBaseModalFrom(row.row.id)}
             />
           </span>
+          <span className='number change-cursor-to-pointer'>
+            <img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteLocations(row.value)} />
+          </span>
+          </div>
         ) // Custom cell components!
       }
     ];
@@ -270,6 +296,7 @@ class LocationComponent extends React.Component {
               show={this.state.baseModalOpen}
               onClose={this.closeBaseModalFrom}
               translations={translations}
+              stopupdate={this.stopupdate}
             />
           ) : null}
         {/*   <NotificationContainer />  */}
@@ -281,11 +308,12 @@ class LocationComponent extends React.Component {
                 columns={columns}
                 defaultPageSize={5}
                 className="-striped -highlight"
+                loading={this.props.isLoading}
                 filterable={true}
                 defaultFilterMethod={(filter, row) => {
                   const id = filter.pivotId || filter.id;
                   return row[id] !== undefined
-                    ? String(row[id]).startsWith(filter.value)
+                    ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase())
                     : true;
                 }}
               />

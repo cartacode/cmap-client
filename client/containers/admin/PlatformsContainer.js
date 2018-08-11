@@ -7,6 +7,7 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     allPlatformInventory: state.platforminventory.allPlatformInventory,
+    isLoading: state.platforminventory.isFetching,
   };
 };
 
