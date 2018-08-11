@@ -204,7 +204,7 @@ class MunitionsSpecificationComponent extends React.Component {
         accessor: 'company',
       },
       {
-        Header: "Munition",
+        Header: "Munition Name",
         accessor: 'name',
       
       },
