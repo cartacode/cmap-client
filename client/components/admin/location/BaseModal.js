@@ -161,11 +161,19 @@ class BaseModal extends React.Component {
               locationPhotoPreviewUrl: reader.result
           });
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
     //MAP IMAGE
     if (event.target.id == "LocationMapFile") {
-      this.setState({ locationMapFile: event.target.files[0] })
+      this.setState({ locationMapFile: event.target.files[0] });
+      let reader = new FileReader();
+      let file = event.target.files[0];
+      reader.onloadend =() =>{
+          this.setState({
+              mapImagePreviewUrl: reader.result
+          });
+      }
+      reader.readAsDataURL(file);
     }
     //DOCUMENT
     if (event.target.id == "LocationDocumentFile") {

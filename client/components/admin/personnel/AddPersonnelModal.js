@@ -216,11 +216,10 @@ class AddPersonnelModal extends React.Component {
     let file = event.target.files[0];
     reader.onloadend =() =>{
       this.setState({
-        file:file,
         imagePreviewUrl2: reader.result
       });
     }
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
 
     let parametername = event.target.id;
 
@@ -277,11 +276,10 @@ class AddPersonnelModal extends React.Component {
       let file = event.target.files[0];
       reader.onloadend =() =>{
         this.setState({
-          file:file,
           imagePreviewUrl: reader.result
         });
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
 
 
