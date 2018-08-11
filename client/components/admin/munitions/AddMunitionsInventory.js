@@ -86,6 +86,8 @@ class AddMunitionsInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
+        COCOM: generalData.COCOM,
+        branch: generalData.branch,
         serialNumber: generalData.serialNumber,
         lastUpdateUserId: '000',
         lastUpdate: new Date(),
@@ -110,7 +112,7 @@ class AddMunitionsInventory extends React.Component {
       munition.id = editId;
       this.props.updateMunitionInventory(editId, munition).then(() => { this.props.onClose(); });
     } else {
-      this.props.addMunitionInventory(this.state.munition).then(() => { this.props.onClose(); });
+      this.props.addMunitionInventory(munition).then(() => { this.props.onClose(); });
     }
   }
 
@@ -165,6 +167,8 @@ class AddMunitionsInventory extends React.Component {
     let { locationCatg } = this.state;
 
     let { munition } = this.state;
+
+    debugger;
 
     let generalFields = [
       { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
