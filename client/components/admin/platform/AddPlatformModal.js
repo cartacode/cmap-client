@@ -239,11 +239,10 @@ class AddPlatformModal extends React.Component {
     let file = event.target.files[0];
     reader.onloadend = () => {
       this.setState({
-        file: file,
         imagePreviewUrl: reader.result
       });
     }
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
 
     this.setState({
       platform: {
@@ -274,7 +273,6 @@ class AddPlatformModal extends React.Component {
     let file = event.target.files[0];
     reader.onloadend = () => {
       this.setState({
-        file: file,
         imagePreviewUrl2: reader.result
       });
     }

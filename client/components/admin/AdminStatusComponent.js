@@ -37,6 +37,12 @@ class AdminStatusComponent extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.fetchPlatformsStatus();
+    this.props.fetchPayloadsStatus();
+    this.props.fetchPersonnelsStatus();
+  }
+
   onFind(){   
     console.log("find");
   }
@@ -90,6 +96,12 @@ class AdminStatusComponent extends React.Component {
   }
 
   render() {
+
+    const { statusplatform } = this.props;
+    const { statuspayload } = this.props;
+    const { statuspersonnel } = this.props;
+
+    console.log(statuspersonnel);
 
     let langs = ['val 1', 'val 2'];
 
@@ -187,7 +199,7 @@ class AdminStatusComponent extends React.Component {
     const platformColumns = [
       {
         Header: translations['platform'],
-        accessor: 'platform', 
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -199,7 +211,7 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['Tail#'],
-        accessor: 'tail',
+        accessor: 'tailNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
@@ -217,7 +229,7 @@ class AdminStatusComponent extends React.Component {
       }, 
       {
         Header: translations['etic'],
-        accessor: 'etic',
+        accessor: 'ETIC',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
@@ -225,7 +237,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -243,7 +255,7 @@ class AdminStatusComponent extends React.Component {
     const payloadColumns = [
       {
         Header: translations['payload'],
-        accessor: 'payload', 
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -255,7 +267,7 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['serial#'],
-        accessor: 'serial',
+        accessor: 'serialNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
@@ -273,7 +285,7 @@ class AdminStatusComponent extends React.Component {
       }, 
       {
         Header: translations['etic'],
-        accessor: 'etic',
+        accessor: 'ETIC',
         filterMethod: (filter, row) =>
         row[filter.id].startsWith(filter.value)
       },
@@ -281,7 +293,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
       }
     ];
 
@@ -336,7 +348,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="Equipment"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Equipment"/></span>// Custom cell components!
       }
     ];
 
@@ -395,7 +407,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png"  id="PED"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
       }
     ];
 
@@ -469,7 +481,7 @@ class AdminStatusComponent extends React.Component {
     const personnelColumns = [
       {
         Header: translations['Name'],
-        accessor: 'name', 
+        accessor: 'fullName', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -487,7 +499,7 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['duty pos.'],
-        accessor: 'duty',
+        accessor: 'dutyPos',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
@@ -513,7 +525,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" id="Personnel"/></span>// Custom cell components!
+        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel"/></span>// Custom cell components!
       }
     ];
 
@@ -537,7 +549,7 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
-              <ReactTable data={platform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
 
@@ -568,7 +580,7 @@ class AdminStatusComponent extends React.Component {
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
-              <ReactTable data={payload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
 
@@ -659,7 +671,7 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
-              <ReactTable data={personnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
 

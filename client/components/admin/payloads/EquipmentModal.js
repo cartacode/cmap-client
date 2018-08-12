@@ -186,11 +186,10 @@ class EquipmentModal extends React.Component {
       let file = event.target.files[0];
       reader.onloadend = () => {
         this.setState({
-          file: file,
           imagePreviewUrl: reader.result
         });
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
 
     else if (event.target.id == "PaylodWireframe") {
@@ -198,11 +197,10 @@ class EquipmentModal extends React.Component {
       let file = event.target.files[0];
       reader.onloadend = () => {
         this.setState({
-          file: file,
           imagePreviewUrl2: reader.result
         });
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
 
 

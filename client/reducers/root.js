@@ -13,6 +13,7 @@ import platforminventory from 'reducers/platforminventory';
 import paygrades from 'reducers/paygrade';
 import ranks from 'reducers/ranks';
 import ccirpir from 'reducers/ccirpir';
+import status from 'reducers/status';
 
 export default function createReducer() {
   return combineReducers({
@@ -28,7 +29,7 @@ export default function createReducer() {
     personnels,
     platforms,
     platforminventory,
-    
-    ccirpir
+    ccirpir,
+    status
   });
 }
