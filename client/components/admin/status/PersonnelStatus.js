@@ -1,0 +1,221 @@
+import { uploadFile } from 'actions/file';
+import { fetchPayloadStatusById, updatePayloadStatus } from 'actions/status';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
+
+
+
+class PersonnelStatus extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      file: '',
+      clear:false,
+      imagePreviewUrl: '',
+      locationcategory: '',
+      inventoryId: '0',
+      isUpdated: false,
+       personnel: {
+      //   metaDataID: '',
+      //   locationID: '',
+      //   owningUnit: '',
+      //   tailNumber: '',
+      //   dispPlatformPayload1: '',
+      //   dispPlatformPayload2: '',
+      //   dispPlatformPayload3: '',
+      //   dispPlatformArmament1: '',
+      //   dispPlatformArmament2: '',
+      //   dispPlatformArmament3: '',
+      //   dispPlatformComs1: '',
+      //   dispPlatformComs2: '',
+      },
+      onePlatformInventory: {},
+    };
+
+    this.resetForm = this.resetForm.bind(this);
+    // preserve the initial state in a new object
+    this.baseState = this.state;
+  }
+
+  componentDidMount = () => {
+    const { editId } = this.props;
+    this.setState({ clear: true });
+    if (editId !== '0') {
+    //   this.props.fetchPlatformInventoryById(editId).then(() => {
+    //     this.setState({
+    //       isUpdated: true,
+    //       platform: this.props.onePlatformInventory,
+    //     });
+    //   });
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { editId } = this.props;
+    if(editId !== '0' && prevProps.editId !== editId) {
+    //   this.props.fetchPlatformInventoryById(this.props.editId).then(() => {
+    //     this.setState({
+    //       isUpdated: true,
+    //       platform: this.props.onePlatformInventory,
+    //     });
+
+    //   });
+    }
+
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
+  }
+
+  stopUpdate = ()=> {
+    this.setState({
+      isUpdated: false,
+    });
+  }
+  
+  handlePlatformGeneralData = (generalData) => {
+    const { platform } = this.state;
+    this.setState({ locationcategory: generalData.locationcategory });
+    this.setState({
+      platform: {
+        ...platform,
+        metaDataID: generalData.metaDataID,
+        locationID: generalData.locationID,
+        owningUnit: generalData.owningUnit,
+        locationcategory: generalData.locationcategory,
+        tailNumber: generalData.tailNumber,
+        payload1: generalData.payload1,
+        payload2: generalData.payload2,
+        payload3: generalData.payload3,
+        armament1: generalData.armament1,
+        armament2: generalData.armament2,
+        armament3: generalData.armament3,
+        coms1: generalData.coms1,
+        coms2: generalData.coms2,       
+        branch: generalData.branch,
+        COCOM: generalData.COCOM,
+      },
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    let { payload } = this.state;
+    const { editId } = this.props;
+    console.log(JSON.stringify(payload));
+    if (editId !== undefined && editId !== '0') {
+      platform.id = editId;
+      this.props.updatePlatformInventory(editId, payload).then( () => {this.props.onClose('UPDATE');});
+    } else {
+      this.props.addPlatformInventory(payload).then( () => {this.props.onClose('ADD');});
+    }
+  }
+
+
+
+  stopset () {
+    this.setState({clear:false});
+  }
+
+
+  resetForm() {
+    this.setState(this.baseState);
+    console.log("FORM RESET DONE");
+    if (confirm("Do you want to clear all data from this form?")) {
+      this.setState({clear:true});
+    }
+    else {
+ 
+    }
+  }
+
+  render() {
+    // Render nothing if the "show" prop is false
+    // if (!this.props.show) {
+    //   return null;
+    // }
+   
+    const { translations } = this.props;
+
+    const generalFields = [
+      { name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'status', valFieldID: 'status', required: true },
+      {name: "ETIC", type: 'dropdown', domID: 'etic', ddID: 'etic',valFieldID: 'etic',required:true},
+      {name: "Remark", type: 'textarea', domID: 'remark', ddID: 'remark',valFieldID: 'remark',required:true}
+    ];
+
+
+    return (
+
+      <form action="" onSubmit={this.handleSubmit} >
+          <div className="close-button" >
+          <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
+        </div> 
+        <div className="payload-content">
+          <div className="row personnel" >
+
+            <div className="header-line">
+              <img src="/assets/img/admin/personnel_1.png" alt="" />
+              <div className="header-text">
+                Edit Personnel Status
+              </div>
+
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
+            </div>
+          </div>
+
+          <div className="row personnel" >
+            
+               <div className="col-md-4 info-block"></div> 
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <div className="col-md-4 info-block"></div>  
+          </div>
+          
+        </div>
+        <div className="row action-buttons">
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
+              {translations['clear']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+          </div>
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+            <button type="submit" className='highlighted-button'>
+              {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+          </div>
+        </div>
+
+      </form>
+
+    );
+  }
+}
+
+PersonnelStatus.propTypes = {
+  children: PropTypes.node,
+  editId: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+};
+
+const mapStateToProps = state => {
+  return {
+    translations: state.localization.staticText,
+    onePlatformInventory: state.platforminventory.onePlatformInventory,
+  };
+};
+
+const mapDispatchToProps = {
+ 
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonnelStatus);
