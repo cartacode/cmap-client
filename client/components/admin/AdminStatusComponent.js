@@ -18,6 +18,9 @@ import DropDownButton from '../reusable/DropDownButton';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
+import PlatformStatus from './status/PlatformStatus';
+import PayloadStatus from './status/PayloadStatus';
+import PersonnelStatus from './status/PersonnelStatus';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -33,7 +36,13 @@ class AdminStatusComponent extends React.Component {
       status:'',
       etic:'',
       remark:'',
-      rowno: 0
+      rowno: 0,
+      platformEditId:0,
+      payloadEditId:0,
+      personnelEditId:0,
+      platformStatusOpen:false,
+      payloadStatusOpen:false,
+      personnelStatusOpen:false
     }
   }
 
@@ -41,6 +50,51 @@ class AdminStatusComponent extends React.Component {
     this.props.fetchPlatformsStatus();
     this.props.fetchPayloadsStatus();
     this.props.fetchPersonnelsStatus();
+  }
+
+  openPlatformForm = (row) => {
+    this.setState({
+      platformEditId: row,
+      platformStatusOpen: true
+    });
+  }
+
+  openPayloadForm = (row) => {
+    this.setState({
+      payloadEditId: row,
+      payloadStatusOpen: true
+    });
+  }
+
+  openPersonnelForm = (row) => {
+    this.setState({
+      personnelEditId: row,
+      personnelStatusOpen: true
+    });
+  }
+
+  closePlatformForm = () => {
+    this.props.fetchPlatformsStatus();
+    this.setState({
+      platformEditId: 0,
+      platformStatusOpen: false,
+    });
+  }
+
+  closePayloadForm = () => {
+    this.props.fetchPayloadsStatus();
+    this.setState({
+      payloadEditId: 0,
+      payloadStatusOpen: false,
+    });
+  }
+
+  closePersonnelForm = () => {
+    this.props.fetchPersonnelsStatus();
+    this.setState({
+      personnelEditId: 0,
+      personnelStatusOpen: false,
+    });
   }
 
   onFind(){   
@@ -235,9 +289,9 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['update'],
-        accessor: 'update',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" onClick={() => this.openPlatformForm(row.value)}/></span>// Custom cell components!
       }
     ];
 
@@ -293,7 +347,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" /></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Payload" onClick={() => this.openPayloadForm(row.value)}/></span>// Custom cell components!
       }
     ];
 
@@ -525,7 +579,7 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel"/></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
       }
     ];
 
@@ -545,6 +599,19 @@ class AdminStatusComponent extends React.Component {
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
         </div>
+
+        <div className="row status">
+        {this.state.platformStatusOpen ?
+        <PlatformStatus editId = {this.state.platformEditId} onClose={this.closePlatformForm} translations={translations} />
+        : null }
+        </div>
+
+        <div className="row status">
+        {this.state.payloadStatusOpen ?
+        <PayloadStatus editId = {this.state.payloadEditId} onClose={this.closePayloadForm} translations={translations} />
+        : null }
+        </div>
+
         <div className="row status">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -583,28 +650,6 @@ class AdminStatusComponent extends React.Component {
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
-
-                  getTdProps={(state, rowInfo, column, instance) => {
-                    return {
-                      onClick: e =>{
-  
-                        console.log(rowInfo);
-                        console.log(column);
-  
-                         if (column.Header == 'update')
-                        {
-                          this.setState({
-                            statusModalOpen: !this.state.statusModalOpen,
-                            whichModal: 'Payload',
-                            rowno: rowInfo.index
-                          });
-                        }
-  
-                      }
-  
-  
-                    };
-                  }}
               />
             </div>
           </div>
@@ -668,34 +713,19 @@ class AdminStatusComponent extends React.Component {
               />
             </div>
           </div>
+
+        <div className="row status">
+        {this.state.personnelStatusOpen ?
+        <PersonnelStatus editId = {this.state.personnelEditId} onClose={this.closePersonnelForm} translations={translations} />
+        : null }
+        </div>
+
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
-
-                  getTdProps={(state, rowInfo, column, instance) => {
-                    return {
-                      onClick: e =>{
-  
-                        console.log(rowInfo);
-                        console.log(column);
-  
-                         if (column.Header == 'update')
-                        {
-                          this.setState({
-                            statusModalOpen: !this.state.statusModalOpen,
-                            whichModal: 'Personnel',
-                            rowno: rowInfo.index
-                          });
-                        }
-  
-                      }
-  
-  
-                    };
-                  }}
               />
             </div>
             <div className="col-md-6">
