@@ -79,6 +79,9 @@ export default {
     platforms: [],
     payloads: [],
     personnels: [],
+    onePlatform: {},
+    onePayload: {},
+    onePersonnel: {},
     isFetching: false
   }
 };

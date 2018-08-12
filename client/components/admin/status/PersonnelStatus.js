@@ -1,5 +1,5 @@
 import { uploadFile } from 'actions/file';
-import { fetchPayloadStatusById, updatePayloadStatus } from 'actions/status';
+import { fetchPersonnelStatusById, updatePersonnelStatus } from 'actions/status';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -34,7 +34,7 @@ class PersonnelStatus extends React.Component {
       //   dispPlatformComs1: '',
       //   dispPlatformComs2: '',
       },
-      onePlatformInventory: {},
+      onePersonnel: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -46,30 +46,28 @@ class PersonnelStatus extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-    //   this.props.fetchPlatformInventoryById(editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       platform: this.props.onePlatformInventory,
-    //     });
-    //   });
+      this.props.fetchPersonnelStatusById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          personnel: this.props.onePersonnel
+        });
+      });
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-    //   this.props.fetchPlatformInventoryById(this.props.editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       platform: this.props.onePlatformInventory,
-    //     });
+      this.props.fetchPersonnelStatusById(this.props.editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          personnel: this.props.onePersonnel
+        });
 
-    //   });
+      });
     }
 
-    if(editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
-    }
+    
   }
 
   stopUpdate = ()=> {
@@ -79,40 +77,27 @@ class PersonnelStatus extends React.Component {
   }
   
   handlePlatformGeneralData = (generalData) => {
-    const { platform } = this.state;
-    this.setState({ locationcategory: generalData.locationcategory });
+    const { personnel } = this.state;
     this.setState({
-      platform: {
-        ...platform,
-        metaDataID: generalData.metaDataID,
-        locationID: generalData.locationID,
-        owningUnit: generalData.owningUnit,
-        locationcategory: generalData.locationcategory,
-        tailNumber: generalData.tailNumber,
-        payload1: generalData.payload1,
-        payload2: generalData.payload2,
-        payload3: generalData.payload3,
-        armament1: generalData.armament1,
-        armament2: generalData.armament2,
-        armament3: generalData.armament3,
-        coms1: generalData.coms1,
-        coms2: generalData.coms2,       
-        branch: generalData.branch,
-        COCOM: generalData.COCOM,
+      personnel: {
+        ...personnel,
+        StatusCode: generalData.StatusCode,
+        ETIC: generalData.ETIC,
+        Remark: generalData.Remark,
       },
     });
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    let { payload } = this.state;
+    let { personnel } = this.state;
     const { editId } = this.props;
     console.log(JSON.stringify(payload));
     if (editId !== undefined && editId !== '0') {
-      platform.id = editId;
-      this.props.updatePlatformInventory(editId, payload).then( () => {this.props.onClose('UPDATE');});
+      
+      this.props.updatePersonnelStatus(editId, personnel).then( () => {this.props.onClose();});
     } else {
-      this.props.addPlatformInventory(payload).then( () => {this.props.onClose('ADD');});
+      
     }
   }
 
@@ -143,9 +128,9 @@ class PersonnelStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'status', valFieldID: 'status', required: true },
-      {name: "ETIC", type: 'dropdown', domID: 'etic', ddID: 'etic',valFieldID: 'etic',required:true},
-      {name: "Remark", type: 'textarea', domID: 'remark', ddID: 'remark',valFieldID: 'remark',required:true}
+      {name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: "ETIC", type: 'dropdown', domID: 'ETIC', ddID: 'ETIC',valFieldID: 'ETIC',required:true},
+      {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
 
@@ -171,7 +156,7 @@ class PersonnelStatus extends React.Component {
           <div className="row personnel" >
             
                <div className="col-md-4 info-block"></div> 
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePersonnel} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
               <div className="col-md-4 info-block"></div>  
           </div>
           
@@ -209,12 +194,13 @@ PersonnelStatus.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePlatformInventory: state.platforminventory.onePlatformInventory,
+    onePersonnel: state.status.onePersonnel
   };
 };
 
 const mapDispatchToProps = {
- 
+  fetchPersonnelStatusById,
+  updatePersonnelStatus
 
 };
 

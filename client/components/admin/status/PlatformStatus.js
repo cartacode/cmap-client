@@ -34,7 +34,7 @@ class PlatformStatus extends React.Component {
       //   dispPlatformComs1: '',
       //   dispPlatformComs2: '',
       },
-      onePlatformInventory: {},
+      onePlatform: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -46,25 +46,25 @@ class PlatformStatus extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-    //   this.props.fetchPlatformInventoryById(editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       platform: this.props.onePlatformInventory,
-    //     });
-    //   });
+      this.props.fetchPlatformStatusById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          platform: this.props.onePlatform,
+        });
+      });
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-    //   this.props.fetchPlatformInventoryById(this.props.editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       platform: this.props.onePlatformInventory,
-    //     });
+      this.props.fetchPlatformStatusById(this.props.editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          platform: this.props.onePlatform,
+        });
 
-    //   });
+      });
     }
 
     if(editId === '0' && prevProps.editId !== editId) {
@@ -79,28 +79,18 @@ class PlatformStatus extends React.Component {
   }
   
   handlePlatformGeneralData = (generalData) => {
+    console.log(generalData);
     const { platform } = this.state;
-    this.setState({ locationcategory: generalData.locationcategory });
     this.setState({
       platform: {
         ...platform,
-        metaDataID: generalData.metaDataID,
-        locationID: generalData.locationID,
-        owningUnit: generalData.owningUnit,
-        locationcategory: generalData.locationcategory,
-        tailNumber: generalData.tailNumber,
-        payload1: generalData.payload1,
-        payload2: generalData.payload2,
-        payload3: generalData.payload3,
-        armament1: generalData.armament1,
-        armament2: generalData.armament2,
-        armament3: generalData.armament3,
-        coms1: generalData.coms1,
-        coms2: generalData.coms2,       
-        branch: generalData.branch,
-        COCOM: generalData.COCOM,
+        StatusCode: generalData.StatusCode,
+        ETIC: generalData.ETIC,
+        Remark: generalData.Remark,
+//        TailNumber: generalData.locationcategory
       },
     });
+    
   }
 
   handleSubmit = event => {
@@ -110,9 +100,9 @@ class PlatformStatus extends React.Component {
     console.log(JSON.stringify(platform));
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose('UPDATE');});
+      this.props.updatePlatformStatus(editId, platform).then( () => {this.props.onClose();});
     } else {
-      this.props.addPlatformInventory(platform).then( () => {this.props.onClose('ADD');});
+      
     }
   }
 
@@ -143,9 +133,9 @@ class PlatformStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'status', valFieldID: 'status', required: true },
-      {name: "ETIC", type: 'dropdown', domID: 'etic', ddID: 'etic',valFieldID: 'etic',required:true},
-      {name: "Remark", type: 'textarea', domID: 'remark', ddID: 'remark',valFieldID: 'remark',required:true}
+      {name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: "ETIC", type: 'dropdown', domID: 'ETIC', ddID: 'ETIC',valFieldID: 'ETIC',required:true},
+      {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
 
@@ -170,9 +160,9 @@ class PlatformStatus extends React.Component {
 
           <div className="row personnel" >
             
-               <div className="col-md-4"> </div>
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <div className="col-md-4"> </div>
+               <div className="col-md-4"></div>
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <div className="col-md-4"></div>
           </div>
           
         </div>
@@ -209,12 +199,13 @@ PlatformStatus.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePlatformInventory: state.platforminventory.onePlatformInventory,
+    onePlatform: state.status.onePlatform
   };
 };
 
 const mapDispatchToProps = {
- 
+  fetchPlatformStatusById,
+  updatePlatformStatus
 
 };
 

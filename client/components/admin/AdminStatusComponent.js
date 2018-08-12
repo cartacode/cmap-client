@@ -64,6 +64,7 @@ class AdminStatusComponent extends React.Component {
       payloadEditId: row,
       payloadStatusOpen: true
     });
+    console.log(this.state.payloadEditId);
   }
 
   openPersonnelForm = (row) => {
@@ -345,7 +346,7 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['update'],
-        accessor: 'update',
+        accessor: 'ID',
         filterable: false,
         Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Payload" onClick={() => this.openPayloadForm(row.value)}/></span>// Custom cell components!
       }
@@ -577,7 +578,7 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['update'],
-        accessor: 'update',
+        accessor: 'ID',
         filterable: false,
         Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
       }
