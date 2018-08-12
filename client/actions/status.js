@@ -10,21 +10,21 @@ import { createAction } from 'util/action';
 export function fetchPlatformsStatus() {
   return createAction({
     type: STATUS_PLATFORM__FETCH,
-    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryStatus`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PlatformStatus/GetPlatformStatusData`, requestHeaders),
   });
 }
 
 export function fetchPayloadsStatus() {
   return createAction({
     type: STATUS_PAYLOAD__FETCH,
-    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventoryStatus`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PayloadStatus/GetPayloadStatusData`, requestHeaders),
   });
 }
 
 export function fetchPersonnelsStatus() {
   return createAction({
     type: STATUS_PERSONNEL__FETCH,
-    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnelStatus`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PersonnelStatus/GetPersonnelStatusData`, requestHeaders),
   });
 }
 

@@ -553,29 +553,29 @@ class AdminStatusComponent extends React.Component {
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
 
-                  getTdProps={(state, rowInfo, column, instance) => {
-                    return {
-                      onClick: e =>{
+                  // getTdProps={(state, rowInfo, column, instance) => {
+                  //   return {
+                  //     onClick: e =>{
   
-                        console.log(rowInfo);
-                        console.log(column);
+                  //       console.log(rowInfo);
+                  //       console.log(column);
 
-                        console.log(rowInfo.index);
+                  //       console.log(rowInfo.index);
   
-                         if (column.Header == 'update')
-                        {
-                          this.setState({
-                            statusModalOpen: !this.state.statusModalOpen,
-                            whichModal: 'Platform',
-                            rowno: rowInfo.index
-                          });
-                        }
+                  //        if (column.Header == 'update')
+                  //       {
+                  //         this.setState({
+                  //           statusModalOpen: !this.state.statusModalOpen,
+                  //           whichModal: 'Platform',
+                  //           rowno: rowInfo.index
+                  //         });
+                  //       }
   
-                      }
+                  //     }
   
   
-                    };
-                  }}
+                  //   };
+                  // }}
               />
             </div>
             <div className="col-md-6">
