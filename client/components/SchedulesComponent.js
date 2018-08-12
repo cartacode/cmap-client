@@ -94,13 +94,13 @@ class SchedulesComponent extends React.Component {
             <div className="col-md-4 schedule-manage">
               <HalfHeaderLine headerText={translations["Manage"]} />
               <div className="button-group">
-                <div className="col-md-4" style={{padding:0}}>              
+                <div className="col-md-4" style={{padding:0}}>
                   <CustomButton buttonName={translations["Shift Assignment"]} />
                 </div>
-                <div className="col-md-4" style={{padding:0}}>              
+                <div className="col-md-4" style={{padding:0}}>
                   <CustomButton buttonName={translations["Copy Assignment"]} />
                 </div>
-                <div className="col-md-4" style={{padding:0}}>              
+                <div className="col-md-4" style={{padding:0}}>
                   <CustomButton buttonName={translations["Time Off"]} />
                 </div>
               </div>
@@ -112,10 +112,10 @@ class SchedulesComponent extends React.Component {
             </div>
             <div className="col-md-10" style={{padding:0}}>
               <Timeline
-                className="react-calendar-timeline" 
-                sidebarWidth="0"
+                className="react-calendar-timeline"
+                sidebarWidth={0}
                 groups={groups}
-                lineHeight="51"
+                lineHeight={51}
                 items={items}
                 defaultTimeStart={moment().add(-12, 'hour')}
                 defaultTimeEnd={moment().add(12, 'hour')}

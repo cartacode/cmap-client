@@ -18,7 +18,7 @@ class IsrSyncComponent extends React.Component {
     super(props);
   }
 
-  
+
   onFind(){
     console.log("find");
   }
@@ -79,7 +79,7 @@ class IsrSyncComponent extends React.Component {
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="highlighted-button" onClick={this.onFind.bind(this)}>
-                    {translations["find & filter"]} 
+                    {translations["find & filter"]}
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
@@ -94,10 +94,10 @@ class IsrSyncComponent extends React.Component {
             </div>
             <div className="col-md-8" style={{padding:0}}>
               <Timeline
-                className="react-calendar-timeline" 
-                sidebarWidth="0"
+                className="react-calendar-timeline"
+                sidebarWidth={0}
                 groups={groups}
-                lineHeight="51"
+                lineHeight={51}
                 items={items}
                 defaultTimeStart={moment().add(-12, 'hour')}
                 defaultTimeEnd={moment().add(12, 'hour')}
