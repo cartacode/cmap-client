@@ -8,6 +8,10 @@ module.exports = function getWebpackConfig() {
   const isDev = (process.env.NODE_ENV === 'development');
 
   return {
+    amd: {
+      toUrlUndefined: true,
+    },
+
     devServer: {
       compress: true,
       historyApiFallback: true,
@@ -68,17 +72,27 @@ module.exports = function getWebpackConfig() {
           loader: 'url-loader?limit=10000&mimetype=application/font-woff',
         },
       ],
+
+      unknownContextCritical: false,
+    },
+
+    node: {
+      fs: 'empty',
     },
 
     output: {
       filename: '[name].[hash].js',
       path: path.join(__dirname, 'public'),
       publicPath: '/',
+      sourcePrefix: '',
     },
 
     plugins: getPlugins(isDev),
 
     resolve: {
+      alias: {
+        cesium: 'cesium/Source',
+      },
       extensions: ['.js', '.json'],
       modules: [
         path.join(__dirname, 'client'),
@@ -109,16 +123,25 @@ function getEntry(isDev) {
 function getPlugins(isDev) {
   const plugins = [
     new CopyWebpackPlugin([
-      {from: 'client/assets', to: 'assets'}
+      { from: 'client/assets', to: 'assets' },
     ]),
     new CopyWebpackPlugin([
-      {from: 'client/vendor', to: 'vendor'}
+      { from: 'client/vendor', to: 'vendor' },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: 'body',
       template: path.join(__dirname, 'client/index.html'),
     }),
+    new webpack.DefinePlugin({
+      CESIUM_BASE_URL: JSON.stringify('Cesium/'),
+    }),
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'node_modules/cesium/Build/Cesium/Workers'), to: 'Cesium/Workers' },
+    ]),
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
+    ]),
   ];
 
   if (isDev) {

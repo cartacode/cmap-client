@@ -71,7 +71,7 @@ class OrdersComponent extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <div className="filter-items">
-              
+
               <MissionMgtDropDown key="3" id="3" label={translations["cocom"]} items={cocom} />
               <MissionMgtDropDown key="4" id="4" label={translations["unit"]} items={unit} />
               <MissionMgtDropDown key="5" id="5" label={translations["Order Type"]} items={order_type} />
@@ -107,10 +107,10 @@ class OrdersComponent extends React.Component {
             </div>
             <div className="col-md-7" style={{padding:0}}>
               <Timeline
-                className="react-calendar-timeline" 
-                sidebarWidth="0"
+                className="react-calendar-timeline"
+                sidebarWidth={0}
                 groups={groups}
-                lineHeight="51"
+                lineHeight={51}
                 items={items}
                 defaultTimeStart={moment().add(-12, 'hour')}
                 defaultTimeEnd={moment().add(12, 'hour')}

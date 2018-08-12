@@ -82,7 +82,7 @@ class AtoComponent extends React.Component {
           </div>
           <FormBlock fields={intelRequest1} />
           <FormBlock fields={intelRequest2} />
-          <FormBlock fields={intelRequest3} />            
+          <FormBlock fields={intelRequest3} />
         </div>
         <div className="row mission-mgt">
           <div className="col-md-12">
@@ -94,10 +94,10 @@ class AtoComponent extends React.Component {
             </div>
             <div className="col-md-8" style={{padding:0}}>
               <Timeline
-                className="react-calendar-timeline" 
-                sidebarWidth="0"
+                className="react-calendar-timeline"
+                sidebarWidth={0}
                 groups={groups}
-                lineHeight="51"
+                lineHeight={51}
                 items={items}
                 defaultTimeStart={moment().add(-12, 'hour')}
                 defaultTimeEnd={moment().add(12, 'hour')}

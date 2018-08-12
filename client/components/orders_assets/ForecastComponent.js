@@ -91,10 +91,10 @@ class ForecastComponent extends React.Component {
             </div>
             <div className="col-md-7" style={{padding:0}}>
               <Timeline
-                className="react-calendar-timeline" 
-                sidebarWidth="0"
+                className="react-calendar-timeline"
+                sidebarWidth={0}
                 groups={groups}
-                lineHeight="51"
+                lineHeight={51}
                 items={items}
                 defaultTimeStart={moment().add(-12, 'hour')}
                 defaultTimeEnd={moment().add(12, 'hour')}
