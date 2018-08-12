@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import Modal from  './Modal';
 
 
-class DropDwonButton extends React.Component {
+class DropDownButton extends React.Component {
 
   constructor(props) {
     super(props);
-    
+
   }
 
   changeValue = (key, value) => {
@@ -17,7 +17,7 @@ class DropDwonButton extends React.Component {
     document.getElementById(`dropdown${key}`).value = value;
   };
 
-  
+
 
   //render dropdown list of lang switcher
   renderItems(key) {
@@ -45,10 +45,10 @@ class DropDwonButton extends React.Component {
   }
 }
 
-DropDwonButton.propTypes = {
+DropDownButton.propTypes = {
   children: PropTypes.element,
 
 
 };
 
-export default DropDwonButton;
+export default DropDownButton;
