@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import AdminStatusComponent from '../../components/admin/AdminStatusComponent';
-import { fetchPlatformsStatus, fetchPayloadsStatus, fetchPersonnelsStatus } from 'actions/status';
+import { fetchPlatformsStatus, fetchPayloadsStatus, fetchPersonnelsStatus, fetchMunitionsStatus } from 'actions/status';
 
 const mapStateToProps = state => {
   return {
@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     statusplatform:state.status.platforms,
     statuspayload:state.status.payloads,
     statuspersonnel:state.status.personnels,
+    statusmunition:state.status.munitions,
     isLoading: state.status.isFetching,    
   };
 };
@@ -16,7 +17,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchPlatformsStatus,
   fetchPayloadsStatus,
-  fetchPersonnelsStatus
+  fetchPersonnelsStatus,
+  fetchMunitionsStatus
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(AdminStatusComponent);

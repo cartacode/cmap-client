@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE} from 'dictionary/action';
+import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE, STATUS_MUNITION__FETCH_ONE, STATUS_MUNITION__UPDATE} from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -70,4 +70,23 @@ export function updatePersonnelStatus(id, personnel) {
   });
 }
 
+export function fetchMunitionsStatus() {
+  return createAction({
+    type: STATUS_MUNITION__FETCH,
+    action: () => axios.get(`${baseUrl}/MunitionStatus/GetMunitionsStatusData`, requestHeaders),
+  });
+}
 
+export function fetchMunitionsStatusById(id) {
+  return createAction({
+    type: STATUS_MUNITION__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/MunitionStatus/GetMunitionsStatus/${id}`, requestHeaders),
+  });
+}
+
+export function updateMunitionStatus(id, munition) {
+  return createAction({
+    type: STATUS_MUNITION__UPDATE,
+    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatus/${id}`, qs.stringify(munition), requestHeaders),
+  });
+}

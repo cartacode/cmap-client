@@ -1,5 +1,5 @@
 import { uploadFile } from 'actions/file';
-import { fetchPayloadStatusById, updatePayloadStatus } from 'actions/status';
+import { fetchMunitionsStatusById, updateMunitionStatus } from 'actions/status';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 
-class PayloadStatus extends React.Component {
+class MunitionStatus extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class PayloadStatus extends React.Component {
       locationcategory: '',
       inventoryId: '0',
       isUpdated: false,
-       payload: {
+       munition: {
       //   metaDataID: '',
       //   locationID: '',
       //   owningUnit: '',
@@ -46,10 +46,10 @@ class PayloadStatus extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.fetchPayloadStatusById(editId).then(() => {
+      this.props.fetchMunitionsStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
-          payload: this.props.onePayload,
+          munition: this.props.onePayload,
         });
       });
     }
@@ -58,10 +58,10 @@ class PayloadStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPayloadStatusById(this.props.editId).then(() => {
+      this.props.fetchMunitionsStatusById(this.props.editId).then(() => {
         this.setState({
           isUpdated: true,
-          payload: this.props.onePayload,
+          munition: this.props.onePayload,
         });
 
       });
@@ -79,11 +79,11 @@ class PayloadStatus extends React.Component {
   }
   
   handlePayloadGeneralData = (generalData) => {
-    const { payload } = this.state;
+    const { munition } = this.state;
     
     this.setState({
-      payload: {
-        ...payload,
+      munition: {
+        ...munition,
         StatusCode: generalData.StatusCode,
         ETIC: generalData.ETIC,
         Remark: generalData.Remark,
@@ -93,12 +93,12 @@ class PayloadStatus extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let { payload } = this.state;
+    let { munition } = this.state;
     const { editId } = this.props;
     console.log(JSON.stringify(payload));
     if (editId !== undefined && editId !== '0') {
       
-      this.props.updatePayloadStatus(editId, payload).then( () => {this.props.onClose();});
+      this.props.updateMunitionStatus(editId, munition).then( () => {this.props.onClose();});
     } else {
       
     }
@@ -149,7 +149,7 @@ class PayloadStatus extends React.Component {
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
-                Edit Payload Status
+                Edit Munition Status
               </div>
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
@@ -159,7 +159,7 @@ class PayloadStatus extends React.Component {
           <div className="row personnel" >
             
                <div className="col-md-4 info-block"></div> 
-              <ContentBlock fields={generalFields} data={this.handlePayloadGeneralData} initstate={this.props.onePayload} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePayloadGeneralData} initstate={this.props.oneMunition} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
               <div className="col-md-4 info-block"></div>  
           </div>
           
@@ -187,7 +187,7 @@ class PayloadStatus extends React.Component {
   }
 }
 
-PayloadStatus.propTypes = {
+MunitionStatus.propTypes = {
   children: PropTypes.node,
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
@@ -197,14 +197,14 @@ PayloadStatus.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePayload: state.status.onePayload,
+    oneMunition: state.status.oneMunition,
   };
 };
 
 const mapDispatchToProps = {
-  fetchPayloadStatusById,
-  updatePayloadStatus
+  fetchMunitionsStatusById,
+  updateMunitionStatus
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayloadStatus);
+export default connect(mapStateToProps, mapDispatchToProps)(MunitionStatus);
