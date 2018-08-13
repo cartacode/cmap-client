@@ -176,8 +176,6 @@ class AdminStatusComponent extends React.Component {
     const { statuspersonnel } = this.props;
     const { statusmunition } = this.props;
 
-    console.log(statuspersonnel);
-
     let langs = ['val 1', 'val 2'];
 
     let {whichModal} = this.state;

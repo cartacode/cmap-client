@@ -32,6 +32,13 @@ class StatusComponent extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.fetchPlatformsStatus();
+    this.props.fetchPayloadsStatus();
+    this.props.fetchMunitionsStatus();
+    this.props.fetchPersonnelsStatus();
+  }
+
   statusModal = () => {
     this.setState({
       statusModalOpen: !this.state.statusModalOpen
@@ -51,6 +58,10 @@ class StatusComponent extends React.Component {
     let langs = ['val 1', 'val 2'];
 
     const {translations} = this.props;
+    const { statusplatform } = this.props;
+    const { statuspayload } = this.props;
+    const { statuspersonnel } = this.props;
+    const { statusmunition } = this.props;
 
     const platform = [
       { platform:'grey eagle', tail:'fg2592', status:'flight ready', remark:'none', etic:'90 days', update:'update' },
@@ -65,7 +76,7 @@ class StatusComponent extends React.Component {
     const platformColumns = [
       {
         Header: translations['platform'],
-        accessor: 'platform', 
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -77,31 +88,30 @@ class StatusComponent extends React.Component {
       },
       {
         Header: translations['Tail#'],
-        accessor: 'tail',
+        accessor: 'tailNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['etic'],
-        accessor: 'etic',
-      },
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        accessor: 'ETIC',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       }
     ];
+
 
     
     const payload = [
@@ -117,7 +127,7 @@ class StatusComponent extends React.Component {
     const payloadColumns = [
       {
         Header: translations['payload'],
-        accessor: 'payload', 
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -129,29 +139,27 @@ class StatusComponent extends React.Component {
       },
       {
         Header: translations['serial#'],
-        accessor: 'serial',
+        accessor: 'serialNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['etic'],
-        accessor: 'etic',
-      },
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        accessor: 'ETIC',
+        filterMethod: (filter, row) =>
+        row[filter.id].startsWith(filter.value)
       }
     ];
 
@@ -167,12 +175,10 @@ class StatusComponent extends React.Component {
 
     const equipmentColumns = [
       {
-        Header: translations['equipment'],
-        accessor: 'equipment', 
+        Header: "Munition",
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
-        Filter: ({ filter, onChange }) =>
-                    <FilterDropdown dropdownDataUrl="Munition" dropdownData={(value)=>{onChange({filterValue:value}); console.log(value);}} value={this.state.filterValue}/>,
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -182,32 +188,24 @@ class StatusComponent extends React.Component {
       },
       {
         Header: translations['serial#'],
-        accessor: 'serial',
+        accessor: 'serialNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-
-      },
-      {
-        Header: translations['inventory'],
-        accessor: 'inventory',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-
-      }, 
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       }
     ];
-
+    
     const petTeam = [
       { team:'blue', type:'fmv', status:'ready', day:'11-nov-17', time:'08:00', remark:'none', update:'update' },
       { team:'yellow', type:'fmv', status:'ready', day:'12-nov-17', time:'09:00', remark:'none', update:'update' },
@@ -252,12 +250,6 @@ class StatusComponent extends React.Component {
         Header: translations['remark'],
         accessor: 'remark',
 
-      }, 
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
       }
     ];
 
@@ -275,7 +267,9 @@ class StatusComponent extends React.Component {
     const personnelColumns = [
       {
         Header: translations['Name'],
-        accessor: 'name', 
+        accessor: 'fullName', 
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
                       if (a.length === b.length) {
                         return a > b ? 1 : -1;
@@ -290,26 +284,28 @@ class StatusComponent extends React.Component {
                     row[filter.id].startsWith(filter.value)
       },
       {
-        Header: translations['mos'],
-        accessor: 'mos',
+        Header: translations['duty pos.'],
+        accessor: 'dutyPos',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
-        Header: translations['duty pos.'],
-        accessor: 'duty',
+        Header: translations['status'],
+        accessor: 'status',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['arrive'],
         accessor: 'arrive',
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['depart'],
         accessor: 'depart',
-      },
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/eye_icon.png" onClick={this.statusModal} /></span>// Custom cell components!
+        filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value)
       }
     ];
 
@@ -339,14 +335,14 @@ class StatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
-              <ReactTable data={platform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
               />
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
-              <ReactTable data={payload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
               />
@@ -354,8 +350,8 @@ class StatusComponent extends React.Component {
           </div>
           <div className="col-md-12">
             <div className="col-md-6">
-              <HalfHeaderLine headerText={translations["equipment"]} />
-              <ReactTable data={equipment} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <HalfHeaderLine headerText="Munition" />
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
               />     
@@ -371,7 +367,7 @@ class StatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
-              <ReactTable data={personnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
               />
