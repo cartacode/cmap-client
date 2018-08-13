@@ -9,8 +9,47 @@ class UploadFileBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: []
-        }
+            content: [],
+            previewFile: {
+                name: '',
+                originalFile: null
+            }
+        },
+            this.handleSelectedFile = this.handleSelectedFile.bind(this);
+    }
+
+
+    /**
+     * This method is use for handle the selected file by browse.
+     */
+    handleSelectedFile = (event) => {
+        const name = event.target.name;
+        const file = event.target.files[0];
+        this.updateContent(name, file);
+    }
+
+    /**
+     * This method is use for update the content state.
+     * @param {*} name 
+     * @param {*} file 
+     */
+    updateContent(name, file) {
+        const { content } = this.state;
+        const { previewFile } = this.state;
+        this.setState({
+            content: {
+                ...content,
+                [name]: file,
+            },
+            previewFile: {
+                ...previewFile,
+                name: name,
+                originalFile: file
+            }
+        }, () => {
+            this.props.data(this.state.content);
+            this.props.previewFile(this.state.previewFile);
+        });
     }
 
     renderFields() {
@@ -23,28 +62,28 @@ class UploadFileBlock extends React.Component {
             switch (item.fileType) {
                 case 'image':
                     if (item.required) {
-                        input = (<input type="file" className="hidden_input pull-right" value={value} name={item.valFieldID} accept="image/*" required />);
+                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" required />);
                     }
                     else {
-                        input = (<input type="file" className="hidden_input pull-right" value={value} name={item.valFieldID} accept="image/*" />);
+                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
                     }
                     break;
                 case 'file':
                     if (item.required) {
-                        input = (<input type="file" className="hidden_input pull-right" value={value} name={item.valFieldID} required />);
+                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required />);
                     }
                     else {
-                        input = (<input type="file" className="hidden_input pull-right" value={value} name={item.valFieldID} />);
+                        input = (<input type="file" className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
                     }
                     break;
             }
 
             return (
-                 <div className="upload-line">
-                        <div>
-                            {item.name}
-                        </div>
-                        {input}
+                <div className="upload-line" key={'elem' + i}>
+                    <div>
+                        {item.name}
+                    </div>
+                    {input}
                 </div>
 
             );
@@ -58,7 +97,7 @@ class UploadFileBlock extends React.Component {
                     <img src={this.props.headerLine} alt="" />
                     <div className="header-text">
                         {this.props.title}
-                  </div>
+                    </div>
                     <img className="mirrored-X-image" src={this.props.headerLine} alt="" />
                 </div>
                 <div className="upload-content">
@@ -69,11 +108,8 @@ class UploadFileBlock extends React.Component {
     }
 }
 
-
 UploadFileBlock.propTypes = {
     children: PropTypes.element,
-    
-
 };
 
 export default UploadFileBlock;

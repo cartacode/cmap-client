@@ -519,13 +519,13 @@ class AddPlatformModal extends React.Component {
 
     const crewFields = [
       { name: translations['Flight Crew Req'], type: 'dropdown', domID: 'PlatformFlightCrewReq', valFieldID: 'PlatformFlightCrewReq', ddID: '', options: nums },
-      { name: translations['Flight Crew Mos'], type: 'dropdown', domID: 'PlatformFlightCrewMOS', valFieldID: 'PlatformFlightCrewMOS', ddID: 'MOS', required: true },
+      { name: translations['Flight Crew Mos'], type: 'dropdown', domID: 'PlatformFlightCrewMOS', valFieldID: 'PlatformFlightCrewMOS', ddID: 'MOS'},
       { name: translations['Line Crew Req'], type: 'dropdown', domID: 'PlatformLineCrewReq', valFieldID: 'PlatformLineCrewReq', ddID: '', options: nums },
-      { name: translations['Line Crew Mos'], type: 'dropdown', domID: 'PlatformLineCrewMOS', valFieldID: 'PlatformLineCrewMOS', ddID: 'MOS', required: true },
+      { name: translations['Line Crew Mos'], type: 'dropdown', domID: 'PlatformLineCrewMOS', valFieldID: 'PlatformLineCrewMOS', ddID: 'MOS' },
       { name: translations['Payload Crew Req'], type: 'dropdown', domID: 'PlatformPayloadCrewReq', valFieldID: 'PlatformPayloadCrewReq', ddID: '', options: nums},
-      { name: translations['Payload Crew Mos'], type: 'dropdown', domID: 'PlatformPayloadCrewMOS', valFieldID: 'PlatformPayloadCrewMOS', ddID: 'MOS', required: true },
+      { name: translations['Payload Crew Mos'], type: 'dropdown', domID: 'PlatformPayloadCrewMOS', valFieldID: 'PlatformPayloadCrewMOS', ddID: 'MOS' },
       { name: translations['PED Crew Req'], type: 'dropdown', domID: 'PlatformPEDCrewReq', valFieldID: 'PlatformPEDCrewReq', ddID: '', options: nums },
-      { name: translations['PED Crew Mos'], type: 'dropdown', domID: 'PlatformPEDCrewMOS', valFieldID: 'PlatformPEDCrewMOS', ddID: 'MOS', required: true },
+      { name: translations['PED Crew Mos'], type: 'dropdown', domID: 'PlatformPEDCrewMOS', valFieldID: 'PlatformPEDCrewMOS', ddID: 'MOS' },
 
     ];
 

@@ -128,7 +128,7 @@ class PersonnelStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      {name: "Status", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetPersonnelStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
       {name: "ETIC", type: 'dropdown', domID: 'ETIC', ddID: 'ETIC',valFieldID: 'ETIC',required:true},
       {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];

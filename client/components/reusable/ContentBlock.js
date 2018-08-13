@@ -146,9 +146,9 @@ class ContentBlock extends React.Component {
               minValue = item.minValue;
             }
             if(item.required) {
-              input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
-            }else {
               input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} required/>);
+            }else {
+              input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             }
             break;
 

@@ -1,10 +1,10 @@
 import { uploadFile } from 'actions/file';
 import { addLocation, fetchLocationById, fetchLocations, updateLocation } from 'actions/location';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
-import qs from 'qs';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 
@@ -20,7 +20,7 @@ class BaseModal extends React.Component {
       clear: false,
       locationPhotoPreviewUrl: '',
       mapImagePreviewUrl: '',
-      editFetched:false,
+      editFetched: false,
       location: {
         LocationID: '',
         LocationReferenceCode: '',
@@ -52,10 +52,13 @@ class BaseModal extends React.Component {
         FAA: ''
       },
       oneLocation: {},
-      locationPhotoFile: null,
-      locationMapFile: null,
-      locationDocumentFile: null,
-      locationKMLFile: null,
+      locationFiles: {
+        LocationPhoto: null,
+        LocationMapImage: null,
+        LocationDocument: null,
+        KML: null,
+      }
+
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -75,10 +78,10 @@ class BaseModal extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
-    if(editId !== '0' && prevProps.editId !== editId) {
+    if (editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
     }
-    if(editId === '0' && prevProps.editId !== editId) {
+    if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
   }
@@ -87,14 +90,14 @@ class BaseModal extends React.Component {
     this.props.fetchLocationById(editId).then(() => {
       this.setState(
         {
-          editFetched:true,
+          editFetched: true,
           location: this.props.oneLocation,
         });
     });
   }
 
   stopupd = () => {
-    this.setState({editFetched:false});
+    this.setState({ editFetched: false });
   }
 
   handleLocationGeneralData = (generalData) => {
@@ -149,23 +152,60 @@ class BaseModal extends React.Component {
   }
 
 
-
+  /**
+   * This is callback method called automatically and update state with locationFiles.
+   */
   handleUploadFileData = (uploadFileData) => {
-    
+    const { locationFiles } = this.state;
+    this.setState({
+      locationFiles: {
+        ...locationFiles,
+        LocationPhoto: uploadFileData.LocationPhoto,
+        LocationMapImage: uploadFileData.LocationMapImage,
+        LocationDocument: uploadFileData.LocationDocument,
+        KML: uploadFileData.KML,
+      }
+    }, () => {
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+    });
   }
 
-  handleUploadFile = (event) => {
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    let reader = new FileReader();
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'LocationPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          locationPhotoPreviewUrl: reader.result
+        });
+      }
+    }
+    if (uploadedFile.name === 'LocationMapImage') {
+      reader.onloadend = () => {
+        this.setState({
+          mapImagePreviewUrl: reader.result
+        });
+      }
+    }
+    reader.readAsDataURL(file);
+  }
+
+  /* handleUploadFile = (event) => {
     event.preventDefault();
-   
+
     //PHOTO IMAGE
     if (event.target.id == "LocationPhotoFile") {
       this.setState({ locationPhotoFile: event.target.files[0] });
       let reader = new FileReader();
       let file = event.target.files[0];
-      reader.onloadend =() =>{
-          this.setState({
-              locationPhotoPreviewUrl: reader.result
-          });
+      reader.onloadend = () => {
+        this.setState({
+          locationPhotoPreviewUrl: reader.result
+        });
       }
       reader.readAsDataURL(file);
     }
@@ -174,10 +214,10 @@ class BaseModal extends React.Component {
       this.setState({ locationMapFile: event.target.files[0] });
       let reader = new FileReader();
       let file = event.target.files[0];
-      reader.onloadend =() =>{
-          this.setState({
-              mapImagePreviewUrl: reader.result
-          });
+      reader.onloadend = () => {
+        this.setState({
+          mapImagePreviewUrl: reader.result
+        });
       }
       reader.readAsDataURL(file);
     }
@@ -189,83 +229,47 @@ class BaseModal extends React.Component {
     if (event.target.id == "LocationKMLFile") {
       this.setState({ locationKMLFile: event.target.files[0] })
     }
-  /*   const {location} = this.state;
-    if(event.target.id == "LocationPhotoFile") {
-     
-    } */
-
-    /*
-
-    if(event.target.id == "LocationMapImage") {
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend =() =>{
-          this.setState({
-              file:file,
-              mapImagePreviewUrl: reader.result
-          });
-      }
-      reader.readAsDataURL(file)
-    }
-
-    let parametername = event.target.id;
-
-    this.setState({
-        location: {
-            ...location,
-            [parametername] : event.target.files[0].name
-        }
-    }, () => {
-        console.log("New state in ASYNC callback:", this.state.location);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name); */
-
-    //  this.props.uploadFile(data);
-  }
+  } */
 
   handleSubmit = event => {
     event.preventDefault();
     const { location } = this.state;
     const { editId } = this.props;
+    const { locationFiles } = this.state;
 
     //We are going to upload files with JSON request body.
     const formData = new FormData();
-  
-    if(this.state.locationPhotoFile) {
-      formData.append('locationPhotoFile', this.state.locationPhotoFile, this.state.locationPhotoFile.name);
+    console.log("Location file cheking... " + locationFiles.LocationPhoto);
+    if (locationFiles.LocationPhoto) {
+      formData.append('locationPhotoFile', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
     }
 
-    if(this.state.locationMapFile) {
-      formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name);
+    if (locationFiles.LocationMapImage) {
+      formData.append('locationMapFile', locationFiles.LocationMapImage, locationFiles.LocationMapImage.name);
     }
 
-    if(this.state.locationDocumentFile) {
-      formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name);
+    if (locationFiles.LocationDocument) {
+      formData.append('locationDocumentFile', locationFiles.LocationDocument,locationFiles.LocationDocument.name);
     }
-    
-    if(this.state.locationKMLFile) {
-      formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name);
+
+    if (locationFiles.KML) {
+      formData.append('locationKMLFile', locationFiles.KML, locationFiles.KML.name);
     }
-    
-    
+
     if (editId !== undefined && editId !== '0') {
-       location.LocationID = editId;
-       formData.append("locationFormData",qs.stringify(location));
-       //TODO: When upload files api will work thn we will pass formData.
-       this.props.updateLocation(editId, location).then(() => {
-         this.props.onClose();
-       });
-     } else {
-       formData.append("locationFormData", qs.stringify(location));
+      location.LocationID = editId;
+      formData.append("locationFormData", qs.stringify(location));
       //TODO: When upload files api will work thn we will pass formData.
-       this.props.addLocation(location).then(() => {
-         this.props.onClose();
-       });
-     }
+      this.props.updateLocation(editId, location).then(() => {
+        this.props.onClose();
+      });
+    } else {
+      formData.append("locationFormData", qs.stringify(location));
+      //TODO: When upload files api will work thn we will pass formData.
+      this.props.addLocation(location).then(() => {
+        this.props.onClose();
+      });
+    }
   }
 
   stopset() {
@@ -324,7 +328,7 @@ class BaseModal extends React.Component {
       { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude' },
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
-      
+
     ];
 
     const contactFields = [
@@ -338,10 +342,10 @@ class BaseModal extends React.Component {
 
 
     const uploadFileFields = [
-      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhotoFile', valFieldID: 'LocationPhoto', fileType :'image',  required: true },
-      { name: translations['Map Image'], type: 'file', domID: 'LocationMapFile', valFieldID: 'LocationMapImage', fileType :'image', required: true},
-      { name: translations['Document'], type: 'file', domID: 'LocationDocumentFile', valFieldID: 'LocationDocument', fileType :'file',required: true },
-      { name: translations['KML Marker'], type: 'file', domID: 'LocationKMLFile', valFieldID: 'KML', fileType :'file', required: true },
+      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image', required: true },
+      { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image', required: true },
+      { name: translations['Document'], type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file', required: true },
+      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file', required: true },
     ];
 
     return (
@@ -365,18 +369,18 @@ class BaseModal extends React.Component {
             <div className="col-md-4 image-block">
               {$mpaImage}
             </div>
-            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields} 
-            data={this.handleUploadFileData} ></UploadFileBlock>
+            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+              data={this.handleUploadFileData} previewFile={this.handlePhotoPreviewURL} ></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >
           <div className="under-location-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
           </div>
         </div>
         <div className="row action-buttons">
