@@ -121,13 +121,13 @@ class AddPayloadsInventory extends React.Component {
   updatelocationid (generalData) {
     let locationselect = document.getElementsByName('locationID')[0];
     locationselect.length = 0;
-    locationselect.add(new Option('--Fetching Locations--', 0));
+    locationselect.add(new Option('--Fetching Locations--', ''));
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
     axios.get(apiUrl)
       .then(response => {
         locationselect.length = 0;
         if(response.data) {
-          locationselect.add(new Option('--Select Location--', 0));
+          locationselect.add(new Option('--Select Location--', ''));
           response.data.map(item => {
             let selected = false;
             if(item.id === generalData.locationID) {
@@ -136,12 +136,12 @@ class AddPayloadsInventory extends React.Component {
             locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
-          locationselect.add(new Option('No Location Found', 0));
+          locationselect.add(new Option('No Location Found', ''));
         }
       })
       .catch((error) => {
         locationselect.length = 0;
-        locationselect.add(new Option('Error Fetching Locations', 0));
+        locationselect.add(new Option('Error Fetching Locations', ''));
         console.log('Exception comes:' + error);
       });
   }
@@ -179,8 +179,8 @@ class AddPayloadsInventory extends React.Component {
       { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'COCOM', required:true},
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' },
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
     ];
 
     return (
