@@ -49,7 +49,7 @@ class MunitionStatus extends React.Component {
       this.props.fetchMunitionsStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
-          munition: this.props.onePayload,
+          munition: this.props.oneMunition,
         });
       });
     }
@@ -61,7 +61,7 @@ class MunitionStatus extends React.Component {
       this.props.fetchMunitionsStatusById(this.props.editId).then(() => {
         this.setState({
           isUpdated: true,
-          munition: this.props.onePayload,
+          munition: this.props.oneMunition,
         });
 
       });
@@ -95,7 +95,7 @@ class MunitionStatus extends React.Component {
     event.preventDefault();
     let { munition } = this.state;
     const { editId } = this.props;
-    console.log(JSON.stringify(payload));
+    
     if (editId !== undefined && editId !== '0') {
       
       this.props.updateMunitionStatus(editId, munition).then( () => {this.props.onClose();});
@@ -132,7 +132,7 @@ class MunitionStatus extends React.Component {
 
     const generalFields = [
       {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetAssetStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
-      {name: "ETIC", type: 'dropdown', domID: 'ETIC', ddID: 'ETIC',valFieldID: 'ETIC',required:true},
+      {name: "ETIC", type: 'number', domID: 'ETIC', valFieldID: 'ETIC',required:true},
       {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 

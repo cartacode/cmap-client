@@ -87,6 +87,6 @@ export function fetchMunitionsStatusById(id) {
 export function updateMunitionStatus(id, munition) {
   return createAction({
     type: STATUS_MUNITION__UPDATE,
-    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatus/${id}`, qs.stringify(munition), requestHeaders),
+    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatusUpdate/${id}`, qs.stringify(munition), requestHeaders),
   });
 }

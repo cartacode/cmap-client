@@ -132,7 +132,7 @@ class PayloadStatus extends React.Component {
 
     const generalFields = [
       {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetAssetStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
-      {name: "ETIC", type: 'dropdown', domID: 'ETIC', ddID: 'ETIC',valFieldID: 'ETIC',required:true},
+      {name: "ETIC", type: 'number', domID: 'ETIC',valFieldID: 'ETIC',required:true},
       {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
