@@ -9,9 +9,13 @@ export const PAYGRADE_LIST__FETCH = createActionType('PAYGRADE_LIST__FETCH');
 export const FILE__UPLOAD = createActionType('FILE__UPLOAD');
 
 export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
-export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
+export const INTEL_EEI__UPDATE = createActionType('INTEL_EEI__UPDATE');
 export const INTEL_EEI__FETCH = createActionType('INTEL_EEI__FETCH');
+export const INTEL_EEI__FETCH_ONE = createActionType('INTEL_EEI__FETCH_ONE');
+export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
+export const INTEL_REQUEST__UPDATE = createActionType('INTEL_REQUEST__UPDATE');
 export const INTEL_REQUEST__FETCH = createActionType('INTEL_REQUEST__FETCH');
+export const INTEL_REQUEST__FETCH_ONE = createActionType('INTEL_REQUEST__FETCH_ONE');
 
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');

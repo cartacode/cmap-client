@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import IntelRequestIntelRequestComponent from '../../components/intel_request/IntelRequestIntelRequestComponent';
+import RequestForm from '../../components/intel_request/RequestForm';
 import { addIntelEei, addIntelRequest } from 'actions/intel';
 
 const mapStateToProps = state => {
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
   addIntelRequest,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(IntelRequestIntelRequestComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestForm);

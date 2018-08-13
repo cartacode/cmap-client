@@ -1,29 +1,40 @@
-import { INTEL_EEI__FETCH, INTEL_REQUEST__FETCH } from 'dictionary/action';
+import { INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function locations(state = initialState.locations, { payload, type }) {
+export default function intel(state = initialState.intelrequest, { payload, type }) {
   switch (type) {
     case INTEL_EEI__FETCH.REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isFetchingEEI: true,
       };
     case INTEL_EEI__FETCH.SUCCESS:
       return {
         ...state,
-        isFetching: false,
-        allLocations: payload.data,
+        isFetchingEEI: false,
+        eeis: payload.data,
       };
     case INTEL_REQUEST__FETCH.REQUEST:
       return {
         ...state,
-        isListFetching: true,
+        isFetching: true,
       };
     case INTEL_REQUEST__FETCH.SUCCESS:
       return {
         ...state,
-        isListFetching: false,
-        locationList: payload.data,
+        isFetching: false,
+        allRequests: payload.data,
+      };
+    case INTEL_REQUEST__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetchingOne: true,
+      };
+    case INTEL_REQUEST__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetchingOne: false,
+        oneIntelRequest: payload.data,
       };
     default:
       return state;

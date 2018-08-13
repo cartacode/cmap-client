@@ -57,7 +57,7 @@ class HeaderComponent extends React.Component {
       {title: translations['dashboard'], url: '/dashboard'},
       {title: translations['liveview'], url: '/liveview'},
       {title: translations['status'], url: '/status'},
-      {title: translations['intel request'], url: '/intel-request/summary'},
+      {title: translations['intel request'], url: '/intel-request/request'},
       {title: translations['mission mgt'], url: '/mission-mgt/isr-sync'},
       {title: translations['schedules'], url: '/schedules'},
       {title: translations['orders/assets'], url: '/orders-assets/orders'},

@@ -82,6 +82,17 @@ export default {
     onePlatform: {},
     onePayload: {},
     onePersonnel: {},
-    isFetching: false
+    isFetching: false,
+  },
+
+  intelrequest: {
+    eeis: [],
+    allRequests: [],
+    oneEei: {},
+    oneIntelRequest: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isFetchingEEI: false,
   }
+
 };

@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import ShortHeaderLine from '../reusable/ShortHeaderLine';
-import Dropdown from "../reusable/Dropdown";
-import FormBlock from "../reusable/FormBlock";
-import ModalFormBlock from "../reusable/ModalFormBlock";
-import StatusTable from "../reusable/StatusTable";
 
-import FilterDropdown from '../reusable/FilterDropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
+import ModalFormBlock from "../reusable/ModalFormBlock";
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import TableRowDetailModal from '../reusable/TableRowDetailModal';
 
 
-class IntelRequestIntelRequestComponent extends React.Component {
+class RequestForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -234,16 +229,16 @@ class IntelRequestIntelRequestComponent extends React.Component {
     const {translations} = this.props;
 
     const intelRequest1 = [
-      {name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID:'COCOM',valFieldID:'SupportedCommand'},
-      {name: translations['Named Operation'], type: 'dropdown',domID: 'dispNamedOp',valFieldID:'NamedOperation'},
+      {name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID:'COCOM', valFieldID:'SupportedCommand'},
+      {name: translations['Named Operation'], type: 'input',domID: 'dispNamedOp',valFieldID:'NamedOperation'},
       {name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType'},
-      {name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart'},
+      {name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart'}
     ];
 
     const intelRequest2 = [
       {name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', ddID: 'PriorityIntelRequirement', valFieldID:'PriorityIntelRequirement'},
-      {name: translations['Primary Sensor'], type: 'dropdown',ddID: 'GetPayloads', domID:'dispPriSensor', valFieldID:'PrimaryPayload'},
-      {name: translations['Secondary Sensor'], type: 'dropdown',ddID: 'GetPayloads', domID:'dispSecSensor', valFieldID:'SecondaryPayload'},
+      {name: translations['Primary Sensor'], type: 'dropdown',ddID: 'PayloadType/GetPayloadTypes', domID:'dispPriSensor', valFieldID:'PrimaryPayload'},
+      {name: translations['Secondary Sensor'], type: 'dropdown',ddID: 'PayloadType/GetPayloadTypes', domID:'dispSecSensor', valFieldID:'SecondaryPayload'},
       {name: translations['Armed'], type: 'dropdown',ddID: 'GetMunitions', domID:'dispArmed', valFieldID:'Armed'},
     ];
 
@@ -342,19 +337,19 @@ class IntelRequestIntelRequestComponent extends React.Component {
         Header: translations['del'],
         accessor: 'del',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/trash_icon.png" /></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/trash_icon.png" /></span>// Custom cell components!
       }
     ];
 
-    const rowFields = [
-			{name: translations['eei#'], type: 'input'},
-			{name: translations['Name'], type: 'input'},
-			{name: translations['threat'], type: 'input'},
-			{name: translations['Location'], type: 'dropdown'},
-			{name: translations['grid'], type: 'input'},
-			{name: translations['POIs'], type: 'dropdown'},
-			{name: translations['LIMIDS Request'], type: 'input'},
-		];
+    // const rowFields = [
+	// 		{name: translations['eei#'], type: 'input'},
+	// 		{name: translations['Name'], type: 'input'},
+	// 		{name: translations['threat'], type: 'input'},
+	// 		{name: translations['Location'], type: 'dropdown'},
+	// 		{name: translations['grid'], type: 'input'},
+	// 		{name: translations['POIs'], type: 'dropdown'},
+	// 		{name: translations['LIMIDS Request'], type: 'input'},
+	// 	];
 
     return (
       <div>
@@ -487,16 +482,16 @@ class IntelRequestIntelRequestComponent extends React.Component {
           </div>
         </div>
 
-                  <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/>
+                  {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
 
       </div>
     );
   }
 }
 
-IntelRequestIntelRequestComponent.propTypes = {
+RequestForm.propTypes = {
   children: PropTypes.element,
 
 };
 
-export default IntelRequestIntelRequestComponent;
+export default RequestForm;
