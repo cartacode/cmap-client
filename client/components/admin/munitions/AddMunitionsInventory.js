@@ -176,8 +176,8 @@ class AddMunitionsInventory extends React.Component {
       { name: "COCOM", type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM' },
       { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch' },
       { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg' },
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' },
+      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg', required: true },
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
       /*       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
     
       {name: "Type", type: 'dropdown', domID: 'typeId', ddID: 'MunitionRoles/GetMunitionRoles', valFieldID: 'type'}, */
