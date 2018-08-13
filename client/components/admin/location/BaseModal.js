@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import qs from 'qs';
+import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 
 
@@ -147,6 +148,11 @@ class BaseModal extends React.Component {
     });
   }
 
+
+
+  handleUploadFileData = (uploadFileData) => {
+    
+  }
 
   handleUploadFile = (event) => {
     event.preventDefault();
@@ -330,6 +336,14 @@ class BaseModal extends React.Component {
       { name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'LocationChatID' },
     ];
 
+
+    const uploadFileFields = [
+      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhotoFile', valFieldID: 'LocationPhoto', fileType :'image',  required: true },
+      { name: translations['Map Image'], type: 'file', domID: 'LocationMapFile', valFieldID: 'LocationMapImage', fileType :'image', required: true},
+      { name: translations['Document'], type: 'file', domID: 'LocationDocumentFile', valFieldID: 'LocationDocument', fileType :'file',required: true },
+      { name: translations['KML Marker'], type: 'file', domID: 'LocationKMLFile', valFieldID: 'KML', fileType :'file', required: true },
+    ];
+
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="locationform">
@@ -351,42 +365,8 @@ class BaseModal extends React.Component {
             <div className="col-md-4 image-block">
               {$mpaImage}
             </div>
-            <div className="col-md-4 upload-block">
-              <div className="upload-imagery">
-                <img src="/assets/img/admin/upload_1.png" alt="" />
-                <div className="header-text">
-                  upload imagery & datasheets
-                  </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt="" />
-              </div>
-              <div className="upload-content">
-                <div className="upload-line">
-                  <div>
-                    {translations['Photo Image']}
-                  </div>
-                  <input type="file" name="file" id="LocationPhotoFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
-                </div>
-                <div className="upload-line">
-                  <div>
-                    {translations['Map Image']}
-                  </div>
-                  <input type="file" name="file" id="LocationMapFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                </div>
-                <div className="upload-line">
-                  <div>
-                    {translations['Document']}
-                  </div>
-                  <input type="file" name="file" id="LocationDocumentFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
-                </div>
-                <div className="upload-line">
-                  <div>
-                    {translations['KML Marker']}
-                  </div>
-                  <input type="file" name="file" id="LocationKMLFile" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                </div>
-
-              </div>
-            </div>
+            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields} 
+            data={this.handleUploadFileData} ></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >
