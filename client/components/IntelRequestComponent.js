@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import { Switch, Route, NavLink } from 'react-router-dom';
 
-import IntelRequestContainer from '../containers/intel_request/IntelRequestContainer';
-import IntelSummaryContainer from '../containers/intel_request/IntelSummaryContainer';
+
+import RequestContainer from '../containers/intel_request/RequestContainer';
+import RequestFormContainer from '../containers/intel_request/RequestFormContainer';
 
 import NatlImageryContainer from '../containers/intel_request/NatlImageryContainer';
 import ResourcesContainer from '../containers/intel_request/ResourcesContainer';
-import TaskingOrderContainer from '../containers/TaskingOrderContainer';
 
 
 class IntelRequestComponent extends React.Component {
@@ -22,21 +22,28 @@ class IntelRequestComponent extends React.Component {
     const {translations, match} = this.props;
 
     const menuItems = [
-      {title: 'Request', url: `${match.url}/summary`},
+      {title: 'Request', url: `${match.url}/request`},
      /*  {title: translations['request'], url: `${match.url}/request`}, */
       {title: translations['review'], url: `${match.url}/review`},
       {title: translations["nat'l imagery"], url: `${match.url}/natl-imagery`},
     ];
 
     return menuItems.map((item, i) => {
-        let matchForLink = false;
-        let image = '/assets/img/menu/button-line-highlight.png';
-        matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
+      let matchForLink = false;
+      let image = '/assets/img/menu/button-line-highlight.png';
+      matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
+
+      // if (item.url.indexOf('/', 8) !== -1) {
+      //   matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 8))) !== -1);
+      // } else {
+      //   matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
+      // }
+
 
         //When clicking on New Request. the REQUEST tab should remain highlighted
-        if(this.props.router.location.pathname === '/intel-request/request/request' && item.title === 'Request' ){
-          matchForLink = true;
-        }
+        // if(this.props.router.location.pathname === '/intel-request/request/request' && item.title === 'Request' ){
+        //   matchForLink = true;
+        // }
 
       return (
         <div className="submenu-button" key={i}>
@@ -66,8 +73,8 @@ class IntelRequestComponent extends React.Component {
           </div>
         </div>
         <Switch>
-          <Route path={`${match.url}/summary`} component={IntelSummaryContainer} />
-          <Route path={`${match.url}/request`} component={IntelRequestContainer} />
+          <Route path={`${match.url}/request-form`} component={RequestFormContainer} />
+          <Route path={`${match.url}/request`} component={RequestContainer} />
           <Route path={`${match.url}/review`} component={ResourcesContainer} />
           <Route path={`${match.url}/natl-imagery`} component={NatlImageryContainer} />
         </Switch>
