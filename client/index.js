@@ -6,6 +6,7 @@ import App from 'components/App';
 import configureStore from 'store/configureStore';
 
 import 'styles/main.scss';
+import 'react-notifications/lib/notifications.css';
 
 render(
   <Provider store={configureStore()}>
