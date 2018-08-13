@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addLocation(location) {
   return createAction({
     type: LOCATION__ADD,
-    action: () => axios.post(`${baseUrl}/Locations/PostLocations`, qs.stringify(location), formDataRequestHeader),
+    action: () => axios.post(`${baseUrl}/Locations/PostLocations`, location, formDataRequestHeader),
   });
 }
 
@@ -16,7 +16,7 @@ export function addLocation(location) {
 export function updateLocation(id, location) {
   return createAction({
     type: LOCATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Locations/PutLocations/${id}`, qs.stringify(location), formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Locations/PutLocations/${id}`, location, formDataRequestHeader),
   });
 }
 
