@@ -235,26 +235,26 @@ class BaseModal extends React.Component {
     event.preventDefault();
     const { location } = this.state;
     const { editId } = this.props;
+    const { locationFiles } = this.state;
 
     //We are going to upload files with JSON request body.
     const formData = new FormData();
-
-    if (this.state.locationPhotoFile) {
-      formData.append('locationPhotoFile', this.state.locationPhotoFile, this.state.locationPhotoFile.name);
+    console.log("Location file cheking... " + locationFiles.LocationPhoto);
+    if (locationFiles.LocationPhoto) {
+      formData.append('locationPhotoFile', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
     }
 
-    if (this.state.locationMapFile) {
-      formData.append('locationMapFile', this.state.locationMapFile, this.state.locationMapFile.name);
+    if (locationFiles.LocationMapImage) {
+      formData.append('locationMapFile', locationFiles.LocationMapImage, locationFiles.LocationMapImage.name);
     }
 
-    if (this.state.locationDocumentFile) {
-      formData.append('locationDocumentFile', this.state.locationDocumentFile, this.state.locationDocumentFile.name);
+    if (locationFiles.LocationDocument) {
+      formData.append('locationDocumentFile', locationFiles.LocationDocument,locationFiles.LocationDocument.name);
     }
 
-    if (this.state.locationKMLFile) {
-      formData.append('locationKMLFile', this.state.locationKMLFile, this.state.locationKMLFile.name);
+    if (locationFiles.KML) {
+      formData.append('locationKMLFile', locationFiles.KML, locationFiles.KML.name);
     }
-
 
     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;
