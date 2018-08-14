@@ -262,7 +262,7 @@ class Accordion extends React.Component {
             </div>
           </div>
         </div>
-        <div className="accordion-section" ref={`section${2}`}>
+    {   /* <div className="accordion-section" ref={`section${2}`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(2)}>
             <div>
               view roster
@@ -279,8 +279,8 @@ class Accordion extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="accordion-section" ref={`section${3}`}>
+    </div> */}
+   {/*     <div className="accordion-section" ref={`section${3}`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(3)}>
             <div>
               create / edit role
@@ -349,8 +349,8 @@ class Accordion extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="accordion-section" ref={`section${4}`}>
+        </div> */ }
+      {/*  <div className="accordion-section" ref={`section${4}`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(4)}>
             <div>
               generate orders
@@ -364,7 +364,7 @@ class Accordion extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+      </div> */ }
 
       </div>
     );

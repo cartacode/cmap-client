@@ -256,13 +256,15 @@ render() {
       </div>
 
       <div className="row personnel" >
-        <div className="org-builder">
-          {/* <Accordion /> */}
+       <div className="col-md-2"> 
+          { <Accordion /> }
+       </div>   
+       <div className="col-md-10"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
           <TreeComponent data={this.state.orgData} onNodeClick = {this.openOptionModal}/>
+        </div>  
         </div>
       </div>
-    </div>
   );
 }
 }

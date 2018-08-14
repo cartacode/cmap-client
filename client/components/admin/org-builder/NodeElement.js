@@ -7,7 +7,7 @@ class NodeElement extends React.PureComponent {
     return (
       <div className={className}>
       
-        <h1>{nodeData.name}<img src="/assets/img/admin/avatar.png" height="50" width="50"/></h1>
+        <h3>{nodeData.name}<img src="/assets/img/admin/avatar.png" height="50" width="50"/></h3>
         <p>Rank: {nodeData.attributes.Rank} <br/>
            Unit : {nodeData.attributes.Unit} 
         </p>
