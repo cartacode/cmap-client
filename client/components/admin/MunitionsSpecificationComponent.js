@@ -204,6 +204,33 @@ class MunitionsSpecificationComponent extends React.Component {
           : 'Unknown'
         }
         </div>,
+        filterMethod: (filter, row) =>{
+          if (filter.value === "all") {
+            return true;
+          }
+          if (filter.value === "1") {
+            return row[filter.id] === 1;
+          }
+
+          if (filter.value === "2") {
+            return row[filter.id] === 2;
+          }
+          return row[filter.id] === 3;
+       
+        },
+        
+        Filter: ({ filter, onChange }) =>
+                    <select
+                      onChange={event => onChange(event.target.value)}
+                      style={{ width: "100%" }}
+                      value={filter ? filter.value : "all"}
+                    >
+                      <option value="all">All</option>
+                      <option value="1">Missile</option>
+                      <option value="2">Rocket</option>
+                      <option value="3">Guns</option>
+                    </select>
+    
       },
       
       {
@@ -222,10 +249,16 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Ops range",
         accessor: 'opsRange',
+        filterMethod: (filter, row) => {
+          return String(row[filter.id]).startsWith(filter.value) 
+        }
       },
       {
         Header: "Weight",
         accessor: 'weight',
+        filterMethod: (filter, row) => {
+          return String(row[filter.id]).startsWith(filter.value) 
+          }
       },
       {
         Header: translations['view'],
@@ -274,7 +307,9 @@ class MunitionsSpecificationComponent extends React.Component {
               filterable={true}
               defaultFilterMethod={(filter, row) => {
                 const id = filter.pivotId || filter.id
-                return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;
+                //return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;
+                return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+
               }}
 
             />
