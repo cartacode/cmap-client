@@ -13,7 +13,8 @@ import CustomButton from './reusable/CustomButton';
 
 import CustomDatePicker from './reusable/CustomDatePicker';
 import DropDownButton from './reusable/DropDownButton';
-
+import axios from 'axios';
+import { baseUrl } from 'dictionary/network';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
@@ -29,10 +30,17 @@ class StatusComponent extends React.Component {
     this.onSubmit();
     this.state={
       statusModalOpen:false,
+      payloadpct:'',
+      platformpct:'',
+      payloadnum:'',
+      payloaddenom:'',
+      platformnum:'',
+      platformdenom:''
     }
   }
 
   componentDidMount() {
+    this.stats();
     this.props.fetchPlatformsStatus();
     this.props.fetchPayloadsStatus();
     this.props.fetchMunitionsStatus();
@@ -51,6 +59,25 @@ class StatusComponent extends React.Component {
 
   onSubmit(){
     console.log("submit");
+  }
+
+  stats = () => {
+    const apiUrl = `${baseUrl}/StatusStats/GetStatusStats`;
+    axios.get(apiUrl)
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          platformpct:response.data.PlatformReadyPct+"%",
+          payloadpct:response.data.PayloadReadyPct+"%",
+          platformnum:response.data.PlatformReadyCount,
+          payloadnum:response.data.PayloadReadyCount,
+          platformdenom:response.data.PlatformCount,
+          payloaddenom:response.data.PayloadCount,
+        });
+      })
+      .catch((error) => {
+        console.log('Exception comes:' + error);
+      });
   }
 
   render() {
@@ -323,8 +350,8 @@ class StatusComponent extends React.Component {
                 <img src="/assets/img/status/status_logo.png" className="photo" alt="" />
               </div>
               <div className="col-md-8 status-block">
-                <CircleStatus statusHeader={translations["platform"]} statusPercent="88%" statusNumber="16/18" />
-                <CircleStatus statusHeader={translations["payload"]} statusPercent="55%" statusNumber="17/31" />
+                <CircleStatus statusHeader={translations["platform"]} statusPercent={this.state.platformpct} statusNumber={this.state.platformnum + "/" + this.state.platformdenom} />
+                <CircleStatus statusHeader={translations["payload"]} statusPercent={this.state.payloadpct} statusNumber={this.state.payloadnum + "/" + this.state.payloaddenom} />
                 <CircleStatus statusHeader={translations["flight crew"]} statusPercent="89%" statusNumber="239/270" />
                 <CircleStatus statusHeader={translations["line crew"]} statusPercent="80%" statusNumber="12/15" />
                 <CircleStatus statusHeader={translations["ped crew"]} statusPercent="78%" statusNumber="492/550" />
