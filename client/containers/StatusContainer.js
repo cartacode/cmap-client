@@ -1,11 +1,24 @@
 import {connect} from 'react-redux';
 
 import StatusComponent from '../components/StatusComponent';
+import { fetchPlatformsStatus, fetchPayloadsStatus, fetchPersonnelsStatus, fetchMunitionsStatus } from 'actions/status';
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
+    statusplatform:state.status.platforms,
+    statuspayload:state.status.payloads,
+    statuspersonnel:state.status.personnels,
+    statusmunition:state.status.munitions,
+    isLoading: state.status.isFetching, 
   };
 };
 
-export default connect(mapStateToProps)(StatusComponent);
+const mapDispatchToProps = {
+  fetchPlatformsStatus,
+  fetchPayloadsStatus,
+  fetchPersonnelsStatus,
+  fetchMunitionsStatus
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(StatusComponent);

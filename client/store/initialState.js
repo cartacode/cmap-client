@@ -79,9 +79,11 @@ export default {
     platforms: [],
     payloads: [],
     personnels: [],
+    munitions: [],
     onePlatform: {},
     onePayload: {},
     onePersonnel: {},
+    oneMunition: {},
     isFetching: false,
   },
 

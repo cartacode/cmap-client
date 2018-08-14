@@ -21,6 +21,7 @@ import ReactTable from 'react-table';
 import PlatformStatus from './status/PlatformStatus';
 import PayloadStatus from './status/PayloadStatus';
 import PersonnelStatus from './status/PersonnelStatus';
+import MunitionsStatus from './status/MunitionsStatus';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -40,15 +41,18 @@ class AdminStatusComponent extends React.Component {
       platformEditId:0,
       payloadEditId:0,
       personnelEditId:0,
+      munitionEditId:0,
       platformStatusOpen:false,
       payloadStatusOpen:false,
-      personnelStatusOpen:false
+      personnelStatusOpen:false,
+      munitionStatusOpen:false
     }
   }
 
   componentDidMount() {
     this.props.fetchPlatformsStatus();
     this.props.fetchPayloadsStatus();
+    this.props.fetchMunitionsStatus();
     this.props.fetchPersonnelsStatus();
   }
 
@@ -74,6 +78,13 @@ class AdminStatusComponent extends React.Component {
     });
   }
 
+  openMunitionForm = (row) => {
+    this.setState({
+      munitionEditId: row,
+      munitionStatusOpen: true
+    });
+  }
+
   closePlatformForm = () => {
     this.props.fetchPlatformsStatus();
     this.setState({
@@ -95,6 +106,14 @@ class AdminStatusComponent extends React.Component {
     this.setState({
       personnelEditId: 0,
       personnelStatusOpen: false,
+    });
+  }
+
+  closeMunitionForm = () => {
+    this.props.fetchMunitionsStatus();
+    this.setState({
+      munitionEditId: 0,
+      munitionStatusOpen: false,
     });
   }
 
@@ -155,8 +174,7 @@ class AdminStatusComponent extends React.Component {
     const { statusplatform } = this.props;
     const { statuspayload } = this.props;
     const { statuspersonnel } = this.props;
-
-    console.log(statuspersonnel);
+    const { statusmunition } = this.props;
 
     let langs = ['val 1', 'val 2'];
 
@@ -364,8 +382,8 @@ class AdminStatusComponent extends React.Component {
 
     const equipmentColumns = [
       {
-        Header: translations['equipment'],
-        accessor: 'equipment', 
+        Header: "Munition",
+        accessor: 'name', 
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value),
         sortMethod: (a, b) => {
@@ -377,19 +395,13 @@ class AdminStatusComponent extends React.Component {
       },
       {
         Header: translations['serial#'],
-        accessor: 'serial',
+        accessor: 'serialNbr',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
-      },
-      {
-        Header: translations['inventory'],
-        accessor: 'inventory',
         filterMethod: (filter, row) =>
                     row[filter.id].startsWith(filter.value)
       },
@@ -401,9 +413,9 @@ class AdminStatusComponent extends React.Component {
       }, 
       {
         Header: translations['update'],
-        accessor: 'update',
+        accessor: 'ID',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Equipment"/></span>// Custom cell components!
+        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Munition" onClick={() => this.openMunitionForm(row.value)}/></span>// Custom cell components!
       }
     ];
 
@@ -654,34 +666,19 @@ class AdminStatusComponent extends React.Component {
               />
             </div>
           </div>
+
+        <div className="row status">
+        {this.state.munitionStatusOpen ?
+        <MunitionsStatus editId = {this.state.munitionEditId} onClose={this.closeMunitionForm} translations={translations} />
+        : null }
+        </div>
+
           <div className="col-md-12">
             <div className="col-md-6">
-              <HalfHeaderLine headerText={translations["equipment"]} />
-              <ReactTable data={equipment} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <HalfHeaderLine headerText="Muntion" />
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
-
-                  getTdProps={(state, rowInfo, column, instance) => {
-                    return {
-                      onClick: e =>{
-  
-                        console.log(rowInfo);
-                        console.log(column);
-  
-                         if (column.Header == 'update')
-                        {
-                          this.setState({
-                            statusModalOpen: !this.state.statusModalOpen,
-                            whichModal: 'Equipment',
-                            rowno: rowInfo.index
-                          });
-                        }
-  
-                      }
-  
-  
-                    };
-                  }}
               />     
             </div>
             <div className="col-md-6">

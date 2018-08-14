@@ -74,15 +74,34 @@ class PersonnelComponent extends React.Component {
   // }
   // }
 
-closePersonnelForm = () => {
-  const { translations } = this.props;
-  NotificationManager.success(translations['Add Personnel Success'], translations['personnel']);
-  this.props.fetchPersonnels();
+closePersonnelForm = (actionType) => {
+  this.loadData(actionType);
   this.setState({
     editId: '0',
     addPersonnelModalOpen: false,
   });
 }
+
+loadData = (actionType) => {
+  this.notify(actionType);
+  this.props.fetchPersonnels();
+}
+
+
+notify =(actionType)=>{
+  const { translations } = this.props;
+  if ('DELETE' != actionType) {
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
+      NotificationManager.success(translations['Update Personnel Success'], translations['personnel'], 5000);
+    }else{
+      NotificationManager.success(translations['Add Personnel Success'], translations['personnel'], 5000);
+    }
+  }else{
+    NotificationManager.success(translations['Delete Personnel Success'],translations['personnel'], 5000);
+  }
+}
+
+
 
 stopupdate = () => 
   {
@@ -151,8 +170,8 @@ render() {
       Header: translations['view'],
       accessor: 'ID',
       filterable: false,
-      // Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
-      Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
+      Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
+      //Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
     },
   ];
 

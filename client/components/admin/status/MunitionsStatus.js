@@ -1,5 +1,5 @@
 import { uploadFile } from 'actions/file';
-import { fetchPersonnelStatusById, updatePersonnelStatus } from 'actions/status';
+import { fetchMunitionsStatusById, updateMunitionStatus } from 'actions/status';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 
-class PersonnelStatus extends React.Component {
+class MunitionStatus extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class PersonnelStatus extends React.Component {
       locationcategory: '',
       inventoryId: '0',
       isUpdated: false,
-       personnel: {
+       munition: {
       //   metaDataID: '',
       //   locationID: '',
       //   owningUnit: '',
@@ -34,7 +34,7 @@ class PersonnelStatus extends React.Component {
       //   dispPlatformComs1: '',
       //   dispPlatformComs2: '',
       },
-      onePersonnel: {},
+      onePayload: {},
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -46,10 +46,10 @@ class PersonnelStatus extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.fetchPersonnelStatusById(editId).then(() => {
+      this.props.fetchMunitionsStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
-          personnel: this.props.onePersonnel
+          munition: this.props.oneMunition,
         });
       });
     }
@@ -58,16 +58,18 @@ class PersonnelStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPersonnelStatusById(this.props.editId).then(() => {
+      this.props.fetchMunitionsStatusById(this.props.editId).then(() => {
         this.setState({
           isUpdated: true,
-          personnel: this.props.onePersonnel
+          munition: this.props.oneMunition,
         });
 
       });
     }
 
-    
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
   }
 
   stopUpdate = ()=> {
@@ -76,14 +78,14 @@ class PersonnelStatus extends React.Component {
     });
   }
   
-  handlePlatformGeneralData = (generalData) => {
-    const { personnel } = this.state;
+  handlePayloadGeneralData = (generalData) => {
+    const { munition } = this.state;
+    
     this.setState({
-      personnel: {
-        ...personnel,
+      munition: {
+        ...munition,
         StatusCode: generalData.StatusCode,
-        ArrivalDate: generalData.ArrivalDate,
-        DepartureDate: generalData.DepartureDate,
+        ETIC: generalData.ETIC,
         Remark: generalData.Remark,
       },
     });
@@ -91,11 +93,12 @@ class PersonnelStatus extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let { personnel } = this.state;
+    let { munition } = this.state;
     const { editId } = this.props;
+    
     if (editId !== undefined && editId !== '0') {
       
-      this.props.updatePersonnelStatus(editId, personnel).then( () => {this.props.onClose();});
+      this.props.updateMunitionStatus(editId, munition).then( () => {this.props.onClose();});
     } else {
       
     }
@@ -128,9 +131,8 @@ class PersonnelStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetPersonnelStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
-      {name: "Arrival Date", type: 'date', domID: 'ArrivalDate',  valFieldID: 'ArrivalDate'},
-      {name: "Departure Date", type: 'date', domID: 'DepartureDate', valFieldID: 'DepartureDate' },
+      {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetAssetStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: "ETIC", type: 'number', domID: 'ETIC', valFieldID: 'ETIC',required:true},
       {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
@@ -147,7 +149,7 @@ class PersonnelStatus extends React.Component {
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
-                Edit Personnel Status
+                Edit Munition Status
               </div>
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
@@ -157,7 +159,7 @@ class PersonnelStatus extends React.Component {
           <div className="row personnel" >
             
                <div className="col-md-4 info-block"></div> 
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePersonnel} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePayloadGeneralData} initstate={this.props.oneMunition} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
               <div className="col-md-4 info-block"></div>  
           </div>
           
@@ -185,7 +187,7 @@ class PersonnelStatus extends React.Component {
   }
 }
 
-PersonnelStatus.propTypes = {
+MunitionStatus.propTypes = {
   children: PropTypes.node,
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
@@ -195,14 +197,14 @@ PersonnelStatus.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePersonnel: state.status.onePersonnel
+    oneMunition: state.status.oneMunition,
   };
 };
 
 const mapDispatchToProps = {
-  fetchPersonnelStatusById,
-  updatePersonnelStatus
+  fetchMunitionsStatusById,
+  updateMunitionStatus
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonnelStatus);
+export default connect(mapStateToProps, mapDispatchToProps)(MunitionStatus);

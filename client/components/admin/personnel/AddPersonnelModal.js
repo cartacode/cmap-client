@@ -163,6 +163,7 @@ class AddPersonnelModal extends React.Component {
       selectedRank: generalData.Rank,
     });
 
+    console.log('personnal'+personnel);
     //let personnell = generalData.Rank;
     //this.setPaygrade(personnell);
   }
@@ -306,22 +307,18 @@ class AddPersonnelModal extends React.Component {
     event.preventDefault();
     let {  personnel } = this.state;
     let { editId } = this.props;
-  
+    let {  selectedRank } = this.state;
+    personnel.Rank = selectedRank;
+
     if (editId !== undefined && editId !== '0') {
-      
-    //   const data = {
-    //     id: editId,
-    //     personnel: personnel
-    //   }
-        
       personnel.PersonnelID = editId;
       console.log('handle Submit '+ JSON.stringify(personnel));
       this.props.updatePersonnel(editId, personnel).then(() => {
-        this.props.onClose();
+        this.props.onClose('UPDATE');
       });
     } else {
       this.props.addPersonnel(this.state.personnel).then(() => {
-        this.props.onClose();
+        this.props.onClose('ADD');
       });
     }
 
@@ -428,6 +425,8 @@ render() {
     
     
   const {translations} = this.props;
+
+  let { personnel } = this.state;
 
   const generalFields = [
     {name: translations['First Name'], type: 'input', domID: 'FirstName', valFieldID: 'FirstName', required: true },

@@ -258,15 +258,15 @@ class BaseModal extends React.Component {
 
     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;
-      formData.append("locationFormData", qs.stringify(location));
+      formData.append("locationFormData", JSON.stringify(location));
       //TODO: When upload files api will work thn we will pass formData.
-      this.props.updateLocation(editId, location).then(() => {
+      this.props.updateLocation(editId, formData).then(() => {
         this.props.onClose();
       });
     } else {
-      formData.append("locationFormData", qs.stringify(location));
+      formData.append("locationFormData", JSON.stringify(location));
       //TODO: When upload files api will work thn we will pass formData.
-      this.props.addLocation(location).then(() => {
+      this.props.addLocation(formData).then(() => {
         this.props.onClose();
       });
     }

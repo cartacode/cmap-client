@@ -658,6 +658,8 @@
   "Qty:": "Qty:",
   "Add Personnel": "Add Personnel",
   "Add Personnel Success": "Record Added Successfully",
+  "Update Personnel Success": "Record Updated Successfully",
+  "Delete Personnel Success": "Record Deleted Successfully",
   "Add Platform": "Add Platform",
   "Platform Inventory Title": "Platform inventory",
   "Add Platform Inventory Message": "Record add successfully.",
