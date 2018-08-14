@@ -9,6 +9,7 @@ import RequestFormContainer from '../containers/intel_request/RequestFormContain
 
 import NatlImageryContainer from '../containers/intel_request/NatlImageryContainer';
 import ResourcesContainer from '../containers/intel_request/ResourcesContainer';
+import CollectionManagerContainer from '../containers/intel_request/CollectionManagerContainer';
 
 
 class IntelRequestComponent extends React.Component {
@@ -26,6 +27,7 @@ class IntelRequestComponent extends React.Component {
      /*  {title: translations['request'], url: `${match.url}/request`}, */
       {title: translations['review'], url: `${match.url}/review`},
       {title: translations["nat'l imagery"], url: `${match.url}/natl-imagery`},
+      {title: translations["collection manager"], url: `${match.url}/collection-manager` },
     ];
 
     return menuItems.map((item, i) => {
@@ -76,6 +78,7 @@ class IntelRequestComponent extends React.Component {
           <Route path={`${match.url}/request-form`} component={RequestFormContainer} />
           <Route path={`${match.url}/request`} component={RequestContainer} />
           <Route path={`${match.url}/review`} component={ResourcesContainer} />
+          <Route path={`${match.url}/collection-manager`} component={CollectionManagerContainer} />
           <Route path={`${match.url}/natl-imagery`} component={NatlImageryContainer} />
         </Switch>
       </div>

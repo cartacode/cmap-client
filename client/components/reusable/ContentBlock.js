@@ -121,7 +121,11 @@ class ContentBlock extends React.Component {
         switch (item.type) {
           case 'input':
             if(item.required) {
-              input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required/> );
+              if(item.validationIcon){
+                input = ( <div className="input-group"><input type="text" className="form-control" value={value} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required/><span className="input-group-addon-validation-icon"> <img id="validationIcon" src=""/></span> </div>);
+              }else{
+                input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required/> );
+              }
             }
             else {
               input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange}/>)

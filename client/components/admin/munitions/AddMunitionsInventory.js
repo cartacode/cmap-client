@@ -118,12 +118,12 @@ class AddMunitionsInventory extends React.Component {
 
   updatelocationid(generalData) {
     let locationselect = document.getElementsByName('locationID')[0];
-    let items = [{ 'label': '--Select Item--', 'value': 0 }];
+    let items = [{ 'label': '--Select Item--', 'value': '' }];
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationCatg;
     axios.get(apiUrl)
       .then(response => {
         console.log(response.data);
-        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': 0 }]; }
+        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }
         response.data.map(item => {
           items.push({ 'label': item['description'], 'value': item['id'].trim() });
         });
@@ -175,7 +175,7 @@ class AddMunitionsInventory extends React.Component {
       { name: "Serial #", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
       { name: "COCOM", type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM' },
       { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch' },
-      { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' },
+      { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units', valFieldID: 'owningUnit' , required: true },
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg', required: true },
       { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
       /*       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},

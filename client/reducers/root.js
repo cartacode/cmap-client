@@ -15,6 +15,7 @@ import ranks from 'reducers/ranks';
 import ccirpir from 'reducers/ccirpir';
 import status from 'reducers/status';
 import intelrequest from 'reducers/intel';
+import collections from 'reducers/collections';
 
 export default function createReducer() {
   return combineReducers({
@@ -33,5 +34,6 @@ export default function createReducer() {
     ccirpir,
     status,
     intelrequest,
+    collections,
   });
 }

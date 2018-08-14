@@ -1,14 +1,12 @@
 import { uploadFile } from 'actions/file';
 import { addLocation, fetchLocationById, fetchLocations, updateLocation } from 'actions/location';
+import axios from 'axios';
+import { baseUrl, requestHeaders } from 'dictionary/network';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
-
-
-
 
 
 class BaseModal extends React.Component {
@@ -49,7 +47,8 @@ class BaseModal extends React.Component {
         webAddress: '',
         IATA: '',
         ICAO: '',
-        FAA: ''
+        FAA: '',
+        UserLocationID: '',
       },
       oneLocation: {},
       locationFiles: {
@@ -57,7 +56,7 @@ class BaseModal extends React.Component {
         LocationMapImage: null,
         LocationDocument: null,
         KML: null,
-      }
+      },
 
     }
 
@@ -128,9 +127,50 @@ class BaseModal extends React.Component {
         LocationLongitude: positionData.LocationLongitude,
         LocationMGRS: positionData.LocationMGRS,
         LocationElevation: positionData.LocationElevation,
+        UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.location);
+      const { editId } = this.props;
+
+      const userLocationId = positionData.UserLocationID;
+      if (userLocationId) {
+        let isUserLocationIdExits;
+        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
+          .then(response => {
+            isUserLocationIdExits = response.data;
+            document.getElementById('LocationID').placeholder = '';
+            if (isUserLocationIdExits === false) {
+              if (this.props.oneLocation.UserLocationID !== 'undefined') {
+                if (this.props.oneLocation.UserLocationID !== userLocationId) {
+                  const { location } = this.state;
+                  this.setState({
+                    location: {
+                      ...location,
+                      UserLocationID: '',
+                    }
+                  });
+                  document.getElementById('LocationID').value = '';
+                  document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+                  document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+                }
+              } else {
+                const { location } = this.state;
+                this.setState({
+                  location: {
+                    ...location,
+                    UserLocationID: '',
+                  }
+                });
+                document.getElementById('LocationID').value = '';
+                document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+                document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+              }
+            } else {
+              document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+            }
+          });
+      }
+      console.log("New state in ASYNC callback og location Section:22222", this.state.location);
     });
   }
 
@@ -236,7 +276,6 @@ class BaseModal extends React.Component {
     const { location } = this.state;
     const { editId } = this.props;
     const { locationFiles } = this.state;
-
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     console.log("Location file cheking... " + locationFiles.LocationPhoto);
@@ -249,7 +288,7 @@ class BaseModal extends React.Component {
     }
 
     if (locationFiles.LocationDocument) {
-      formData.append('locationDocumentFile', locationFiles.LocationDocument,locationFiles.LocationDocument.name);
+      formData.append('locationDocumentFile', locationFiles.LocationDocument, locationFiles.LocationDocument.name);
     }
 
     if (locationFiles.KML) {
@@ -323,11 +362,11 @@ class BaseModal extends React.Component {
 
     const locationFields = [
       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory' },
-      // { name: translations['Location ID'], type: 'dropdown', domID: 'LocationID', ddID: '', valFieldID: 'LocationID' },
       { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude' },
       { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude' },
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
+      { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },
 
     ];
 
