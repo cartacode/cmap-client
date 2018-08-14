@@ -128,7 +128,7 @@ class ModalFormBlock extends React.Component {
                 break;
     
               case 'textarea':
-                input = (<textarea rows="3" className="description" value={value} name={item.valFieldID} onChange={this.handleChange} /> );
+                input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} /> );
                 break;    
                 
               case 'email':

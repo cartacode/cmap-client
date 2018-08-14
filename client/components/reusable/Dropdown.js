@@ -28,6 +28,7 @@ class Table extends React.Component {
     componentWillMount() {
       let items = [{'label': '--Select Item--', 'value': 0}];
 
+      console.log('ddi '+this.props.dropdownDataUrl);
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
         
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
@@ -35,7 +36,11 @@ class Table extends React.Component {
           .then(response => {
             if(response.data) {
               response.data.map(item => {
-                items.push({ 'label': item[this.labelField], 'value': item[this.valueField].trim() });
+                let val = item[this.valueField];
+                if(typeof value === 'string') {
+                  val = val.trim();
+                }          
+                items.push({ 'label': item[this.labelField], 'value': val });
               });
               this.setState({
                 dropdownItems: items,

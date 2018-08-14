@@ -109,7 +109,7 @@ class RequestComponent extends React.Component {
               columns={columns}
               defaultPageSize={8}
               className="-striped -highlight"
-              filterable
+              filterable={true}
               defaultFilterMethod={(filter, row) => {
                 const id = filter.pivotId || filter.id
                 return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
