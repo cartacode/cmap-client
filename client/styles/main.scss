@@ -4320,6 +4320,10 @@ input.custom-file-input {
 
 .ReactTable .rt-noData {
   z-index: 0 !important;
+  background: transparent;
+  color: #f2f2f2;
+  padding: 0;
+  top: 58%;
 }
 
 .description {
@@ -4645,7 +4649,8 @@ margin: 0px;
 }
 
 .text-white {
- color: whitesmoke; 
+ color: navajowhite; 
+ 
 }
 
 /*********************************** playloads *************************************************/

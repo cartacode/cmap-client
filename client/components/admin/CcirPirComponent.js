@@ -187,6 +187,7 @@ notify =(type)=>{
               defaultPageSize={5}
               className="-striped -highlight"
               filterable={true}
+              minRows={1}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id
 							  return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;

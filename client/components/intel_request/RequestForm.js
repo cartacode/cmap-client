@@ -141,7 +141,6 @@ class RequestForm extends React.Component {
   }
 
   render() {
-    const langs = ['val 1', 'val 2'];
 
     const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
 
@@ -160,8 +159,8 @@ class RequestForm extends React.Component {
       { name: translations['Primary Sensor'], type: 'dropdown', ddID: '/PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload' },
       { name: translations['Secondary Sensor'], type: 'dropdown', ddID: '/PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload' },
       { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
-      { name: translations['Best Collection Time'], type: 'input', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime' },
-      { name: translations['Latest Time of Intel Value'], type: 'input', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue' },
+      { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime' },
+      { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue' },
     ];
 
     const intelRequest3 = [
@@ -179,10 +178,10 @@ class RequestForm extends React.Component {
       { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', readonly: true },
     ];
 
-    const priorityOptions = [];
-    for(let i = 1; i <= 25; i++) {
-      priorityOptions.push({ label: i, value: i });
-    }
+    const priorityOptions = [{ label: '--Select Item--', value: 0 }, { label: 'Low', value: 4 }, { label: 'Medium', value: 3 }, { label: 'High', value: 2 }, { label: 'urgent', value: 1 }];
+    // for(let i = 1; i <= 25; i++) {
+    //   priorityOptions.push({ label: i, value: i });
+    // }
 
     const intelRequest5 = [
       

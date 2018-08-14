@@ -180,6 +180,13 @@ class MunitionsSpecificationComponent extends React.Component {
     });
   }
 
+  munitionTypeFilter = (filter, row) => {
+  
+    const id = filter.pivotId || filter.id
+    return (row.value !== undefined && row.value !== null) ? String(row.value.toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+
+  }
+
   render() {
 
     const { translations } = this.props;
@@ -196,14 +203,36 @@ class MunitionsSpecificationComponent extends React.Component {
       
       {
         Header: "Type",
-        accessor: 'munitionType',
-        Cell: row => <div>{
-          row.value === 1 ? translations['Missile']
-          :row.value === 2 ? translations['Rocket']
-          :row.value === 3 ? translations['Guns']
-          : 'Unknown'
-        }
-        </div>,
+        accessor: 'munitionType',        
+        // Cell: row => <div>{
+        //   row.value === 1 ? translations['Missile']
+        //     : row.value === 2 ? translations['Rocket']
+        //       : row.value === 3 ? translations['Guns']
+        //         : 'Unknown'
+        // }
+        // </div>,
+        Cell: ({ value }) => (value === 1 ? translations['Missile'] : value === 2 ? translations['Rocket'] : value === 3 ? translations['Guns'] : 'Unknown'),
+        filterMethod: (filter, row) =>{
+          if (filter.value === "all") {
+            return true;
+          }
+          if (filter.value === "1") {
+            return row[filter.id] === 1;
+          }
+          if (filter.value === "2") {
+            return row[filter.id] === 2;
+          }
+          return row[filter.id] === 3;
+       
+        },
+        
+        Filter: ({ filter, onChange }) =>
+          <select onChange={event => onChange(event.target.value)}  style={{ width: "100%" }} value={filter ? filter.value : "all" } >
+            <option value="all">All</option>
+            <option value="1">{translations['Missile']}</option>
+            <option value="2">{translations['Rocket']}</option>
+            <option value="3">{translations['Guns']}</option>
+          </select>
       },
       
       {
@@ -222,10 +251,16 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Ops range",
         accessor: 'opsRange',
+        filterMethod: (filter, row) => {
+          return String(row[filter.id]).startsWith(filter.value) 
+        }
       },
       {
         Header: "Weight",
         accessor: 'weight',
+        filterMethod: (filter, row) => {
+          return String(row[filter.id]).startsWith(filter.value) 
+        }
       },
       {
         Header: translations['view'],
@@ -268,11 +303,13 @@ class MunitionsSpecificationComponent extends React.Component {
             <ReactTable
               data={allMunitions}
               columns={columns}
+              minRows={1}
               defaultPageSize={5}
               loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={(filter, row) => {
+              //  console.log(row);
                 const id = filter.pivotId || filter.id
                 return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
               }}

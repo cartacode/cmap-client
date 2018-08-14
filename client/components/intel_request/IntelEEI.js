@@ -15,6 +15,13 @@ class IntelEEI extends React.Component {
     super(props);
 
     this.state = {
+      missionEEI: [{ eei: '0000-01', name: 'torani farmhouse', threat: 'ied', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-06', limids:'us/noforn', edit:'edit', del:'del' },
+      { eei: '0000-02', name: 'izz-al-din bed-down', threat: 'rocket', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-18', limids:'us/noforn', edit:'edit', del:'del' },
+      { eei: '0000-03', name: 'mogzu road', threat: 'ied', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-22', limids:'us/noforn', edit:'edit', del:'del' },
+      { eei: '0000-04', name: 'zahani fields', threat: 'direct fire', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-13', limids:'us/noforn', edit:'edit', del:'del' },
+      { eei: '0000-05', name: 'madrasaye mosque', threat: 'direct fire', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-06', limids:'us/noforn', edit:'edit', del:'del' },
+      { eei: '0000-06', name: 'gardez stadium', threat: 'rocket', location: 'gardez, afg', grid: '42swc20821753', pois:'poi-43', limids:'us/noforn', edit:'edit', del:'del' }], 
+    
       intelReqEEI: {
         id: '',
         intelReqID: '',
@@ -172,7 +179,7 @@ class IntelEEI extends React.Component {
         Header: translations.edit,
         accessor: 'edit',
         filterable: false,
-        Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.editEEi(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteEEI(row.value)} /></span></div>,
+        Cell: row => <div><a href="#" className="text-white" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
       },
     ];
 
@@ -220,6 +227,7 @@ class IntelEEI extends React.Component {
               data={this.state.missionEEI}
               columns={missionColumns}
               defaultPageSize={5}
+              minRows={1}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={(filter, row) => {

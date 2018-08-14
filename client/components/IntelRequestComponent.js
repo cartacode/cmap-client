@@ -25,9 +25,10 @@ class IntelRequestComponent extends React.Component {
     const menuItems = [
       {title: 'Request', url: `${match.url}/request`},
      /*  {title: translations['request'], url: `${match.url}/request`}, */
-      {title: translations['review'], url: `${match.url}/review`},
+      // {title: translations['review'], url: `${match.url}/review`},
+      {title: translations["CollectionPlan"], url: `${match.url}/collection-plan` },
       {title: translations["nat'l imagery"], url: `${match.url}/natl-imagery`},
-      {title: translations["collection manager"], url: `${match.url}/collection-manager` },
+      
     ];
 
     return menuItems.map((item, i) => {
@@ -78,7 +79,7 @@ class IntelRequestComponent extends React.Component {
           <Route path={`${match.url}/request-form`} component={RequestFormContainer} />
           <Route path={`${match.url}/request`} component={RequestContainer} />
           <Route path={`${match.url}/review`} component={ResourcesContainer} />
-          <Route path={`${match.url}/collection-manager`} component={CollectionManagerContainer} />
+          <Route path={`${match.url}/collection-plan`} component={CollectionManagerContainer} />
           <Route path={`${match.url}/natl-imagery`} component={NatlImageryContainer} />
         </Switch>
       </div>

@@ -101,7 +101,7 @@
   "DSN": "DSN",
   "Report Classification": "Report Classification",
   "Email-SIPR": "Email-SIPR",
-  "special instructions/notes": "special instructions/notes",
+  "special instructions/notes": "Special Instructions/Notes",
   "Priority": "Priority",
   "DispositionStaus": "Disposition Status",
   "eei generator": "eei generator",
@@ -701,6 +701,7 @@
   "pir2": "Description 2",
   "pir3": "Description 3",
   "pir4": "Description 4",
-  "collection manager":"Collection Manager"
+  "CollectionPlan":"Collection Plan",
+  "CollectionMap":"Collection Map"
   
 }

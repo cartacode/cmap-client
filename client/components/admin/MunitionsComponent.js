@@ -216,6 +216,7 @@ else{
               loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
+              minRows={1}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id;
 							  return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;

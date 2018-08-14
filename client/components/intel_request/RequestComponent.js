@@ -108,6 +108,7 @@ class RequestComponent extends React.Component {
               data={allRequests}
               columns={columns}
               defaultPageSize={8}
+              minRows={1}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={(filter, row) => {
