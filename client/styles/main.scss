@@ -4274,13 +4274,10 @@ img.calendar {
   //max-width: 200px;
 
   input {
-    max-width: 200px;
+    max-width: 100%;
   }
 }
 
-select.form-control {
-  padding: 0px 7px!important;
-}
 
 // Customize Upload file button
 .custom-file-input::-webkit-file-upload-button {
@@ -4412,11 +4409,30 @@ button.btn.btn-secondary.dropdown-toggle {
   margin-right: 10px;
 }
 
-
+/**
+  * This css is use for change mouse cursor to pointer
+  */
 .change-cursor-to-pointer{
   cursor: pointer;
   padding-right:15px;
 }
+
+/**
+  * This css is use for validaion sucess/failure icon
+  */
+span.input-group-addon-validation-icon {
+  position: absolute;
+  right: -27px;
+  top: 0px;
+}
+span.input-group-addon-validation-icon img {
+  width: 20px;
+}
+select.form-control {
+  padding: 0px 7px!important;
+}
+
+
 .select-val
 {
   position: relative;
@@ -4666,20 +4682,4 @@ input[type="checkbox"]:checked + label span {
   height: 15px;
 }
 }
-@media screen and (max-width: 1027px) and (min-width: 1024px) {
-  .langs-dropdown
-  {
-position: absolute!important;
-top: 10px!important;
-right: 200px;
-}
-.num-block .block-header {
-  padding: 16px 10px 0px;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 14px;
-}
-.dashboard .operating-status .num-block {
-  width: 16%;
-}
-}
+
