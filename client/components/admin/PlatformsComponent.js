@@ -182,6 +182,7 @@ class PlatformComponent extends React.Component {
               defaultPageSize={5}
               className="-striped -highlight"              
               filterable={true}
+              minRows={1}
               loading={this.props.isLoading}
 						  defaultFilterMethod={(filter, row) => {
 							  const id = filter.pivotId || filter.id

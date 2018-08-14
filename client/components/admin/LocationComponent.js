@@ -183,6 +183,7 @@ class LocationComponent
               <ReactTable
                 data={allLocations}
                 columns={columns}
+                minRows={1}
                 defaultPageSize={5}
                 className="-striped -highlight"
                 loading={this.props.isLoading}

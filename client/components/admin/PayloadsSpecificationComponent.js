@@ -324,6 +324,7 @@ class PayloadsSpecificationComponent extends React.Component {
 						data={allPayloads}
 						columns={columns}
 						defaultPageSize={5}
+						minRows={1}
 						className="-striped -highlight"
 						filterable={true}
 						loading={this.props.isLoading}

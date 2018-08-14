@@ -170,8 +170,8 @@ render() {
       Header: translations['view'],
       accessor: 'ID',
       filterable: false,
-      Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
-      //Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
+      // Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
+      Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
     },
   ];
 
@@ -210,6 +210,7 @@ render() {
             loading={this.props.isLoading}
             className="-striped -highlight"
             filterable={true}
+            minRows={1}
             defaultFilterMethod={(filter, row) => {
               const id = filter.pivotId || filter.id
               return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
