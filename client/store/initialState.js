@@ -65,6 +65,11 @@ export default {
     onePlatformInventory: {},
   },
 
+  collections: {
+    allCollections: [],
+    isFetching: false,
+  },
+
   paygrades: {
     paygradeList: [],
     isListFetching: false,
