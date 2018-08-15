@@ -77,6 +77,7 @@ class IntelRequestComponent extends React.Component {
         </div>
         <Switch>
           <Route path={`${match.url}/request-form`} component={RequestFormContainer} />
+          <Route path={`${match.url}/detail/:editId`} component={RequestFormContainer} />
           <Route path={`${match.url}/request`} component={RequestContainer} />
           <Route path={`${match.url}/review`} component={ResourcesContainer} />
           <Route path={`${match.url}/collection-plan`} component={CollectionManagerContainer} />

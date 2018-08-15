@@ -38,6 +38,12 @@ class RequestComponent extends React.Component {
 
     const { allRequests } = this.props;
 
+ 
+    const { match } = this.props;
+
+    const addurl = match.url.replace('/request', '/request-form');
+    const editurl = match.url.replace('/request', '/detail/');
+
     const columns = [
       {
         Header: 'IR#',
@@ -68,17 +74,14 @@ class RequestComponent extends React.Component {
         Header: translations['view'],
         accessor: 'id',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/eye_icon.png"  /></span> // Custom cell components!
+        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; <a href="#" className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
       }
     ];
 
-    
-    const { match } = this.props;
-
-    const itemurl = match.url.replace('/request', '/request-form');
+   
     //let itemurl = itemu.replace("/summary", "/request");
 
-    console.log(itemurl);
+    
 
 
     return (
@@ -94,7 +97,7 @@ class RequestComponent extends React.Component {
           <div className="col-md-12 filter-line">
 
             {/* <Link to={ itemurl } activeClassName="btn btn-warning">{translations['New request'}</Link> */}
-            <Link to={ itemurl } className="btn btn-warning">New Request</Link>
+            <Link to={ addurl } className="btn btn-warning">New Request</Link>
 
 {/*             <NavLink to={itemurl} className="submenu" activeClassName="active-submenu-item">
               <div className="add-button">

@@ -61,6 +61,15 @@ const rows =  [
     {irNo:'0000-06', status: 'Denied', missionType: 'Force Protect', payload: 'FMV', armed:'Unrmed', command:'TF-EAGLE' },
 ];
 
+const collection =  [
+  {irNo:'0000-05', status: 'Approved', missionType: 'Attack', payload: 'WAMI', armed:'Armed', command:'ARJUN' },
+  {irNo:'0000-06', status: 'Approved', missionType: 'Monitor', payload: 'SIGINT', armed:'UnArmed', command:'THETA NU' },
+  {irNo:'0000-07', status: 'Future', missionType: 'Attack', payload: 'EQUIPMENT', armed:'Unarmed', command:'ALPHA' },
+  {irNo:'0000-08', status: 'Appproved', missionType: 'Tracking', payload: 'SIGINT', armed:'Unarmed', command:'AVENGER' },
+  {irNo:'0000-09', status: 'Recent', missionType: 'Monitor', payload: 'SAR', armed:'Armed', command:'T-REX' },
+
+];
+
     let langs = ['val 1', 'val 2'];
     return (
       <div>
@@ -103,7 +112,7 @@ const rows =  [
               
               <div className="col-md-12">
                 <ReactTable
-                  data={rows}
+                  data={collection}
                   columns={columns}                  
                   defaultPageSize={3}
                   minRows={3}

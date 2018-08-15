@@ -28,7 +28,6 @@ class Table extends React.Component {
     componentWillMount() {
       let items = [{'label': '--Select Item--', 'value': 0}];
 
-      console.log('ddi '+this.props.dropdownDataUrl);
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
         
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
