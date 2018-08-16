@@ -13,11 +13,17 @@ class UploadFileBlock extends React.Component {
             previewFile: {
                 name: '',
                 originalFile: null
-            }
+            },
         },
             this.handleSelectedFile = this.handleSelectedFile.bind(this);
     }
 
+
+    componentWillMount() {
+        this.setState({
+            content: this.props.initstate,
+        });
+    }
 
     /**
      * This method is use for handle the selected file by browse.
@@ -53,6 +59,7 @@ class UploadFileBlock extends React.Component {
     }
 
     renderFields() {
+        const isEditRecord = this.props.isImagedRequired;
         return this.props.fields.map((item, i) => {
             let input;
             let value = '';
@@ -61,19 +68,18 @@ class UploadFileBlock extends React.Component {
             }
             switch (item.fileType) {
                 case 'image':
-                    if (item.required) {
-                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" required />);
-                    }
-                    else {
+                    if (isEditRecord !== undefined && isEditRecord === false) {
                         input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
+                    } else {
+                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" required />);
                     }
                     break;
                 case 'file':
-                    if (item.required) {
-                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required />);
+                    if (isEditRecord !== undefined && isEditRecord === false) {
+                        input = (<input type="file" className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
                     }
                     else {
-                        input = (<input type="file" className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
+                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required />);
                     }
                     break;
             }

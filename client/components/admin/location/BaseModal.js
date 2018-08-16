@@ -57,7 +57,7 @@ class BaseModal extends React.Component {
         LocationDocument: null,
         KML: null,
       },
-
+      isImagedRequired: true,
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -91,6 +91,9 @@ class BaseModal extends React.Component {
         {
           editFetched: true,
           location: this.props.oneLocation,
+          locationPhotoPreviewUrl: null,
+          mapImagePreviewUrl: null,
+          isImagedRequired:  false
         });
     });
   }
@@ -234,43 +237,6 @@ class BaseModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  /* handleUploadFile = (event) => {
-    event.preventDefault();
-
-    //PHOTO IMAGE
-    if (event.target.id == "LocationPhotoFile") {
-      this.setState({ locationPhotoFile: event.target.files[0] });
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend = () => {
-        this.setState({
-          locationPhotoPreviewUrl: reader.result
-        });
-      }
-      reader.readAsDataURL(file);
-    }
-    //MAP IMAGE
-    if (event.target.id == "LocationMapFile") {
-      this.setState({ locationMapFile: event.target.files[0] });
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend = () => {
-        this.setState({
-          mapImagePreviewUrl: reader.result
-        });
-      }
-      reader.readAsDataURL(file);
-    }
-    //DOCUMENT
-    if (event.target.id == "LocationDocumentFile") {
-      this.setState({ locationDocumentFile: event.target.files[0] })
-    }
-    //KML
-    if (event.target.id == "LocationKMLFile") {
-      this.setState({ locationKMLFile: event.target.files[0] })
-    }
-  } */
-
   handleSubmit = event => {
     event.preventDefault();
     const { location } = this.state;
@@ -278,33 +244,26 @@ class BaseModal extends React.Component {
     const { locationFiles } = this.state;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
-    console.log("Location file cheking... " + locationFiles.LocationPhoto);
     if (locationFiles.LocationPhoto) {
       formData.append('locationPhotoFile', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
     }
-
     if (locationFiles.LocationMapImage) {
       formData.append('locationMapFile', locationFiles.LocationMapImage, locationFiles.LocationMapImage.name);
     }
-
     if (locationFiles.LocationDocument) {
       formData.append('locationDocumentFile', locationFiles.LocationDocument, locationFiles.LocationDocument.name);
     }
-
     if (locationFiles.KML) {
       formData.append('locationKMLFile', locationFiles.KML, locationFiles.KML.name);
     }
-
     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;
       formData.append("locationFormData", JSON.stringify(location));
-      //TODO: When upload files api will work thn we will pass formData.
       this.props.updateLocation(editId, formData).then(() => {
         this.props.onClose();
       });
     } else {
       formData.append("locationFormData", JSON.stringify(location));
-      //TODO: When upload files api will work thn we will pass formData.
       this.props.addLocation(formData).then(() => {
         this.props.onClose();
       });
@@ -333,24 +292,28 @@ class BaseModal extends React.Component {
     let { locationPhotoPreviewUrl, mapImagePreviewUrl } = this.state;
     let $locationPhoto = '';
     let $mpaImage = '';
+    const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
+    const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
 
-    if (locationPhotoPreviewUrl) {
-      $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    }
-    else {
+    if (locationPhotoUrl) {
+      $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
+    }else {
       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
     }
 
+    if (locationPhotoPreviewUrl) {
+      $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
+    } 
+
+    if(locationMapImageUrl){
+      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
+    }else {
+      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+    }
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
     }
-    else {
-      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
-    }
-
     const { translations } = this.props;
-
-
     const generalFields = [
       { name: translations['Name'], type: 'input', domID: 'LocationName', valFieldID: 'LocationName', required: true },
       { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
@@ -381,10 +344,10 @@ class BaseModal extends React.Component {
 
 
     const uploadFileFields = [
-      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image', required: true },
-      { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image', required: true },
-      { name: translations['Document'], type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file', required: true },
-      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file', required: true },
+      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image' },
+      { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image' },
+      { name: translations['Document'], type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file' },
+      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file' },
     ];
 
     return (
@@ -409,7 +372,7 @@ class BaseModal extends React.Component {
               {$mpaImage}
             </div>
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData} previewFile={this.handlePhotoPreviewURL} ></UploadFileBlock>
+              data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >
