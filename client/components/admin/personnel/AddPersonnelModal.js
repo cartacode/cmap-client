@@ -364,14 +364,31 @@ class AddPersonnelModal extends React.Component {
     let { editId } = this.props;
     let {  selectedRank } = this.state;
     personnel.Rank = selectedRank;
-    debugger;
+
+    const { personnelFiles } = this.state;
+    //We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (personnelFiles.PersonnelPhoto) {
+      formData.append('PersonnelPhotoFile', personnelFiles.PersonnelPhoto, personnelFiles.PersonnelPhoto.name);
+    }
+    if (personnelFiles.OrganizationLogo) {
+      formData.append('OrganizationLogoFile', personnelFiles.OrganizationLogo, personnelFiles.OrganizationLogo.name);
+    }
+    if (personnelFiles.DataSheet) {
+      formData.append('DataSheetFile', personnelFiles.DataSheet, personnelFiles.DataSheet.name);
+    }
+    
     if (editId !== undefined && editId !== '0') {
       personnel.PersonnelID = editId;
       console.log('handle Submit '+ JSON.stringify(personnel));
+      formData.append("personnelFormData", JSON.stringify(personnel));
+      // TO DO: Will pass form Data in place of personnel 
       this.props.updatePersonnel(editId, personnel).then(() => {
         this.props.onClose('UPDATE');
       });
     } else {
+      formData.append("personnelFormData", JSON.stringify(personnel));
+      // TO DO: Will pass form Data in place of personnel 
       this.props.addPersonnel(this.state.personnel).then(() => {
         this.props.onClose('ADD');
       });
