@@ -18,11 +18,11 @@ const format = 'YYYY-MM-DD HH:mm:ss';
 const cn = location.search.indexOf('cn') !== -1;
 
 const now = moment();
-if (cn) {
-    now.locale('zh-cn').utcOffset(8);
-} else {
+// if (cn) {
+//     now.locale('zh-cn').utcOffset(8);
+// } else {
     now.locale('en-gb').utcOffset(0);
-}
+// }
 
 function getFormat(time) {
     return time ? format : 'YYYY-MM-DD';

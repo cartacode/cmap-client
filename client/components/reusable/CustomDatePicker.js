@@ -16,13 +16,13 @@ import 'moment/locale/en-gb';
 
 const format = 'YYYY-MM-DDTHH:mm:ss';
 // const cn = location.search.indexOf('cn') !== -1;
-
+moment.locale('en');
 const now = moment();
-now.locale('en-ca').utcOffset(8);
+//now.locale('en-ca').utcOffset(8);
 // if (cn) {
 //     now.locale('zh-cn').utcOffset(8);
 // } else {
-//     now.locale('en-gb').utcOffset(0);
+    now.locale('en-gb').utcOffset(0);
 // }
 
 function getFormat(time) {

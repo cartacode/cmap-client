@@ -36,7 +36,7 @@ class Table extends React.Component {
             if(response.data) {
               response.data.map(item => {
                 let val = item[this.valueField];
-                if(typeof value === 'string') {
+                if(typeof val === 'string') {
                   val = val.trim();
                 }          
                 items.push({ 'label': item[this.labelField], 'value': val });

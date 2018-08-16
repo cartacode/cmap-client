@@ -8,8 +8,11 @@ import ShortHeaderLine from '../reusable/ShortHeaderLine';
 import ModalFormBlock from '../reusable/ModalFormBlock';
 
 import 'react-table/react-table.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import  { NoticeType } from '../../dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
+import { Redirect } from 'react-router-dom';
 
 class RequestForm extends React.Component {
 
@@ -17,34 +20,38 @@ class RequestForm extends React.Component {
     super(props);
 
     this.state = {
+      toSummary: false,
+      editFetched: false,
+      clear: false,
       intelRequest: {
-        AreaOfOperations: '',
-        SupportedCommand: '',
-        SupportedUnit: '',
-        NamedOperation: '',
-        MissionType: '',
-        SubMissionType: '',
-        ActiveDateTimeStart: '',
-        ActiveDateTimeEnd: '',
-        BestCollectionTime: '',
-        LatestTimeIntelValue: '',
-        PriorityIntelRequirement: '',
-        SpecialInstructions: '',
-        PrimaryPayload: '',
-        SecondaryPayload: '',
-        Armed: '',
+        IntelRequestID: '',
+        // AreaOfOperations: '',
+        // SupportedCommand: '',
+        // SupportedUnit: '',
+        // NamedOperation: '',
+        // MissionType: '',
+        // SubMissionType: '',
+        ActiveDateTimeStart: new Date(),
+        // ActiveDateTimeEnd: '',
+        BestCollectionTime: new Date(),
+        LatestTimeIntelValue: new Date(),
+        // PriorityIntelRequirement: '',
+        // SpecialInstructions: '',
+        // PrimaryPayload: '',
+        // SecondaryPayload: '',
+        // Armed: '',
         PointofContact: 'UserProfile',
         DSN: 'UserProfile',
         EmailSIPR: 'UserProfile',
-        ReportClassification: '',
-        LIMIDSRequest: '',
-        IC_ISM_Classifications: '',
-        IntelReqStatus: '',
-        MissionType1: '',
-        MissionType2: '',
-        Payload: '',
-        Payload1: '',
-        Unit: '',
+        // ReportClassification: '',
+        // LIMIDSRequest: '',
+        // IC_ISM_Classifications: '',
+        // IntelReqStatus: '',
+        // MissionType1: '',
+        // MissionType2: '',
+        // Payload: '',
+        // Payload1: '',
+        // Unit: '',
       },
     };
 
@@ -64,10 +71,22 @@ class RequestForm extends React.Component {
         this.setState(
           {
             intelRequest: this.props.oneIntelRequest,
+            editFetched: true,
           });
       });
     }
   }
+
+  // componentDidUpdate = (prevProps) => {
+  //   const { oneIntelRequest } = this.props;
+  //   const { intelRequest } = this.state;
+  //   if(intelRequest.IntelRequestID !== oneIntelRequest.IntelRequestID) {
+  //     this.setState(
+  //       {
+  //         intelRequest: oneIntelRequest,
+  //       });
+  //   }
+  // }
 
   handleIntelRequest1 = (ir) => {
     const { intelRequest } = this.state;
@@ -115,7 +134,7 @@ class RequestForm extends React.Component {
     this.setState({
       intelRequest: {
         ...intelRequest,
-        OrganicUnit: ir.OrganicUnit,
+        // OrganicUnit: ir.OrganicUnit,
         StatusId: ir.StatusId,
         NextHigherUnitId: ir.NextHigherUnitId,
       },
@@ -135,19 +154,58 @@ class RequestForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { editId } = this.props;
+    
     let { intelRequest } = this.state;
-    console.log(intelRequest);
-    intelRequest.PointofContact = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
-    if(editId !== '0') {
-      this.props.updateIntelRequest(editId, intelRequest);
+    const  editId  = intelRequest.IntelRequestID;
+    intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
+    
+
+    if(editId !== undefined && editId !== '0') {
+      
+      console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
+      this.props.updateIntelRequest(editId, intelRequest).then(() => {
+        this.notify(NoticeType.UPDATE);
+        this.setState({
+          toSummary: true,
+        });
+      });
     }else {
-      this.props.addIntelRequest(intelRequest);
+      this.props.addIntelRequest(intelRequest).then(() => {
+        this.notify(NoticeType.ADD);
+        this.setState({
+          toSummary: true,
+        });
+      });
     }
-    
-    
-    // this.resetForm();
+
   }
+
+notify= (type) => {
+  if(type === NoticeType.ADD) {
+    NotificationManager.success('Added Succesfully', 'Intel Request', 5000);
+  } else if(type === NoticeType.UPDATE) {
+    NotificationManager.success('Update Succesfully', 'Intel Request', 5000);
+  } else if(type === NoticeType.DELETE) {
+    NotificationManager.success('Deleted Succesfully', 'Intel Request', 5000);
+  }
+}
+
+stopUpdate = () => {
+  this.setState({editFetched:false});
+}
+
+stopset () {
+  this.setState({clear:false});
+}
+
+resetForm() {
+  // this.setState(this.baseState);
+  console.log("FORM RESET DONE");
+  if (confirm("Do you want to clear all data from this form?")) {
+    this.setState({clear:true});
+    document.getElementById('personnelform').reset();
+  }
+}
 
   deleteStuff = () => {
 
@@ -172,6 +230,10 @@ class RequestForm extends React.Component {
 
     const { translations } = this.props;
 
+
+    const { match: { params } } = this.props;
+    const editId = params.editId;
+
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand' },
       { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation' },
@@ -194,9 +256,9 @@ class RequestForm extends React.Component {
     const intelRequest3 = [
       { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification' },
       // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
-      { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: '' },
-      { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'DSN' },
-      { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'EmailSIPR' },
+      { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
+      { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
+      { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
     ];
 
 
@@ -208,17 +270,20 @@ class RequestForm extends React.Component {
     const intelRequest4 = [
       
       { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' },
-      { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'OrganicUnit' },
+      { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId' },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
     ];
 
     const intelRequest5 = [
-      { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: '', valFieldID: 'PriorityId', options: priorityOptions },
-      { name: translations['special instructions/notes'], type: 'textarea',  valFieldID: 'notes', domID: 'SpecialInstructions' },
+      { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: 'Priority', valFieldID: 'PriorityId', /* options: priorityOptions */ },
+      { name: translations['special instructions/notes'], type: 'textarea',  valFieldID: 'SpecialInstructions', domID: 'SpecialInstructions' },
     ]
+
+    const { editFetched } = this.state;
 
     return (
       <div>
+        <NotificationContainer />
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
             <div className="img-header-line">
@@ -247,32 +312,34 @@ class RequestForm extends React.Component {
               <FullHeaderLine headerText={translations['intelligence request']} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest}/>
+              <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest}/>
+              <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest}/>
+              <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
             </div>
           </div>
 
-          <div className="row intel-request">
-            <div className="col-md-12">
-              <FullHeaderLine headerText={translations.route} />
-            </div>
-            {/* <div className="col-md-4">
-               <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest}/> }
-            </div> */}
-            <div className="col-md-6">
-              <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest}/>
-            </div>
-            <div className="col-md-6">
-              <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest}/>
-            </div>
+          {editId != undefined && editId !== '0' ?
+            <div className="row intel-request">
+              <div className="col-md-12">
+                <FullHeaderLine headerText={translations.route} />
+              </div>
+              {/* <div className="col-md-4">
+                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} stopupd={this.stopUpdate} /> }
+              </div> */}
+              <div className="col-md-6">
+                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+              </div>
+              <div className="col-md-6">
+                <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+              </div>
 
-          </div>
-
+            </div>
+            : null
+          }
           {/* <div className="row intel-request">
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['special instructions/notes']} />
@@ -285,26 +352,28 @@ class RequestForm extends React.Component {
 
 
           <div className="row action-buttons">
-                  <div className="menu-button">
-                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                    <button className='btn btn-warning' >
-                      {translations['clear']}
-                    </button>
-                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                  </div>
-                  <div className="menu-button">
-                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                    <button type="submit" className='btn btn-warning'>
-                    {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
-                    </button>
-                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                  </div>
-                </div>
+            <div className="menu-button">
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+              <button className='btn btn-warning' >
+                {translations['clear']}
+              </button>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+            </div>
+            <div className="menu-button">
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+              <button type="submit" className='btn btn-warning'>
+                {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+              </button>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+            </div>
+          </div>
 
 
         </form>
 
-        <IntelEEI intelId = {this.state.intelId} translations={this.props.translations}/>
+        <IntelEEI intelId = {this.state.intelRequest.IntelRequestID} translations={this.props.translations} eeis={this.state.intelRequest.IntelReqEEIs} editFetched={editFetched} stopupd={this.stopUpdate}/>
+
+        {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
       </div>
     );

@@ -22,36 +22,27 @@ class ModalFormBlock extends React.Component {
   }
     
     
-//   componentDidUpdate() {
+  componentDidUpdate() {
         
-//     const { content } = this.state;
-//     const { initstate, editId } = this.props;
-//     const { editFetched } = this.props;
+    const { content } = this.state;
+    const { initstate, editId } = this.props;
+    const { editFetched } = this.props;
         
-//     // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
-//     //   // if(editId !== undefined && editId !== '0') {
-//     //     console.log("Is it called?");
-//     //   this.setState({
-//     //     content: initstate,
-//     //   });
-//     //   this.props.data(this.state.content);
-//     // }
-    
-//     if (editFetched)
-//     {
-//       console.log(this.props.initstate);
-//       this.props.stopupd();
-//       this.setState({content:initstate}, () => { console.log("Init State Updated"); console.log(this.state.content); this.props.data(this.state.content); });
+    if (editFetched)
+    {
+      console.log(this.props.initstate);
+      this.props.stopupd();
+      this.setState({content:initstate}, () => { console.log("Init State Updated"); console.log(this.state.content); this.props.data(this.state.content); });
       
-//     }
+    }
         
-//     const {clearit } = this.props;
-//     if(clearit)
-//     {
-//       this.setState({content:[]});
-//       this.props.stopset();
-//     }
-//   }
+    const {clearit } = this.props;
+    if(clearit)
+    {
+      this.setState({content:[]});
+      this.props.stopset();
+    }
+  }
     
         handleChange = (e) => {
           const { name, value } = e.target;
@@ -119,11 +110,15 @@ class ModalFormBlock extends React.Component {
     
             switch (item.type) {
               case 'input':
+                let readOnly = false;
+                if(item.readOnly) {
+                  readOnly = true;
+                }
                 if(item.required) {
-                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required/> );
+                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} required /> );
                 }
                 else {
-                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange}/>)
+                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly}/>)
                 }
                 break;
     

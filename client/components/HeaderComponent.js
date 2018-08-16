@@ -15,6 +15,7 @@ class HeaderComponent extends React.Component {
     this.state= {
       width: '72px'
     }
+    moment.locale('en');
   }
 
   changeLang(lang) {
