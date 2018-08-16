@@ -60,6 +60,13 @@ class AddPersonnelModal extends React.Component {
         //     ChatID: ''
       },
       onePersonnel: {},
+      
+      personnelFiles: {
+        PersonnelPhoto: null,
+        OrganizationLogo: null,
+        DataSheet: null,
+      },
+      isImagedRequired: true,
     }
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
@@ -327,6 +334,7 @@ class AddPersonnelModal extends React.Component {
    * This is callback method called automatically and show selected image preview.
    */
   handlePhotoPreviewURL = (uploadedFile) => {
+    
     let reader = new FileReader();
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'PersonnelPhoto') {
@@ -356,7 +364,7 @@ class AddPersonnelModal extends React.Component {
     let { editId } = this.props;
     let {  selectedRank } = this.state;
     personnel.Rank = selectedRank;
-
+    debugger;
     if (editId !== undefined && editId !== '0') {
       personnel.PersonnelID = editId;
       console.log('handle Submit '+ JSON.stringify(personnel));
@@ -451,22 +459,34 @@ render() {
 
   let {imagePreviewUrl} = this.state;
   let $imagePreview = '';
+  let {imagePreviewUrl2} = this.state;
+  let $imagePreview2 = '';
+  const imageUrl = this.props.onePersonnel.PersonnelPhoto;
+  const imageUrl2 = this.props.onePersonnel.OrganizationLogo;
 
-  if (imagePreviewUrl) {
-    $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
+
+
+
+
+  if (imageUrl) {
+    $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
   }
   else {
     $imagePreview = (<img src="/assets/img/admin/photo_1.png" className="photo" alt=""/>);
   }
+  if (imagePreviewUrl) {
+    $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
+  }
+ 
 
-  let {imagePreviewUrl2} = this.state;
-  let $imagePreview2 = '';
-
-  if (imagePreviewUrl2) {
-    $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt=""/>);
+  if (imageUrl2) {
+    $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
   }
   else {
     $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
+  }
+  if (imagePreviewUrl2) {
+    $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
   }
 
     
@@ -543,7 +563,7 @@ const uploadFileFields = [
             </div>
 
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData} previewFile={this.handlePhotoPreviewURL} ></UploadFileBlock>
+              data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
 
             {/* <div className="col-md-4 upload-block">
               <div className="upload-imagery">
