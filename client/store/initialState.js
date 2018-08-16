@@ -93,13 +93,17 @@ export default {
   },
 
   intelrequest: {
-    eeis: [],
     allRequests: [],
-    oneEei: {},
     oneIntelRequest: {},
     isFetching: false,
     isFetchingOne: false,
-    isFetchingEEI: false,
-  }
+  },
+
+  inteleei: {
+    eeis: [],
+    oneEei: {},
+    isFetching: false,
+    isFetchingOne: false,
+  },
 
 };

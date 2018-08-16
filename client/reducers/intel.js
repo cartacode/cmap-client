@@ -1,4 +1,4 @@
-import { INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE } from 'dictionary/action';
+import { INTEL_EEI__FETCH, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function intel(state = initialState.intelrequest, { payload, type }) {

@@ -33,6 +33,13 @@ export function fetchIntelRequestById(id) {
   });
 }
 
+export function fetchIntelRequests() {
+  return createAction({
+    type: INTEL_REQUEST__FETCH,
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestData`, requestHeaders),
+  });
+}
+
 export function fetchIntelEEI() {
   return createAction({
     type: INTEL_EEI__FETCH,
@@ -40,9 +47,4 @@ export function fetchIntelEEI() {
   });
 }
 
-export function fetchIntelRequests() {
-  return createAction({
-    type: INTEL_REQUEST__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestData`, requestHeaders),
-  });
-}
+

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
-
+import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { defaultFilter, formatDateTime } from '../../util/helpers';
 
 class RequestComponent extends React.Component {
 
@@ -24,6 +25,8 @@ class RequestComponent extends React.Component {
       }
 
     }
+
+    moment.locale('en');
   }
 
 
@@ -47,35 +50,54 @@ class RequestComponent extends React.Component {
     const columns = [
       {
         Header: 'IR#',
-        accessor: 'role',
+        accessor: 'IntelRequestID',
       },
       {
-        Header: 'Date',
-        accessor: 'lastUpdate',
+        Header: 'Status',
+        id: 'StatusId',
+        accessor: 'Status',
       },
-	  {
-	    Header: 'Status',
-	    accessor: 'munition',
-	  },
       {
-        Header: 'Operation',
-        accessor: 'serial',
+        Header: 'Named Operation',
+        accessor: 'NamedOperation',
       },
       {
         Header: 'Command',
-        accessor: 'COCOM',
+        accessor: 'COCOMText',
       },
       {
-        Header: 'Type',
-        accessor: 'unit',
+        Header: 'Mission Type',
+        accessor: 'MissionTypeText',
       },
-      
+      {
+        Header: 'Payload',
+        accessor: 'PrimaryPayloadName',
+      },
+      {
+        Header: 'Originator',
+        accessor: 'OrginatorPersonnelID',
+        Cell: row => <div>{row.original.OriginatorFirstName} {row.original.OriginatorLastName} </div>,
+      },
+      {
+        Header: 'Date',
+        id: 'ActiveDateTimeStart',
+        accessor: d => {
+          return formatDateTime(d.ActiveDateTimeStart);
+        },
+      },
+      {
+        Header: 'LTIV',
+        id: 'LatestTimeIntelValue',
+        accessor: d => {
+          return formatDateTime(d.LatestTimeIntelValue);
+        },
+      },
       {
         Header: translations['view'],
-        accessor: 'id',
+        accessor: 'IntelRequestID',
         filterable: false,
-        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; <a href="#" className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
-      }
+        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; <a href="#" className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+      },
     ];
 
    
@@ -114,10 +136,7 @@ class RequestComponent extends React.Component {
               minRows={1}
               className="-striped -highlight"
               filterable={true}
-              defaultFilterMethod={(filter, row) => {
-                const id = filter.pivotId || filter.id
-                return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-              }}
+              defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>

@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
-
+import { defaultFilter } from '../../util/helpers';
 
 
 
@@ -183,10 +183,7 @@ class PlatformsSpecificationComponent extends React.Component {
               loading={this.props.isLoading}
               filterable={true}
               minRows={1}
-              defaultFilterMethod={(filter, row) => {
-                const id = filter.pivotId || filter.id
-                return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-              }}
+              defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>

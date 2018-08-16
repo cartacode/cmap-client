@@ -15,6 +15,7 @@ import ranks from 'reducers/ranks';
 import ccirpir from 'reducers/ccirpir';
 import status from 'reducers/status';
 import intelrequest from 'reducers/intel';
+import inteleei from 'reducers/inteleei';
 import collections from 'reducers/collections';
 
 export default function createReducer() {
@@ -34,6 +35,7 @@ export default function createReducer() {
     ccirpir,
     status,
     intelrequest,
+    inteleei,
     collections,
   });
 }
