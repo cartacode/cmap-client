@@ -1,17 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-
 import { uploadFile } from 'actions/file';
-import { addMunition, fetchMunitionsById, fetchMunitions, updateMunition } from 'actions/munition';
+import { addMunition, fetchMunitions, fetchMunitionsById, updateMunition } from 'actions/munition';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+import UploadFileBlock from '../../reusable/UploadFileBlock';
+
 
 class GunModal extends React.Component {
 
@@ -19,7 +13,7 @@ class GunModal extends React.Component {
     super(props);
     this.state = {
       file: '',
-      imagePreviewUrl: '',
+      gunPhotoPreviewUrl: '',
       editFetched: false,
       oneMunition: {},
       clear: false,
@@ -55,7 +49,16 @@ class GunModal extends React.Component {
         MunitionMOS2: '',
         MunitionMOS3: '',
       } */
-    }
+      gunMunitionFiles: {
+        MunitionPhoto: null,
+        MunitionWireframe: null,
+        Munition3D: null,
+        MunitionIcon: null,
+        Munition2525B: null,
+        MunitionDatasheet: null
+      },
+      isImagedRequired: true,
+    },
 
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
@@ -99,7 +102,7 @@ class GunModal extends React.Component {
       });
     }
 
-    if(editId === '0' && prevProps.editId !== editId) {
+    if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
   }
@@ -132,7 +135,7 @@ class GunModal extends React.Component {
     this.setState({
       munition: {
         ...munition,
-       /*  MunitionType: technicalData.MunitionType, */
+        /*  MunitionType: technicalData.MunitionType, */
         MunitionCaliber: technicalData.MunitionCaliber,
         MunitionDriveSystem: technicalData.MunitionDriveSystem,
         MunitionFeedSystem: technicalData.MunitionFeedSystem,
@@ -167,7 +170,46 @@ class GunModal extends React.Component {
   }
 
 
-  handleUploadFile(event) {
+  /**
+  * This is callback method called automatically and update state with gunMunitionFiles.
+  */
+ handleUploadFileData = (uploadFileData) => {
+  const { gunMunitionFiles } = this.state;
+  this.setState({
+    gunMunitionFiles: {
+      ...gunMunitionFiles,
+      MunitionPhoto: uploadFileData.MunitionPhoto,
+      MunitionWireframe: uploadFileData.MunitionWireframe,
+      Munition3D: uploadFileData.Munition3D,
+      MunitionIcon: uploadFileData.MunitionIcon,
+      Munition2525B: uploadFileData.Munition2525B,
+      MunitionDatasheet: uploadFileData.MunitionDatasheet,
+    }
+  }, () => {
+    console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Munition Specification screen :", this.state.gunMunitionFiles);
+  });
+}
+
+
+/**
+ * This is callback method called automatically and show selected image preview.
+ */
+handlePhotoPreviewURL = (uploadedFile) => {
+  let reader = new FileReader();
+  debugger;
+  let file = uploadedFile.originalFile;
+  if (uploadedFile.name === 'MunitionPhoto') {
+    reader.onloadend = () => {
+      this.setState({
+        gunPhotoPreviewUrl: reader.result
+      });
+    }
+  }
+  reader.readAsDataURL(file);
+}
+
+
+ /*  handleUploadFile(event) {
     event.preventDefault();
     const { munition } = this.state;
     if (event.target.id == "MunitionPhoto") {
@@ -180,9 +222,7 @@ class GunModal extends React.Component {
       }
       reader.readAsDataURL(file);
     }
-
     let parametername = event.target.id;
-
     this.setState({
       munition: {
         ...munition,
@@ -191,14 +231,11 @@ class GunModal extends React.Component {
     }, () => {
       console.log("New state in ASYNC callback:", this.state.munition);
     });
-
     const data = new FormData();
-
     data.append('file', event.target.files[0]);
     data.append('name', event.target.files[0].name);
-
     //this.props.uploadFile(data);
-  }
+  } */
 
   handleSubmit = event => {
     event.preventDefault();
@@ -206,12 +243,12 @@ class GunModal extends React.Component {
     console.log(this.state.munition);
     const { munition } = this.state;
     const { editId } = this.props;
-    munition.MunitionType =  this.props.munitionType;
+    munition.MunitionType = this.props.munitionType;
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       debugger;
-      console.log("editId "+editId);
-      console.log("munition "+JSON.stringify(munition));
+      console.log("editId " + editId);
+      console.log("munition " + JSON.stringify(munition));
       this.props.updateMunition(editId, munition).then(() => { this.props.onClose('UPDATE'); });
     } else {
       debugger;
@@ -243,26 +280,24 @@ class GunModal extends React.Component {
       return null;
     }
 
-    let { imagePreviewUrl } = this.state;
+    let { gunPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
 
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt="" />);
+    if (gunPhotoPreviewUrl) {
+      $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
     else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
-
     let { munition } = this.state;
     const { translations } = this.props;
-
     const { munitionType } = this.props;
 
     const generalFields = [
       { name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName', required: true },
       { name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole', required: true },
-      {name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID:'MunitionManufacturer'},
+      { name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID: 'MunitionManufacturer' },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'MunitionExecutiveAgent', valFieldID: 'MunitionExecutiveAgent' },
       { name: translations['Contract Program'], type: 'input', domID: 'MunitionContractProgram', valFieldID: 'MunitionContractProgram' },
       { name: translations['Cost'], type: 'number', domID: 'MunitionCost', valFieldID: 'MunitionCost' },
@@ -293,6 +328,15 @@ class GunModal extends React.Component {
       { name: translations['Rounds Carried'], type: 'number', domID: 'MunitionRoundsCarried', valFieldID: 'MunitionRoundsCarried' },
     ];
 
+    const uploadFileFields = [
+      { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
+      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+    ];
+
 
     return (
 
@@ -313,66 +357,21 @@ class GunModal extends React.Component {
               <div className="col-md-8 image-block">
                 {$imagePreview}
               </div>
-              <div className="col-md-4 upload-block">
-                <div className="upload-imagery">
-                  <img src="/assets/img/admin/upload_1.png" alt="" />
-                  <div className="header-text">
-                    upload imagery & datasheets
-                    </div>
-                  <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt="" />
-                </div>
-                <div className="upload-content">
-                  <div className="upload-line">
-                    <div>
-                      {translations['Photo Image']}
-                    </div>
-                    <input type="file" name="file" id="MunitionPhoto" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Wireframe Image']}
-                    </div>
-                    <input type="file" name="file" id="MunitionWireframe" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['3D Model']}
-                    </div>
-                    <input type="file" name="file" id="Munition3D" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['2D Icon']}
-                    </div>
-                    <input type="file" name="file" id="MunitionIcon" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Milspec Icon']}
-                    </div>
-                    <input type="file" name="file" id="Munition2525B" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Datasheets']}
-                    </div>
-                    <input type="file" name="file" id="MunitionDatasheet" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                </div>
-              </div>
+              <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+                data={this.handleUploadFileData} initstate={this.props.oneMunition} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
             </div>
           </div>
           <div className="row personnel" >
             <div className="under-munitions-content">
-             
-             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-                data={this.handleMunitionGeneralData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
+                data={this.handleMunitionGeneralData} initstate={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
                 editFetched={this.state.editFetched} stopupd={this.stopupd} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields}
-                data={this.handleMunitionCrewData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                data={this.handleMunitionCrewData} initstate={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
                 editFetched={this.state.editFetched} stopupd={this.stopupd} />
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields}
-                data={this.handleMunitionTechnicalData} initstate ={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                data={this.handleMunitionTechnicalData} initstate={this.props.oneMunition} clearit={this.state.clear} stopset={this.stopset.bind(this)}
                 editFetched={this.state.editFetched} stopupd={this.stopupd} />
             </div>
           </div>
@@ -388,7 +387,7 @@ class GunModal extends React.Component {
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+              {(this.props.editId != undefined && this.props.editId != '0') ? translations['update'] : translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>

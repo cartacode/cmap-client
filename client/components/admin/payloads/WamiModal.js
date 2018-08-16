@@ -184,7 +184,7 @@ class WamiModal extends React.Component {
 
 
   /**
-  * This is callback method called automatically and update state with locationFiles.
+  * This is callback method called automatically and update state with wamiPayloadFiles.
   */
   handleUploadFileData = (uploadFileData) => {
     const { wamiPayloadFiles } = this.state;
@@ -199,7 +199,7 @@ class WamiModal extends React.Component {
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
     }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.wamiPayloadFiles);
     });
   }
 

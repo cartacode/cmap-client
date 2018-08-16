@@ -176,7 +176,7 @@ class SigintModal extends React.Component {
   }
 
   /**
-  * This is callback method called automatically and update state with locationFiles.
+  * This is callback method called automatically and update state with sigintPayloadFiles.
   */
  handleUploadFileData = (uploadFileData) => {
   const { sigintPayloadFiles } = this.state;
@@ -191,7 +191,7 @@ class SigintModal extends React.Component {
       PayloadDatasheet: uploadFileData.PayloadDatasheet,
     }
   }, () => {
-    console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+    console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.sigintPayloadFiles);
   });
 }
 

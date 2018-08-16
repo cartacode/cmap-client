@@ -191,7 +191,7 @@ class EoirModal extends React.Component {
   }
 
   /**
-  * This is callback method called automatically and update state with locationFiles.
+  * This is callback method called automatically and update state with eoirPayloadFiles.
   */
   handleUploadFileData = (uploadFileData) => {
     const { eoirPayloadFiles } = this.state;
@@ -206,7 +206,7 @@ class EoirModal extends React.Component {
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
     }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.eoirPayloadFiles);
     });
   }
 

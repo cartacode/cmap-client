@@ -59,7 +59,7 @@ class EquipmentModal extends React.Component {
       },
 
       onePayload: {},
-      eqipmentPayloadFiles: {
+      equipmentPayloadFiles: {
         PayloadPhoto: null,
         PaylodWireframe: null,
         Payload3D: null,
@@ -187,13 +187,13 @@ class EquipmentModal extends React.Component {
   }
 
   /**
- * This is callback method called automatically and update state with locationFiles.
+ * This is callback method called automatically and update state with equipmentPayloadFiles.
  */
   handleUploadFileData = (uploadFileData) => {
-    const { eoirPayloadFiles } = this.state;
+    const { equipmentPayloadFiles } = this.state;
     this.setState({
-      eoirPayloadFiles: {
-        ...eoirPayloadFiles,
+      equipmentPayloadFiles: {
+        ...equipmentPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
         PaylodWireframe: uploadFileData.PaylodWireframe,
         Payload3D: uploadFileData.Payload3D,
@@ -202,7 +202,7 @@ class EquipmentModal extends React.Component {
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
     }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.equipmentPayloadFiles);
     });
   }
 

@@ -180,13 +180,13 @@ class SargmtiModal extends React.Component {
 
 
   /**
- * This is callback method called automatically and update state with locationFiles.
+ * This is callback method called automatically and update state with sargmtiPayloadFiles.
  */
   handleUploadFileData = (uploadFileData) => {
-    const { eoirPayloadFiles } = this.state;
+    const { sargmtiPayloadFiles } = this.state;
     this.setState({
-      eoirPayloadFiles: {
-        ...eoirPayloadFiles,
+      sargmtiPayloadFiles: {
+        ...sargmtiPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
         PaylodWireframe: uploadFileData.PaylodWireframe,
         Payload3D: uploadFileData.Payload3D,
@@ -195,7 +195,7 @@ class SargmtiModal extends React.Component {
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
     }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS()  Payload Specification screen :", this.state.sargmtiPayloadFiles);
     });
   }
 
