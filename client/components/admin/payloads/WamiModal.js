@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
-
-
+import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 
 class WamiModal extends React.Component {
@@ -15,8 +14,8 @@ class WamiModal extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
+      payloadPhotoPreviewUrl: '',
+      payloadWireframePreviewUrl: '',
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
@@ -58,6 +57,15 @@ class WamiModal extends React.Component {
         PayloadMOS3: '',
       },
       onePayload: {},
+      wamiPayloadFiles: {
+        PayloadPhoto: null,
+        PaylodWireframe: null,
+        Payload3D: null,
+        PayloadIcon: null,
+        Payload2525B: null,
+        PayloadDatasheet: null
+      },
+      isImagedRequired: true,
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -75,16 +83,16 @@ class WamiModal extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
-    if(editId !== '0' && prevProps.editId !== editId) {
+    if (editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
     }
-    if(editId === '0' && prevProps.editId !== editId) {
+    if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
   }
 
   stopUpdate = () => {
-    this.setState({editFetched:false});
+    this.setState({ editFetched: false });
   }
 
   editComponent = (editId) => {
@@ -175,7 +183,53 @@ class WamiModal extends React.Component {
   }
 
 
-  handleUploadFile(event) {
+  /**
+  * This is callback method called automatically and update state with locationFiles.
+  */
+  handleUploadFileData = (uploadFileData) => {
+    const { wamiPayloadFiles } = this.state;
+    this.setState({
+      wamiPayloadFiles: {
+        ...wamiPayloadFiles,
+        PayloadPhoto: uploadFileData.PayloadPhoto,
+        PaylodWireframe: uploadFileData.PaylodWireframe,
+        Payload3D: uploadFileData.Payload3D,
+        PayloadIcon: uploadFileData.PayloadIcon,
+        Payload2525B: uploadFileData.Payload2525B,
+        PayloadDatasheet: uploadFileData.PayloadDatasheet,
+      }
+    }, () => {
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+    });
+  }
+
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    let reader = new FileReader();
+    debugger;
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'PayloadPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          payloadPhotoPreviewUrl: reader.result
+        });
+      }
+    }
+    if (uploadedFile.name === 'PaylodWireframe') {
+      reader.onloadend = () => {
+        this.setState({
+          payloadWireframePreviewUrl: reader.result
+        });
+      }
+    }
+    reader.readAsDataURL(file);
+  }
+
+
+  /* handleUploadFile(event) {
     event.preventDefault();
     const { payload } = this.state;
     if (event.target.id == "PayloadPhoto") {
@@ -199,9 +253,7 @@ class WamiModal extends React.Component {
       }
       reader.readAsDataURL(file);
     }
-
     let parametername = event.target.id;
-
     this.setState({
       payload: {
         ...payload,
@@ -210,14 +262,11 @@ class WamiModal extends React.Component {
     }, () => {
       console.log("New state in ASYNC callback:", this.state.payload);
     });
-
     const data = new FormData();
-
     data.append('file', event.target.files[0]);
     data.append('name', event.target.files[0].name);
-
     // this.props.uploadFile(data);
-  }
+  } */
 
   handleSubmit = event => {
     event.preventDefault();
@@ -256,30 +305,24 @@ class WamiModal extends React.Component {
       return null;
     }
 
-    let { imagePreviewUrl } = this.state;
+    let { payloadPhotoPreviewUrl } = this.state;
+    let { payloadWireframePreviewUrl } = this.state;
     let $imagePreview = '';
+    let $imagePreview2 = '';
 
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt="" />);
-    }
-    else {
+    if (payloadPhotoPreviewUrl) {
+      $imagePreview = (<img src={payloadPhotoPreviewUrl} alt="" className="photo" alt="" />);
+    } else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
 
-    let { imagePreviewUrl2 } = this.state;
-    let $imagePreview2 = '';
-
-    if (imagePreviewUrl2) {
-      $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
-    }
-    else {
+    if (payloadWireframePreviewUrl) {
+      $imagePreview2 = (<img src={payloadWireframePreviewUrl} alt="" className="photo" alt="" />);
+    } else {
       $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt="" />);
     }
 
-
     const { translations } = this.props;
-
-
     const generalFields = [
       // { name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial', required: true },
       // { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit', required: true },
@@ -316,12 +359,20 @@ class WamiModal extends React.Component {
       { name: translations['Cross-Cueing'], type: 'checkbox', domID: 'PayloadCrossCueing', valFieldID: 'PayloadCrossCueing' },
     ];
 
-
     const crewFields = [
       { name: translations['Payload Crew Count'], type: 'number', domID: 'PayloadCrewCount', valFieldID: 'PayloadCrewCount', required: true },
       { name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'PayloadMOS1' },
       { name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: "MOS", valFieldID: 'PayloadMOS2' },
       { name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'PayloadMOS3' },
+    ];
+
+    const uploadFileFields = [
+      { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
+      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },
+      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file', fileType: 'image' }
     ];
 
     return (
@@ -346,53 +397,8 @@ class WamiModal extends React.Component {
               <div className="col-md-4 image-block">
                 {$imagePreview2}
               </div>
-              <div className="col-md-4 upload-block">
-                <div className="upload-imagery">
-                  <img src="/assets/img/admin/upload_1.png" alt="" />
-                  <div className="header-text">
-                    upload imagery & datasheets
-                    </div>
-                  <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt="" />
-                </div>
-                <div className="upload-content">
-                  <div className="upload-line">
-                    <div>
-                      {translations['Photo Image']}
-                    </div>
-                    <input type="file" name="file" id="PayloadPhoto" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Wireframe Image']}
-                    </div>
-                    <input type="file" name="file" id="PaylodWireframe" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['3D Model']}
-                    </div>
-                    <input type="file" name="file" id="Payload3D" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['2D Icon']}
-                    </div>
-                    <input type="file" name="file" id="PayloadIcon" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Milspec Icon']}
-                    </div>
-                    <input type="file" name="file" id="Payload2525B" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Datasheets']}
-                    </div>
-                    <input type="file" name="file" id="PayloadDatasheet" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                </div>
-              </div>
+              <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+                data={this.handleUploadFileData} initstate={this.props.onePayload} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
             </div>
           </div>
           <div className="row personnel" >
@@ -416,11 +422,11 @@ class WamiModal extends React.Component {
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
-         
+
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+              {(this.props.editId != undefined && this.props.editId != '0') ? translations['update'] : translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>

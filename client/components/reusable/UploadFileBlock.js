@@ -75,6 +75,7 @@ class UploadFileBlock extends React.Component {
                     }
                     break;
                 case 'file':
+
                     if (isEditRecord !== undefined && isEditRecord === false) {
                         input = (<input type="file" className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
                     }
