@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import FullHeaderLine from '../reusable/FullHeaderLine';
-import ImageryBlock from "../reusable/ImageryBlock";
-import 'react-table/react-table.css';
 import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import FullHeaderLine from '../reusable/FullHeaderLine';
 
 
 class CollectionManagerComponent extends React.Component {
@@ -18,7 +17,7 @@ class CollectionManagerComponent extends React.Component {
 
     const {translations} = this.props;
 
-    const columns = [
+    const intelRequestColumns = [
       {
         Header: 'IR#',
         accessor: 'irNo',
@@ -48,7 +47,47 @@ class CollectionManagerComponent extends React.Component {
         Header: translations['view'],
         accessor: 'id',
         filterable: false,
-        Cell: row => <div><a href="#" className="text-success" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" className="text-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+        Cell: row => <div><a href="#" className="text-success" title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                      <a href="#" className="text-danger" title="Move To Collection Plan" > <span className="glyphicon glyphicon-circle-arrow-down"/></a>&nbsp; 
+                      <a href="#" className="text-danger" title="Delete" > <span className="glyphicon glyphicon-trash"/></a>
+                    </div>,
+      }
+    ];
+
+
+    const collectionPlanColumns = [
+      {
+        Header: 'IR#',
+        accessor: 'irNo',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+      },
+	    // {
+	    //   Header: 'Mission Type',
+	    //   accessor: 'missionType',
+	    // },
+      {
+        Header: 'Payload',
+        accessor: 'payload',
+      },
+      {
+        Header: 'Armed',
+        accessor: 'armed',
+      },
+      {
+        Header: 'Command',
+        accessor: 'command',
+      },
+      
+      {
+        Header: translations['view'],
+        accessor: 'id',
+        filterable: false,
+        Cell: row => <div><a href="#" className="text-danger" title="Move To Intel Request" > <span className="glyphicon glyphicon-circle-arrow-up"/></a>&nbsp;
+                          <a href="#" className="text-danger" title="Delete" > <span className="glyphicon glyphicon-trash"/></a>
+                    </div>,
       }
     ];
 
@@ -87,12 +126,12 @@ const collection =  [
             
           </div> */}
           <div className="col-md-6">
-          <FullHeaderLine headerText={translations["CollectionPlan"]} />
+          <FullHeaderLine headerText={translations["IntelRequests"]} />
             <div className="row ">
               <div className="col-md-12">
                 <ReactTable
                   data={rows}
-                  columns={columns}
+                  columns={intelRequestColumns}
                   defaultPageSize={3}
                   showPaginationTop= {true}
                   showPaginationBottom= {false}
@@ -111,14 +150,16 @@ const collection =  [
               </div>
               
               <div className="col-md-12">
+              <FullHeaderLine headerText={translations["CollectionPlan"]} />
+              <div className="row ">
                 <ReactTable
                   data={collection}
-                  columns={columns}                  
+                  columns={collectionPlanColumns}                  
                   defaultPageSize={3}
                   minRows={3}
                   className="-striped -highlight"
                   filterable={false}
-                  showPagination= {false}
+                  showPagination= {true}
                   previousText= "&#8678;"
                   nextText= "&#8680;"
                   defaultFilterMethod={(filter, row) => {
@@ -127,6 +168,7 @@ const collection =  [
                   }}
 
                 />   
+                </div>
               </div>
             </div>
           </div>

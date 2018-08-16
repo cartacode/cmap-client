@@ -95,5 +95,10 @@ export const STATUS_PAYLOAD__UPDATE = createActionType('STATUS_PAYLOAD__UPDATE')
 export const STATUS_PERSONNEL__UPDATE = createActionType('STATUS_PERSONNEL__UPDATE');
 export const STATUS_MUNITION__UPDATE = createActionType('STATUS_MUNITION__UPDATE');
 
-export const COLLECTION_MANAGER__FETCH = createActionType('COLLECTION_MANAGER__FETCH');
+export const COLLECTION_PLAN__FETCH = createActionType('COLLECTION_PLAN__FETCH');
+export const MOVE_TO_COLLECTION__PLAN = createActionType('MOVE_TO_COLLECTION__PLAN');
+export const MOVE_TO_INTEL__REQUEST = createActionType('MOVE_TO_INTEL__REQUEST');
+export const DELETE_COLLECTION__PLAN = createActionType('DELETE_COLLECTION__PLAN');
+
+
 
