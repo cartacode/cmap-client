@@ -1,17 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import ButtonsList from "../../reusable/ButtonsList";
-
-import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../../reusable/CustomDatePicker';
-import DropDownButton from '../../reusable/DropDownButton';
-import StatusTable from '../../reusable/StatusTable';
-
 import { uploadFile } from 'actions/file';
-import { addPayload, fetchPayloads, fetchPayloadsById, updatePayload, deletePayloadsById } from 'actions/payload';
+import { addPayload, deletePayloadsById, fetchPayloads, fetchPayloadsById, updatePayload } from 'actions/payload';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import ContentBlock from "../../reusable/ContentBlock";
+import UploadFileBlock from '../../reusable/UploadFileBlock';
+
+
 
 class EoirModal extends React.Component {
 
@@ -19,8 +14,8 @@ class EoirModal extends React.Component {
     super(props);
     this.state = {
       file: '',
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
+      payloadPhotoPreviewUrl: '',
+      payloadWireframePreviewUrl: '',
       clear: false,
       editFetched: false,
       payload: {
@@ -68,13 +63,22 @@ class EoirModal extends React.Component {
         // PayloadLocation: 'd0386ac6-1609-444e-aa7f-91a17f5a42aa',
       },
       onePayload: {},
+      eoirPayloadFiles: {
+        PayloadPhoto: null,
+        PaylodWireframe: null,
+        Payload3D: null,
+        PayloadIcon: null,
+        Payload2525B: null,
+        PayloadDatasheet: null
+      },
+      isImagedRequired: true,
     }
 
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
     this.baseState = this.state;
   }
-  
+
   componentDidMount = () => {
     const { editId } = this.props;
     this.setState({ clear: true });
@@ -85,17 +89,17 @@ class EoirModal extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
-    if(editId === '0' && prevProps.editId !== editId) {
+    if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
-    if(editId !== '0' && prevProps.editId !== editId) {
+    if (editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
     }
-    
+
   }
 
   stopUpdate = () => {
-    this.setState({editFetched:false});
+    this.setState({ editFetched: false });
   }
 
   editComponent = (editId) => {
@@ -124,7 +128,7 @@ class EoirModal extends React.Component {
         PayloadExecutiveAgent: generalData.PayloadExecutiveAgent,
         PayloadContractProgram: generalData.PayloadContractProgram,
         PayloadCost: generalData.PayloadCost,
-        PayloadCostNotes: generalData.PayloadCostNotes,        
+        PayloadCostNotes: generalData.PayloadCostNotes,
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.payload);
@@ -170,6 +174,7 @@ class EoirModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.payload);
     });
   }
+
   handlePayloadCrewData = (crewData) => {
     const { payload } = this.state;
     this.setState({
@@ -185,8 +190,53 @@ class EoirModal extends React.Component {
     });
   }
 
+  /**
+  * This is callback method called automatically and update state with eoirPayloadFiles.
+  */
+  handleUploadFileData = (uploadFileData) => {
+    const { eoirPayloadFiles } = this.state;
+    this.setState({
+      eoirPayloadFiles: {
+        ...eoirPayloadFiles,
+        PayloadPhoto: uploadFileData.PayloadPhoto,
+        PaylodWireframe: uploadFileData.PaylodWireframe,
+        Payload3D: uploadFileData.Payload3D,
+        PayloadIcon: uploadFileData.PayloadIcon,
+        Payload2525B: uploadFileData.Payload2525B,
+        PayloadDatasheet: uploadFileData.PayloadDatasheet,
+      }
+    }, () => {
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.eoirPayloadFiles);
+    });
+  }
 
-  handleUploadFile(event) {
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    let reader = new FileReader();
+    debugger;
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'PayloadPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          payloadPhotoPreviewUrl: reader.result
+        });
+      }
+    }
+    if (uploadedFile.name === 'PaylodWireframe') {
+      reader.onloadend = () => {
+        this.setState({
+          payloadWireframePreviewUrl: reader.result
+        });
+      }
+    }
+    reader.readAsDataURL(file);
+  }
+
+
+  /* handleUploadFile(event) {
     event.preventDefault();
     const { payload } = this.state;
     if (event.target.id == "PayloadPhoto") {
@@ -199,7 +249,6 @@ class EoirModal extends React.Component {
       }
       reader.readAsDataURL(file);
     }
-
     else if (event.target.id == "PaylodWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
@@ -210,9 +259,7 @@ class EoirModal extends React.Component {
       }
       reader.readAsDataURL(file)
     }
-
     let parametername = event.target.id;
-
     this.setState({
       payload: {
         ...payload,
@@ -221,23 +268,19 @@ class EoirModal extends React.Component {
     }, () => {
       console.log("New state in ASYNC callback:", this.state.payload);
     });
-
     const data = new FormData();
-
     data.append('file', event.target.files[0]);
     data.append('name', event.target.files[0].name);
-
     // this.props.uploadFile(data);
-  }
+  } */
 
   handleSubmit = event => {
     event.preventDefault();
-  
+
     let { payload } = this.state;
     const { editId, payloadTypeId } = this.props;
-    
+
     payload.PayloadType = payloadTypeId;
-    console.log('submitting'+JSON.stringify(payload));
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
       this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
@@ -246,11 +289,11 @@ class EoirModal extends React.Component {
     }
   }
 
-  deletePayload= ()=> {
+  deletePayload = () => {
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
       this.props.deletePayloadsById(editId).then(() => { this.props.onClose('DELETE'); });
-    } 
+    }
   }
 
 
@@ -270,30 +313,27 @@ class EoirModal extends React.Component {
 
 
   render() {
-
-    let { imagePreviewUrl } = this.state;
-
+    
+    let { payloadPhotoPreviewUrl } = this.state;
+    let { payloadWireframePreviewUrl } = this.state;
     let $imagePreview = '';
+    let $imagePreview2 = '';
 
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt="" />);
+    if (payloadPhotoPreviewUrl) {
+      $imagePreview = (<img src={payloadPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
     else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
 
-    let { imagePreviewUrl2 } = this.state;
-    let $imagePreview2 = '';
-
-    if (imagePreviewUrl2) {
-      $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
+    if (payloadWireframePreviewUrl) {
+      $imagePreview2 = (<img src={payloadWireframePreviewUrl} alt="" className="photo" alt="" />);
     }
     else {
       $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt="" />);
     }
 
     const { translations } = this.props;
-
     const generalFields = [
       /* { name: translations['Serial#'], type: 'number', domID: 'PayloadSerial', valFieldID: 'PayloadSerial', required: true }, */
       /* { name: translations['Owning Unit'], type: 'dropdown', domID: 'PayloadOwningUnit', ddID: 'Units', valFieldID: 'PayloadOwningUnit' }, */
@@ -339,13 +379,20 @@ class EoirModal extends React.Component {
       { name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'PayloadMOS3' },
     ];
 
+    const uploadFileFields = [
+      { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
+      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },
+      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file', fileType: 'image' }
+    ];
+
+
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="payloadform">
 
-        {/*  <div className="close-button" >
-            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div> */}
         <div className="payload-content">
           <div className="row personnel" >
             <div className="header-line">
@@ -362,53 +409,8 @@ class EoirModal extends React.Component {
               <div className="col-md-4 image-block">
                 {$imagePreview2}
               </div>
-              <div className="col-md-4 upload-block">
-                <div className="upload-imagery">
-                  <img src="/assets/img/admin/upload_1.png" alt="" />
-                  <div className="header-text">
-                    upload imagery & datasheets
-                    </div>
-                  <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt="" />
-                </div>
-                <div className="upload-content">
-                  <div className="upload-line">
-                    <div>
-                      {translations['Photo Image']}
-                    </div>
-                    <input type="file" name="file" id="PayloadPhoto" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Wireframe Image']}
-                    </div>
-                    <input type="file" name="file" id="PaylodWireframe" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['3D Model']}
-                    </div>
-                    <input type="file" name="file" id="Payload3D" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['2D Icon']}
-                    </div>
-                    <input type="file" name="file" id="PayloadIcon" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Milspec Icon']}
-                    </div>
-                    <input type="file" name="file" id="Payload2525B" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                  <div className="upload-line">
-                    <div>
-                      {translations['Datasheets']}
-                    </div>
-                    <input type="file" name="file" id="PayloadDatasheet" onChange={this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                  </div>
-                </div>
-              </div>
+              <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+                data={this.handleUploadFileData} initstate={this.props.onePayload} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
             </div>
           </div>
           <div className="row personnel" >
@@ -432,11 +434,11 @@ class EoirModal extends React.Component {
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
-          
+
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-            {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+              {(this.props.editId != undefined && this.props.editId != '0') ? translations['update'] : translations['save']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>

@@ -88,7 +88,6 @@ class LocationComponent
       { name: translations["POI"], onClick: this.poiModal }
     ];
     const { allLocations } = this.props;
-    debugger;
     const columns = [
       {
         Header: translations["type"],

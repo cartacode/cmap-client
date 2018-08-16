@@ -286,6 +286,8 @@
   "Personnel Administration": "Personnel Administration",
   "Upload Imagery & Datasheets": "Upload Imagery & Datasheets",
   "Photo Image": "Photo Image",
+  "Organization Logo":"Organization Logo",
+  "DataSheet":"DataSheet",
   "Street/Road": "Street/Road",
   "City/Town": "City/Town",
   "Elevation": "Elevation",
@@ -702,6 +704,7 @@
   "pir3": "Description 3",
   "pir4": "Description 4",
   "CollectionPlan":"Collection Plan",
-  "CollectionMap":"Collection Map"
+  "CollectionMap":"Collection Map",
+  "IntelRequests":"Intel Requests"
   
 }
