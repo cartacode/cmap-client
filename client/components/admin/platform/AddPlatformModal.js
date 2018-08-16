@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
+import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 
 
@@ -77,6 +78,14 @@ class AddPlatformModal extends React.Component {
       },
 
       onePlatform: {},
+      platformFiles: {
+        PlatformPhoto: null,
+        PlatformWireframe: null,
+        Platform3D:null,
+        PlatformIcon:null,
+        PlatformDatasheet: null,
+      },
+      isImagedRequired: true,
     };
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
@@ -231,7 +240,7 @@ class AddPlatformModal extends React.Component {
     });
   }
 
-  handleUploadImgFile(event) {
+  /* handleUploadImgFile(event) {
     event.preventDefault();
     const { platform } = this.state;
 
@@ -264,8 +273,8 @@ class AddPlatformModal extends React.Component {
     });
 
   }
-
-  handleUploadPhotoFile(event) {
+ */
+  /* handleUploadPhotoFile(event) {
     event.preventDefault();
     const { platform } = this.state;
 
@@ -298,9 +307,9 @@ class AddPlatformModal extends React.Component {
       console.log(response);
     });
 
-  }
+  } */
 
-  handleUpload3DFile(event) {
+  /* handleUpload3DFile(event) {
     event.preventDefault();
     const { platform } = this.state;
 
@@ -332,9 +341,9 @@ class AddPlatformModal extends React.Component {
       console.log(response);
     });
 
-  }
+  } */
 
-  handleUploadIconFile(event) {
+  /* handleUploadIconFile(event) {
     event.preventDefault();
     const { platform } = this.state;
 
@@ -366,9 +375,9 @@ class AddPlatformModal extends React.Component {
       console.log(response);
     });
 
-  }
+  } */
 
-  handleUploadDatasheetsFile(event) {
+  /* handleUploadDatasheetsFile(event) {
     event.preventDefault();
     const { platform } = this.state;
 
@@ -399,17 +408,41 @@ class AddPlatformModal extends React.Component {
       console.log(response);
     });
 
-  }
+  } */
 
   handleSubmit = event => {
     event.preventDefault();
     let { platform } = this.state;
     const { editId } = this.props;
-    console.log('submitting'+JSON.stringify(platform));
+
+    const { platformFiles } = this.state;
+
+    //We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (platformFiles.PlatformPhoto) {
+      formData.append('PlatformPhoto', platformFiles.PlatformPhoto, platformFiles.PlatformPhoto.name);
+    }
+    if (platformFiles.PlatformWireframe) {
+      formData.append('PlatformWireframe', platformFiles.PlatformWireframe, platformFiles.PlatformWireframe.name);
+    }
+    if (platformFiles.Platform3D) {
+      formData.append('Platform3D', platformFiles.Platform3D, platformFiles.Platform3D.name);
+    }
+    if (platformFiles.PlatformIcon) {
+      formData.append('PlatformIcon', platformFiles.PlatformIcon, platformFiles.PlatformIcon.name);
+    }
+    if (platformFiles.PlatformDatasheet) {
+      formData.append('PlatformDatasheet', platformFiles.PlatformDatasheet, platformFiles.PlatformDatasheet.name);
+    }
+
     if (editId !== undefined && editId !== '0') {
       platform.PlatformID = editId;
+      formData.append("platformFormData", JSON.stringify(platform));
+      // TO DO: Will pass form Data in place of platform 
       this.props.updatePlatform(editId, platform).then(() => {this.props.onClose('UPDATE');});
     } else {
+      formData.append("platformFormData", JSON.stringify(platform));
+      // TO DO: Will pass form Data in place of platform 
       this.props.addPlatform(platform).then(() => {this.props.onClose('ADD'); });
     }
   }
@@ -427,6 +460,50 @@ class AddPlatformModal extends React.Component {
     }
   }
 
+   /**
+   * This is callback method called automatically and update state with platformFiles.
+   */
+  handleUploadFileData = (uploadFileData) => {
+    const { platform } = this.state;
+    this.setState({
+      platform: {
+        ...platform,
+        PlatformPhoto: uploadFileData.PlatformPhoto,
+        PlatformWireframe: uploadFileData.PlatformWireframe,
+        Platform3D: uploadFileData.Platform3D,
+        PlatformIcon: uploadFileData.PlatformIcon,
+        PlatformDataSheet: uploadFileData.PlatformDataSheet,
+      }
+    }, () => {
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
+    });
+  }
+
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    
+    let reader = new FileReader();
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'PlatformPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          imagePreviewUrl: reader.result
+        });
+      }
+    }
+    if (uploadedFile.name === 'PlatformWireframe') {
+      reader.onloadend = () => {
+        this.setState({
+          imagePreviewUrl2: reader.result
+        });
+      }
+    }
+    
+    reader.readAsDataURL(file);
+  }
 
   render() {
     // Render nothing if the "show" prop is false
@@ -538,6 +615,14 @@ class AddPlatformModal extends React.Component {
       // {name: translations['Add Munition']+" #3", type: 'dropdown', domID: 'AddMunition3', ddID: 'Munition/GetMunitions', valFieldID: 'Munition3'},
     ];
 
+    const uploadFileFields = [
+      { name: translations['Photo Image'], type: 'file', domID: 'PlatformPhoto', valFieldID: 'PlatformPhoto', fileType: 'image', required: true },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PlatformWireframe', valFieldID: 'PlatformWireframe', fileType: 'image', required: true },
+      { name: translations['3D Model'], type: 'file', domID: 'Platform3D', valFieldID: 'Platform3D', fileType: 'image', required: true },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'PlatformIcon', valFieldID: 'PlatformIcon', fileType: 'image', required: true },
+      { name: translations['DataSheet'], type: 'file', domID: 'PlatformDataSheet', valFieldID: 'PlatformDataSheet', fileType: 'file', required: true },
+    ];
+
 
     
 
@@ -584,7 +669,11 @@ class AddPlatformModal extends React.Component {
               <div className="col-md-4 image-block">
                 {$imagePreview2}
               </div>
-              <div className="col-md-4 upload-block">
+
+               <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+              data={this.handleUploadFileData}  initstate={this.props.onePlatform} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
+
+             {/*  <div className="col-md-4 upload-block">
                 <div className="upload-imagery">
                   <img src="/assets/img/admin/upload_1.png" alt="" />
                   <div className="header-text">
@@ -625,7 +714,7 @@ class AddPlatformModal extends React.Component {
                     <input type="file" name="file" id="file" onChange={this.handleUploadDatasheetsFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="row personnel" >
