@@ -14,6 +14,7 @@ import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
 import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
+import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 class AddPersonnelModal extends React.Component {
 
@@ -208,7 +209,7 @@ class AddPersonnelModal extends React.Component {
 
 
   
-  handleUploadImgFile(event){
+  /* handleUploadImgFile(event){
 
     event.preventDefault();
     const {personnel} = this.state;
@@ -243,9 +244,9 @@ class AddPersonnelModal extends React.Component {
         console.log(response);
       }); */
 
-  }
+  //} */
 
-  handleUploadTxtFile(event) {
+ /*  handleUploadTxtFile(event) {
     event.preventDefault();
 
     let reader = new FileReader();
@@ -268,8 +269,8 @@ class AddPersonnelModal extends React.Component {
     });
 
   }
-
-  handleUploadFile(event){
+ */
+  /* handleUploadFile(event){
     event.preventDefault();
     const {payload} = this.state;
     if(event.target.id == "PayloadPhoto") {
@@ -301,7 +302,53 @@ class AddPersonnelModal extends React.Component {
     data.append('name', event.target.files[0].name);
 
     // this.props.uploadFile(data);
+  } */
+
+  /**
+   * This is callback method called automatically and update state with personnelFiles.
+   */
+  handleUploadFileData = (uploadFileData) => {
+    const { personnel } = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,
+        PersonnelPhoto: uploadFileData.PersonnelPhoto,
+        OrganizationLogo: uploadFileData.OrganizationLogo,
+        DataSheet: uploadFileData.DataSheet,
+      }
+    }, () => {
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
+    });
   }
+
+
+
+   /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    let reader = new FileReader();
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'PersonnelPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          imagePreviewUrl: reader.result
+        });
+      }
+    }
+    if (uploadedFile.name === 'OrganizationLogo') {
+      reader.onloadend = () => {
+        this.setState({
+          imagePreviewUrl2: reader.result
+        });
+      }
+    }
+    reader.readAsDataURL(file);
+  }
+
+
+
+
 
   handleSubmit = event => {
     event.preventDefault();
@@ -467,6 +514,13 @@ render() {
 
   ];
 
+
+const uploadFileFields = [
+  { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image', required: true },
+  { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image', required: true },
+  { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'DataSheet', fileType: 'file', required: true },
+];
+
   return (
 
     <form action="" onSubmit={this.handleSubmit} id="personnelform">
@@ -487,7 +541,11 @@ render() {
             <div className="col-md-4 image-block">
               {$imagePreview2}
             </div>
-            <div className="col-md-4 upload-block">
+
+            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+              data={this.handleUploadFileData} previewFile={this.handlePhotoPreviewURL} ></UploadFileBlock>
+
+            {/* <div className="col-md-4 upload-block">
               <div className="upload-imagery">
                 <img src="/assets/img/admin/upload_1.png" alt=""/>
                 <div className="header-text">
@@ -515,7 +573,7 @@ render() {
                   <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row personnel" >

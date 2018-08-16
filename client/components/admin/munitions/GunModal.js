@@ -209,8 +209,12 @@ class GunModal extends React.Component {
     munition.MunitionType =  this.props.munitionType;
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
+      debugger;
+      console.log("editId "+editId);
+      console.log("munition "+JSON.stringify(munition));
       this.props.updateMunition(editId, munition).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      debugger;
       this.props.addMunition(munition).then(() => { this.props.onClose('ADD'); });
     }
 
