@@ -43,7 +43,7 @@ class OrgBuilderComponent extends React.Component {
           id: '1',
           name: 'Larry Pickering',
           attributes: {
-            Rank: 'LTCOL',
+            Rank: 'Commanding General',
             Unit: '82nd Airborne Division',
           },
           children: [
@@ -51,7 +51,7 @@ class OrgBuilderComponent extends React.Component {
               id: '1.1',
               name: 'Steve Lockwood',
               attributes: {
-                Rank: 'PVT',
+                Rank: 'Commander',
                 Unit: '82nd Airborne Division',
               },
             },
@@ -59,7 +59,7 @@ class OrgBuilderComponent extends React.Component {
               id: '1.2',
               name: 'Mike Kelly',
               attributes: {
-                Rank: 'PVT',
+                Rank: 'Commander',
                 Unit: '82nd Airborne Division',
               },
             },

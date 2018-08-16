@@ -6,11 +6,13 @@ class NodeElement extends React.PureComponent {
     const {className, nodeData} = this.props;
     return (
       <div className={className}>
-      
-        <h3>{nodeData.name}<img src="/assets/img/admin/avatar.png" height="50" width="50"/></h3>
-        <p>Rank: {nodeData.attributes.Rank} <br/>
-           Unit : {nodeData.attributes.Unit} 
-        </p>
+        <div className="element-bg">
+        <img className="img-valign" src="/assets/img/admin/avatar.png" height="55" width="55"/>
+          <div className="text-1">{nodeData.name} <br/>
+          <span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
+            <span className="unit-text">Unit : {nodeData.attributes.Unit}</span> 
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <a href="#">

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Dropdown from "../reusable/Dropdown";
+import ContentBlock from './ContentBlock';
 
 class Accordion extends React.Component {
 
@@ -55,7 +56,8 @@ class Accordion extends React.Component {
 
         return (
           <div className="dropdown-block" key={i}>
-            <Dropdown id={i} items={langs}/>
+            <div className="label-name">{item.name}</div>
+            <Dropdown id={i} items={langs} className="form-control" dropdownDataUrl={item.ddID}/><br/>
           </div>
         )
       });
@@ -79,10 +81,7 @@ class Accordion extends React.Component {
 
         return (
           <div className="accordion-results" key={i}>
-            <div className="result-checkbox">
-              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}/>
-              <label htmlFor={`checkbox${i}`}><span /></label>
-            </div>
+           
             <div>
               <img className="result-avatar" src="/assets/img/admin/avatar.png" alt=""/>
             </div>
@@ -201,14 +200,14 @@ class Accordion extends React.Component {
   render() {
 
     const firstSectionDropdowns = [
-      {name: 'DSN', type: 'input'},
-      {name: 'Email - NIPR', type: 'input'},
-      {name: 'Email - SIPR', type: 'input'},
-      {name: 'Chat ID', type: 'input'},
-      {name: 'Email - NIPR', type: 'input'},
-      {name: 'Email - SIPR', type: 'input'},
-      {name: 'Chat ID', type: 'input'},
-
+      {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
+      {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
+      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units'},
+      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units'},
+      {name: 'Team', type: 'dropdown', ddID:'Units'},
+      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
+      {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
     let langs = ['val 1', 'val 2'];
@@ -224,9 +223,10 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${0}`}>
-              <div className="content">
+              <div className="content info-content">
                 {this.renderDropdowns(firstSectionDropdowns)}
                 <div className="accordion-search">
+                <br/>
                   <input placeholder="Search/Filter Name, CAC ID"/>
                 </div>
               </div>
