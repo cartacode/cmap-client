@@ -3,6 +3,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FullHeaderLine from '../reusable/FullHeaderLine';
+import { Link } from 'react-router-dom';
 
 
 class CollectionManagerComponent extends React.Component {
@@ -17,6 +18,7 @@ class CollectionManagerComponent extends React.Component {
 
     const {translations} = this.props;
 
+    const editurl = '/intel-request/detail/'
     const intelRequestColumns = [
       {
         Header: 'IR#',
@@ -47,14 +49,13 @@ class CollectionManagerComponent extends React.Component {
         Header: translations['view'],
         accessor: 'id',
         filterable: false,
-        Cell: row => <div><a href="#" className="text-success" title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                      <a href="#" className="text-danger" title="Move To Collection Plan" > <span className="glyphicon glyphicon-circle-arrow-down"/></a>&nbsp; 
-                      <a href="#" className="text-danger" title="Delete" > <span className="glyphicon glyphicon-trash"/></a>
+        Cell: row => <div><Link to={`${editurl}${row.value}`} className="text-success" title="Edit"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
+                          <a href="#" className="text-danger" title="Move To Collection Plan" > <span className="glyphicon glyphicon-circle-arrow-down"/></a>&nbsp; 
+                          <a href="#" className="text-danger" title="Delete" > <span className="glyphicon glyphicon-trash"/></a>
                     </div>,
       }
     ];
-
-
+      
     const collectionPlanColumns = [
       {
         Header: 'IR#',

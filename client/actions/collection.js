@@ -19,14 +19,14 @@ export function fetchIntelRequests() {
   });
 }
 
-export function moveToCollectionPlan() {
+export function moveToCollectionPlan(userId, intelReqId) {
   return createAction({
     type: MOVE_TO_COLLECTION__PLAN,
     action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
   });
 }
 
-export function moveToIntelRequest() {
+export function moveToIntelRequest(userId, intelReqId) {
   return createAction({
     type: MOVE_TO_INTEL__REQUEST,
     action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
