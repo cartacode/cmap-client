@@ -705,6 +705,6 @@
   "pir4": "Description 4",
   "CollectionPlan":"Collection Plan",
   "CollectionMap":"Collection Map",
-  "IntelRequests":"Intel Requests"
-  
+  "IntelRequests":"Intel Requests",
+  "MissionType":"Mission Type"
 }

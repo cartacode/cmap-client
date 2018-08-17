@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { COLLECTION_PLAN__FETCH, INTEL_REQUEST__FETCH, MOVE_TO_COLLECTION__PLAN, MOVE_TO_INTEL__REQUEST, DELETE_COLLECTION__PLAN } from 'dictionary/action';
+import { COLLECTION_PLAN__FETCH, INTEL_APPROVED_REQUEST__FETCH, MOVE_TO_COLLECTION__PLAN, MOVE_TO_INTEL__REQUEST, DELETE_COLLECTION__PLAN, 
+  INTEL_APPROVED_REQUEST__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -8,17 +9,21 @@ import { createAction } from 'util/action';
 export function fetchCollectionPlans() {
   return createAction({
     type: COLLECTION_PLAN__FETCH,
-    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetApprovedIntelRequests`, requestHeaders),
   });
 }
-
-export function fetchIntelRequests() {
+export function fetchApprovedIntelRequests() {
   return createAction({
-    type: INTEL_REQUEST__FETCH,
-    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
+    type: INTEL_APPROVED_REQUEST__FETCH,
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetApprovedIntelRequests`, requestHeaders),
   });
 }
-
+export function deleteApprovedIntelRequestById(id) {
+  return createAction({
+    type: INTEL_APPROVED_REQUEST__DELETE_ONE,
+    action: () => axios.delete(`${baseUrl}/IntelRequest/DeleteIntelRequest/${id}`, requestHeaders),
+  });
+}
 export function moveToCollectionPlan(userId, intelReqId) {
   return createAction({
     type: MOVE_TO_COLLECTION__PLAN,

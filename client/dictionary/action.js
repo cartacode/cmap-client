@@ -100,6 +100,11 @@ export const COLLECTION_PLAN__FETCH = createActionType('COLLECTION_PLAN__FETCH')
 export const MOVE_TO_COLLECTION__PLAN = createActionType('MOVE_TO_COLLECTION__PLAN');
 export const MOVE_TO_INTEL__REQUEST = createActionType('MOVE_TO_INTEL__REQUEST');
 export const DELETE_COLLECTION__PLAN = createActionType('DELETE_COLLECTION__PLAN');
+export const INTEL_APPROVED_REQUEST__FETCH = createActionType('INTEL_APPROVED_REQUEST__FETCH');
+export const INTEL_APPROVED_REQUEST__DELETE_ONE = createActionType('INTEL_APPROVED_REQUEST__DELETE_ONE');
+
+
+
 
 
 

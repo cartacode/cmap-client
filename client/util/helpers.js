@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { IntelReqStatusCodes } from "../dictionary/constants";
 
 export const defaultFilter = (filter, row) => {
   const id = filter.pivotId || filter.id;
@@ -27,3 +28,18 @@ export const formatTime = (dateObj) => {
   moment.locale('en');
   return moment(dateObj).local().format("H:m A");
 }
+
+export const getIntelRequestStatusCodeColoe = (statusId) => {
+  let statueCodes = JSON.stringify(IntelReqStatusCodes);
+  statueCodes = JSON.parse(statueCodes);
+  console.log("****************IntelReqStatusCodes***********" + statueCodes);
+  let colorCode;
+  for (let i = 0; i < statueCodes.length; i++) {
+    if (statusId == statueCodes[i].id) {
+      colorCode = statueCodes[i].color;
+      break;
+    }
+  }
+  console.log("***********************colorCode*************" + colorCode);
+  return colorCode;
+};
