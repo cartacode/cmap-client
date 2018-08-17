@@ -46,7 +46,7 @@ class CollectionManagerComponent extends React.Component {
     const value = row.value;
     if (value !== undefined && value !== '0') {
       //For Temporary
-      const userId = 1;
+      const userId = '99bdcdab-666f-498f-b93a-a53cce15e4a5';
 	    this.props.moveToCollectionPlan(userId, value).then(() => {
 	      this.setState({ editId: '0' });
 	      this.notify('MOVE_TO_COLLECTION');
@@ -60,7 +60,7 @@ class CollectionManagerComponent extends React.Component {
     // 'Approved – Approved - Validated' and status codre should be 21.
     if (value !== undefined && value !== '0') {
       //For Temporary
-      const userId = 1;
+      const userId = '99bdcdab-666f-498f-b93a-a53cce15e4a5';
       this.props.moveToIntelRequest(userId, value).then(() => {
         this.setState({ editId: "0" });
         this.notify("MOVE_TO_INTEL_REQUEST");
