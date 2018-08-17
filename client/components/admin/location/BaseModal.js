@@ -294,21 +294,26 @@ class BaseModal extends React.Component {
     let $mpaImage = '';
     const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
     const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
-
-    if (locationPhotoUrl) {
+   
+    if(this.props.editId === '0'){
+      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
+    }else {
+      $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
+    }
+   /*  if (locationPhotoUrl) {
       $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
     }else {
       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
-    }
+    } */
 
     if (locationPhotoPreviewUrl) {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
     } 
 
-    if(locationMapImageUrl){
-      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
-    }else {
+    if(this.props.editId === '0'){
       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+    }else {
+      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
     }
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
