@@ -9,8 +9,11 @@ class NodeElement extends React.PureComponent {
         <div className="element-bg">
         <img className="img-valign" src={nodeData.image} height="55" width="55"/>
           <div className="text-1">{nodeData.name} <br/>
-          <span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
-            <span className="unit-text">Unit : {nodeData.attributes.Unit}</span> 
+       
+            <span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
+            <span className="unit-text"> {nodeData.attributes.Unit}</span>
+            
+          
           </div>
         </div>
         <div className="row">

@@ -232,7 +232,7 @@ class Accordion extends React.Component {
                 <ul>
                   <li onClick={this.props.orgChart}>Organic Org View</li>
                   <li>Deployed Org View</li>
-                  <li>Organic Personnel View</li>
+                  <li onClick={this.props.personnelChart}>Organic Personnel View</li>
                   <li>Deployed Personnel View</li>
                 </ul>
               </div>
@@ -399,6 +399,7 @@ class Accordion extends React.Component {
 Accordion.propTypes = {
   children: PropTypes.element,
   orgChart:PropTypes.func.isRequired,
+  personnelChart:PropTypes.func.isRequired,
 };
 
 export default Accordion;
