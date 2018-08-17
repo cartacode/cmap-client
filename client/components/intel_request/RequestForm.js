@@ -194,8 +194,8 @@ stopUpdate = () => {
   this.setState({editFetched:false});
 }
 
-stopset () {
-  this.setState({clear:false});
+stopset = () => {
+  this.setState({ clear: false });
 }
 
 resetForm() {
@@ -367,12 +367,11 @@ resetForm() {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
-
-
         </form>
-
-        <IntelEEI intelId = {this.state.intelRequest.IntelRequestID} translations={this.props.translations} eeis={this.state.intelRequest.IntelReqEEIs} editFetched={editFetched} stopupd={this.stopUpdate}/>
-
+ 
+        {this.state.intelRequest.IntelRequestID !== '' ?
+          <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+          : null }
         {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
       </div>

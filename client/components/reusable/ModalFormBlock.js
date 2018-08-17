@@ -30,9 +30,9 @@ class ModalFormBlock extends React.Component {
         
     if (editFetched)
     {
-      console.log(this.props.initstate);
+      
       this.props.stopupd();
-      this.setState({content:initstate}, () => { console.log("Init State Updated"); console.log(this.state.content); this.props.data(this.state.content); });
+      this.setState({content:initstate}, () => {this.props.data(this.state.content); });
       
     }
         

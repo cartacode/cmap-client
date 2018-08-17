@@ -15,7 +15,7 @@ export function addIntelEei(intelEei) {
 export function updateIntelEei(id, data) {
   return createAction({
     type: INTEL_EEI__UPDATE,
-    action: () => axios.post(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, qs.stringify(data), requestHeaders),
   });
 }
 
@@ -23,7 +23,7 @@ export function updateIntelEei(id, data) {
 export function fetchIntelEeiById(id) {
   return createAction({
     type: INTEL_EEI__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEIs/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEI/${id}`, requestHeaders),
   });
 }
 
