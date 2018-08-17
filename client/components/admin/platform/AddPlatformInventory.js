@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
+import {NoticeType} from '../../../dictionary/constants';
 
 
 
@@ -140,9 +141,9 @@ class AddPlatformInventory extends React.Component {
     console.log(JSON.stringify(platform));
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose('UPDATE');});
+      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose(NoticeType.UPDATE);});
     } else {
-      this.props.addPlatformInventory(platform).then( () => {this.props.onClose('ADD');});
+      this.props.addPlatformInventory(platform).then( () => {this.props.onClose(NoticeType.ADD);});
     }
   }
 

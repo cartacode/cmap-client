@@ -1,4 +1,5 @@
-import { deleteCollectionPlanById, fetchCollectionPlans, fetchIntelRequests, moveToCollectionPlan, moveToIntelRequest } from 'actions/collection';
+import { deleteCollectionPlanById, fetchCollectionPlans, fetchApprovedIntelRequests, moveToCollectionPlan, moveToIntelRequest,
+  deleteApprovedIntelRequestById  } from 'actions/collection';
 import { fetchIntelRequestById, updateIntelRequest } from 'actions/intel';
 import { connect } from 'react-redux';
 import CollectionManagerComponent from '../../components/intel_request/CollectionManagerComponent';
@@ -6,14 +7,16 @@ import CollectionManagerComponent from '../../components/intel_request/Collectio
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allCollections: state.collections.allCollections,
+    allApprovedIntelRequests: state.collections.allApprovedIntelRequests,
+    allCollectionsPlan: state.collections.allCollectionsPlan,
     isLoading: state.collections.isFetching,
   };
 };
 
 const mapDispatchToProps = {
   fetchCollectionPlans,
-  fetchIntelRequests,
+  fetchApprovedIntelRequests,
+  deleteApprovedIntelRequestById,
   moveToCollectionPlan,
   moveToIntelRequest,
   deleteCollectionPlanById,

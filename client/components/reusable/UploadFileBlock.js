@@ -30,8 +30,17 @@ class UploadFileBlock extends React.Component {
      */
     handleSelectedFile = (event) => {
         const name = event.target.name;
+        const id = event.target.id;
         const file = event.target.files[0];
-        this.updateContent(name, file);
+        if(file.size > 1024000){
+            alert("File size should be less than 1 MB.");
+            document.getElementById(id).value= null;
+            if(this.props.isImagedRequired){
+                this.updateContent(name, new File([""], ""));
+            }
+         }else {
+            this.updateContent(name, file);
+         };
     }
 
     /**
@@ -69,18 +78,18 @@ class UploadFileBlock extends React.Component {
             switch (item.fileType) {
                 case 'image':
                     if (isEditRecord !== undefined && isEditRecord === false) {
-                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
+                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
                     } else {
-                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" required />);
+                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*"  />);
                     }
                     break;
                 case 'file':
 
                     if (isEditRecord !== undefined && isEditRecord === false) {
-                        input = (<input type="file" className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
+                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
                     }
                     else {
-                        input = (<input type="file" className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required />);
+                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)}  />);
                     }
                     break;
             }

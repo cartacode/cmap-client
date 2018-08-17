@@ -5,6 +5,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatformInventory from './platform/AddPlatformInventory';
+import {NoticeType} from '../../dictionary/constants';
+import { defaultFilter } from '../../util/helpers';
 
 
 
@@ -58,7 +60,7 @@ class PlatformComponent extends React.Component {
 	  if (value !== undefined && value !== '0') {
 	    this.props.deletePlatformInventoryById(value).then(() => {
 	      this.setState({ editId: '0' });
-	      this.notify('DELETE');
+	      this.notify(NoticeType.DELETE);
 	      this.props.fetchPlatformInventory();
 	    });
 	  }
@@ -66,7 +68,7 @@ class PlatformComponent extends React.Component {
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if ('DELETE' != actionType) {
+    if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
       }else{
@@ -184,10 +186,7 @@ class PlatformComponent extends React.Component {
               filterable={true}
               minRows={1}
               loading={this.props.isLoading}
-						  defaultFilterMethod={(filter, row) => {
-							  const id = filter.pivotId || filter.id
-							  return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-						  }}
+						  defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>

@@ -93,7 +93,7 @@ class BaseModal extends React.Component {
           location: this.props.oneLocation,
           locationPhotoPreviewUrl: null,
           mapImagePreviewUrl: null,
-          isImagedRequired:  false
+          isImagedRequired: false
         });
     });
   }
@@ -221,16 +221,27 @@ class BaseModal extends React.Component {
     let reader = new FileReader();
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'LocationPhoto') {
-      reader.onloadend = () => {
+      if (file.size > 0) {
+        reader.onloadend = () => {
+          this.setState({
+            locationPhotoPreviewUrl: reader.result
+          });
+        }
+      } else {
         this.setState({
-          locationPhotoPreviewUrl: reader.result
+          locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
         });
       }
-    }
-    if (uploadedFile.name === 'LocationMapImage') {
-      reader.onloadend = () => {
+    } else if (uploadedFile.name === 'LocationMapImage') {
+      if (file.size > 0) {
+        reader.onloadend = () => {
+          this.setState({
+            mapImagePreviewUrl: reader.result
+          });
+        }
+      } else {
         this.setState({
-          mapImagePreviewUrl: reader.result
+          mapImagePreviewUrl: '/assets/img/admin/map2.png'
         });
       }
     }
@@ -295,20 +306,25 @@ class BaseModal extends React.Component {
     const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
     const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
 
-    if (locationPhotoUrl) {
-      $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
-    }else {
+    if (this.props.editId === '0') {
       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
+    } else {
+      $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
     }
+    /*  if (locationPhotoUrl) {
+       $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
+     }else {
+       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
+     } */
 
     if (locationPhotoPreviewUrl) {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    } 
+    }
 
-    if(locationMapImageUrl){
-      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
-    }else {
+    if (this.props.editId === '0') {
       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+    } else {
+      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
     }
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);

@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
+import {NoticeType} from '../../../dictionary/constants';
 
 
 
@@ -439,11 +440,11 @@ class AddPlatformModal extends React.Component {
       platform.PlatformID = editId;
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.updatePlatform(editId, platform).then(() => {this.props.onClose('UPDATE');});
+      this.props.updatePlatform(editId, platform).then(() => {this.props.onClose(NoticeType.UPDATE);});
     } else {
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.addPlatform(platform).then(() => {this.props.onClose('ADD'); });
+      this.props.addPlatform(platform).then(() => {this.props.onClose(NoticeType.ADD); });
     }
   }
 

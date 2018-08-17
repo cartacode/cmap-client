@@ -197,6 +197,11 @@ class Accordion extends React.Component {
     });
   }
 
+  toggleOrgView = () => {
+    console.log("Toggled");
+    
+  }
+
   render() {
 
     const firstSectionDropdowns = [
@@ -217,12 +222,32 @@ class Accordion extends React.Component {
         <div className="accordion-section" ref={`section0`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(0)}>
             <div>
-              add to roster
+              View
             </div>
             <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${0}`}>
+              <div className="content info-content">
+                <ul>
+                  <li onClick={this.props.orgChart}>Organic Org View</li>
+                  <li>Deployed Org View</li>
+                  <li onClick={this.props.personnelChart}>Organic Personnel View</li>
+                  <li>Deployed Personnel View</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="accordion-section" ref={`section1`}>
+          <div className="accordion-header" onClick={() => this.toggleHeader(1)}>
+            <div>
+              add to roster
+            </div>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
+          </div>
+          <div className="accordion-content">
+            <div className={`accordion-content-wrapper${1}`}>
               <div className="content info-content">
                 {this.renderDropdowns(firstSectionDropdowns)}
                 <div className="accordion-search">
@@ -233,20 +258,20 @@ class Accordion extends React.Component {
             </div>
           </div>
         </div>
-        <div className="accordion-section" ref={`section${1}`}>
-          <div className="accordion-header" onClick={() => this.toggleHeader(1)}>
+        <div className="accordion-section" ref={`section${2}`}>
+          <div className="accordion-header" onClick={() => this.toggleHeader(2)}>
             <div>
               results
             </div>
             <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
           <div className="accordion-content">
-            <div className={`accordion-content-wrapper${1}`}>
+            <div className={`accordion-content-wrapper${2}`}>
               <div className="content">
                 {this.renderResults()}
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={() => this.close(1)}>
+                  <button onClick={() => this.close(2)}>
                     Close
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -373,7 +398,8 @@ class Accordion extends React.Component {
 
 Accordion.propTypes = {
   children: PropTypes.element,
-
+  orgChart:PropTypes.func.isRequired,
+  personnelChart:PropTypes.func.isRequired,
 };
 
 export default Accordion;

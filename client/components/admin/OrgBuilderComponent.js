@@ -42,6 +42,8 @@ class OrgBuilderComponent extends React.Component {
         {
           id: '1',
           name: 'Larry Pickering',
+          image: '/assets/img/admin/avatar.png',
+          type:'Personnel',
           attributes: {
             Rank: 'Commanding General',
             Unit: '82nd Airborne Division',
@@ -50,6 +52,8 @@ class OrgBuilderComponent extends React.Component {
             {
               id: '1.1',
               name: 'Steve Lockwood',
+              image: '/assets/img/admin/avatar.png',
+              type:'Personnel',
               attributes: {
                 Rank: 'Commander',
                 Unit: '82nd Airborne Division',
@@ -58,6 +62,8 @@ class OrgBuilderComponent extends React.Component {
             {
               id: '1.2',
               name: 'Mike Kelly',
+              image: '/assets/img/admin/avatar.png',
+              type:'Personnel',
               attributes: {
                 Rank: 'Commander',
                 Unit: '82nd Airborne Division',
@@ -105,6 +111,92 @@ class OrgBuilderComponent extends React.Component {
       isOptionModalOpen: false,
     });
   }
+
+  orgChartView = () => {
+    console.log("Here");
+    let orgData2 = [
+       {
+         id: '1',
+         name: 'US Army, INSCOM',
+         image: '/assets/img/admin/primoris_backgr.png',
+         type:'Org',
+         attributes: {
+           Rank: '',
+           Unit: 'Fort Belvoir, VA',
+         },
+         children: [
+           {
+             id: '1.1',
+             name: 'US Army 66th MI Brigade',
+             image: '/assets/img/admin/primoris_backgr.png',
+             type:'Org',
+             attributes: {
+               Rank: '',
+               Unit: 'Wiesbaden, Germany',
+             },
+           },
+           {
+             id: '1.2',
+             name: 'US Army 470th MI Brigade',
+             image: '/assets/img/admin/primoris_backgr.png',
+             type:'Org',
+             attributes: {
+               Rank: '',
+               Unit: 'Fort Sam Houston, TX',
+             },
+           },
+         ],
+       },
+     ];
+   
+     this.setState({
+       orgData: orgData2
+     });
+   }
+
+   personnelChartView = () => {
+    
+    let orgData = [
+       {
+        id: '1',
+        name: 'Larry Pickering',
+        image: '/assets/img/admin/avatar.png',
+        type:'Personnel',
+        attributes: {
+          Rank: 'Commanding General',
+          Unit: '82nd Airborne Division',
+        },
+        children: [
+          {
+            id: '1.1',
+            name: 'Steve Lockwood',
+            image: '/assets/img/admin/avatar.png',
+            type:'Personnel',
+            attributes: {
+              Rank: 'Commander',
+              Unit: '82nd Airborne Division',
+            },
+          },
+          {
+            id: '1.2',
+            name: 'Mike Kelly',
+            image: '/assets/img/admin/avatar.png',
+            type:'Personnel',
+            attributes: {
+              Rank: 'Commander',
+              Unit: '82nd Airborne Division',
+            },
+          },
+        ],
+       },
+     ];
+   
+     this.setState({
+       orgData: orgData
+     });
+   }
+
+
 
 onSelecOption = (nodeId, name) => {
 
@@ -257,7 +349,7 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-2"> 
-          { <Accordion /> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView}/> }
        </div>   
        <div className="col-md-10"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
