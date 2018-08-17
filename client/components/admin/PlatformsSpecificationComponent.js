@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
 import { defaultFilter } from '../../util/helpers';
-
+import {NoticeType} from '../../dictionary/constants';
 
 
 
@@ -70,7 +70,7 @@ class PlatformsSpecificationComponent extends React.Component {
 		if (value !== undefined && value !== '0') {
 			this.props.deletePlatformById(value).then(() => {
 				this.setState({ editId: '0' });
-        this.notify('DELETE');
+        this.notify(NoticeType.DELETE);
         this.props.fetchPlatforms();
 			});
 		}
@@ -78,7 +78,7 @@ class PlatformsSpecificationComponent extends React.Component {
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if ('DELETE' != actionType) {
+    if (NoticeType.DELETE != actionType) {
         if (this.state.editId !== undefined && this.state.editId !== '0') {
           NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
         }else{
