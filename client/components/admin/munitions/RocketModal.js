@@ -74,14 +74,28 @@ class RocketModal extends React.Component {
     let { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.fetchMunitionsById(editId).then(() => {
+      /* this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
           {
             editFetched: true,
             munition: this.props.oneMunition,
           });
-      });
+      }); */
+      this.editComponent(editId);
     }
+  }
+
+
+  editComponent = (editId) => {
+    this.props.fetchMunitionsById(editId).then(() => {
+      this.setState(
+        {
+          editFetched: true,
+          munition: this.props.oneMunition,
+          rocketPhotoPreviewUrl: null,
+          isImagedRequired:  false
+        });
+    });
   }
 
   /**
@@ -90,13 +104,15 @@ class RocketModal extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     let { editId } = this.props;
     if (editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchMunitionsById(editId).then(() => {
+      /* this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
           {
             editFetched: true,
             munition: this.props.oneMunition,
           });
-      });
+      }); */
+      this.editComponent(editId);
+
     }
     if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
@@ -239,11 +255,39 @@ class RocketModal extends React.Component {
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
+
+
+    const { rocketMunitionFiles } = this.state;
+    //We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (rocketMunitionFiles.MunitionPhoto) {
+      formData.append('MunitionPhoto', rocketMunitionFiles.MunitionPhoto, rocketMunitionFiles.MunitionPhoto.name);
+    }
+    if (rocketMunitionFiles.MunitionWireframe) {
+      formData.append('MunitionWireframe', rocketMunitionFiles.MunitionWireframe, rocketMunitionFiles.MunitionWireframe.name);
+    }
+    if (rocketMunitionFiles.Munition3D) {
+      formData.append('Munition3D', rocketMunitionFiles.Munition3D, rocketMunitionFiles.Munition3D.name);
+    }
+    if (rocketMunitionFiles.MunitionIcon) {
+      formData.append('MunitionIcon', rocketMunitionFiles.MunitionIcon, rocketMunitionFiles.MunitionIcon.name);
+    }
+    if (rocketMunitionFiles.Munition2525B) {
+      formData.append('Munition2525B', rocketMunitionFiles.Munition2525B, rocketMunitionFiles.Munition2525B.name);
+    }
+    if (rocketMunitionFiles.MunitionDatasheet) {
+      formData.append('MunitionDatasheet', rocketMunitionFiles.MunitionDatasheet, rocketMunitionFiles.MunitionDatasheet.name);
+    }
+
+
+
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
-      this.props.updateMunition(editId, munition).then(() => { this.props.onClose('UPDATE'); });
+      formData.append("munitionFormData", JSON.stringify(munition));
+      this.props.updateMunition(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
-      this.props.addMunition(munition).then(() => { this.props.onClose('ADD'); });
+      formData.append("munitionFormData", JSON.stringify(munition));
+      this.props.addMunition(formData).then(() => { this.props.onClose('ADD'); });
     }
 
   }
@@ -272,12 +316,20 @@ class RocketModal extends React.Component {
 
     let { rocketPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
+    const imageUrl = this.props.oneMunition.MunitionPhoto;
 
-    if (rocketPhotoPreviewUrl) {
-      $imagePreview = (<img src={rocketPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    } else {
+    if (imageUrl) {
+      $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
+    }
+    else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
+    if (rocketPhotoPreviewUrl) {
+      $imagePreview = (<img src={rocketPhotoPreviewUrl} alt="" className="photo" alt="" />);
+    } 
+
+
+   
     let { munition } = this.state;
     const { translations } = this.props;
     const { munitionType } = this.props;
