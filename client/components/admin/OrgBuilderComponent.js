@@ -348,10 +348,10 @@ render() {
       </div>
 
       <div className="row personnel" >
-       <div className="col-md-2"> 
+       <div className="col-md-3"> 
           { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView}/> }
        </div>   
-       <div className="col-md-10"> 
+       <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
           <TreeComponent data={this.state.orgData} onNodeClick = {this.openOptionModal}/>
         </div>  

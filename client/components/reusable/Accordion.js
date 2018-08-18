@@ -9,7 +9,8 @@ class Accordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uncheckedResults: []
+      uncheckedResults: [],
+      showAddForm:false
     }
   }
 
@@ -20,6 +21,12 @@ class Accordion extends React.Component {
   save = () => {
     console.log('saving');
   };
+
+  toggleAddForm = () => {
+      this.setState({
+        showAddForm:true
+      }, () => {this.addOrgForm();});   
+  }
 
   close = (key) => {
     let accordionContent = document.getElementsByClassName(`accordion-content`)[key];
@@ -48,6 +55,12 @@ class Accordion extends React.Component {
     }
   }
 
+  addOrgForm = () => {
+    console.log("Fired");
+    this.toggleHeader(3);
+    this.close(0); this.close(1);
+  }
+
   renderDropdowns(dropdowns) {
 
       let langs = ['val 1', 'val 2'];
@@ -71,10 +84,10 @@ class Accordion extends React.Component {
       {name: 'Last Name', type: 'input'},
       {name: 'Rank', type: 'dropdown'},
       {name: 'Pay Grade', type: 'dropdown'},
-      {name: 'Nationality', type: 'dropdown'},
-      {name: 'Clearance Level', type: 'dropdown'},
-      {name: 'CAC ID', type: 'input'},
-      {name: 'Call Sign', type: 'input'},
+      // {name: 'Nationality', type: 'dropdown'},
+      // {name: 'Clearance Level', type: 'dropdown'},
+      // {name: 'CAC ID', type: 'input'},
+      // {name: 'Call Sign', type: 'input'},
     ];
 
       return results.map((item, i) => {
@@ -215,6 +228,13 @@ class Accordion extends React.Component {
       {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
+    const lastSectionDropdowns = [
+      {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'COCOM'},
+      {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Units'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
+      {name: 'Reports to Unit', type: 'dropdown', ddID:'Units'},
+    ];
+
     let langs = ['val 1', 'val 2'];
 
     return (
@@ -242,7 +262,7 @@ class Accordion extends React.Component {
         <div className="accordion-section" ref={`section1`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(1)}>
             <div>
-              add to roster
+              Search / Filter
             </div>
             <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
           </div>
@@ -278,7 +298,7 @@ class Accordion extends React.Component {
                 </div>
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={this.save}>
+                  <button onClick={this.toggleAddForm}>
                     Add
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -287,6 +307,42 @@ class Accordion extends React.Component {
             </div>
           </div>
         </div>
+       { this.state.showAddForm ? 
+        <div className="accordion-section" ref={`section3`}>
+          <div className="accordion-header" onClick={() => this.toggleHeader(3)}>
+            <div>
+              Create Org Unit/Team
+            </div>
+            <img className="arrow pull-right" src="/assets/img/admin/small-arrow.png" alt=""/>
+          </div>
+          <div className="accordion-content">
+            <div className={`accordion-content-wrapper${3}`}>
+              <div className="content info-content">
+             { this.renderDropdowns(lastSectionDropdowns) }
+                <div className="accordion-search">
+                <br/>
+                  <input placeholder="Search/Filter Name, CAC ID"/>
+                </div>
+                <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                  <button onClick={() => this.close(2)}>
+                    Close
+                  </button>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                </div>
+                <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                  <button onClick={this.toggleAddForm}>
+                    Add
+                  </button>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        : null
+       }
     {   /* <div className="accordion-section" ref={`section${2}`}>
           <div className="accordion-header" onClick={() => this.toggleHeader(2)}>
             <div>
