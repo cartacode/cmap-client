@@ -256,16 +256,16 @@ class BaseModal extends React.Component {
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     if (locationFiles.LocationPhoto) {
-      formData.append('locationPhotoFile', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
+      formData.append('LocationPhoto', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
     }
     if (locationFiles.LocationMapImage) {
-      formData.append('locationMapFile', locationFiles.LocationMapImage, locationFiles.LocationMapImage.name);
+      formData.append('LocationMapImage', locationFiles.LocationMapImage, locationFiles.LocationMapImage.name);
     }
     if (locationFiles.LocationDocument) {
-      formData.append('locationDocumentFile', locationFiles.LocationDocument, locationFiles.LocationDocument.name);
+      formData.append('LocationDocument', locationFiles.LocationDocument, locationFiles.LocationDocument.name);
     }
     if (locationFiles.KML) {
-      formData.append('locationKMLFile', locationFiles.KML, locationFiles.KML.name);
+      formData.append('KML', locationFiles.KML, locationFiles.KML.name);
     }
     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;

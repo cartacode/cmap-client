@@ -707,8 +707,13 @@
   "CollectionMap":"Collection Map",
   "IntelRequests":"Intel Requests",
   "MissionType":"Mission Type",
+  "Intel Request Title" : "Intel Request",
+  "Intel Request add": "Intel Request added successfully" ,
+  "Intel Request update": "Intel Request updated successfully" ,
+  "Intel Request delete": "Intel Request deleted successfully" ,
+  "Intel Request moved": "Intel Request moved successfully",
   "IntelEEI": "Intel EEI",
   "AddedSuccesfully": "Added Successfully",
   "UpdateSuccesfully": "Updated Successfully",
-  "DeletedSuccesfully": "Deleted Succesfully"
+  "DeletedSuccesfully": "Deleted Succesfully" 
 }
