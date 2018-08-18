@@ -6,25 +6,21 @@ import { createAction } from 'util/action';
 
 
 export function fetchCollectionPlans(unitId, statusId) {
-  debugger;
   return createAction({
     type: COLLECTION_PLAN__FETCH,
     action: () => axios.get(`${baseUrl}/IntelRequest/getIntelRequestByUnitIdAndSatatusId?statusId=${statusId}&unitId=${unitId}`, requestHeaders),
-    //action: () => axios.get(`${baseUrl}/IntelRequest/GetApprovedIntelRequests`, requestHeaders),
   });
 }
 export function fetchApprovedIntelRequests(unitId, statusId) {
-  debugger;
   return createAction({
     type: INTEL_APPROVED_REQUEST__FETCH,
     action: () => axios.get(`${baseUrl}/IntelRequest/getIntelRequestByUnitIdAndSatatusId?statusId=${statusId}&unitId=${unitId}`, requestHeaders),
-    //action: () => axios.get(`${baseUrl}/IntelRequest/GetApprovedIntelRequests`, requestHeaders),
   });
 }
-export function deleteApprovedIntelRequestById(id) {
+export function deleteApprovedIntelRequestById(intelRequestId, statusId) {
   return createAction({
     type: INTEL_APPROVED_REQUEST__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/IntelRequest/DeleteIntelRequest/${id}`, requestHeaders),
+    action: () => axios.put(`${baseUrl}/IntelRequest/PutCollectionIntelRequest?intelRequestId=${intelRequestId}&statusId=${statusId}`, requestHeaders),
   });
 }
 

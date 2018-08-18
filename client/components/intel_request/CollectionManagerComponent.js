@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  NotificationContainer, NotificationManager
-} from "react-notifications";
+import {NotificationManager } from "react-notifications";
 import { Link } from "react-router-dom";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -26,7 +24,8 @@ class CollectionManagerComponent extends React.Component {
 
   deleteApprovedIntelRequests = (value) => {
     if (value !== undefined && value !== "0") {
-      this.props.deleteApprovedIntelRequestById(value).then(() => {
+      let  statusId  = 7; //'DRC'
+      this.props.deleteApprovedIntelRequestById(value, statusId).then(() => {
         this.setState({ editId: "0" });
         this.notify(NoticeType.DELETE);
         this.loadData();
@@ -44,7 +43,7 @@ class CollectionManagerComponent extends React.Component {
     // 'Approved – Pending Resources' and status codre should be 10 (APR).
     const value = row.value;
     if (value !== undefined && value !== '0') {
-      let { statusId } = 10; //'APR';
+      let  statusId  = 10; //'APR';
 	    this.props.moveToCollectionPlan(value, statusId).then(() => {
 	      this.setState({ editId: '0' });
 	      this.notify(NoticeType.MOVE_TO_COLLECTION);
@@ -57,7 +56,7 @@ class CollectionManagerComponent extends React.Component {
     //@Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
     // 'Approved – Approved - Validated' and status codre should be 21 (AV).
     if (value !== undefined && value !== '0') {
-      let { statusId } = 21;//'AV';
+      let  statusId  = 21;//'AV';
       this.props.moveToIntelRequest(value, statusId).then(() => {
         this.setState({ editId: "0" });
         this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
@@ -77,9 +76,10 @@ class CollectionManagerComponent extends React.Component {
   }
 
   loadData = () => {
-    let  unitId  = 10;
+    let  unitId  = 12;
     let  statusId  = 21; //'AV';
     this.props.fetchApprovedIntelRequests(unitId, statusId);
+
     statusId  = 10;//'APR';
     this.props.fetchCollectionPlans(unitId, statusId);
   };
@@ -261,7 +261,6 @@ class CollectionManagerComponent extends React.Component {
               </div>
             </div>
           </div>
-          <NotificationContainer />
         </div>
       </div>
     );
