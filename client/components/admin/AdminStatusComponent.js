@@ -22,6 +22,7 @@ import PlatformStatus from './status/PlatformStatus';
 import PayloadStatus from './status/PayloadStatus';
 import PersonnelStatus from './status/PersonnelStatus';
 import MunitionsStatus from './status/MunitionsStatus';
+import { defaultFilter, formatDateTime } from '../../util/helpers';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -273,38 +274,22 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['platform'],
         accessor: 'name', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
       },
       {
         Header: translations['Tail#'],
         accessor: 'tailNbr',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['etic'],
         accessor: 'ETIC',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['update'],
@@ -329,38 +314,22 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['payload'],
         accessor: 'name', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
       },
       {
         Header: translations['serial#'],
         accessor: 'serialNbr',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['etic'],
         accessor: 'ETIC',
-        filterMethod: (filter, row) =>
-        row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['update'],
@@ -384,32 +353,18 @@ class AdminStatusComponent extends React.Component {
       {
         Header: "Munition",
         accessor: 'name', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
       },
       {
         Header: translations['serial#'],
         accessor: 'serialNbr',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['update'],
@@ -432,43 +387,27 @@ class AdminStatusComponent extends React.Component {
     const petTeamColumns = [
       {
         Header: translations['team'],
-        accessor: 'team', 
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
+        accessor: 'team',
       },
       {
         Header: translations['type'],
         accessor: 'type',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['day'],
         accessor: 'day',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['Time'],
         accessor: 'time',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['remark'],
         accessor: 'remark',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       }, 
       {
         Header: translations['update'],
@@ -549,44 +488,26 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['Name'],
         accessor: 'fullName', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
       },
       {
         Header: translations['Rank'],
         accessor: 'rank',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['duty pos.'],
         accessor: 'dutyPos',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['status'],
         accessor: 'status',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['arrive'],
         accessor: 'arrive',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['depart'],
         accessor: 'depart',
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value)
       },
       {
         Header: translations['update'],
@@ -630,8 +551,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
               <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
-                defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+               defaultFilterMethod={defaultFilter}
 
                   // getTdProps={(state, rowInfo, column, instance) => {
                   //   return {
@@ -661,8 +581,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
-                defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+                defaultFilterMethod={defaultFilter}
               />
             </div>
           </div>
@@ -675,17 +594,15 @@ class AdminStatusComponent extends React.Component {
 
           <div className="col-md-12">
             <div className="col-md-6">
-              <HalfHeaderLine headerText="Muntion" />
-              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable
-                defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+              <HalfHeaderLine headerText="Munition" />
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable={true}
+               defaultFilterMethod={defaultFilter}
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
               <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={5} className="-striped -highlight" filterable
-                defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+                defaultFilterMethod={defaultFilter}
 
                   getTdProps={(state, rowInfo, column, instance) => {
                     return {
@@ -722,8 +639,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
-                defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+                defaultFilterMethod={defaultFilter}
               />
             </div>
             <div className="col-md-6">
