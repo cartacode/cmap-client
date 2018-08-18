@@ -5,6 +5,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { defaultFilter, formatDateTime } from '../../util/helpers';
+import {NoticeType} from '../../dictionary/constants';
+
 
 class PersonnelComponent extends React.Component {
 
@@ -90,7 +93,7 @@ loadData = (actionType) => {
 
 notify =(actionType)=>{
   const { translations } = this.props;
-  if ('DELETE' != actionType) {
+  if (NoticeType.DELETE != actionType) {
     if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['Update Personnel Success'], translations['personnel'], 5000);
     }else{
@@ -211,10 +214,7 @@ render() {
             className="-striped -highlight"
             filterable={true}
             minRows={1}
-            defaultFilterMethod={(filter, row) => {
-              const id = filter.pivotId || filter.id
-              return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-            }}
+            defaultFilterMethod={defaultFilter}
           />
         </div>
       </div>

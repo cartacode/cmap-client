@@ -8,7 +8,7 @@ import ShortHeaderLine from '../reusable/ShortHeaderLine';
 import ModalFormBlock from '../reusable/ModalFormBlock';
 
 import 'react-table/react-table.css';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import  { NoticeType } from '../../dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
@@ -122,6 +122,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         ...intelRequest,
         ReportClassification: ir.ReportClassification,
+        AssetId: ir.Asset,
         // PointofContact: intelRequest3.PointofContact,
         // DSN: intelRequest3.DSN,
         // EmailSIPR: intelRequest3.EmailSIPR,
@@ -156,20 +157,21 @@ class RequestForm extends React.Component {
     event.preventDefault();
     
     let { intelRequest } = this.state;
-    const  editId  = intelRequest.IntelRequestID;
+    const { match: { params } } = this.props;
+    const editId = params.editId;
     intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
-    
+
+    console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
 
     if(editId !== undefined && editId !== '0') {
-      
-      console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
+      intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
         this.notify(NoticeType.UPDATE);
         this.setState({
           toSummary: true,
         });
       });
-    }else {
+    } else {
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
         this.setState({
@@ -180,13 +182,14 @@ class RequestForm extends React.Component {
 
   }
 
-notify= (type) => {
+notify = (type) => {
+  
   if(type === NoticeType.ADD) {
-    NotificationManager.success('Added Succesfully', 'Intel Request', 5000);
+    NotificationManager.success(translations['AddedSuccesfully'], translations['intel request'], 5000);
   } else if(type === NoticeType.UPDATE) {
-    NotificationManager.success('Update Succesfully', 'Intel Request', 5000);
+    NotificationManager.success(translations['UpdatedSuccesfully'], translations['intel request'], 5000);
   } else if(type === NoticeType.DELETE) {
-    NotificationManager.success('Deleted Succesfully', 'Intel Request', 5000);
+    NotificationManager.success(translations['DeletedSuccesfully'], translations['intel request'], 5000);
   }
 }
 
@@ -235,26 +238,27 @@ resetForm() {
     const editId = params.editId;
 
     const intelRequest1 = [
-      { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand' },
-      { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation' },
-      { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType' },
-      { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart' },
-      { name: translations['Priority Intel Req'], type: 'input', domID: 'PriorityIntelRequirement', ddID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement' },
+      { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
+      { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true },
+      { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true },
+      { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true },
+      { name: translations['Priority Intel Req'], type: 'input', domID: 'PriorityIntelRequirement', ddID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true },
     ];
 
     const intelRequest2 = [
 
-      { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload' },
-      { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload' },
-      { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
-      { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime' },
-      { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue' },
+      { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true },
+      { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true },
+      { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions, required: true },
+      { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
+      { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
     ];
 
 
     // Following fields is visible only to Collection manager and also only in case of edit
     const intelRequest3 = [
-      { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification' },
+      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'PlatformCategory', valFieldID: 'AssetId', required: true, required: true },
+      { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
       // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
       { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
       { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
@@ -283,7 +287,7 @@ resetForm() {
 
     return (
       <div>
-        <NotificationContainer />
+        
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
             <div className="img-header-line">

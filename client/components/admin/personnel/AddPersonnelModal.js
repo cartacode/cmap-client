@@ -15,6 +15,7 @@ import axios from 'axios';
 import { uploadFile } from 'actions/file';
 import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
+import {NoticeType} from '../../../dictionary/constants';
 
 class AddPersonnelModal extends React.Component {
 
@@ -64,7 +65,7 @@ class AddPersonnelModal extends React.Component {
       personnelFiles: {
         PersonnelPhoto: null,
         OrganizationLogo: null,
-        DataSheet: null,
+        Datasheet: null,
       },
       isImagedRequired: true,
     }
@@ -79,32 +80,43 @@ class AddPersonnelModal extends React.Component {
     let { editId } = this.props;
     this.setState({ clear: true });
     if(editId !== '0') {
-      this.props.fetchPersonnelById(editId).then(() => { 
+      /* this.props.fetchPersonnelById(editId).then(() => { 
         this.setState(
           {
             editFetched: true,
             personnel: this.props.onePersonnel,
+            locationPhotoPreviewUrl: null,
+            mapImagePreviewUrl: null,
+            isImagedRequired:  false
           });
         //this.state.personnel = this.props.onePersonnel; 
-      });
+      }); */
+
+      this.editComponent(editId);
+
     }
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    let { editId } = this.props;
-    
-    if(editId !== '0' && prevProps.editId !== editId) {
-      //this.props.stopupdate();
-      this.props.fetchPersonnelById(editId).then(() => {
-        this.setState(
-          {
-            editFetched:true,
-            personnel: this.props.onePersonnel,
-          });
-      });
-    }
+  editComponent = (editId) => {
+    this.props.fetchPersonnelById(editId).then(() => {
+      this.setState(
+        {
+          editFetched: true,
+          personnel: this.props.onePersonnel,
+          imagePreviewUrl: null,
+          imagePreviewUrl2: null,
+          isImagedRequired:  false
+        });
+    });
+  }
 
-    if(editId === '0' && prevProps.editId !== editId) {
+  componentDidUpdate = (prevProps, prevState) => {
+
+    const { editId } = this.props;
+    if (editId !== '0' && prevProps.editId !== editId) {
+      this.editComponent(editId);
+    }
+    if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
     
@@ -317,11 +329,11 @@ class AddPersonnelModal extends React.Component {
   handleUploadFileData = (uploadFileData) => {
     const { personnel } = this.state;
     this.setState({
-      personnel: {
+      personnelFiles: {
         ...personnel,
         PersonnelPhoto: uploadFileData.PersonnelPhoto,
         OrganizationLogo: uploadFileData.OrganizationLogo,
-        DataSheet: uploadFileData.DataSheet,
+        Datasheet: uploadFileData.Datasheet,
       }
     }, () => {
       console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
@@ -359,23 +371,23 @@ class AddPersonnelModal extends React.Component {
 
 
   handleSubmit = event => {
+
     event.preventDefault();
     let {  personnel } = this.state;
     let { editId } = this.props;
     let {  selectedRank } = this.state;
     personnel.Rank = selectedRank;
-
     const { personnelFiles } = this.state;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     if (personnelFiles.PersonnelPhoto) {
-      formData.append('PersonnelPhotoFile', personnelFiles.PersonnelPhoto, personnelFiles.PersonnelPhoto.name);
+      formData.append('PersonnelPhoto', personnelFiles.PersonnelPhoto, personnelFiles.PersonnelPhoto.name);
     }
     if (personnelFiles.OrganizationLogo) {
-      formData.append('OrganizationLogoFile', personnelFiles.OrganizationLogo, personnelFiles.OrganizationLogo.name);
+      formData.append('OrganizationLogo', personnelFiles.OrganizationLogo, personnelFiles.OrganizationLogo.name);
     }
-    if (personnelFiles.DataSheet) {
-      formData.append('DataSheetFile', personnelFiles.DataSheet, personnelFiles.DataSheet.name);
+    if (personnelFiles.Datasheet) {
+      formData.append('Datasheet', personnelFiles.Datasheet, personnelFiles.Datasheet.name);
     }
     
     if (editId !== undefined && editId !== '0') {
@@ -383,14 +395,14 @@ class AddPersonnelModal extends React.Component {
       console.log('handle Submit '+ JSON.stringify(personnel));
       formData.append("personnelFormData", JSON.stringify(personnel));
       // TO DO: Will pass form Data in place of personnel 
-      this.props.updatePersonnel(editId, personnel).then(() => {
-        this.props.onClose('UPDATE');
+      this.props.updatePersonnel(editId, formData).then(() => {
+        this.props.onClose(NoticeType.UPDATE);
       });
     } else {
       formData.append("personnelFormData", JSON.stringify(personnel));
       // TO DO: Will pass form Data in place of personnel 
-      this.props.addPersonnel(this.state.personnel).then(() => {
-        this.props.onClose('ADD');
+      this.props.addPersonnel(formData).then(() => {
+        this.props.onClose(NoticeType.ADD);
       });
     }
 
@@ -553,9 +565,9 @@ render() {
 
 
 const uploadFileFields = [
-  { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image', required: true },
-  { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image', required: true },
-  { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'DataSheet', fileType: 'file', required: true },
+  { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image'},
+  { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image' },
+  { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'Datasheet', fileType: 'file' },
 ];
 
   return (
