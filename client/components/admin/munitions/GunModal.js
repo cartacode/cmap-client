@@ -77,13 +77,14 @@ class GunModal extends React.Component {
     let { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.fetchMunitionsById(editId).then(() => {
+     /*  this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
           {
             editFetched: true,
             munition: this.props.oneMunition,
           });
-      });
+      }); */
+      this.editComponent(editId);
     }
   }
 
@@ -93,7 +94,7 @@ class GunModal extends React.Component {
         {
           editFetched: true,
           munition: this.props.oneMunition,
-          imagePreviewUrl: null,
+          gunPhotoPreviewUrl: null,
           isImagedRequired:  false
         });
     });
@@ -105,13 +106,14 @@ class GunModal extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     let { editId } = this.props;
     if (editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchMunitionsById(editId).then(() => {
+      /* this.props.fetchMunitionsById(editId).then(() => {
         this.setState(
           {
             editFetched: true,
             munition: this.props.oneMunition,
           });
-      });
+      }); */
+      this.editComponent(editId);
     }
 
     if (editId === '0' && prevProps.editId !== editId) {
