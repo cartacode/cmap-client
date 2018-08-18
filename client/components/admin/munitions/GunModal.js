@@ -210,7 +210,6 @@ class GunModal extends React.Component {
  */
 handlePhotoPreviewURL = (uploadedFile) => {
   let reader = new FileReader();
-  debugger;
   let file = uploadedFile.originalFile;
   if (uploadedFile.name === 'MunitionPhoto') {
     reader.onloadend = () => {
@@ -253,8 +252,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('---here--');
-    console.log(this.state.munition);
+    
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
@@ -289,13 +287,11 @@ handlePhotoPreviewURL = (uploadedFile) => {
 
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
-      debugger;
       console.log("editId " + editId);
       console.log("munition " + JSON.stringify(munition));
       formData.append("munitionFormData", JSON.stringify(munition));
       this.props.updateMunition(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
-      debugger;
       formData.append("munitionFormData", JSON.stringify(munition));
       this.props.addMunition(formData).then(() => { this.props.onClose('ADD'); });
     }

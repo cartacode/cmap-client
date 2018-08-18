@@ -210,7 +210,6 @@ class MissileModal extends React.Component {
    */
   handlePhotoPreviewURL = (uploadedFile) => {
     let reader = new FileReader();
-    debugger;
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'MunitionPhoto') {
       reader.onloadend = () => {
@@ -252,10 +251,8 @@ class MissileModal extends React.Component {
    } */
 
   handleSubmit = event => {
-    debugger;
     event.preventDefault();
-    console.log('---here--');
-    console.log(this.state.munition);
+   
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
