@@ -87,6 +87,18 @@ class GunModal extends React.Component {
     }
   }
 
+  editComponent = (editId) => {
+    this.props.fetchMunitionsById(editId).then(() => {
+      this.setState(
+        {
+          editFetched: true,
+          munition: this.props.oneMunition,
+          imagePreviewUrl: null,
+          isImagedRequired:  false
+        });
+    });
+  }
+
   /**
    * Auto invoked functions. This Function works like as listener. This will update or call during changes in the value of input fields.
    */
@@ -278,11 +290,11 @@ handlePhotoPreviewURL = (uploadedFile) => {
       debugger;
       console.log("editId " + editId);
       console.log("munition " + JSON.stringify(munition));
-      formData.append("munitionGunsFormData", JSON.stringify(munition));
-      this.props.updateMunition(editId, munition).then(() => { this.props.onClose('UPDATE'); });
+      formData.append("munitionFormData", JSON.stringify(munition));
+      this.props.updateMunition(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
       debugger;
-      formData.append("munitionGunsFormData", JSON.stringify(munition));
+      formData.append("munitionFormData", JSON.stringify(munition));
       this.props.addMunition(formData).then(() => { this.props.onClose('ADD'); });
     }
 
@@ -311,7 +323,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
       return null;
     }
 
-    let { gunPhotoPreviewUrl } = this.state;
+    /* let { gunPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
 
     if (gunPhotoPreviewUrl) {
@@ -319,7 +331,30 @@ handlePhotoPreviewURL = (uploadedFile) => {
     }
     else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
-    }
+    } */
+
+
+    let { gunPhotoPreviewUrl } = this.state;
+    let $imagePreview = '';
+   
+    const imageUrl = this.props.oneMunition.MunitionPhoto;
+
+  if (imageUrl) {
+    $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
+  }
+  else {
+    $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
+  }
+  if (gunPhotoPreviewUrl) {
+    $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt=""/>);
+  }
+ 
+
+ 
+  
+
+
+
     let { munition } = this.state;
     const { translations } = this.props;
     const { munitionType } = this.props;
