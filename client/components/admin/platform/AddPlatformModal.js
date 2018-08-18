@@ -417,7 +417,6 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
 
     const { platformFiles } = this.state;
-
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     if (platformFiles.PlatformPhoto) {
@@ -440,11 +439,11 @@ class AddPlatformModal extends React.Component {
       platform.PlatformID = editId;
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.updatePlatform(editId, platform).then(() => {this.props.onClose(NoticeType.UPDATE);});
+      this.props.updatePlatform(editId, formData).then(() => {this.props.onClose(NoticeType.UPDATE);});
     } else {
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.addPlatform(platform).then(() => {this.props.onClose(NoticeType.ADD); });
+      this.props.addPlatform(formData).then(() => {this.props.onClose(NoticeType.ADD); });
     }
   }
 
@@ -467,13 +466,13 @@ class AddPlatformModal extends React.Component {
   handleUploadFileData = (uploadFileData) => {
     const { platform } = this.state;
     this.setState({
-      platform: {
+      platformFiles: {
         ...platform,
         PlatformPhoto: uploadFileData.PlatformPhoto,
         PlatformWireframe: uploadFileData.PlatformWireframe,
         Platform3D: uploadFileData.Platform3D,
         PlatformIcon: uploadFileData.PlatformIcon,
-        PlatformDataSheet: uploadFileData.PlatformDataSheet,
+        PlatformDatasheet: uploadFileData.PlatformDatasheet,
       }
     }, () => {
       console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
@@ -621,7 +620,7 @@ class AddPlatformModal extends React.Component {
       { name: translations['Wireframe Image'], type: 'file', domID: 'PlatformWireframe', valFieldID: 'PlatformWireframe', fileType: 'image', required: true },
       { name: translations['3D Model'], type: 'file', domID: 'Platform3D', valFieldID: 'Platform3D', fileType: 'image', required: true },
       { name: translations['Milspec Icon'], type: 'file', domID: 'PlatformIcon', valFieldID: 'PlatformIcon', fileType: 'image', required: true },
-      { name: translations['DataSheet'], type: 'file', domID: 'PlatformDataSheet', valFieldID: 'PlatformDataSheet', fileType: 'file', required: true },
+      { name: translations['DataSheet'], type: 'file', domID: 'PlatformDatasheet', valFieldID: 'PlatformDatasheet', fileType: 'file', required: true },
     ];
 
 

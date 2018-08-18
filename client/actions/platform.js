@@ -2,13 +2,13 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { PLATFORM__ADD, PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__UPDATE, PLATFORM__DELETE_ONE } from 'dictionary/action';
-import { baseUrl, requestHeaders } from 'dictionary/network';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 export function addPlatform(platform) {
   return createAction({
     type: PLATFORM__ADD,
-    action: () => axios.post(`${baseUrl}/Platform/PostPlatform`, qs.stringify(platform), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Platform/PostPlatform`, platform, formDataRequestHeader),
   });
 }
 
