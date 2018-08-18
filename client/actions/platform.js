@@ -15,7 +15,7 @@ export function addPlatform(platform) {
 export function updatePlatform(id, platform) {
   return createAction({
     type: PLATFORM__UPDATE,
-    action: () => axios.put(`${baseUrl}/Platform/PutPlatform/${id}`, qs.stringify(platform), requestHeaders),
+    action: () => axios.put(`${baseUrl}/Platform/PutPlatform/${id}`, platform, formDataRequestHeader),
   });
 }
 

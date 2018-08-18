@@ -98,28 +98,44 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== undefined && editId !== '0') {
-      this.props.fetchPlatformById(editId).then(() => {
+      /* this.props.fetchPlatformById(editId).then(() => {
         this.setState(
           { isUpdated: true,
             platform: this.props.onePlatform, 
           });
-      });
+      }); */
+      this.editComponent(editId);
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPlatformById(editId).then(() => {
+      /* this.props.fetchPlatformById(editId).then(() => {
         this.setState(
           { isUpdated: true,
             platform: this.props.onePlatform, 
           });
-      });
+      }); */
+      this.editComponent(editId);
+
     }
     if(editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
     }
+  }
+
+  editComponent = (editId) => {
+    this.props.fetchPlatformById(editId).then(() => {
+      this.setState(
+        {
+          isUpdated: true,
+          platform: this.props.onePlatform, 
+          imagePreviewUrl: null,
+          imagePreviewUrl2: null,
+          isImagedRequired:  false
+        });
+    });
   }
 
   stopUpdate = ()=> {
@@ -511,25 +527,34 @@ class AddPlatformModal extends React.Component {
       return null;
     } */
 
-    let { imagePreviewUrl } = this.state;
+    let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
-
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt="" />);
-    }
-    else {
-      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
-    }
-
-    let { imagePreviewUrl2 } = this.state;
+    let {imagePreviewUrl2} = this.state;
     let $imagePreview2 = '';
+    const imageUrl = this.props.onePlatform.PlatformPhoto;
+    const imageUrl2 = this.props.onePlatform.PlatformWireframe;
 
-    if (imagePreviewUrl2) {
-      $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
-    }
-    else {
-      $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt="" />);
-    }
+  if (imageUrl) {
+    $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
+  }
+  else {
+    $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
+  }
+  if (imagePreviewUrl) {
+    $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
+  }
+ 
+
+  if (imageUrl2) {
+    $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
+  }
+  else {
+    $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
+  }
+  if (imagePreviewUrl2) {
+    $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
+  }
+
 
 
     let nums = [{label:'--Select--', value:''}];
