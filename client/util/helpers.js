@@ -30,16 +30,13 @@ export const formatTime = (dateObj) => {
 }
 
 export const getIntelRequestStatusCodeColor = (abbreviation) => {
-  let statueCodes = JSON.stringify(IntelReqStatusCodes);
-  statueCodes = JSON.parse(statueCodes);
-  console.log("****************IntelReqStatusCodes***********" + statueCodes);
+  const statueCodes = IntelReqStatusCodes;
   let colorCode;
   for (let i = 0; i < statueCodes.length; i++) {
-    if (abbreviation == statueCodes[i].abbreviation) {
-      colorCode = statueCodes[i].color;
+    if (abbreviation === statueCodes[i].abbreviation) {
+      colorCode = {'color': statueCodes[i].color};
       break;
     }
   }
-  console.log("***********************colorCode*************" + colorCode);
   return colorCode;
 };

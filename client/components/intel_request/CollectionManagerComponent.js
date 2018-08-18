@@ -1,21 +1,20 @@
-import PropTypes from "prop-types";
-import React from "react";
-import {NotificationManager } from "react-notifications";
-import { Link } from "react-router-dom";
-import ReactTable from "react-table";
-import "react-table/react-table.css";
-import FullHeaderLine from "../reusable/FullHeaderLine";
-import { NoticeType } from "../../dictionary/constants";
-import { getIntelRequestStatusCodeColor, defaultFilter } from "../../util/helpers";
-
+import PropTypes from 'prop-types';
+import React from 'react';
+import { NotificationManager } from 'react-notifications';
+import { Link } from 'react-router-dom';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import FullHeaderLine from '../reusable/FullHeaderLine';
+import { NoticeType } from '../../dictionary/constants';
+import { getIntelRequestStatusCodeColor, defaultFilter } from '../../util/helpers';
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterValue: "",
+      filterValue: '',
       filter: [],
-      editId: "0"
+      editId: '0',
     };
   }
 
@@ -24,10 +23,10 @@ class CollectionManagerComponent extends React.Component {
   }
 
   deleteApprovedIntelRequests = (value) => {
-    if (value !== undefined && value !== "0") {
-      let  statusId  = 7; //'DRC'
+    if (value !== undefined && value !== '0') {
+      const statusId = 7; // 'DRC'
       this.props.deleteApprovedIntelRequestById(value, statusId).then(() => {
-        this.setState({ editId: "0" });
+        this.setState({ editId: '0' });
         this.notify(NoticeType.DELETE);
         this.loadData();
       });
@@ -35,31 +34,30 @@ class CollectionManagerComponent extends React.Component {
   };
 
   getColor= (row)=>{
-    const colorCode = getIntelRequestStatusCodeColor(row.original.abbreviation);
+  return getIntelRequestStatusCodeColor(row.original.Abbreviation);
   }
 
-
   moveToCollectionPlan = (row) => {
-    //@Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
+    // @Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
     // 'Approved – Pending Resources' and status codre should be 10 (APR).
     const value = row.value;
     if (value !== undefined && value !== '0') {
-      let  statusId  = 10; //'APR';
+      const statusId = 10; // 'APR';
 	    this.props.moveToCollectionPlan(value, statusId).then(() => {
 	      this.setState({ editId: '0' });
 	      this.notify(NoticeType.MOVE_TO_COLLECTION);
 	      this.loadData();
-      }); 
+      });
     }
   };
 
   moveToIntelRequest = (value) => {
-    //@Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
+    // @Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
     // 'Approved – Approved - Validated' and status codre should be 21 (AV).
     if (value !== undefined && value !== '0') {
-      let  statusId  = 21;//'AV';
+      const statusId = 21;// 'AV';
       this.props.moveToIntelRequest(value, statusId).then(() => {
-        this.setState({ editId: "0" });
+        this.setState({ editId: '0' });
         this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
         this.loadData();
       });
@@ -67,9 +65,9 @@ class CollectionManagerComponent extends React.Component {
   };
 
   deleteCollectionPlan=(value)=>{
-    if (value !== undefined && value !== "0") {
+    if (value !== undefined && value !== '0') {
       this.props.deleteCollectionPlanById(value).then(() => {
-        this.setState({ editId: "0" });
+        this.setState({ editId: '0' });
         this.notify(NoticeType.DELETE);
         this.loadData();
       });
@@ -77,17 +75,17 @@ class CollectionManagerComponent extends React.Component {
   }
 
   loadData = () => {
-    let  unitId  = 12;
-    let  statusId  = 21; //'AV';
+    const unitId = 12;
+    let statusId = 21; // 'AV';
     this.props.fetchApprovedIntelRequests(unitId, statusId);
 
-    statusId  = 10;//'APR';
+    statusId = 10;// 'APR';
     this.props.fetchCollectionPlans(unitId, statusId);
   };
 
   notify = actionType => {
     const { translations } = this.props;
-    if (this.state.editId !== undefined && this.state.editId !== "0") {
+    if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['Intel Request update'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.ADD == actionType) {
       NotificationManager.success(translations['Intel Request add'], translations['Intel Request Title'], 5000);
@@ -104,40 +102,40 @@ class CollectionManagerComponent extends React.Component {
     const { translations } = this.props;
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
-    const editurl = "/intel-request/detail/";
+    const editurl = '/intel-request/detail/';
     const intelRequestColumns = [
       {
-        Header: "IR#",
-        accessor: "IntelRequestID",
+        Header: 'IR#',
+        accessor: 'IntelRequestID',
         Cell: row => <div>
-                          <span style = {this.getColor(row)} ></span>
-                          <span>{row.value}</span>
-                    </div>,
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
+      },
+      // {
+      //   Header: "Status",
+      //   accessor: "Status"
+      // },
+      {
+        Header: 'Mission Type',
+        accessor: 'MissionTypeText',
       },
       {
-        Header: "Status",
-        accessor: "Status"
+        Header: 'Payload',
+        accessor: 'PrimaryPayloadName',
       },
       {
-        Header: "Mission Type",
-        accessor: "MissionTypeText"
+        Header: 'Armed',
+        accessor: 'Armed',
       },
       {
-        Header: "Payload",
-        accessor: "PrimaryPayloadName"
-      },
-      {
-        Header: "Armed",
-        accessor: "Armed"
-      },
-      {
-        Header: "Command",
-        accessor: "COCOMText"
+        Header: 'Command',
+        accessor: 'COCOMText',
       },
 
       {
-        Header: translations["view"],
-        accessor: "IntelRequestID",
+        Header: translations.view,
+        accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
@@ -146,55 +144,59 @@ class CollectionManagerComponent extends React.Component {
             &nbsp;
             <a href="#" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
-        )
-      }
+        ),
+      },
     ];
 
     const collectionPlanColumns = [
       {
-        Header: "IR#",
-        accessor: "IntelRequestID"
+        Header: 'IR#',
+        accessor: 'IntelRequestID',
+        Cell: row => <div>
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
+      },
+      // {
+      //   Header: 'Status',
+      //   accessor: 'Status',
+      // },
+      {
+        Header: 'Mission Type',
+        accessor: 'MissionTypeText',
       },
       {
-        Header: "Status",
-        accessor: "Status"
+        Header: 'Payload',
+        accessor: 'PrimaryPayloadName',
       },
       {
-        Header: "Mission Type",
-        accessor: "MissionTypeText"
+        Header: 'Armed',
+        accessor: 'Armed',
       },
       {
-        Header: "Payload",
-        accessor: "PrimaryPayloadName"
-      },
-      {
-        Header: "Armed",
-        accessor: "Armed"
-      },
-      {
-        Header: "Command",
-        accessor: "COCOMText"
+        Header: 'Command',
+        accessor: 'COCOMText',
       },
 
       {
-        Header: translations["view"],
-        accessor: "IntelRequestID",
+        Header: translations.view,
+        accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
             <a href="#" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
             &nbsp;
           </div>
-        )
-      }
+        ),
+      },
     ];
 
-    let langs = ["val 1", "val 2"];
+    const langs = ['val 1', 'val 2'];
     return (
       <div>
         <div className="row intel-request">
           <div className="col-md-12 two-block">
-            <FullHeaderLine headerText={translations["CollectionMap"]} />
+            <FullHeaderLine headerText={translations.CollectionMap} />
             <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
@@ -203,17 +205,17 @@ class CollectionManagerComponent extends React.Component {
           </div>
 
           {/* <div className="col-md-6 two-block">
-            
+
           </div> */}
 
           {/* <div className="col-md-6">
-            
+
           </div> */}
           <div className="col-md-12">
-            
+
             <div className="row ">
               <div className="col-md-6">
-            <FullHeaderLine headerText={translations["IntelRequests"]} />
+                <FullHeaderLine headerText={translations.IntelRequests} />
                 <ReactTable
                   data={allApprovedIntelRequests}
                   columns={intelRequestColumns}
@@ -231,7 +233,7 @@ class CollectionManagerComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations["CollectionPlan"]} />
+                <FullHeaderLine headerText={translations.CollectionPlan} />
                 <div className="row ">
                   <ReactTable
                     data={allCollectionsPlan}
@@ -258,7 +260,7 @@ class CollectionManagerComponent extends React.Component {
 }
 
 CollectionManagerComponent.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 };
 
 export default CollectionManagerComponent;

@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { defaultFilter, formatDateTime } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
 
 class RequestComponent extends React.Component {
@@ -36,6 +36,10 @@ class RequestComponent extends React.Component {
     this.props.fetchIntelRequests();
   }
 
+
+  getColor= (row)=> {
+    return  getIntelRequestStatusCodeColor(row.original.Abbreviation);
+  }
   render() {
 
     const { translations } = this.props;
@@ -52,6 +56,10 @@ class RequestComponent extends React.Component {
       {
         Header: 'IR#',
         accessor: 'IntelRequestID',
+        Cell: row => <div>
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
       },
       {
         Header: 'Status',

@@ -17,13 +17,13 @@ export const IntelReqStatusCodes = [
     id: 1,
     description: "Origination in Process",
     abbreviation: 'OP',
-    color: ''
+    color: '#FFB6C1',
   },
   {
     id: 2,
     description: "Pending – On Hold",
     abbreviation: 'POH',
-    color : '#FFA500'
+    color : '#FFA500',
   },
   {
     id: 3,
@@ -35,19 +35,19 @@ export const IntelReqStatusCodes = [
     id: 4,
     description: "Denied - Insufficient Priority",
     abbreviation: 'DIP',
-    color: '#FFFF00'
+    color: '#FFFF00',
   },
   {
     id: 5,
     description: "Denied – Unavailable Resources",
     abbreviation: 'DUR',
-    color: '#FFFF00'
+    color: '#FFFF00',
   },
   {
     id: 6,
     description: "Denied - Additional Info Requested",
     abbreviation: 'DAIR',
-    color: '#FF0000'
+    color: '#FF0000',
 
   },
   {
@@ -66,36 +66,36 @@ export const IntelReqStatusCodes = [
     id: 9,
     description: "Denied – Past LTIV",
     abbreviation: 'DPL',
-    color: '#FFFF00'
+    color: '#FFFF00',
   },
   {
     id: 10,
     description: "Approved – Pending Resources",
     abbreviation: 'APR',
-    color: '#0000FF'
+    color: '#0000FF',
   },
   {
     id: 11,
     description: "Approved – Resourced",
     abbreviation: 'AR',
-    color: '#008000'
+    color: '#008000',
   },
   {
     id: 12,
     description: "Approved – Executed",
     abbreviation: 'AE',
-    color: '#808080'
+    color: '#808080',
   },
   {
     id: 13,
     description: "Approved – Intel Posted",
     abbreviation: 'AIP',
-    color : '#FFA500'
+    color : '#FFA500',
   },
   {
     id: 21,
     description: "Approved - Validated",
     abbreviation: 'AV',
-    color: '#008000',
+    color: '#00FFFF',
   }
 ];

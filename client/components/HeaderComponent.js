@@ -65,7 +65,7 @@ class HeaderComponent extends React.Component {
       {title: translations['intel library'], url: '/intel-library'},
       {title: translations['messages'], url: '/messages'},
       {title: translations['admin'], url: '/admin/personnel'},
-      {title: translations['logout'], url: '/logout'}
+      //{title: translations['logout'], url: '/logout'}
     ];
 
     return menuItems.map((item, i) => {
