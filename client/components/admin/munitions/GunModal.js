@@ -244,15 +244,46 @@ handlePhotoPreviewURL = (uploadedFile) => {
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
+
+
+
+    const { gunMunitionFiles } = this.state;
+    //We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (gunMunitionFiles.MunitionPhoto) {
+      formData.append('MunitionPhoto', gunMunitionFiles.MunitionPhoto, gunMunitionFiles.MunitionPhoto.name);
+    }
+    if (gunMunitionFiles.MunitionWireframe) {
+      formData.append('MunitionWireframe', gunMunitionFiles.MunitionWireframe, gunMunitionFiles.MunitionWireframe.name);
+    }
+    if (gunMunitionFiles.Munition3D) {
+      formData.append('Munition3D', gunMunitionFiles.Munition3D, gunMunitionFiles.Munition3D.name);
+    }
+    if (gunMunitionFiles.MunitionIcon) {
+      formData.append('MunitionIcon', gunMunitionFiles.MunitionIcon, gunMunitionFiles.MunitionIcon.name);
+    }
+    if (gunMunitionFiles.Munition2525B) {
+      formData.append('Munition2525B', gunMunitionFiles.Munition2525B, gunMunitionFiles.Munition2525B.name);
+    }
+    if (gunMunitionFiles.MunitionDatasheet) {
+      formData.append('MunitionDatasheet', gunMunitionFiles.MunitionDatasheet, gunMunitionFiles.MunitionDatasheet.name);
+    }
+    
+
+
+
+
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       debugger;
       console.log("editId " + editId);
       console.log("munition " + JSON.stringify(munition));
+      formData.append("munitionGunsFormData", JSON.stringify(munition));
       this.props.updateMunition(editId, munition).then(() => { this.props.onClose('UPDATE'); });
     } else {
       debugger;
-      this.props.addMunition(munition).then(() => { this.props.onClose('ADD'); });
+      formData.append("munitionGunsFormData", JSON.stringify(munition));
+      this.props.addMunition(formData).then(() => { this.props.onClose('ADD'); });
     }
 
   }
