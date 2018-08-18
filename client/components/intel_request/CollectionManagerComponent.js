@@ -192,7 +192,7 @@ class CollectionManagerComponent extends React.Component {
     return (
       <div>
         <div className="row intel-request">
-          <div className="col-md-6 two-block">
+          <div className="col-md-12 two-block">
             <FullHeaderLine headerText={translations["CollectionMap"]} />
             <img
               className="photo"
@@ -208,10 +208,11 @@ class CollectionManagerComponent extends React.Component {
           {/* <div className="col-md-6">
             
           </div> */}
-          <div className="col-md-6">
-            <FullHeaderLine headerText={translations["IntelRequests"]} />
+          <div className="col-md-12">
+            
             <div className="row ">
-              <div className="col-md-12">
+              <div className="col-md-6">
+            <FullHeaderLine headerText={translations["IntelRequests"]} />
                 <ReactTable
                   data={allApprovedIntelRequests}
                   columns={intelRequestColumns}
@@ -235,7 +236,7 @@ class CollectionManagerComponent extends React.Component {
                 />
               </div>
 
-              <div className="col-md-12">
+              <div className="col-md-6">
                 <FullHeaderLine headerText={translations["CollectionPlan"]} />
                 <div className="row ">
                   <ReactTable
