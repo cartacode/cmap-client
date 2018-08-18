@@ -2,20 +2,20 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { PAYLOAD__ADD, PAYLOAD__FETCH, PAYLOAD__UPDATE, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE, PAYLOAD__DELETE_ONE } from 'dictionary/action';
-import { baseUrl, requestHeaders } from 'dictionary/network';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 export function addPayload(payload) {
   return createAction({
     type: PAYLOAD__ADD,
-    action: () => axios.post(`${baseUrl}/Payload/PostPayload`, qs.stringify(payload), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Payload/PostPayload`, payload, formDataRequestHeader),
   });
 }
 
 export function updatePayload(id, payload) {
   return createAction({
     type: PAYLOAD__UPDATE,
-    action: () => axios.put(`${baseUrl}/Payload/PutPayload/${id}`, qs.stringify(payload), requestHeaders),
+    action: () => axios.put(`${baseUrl}/Payload/PutPayload/${id}`, payload, formDataRequestHeader),
   });
 }
 

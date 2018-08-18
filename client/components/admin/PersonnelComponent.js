@@ -6,7 +6,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
-import {NoticeType} from '../../dictionary/constants';
+import { NoticeType, TableDefaults } from '../../dictionary/constants';
 
 
 class PersonnelComponent extends React.Component {
@@ -174,7 +174,7 @@ render() {
       accessor: 'ID',
       filterable: false,
       // Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPersonnelForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePersonnel(row.value)} /></span></div>,
-      Cell: row => <div><a href="#" className="text-white" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="text-white" > <span className="glyphicon glyphicon-trash"/></a></div>,
+      Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePersonnel(row.value)} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
     },
   ];
 
@@ -187,7 +187,7 @@ render() {
 
   return (
     <div>
-      <NotificationContainer />
+
       <div className="row orders-assets">
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -209,11 +209,11 @@ render() {
           <ReactTable
             data={allPersonnels}
             columns={columns}
-            defaultPageSize={10}
+            defaultPageSize={TableDefaults.PAGE_SIZE}
+						minRows={TableDefaults.PAGE_SIZE}
             loading={this.props.isLoading}
             className="-striped -highlight"
             filterable={true}
-            minRows={1}
             defaultFilterMethod={defaultFilter}
           />
         </div>

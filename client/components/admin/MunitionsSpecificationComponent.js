@@ -1,28 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import UploadBlock from "../reusable/UploadBlock";
-import ContentBlock from "../reusable/ContentBlock";
-import FilterDropdown from '../reusable/FilterDropdown';
-import FilterDatePicker from '../reusable/FilterDatePicker';
-import ButtonsList from "../reusable/ButtonsList";
-import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
-import CustomDatePicker from '../reusable/CustomDatePicker';
+
 import DropDownButton from '../reusable/DropDownButton';
-import StatusTable from '../reusable/StatusTable';
 
 import MissileModal from './munitions/MissileModal';
 import RocketModal from './munitions/RocketModal';
 import GunModal from './munitions/GunModal';
-import TableRowDetailModal from '../reusable/TableRowDetailModal';
-
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
+import { defaultFilter } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
+
 
 class MunitionsSpecificationComponent extends React.Component {
 
@@ -298,21 +289,17 @@ class MunitionsSpecificationComponent extends React.Component {
             <GunModal editId={this.state.editId} munitionType={this.state.munitionType} show={this.state.gunModalOpen} onClose={this.closeMunitionSpecifiction} translations={translations} />
             : null
           }
-          <NotificationContainer />
+
           <div className="col-md-12">
             <ReactTable
               data={allMunitions}
               columns={columns}
-              minRows={1}
-              defaultPageSize={5}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.PAGE_SIZE}
               loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
-              defaultFilterMethod={(filter, row) => {
-              //  console.log(row);
-                const id = filter.pivotId || filter.id
-                return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-              }}
+              defaultFilterMethod={defaultFilter}
 
             />
           </div>

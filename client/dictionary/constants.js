@@ -7,6 +7,11 @@ export const NoticeType = {
 
 };
 
+export const TableDefaults = {
+  PAGE_SIZE: 5,
+  MIN_ROWS: 1,
+}
+
 export const IntelReqStatusCodes = [
   {
     id: 1,

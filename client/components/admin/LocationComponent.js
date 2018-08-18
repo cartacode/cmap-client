@@ -4,6 +4,8 @@ import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
+import { defaultFilter } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
 
 
 class LocationComponent
@@ -182,17 +184,12 @@ class LocationComponent
               <ReactTable
                 data={allLocations}
                 columns={columns}
-                minRows={1}
-                defaultPageSize={5}
+                defaultPageSize={TableDefaults.PAGE_SIZE}
+						    minRows={TableDefaults.PAGE_SIZE}
                 className="-striped -highlight"
                 loading={this.props.isLoading}
                 filterable={true}
-                defaultFilterMethod={(filter, row) => {
-                  const id = filter.pivotId || filter.id;
-                  return (row[id] !== undefined && row[id] !== null)
-                    ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase())
-                    : true;
-                }}
+                defaultFilterMethod={defaultFilter}
               />
             </div>
           </div>

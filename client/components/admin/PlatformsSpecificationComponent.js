@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
 import { defaultFilter } from '../../util/helpers';
-import {NoticeType} from '../../dictionary/constants';
+import {NoticeType, TableDefaults } from '../../dictionary/constants';
 
 
 
@@ -172,17 +172,17 @@ class PlatformsSpecificationComponent extends React.Component {
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
-          <NotificationContainer /> 
+          
 
           <div className="col-md-12">
             <ReactTable
               data={allPlatforms}
               columns={columns}
-              defaultPageSize={5}
               className="-striped -highlight"
               loading={this.props.isLoading}
               filterable={true}
-              minRows={1}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE}
               defaultFilterMethod={defaultFilter}
             />
           </div>

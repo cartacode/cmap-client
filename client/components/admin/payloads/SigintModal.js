@@ -20,7 +20,7 @@ class SigintModal extends React.Component {
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
-        PaylodWireframe: '',
+        PayloadWireframe: '',
         PayloadPhoto: '',
         Payload3D: '',
         PayloadIcon: '',
@@ -60,7 +60,7 @@ class SigintModal extends React.Component {
       onePayload: {},
       sigintPayloadFiles: {
         PayloadPhoto: null,
-        PaylodWireframe: null,
+        PayloadWireframe: null,
         Payload3D: null,
         PayloadIcon: null,
         Payload2525B: null,
@@ -101,6 +101,9 @@ class SigintModal extends React.Component {
       this.setState({
         editFetched: true,
         payload: this.props.onePayload,
+        isImagedRequired: true,
+        payloadPhotoPreviewUrl: this.props.onePayload.PayloadPhoto,
+        payloadWireframePreviewUrl: this.props.onePayload.PayloadWireframe,
       });
     });
   }
@@ -184,7 +187,7 @@ class SigintModal extends React.Component {
     sigintPayloadFiles: {
       ...sigintPayloadFiles,
       PayloadPhoto: uploadFileData.PayloadPhoto,
-      PaylodWireframe: uploadFileData.PaylodWireframe,
+      PayloadWireframe: uploadFileData.PayloadWireframe,
       Payload3D: uploadFileData.Payload3D,
       PayloadIcon: uploadFileData.PayloadIcon,
       Payload2525B: uploadFileData.Payload2525B,
@@ -210,7 +213,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
       });
     }
   }
-  if (uploadedFile.name === 'PaylodWireframe') {
+  if (uploadedFile.name === 'PayloadWireframe') {
     reader.onloadend = () => {
       this.setState({
         payloadWireframePreviewUrl: reader.result
@@ -234,7 +237,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
       }
       reader.readAsDataURL(file);
     }
-    else if (event.target.id == "PaylodWireframe") {
+    else if (event.target.id == "PayloadWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
       reader.onloadend = () => {
@@ -261,18 +264,39 @@ handlePhotoPreviewURL = (uploadedFile) => {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('---here--');
-    console.log(this.state.payload);
-    const { payload } = this.state;
-    const { editId, payloadTypeId } = this.props;
-    payload.PayloadType = payloadTypeId;
 
+    let { payload, sigintPayloadFiles } = this.state;
+    const { editId, payloadTypeId } = this.props;
+
+    // File Upload form data 
+    const formData = new FormData();
+    if (sigintPayloadFiles.PayloadPhoto) {
+      formData.append('PayloadPhoto', sigintPayloadFiles.PayloadPhoto, sigintPayloadFiles.PayloadPhoto.name);
+    }
+    if (sigintPayloadFiles.PayloadWireframe) {
+      formData.append('PayloadWireframe', sigintPayloadFiles.PayloadWireframe, sigintPayloadFiles.PayloadWireframe.name);
+    }
+    if (sigintPayloadFiles.Payload3D) {
+      formData.append('Payload3D', sigintPayloadFiles.Payload3D, sigintPayloadFiles.Payload3D.name);
+    }
+    if (sigintPayloadFiles.PayloadIcon) {
+      formData.append('PayloadIcon', sigintPayloadFiles.PayloadIcon, sigintPayloadFiles.PayloadIcon.name);
+    }
+    if (sigintPayloadFiles.Payload2525B) {
+      formData.append('Payload2525B', sigintPayloadFiles.Payload2525B, sigintPayloadFiles.Payload2525B.name);
+    }
+    if (sigintPayloadFiles.PayloadDatasheet) {
+      formData.append('PayloadDatasheet', sigintPayloadFiles.Payload2525B, sigintPayloadFiles.PayloadDatasheet.name);
+    }
+
+    payload.PayloadType = payloadTypeId;
+    formData.append("payloadFormData", JSON.stringify(payload));
 
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
-      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
 
@@ -357,7 +381,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
 
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
-      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
       { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
       { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },

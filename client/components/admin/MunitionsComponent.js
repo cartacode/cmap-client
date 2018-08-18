@@ -5,6 +5,9 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import AddMunitionsInventory from './munitions/AddMunitionsInventory';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { defaultFilter } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
+
 
 class MunitionsComponent extends React.Component {
 
@@ -207,20 +210,17 @@ else{
             <AddMunitionsInventory onClose={this.closeMunitionsForm} editId={this.state.editId} translations = {translations}/>
             : null
           }
-          <NotificationContainer />
+
           <div className="col-md-12">
             <ReactTable
               data={allMunitionInventory}
               columns={columns}
-              defaultPageSize={5}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE}
               loading={this.props.isLoading}
               className="-striped -highlight"
               filterable={true}
-              minRows={1}
-						  defaultFilterMethod={(filter, row) => {
-							  const id = filter.pivotId || filter.id;
-							  return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-              }}
+						  defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>

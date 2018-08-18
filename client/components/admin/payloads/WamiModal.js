@@ -5,6 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
+import { NoticeType } from '../../../dictionary/constants';
+
 
 
 class WamiModal extends React.Component {
@@ -19,7 +21,7 @@ class WamiModal extends React.Component {
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
-        PaylodWireframe: '',
+        PayloadWireframe: '',
         PayloadPhoto: '',
         Payload3D: '',
         PayloadIcon: '',
@@ -59,7 +61,7 @@ class WamiModal extends React.Component {
       onePayload: {},
       wamiPayloadFiles: {
         PayloadPhoto: null,
-        PaylodWireframe: null,
+        PayloadWireframe: null,
         Payload3D: null,
         PayloadIcon: null,
         Payload2525B: null,
@@ -100,6 +102,9 @@ class WamiModal extends React.Component {
       this.setState({
         editFetched: true,
         payload: this.props.onePayload,
+        isImagedRequired: true,
+        payloadPhotoPreviewUrl: this.props.onePayload.PayloadPhoto,
+        payloadWireframePreviewUrl: this.props.onePayload.PayloadWireframe,
       });
     });
   }
@@ -192,7 +197,7 @@ class WamiModal extends React.Component {
       wamiPayloadFiles: {
         ...wamiPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
-        PaylodWireframe: uploadFileData.PaylodWireframe,
+        PayloadWireframe: uploadFileData.PayloadWireframe,
         Payload3D: uploadFileData.Payload3D,
         PayloadIcon: uploadFileData.PayloadIcon,
         Payload2525B: uploadFileData.Payload2525B,
@@ -218,7 +223,7 @@ class WamiModal extends React.Component {
         });
       }
     }
-    if (uploadedFile.name === 'PaylodWireframe') {
+    if (uploadedFile.name === 'PayloadWireframe') {
       reader.onloadend = () => {
         this.setState({
           payloadWireframePreviewUrl: reader.result
@@ -243,7 +248,7 @@ class WamiModal extends React.Component {
       reader.readAsDataURL(file);
     }
 
-    else if (event.target.id == "PaylodWireframe") {
+    else if (event.target.id == "PayloadWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
       reader.onloadend = () => {
@@ -270,16 +275,39 @@ class WamiModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('---here--');
-    console.log(this.state.payload);
-    const { payload } = this.state;
+
+    let { payload, wamiPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
+
+    // File Upload form data 
+    const formData = new FormData();
+    if (wamiPayloadFiles.PayloadPhoto) {
+      formData.append('PayloadPhoto', wamiPayloadFiles.PayloadPhoto, wamiPayloadFiles.PayloadPhoto.name);
+    }
+    if (wamiPayloadFiles.PayloadWireframe) {
+      formData.append('PayloadWireframe', wamiPayloadFiles.PayloadWireframe, wamiPayloadFiles.PayloadWireframe.name);
+    }
+    if (wamiPayloadFiles.Payload3D) {
+      formData.append('Payload3D', wamiPayloadFiles.Payload3D, wamiPayloadFiles.Payload3D.name);
+    }
+    if (wamiPayloadFiles.PayloadIcon) {
+      formData.append('PayloadIcon', wamiPayloadFiles.PayloadIcon, wamiPayloadFiles.PayloadIcon.name);
+    }
+    if (wamiPayloadFiles.Payload2525B) {
+      formData.append('Payload2525B', wamiPayloadFiles.Payload2525B, wamiPayloadFiles.Payload2525B.name);
+    }
+    if (wamiPayloadFiles.PayloadDatasheet) {
+      formData.append('PayloadDatasheet', wamiPayloadFiles.Payload2525B, wamiPayloadFiles.PayloadDatasheet.name);
+    }
+
     payload.PayloadType = payloadTypeId;
+    formData.append("payloadFormData", JSON.stringify(payload));
+
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => { this.props.onClose(NoticeType.UPDATE); });
     } else {
-      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+      this.props.addPayload(formData).then(() => { this.props.onClose(NoticeType.ADD); });
     }
   }
 
@@ -368,7 +396,7 @@ class WamiModal extends React.Component {
 
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
-      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
       { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
       { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },

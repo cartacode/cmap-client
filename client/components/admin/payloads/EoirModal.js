@@ -21,7 +21,7 @@ class EoirModal extends React.Component {
       payload: {
         // PayloadID: '',
         // PayloadReferenceCode: '',
-        // PaylodWireframe: '',
+        // PayloadWireframe: '',
         // PayloadPhoto: '',
         // Payload3D: '',
         // PayloadIcon: '',
@@ -65,7 +65,7 @@ class EoirModal extends React.Component {
       onePayload: {},
       eoirPayloadFiles: {
         PayloadPhoto: null,
-        PaylodWireframe: null,
+        PayloadWireframe: null,
         Payload3D: null,
         PayloadIcon: null,
         Payload2525B: null,
@@ -107,6 +107,9 @@ class EoirModal extends React.Component {
       this.setState({
         editFetched: true,
         payload: this.props.onePayload,
+        isImagedRequired: true,
+        payloadPhotoPreviewUrl: this.props.onePayload.PayloadPhoto,
+        payloadWireframePreviewUrl: this.props.onePayload.PayloadWireframe,
       });
     });
   }
@@ -199,14 +202,12 @@ class EoirModal extends React.Component {
       eoirPayloadFiles: {
         ...eoirPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
-        PaylodWireframe: uploadFileData.PaylodWireframe,
+        PayloadWireframe: uploadFileData.PayloadWireframe,
         Payload3D: uploadFileData.Payload3D,
         PayloadIcon: uploadFileData.PayloadIcon,
         Payload2525B: uploadFileData.Payload2525B,
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
-    }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.eoirPayloadFiles);
     });
   }
 
@@ -225,7 +226,7 @@ class EoirModal extends React.Component {
         });
       }
     }
-    if (uploadedFile.name === 'PaylodWireframe') {
+    if (uploadedFile.name === 'PayloadWireframe') {
       reader.onloadend = () => {
         this.setState({
           payloadWireframePreviewUrl: reader.result
@@ -249,7 +250,7 @@ class EoirModal extends React.Component {
       }
       reader.readAsDataURL(file);
     }
-    else if (event.target.id == "PaylodWireframe") {
+    else if (event.target.id == "PayloadWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
       reader.onloadend = () => {
@@ -277,15 +278,38 @@ class EoirModal extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    let { payload } = this.state;
+    let { payload, eoirPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
 
+    // File Upload form data 
+    const formData = new FormData();
+    if (eoirPayloadFiles.PayloadPhoto) {
+      formData.append('PayloadPhoto', eoirPayloadFiles.PayloadPhoto, eoirPayloadFiles.PayloadPhoto.name);
+    }
+    if (eoirPayloadFiles.PayloadWireframe) {
+      formData.append('PayloadWireframe', eoirPayloadFiles.PayloadWireframe, eoirPayloadFiles.PayloadWireframe.name);
+    }
+    if (eoirPayloadFiles.Payload3D) {
+      formData.append('Payload3D', eoirPayloadFiles.Payload3D, eoirPayloadFiles.Payload3D.name);
+    }
+    if (eoirPayloadFiles.PayloadIcon) {
+      formData.append('PayloadIcon', eoirPayloadFiles.PayloadIcon, eoirPayloadFiles.PayloadIcon.name);
+    }
+    if (eoirPayloadFiles.Payload2525B) {
+      formData.append('Payload2525B', eoirPayloadFiles.Payload2525B, eoirPayloadFiles.Payload2525B.name);
+    }
+    if (eoirPayloadFiles.PayloadDatasheet) {
+      formData.append('PayloadDatasheet', eoirPayloadFiles.Payload2525B, eoirPayloadFiles.PayloadDatasheet.name);
+    }
+
     payload.PayloadType = payloadTypeId;
+    formData.append("payloadFormData", JSON.stringify(payload));
+
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
-      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
 
@@ -381,7 +405,7 @@ class EoirModal extends React.Component {
 
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
-      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
       { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
       { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },

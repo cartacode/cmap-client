@@ -18,7 +18,7 @@ class SargmtiModal extends React.Component {
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
-        PaylodWireframe: '',
+        PayloadWireframe: '',
         PayloadPhoto: '',
         Payload3D: '',
         PayloadIcon: '',
@@ -59,7 +59,7 @@ class SargmtiModal extends React.Component {
       onePayload: {},
       sargmtiPayloadFiles: {
         PayloadPhoto: null,
-        PaylodWireframe: null,
+        PayloadWireframe: null,
         Payload3D: null,
         PayloadIcon: null,
         Payload2525B: null,
@@ -99,9 +99,13 @@ class SargmtiModal extends React.Component {
       this.setState({
         editFetched: true,
         payload: this.props.onePayload,
+        isImagedRequired: true,
+        payloadPhotoPreviewUrl: this.props.onePayload.PayloadPhoto,
+        payloadWireframePreviewUrl: this.props.onePayload.PayloadWireframe,
       });
     });
   }
+
   handlePayloadGeneralData = (generalData) => {
     const { payload } = this.state;
     this.setState({
@@ -188,7 +192,7 @@ class SargmtiModal extends React.Component {
       sargmtiPayloadFiles: {
         ...sargmtiPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
-        PaylodWireframe: uploadFileData.PaylodWireframe,
+        PayloadWireframe: uploadFileData.PayloadWireframe,
         Payload3D: uploadFileData.Payload3D,
         PayloadIcon: uploadFileData.PayloadIcon,
         Payload2525B: uploadFileData.Payload2525B,
@@ -213,7 +217,7 @@ class SargmtiModal extends React.Component {
         });
       }
     }
-    if (uploadedFile.name === 'PaylodWireframe') {
+    if (uploadedFile.name === 'PayloadWireframe') {
       reader.onloadend = () => {
         this.setState({
           payloadWireframePreviewUrl: reader.result
@@ -236,7 +240,7 @@ class SargmtiModal extends React.Component {
         });
       }
       reader.readAsDataURL(file);
-    }else if (event.target.id == "PaylodWireframe") {
+    }else if (event.target.id == "PayloadWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
       reader.onloadend = () => {
@@ -262,15 +266,39 @@ class SargmtiModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.payload);
-    const { payload } = this.state;
+
+    let { payload, sargmtiPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
+
+    // File Upload form data 
+    const formData = new FormData();
+    if (sargmtiPayloadFiles.PayloadPhoto) {
+      formData.append('PayloadPhoto', sargmtiPayloadFiles.PayloadPhoto, sargmtiPayloadFiles.PayloadPhoto.name);
+    }
+    if (sargmtiPayloadFiles.PayloadWireframe) {
+      formData.append('PayloadWireframe', sargmtiPayloadFiles.PayloadWireframe, sargmtiPayloadFiles.PayloadWireframe.name);
+    }
+    if (sargmtiPayloadFiles.Payload3D) {
+      formData.append('Payload3D', sargmtiPayloadFiles.Payload3D, sargmtiPayloadFiles.Payload3D.name);
+    }
+    if (sargmtiPayloadFiles.PayloadIcon) {
+      formData.append('PayloadIcon', sargmtiPayloadFiles.PayloadIcon, sargmtiPayloadFiles.PayloadIcon.name);
+    }
+    if (sargmtiPayloadFiles.Payload2525B) {
+      formData.append('Payload2525B', sargmtiPayloadFiles.Payload2525B, sargmtiPayloadFiles.Payload2525B.name);
+    }
+    if (sargmtiPayloadFiles.PayloadDatasheet) {
+      formData.append('PayloadDatasheet', sargmtiPayloadFiles.Payload2525B, sargmtiPayloadFiles.PayloadDatasheet.name);
+    }
+
     payload.PayloadType = payloadTypeId;
+    formData.append("payloadFormData", JSON.stringify(payload));
+
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
-      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
 
@@ -362,7 +390,7 @@ class SargmtiModal extends React.Component {
 
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
-      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
       { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
       { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },

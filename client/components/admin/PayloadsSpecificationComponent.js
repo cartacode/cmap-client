@@ -5,7 +5,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import DropDownButton from '../reusable/DropDownButton';
-
+import { defaultFilter } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
 import EoirModal from './payloads/EoirModal';
 import EquipmentModal from './payloads/EquipmentModal';
 import SargmtiModal from './payloads/SargmtiModal';
@@ -318,20 +319,17 @@ class PayloadsSpecificationComponent extends React.Component {
 				<EquipmentModal editId={this.state.editId} payloadSpecType= {this.state.payloadSpecType} payloadTypeId={this.state.payloadTypeId} show={this.state.equipmentModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }
 				
-				<NotificationContainer />
+				
 				<div className="col-md-12">
 					<ReactTable
 						data={allPayloads}
 						columns={columns}
-						defaultPageSize={5}
-						minRows={1}
+						defaultPageSize={TableDefaults.PAGE_SIZE}
+						minRows={TableDefaults.PAGE_SIZE}
 						className="-striped -highlight"
 						filterable={true}
 						loading={this.props.isLoading}
-						defaultFilterMethod={(filter, row) => {
-							const id = filter.pivotId || filter.id
-							return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-						  }}
+						defaultFilterMethod={defaultFilter}
 					/>
 				</div>
 				</div>

@@ -6,7 +6,8 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import FullHeaderLine from "../reusable/FullHeaderLine";
 import { NoticeType } from "../../dictionary/constants";
-import { getIntelRequestStatusCodeColor } from "../../util/helpers";
+import { getIntelRequestStatusCodeColor, defaultFilter } from "../../util/helpers";
+
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
@@ -140,10 +141,10 @@ class CollectionManagerComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link>&nbsp;
-            <a href="#" className="text-danger" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-down" /></a>
+            {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
+            <a href="#" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="#" className="text-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
+            <a href="#" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
         )
       }
@@ -181,7 +182,7 @@ class CollectionManagerComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="#" className="text-danger" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-up" /> </a>
+            <a href="#" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
             &nbsp;
           </div>
         )
@@ -216,7 +217,7 @@ class CollectionManagerComponent extends React.Component {
                 <ReactTable
                   data={allApprovedIntelRequests}
                   columns={intelRequestColumns}
-                  defaultPageSize={3}
+                  defaultPageSize={5}
                   showPaginationTop={true}
                   showPaginationBottom={false}
                   className="-striped -highlight"
@@ -224,15 +225,8 @@ class CollectionManagerComponent extends React.Component {
                   showPageSizeOptions={false}
                   previousText="&#8678;"
                   nextText="&#8680;"
-                  minRows={3}
-                  defaultFilterMethod={(filter, row) => {
-                    const id = filter.pivotId || filter.id;
-                    return row[id] !== undefined && row[id] !== null
-                      ? String(row[id].toLowerCase()).startsWith(
-                          filter.value.toLowerCase()
-                        )
-                      : true;
-                  }}
+                  minRows={5}
+                  defaultFilterMethod={defaultFilter}
                 />
               </div>
 
@@ -242,21 +236,16 @@ class CollectionManagerComponent extends React.Component {
                   <ReactTable
                     data={allCollectionsPlan}
                     columns={collectionPlanColumns}
-                    defaultPageSize={3}
-                    minRows={3}
+                    defaultPageSize={5}
+                    minRows={5}
+                    showPaginationTop={true}
+                    showPaginationBottom={false}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
                     previousText="&#8678;"
                     nextText="&#8680;"
-                    defaultFilterMethod={(filter, row) => {
-                      const id = filter.pivotId || filter.id;
-                      return row[id] !== undefined && row[id] !== null
-                        ? String(row[id].toLowerCase()).startsWith(
-                            filter.value.toLowerCase()
-                          )
-                        : true;
-                    }}
+                    defaultFilterMethod={defaultFilter}
                   />
                 </div>
               </div>

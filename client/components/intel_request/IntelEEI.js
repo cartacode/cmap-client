@@ -12,7 +12,7 @@ import ReactTable from 'react-table';
 import { addIntelEei, fetchIntelEeisByIntelId, updateIntelEei } from '../../actions/inteleei';
 import { defaultFilter } from '../../util/helpers';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import  { NoticeType } from '../../dictionary/constants';
+import  { NoticeType, TableDefaults } from '../../dictionary/constants';
 
 class IntelEEI extends React.Component {
 
@@ -188,8 +188,8 @@ class IntelEEI extends React.Component {
             <ReactTable
               data={this.state.missionEEI}
               columns={missionColumns}
-              defaultPageSize={5}
-              minRows={1}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={defaultFilter}

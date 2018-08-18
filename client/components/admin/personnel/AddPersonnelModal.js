@@ -334,9 +334,7 @@ class AddPersonnelModal extends React.Component {
         PersonnelPhoto: uploadFileData.PersonnelPhoto,
         OrganizationLogo: uploadFileData.OrganizationLogo,
         Datasheet: uploadFileData.Datasheet,
-      }
-    }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
+      },
     });
   }
 

@@ -1,15 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import CcirPirModal from './ccir-pirs/CcirPirModal';
-
-
-
-
-
-
+import { defaultFilter } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
 
 class CcirPirComponent extends React.Component {
 
@@ -161,7 +157,7 @@ notify =(type)=>{
 
   return (
     <div>
-      <NotificationContainer />
+      
       <div className="row orders-assets">
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -184,14 +180,11 @@ notify =(type)=>{
             <ReactTable
               data={allCcirPirs}
               columns={columns}
-              defaultPageSize={5}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.PAGE_SIZE}
               className="-striped -highlight"
               filterable={true}
-              minRows={1}
-						  defaultFilterMethod={(filter, row) => {
-							  const id = filter.pivotId || filter.id
-							  return (row[id] !== undefined && row[id] !== null) ? String(row[id]).startsWith(filter.value) : true;
-						  }}
+						  defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>

@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatformInventory from './platform/AddPlatformInventory';
-import {NoticeType} from '../../dictionary/constants';
+import {NoticeType, TableDefaults} from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 
 
@@ -175,16 +175,16 @@ class PlatformComponent extends React.Component {
             <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}
 
-          <NotificationContainer />
+          
           
           <div className="col-md-12">
             <ReactTable
               data={allPlatformInventory}
               columns={columns}
-              defaultPageSize={5}
               className="-striped -highlight"              
               filterable={true}
-              minRows={1}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.PAGE_SIZE}
               loading={this.props.isLoading}
 						  defaultFilterMethod={defaultFilter}
             />

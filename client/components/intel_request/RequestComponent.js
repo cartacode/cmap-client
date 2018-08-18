@@ -6,6 +6,7 @@ import ReactTable from 'react-table';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
 
 class RequestComponent extends React.Component {
 
@@ -132,8 +133,8 @@ class RequestComponent extends React.Component {
             <ReactTable
               data={allRequests}
               columns={columns}
-              defaultPageSize={8}
-              minRows={1}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.PAGE_SIZE}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={defaultFilter}

@@ -20,7 +20,7 @@ class EquipmentModal extends React.Component {
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
-        PaylodWireframe: '',
+        PayloadWireframe: '',
         PayloadPhoto: '',
         Payload3D: '',
         PayloadIcon: '',
@@ -61,7 +61,7 @@ class EquipmentModal extends React.Component {
       onePayload: {},
       equipmentPayloadFiles: {
         PayloadPhoto: null,
-        PaylodWireframe: null,
+        PayloadWireframe: null,
         Payload3D: null,
         PayloadIcon: null,
         Payload2525B: null,
@@ -105,6 +105,9 @@ class EquipmentModal extends React.Component {
       this.setState({
         editFetched: true,
         payload: this.props.onePayload,
+        isImagedRequired: true,
+        payloadPhotoPreviewUrl: this.props.onePayload.PayloadPhoto,
+        payloadWireframePreviewUrl: this.props.onePayload.PayloadWireframe,
       });
     });
   }
@@ -136,9 +139,7 @@ class EquipmentModal extends React.Component {
         PayloadCost: generalData.PayloadCost,
         PayloadCostNotes: generalData.PayloadCostNotes,
         MissionRole: generalData.MissionRole,
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.payload);
+      },
     });
   }
 
@@ -155,8 +156,6 @@ class EquipmentModal extends React.Component {
         PayloadConnector1: technicalData.PayloadConnector1,
         PayloadConnector2: technicalData.PayloadConnector2,
       }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.payload);
     });
   }
 
@@ -166,9 +165,7 @@ class EquipmentModal extends React.Component {
       payload: {
         ...payload,
         PayloadLensCount: featureData.PayloadlensCount
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.payload);
+      },
     });
   }
   handlePayloadCrewData = (crewData) => {
@@ -180,9 +177,7 @@ class EquipmentModal extends React.Component {
         PayloadMOS1: crewData.PayloadMOS1,
         PayloadMOS2: crewData.PayloadMOS2,
         PayloadMOS3: crewData.PayloadMOS3
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.payload);
+      },
     });
   }
 
@@ -195,14 +190,12 @@ class EquipmentModal extends React.Component {
       equipmentPayloadFiles: {
         ...equipmentPayloadFiles,
         PayloadPhoto: uploadFileData.PayloadPhoto,
-        PaylodWireframe: uploadFileData.PaylodWireframe,
+        PayloadWireframe: uploadFileData.PayloadWireframe,
         Payload3D: uploadFileData.Payload3D,
         PayloadIcon: uploadFileData.PayloadIcon,
         Payload2525B: uploadFileData.Payload2525B,
         PayloadDatasheet: uploadFileData.PayloadDatasheet,
       }
-    }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Payload Specification screen :", this.state.equipmentPayloadFiles);
     });
   }
 
@@ -221,7 +214,7 @@ class EquipmentModal extends React.Component {
         });
       }
     }
-    if (uploadedFile.name === 'PaylodWireframe') {
+    if (uploadedFile.name === 'PayloadWireframe') {
       reader.onloadend = () => {
         this.setState({
           payloadWireframePreviewUrl: reader.result
@@ -244,7 +237,7 @@ class EquipmentModal extends React.Component {
         });
       }
       reader.readAsDataURL(file);
-    }else if (event.target.id == "PaylodWireframe") {
+    }else if (event.target.id == "PayloadWireframe") {
       let reader = new FileReader();
       let file = event.target.files[0];
       reader.onloadend = () => {
@@ -271,21 +264,40 @@ class EquipmentModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    /*  console.log('---here--');
-     console.log(this.state.payload);
-     this.props.addPayload(this.state.payload).then( () => {this.props.onClose();}); */
 
-    console.log(this.state.payload);
-    const { payload } = this.state;
+    let { payload, equipmentPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
-    payload.PayloadType = payloadTypeId;
-    if (editId !== undefined && editId !== '0') {
-      payload.PayloadID = editId;
-      this.props.updatePayload(editId, payload).then(() => { this.props.onClose('UPDATE'); });
-    } else {
-      this.props.addPayload(payload).then(() => { this.props.onClose('ADD'); });
+
+    // File Upload form data 
+    const formData = new FormData();
+    if (equipmentPayloadFiles.PayloadPhoto) {
+      formData.append('PayloadPhoto', equipmentPayloadFiles.PayloadPhoto, equipmentPayloadFiles.PayloadPhoto.name);
+    }
+    if (equipmentPayloadFiles.PayloadWireframe) {
+      formData.append('PayloadWireframe', equipmentPayloadFiles.PayloadWireframe, equipmentPayloadFiles.PayloadWireframe.name);
+    }
+    if (equipmentPayloadFiles.Payload3D) {
+      formData.append('Payload3D', equipmentPayloadFiles.Payload3D, equipmentPayloadFiles.Payload3D.name);
+    }
+    if (equipmentPayloadFiles.PayloadIcon) {
+      formData.append('PayloadIcon', equipmentPayloadFiles.PayloadIcon, equipmentPayloadFiles.PayloadIcon.name);
+    }
+    if (equipmentPayloadFiles.Payload2525B) {
+      formData.append('Payload2525B', equipmentPayloadFiles.Payload2525B, equipmentPayloadFiles.Payload2525B.name);
+    }
+    if (equipmentPayloadFiles.PayloadDatasheet) {
+      formData.append('PayloadDatasheet', equipmentPayloadFiles.Payload2525B, equipmentPayloadFiles.PayloadDatasheet.name);
     }
 
+    payload.PayloadType = payloadTypeId;
+    formData.append("payloadFormData", JSON.stringify(payload));
+
+    if (editId !== undefined && editId !== '0') {
+      payload.PayloadID = editId;
+      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
+    } else {
+      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
+    }
   }
 
 
@@ -360,7 +372,7 @@ class EquipmentModal extends React.Component {
 
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
-      { name: translations['Wireframe Image'], type: 'file', domID: 'PaylodWireframe', valFieldID: 'PaylodWireframe', fileType: 'image' },
+      { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
       { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
       { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },
