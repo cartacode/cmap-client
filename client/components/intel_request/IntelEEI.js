@@ -78,15 +78,14 @@ class IntelEEI extends React.Component {
   }
 
   closeEEI = (actionType) => {
+    const { intelId} = this.props;
     this.notify(actionType);
-    // toto fetch latest EEI array
-
     this.props.fetchIntelEeisByIntelId(intelId).then(() => {
 
       this.setState({
         editId: '0',
         isFormOpened: false,  
-        missionEEI: this.props.inteleei,
+        missionEEI: this.props.inteleeis,
       });
     });
   }
@@ -99,12 +98,13 @@ class IntelEEI extends React.Component {
   }
 
   notify = (type) => {
+    const {translations} = this.props;
     if(type === NoticeType.ADD) {
-      NotificationManager.success('Added Succesfully', 'Intel Request', 5000);
+      NotificationManager.success(translations['AddedSuccesfully'], translations['IntelEEI'], 5000);
     } else if(type === NoticeType.UPDATE) {
-      NotificationManager.success('Update Succesfully', 'Intel Request', 5000);
+      NotificationManager.success(translations['UpdateSuccesfully'], translations['IntelEEI'], 5000);
     } else if(type === NoticeType.DELETE) {
-      NotificationManager.success('Deleted Succesfully', 'Intel Request', 5000);
+      NotificationManager.success(translations['DeletedSuccesfully'], translations['IntelEEI'], 5000);
     }
   }
 
@@ -162,7 +162,6 @@ class IntelEEI extends React.Component {
 
     return (
       <div id="intelEEIContainer">
-        <NotificationContainer />
 
         {/* <div className="row">
           <div className="col-md-12 filter-line">
@@ -171,7 +170,7 @@ class IntelEEI extends React.Component {
             </div>
           </div>
         </div> */}
-        { this.state.isFormOpened ? <EeiForm editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI}/> : null }
+        { this.state.isFormOpened ? <EeiForm editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
           <div className="col-md-12">

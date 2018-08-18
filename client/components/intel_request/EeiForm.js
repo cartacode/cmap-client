@@ -120,15 +120,18 @@ class EeiForm extends React.Component {
     let { intelReqEEI } = this.state;
     const { editId, intelId } = this.props;
     intelReqEEI.intelReqID = intelId;
+    
     console.log('Submitting' + JSON.stringify(intelReqEEI));
     if(editId !== undefined && editId !== '0') {
+      delete intelReqEEI.LIMIDSReq;
+      delete intelReqEEI.EEIThreat;
       intelReqEEI.id = editId;
       this.props.updateIntelEei(editId, intelReqEEI).then(() => {
-        this.onClose(NoticeType.UPDATE);
+        this.props.onClose(NoticeType.UPDATE);
       });
     } else {
       this.props.addIntelEei(intelReqEEI).then(() => {
-        this.onClose(NoticeType.ADD);
+        this.props.onClose(NoticeType.ADD);
       });
     }
   }
@@ -158,17 +161,17 @@ class EeiForm extends React.Component {
     
     // FORM fields Array
     const eeiFiled1 = [
-      { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName' },
-      { name: translations['Target#'], type: 'input', domID: 'targetNum', valFieldID: 'targetNum' },
-      { name: translations.Objective, type: 'number', domID: 'dispObjective', ddID: 'objective', valFieldID: 'objective' },
-      { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID' },
+      { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
+      { name: translations['Target#'], type: 'input', domID: 'targetNum', valFieldID: 'targetNum', required: true },
+      { name: translations.Objective, type: 'number', domID: 'dispObjective', ddID: 'objective', valFieldID: 'objective', required: true },
+      { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },
     ];
 
     const eeiFiled2 = [
-      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location' },
-      { name: translations.District, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district' },
-      { name: translations['Grid Coordinates'], type: 'input', domID: 'gridCoordinates', valFieldID: 'gridCoordinates' },
-      { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_Req' },
+      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },
+      { name: translations.District, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district', required: true },
+      { name: translations['Grid Coordinates'], type: 'input', domID: 'gridCoordinates', valFieldID: 'gridCoordinates', required: true },
+      { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_Req', required: true },
     ];
 
     const eeiFiled3 = [

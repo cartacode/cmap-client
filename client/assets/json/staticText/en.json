@@ -2,7 +2,7 @@
   "dashboard": "dashboard",
   "liveview": "liveview",
   "status": "status",
-  "intel request": "intel request",
+  "intel request": "Intel Request",
   "mission mgt": "mission mgt",
   "schedules": "schedules",
   "orders/assets": "orders/assets",
@@ -706,5 +706,9 @@
   "CollectionPlan":"Collection Plan",
   "CollectionMap":"Collection Map",
   "IntelRequests":"Intel Requests",
-  "MissionType":"Mission Type"
+  "MissionType":"Mission Type",
+  "IntelEEI": "Intel EEI",
+  "AddedSuccesfully": "Added Successfully",
+  "UpdateSuccesfully": "Updated Successfully",
+  "DeletedSuccesfully": "Deleted Succesfully"
 }

@@ -5,7 +5,7 @@ import {
   NavLink
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { NotificationContainer} from 'react-notifications';
 import { supportedLanguages } from 'dictionary/localization';
 
 class HeaderComponent extends React.Component {
@@ -79,6 +79,7 @@ class HeaderComponent extends React.Component {
 
       return (
         <div className="menu-button" key={i}>
+          <NotificationContainer />
           <NavLink to={item.url} className={matchForLink ? "active-menu-item" : ''}>
             <button data-target="#bs-AMPS-navbar-collapse-1"  data-toggle="collapse">
               {item.title}
