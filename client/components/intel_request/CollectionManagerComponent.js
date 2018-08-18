@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  NotificationContainer,
-  NotificationManager
+  NotificationContainer, NotificationManager
 } from "react-notifications";
 import { Link } from "react-router-dom";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import FullHeaderLine from "../reusable/FullHeaderLine";
-import { NoticeType, IntelReqStatusCodes } from "../../dictionary/constants";
-import { getIntelRequestStatusCodeColoe } from "../../util/helpers";
+import { NoticeType } from "../../dictionary/constants";
+import { getIntelRequestStatusCodeColor } from "../../util/helpers";
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
@@ -29,27 +28,26 @@ class CollectionManagerComponent extends React.Component {
     if (value !== undefined && value !== "0") {
       this.props.deleteApprovedIntelRequestById(value).then(() => {
         this.setState({ editId: "0" });
-        this.notify("DELETE");
+        this.notify(NoticeType.DELETE);
         this.loadData();
       });
     }
   };
 
   getColor= (row)=>{
-    const colorCode = getIntelRequestStatusCodeColoe(row.original.StatusId);
+    const colorCode = getIntelRequestStatusCodeColor(row.original.abbreviation);
   }
 
 
   moveToCollectionPlan = (row) => {
     //@Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
-    // 'Approved – Pending Resources' and status codre should be 10.
+    // 'Approved – Pending Resources' and status codre should be 10 (APR).
     const value = row.value;
     if (value !== undefined && value !== '0') {
-      //For Temporary
-      const userId = '99bdcdab-666f-498f-b93a-a53cce15e4a5';
-	    this.props.moveToCollectionPlan(userId, value).then(() => {
+      let { statusId } = 10; //'APR';
+	    this.props.moveToCollectionPlan(value, statusId).then(() => {
 	      this.setState({ editId: '0' });
-	      this.notify('MOVE_TO_COLLECTION');
+	      this.notify(NoticeType.MOVE_TO_COLLECTION);
 	      this.loadData();
       }); 
     }
@@ -57,35 +55,47 @@ class CollectionManagerComponent extends React.Component {
 
   moveToIntelRequest = (value) => {
     //@Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
-    // 'Approved – Approved - Validated' and status codre should be 21.
+    // 'Approved – Approved - Validated' and status codre should be 21 (AV).
     if (value !== undefined && value !== '0') {
-      //For Temporary
-      const userId = '99bdcdab-666f-498f-b93a-a53cce15e4a5';
-      this.props.moveToIntelRequest(userId, value).then(() => {
+      let { statusId } = 21;//'AV';
+      this.props.moveToIntelRequest(value, statusId).then(() => {
         this.setState({ editId: "0" });
-        this.notify("MOVE_TO_INTEL_REQUEST");
+        this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
         this.loadData();
       });
     }
   };
 
+  deleteCollectionPlan=(value)=>{
+    if (value !== undefined && value !== "0") {
+      this.props.deleteCollectionPlanById(value).then(() => {
+        this.setState({ editId: "0" });
+        this.notify(NoticeType.DELETE);
+        this.loadData();
+      });
+    }
+  }
+
   loadData = () => {
-    this.props.fetchApprovedIntelRequests();
-    this.props.fetchCollectionPlans();
+    let  unitId  = 10;
+    let  statusId  = 21; //'AV';
+    this.props.fetchApprovedIntelRequests(unitId, statusId);
+    statusId  = 10;//'APR';
+    this.props.fetchCollectionPlans(unitId, statusId);
   };
 
   notify = actionType => {
     const { translations } = this.props;
     if (this.state.editId !== undefined && this.state.editId !== "0") {
-      NotificationManager.success("Intel request is updated successfully.","Intel Request",5000);
-    } else if ("ADD" == actionType) {
-      NotificationManager.success("Intel request is added successfully.","Intel Request",5000);
-    } else if ("MOVE_TO_COLLECTION" == actionType) {
-      NotificationManager.success("Intel request is moved to collection plan.","Intel Request", 5000);
-    } else if ("MOVE_TO_INTEL_REQUEST" == actionType) {
-      NotificationManager.success("Intel request is moved to collection plan.","Intel Request", 5000);
-    } else if ("DELETE" == actionType) {
-      NotificationManager.success("Intel request is deleted.","Intel Request",5000);
+      NotificationManager.success(translations['Intel Request update'], translations['Intel Request Title'], 5000);
+    } else if (NoticeType.ADD == actionType) {
+      NotificationManager.success(translations['Intel Request add'], translations['Intel Request Title'], 5000);
+    } else if (NoticeType.MOVE_TO_COLLECTION == actionType) {
+      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+    } else if (NoticeType.MOVE_TO_INTEL_REQUEST == actionType) {
+      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+    } else if (NoticeType.DELETE == actionType) {
+      NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
     }
   };
 
@@ -173,7 +183,6 @@ class CollectionManagerComponent extends React.Component {
           <div>
             <a href="#" className="text-danger" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-up" /> </a>
             &nbsp;
-            <a href="#" className="text-danger" title="Delete"> <span className="glyphicon glyphicon-trash" /> </a>
           </div>
         )
       }

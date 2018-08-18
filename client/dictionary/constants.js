@@ -1,79 +1,96 @@
 export const NoticeType = {
   ADD: "ADD",
   UPDATE: "UPDATE",
-  DELETE: "DELETE"
+  DELETE: "DELETE",
+  MOVE_TO_COLLECTION : "MOVE_TO_COLLECTION",
+  MOVE_TO_INTEL_REQUEST : "MOVE_TO_INTEL_REQUEST",
+
 };
 
 export const IntelReqStatusCodes = [
   {
     id: 1,
     description: "Origination in Process",
+    abbreviation: 'OP',
     color: ''
-  },
-  {
-    id: 10,
-    description: "Approved – Pending Resources",
-    color: '#0000FF'
-  },
-  {
-    id: 11,
-    description: "Approved – Resourced",
-    color: '#008000'
-  },
-  {
-    id: 12,
-    description: "Approved – Executed",
-    color: '#808080'
-  },
-  {
-    id: 13,
-    description: "Approved – Intel Posted",
-    color : '#FFA500'
   },
   {
     id: 2,
     description: "Pending – On Hold",
+    abbreviation: 'POH',
     color : '#FFA500'
-  },
-  {
-    id: 21,
-    description: "Approved - Validated",
-    color: '#008000',
   },
   {
     id: 3,
     description: "Denied - Intel Already Exists",
+    abbreviation: 'DIAE',
     color: '#FFFF00'
   },
   {
     id: 4,
     description: "Denied - Insufficient Priority",
+    abbreviation: 'DIP',
     color: '#FFFF00'
   },
   {
     id: 5,
     description: "Denied – Unavailable Resources",
+    abbreviation: 'DUR',
     color: '#FFFF00'
   },
   {
     id: 6,
     description: "Denied - Additional Info Requested",
+    abbreviation: 'DAIR',
     color: '#FF0000'
 
   },
   {
     id: 7,
     description: "Denied - Request Canceled",
+    abbreviation: 'DRC',
     color: '#FFFF00'
   },
   {
     id: 8,
     description: "Denied – Weather Cancelation",
+    abbreviation: 'DWC',
     color: '#FFFF00'
   },
   {
     id: 9,
     description: "Denied – Past LTIV",
+    abbreviation: 'DPL',
     color: '#FFFF00'
+  },
+  {
+    id: 10,
+    description: "Approved – Pending Resources",
+    abbreviation: 'APR',
+    color: '#0000FF'
+  },
+  {
+    id: 11,
+    description: "Approved – Resourced",
+    abbreviation: 'AR',
+    color: '#008000'
+  },
+  {
+    id: 12,
+    description: "Approved – Executed",
+    abbreviation: 'AE',
+    color: '#808080'
+  },
+  {
+    id: 13,
+    description: "Approved – Intel Posted",
+    abbreviation: 'AIP',
+    color : '#FFA500'
+  },
+  {
+    id: 21,
+    description: "Approved - Validated",
+    abbreviation: 'AV',
+    color: '#008000',
   }
 ];

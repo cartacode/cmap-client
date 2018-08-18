@@ -29,13 +29,13 @@ export const formatTime = (dateObj) => {
   return moment(dateObj).local().format("H:m A");
 }
 
-export const getIntelRequestStatusCodeColoe = (statusId) => {
+export const getIntelRequestStatusCodeColor = (abbreviation) => {
   let statueCodes = JSON.stringify(IntelReqStatusCodes);
   statueCodes = JSON.parse(statueCodes);
   console.log("****************IntelReqStatusCodes***********" + statueCodes);
   let colorCode;
   for (let i = 0; i < statueCodes.length; i++) {
-    if (statusId == statueCodes[i].id) {
+    if (abbreviation == statueCodes[i].abbreviation) {
       colorCode = statueCodes[i].color;
       break;
     }
