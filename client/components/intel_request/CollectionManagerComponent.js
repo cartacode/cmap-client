@@ -105,17 +105,21 @@ class CollectionManagerComponent extends React.Component {
     const editurl = '/intel-request/detail/';
     const intelRequestColumns = [
       {
-        Header: 'IR#',
+        Header: 'Request# Command',
         accessor: 'IntelRequestID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <span>{row.value}</span>
         </div>,
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "Status"
-      // },
+     /*  {
+        Header: 'Command',
+        accessor: 'COCOMText',
+      }, */
+      {
+        Header: "Status",
+        accessor: "Status"
+      },
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
@@ -128,11 +132,6 @@ class CollectionManagerComponent extends React.Component {
         Header: 'Armed',
         accessor: 'Armed',
       },
-      {
-        Header: 'Command',
-        accessor: 'COCOMText',
-      },
-
       {
         Header: translations.view,
         accessor: 'IntelRequestID',
@@ -150,17 +149,21 @@ class CollectionManagerComponent extends React.Component {
 
     const collectionPlanColumns = [
       {
-        Header: 'IR#',
+        Header: 'Request # Command',
         accessor: 'IntelRequestID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <span>{row.value}</span>
         </div>,
       },
-      // {
-      //   Header: 'Status',
-      //   accessor: 'Status',
-      // },
+      {
+        Header: 'Asset',
+        accessor: 'asset',
+      },
+      {
+        Header: 'Priority',
+        accessor: 'PriorityIntelRequirement',
+      },
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
@@ -173,11 +176,10 @@ class CollectionManagerComponent extends React.Component {
         Header: 'Armed',
         accessor: 'Armed',
       },
-      {
+    /*   {
         Header: 'Command',
         accessor: 'COCOMText',
-      },
-
+      }, */
       {
         Header: translations.view,
         accessor: 'IntelRequestID',

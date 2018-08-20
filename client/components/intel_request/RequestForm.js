@@ -122,7 +122,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         ...intelRequest,
         ReportClassification: ir.ReportClassification,
-        AssetId: ir.Asset,
+        AssetId: ir.AssetId,
         // PointofContact: intelRequest3.PointofContact,
         // DSN: intelRequest3.DSN,
         // EmailSIPR: intelRequest3.EmailSIPR,
@@ -155,7 +155,6 @@ class RequestForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    
     let { intelRequest } = this.state;
     const { match: { params } } = this.props;
     const editId = params.editId;
