@@ -125,9 +125,8 @@ class OrgBuilderComponent extends React.Component {
          image: '/assets/img/admin/primoris_backgr.png',
          type:'Org',
          attributes: {
-           Rank: '',
-           Unit: allOrganicOrgs[0].LocationName,
-         },
+           Location: allOrganicOrgs[0].LocationName,
+          },
          children: [
            {
              id: '1.1',
@@ -135,8 +134,7 @@ class OrgBuilderComponent extends React.Component {
              image: '/assets/img/admin/primoris_backgr.png',
              type:'Org',
              attributes: {
-               Rank: '',
-               Unit: allOrganicOrgs[1].LocationName,
+               Location: allOrganicOrgs[1].LocationName,
              },
            },
            {
@@ -145,8 +143,7 @@ class OrgBuilderComponent extends React.Component {
              image: '/assets/img/admin/primoris_backgr.png',
              type:'Org',
              attributes: {
-               Rank: '',
-               Unit: allOrganicOrgs[2].LocationName,
+               Location: allOrganicOrgs[2].LocationName,
              },
            },
          ],

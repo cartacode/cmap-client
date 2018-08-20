@@ -318,11 +318,11 @@ class Accordion extends React.Component {
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${3}`}>
               <div className="content info-content">
-             { this.renderDropdowns(lastSectionDropdowns) }
                 <div className="accordion-search">
                 <br/>
-                  <input placeholder="Search/Filter Name, CAC ID"/>
+                  <input placeholder="Name"/>
                 </div>
+             { this.renderDropdowns(lastSectionDropdowns) }
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button onClick={() => this.close(2)}>
