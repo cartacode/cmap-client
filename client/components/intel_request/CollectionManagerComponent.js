@@ -75,7 +75,7 @@ class CollectionManagerComponent extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 12;
+    const unitId = 25;
     let statusId = 21; // 'AV';
     this.props.fetchApprovedIntelRequests(unitId, statusId);
 
@@ -140,9 +140,9 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
-            <a href="#" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="#" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
+            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
         ),
       },
@@ -184,7 +184,7 @@ class CollectionManagerComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="#" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
             &nbsp;
           </div>
         ),
@@ -213,7 +213,7 @@ class CollectionManagerComponent extends React.Component {
           </div> */}
           <div className="col-md-12">
 
-            <div className="row ">
+            <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
                 <FullHeaderLine headerText={translations.IntelRequests} />
                 <ReactTable
