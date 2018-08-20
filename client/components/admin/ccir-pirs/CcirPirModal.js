@@ -76,7 +76,7 @@ class CcirPirModal extends React.Component {
         RegionId: generalData.RegionId,
         UnitId: generalData.UnitId,
         CommanderId: generalData.CommanderId,
-        Type: generalData.Type,
+        /* Type: generalData.Type,*/
         MissionName: generalData.MissionName,
         EffectiveAreaKML: generalData.EffectiveAreaKML,
         CCIRPIRId: this.props.editId,
@@ -125,16 +125,17 @@ resetForm = () => {
 
   handleSubmit = event => {
     event.preventDefault();
-    debugger;
     const { editId } = this.props;
     let { ccirpir } = this.state;
+    const formData = new FormData();
     if (editId !== undefined && editId !== '0') {
       ccirpir.CCIRPIRId = editId;
       ccirpir.LastUpdateUserId =  null;
       this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
     } else {
       ccirpir.LastUpdateUserId =  null;
-      this.props.addCcirPir(ccirpir).then( () => {this.props.onClose('ADD');});
+      formData.append("ccirpir", ccirpir);
+      this.props.addCcirPir(formData).then( () => {this.props.onClose('ADD');});
     }
     
   }
@@ -194,7 +195,6 @@ resetForm = () => {
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
           </div>
-
           <div className="row personnel" >
             <div className="under-payload-content">
               <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleCcirPirGeneralData}
