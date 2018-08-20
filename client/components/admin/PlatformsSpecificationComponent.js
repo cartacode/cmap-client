@@ -69,9 +69,9 @@ class PlatformsSpecificationComponent extends React.Component {
 	deletePayload = (value) => {
 		if (value !== undefined && value !== '0') {
 			this.props.deletePlatformById(value).then(() => {
-				this.setState({ editId: '0' });
-        this.notify(NoticeType.DELETE);
-        this.props.fetchPlatforms();
+        this.closePlatformForm(NoticeType.DELETE);
+				/* this.setState({ editId: '0', }); */
+        //this.props.fetchPlatforms();
 			});
 		}
 	}
