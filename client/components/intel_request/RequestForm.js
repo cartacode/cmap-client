@@ -257,7 +257,7 @@ resetForm() {
 
     // Following fields is visible only to Collection manager and also only in case of edit
     const intelRequest3 = [
-      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes', valFieldID: 'AssetId', required: true, required: true },
+      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
       { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
       // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
       { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
