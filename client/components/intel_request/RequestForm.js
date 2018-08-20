@@ -122,7 +122,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         ...intelRequest,
         ReportClassification: ir.ReportClassification,
-        AssetId: ir.Asset,
+        AssetId: ir.AssetId,
         // PointofContact: intelRequest3.PointofContact,
         // DSN: intelRequest3.DSN,
         // EmailSIPR: intelRequest3.EmailSIPR,
@@ -155,7 +155,6 @@ class RequestForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    
     let { intelRequest } = this.state;
     const { match: { params } } = this.props;
     const editId = params.editId;
@@ -258,7 +257,7 @@ resetForm() {
 
     // Following fields is visible only to Collection manager and also only in case of edit
     const intelRequest3 = [
-      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'PlatformCategory', valFieldID: 'AssetId', required: true, required: true },
+      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
       { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
       // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
       { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },

@@ -2,14 +2,14 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { CCIRPIR__ADD, CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__UPDATE, CCIRPIR__DELETE } from 'dictionary/action';
-import { baseUrl, requestHeaders } from 'dictionary/network';
+import { baseUrl, requestHeaders , formDataRequestHeader} from 'dictionary/network';
 import { createAction } from 'util/action';
 
 // function to add New CCIRPIR Record
 export function addCcirPir(ccirpir) {
   return createAction({
     type: CCIRPIR__ADD,
-    action: () => axios.post(`${baseUrl}/CCIRPIR`, qs.stringify(ccirpir), requestHeaders),
+    action: () => axios.post(`${baseUrl}/CCIRPIR`, ccirpir, formDataRequestHeader),
   });
 }
 

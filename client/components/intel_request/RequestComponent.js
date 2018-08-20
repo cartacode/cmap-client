@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { defaultFilter, formatDateTime, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
+import { NotificationManager } from 'react-notifications';
 
 class RequestComponent extends React.Component {
 
@@ -34,6 +35,15 @@ class RequestComponent extends React.Component {
 
   componentDidMount() {
     this.props.fetchIntelRequests();
+  }
+
+  deleteIntelRequestById =(value)=>{
+    const { translations } = this.props;
+    //@TODO:- Still API is not working.
+   /*  this.props.deleteIntelRequestById(value).then(() => {
+      NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
+      this.props.fetchIntelRequests();
+    }); */
   }
 
 
@@ -105,7 +115,8 @@ class RequestComponent extends React.Component {
         Header: translations['view'],
         accessor: 'IntelRequestID',
         filterable: false,
-        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; <a href="#" className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
+        <a href="#" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a></div>,
       },
     ];
 

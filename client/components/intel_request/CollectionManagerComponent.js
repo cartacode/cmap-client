@@ -75,12 +75,14 @@ class CollectionManagerComponent extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 12;
+    const unitId = 25;
     let statusId = 21; // 'AV';
-    this.props.fetchApprovedIntelRequests(unitId, statusId);
+    let abbreviation = 'AV';
+    this.props.fetchApprovedIntelRequests(unitId, abbreviation);
 
     statusId = 10;// 'APR';
-    this.props.fetchCollectionPlans(unitId, statusId);
+    abbreviation = 'APR';
+    this.props.fetchCollectionPlans(unitId, abbreviation);
   };
 
   notify = actionType => {
@@ -90,9 +92,9 @@ class CollectionManagerComponent extends React.Component {
     } else if (NoticeType.ADD == actionType) {
       NotificationManager.success(translations['Intel Request add'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.MOVE_TO_COLLECTION == actionType) {
-      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+     // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.MOVE_TO_INTEL_REQUEST == actionType) {
-      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+     // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.DELETE == actionType) {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
     }
@@ -105,17 +107,21 @@ class CollectionManagerComponent extends React.Component {
     const editurl = '/intel-request/detail/';
     const intelRequestColumns = [
       {
-        Header: 'IR#',
+        Header: 'Request# Command',
         accessor: 'IntelRequestID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <span>{row.value}</span>
         </div>,
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "Status"
-      // },
+     /*  {
+        Header: 'Command',
+        accessor: 'COCOMText',
+      }, */
+      {
+        Header: "Status",
+        accessor: "Status"
+      },
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
@@ -127,12 +133,10 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        Cell: row => <div>
+                        <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+                  </div>,
       },
-      {
-        Header: 'Command',
-        accessor: 'COCOMText',
-      },
-
       {
         Header: translations.view,
         accessor: 'IntelRequestID',
@@ -140,9 +144,9 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
-            <a href="#" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="#" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
+            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
         ),
       },
@@ -150,17 +154,21 @@ class CollectionManagerComponent extends React.Component {
 
     const collectionPlanColumns = [
       {
-        Header: 'IR#',
+        Header: 'Request # Command',
         accessor: 'IntelRequestID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <span>{row.value}</span>
         </div>,
       },
-      // {
-      //   Header: 'Status',
-      //   accessor: 'Status',
-      // },
+      {
+        Header: 'Asset',
+        accessor: 'Asset',
+      },
+      {
+        Header: 'Priority',
+        accessor: 'PriorityIntelRequirement',
+      },
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
@@ -172,19 +180,21 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        Cell: row => <div>
+                        <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+                  </div>,
       },
-      {
+    /*   {
         Header: 'Command',
         accessor: 'COCOMText',
-      },
-
+      }, */
       {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
-            <a href="#" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
             &nbsp;
           </div>
         ),
@@ -213,23 +223,25 @@ class CollectionManagerComponent extends React.Component {
           </div> */}
           <div className="col-md-12">
 
-            <div className="row ">
+            <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
                 <FullHeaderLine headerText={translations.IntelRequests} />
-                <ReactTable
-                  data={allApprovedIntelRequests}
-                  columns={intelRequestColumns}
-                  defaultPageSize={5}
-                  showPaginationTop={true}
-                  showPaginationBottom={false}
-                  className="-striped -highlight"
-                  filterable={false}
-                  showPageSizeOptions={false}
-                  previousText="&#8678;"
-                  nextText="&#8680;"
-                  minRows={5}
-                  defaultFilterMethod={defaultFilter}
-                />
+              <div className="intel-request-table-margin-top">
+                  <ReactTable
+                    data={allApprovedIntelRequests}
+                    columns={intelRequestColumns}
+                    defaultPageSize={5}
+                    showPaginationTop={true}
+                    showPaginationBottom={false}
+                    className="-striped -highlight"
+                    filterable={false}
+                    showPageSizeOptions={true}
+                    previousText="&#8678;"
+                    nextText="&#8680;"
+                    minRows={5}
+                    defaultFilterMethod={defaultFilter}
+                  />
+                </div>  
               </div>
 
               <div className="col-md-6">

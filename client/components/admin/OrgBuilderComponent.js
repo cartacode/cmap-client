@@ -7,6 +7,7 @@ import Tree from 'react-d3-tree';
 import TreeComponent from './org-builder/TreeComponent';
 import AddNodeModal from './org-builder/AddNodeModal';
 import OptionsModal from './org-builder/OptionsModal';
+import { fetchOrganicOrg } from '../../actions/organicorg';
 // import '../../vendor/treant-js/Treant.css';
 // import '../../vendor/treant-js/examples/custom-colored/custom-colored.css';
 // import '../../vendor/treant-js/vendor/raphael.js';
@@ -76,7 +77,7 @@ class OrgBuilderComponent extends React.Component {
   }
 
   componentDidMount = () => {
-  
+  this.props.fetchOrganicOrg();
   }
 
   renderSchema = () => {
@@ -114,35 +115,38 @@ class OrgBuilderComponent extends React.Component {
 
   orgChartView = () => {
     console.log("Here");
+    const { allOrganicOrgs } = this.props;
+    console.log(allOrganicOrgs);
+
     let orgData2 = [
        {
          id: '1',
-         name: 'US Army, INSCOM',
+         name: allOrganicOrgs[0].UnitName,
          image: '/assets/img/admin/primoris_backgr.png',
          type:'Org',
          attributes: {
            Rank: '',
-           Unit: 'Fort Belvoir, VA',
+           Unit: allOrganicOrgs[0].LocationName,
          },
          children: [
            {
              id: '1.1',
-             name: 'US Army 66th MI Brigade',
+             name: allOrganicOrgs[1].UnitName,
              image: '/assets/img/admin/primoris_backgr.png',
              type:'Org',
              attributes: {
                Rank: '',
-               Unit: 'Wiesbaden, Germany',
+               Unit: allOrganicOrgs[1].LocationName,
              },
            },
            {
              id: '1.2',
-             name: 'US Army 470th MI Brigade',
+             name: allOrganicOrgs[2].UnitName,
              image: '/assets/img/admin/primoris_backgr.png',
              type:'Org',
              attributes: {
                Rank: '',
-               Unit: 'Fort Sam Houston, TX',
+               Unit: allOrganicOrgs[2].LocationName,
              },
            },
          ],
@@ -321,6 +325,8 @@ setTimeout(() => {
 render() {
 
   const { translations } = this.props;
+  const { allOrganicOrgs } = this.props;
+
 
   return (
     <div>

@@ -107,4 +107,9 @@ export default {
     isFetchingOne: false,
   },
 
+  organicorgs: {
+    allOrganicOrgs: [],
+    isFetching: false,
+  },
+
 };

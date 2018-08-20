@@ -156,11 +156,12 @@ class GunModal extends React.Component {
         MunitionRateFire: technicalData.MunitionRateFire,
         MunitionMuzzleVelocity: technicalData.MunitionMuzzleVelocity,
         MunitionProjectileWeight: technicalData.MunitionProjectileWeight,
-        MunitionMusselEnergy: technicalData.MunitionMusselEnergy,
+        MunitionMuzzleEnergy: technicalData.MunitionMuzzleEnergy,
         MunitionLength: technicalData.MunitionLength,
         MunitionWidthDiameter: technicalData.MunitionWidthDiameter,
         MunitionHeight: technicalData.MunitionHeight,
         MunitionWeightUnloaded: technicalData.MunitionWeightUnloaded,
+        MunitionWeightLoaded: technicalData.MunitionWeightLoaded,
         MunitionRoundsCarried: technicalData.MunitionRoundsCarried
       }
     }, () => {
@@ -383,7 +384,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
       { name: translations['Rate of Fire'], type: 'number', domID: 'MunitionRateFire', valFieldID: 'MunitionRateFire' },
       { name: translations['Muzzle Velocity'], type: 'number', domID: 'MunitionMuzzleVelocity', valFieldID: 'MunitionMuzzleVelocity' },
       { name: translations['Projectile Weight'], type: 'number', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight', required: true },
-      { name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMusselEnergy', valFieldID: 'MunitionMusselEnergy' },
+      { name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMuzzleEnergy', valFieldID: 'MunitionMuzzleEnergy' },
       { name: translations['Length'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength' },
       { name: translations['Width/Diameter'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter' },
       { name: translations['Height'], type: 'number', domID: 'MunitionHeight', valFieldID: 'MunitionHeight' },
