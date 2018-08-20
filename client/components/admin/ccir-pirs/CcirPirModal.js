@@ -24,6 +24,7 @@ class CcirPirModal extends React.Component {
 
       //  },
       ccirpir:{},
+      EffectiveAreaKML: null,
       oneCcirPir: {},
     };
 
@@ -68,6 +69,7 @@ class CcirPirModal extends React.Component {
   handleCcirPirGeneralData = (generalData) => {
     const { ccirpir } = this.state;
     this.setState({
+      EffectiveAreaKML : generalData.EffectiveAreaKML,
       ccirpir: {
         ...ccirpir,
         COCOMId: generalData.COCOMId,
@@ -78,7 +80,7 @@ class CcirPirModal extends React.Component {
         CommanderId: generalData.CommanderId,
         /* Type: generalData.Type,*/
         MissionName: generalData.MissionName,
-        EffectiveAreaKML: generalData.EffectiveAreaKML,
+        /* EffectiveAreaKML: generalData.EffectiveAreaKML, */
         CCIRPIRId: this.props.editId,
       },
     });
@@ -128,13 +130,18 @@ resetForm = () => {
     const { editId } = this.props;
     let { ccirpir } = this.state;
     const formData = new FormData();
+    const kmlFile = this.state.EffectiveAreaKML;
+    if (kmlFile) {
+      formData.append('EffectiveAreaKML', kmlFile, kmlFile.name);
+    }
     if (editId !== undefined && editId !== '0') {
       ccirpir.CCIRPIRId = editId;
       ccirpir.LastUpdateUserId =  null;
-      this.props.updateCcirPir(editId, ccirpir).then( () => {this.props.onClose('UPDATE');});
+      formData.append("ccirpirFormData", JSON.stringify(ccirpir));
+      this.props.updateCcirPir(editId, formData).then( () => {this.props.onClose('UPDATE');});
     } else {
       ccirpir.LastUpdateUserId =  null;
-      formData.append("ccirpir", ccirpir);
+      formData.append("ccirpirFormData", JSON.stringify(ccirpir));
       this.props.addCcirPir(formData).then( () => {this.props.onClose('ADD');});
     }
     
