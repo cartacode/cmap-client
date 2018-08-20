@@ -77,10 +77,12 @@ class CollectionManagerComponent extends React.Component {
   loadData = () => {
     const unitId = 25;
     let statusId = 21; // 'AV';
-    this.props.fetchApprovedIntelRequests(unitId, statusId);
+    let abbreviation = 'AV';
+    this.props.fetchApprovedIntelRequests(unitId, abbreviation);
 
     statusId = 10;// 'APR';
-    this.props.fetchCollectionPlans(unitId, statusId);
+    abbreviation = 'APR';
+    this.props.fetchCollectionPlans(unitId, abbreviation);
   };
 
   notify = actionType => {
@@ -90,9 +92,9 @@ class CollectionManagerComponent extends React.Component {
     } else if (NoticeType.ADD == actionType) {
       NotificationManager.success(translations['Intel Request add'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.MOVE_TO_COLLECTION == actionType) {
-      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+     // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.MOVE_TO_INTEL_REQUEST == actionType) {
-      NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
+     // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.DELETE == actionType) {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
     }
@@ -131,6 +133,9 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        Cell: row => <div>
+                        <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+                  </div>,
       },
       {
         Header: translations.view,
@@ -158,7 +163,7 @@ class CollectionManagerComponent extends React.Component {
       },
       {
         Header: 'Asset',
-        accessor: 'asset',
+        accessor: 'Asset',
       },
       {
         Header: 'Priority',
@@ -175,6 +180,9 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        Cell: row => <div>
+                        <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+                  </div>,
       },
     /*   {
         Header: 'Command',
@@ -218,20 +226,22 @@ class CollectionManagerComponent extends React.Component {
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
                 <FullHeaderLine headerText={translations.IntelRequests} />
-                <ReactTable
-                  data={allApprovedIntelRequests}
-                  columns={intelRequestColumns}
-                  defaultPageSize={5}
-                  showPaginationTop={true}
-                  showPaginationBottom={false}
-                  className="-striped -highlight"
-                  filterable={false}
-                  showPageSizeOptions={false}
-                  previousText="&#8678;"
-                  nextText="&#8680;"
-                  minRows={5}
-                  defaultFilterMethod={defaultFilter}
-                />
+              <div className="intel-request-table-margin-top">
+                  <ReactTable
+                    data={allApprovedIntelRequests}
+                    columns={intelRequestColumns}
+                    defaultPageSize={5}
+                    showPaginationTop={true}
+                    showPaginationBottom={false}
+                    className="-striped -highlight"
+                    filterable={false}
+                    showPageSizeOptions={true}
+                    previousText="&#8678;"
+                    nextText="&#8680;"
+                    minRows={5}
+                    defaultFilterMethod={defaultFilter}
+                  />
+                </div>  
               </div>
 
               <div className="col-md-6">

@@ -17,6 +17,7 @@ export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
 export const INTEL_REQUEST__UPDATE = createActionType('INTEL_REQUEST__UPDATE');
 export const INTEL_REQUEST__FETCH = createActionType('INTEL_REQUEST__FETCH');
 export const INTEL_REQUEST__FETCH_ONE = createActionType('INTEL_REQUEST__FETCH_ONE');
+export const INTEL_REQUEST__DELETE = createActionType('INTEL_REQUEST__DELETE');
 
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
