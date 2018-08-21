@@ -14,10 +14,10 @@ export function addCcirPir(ccirpir) {
 }
 
 // function to update  CCIRPIR Record by Id
-export function updateCcirPir(id, data) {
+export function updateCcirPir(id, ccirpir) {
   return createAction({
     type: CCIRPIR__UPDATE,
-    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR?id=${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR?id=${id}`, ccirpir, formDataRequestHeader),
   });
 }
 

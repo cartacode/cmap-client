@@ -50,7 +50,7 @@ export function fetchIntelEEI() {
 export function deleteIntelRequestById(id) {
   return createAction({
     type: INTEL_REQUEST__DELETE,
-    action: () => axios.delete(`${baseUrl}/IntelReqEEI/DeleteIntelReqEEI/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/IntelRequest/DeleteIntelRequest/${id}`, requestHeaders),
   });
 }
 

@@ -38,12 +38,12 @@ class RequestComponent extends React.Component {
   }
 
   deleteIntelRequestById =(value)=>{
+    debugger;
     const { translations } = this.props;
-    //@TODO:- Still API is not working.
-   /*  this.props.deleteIntelRequestById(value).then(() => {
+    this.props.deleteIntelRequestById(value).then(() => {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
       this.props.fetchIntelRequests();
-    }); */
+    });
   }
 
 

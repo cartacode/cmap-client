@@ -39,7 +39,7 @@ class RequestForm extends React.Component {
         // SpecialInstructions: '',
         // PrimaryPayload: '',
         // SecondaryPayload: '',
-        // Armed: '',
+        //Armed: '',
         PointofContact: 'UserProfile',
         DSN: 'UserProfile',
         EmailSIPR: 'UserProfile',
@@ -109,7 +109,7 @@ class RequestForm extends React.Component {
         ...intelRequest,
         PrimaryPayload: ir.PrimaryPayload,
         SecondaryPayload: ir.SecondaryPayload,
-        Armed: ir.Armed,
+        Armed: (ir.Armed == undefined || ir.Armed == "" || ir.Armed == null )? true: ir.Armed,
         BestCollectionTime: ir.BestCollectionTime,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
       },
@@ -156,6 +156,7 @@ class RequestForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     let { intelRequest } = this.state;
+    intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed == null || intelRequest.Armed == '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
     intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
@@ -310,19 +311,19 @@ resetForm() {
             <div className="associate-content" />
           </div>
         </div>
-        <form action="" onSubmit={this.handleSubmit}>
+        <form action="" onSubmit={this.handleSubmit} id='personnelform'>
           <div className="row intel-request">
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['intelligence request']} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+              <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+              <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
             </div>
             <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+              <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
             </div>
           </div>
 
@@ -335,10 +336,10 @@ resetForm() {
                 <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} stopupd={this.stopUpdate} /> }
               </div> */}
               <div className="col-md-6">
-                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
               </div>
               <div className="col-md-6">
-                <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} />
+                <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear}  />
               </div>
 
             </div>
@@ -358,7 +359,7 @@ resetForm() {
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='btn btn-warning' >
+              <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
                 {translations['clear']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
