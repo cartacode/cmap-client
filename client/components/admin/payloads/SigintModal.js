@@ -288,14 +288,13 @@ handlePhotoPreviewURL = (uploadedFile) => {
     if (sigintPayloadFiles.PayloadDatasheet) {
       formData.append('PayloadDatasheet', sigintPayloadFiles.Payload2525B, sigintPayloadFiles.PayloadDatasheet.name);
     }
-
     payload.PayloadType = payloadTypeId;
-    formData.append("payloadFormData", JSON.stringify(payload));
-
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }

@@ -217,7 +217,6 @@ class EoirModal extends React.Component {
    */
   handlePhotoPreviewURL = (uploadedFile) => {
     let reader = new FileReader();
-    debugger;
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'PayloadPhoto') {
       reader.onloadend = () => {
@@ -280,7 +279,6 @@ class EoirModal extends React.Component {
 
     let { payload, eoirPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
-
     // File Upload form data 
     const formData = new FormData();
     if (eoirPayloadFiles.PayloadPhoto) {
@@ -301,14 +299,13 @@ class EoirModal extends React.Component {
     if (eoirPayloadFiles.PayloadDatasheet) {
       formData.append('PayloadDatasheet', eoirPayloadFiles.Payload2525B, eoirPayloadFiles.PayloadDatasheet.name);
     }
-
     payload.PayloadType = payloadTypeId;
-    formData.append("payloadFormData", JSON.stringify(payload));
-
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
@@ -337,7 +334,6 @@ class EoirModal extends React.Component {
 
 
   render() {
-    
     let { payloadPhotoPreviewUrl } = this.state;
     let { payloadWireframePreviewUrl } = this.state;
     let $imagePreview = '';
