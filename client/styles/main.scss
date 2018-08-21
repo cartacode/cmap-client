@@ -26,6 +26,7 @@ body {
     display: inline-block;
   }
 
+  
   .dropdown-menu {
     background-color: black;
     min-width: 200px;
@@ -79,6 +80,9 @@ body {
   }
 }
 
+.action-not-allow{
+  cursor: not-allowed;
+}
 
 .navbar-default {
   background-color: transparent;
@@ -240,6 +244,8 @@ body {
       display: inline-block;
       margin-bottom: 31px;
     }
+
+   
 
     .search-input {
       border: 1px solid #9b9b9b;

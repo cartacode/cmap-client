@@ -80,19 +80,15 @@ class PlatformsSpecificationComponent extends React.Component {
     const { translations } = this.props;
     if (NoticeType.DELETE != actionType) {
         if (this.state.editId !== undefined && this.state.editId !== '0') {
-          NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+          NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
         }else{
-          NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+          NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);
         }
       }else{
-        NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+        NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Specification Title'], 5000);
       }
 
   }
-
-
-  
-
   
 
   // renderItems(optionItem) {
@@ -148,8 +144,10 @@ class PlatformsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        //Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayload(row.value)} /></span></div>
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                  {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+                     <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+                  </div>,
 
       }
     ];

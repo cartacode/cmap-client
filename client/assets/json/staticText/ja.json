@@ -473,5 +473,8 @@
 	"CCIRPIR Title":"CCIR/PIR",
 	"Update CCIRPIR Message":"Record Updated Successfully.",
 	"Add CCIRPIR Message":"Record Added Successfully.",
-	"Manufacturer": "Manufacturer"
+	"Manufacturer": "Manufacturer",
+	"AddedSuccesfully": "Record Added Successfully",
+  	"UpdatedSuccesfully": "Record Updated Successfully",
+  	"DeletedSuccesfully": "Record Deleted Successfully"
 }

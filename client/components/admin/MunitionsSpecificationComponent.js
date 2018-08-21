@@ -135,7 +135,7 @@ class MunitionsSpecificationComponent extends React.Component {
   deleteMunitions = (value) => {
     if (value !== undefined && value !== '0') {
       this.props.deleteMunitionsById(value).then(() => {
-        this.setState({ editId: '0' });
+       // this.setState({ editId: '0' });
         this.props.fetchMunitions();
         this.notify('DELETE');
       });
@@ -147,12 +147,12 @@ class MunitionsSpecificationComponent extends React.Component {
     const { translations } = this.props;
     if ('DELETE' != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
-        NotificationManager.success('Update munition library successfully', 'Munition Specification ', 5000);
+        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Inventory Title'], 5000);
       } else {
-        NotificationManager.success('Add munition library successfully', 'Munition Specification ', 5000);
+        NotificationManager.success(translations['AddedSuccesfully'], translations['Munition Inventory Title'], 5000);
       }
     } else {
-      NotificationManager.success('Delete  munition library successfully', 'Munition Specification ', 5000);
+        NotificationManager.success(translations['DeletedSuccesfully'],translations['Munition Inventory Title'], 5000);
     }
   }
 
@@ -257,8 +257,10 @@ class MunitionsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        //Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openMunitionsSpecificationForm(row)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deleteMunitions(row.value)} /></span></div> // Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+                    </div>,
       }
     ];
     
