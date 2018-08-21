@@ -472,7 +472,12 @@ class AddPlatformModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        imagePreviewUrl: '/assets/img/admin/aircraft.png',
+        imagePreviewUrl2: '/assets/img/admin/primoris_backgr.png'
+       });
+      document.getElementById('platform').reset();
     }
   }
 
@@ -534,7 +539,8 @@ class AddPlatformModal extends React.Component {
     const imageUrl = this.props.onePlatform.PlatformPhoto;
     const imageUrl2 = this.props.onePlatform.PlatformWireframe;
 
-  if (imageUrl) {
+    
+  if (imageUrl !== undefined && imageUrl !== "") {
     $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
   }
   else {
@@ -545,7 +551,7 @@ class AddPlatformModal extends React.Component {
   }
  
 
-  if (imageUrl2) {
+  if (imageUrl2 !== undefined && imageUrl2 !== "") {
     $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
   }
   else {
