@@ -72,22 +72,37 @@ class PlatformsSpecificationComponent extends React.Component {
       this.setState({
         loading:true
       });
-			this.props.deletePlatformById(value).then(() => {
+			this.props.deletePlatformById(value).then((response) => {
         
         this.setState({
           loading:false
         });
-        this.closePlatformForm(NoticeType.DELETE);
-				/* this.setState({ editId: '0', }); */
-        //this.props.fetchPlatforms();
-			});
+        if(this.props.isDeleted){
+          this.closePlatformForm(NoticeType.DELETE);
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+
+        }
+			
+      }).catch((err) => {
+        
+      });
+      
 		}
 	}
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if (NoticeType.DELETE != actionType) {
-        if (this.state.editId !== undefined && this.state.editId !== '0') {
+
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Platform Specification Title'], 5000);
+    }
+
+    else if (NoticeType.DELETE != actionType) {
+       
+        
+         if (this.state.editId !== undefined && this.state.editId !== '0') {
           NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
         }else{
           NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);

@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     allPlatforms: state.platforms.allPlatforms,
     //platform: state.platforms.onePlatform,
     isLoading: state.platforms.isFetching,
+    isDeleted: state.platforms.isDeleted
   };
 };
 

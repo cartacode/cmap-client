@@ -40,7 +40,7 @@ export default {
     payloadList: [],
     payloadTypes: [],    
     onePayloadInventory: {},
-    allPayloadInventory: [],
+    allPayloadInventory: []
   },
   personnels: {
     allPersonnels: [],
@@ -61,8 +61,9 @@ export default {
     onePlatform: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted:false,
     allPlatformInventory: [],
-    onePlatformInventory: {},
+    onePlatformInventory: {}
   },
 
   collections: {
