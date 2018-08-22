@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
 import { defaultFilter } from '../../util/helpers';
 import {NoticeType, TableDefaults } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 
 
@@ -174,11 +175,10 @@ class PlatformsSpecificationComponent extends React.Component {
 
       }
     ];
-    let loaderDiv = this.state.loading ? <div className="loading">Loading&#8230;</div> :'';
 
     return (
       <div>
-              {loaderDiv}
+        <Loader loading={this.state.loading} />
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
