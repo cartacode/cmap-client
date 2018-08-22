@@ -7,6 +7,7 @@ import IsrSyncContainer from '../containers/mission_mgt/IsrSyncContainer';
 import AtoContainer from '../containers/mission_mgt/AtoContainer';
 import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
 import MissionDetailContainer from '../containers/mission_mgt/MissionDetailContainer';
+import FlightOpsContainer from '../containers/mission_mgt/FlightOpsContainer';
 
 class MissionMGTComponent extends React.Component {
 
@@ -21,6 +22,7 @@ class MissionMGTComponent extends React.Component {
     const menuItems = [
       {title: translations['isr sync'], url: `${match.url}/isr-sync`},
       {title: translations['ato'], url: `${match.url}/ato`},
+      {title: translations['flightops'], url: `${match.url}/flightops`},
       {title: translations['ped tasking'], url: `${match.url}/ped-tasking`},
       {title: translations['mission detail'], url: `${match.url}/mission-detail`},
     ];
@@ -58,6 +60,7 @@ class MissionMGTComponent extends React.Component {
         </div>
         <Switch>
           <Route path={`${match.url}/isr-sync`} component={IsrSyncContainer} />
+          <Route path={`${match.url}/flightops`} component={FlightOpsContainer} />
           <Route path={`${match.url}/ato`} component={AtoContainer} />
           <Route path={`${match.url}/ped-tasking`} component={PedTaskingContainer} />
           <Route path={`${match.url}/mission-detail`} component={MissionDetailContainer} />

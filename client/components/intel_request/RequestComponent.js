@@ -64,7 +64,7 @@ class RequestComponent extends React.Component {
     const columns = [
       {
         Header: 'IR#',
-        accessor: 'IntelRequestID',
+        accessor: 'ReqUserFrndlyID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <span>{row.value}</span>
