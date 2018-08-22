@@ -38,12 +38,9 @@ class CollectionManagerComponent extends React.Component {
   }
 
   moveToCollectionPlan = (row) => {
-    // @Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
-    // 'Approved – Pending Resources' and status codre should be 10 (APR).
     const value = row.value;
     if (value !== undefined && value !== '0') {
-      const statusId = 10; // 'APR';
-	    this.props.moveToCollectionPlan(value, statusId).then(() => {
+	    this.props.moveToCollectionPlan(value).then(() => {
 	      this.setState({ editId: '0' });
 	      this.notify(NoticeType.MOVE_TO_COLLECTION);
 	      this.loadData();
@@ -52,17 +49,25 @@ class CollectionManagerComponent extends React.Component {
   };
 
   moveToIntelRequest = (value) => {
-    // @Note:- When Intel request is moved to Collection Plan section then Intel request should be changed to status
-    // 'Approved – Approved - Validated' and status codre should be 21 (AV).
     if (value !== undefined && value !== '0') {
-      const statusId = 21;// 'AV';
-      this.props.moveToIntelRequest(value, statusId).then(() => {
+      this.props.moveToIntelRequest(value).then(() => {
         this.setState({ editId: '0' });
         this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
         this.loadData();
       });
     }
   };
+
+  routeCollectionIntelRequest = () => {
+      const unitId = 25;
+      const statusId = 10;// 'APR';
+      this.props.routeCollectionIntelRequest(unitId,statusId).then(() => {
+       // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
+        this.loadData();
+      });
+  };
+
+  
 
   deleteCollectionPlan=(value)=>{
     if (value !== undefined && value !== '0') {
@@ -76,13 +81,12 @@ class CollectionManagerComponent extends React.Component {
 
   loadData = () => {
     const unitId = 25;
-    let statusId = 21; // 'AV';
     let abbreviation = 'AV';
-    this.props.fetchApprovedIntelRequests(unitId, abbreviation);
+    let isInCollectionPlan = false;
+    this.props.fetchApprovedIntelRequests(unitId, abbreviation, isInCollectionPlan);
 
-    statusId = 10;// 'APR';
-    abbreviation = 'APR';
-    this.props.fetchCollectionPlans(unitId, abbreviation);
+    isInCollectionPlan = true;
+    this.props.fetchCollectionPlans(unitId, abbreviation, isInCollectionPlan);
   };
 
   notify = actionType => {
@@ -231,8 +235,8 @@ class CollectionManagerComponent extends React.Component {
                     data={allApprovedIntelRequests}
                     columns={intelRequestColumns}
                     defaultPageSize={5}
-                    showPaginationTop={true}
-                    showPaginationBottom={false}
+                    showPaginationTop={false}
+                    showPaginationBottom={true}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
@@ -252,8 +256,8 @@ class CollectionManagerComponent extends React.Component {
                     columns={collectionPlanColumns}
                     defaultPageSize={5}
                     minRows={5}
-                    showPaginationTop={true}
-                    showPaginationBottom={false}
+                    showPaginationTop={false}
+                    showPaginationBottom={true}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
@@ -261,6 +265,16 @@ class CollectionManagerComponent extends React.Component {
                     nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
+                </div>
+
+                <div className="row action-buttons">
+                  <div className="menu-button">
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                    <button className='btn btn-warning' onClick={() => this.routeCollectionIntelRequest()} >
+                      Route
+                    </button>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                  </div>
                 </div>
               </div>
             </div>
