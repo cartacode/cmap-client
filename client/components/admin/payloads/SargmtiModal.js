@@ -86,7 +86,11 @@ class SargmtiModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        payloadPhotoPreviewUrl: '',
+        payloadWireframePreviewUrl: '',
+       });
     }
   }
 
@@ -307,7 +311,10 @@ class SargmtiModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        sargmtiPayloadFiles : {}
+      });
       document.getElementById('payloadform').reset();
     }
     else {

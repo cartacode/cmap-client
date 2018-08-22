@@ -90,7 +90,11 @@ class EoirModal extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({
+        clear: true,
+        payloadPhotoPreviewUrl: '',
+        payloadWireframePreviewUrl: '',
+       });
     }
     if (editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
@@ -326,7 +330,11 @@ class EoirModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        eoirPayloadFiles : {}
+
+       });
       document.getElementById('payloadform').reset();
     }
   }
