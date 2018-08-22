@@ -666,5 +666,6 @@
   "Manufacturer": "Manufacturer",
   "AddedSuccesfully": "Record Added Successfully",
   "UpdatedSuccesfully": "Record Updated Successfully",
-  "DeletedSuccesfully": "Record Deleted Successfully" 
+  "DeletedSuccesfully": "Record Deleted Successfully" ,
+  "DeleteUnSuccessfull":"Record Can Not Be Deleted" 
 }
