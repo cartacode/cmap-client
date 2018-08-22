@@ -120,7 +120,6 @@ class EeiForm extends React.Component {
     let { intelReqEEI } = this.state;
     const { editId, intelId } = this.props;
     intelReqEEI.intelReqID = intelId;
-    
     console.log('Submitting' + JSON.stringify(intelReqEEI));
     if(editId !== undefined && editId !== '0') {
       delete intelReqEEI.LIMIDSReq;
@@ -162,8 +161,8 @@ class EeiForm extends React.Component {
     // FORM fields Array
     const eeiFiled1 = [
       { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
-      { name: translations['Target#'], type: 'input', domID: 'targetNum', valFieldID: 'targetNum', required: true },
-      { name: translations.Objective, type: 'number', domID: 'dispObjective', ddID: 'objective', valFieldID: 'objective', required: true },
+      { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets' , valFieldID: 'targetNum', required: true },
+      { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objective', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },
     ];
 

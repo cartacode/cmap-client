@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import {NoticeType} from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
 
 
 
@@ -518,11 +519,10 @@ class AddPlatformModal extends React.Component {
       right: 0;
 `; */
     
-let loaderDiv = this.state.loading ? <div className="loading">Loading&#8230;</div> :'';
     return (
       
       <form action="" onSubmit={this.handleSubmit} id="platform">
-      {loaderDiv}
+      <Loader loading={this.state.loading} />
       {/*  <div className='loadingjkjk'>
       <BarLoader
        className={override}

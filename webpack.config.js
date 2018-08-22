@@ -142,6 +142,10 @@ function getPlugins(isDev) {
     new CopyWebpackPlugin([
       { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
     ]),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
   ];
 
   if (isDev) {

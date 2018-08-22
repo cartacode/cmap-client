@@ -12,8 +12,10 @@ export function createAction({ action, header = {}, type }) {
 
     try {
       dispatch({ type: type.SUCCESS, header, payload: await action() });
+      
     } catch (error) {
-      dispatch({ type: type.FAILURE, header, error });
+      
+      dispatch({ type: type.FAILURE, header, error});
       
       alert('API ERROR:'+JSON.stringify(error));
       console.log('API ERROR:'+JSON.stringify(error));
