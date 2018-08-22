@@ -17,8 +17,8 @@ export function createAction({ action, header = {}, type }) {
       
       dispatch({ type: type.FAILURE, header, error});
       
-      //alert('API ERROR:'+JSON.stringify(error));
-      //console.log('API ERROR:'+JSON.stringify(error));
+      alert('API ERROR:'+JSON.stringify(error));
+      console.log('API ERROR:'+JSON.stringify(error));
     }
   };
 }
