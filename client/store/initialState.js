@@ -112,4 +112,9 @@ export default {
     isFetching: false,
   },
 
+  organicpersonnels: {
+    allOrganicPersonnels: [],
+    isFetching: false,
+  },
+
 };

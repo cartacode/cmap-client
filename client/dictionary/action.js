@@ -106,7 +106,8 @@ export const INTEL_APPROVED_REQUEST__DELETE_ONE = createActionType('INTEL_APPROV
 
 export const ORGANIC_ORG__FETCH = createActionType('ORGANIC_ORG__FETCH');
 export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
-
+export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
+export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 
 
 

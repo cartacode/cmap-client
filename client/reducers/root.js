@@ -18,6 +18,7 @@ import intelrequest from 'reducers/intel';
 import inteleei from 'reducers/inteleei';
 import collections from 'reducers/collections';
 import organicorgs from 'reducers/organicorg';
+import organicpersonnels from 'reducers/organicpersonnel';
 
 export default function createReducer() {
   return combineReducers({
@@ -39,5 +40,6 @@ export default function createReducer() {
     inteleei,
     collections,
     organicorgs,
+    organicpersonnels,
   });
 }

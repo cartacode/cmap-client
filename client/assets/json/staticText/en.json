@@ -713,7 +713,7 @@
   "Intel Request delete": "Intel Request deleted successfully" ,
   "Intel Request moved": "Intel Request moved successfully",
   "IntelEEI": "Intel EEI",
-  "AddedSuccesfully": "Added Successfully",
-  "UpdatedSuccesfully": "Updated Successfully",
-  "DeletedSuccesfully": "Deleted Succesfully" 
+  "AddedSuccesfully": "Record Added Successfully",
+  "UpdatedSuccesfully": "Record Updated Successfully",
+  "DeletedSuccesfully": "Record Deleted Successfully" 
 }

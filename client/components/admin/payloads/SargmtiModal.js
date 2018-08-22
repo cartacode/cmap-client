@@ -266,10 +266,8 @@ class SargmtiModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
     let { payload, sargmtiPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
-
     // File Upload form data 
     const formData = new FormData();
     if (sargmtiPayloadFiles.PayloadPhoto) {
@@ -290,14 +288,13 @@ class SargmtiModal extends React.Component {
     if (sargmtiPayloadFiles.PayloadDatasheet) {
       formData.append('PayloadDatasheet', sargmtiPayloadFiles.Payload2525B, sargmtiPayloadFiles.PayloadDatasheet.name);
     }
-
     payload.PayloadType = payloadTypeId;
-    formData.append("payloadFormData", JSON.stringify(payload));
-
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
