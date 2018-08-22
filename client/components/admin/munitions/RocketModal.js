@@ -364,9 +364,9 @@ class RocketModal extends React.Component {
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file' }
     ];
 
     return (

@@ -368,9 +368,6 @@ class BaseModal extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="locationform">
-        <div className="close-button change-cursor-to-pointer" >
-          <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-        </div>
         <div className="row personnel" >
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" style={{ width: "35%" }} />
