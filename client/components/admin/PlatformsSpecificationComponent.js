@@ -21,6 +21,7 @@ class PlatformsSpecificationComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
+      loading:false
     }
   }
 
@@ -68,7 +69,14 @@ class PlatformsSpecificationComponent extends React.Component {
 
 	deletePayload = (value) => {
 		if (value !== undefined && value !== '0') {
+      this.setState({
+        loading:true
+      });
 			this.props.deletePlatformById(value).then(() => {
+        
+        this.setState({
+          loading:false
+        });
         this.closePlatformForm(NoticeType.DELETE);
 				/* this.setState({ editId: '0', }); */
         //this.props.fetchPlatforms();
@@ -151,9 +159,11 @@ class PlatformsSpecificationComponent extends React.Component {
 
       }
     ];
+    let loaderDiv = this.state.loading ? <div className="loading">Loading&#8230;</div> :'';
 
     return (
       <div>
+              {loaderDiv}
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
