@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { INTEL_EEI__ADD, INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE, INTEL_EEI__UPDATE } from 'dictionary/action';
+import { INTEL_EEI__ADD, INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE, INTEL_EEI__UPDATE, INTEL_EEI__DELETE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -40,5 +40,13 @@ export function fetchIntelEEI() {
     action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEIs`, requestHeaders),
   });
 }
+
+export function deleteIntelEEIById(id) {
+  return createAction({
+    type: INTEL_EEI__DELETE,
+    action: () => axios.delete(`${baseUrl}/IntelReqEEI/DeleteIntelReqEEI/${id}`, requestHeaders),
+  });
+}
+
 
 
