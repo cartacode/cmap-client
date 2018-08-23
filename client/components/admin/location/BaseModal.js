@@ -7,6 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
+import Loader from '../../reusable/Loader';
 
 
 class BaseModal extends React.Component {
@@ -267,15 +268,21 @@ class BaseModal extends React.Component {
     if (locationFiles.KML) {
       formData.append('KML', locationFiles.KML, locationFiles.KML.name);
     }
+    // Start Loader
+    this.setState({loading:true});
     if (editId !== undefined && editId !== '0') {
       location.LocationID = editId;
       formData.append("locationFormData", JSON.stringify(location));
       this.props.updateLocation(editId, formData).then(() => {
+        // End Loader
+        this.setState({loading:false});
         this.props.onClose();
       });
     } else {
       formData.append("locationFormData", JSON.stringify(location));
       this.props.addLocation(formData).then(() => {
+        // End Loader
+        this.setState({loading:false});
         this.props.onClose();
       });
     }
@@ -369,6 +376,7 @@ class BaseModal extends React.Component {
 
       <form action="" onSubmit={this.handleSubmit} id="locationform">
         <div className="row personnel" >
+        <Loader loading={this.state.loading} />
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" style={{ width: "35%" }} />
             <div className="header-text" style={{ width: "30%" }}>
@@ -405,13 +413,13 @@ class BaseModal extends React.Component {
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
-          <div className="menu-button">
+          {/* <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button className='highlighted-button'>
               {translations['Delete']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
-          </div>
+          </div> */}
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>

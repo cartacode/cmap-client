@@ -1,4 +1,4 @@
-import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH } from 'dictionary/action';
+import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function locations(state = initialState.locations, { payload, type }) {
@@ -46,6 +46,21 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isTypesFetching: false,
         locationTypes: payload.data,
+      };
+      case LOCATION__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case LOCATION__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case LOCATION__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
       };
     default:
       return state;

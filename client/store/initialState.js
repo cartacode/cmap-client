@@ -19,6 +19,7 @@ export default {
     isTypesFetching: false,
     locationList: [],
     locationTypes: [],
+    isDeleted: false
   },
 
   munitions: {

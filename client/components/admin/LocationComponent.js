@@ -5,7 +5,8 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
 import { defaultFilter } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
+import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 
 class LocationComponent
@@ -19,6 +20,7 @@ class LocationComponent
       baseshow: false,
       editId: "0",
       editForm:false,
+      loading:false
     };
   }
 
@@ -58,20 +60,39 @@ class LocationComponent
     this.setState({editForm:false});
   }
 
+  // function will call to refresh data and Display Success/Error Message
+  refreshTableAndDisplayMessage = (dataMessage) =>{
+    this.props.fetchLocations();
+    this.notify(dataMessage);
+  }
+
   deleteLocations = (value) => {
     if (value !== undefined && value !== '0') {
+      // Start Loader
+      this.setState({loading:true});
       this.props.deleteLocationById(value).then(() => {
         //this.setState({ editId: '0' });
-        this.props.fetchLocations();
-        this.notify('DELETE');
+        if(this.props.isDeleted){
+          // End Loader
+          this.setState({loading:false});
+          this.refreshTableAndDisplayMessage (NoticeType.DELETE);
+        }
+        else{
+          // End Loader
+          this.setState({loading:false});
+          this.notify(NoticeType.NOT_DELETE);
+        }
       });
     }
   }
   
   notify =(actionType)=>{
     const { translations } = this.props;
-    if ('DELETE' != actionType) { 
-    if (this.state.editId !== undefined && this.state.editId !== '0') {
+    if (NoticeType.DELETE != actionType) { 
+      if(NoticeType.NOT_DELETE === actionType){
+        NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Location Title'], 5000);
+      }
+    else if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['UpdatedSuccesfully'], translations['Location Title'], 5000);
     }else{
       NotificationManager.success(translations['AddedSuccesfully'], translations['Location Title'], 5000);
@@ -153,6 +174,7 @@ class LocationComponent
     return (
       <div>
         <div className="row orders-assets">
+        <Loader loading={this.state.loading} />
           <div className="row" />
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
