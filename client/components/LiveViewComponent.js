@@ -10,7 +10,7 @@ import PedComponent from './live_view/PedComponent';
 import ComsComponent from './live_view/ComsComponent'; */
 import FullHeaderLine from './reusable/FullHeaderLine';
 
-import Map from 'components/reusable/Map';
+import Map, { viewerSize } from 'components/reusable/Map';
 
 class LiveViewComponent extends React.Component {
 
@@ -40,7 +40,7 @@ class LiveViewComponent extends React.Component {
             <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
           <div className="col-md-12">
-            <Map />
+            <Map size={viewerSize.large} />
           </div>
         </div>
         <div className="row intel-request">
