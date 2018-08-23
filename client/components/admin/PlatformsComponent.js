@@ -67,9 +67,15 @@ class PlatformComponent extends React.Component {
         this.setState({
           loading:false
         });
-	      //this.setState({ editId: '0' });
-	      this.notify(NoticeType.DELETE);
-	      this.props.fetchPlatformInventory();
+        //this.setState({ editId: '0' });
+	      //this.notify(NoticeType.DELETE);
+        //this.props.fetchPlatformInventory();
+        if(this.props.isDeleted){
+          this.closePlatformForm(NoticeType.DELETE);
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+        }
 	    });
 	  }
 	}
