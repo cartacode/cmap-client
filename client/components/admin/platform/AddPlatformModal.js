@@ -364,7 +364,7 @@ class AddPlatformModal extends React.Component {
     const imageUrl2 = this.props.onePlatform.PlatformWireframe;
 
     
-  if (imageUrl !== undefined && imageUrl !== "") {
+  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
     $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
   }
   else {
@@ -375,7 +375,7 @@ class AddPlatformModal extends React.Component {
   }
  
 
-  if (imageUrl2 !== undefined && imageUrl2 !== "") {
+  if (imageUrl2 !== undefined && imageUrl2 !== "" && this.props.editId != '0') {
     $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
   }
   else {
