@@ -7,6 +7,7 @@ import ShortHeaderLine from 'components/reusable/ShortHeaderLine';
 
 import Map from 'components/reusable/Map';
 import ModalFormBlock from 'components/reusable/ModalFormBlock';
+import { viewerIdentifiers } from 'map/viewer';
 
 import 'react-table/react-table.css';
 import { NotificationManager } from 'react-notifications';
@@ -300,7 +301,7 @@ resetForm() {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <Map />
+              <Map viewerId={viewerIdentifiers.intelRequest} />
             </div>
           </div>
           <div className="col-md-4 one-block">
