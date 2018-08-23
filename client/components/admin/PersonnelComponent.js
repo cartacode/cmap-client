@@ -7,6 +7,7 @@ import ReactTable from 'react-table';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
 import { NoticeType, TableDefaults } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 
 class PersonnelComponent extends React.Component {
@@ -94,7 +95,10 @@ loadData = (actionType) => {
 notify =(actionType)=>{
   const { translations } = this.props;
   if (NoticeType.DELETE != actionType) {
-    if (this.state.editId !== undefined && this.state.editId !== '0') {
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'],translations['personnel'], 5000);
+    }
+    else if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['UpdatedSuccesfully'], translations['personnel'], 5000);
     }else{
       NotificationManager.success(translations['AddedSuccesfully'], translations['personnel'], 5000);
@@ -113,10 +117,21 @@ stopupdate = () =>
   
   deletePersonnel = (value) => {
 	  if (value !== undefined && value !== '0') {
+      // Start Loader
+      this.setState({loading:true});
 	    this.props.deletePersonnelById(value).then(() => {
-	      //this.setState({ editId: '0' });
-        this.props.fetchPersonnels();
-        this.notify('DELETE');
+        //this.setState({ editId: '0' });
+        // End Loader
+        this.setState({loading:false});
+        if(this.props.isDeleted){
+          this.closePersonnelForm(NoticeType.DELETE);
+        }
+        else{
+          // Display Error Message
+          this.notify(NoticeType.NOT_DELETE);
+        }
+        //this.props.fetchPersonnels();
+        //this.notify('DELETE');
 	    });
 	  }
   }
@@ -176,7 +191,7 @@ render() {
 
   return (
     <div>
-
+      <Loader loading={this.state.loading} />
       <div className="row orders-assets">
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>

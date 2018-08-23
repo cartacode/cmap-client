@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     allPersonnels: state.personnels.allPersonnels,
     isLoading: state.personnels.isFetching,
+    isDeleted: state.personnels.isDeleted
   };
 };
 

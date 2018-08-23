@@ -47,6 +47,7 @@ export default {
     onePersonnel: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   ccirpir: {

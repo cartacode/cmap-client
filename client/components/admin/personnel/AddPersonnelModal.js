@@ -16,6 +16,7 @@ import { uploadFile } from 'actions/file';
 import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import {NoticeType} from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
 
 class AddPersonnelModal extends React.Component {
 
@@ -68,6 +69,7 @@ class AddPersonnelModal extends React.Component {
         Datasheet: null,
       },
       isImagedRequired: true,
+      loading:false
     }
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
@@ -389,17 +391,23 @@ class AddPersonnelModal extends React.Component {
     }
     
     if (editId !== undefined && editId !== '0') {
+      // Start Loader
+      this.setState({loading:true});
       personnel.PersonnelID = editId;
       console.log('handle Submit '+ JSON.stringify(personnel));
       formData.append("personnelFormData", JSON.stringify(personnel));
-      // TO DO: Will pass form Data in place of personnel 
       this.props.updatePersonnel(editId, formData).then(() => {
+        // Stop Loader
+        this.setState({loading:false});
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
       formData.append("personnelFormData", JSON.stringify(personnel));
-      // TO DO: Will pass form Data in place of personnel 
+      // Start Loader
+      this.setState({loading:true});
       this.props.addPersonnel(formData).then(() => {
+        // Stop Loader
+        this.setState({loading:false});
         this.props.onClose(NoticeType.ADD);
       });
     }
@@ -574,7 +582,9 @@ const uploadFileFields = [
   return (
 
     <form action="" onSubmit={this.handleSubmit} id="personnelform">
+    
       <div className="payload-content">
+      <Loader loading={this.state.loading} />
         <div className="row personnel" >
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
