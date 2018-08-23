@@ -82,9 +82,7 @@ class RocketModal extends React.Component {
   * Auto invoked functions and Once initialized.
   */
   componentDidMount = () => {
-    debugger;
-    this.setState({
-       clear: true      });
+    this.setState({clear: true});
     let { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
@@ -126,15 +124,9 @@ class RocketModal extends React.Component {
           });
       }); */
       this.editComponent(editId);
-
     }
-    this.setState({ 
-      gunPhotoPreviewUrl: ''
-    });
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({
-         clear: true
-         });
+      this.setState({clear: true});
     }
   }
 
