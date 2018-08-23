@@ -7,6 +7,8 @@ import ContentBlock from "../../reusable/ContentBlock";
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
 import {NoticeType} from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
+
 
 
 
@@ -36,6 +38,7 @@ class AddPlatformInventory extends React.Component {
       //   dispPlatformComs2: '',
       },
       onePlatformInventory: {},
+      loading:false
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -135,15 +138,28 @@ class AddPlatformInventory extends React.Component {
   }
 
   handleSubmit = event => {
+    this.setState({
+      loading:true
+    });
     event.preventDefault();
     let { platform } = this.state;
     const { editId } = this.props;
     console.log(JSON.stringify(platform));
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
-      this.props.updatePlatformInventory(editId, platform).then( () => {this.props.onClose(NoticeType.UPDATE);});
+      this.props.updatePlatformInventory(editId, platform).then( () => {
+        this.setState({
+          loading:false
+        });
+        this.props.onClose(NoticeType.UPDATE);
+      });
     } else {
-      this.props.addPlatformInventory(platform).then( () => {this.props.onClose(NoticeType.ADD);});
+      this.props.addPlatformInventory(platform).then( () => {
+        this.setState({
+          loading:false
+        });
+        this.props.onClose(NoticeType.ADD);
+      });
     }
   }
 
@@ -239,6 +255,8 @@ class AddPlatformInventory extends React.Component {
         {/*  <div className="close-button" >
           <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
         </div> */}
+              <Loader loading={this.state.loading} />
+
         <div className="payload-content">
           <div className="row personnel" >
 

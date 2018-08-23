@@ -69,7 +69,7 @@ class PayloadsComponent extends React.Component {
 	deletePayloadInventory = (value) => {
 	  if (value !== undefined && value !== '0') {
 	    this.props.deletePayloadInventoryById(value).then(() => {
-	      this.setState({ editId: '0' });
+	      //this.setState({ editId: '0' });
 	      this.loadData('DELETE');
 	    });
 	  }
@@ -79,12 +79,12 @@ class PayloadsComponent extends React.Component {
 	  const { translations } = this.props;
 	  if ('DELETE' != actionType) {
 	    if (this.state.editId !== undefined && this.state.editId !== '0') {
-	      NotificationManager.success(translations['Update Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
+	      NotificationManager.success(translations['UpdatedSuccesfully'], translations['Payload Inventory Title'], 5000);
 	    } else {
-	      NotificationManager.success(translations['Add Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
+	      NotificationManager.success(translations['AddedSuccesfully'], translations['Payload Inventory Title'], 5000);
 	    }
 	  } else {
-	    NotificationManager.success(translations['Delete Payload Inventory Message'], translations['Payload Inventory Title'], 5000);
+	    NotificationManager.success(translations['DeletedSuccesfully'], translations['Payload Inventory Title'], 5000);
 	  }
 	}
 
@@ -149,7 +149,11 @@ class PayloadsComponent extends React.Component {
 	    Header: translations['view'],
 	    accessor: 'ID',
 	    filterable: false,
-	    Cell: row => <div><span className="number change-cursor-to-pointer"><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPayloadsForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
+			Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openPayloadsForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+												{this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+                     <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+									</div>,
+
 	  }
 	  ];
 

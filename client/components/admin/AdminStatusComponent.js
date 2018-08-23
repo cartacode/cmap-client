@@ -295,7 +295,9 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" onClick={() => this.openPlatformForm(row.value)}/></span>// Custom cell components!
+        //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" onClick={() => this.openPlatformForm(row.value)}/></span>// Custom cell components!
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+
       }
     ];
 
@@ -335,7 +337,9 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Payload" onClick={() => this.openPayloadForm(row.value)}/></span>// Custom cell components!
+        //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Payload" onClick={() => this.openPayloadForm(row.value)}/></span>// Custom cell components!
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPayloadForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+
       }
     ];
 
@@ -370,7 +374,9 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Munition" onClick={() => this.openMunitionForm(row.value)}/></span>// Custom cell components!
+        //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Munition" onClick={() => this.openMunitionForm(row.value)}/></span>// Custom cell components!
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openMunitionForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        
       }
     ];
 
@@ -413,7 +419,10 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'update',
         filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
+        //Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
+        //Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary"  ><span className="glyphicon glyphicon-edit"/></a></div>,
+
       }
     ];
 
@@ -513,7 +522,9 @@ class AdminStatusComponent extends React.Component {
         Header: translations['update'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
+        //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+
       }
     ];
 

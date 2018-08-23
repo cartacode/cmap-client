@@ -66,7 +66,7 @@ callCloseCcirPirForm = () =>{
 deleteCcirPirRecord(row){
   this.props.deleteCcirPirById(row).then(() => {
     //Refresh List
-    this.closeCcirPirForm('DELETE');
+    this.loadData('DELETE');
   });
 }
 
@@ -74,15 +74,15 @@ deleteCcirPirRecord(row){
 notify =(type)=>{
   const { translations } = this.props;
   if(type === 'DELETE'){
-    NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+    NotificationManager.success(translations['DeletedSuccesfully'], translations['CCIRPIR Title'], 5000);
 
   }
   else if(type === 'ADD'){
     //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-    NotificationManager.success(translations['Add CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+    NotificationManager.success(translations['AddedSuccesfully'], translations['CCIRPIR Title'], 5000);
   }
   else if(type === 'UPDATE'){
-    NotificationManager.success(translations['Update CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
+    NotificationManager.success(translations['UpdatedSuccesfully'], translations['CCIRPIR Title'], 5000);
   }
   else{
 
@@ -151,7 +151,11 @@ notify =(type)=>{
         Header: translations['view'],
         accessor: 'CCIRPIRId',
         filterable: false,
-        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openCcirPirForm(row.value)} /></span> <span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png"  onClick={() => this.deleteCcirPirRecord(row.value)} /></span></div>
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openCcirPirForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+                            <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+                      </div>,
+
       } 
     ];
 

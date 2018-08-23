@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 import AddPlatformInventory from './platform/AddPlatformInventory';
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
+import Loader from '../reusable/Loader';
 
 
 
@@ -57,9 +58,16 @@ class PlatformComponent extends React.Component {
   }
 
 	deletePayloadInventory = (value) => {
+
 	  if (value !== undefined && value !== '0') {
+      this.setState({
+        loading:true
+      });
 	    this.props.deletePlatformInventoryById(value).then(() => {
-	      this.setState({ editId: '0' });
+        this.setState({
+          loading:false
+        });
+	      //this.setState({ editId: '0' });
 	      this.notify(NoticeType.DELETE);
 	      this.props.fetchPlatformInventory();
 	    });
@@ -70,12 +78,12 @@ class PlatformComponent extends React.Component {
     const { translations } = this.props;
     if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
-        NotificationManager.success(translations['Update Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
       }else{
-        NotificationManager.success(translations['Add Platform Inventory Message'], translations['Platform Inventory Title'], 5000);
+        NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
       }
     }else{
-      NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+      NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Inventory Title'], 5000);
     }
   }
 
@@ -152,12 +160,18 @@ class PlatformComponent extends React.Component {
         Header: translations['view'],
         accessor: 'id',
         filterable: false,
-        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayloadInventory(row.value)} /></span></div>
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+              {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+              <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+        </div>,
+
       }
     ];
 
     return (
       <div>
+                <Loader loading={this.state.loading} />
+
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />

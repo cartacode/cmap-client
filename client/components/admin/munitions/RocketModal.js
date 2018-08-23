@@ -93,7 +93,7 @@ class RocketModal extends React.Component {
           editFetched: true,
           munition: this.props.oneMunition,
           rocketPhotoPreviewUrl: null,
-          isImagedRequired:  false
+          isImagedRequired: false
         });
     });
   }
@@ -249,11 +249,9 @@ class RocketModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-  
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
-
 
     const { rocketMunitionFiles } = this.state;
     //We are going to upload files with JSON request body.
@@ -276,9 +274,6 @@ class RocketModal extends React.Component {
     if (rocketMunitionFiles.MunitionDatasheet) {
       formData.append('MunitionDatasheet', rocketMunitionFiles.MunitionDatasheet, rocketMunitionFiles.MunitionDatasheet.name);
     }
-
-
-
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       formData.append("munitionFormData", JSON.stringify(munition));
@@ -298,7 +293,10 @@ class RocketModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({
+        clear: true,
+        rocketPhotoPreviewUrl: '/assets/img/admin/rockets.png'
+      });
       document.getElementById('munitionform').reset();
     }
     else {
@@ -316,18 +314,15 @@ class RocketModal extends React.Component {
     let $imagePreview = '';
     const imageUrl = this.props.oneMunition.MunitionPhoto;
 
-    if (imageUrl) {
-      $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
-    }
-    else {
+    if (imageUrl !== undefined && imageUrl !== "") {
+      $imagePreview = (<img src={imageUrl} alt="" className="photo" alt="" />);
+    } else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
     if (rocketPhotoPreviewUrl) {
       $imagePreview = (<img src={rocketPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    } 
+    }
 
-
-   
     let { munition } = this.state;
     const { translations } = this.props;
     const { munitionType } = this.props;
@@ -369,9 +364,9 @@ class RocketModal extends React.Component {
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file' }
     ];
 
     return (

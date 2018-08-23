@@ -91,7 +91,11 @@ class EquipmentModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({
+         clear: true,
+         payloadPhotoPreviewUrl: '',
+         payloadWireframePreviewUrl: '',
+      });
     }
 
   }
@@ -205,7 +209,6 @@ class EquipmentModal extends React.Component {
    */
   handlePhotoPreviewURL = (uploadedFile) => {
     let reader = new FileReader();
-    debugger;
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'PayloadPhoto') {
       reader.onloadend = () => {
@@ -288,14 +291,13 @@ class EquipmentModal extends React.Component {
     if (equipmentPayloadFiles.PayloadDatasheet) {
       formData.append('PayloadDatasheet', equipmentPayloadFiles.Payload2525B, equipmentPayloadFiles.PayloadDatasheet.name);
     }
-
     payload.PayloadType = payloadTypeId;
-    formData.append("payloadFormData", JSON.stringify(payload));
-
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
@@ -310,7 +312,10 @@ class EquipmentModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        equipmentPayloadFiles : {}
+      });
       document.getElementById('payloadform').reset();
     }
     else {
@@ -373,10 +378,10 @@ class EquipmentModal extends React.Component {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file' },
+      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file' }
     ];
 
     return (

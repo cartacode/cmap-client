@@ -473,5 +473,9 @@
 	"Add CCIRPIR Message":"Record Added Successfully.",
 	"Manufacturer": "Manufacturer",
 	"Organization Logo":"Organization Logo",
-    "DataSheet":"DataSheet"
+	"DataSheet":"DataSheet",
+	"AddedSuccesfully": "Record Added Successfully",
+  	"UpdatedSuccesfully": "Record Updated Successfully",
+  	"DeletedSuccesfully": "Record Deleted Successfully" ,
+    "DeleteUnSuccessfull":"Record Can Not Be Deleted" 
 }

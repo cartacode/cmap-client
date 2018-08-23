@@ -86,7 +86,11 @@ class SargmtiModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        payloadPhotoPreviewUrl: '',
+        payloadWireframePreviewUrl: '',
+       });
     }
   }
 
@@ -266,10 +270,8 @@ class SargmtiModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
     let { payload, sargmtiPayloadFiles } = this.state;
     const { editId, payloadTypeId } = this.props;
-
     // File Upload form data 
     const formData = new FormData();
     if (sargmtiPayloadFiles.PayloadPhoto) {
@@ -290,14 +292,13 @@ class SargmtiModal extends React.Component {
     if (sargmtiPayloadFiles.PayloadDatasheet) {
       formData.append('PayloadDatasheet', sargmtiPayloadFiles.Payload2525B, sargmtiPayloadFiles.PayloadDatasheet.name);
     }
-
     payload.PayloadType = payloadTypeId;
-    formData.append("payloadFormData", JSON.stringify(payload));
-
     if (editId !== undefined && editId !== '0') {
       payload.PayloadID = editId;
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
     } else {
+      formData.append("payloadFormData", JSON.stringify(payload));
       this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
     }
   }
@@ -310,7 +311,10 @@ class SargmtiModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true,
+        sargmtiPayloadFiles : {}
+      });
       document.getElementById('payloadform').reset();
     }
     else {
@@ -391,10 +395,10 @@ class SargmtiModal extends React.Component {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'PayloadPhoto', valFieldID: 'PayloadPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'PayloadWireframe', valFieldID: 'PayloadWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['3D Model'], type: 'file', domID: 'Payload3D', valFieldID: 'Payload3D', fileType: 'file' },
+      { name: translations['2D Icon'], type: 'file', domID: 'PayloadIcon', valFieldID: 'PayloadIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Payload2525B', valFieldID: 'Payload2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'PayloadDatasheet', valFieldID: 'PayloadDatasheet', fileType: 'file' }
     ];
 
 

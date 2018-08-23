@@ -162,6 +162,7 @@
   "Image Date": "Image Date",
   "isr sync": "isr sync",
   "ato": "ato",
+  "flightops": "Flight Ops",
   "ped tasking": "ped tasking",
   "mission detail": "mission detail",
   "resource": "resource",
@@ -713,7 +714,8 @@
   "Intel Request delete": "Intel Request deleted successfully" ,
   "Intel Request moved": "Intel Request moved successfully",
   "IntelEEI": "Intel EEI",
-  "AddedSuccesfully": "Added Successfully",
-  "UpdateSuccesfully": "Updated Successfully",
-  "DeletedSuccesfully": "Deleted Succesfully" 
+  "AddedSuccesfully": "Record Added Successfully",
+  "UpdatedSuccesfully": "Record Updated Successfully",
+  "DeletedSuccesfully": "Record Deleted Successfully" ,
+  "DeleteUnSuccessfull":"Record Can Not Be Deleted"
 }

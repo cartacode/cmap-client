@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
 import { defaultFilter } from '../../util/helpers';
 import {NoticeType, TableDefaults } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 
 
@@ -21,6 +22,7 @@ class PlatformsSpecificationComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
+      loading:false
     }
   }
 
@@ -68,31 +70,49 @@ class PlatformsSpecificationComponent extends React.Component {
 
 	deletePayload = (value) => {
 		if (value !== undefined && value !== '0') {
-			this.props.deletePlatformById(value).then(() => {
-				this.setState({ editId: '0' });
-        this.notify(NoticeType.DELETE);
-        this.props.fetchPlatforms();
-			});
+      this.setState({
+        loading:true
+      });
+			this.props.deletePlatformById(value).then((response) => {
+        
+        this.setState({
+          loading:false
+        });
+        if(this.props.isDeleted){
+          this.closePlatformForm(NoticeType.DELETE);
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+
+        }
+			
+      }).catch((err) => {
+        
+      });
+      
 		}
 	}
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if (NoticeType.DELETE != actionType) {
-        if (this.state.editId !== undefined && this.state.editId !== '0') {
-          NotificationManager.success(translations['Update Platform Specification Message'], translations['Platform Specification Title'], 5000);
+
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Platform Specification Title'], 5000);
+    }
+
+    else if (NoticeType.DELETE != actionType) {
+       
+        
+         if (this.state.editId !== undefined && this.state.editId !== '0') {
+          NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
         }else{
-          NotificationManager.success(translations['Add Platform Specification Message'], translations['Platform Specification Title'], 5000);
+          NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);
         }
       }else{
-        NotificationManager.success(translations['Delete Platform Specification Message'],translations['Platform Specification Title'], 5000);
+        NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Specification Title'], 5000);
       }
 
   }
-
-
-  
-
   
 
   // renderItems(optionItem) {
@@ -148,12 +168,17 @@ class PlatformsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
-        Cell: row => <div><span className='number change-cursor-to-pointer'><img src="/assets/img/general/pen_icon.png" onClick={() => this.openPlatformForm(row.value)} /></span><span className='number change-cursor-to-pointer'><img src="/assets/img/general/trash_icon.png" onClick={() => this.deletePayload(row.value)} /></span></div>
+        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                  {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+                     <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+                  </div>,
+
       }
     ];
 
     return (
       <div>
+        <Loader loading={this.state.loading} />
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />

@@ -17,6 +17,7 @@ export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
 export const INTEL_REQUEST__UPDATE = createActionType('INTEL_REQUEST__UPDATE');
 export const INTEL_REQUEST__FETCH = createActionType('INTEL_REQUEST__FETCH');
 export const INTEL_REQUEST__FETCH_ONE = createActionType('INTEL_REQUEST__FETCH_ONE');
+export const INTEL_REQUEST__DELETE = createActionType('INTEL_REQUEST__DELETE');
 
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
@@ -102,9 +103,13 @@ export const MOVE_TO_INTEL__REQUEST = createActionType('MOVE_TO_INTEL__REQUEST')
 export const DELETE_COLLECTION__PLAN = createActionType('DELETE_COLLECTION__PLAN');
 export const INTEL_APPROVED_REQUEST__FETCH = createActionType('INTEL_APPROVED_REQUEST__FETCH');
 export const INTEL_APPROVED_REQUEST__DELETE_ONE = createActionType('INTEL_APPROVED_REQUEST__DELETE_ONE');
+export const ROUTE_COLLECTION__PLAN = createActionType('ROUTE_COLLECTION__PLAN');
 
 
-
+export const ORGANIC_ORG__FETCH = createActionType('ORGANIC_ORG__FETCH');
+export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
+export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
+export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 
 
 

@@ -289,7 +289,11 @@ class BaseModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({
+         clear: true,
+         locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
+         mapImagePreviewUrl: '/assets/img/admin/map2.png'
+        });
       document.getElementById('locationform').reset();
     }
     else {
@@ -305,30 +309,25 @@ class BaseModal extends React.Component {
     let $mpaImage = '';
     const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
     const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
-
-    if (this.props.editId === '0') {
-      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
-    } else {
+   
+    if (locationPhotoUrl !== undefined && locationPhotoUrl !== "") {
       $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
+    } else {
+      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
     }
-    /*  if (locationPhotoUrl) {
-       $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
-     }else {
-       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
-     } */
-
     if (locationPhotoPreviewUrl) {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
 
-    if (this.props.editId === '0') {
-      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
-    } else {
+    if (locationMapImageUrl !== undefined && locationMapImageUrl !== "") {
       $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
+    } else {
+      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
     }
     if (mapImagePreviewUrl) {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
     }
+
     const { translations } = this.props;
     const generalFields = [
       { name: translations['Name'], type: 'input', domID: 'LocationName', valFieldID: 'LocationName', required: true },
@@ -369,9 +368,6 @@ class BaseModal extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="locationform">
-        <div className="close-button change-cursor-to-pointer" >
-          <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-        </div>
         <div className="row personnel" >
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" style={{ width: "35%" }} />

@@ -27,10 +27,10 @@ export function fetchIntelEeiById(id) {
   });
 }
 
-export function fetchIntelEeisByIntelId(id) {
+export function fetchIntelEeisByIntelId(intelReqId) {
   return createAction({
     type: INTEL_EEI__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetAllIntelReqEEIByIntelReqId?intelReqId=${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetAllIntelReqEEIByIntelReqId/${intelReqId}`, requestHeaders),
   });
 }
 

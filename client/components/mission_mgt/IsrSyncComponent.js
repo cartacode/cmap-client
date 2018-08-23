@@ -7,9 +7,9 @@ import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import StatusTable from "../reusable/StatusTable";
 
-
-import Timeline from 'react-calendar-timeline/lib';
 import moment from 'moment';
+import Timeline from 'react-calendar-timeline';
+import 'react-calendar-timeline/lib/Timeline.css';
 
 
 class IsrSyncComponent extends React.Component {

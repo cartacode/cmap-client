@@ -60,7 +60,7 @@ class GunModal extends React.Component {
       isImagedRequired: true,
     },
 
-    this.resetForm = this.resetForm.bind(this);
+      this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
     this.baseState = this.state;
   }
@@ -77,13 +77,13 @@ class GunModal extends React.Component {
     let { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-     /*  this.props.fetchMunitionsById(editId).then(() => {
-        this.setState(
-          {
-            editFetched: true,
-            munition: this.props.oneMunition,
-          });
-      }); */
+      /*  this.props.fetchMunitionsById(editId).then(() => {
+         this.setState(
+           {
+             editFetched: true,
+             munition: this.props.oneMunition,
+           });
+       }); */
       this.editComponent(editId);
     }
   }
@@ -95,7 +95,7 @@ class GunModal extends React.Component {
           editFetched: true,
           munition: this.props.oneMunition,
           gunPhotoPreviewUrl: null,
-          isImagedRequired:  false
+          isImagedRequired: false
         });
     });
   }
@@ -156,11 +156,12 @@ class GunModal extends React.Component {
         MunitionRateFire: technicalData.MunitionRateFire,
         MunitionMuzzleVelocity: technicalData.MunitionMuzzleVelocity,
         MunitionProjectileWeight: technicalData.MunitionProjectileWeight,
-        MunitionMusselEnergy: technicalData.MunitionMusselEnergy,
+        MunitionMuzzleEnergy: technicalData.MunitionMuzzleEnergy,
         MunitionLength: technicalData.MunitionLength,
         MunitionWidthDiameter: technicalData.MunitionWidthDiameter,
         MunitionHeight: technicalData.MunitionHeight,
         MunitionWeightUnloaded: technicalData.MunitionWeightUnloaded,
+        MunitionWeightLoaded: technicalData.MunitionWeightLoaded,
         MunitionRoundsCarried: technicalData.MunitionRoundsCarried
       }
     }, () => {
@@ -187,77 +188,74 @@ class GunModal extends React.Component {
   /**
   * This is callback method called automatically and update state with gunMunitionFiles.
   */
- handleUploadFileData = (uploadFileData) => {
-  const { gunMunitionFiles } = this.state;
-  this.setState({
-    gunMunitionFiles: {
-      ...gunMunitionFiles,
-      MunitionPhoto: uploadFileData.MunitionPhoto,
-      MunitionWireframe: uploadFileData.MunitionWireframe,
-      Munition3D: uploadFileData.Munition3D,
-      MunitionIcon: uploadFileData.MunitionIcon,
-      Munition2525B: uploadFileData.Munition2525B,
-      MunitionDatasheet: uploadFileData.MunitionDatasheet,
-    }
-  }, () => {
-    console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Munition Specification screen :", this.state.gunMunitionFiles);
-  });
-}
-
-
-/**
- * This is callback method called automatically and show selected image preview.
- */
-handlePhotoPreviewURL = (uploadedFile) => {
-  let reader = new FileReader();
-  let file = uploadedFile.originalFile;
-  if (uploadedFile.name === 'MunitionPhoto') {
-    reader.onloadend = () => {
-      this.setState({
-        gunPhotoPreviewUrl: reader.result
-      });
-    }
-  }
-  reader.readAsDataURL(file);
-}
-
-
- /*  handleUploadFile(event) {
-    event.preventDefault();
-    const { munition } = this.state;
-    if (event.target.id == "MunitionPhoto") {
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend = () => {
-        this.setState({
-          imagePreviewUrl: reader.result
-        });
-      }
-      reader.readAsDataURL(file);
-    }
-    let parametername = event.target.id;
+  handleUploadFileData = (uploadFileData) => {
+    const { gunMunitionFiles } = this.state;
     this.setState({
-      munition: {
-        ...munition,
-        [parametername]: event.target.files[0].name
+      gunMunitionFiles: {
+        ...gunMunitionFiles,
+        MunitionPhoto: uploadFileData.MunitionPhoto,
+        MunitionWireframe: uploadFileData.MunitionWireframe,
+        Munition3D: uploadFileData.Munition3D,
+        MunitionIcon: uploadFileData.MunitionIcon,
+        Munition2525B: uploadFileData.Munition2525B,
+        MunitionDatasheet: uploadFileData.MunitionDatasheet,
       }
     }, () => {
-      console.log("New state in ASYNC callback:", this.state.munition);
+      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() Munition Specification screen :", this.state.gunMunitionFiles);
     });
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-    //this.props.uploadFile(data);
-  } */
+  }
+
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handlePhotoPreviewURL = (uploadedFile) => {
+    let reader = new FileReader();
+    let file = uploadedFile.originalFile;
+    if (uploadedFile.name === 'MunitionPhoto') {
+      reader.onloadend = () => {
+        this.setState({
+          gunPhotoPreviewUrl: reader.result
+        });
+      }
+    }
+    reader.readAsDataURL(file);
+  }
+
+
+  /*  handleUploadFile(event) {
+     event.preventDefault();
+     const { munition } = this.state;
+     if (event.target.id == "MunitionPhoto") {
+       let reader = new FileReader();
+       let file = event.target.files[0];
+       reader.onloadend = () => {
+         this.setState({
+           imagePreviewUrl: reader.result
+         });
+       }
+       reader.readAsDataURL(file);
+     }
+     let parametername = event.target.id;
+     this.setState({
+       munition: {
+         ...munition,
+         [parametername]: event.target.files[0].name
+       }
+     }, () => {
+       console.log("New state in ASYNC callback:", this.state.munition);
+     });
+     const data = new FormData();
+     data.append('file', event.target.files[0]);
+     data.append('name', event.target.files[0].name);
+     //this.props.uploadFile(data);
+   } */
 
   handleSubmit = event => {
     event.preventDefault();
-    
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
-
-
 
     const { gunMunitionFiles } = this.state;
     //We are going to upload files with JSON request body.
@@ -280,10 +278,6 @@ handlePhotoPreviewURL = (uploadedFile) => {
     if (gunMunitionFiles.MunitionDatasheet) {
       formData.append('MunitionDatasheet', gunMunitionFiles.MunitionDatasheet, gunMunitionFiles.MunitionDatasheet.name);
     }
-    
-
-
-
 
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
@@ -295,7 +289,6 @@ handlePhotoPreviewURL = (uploadedFile) => {
       formData.append("munitionFormData", JSON.stringify(munition));
       this.props.addMunition(formData).then(() => { this.props.onClose('ADD'); });
     }
-
   }
 
 
@@ -307,7 +300,10 @@ handlePhotoPreviewURL = (uploadedFile) => {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({
+        clear: true,
+        gunPhotoPreviewUrl: '/assets/img/admin/rockets.png'
+      });
       document.getElementById('munitionform').reset();
     }
     else {
@@ -320,38 +316,18 @@ handlePhotoPreviewURL = (uploadedFile) => {
     if (!this.props.show) {
       return null;
     }
-
-    /* let { gunPhotoPreviewUrl } = this.state;
+    let { gunPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
+    const imageUrl = this.props.oneMunition.MunitionPhoto;
 
+    if (imageUrl !== undefined && imageUrl !== "") {
+      $imagePreview = (<img src={imageUrl} alt="" className="photo" alt="" />);
+    } else {
+      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
+    }
     if (gunPhotoPreviewUrl) {
       $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
-    else {
-      $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
-    } */
-
-
-    let { gunPhotoPreviewUrl } = this.state;
-    let $imagePreview = '';
-   
-    const imageUrl = this.props.oneMunition.MunitionPhoto;
-
-  if (imageUrl) {
-    $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
-  }
-  else {
-    $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt=""/>);
-  }
-  if (gunPhotoPreviewUrl) {
-    $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt=""/>);
-  }
- 
-
- 
-  
-
-
 
     let { munition } = this.state;
     const { translations } = this.props;
@@ -383,7 +359,7 @@ handlePhotoPreviewURL = (uploadedFile) => {
       { name: translations['Rate of Fire'], type: 'number', domID: 'MunitionRateFire', valFieldID: 'MunitionRateFire' },
       { name: translations['Muzzle Velocity'], type: 'number', domID: 'MunitionMuzzleVelocity', valFieldID: 'MunitionMuzzleVelocity' },
       { name: translations['Projectile Weight'], type: 'number', domID: 'MunitionProjectileWeight', valFieldID: 'MunitionProjectileWeight', required: true },
-      { name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMusselEnergy', valFieldID: 'MunitionMusselEnergy' },
+      { name: translations['Mussel Energy'], type: 'number', domID: 'MunitionMuzzleEnergy', valFieldID: 'MunitionMuzzleEnergy' },
       { name: translations['Length'], type: 'number', domID: 'MunitionLength', valFieldID: 'MunitionLength' },
       { name: translations['Width/Diameter'], type: 'number', domID: 'MunitionWidthDiameter', valFieldID: 'MunitionWidthDiameter' },
       { name: translations['Height'], type: 'number', domID: 'MunitionHeight', valFieldID: 'MunitionHeight' },
@@ -395,10 +371,10 @@ handlePhotoPreviewURL = (uploadedFile) => {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file' },
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file'}
     ];
 
 

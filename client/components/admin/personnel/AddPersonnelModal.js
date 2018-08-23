@@ -466,7 +466,10 @@ resetForm() {
   this.setState(this.baseState);
   console.log("FORM RESET DONE");
   if (confirm("Do you want to clear all data from this form?")) {
-    this.setState({clear:true});
+    this.setState({clear:true,
+      imagePreviewUrl:"/assets/img/admin/photo_1.png",
+      imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png"
+    });
     document.getElementById('personnelform').reset();
   }
   else {
@@ -495,7 +498,7 @@ render() {
 
 
 
-  if (imageUrl) {
+  if (imageUrl !== undefined && imageUrl !== "") {
     $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
   }
   else {
@@ -506,7 +509,7 @@ render() {
   }
  
 
-  if (imageUrl2) {
+  if (imageUrl2 !== undefined && imageUrl2 !=="") {
     $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
   }
   else {

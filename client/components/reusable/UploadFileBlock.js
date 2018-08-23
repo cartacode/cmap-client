@@ -71,29 +71,14 @@ class UploadFileBlock extends React.Component {
         const isEditRecord = this.props.isImagedRequired;
         return this.props.fields.map((item, i) => {
             let input;
-            let value = '';
-            if (item.valFieldID !== undefined && this.state.content[item.valFieldID] !== undefined && this.state.content[item.valFieldID] !== null) {
-                value = this.state.content[item.valFieldID];
-            }
             switch (item.fileType) {
                 case 'image':
-                    if (isEditRecord !== undefined && isEditRecord === false) {
-                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
-                    } else {
-                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*"  />);
-                    }
+                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
                     break;
                 case 'file':
-
-                    if (isEditRecord !== undefined && isEditRecord === false) {
-                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"/*  value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
-                    }
-                    else {
-                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right" /* value={value} */ name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)}  />);
-                    }
+                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"  name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)}  />);
                     break;
             }
-
             return (
                 <div className="upload-line" key={'elem' + i}>
                     <div>
@@ -101,7 +86,6 @@ class UploadFileBlock extends React.Component {
                     </div>
                     {input}
                 </div>
-
             );
         });
     }

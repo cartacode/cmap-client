@@ -10,9 +10,9 @@ class NodeElement extends React.PureComponent {
         <img className="img-valign" src={nodeData.image} height="55" width="55"/>
           <div className="text-1">{nodeData.name} <br/>
        
-            <span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
-            <span className="unit-text"> {nodeData.attributes.Unit}</span>
-            
+       {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
+       <span className="unit-text"> {nodeData.attributes.Unit}</span></span>) : (<span> <br/>
+       <span className="unit-text"> {nodeData.attributes.Location}</span> <br/> </span>) }
           
           </div>
         </div>

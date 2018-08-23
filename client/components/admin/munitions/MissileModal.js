@@ -212,11 +212,19 @@ class MissileModal extends React.Component {
     let reader = new FileReader();
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'MunitionPhoto') {
-      reader.onloadend = () => {
+      if (file.size > 0) {
+        reader.onloadend = () => {
+          this.setState({
+            missilePhotoPreviewUrl: reader.result
+          });
+        }
+      } else {
         this.setState({
-          missilePhotoPreviewUrl: reader.result
+          missilePhotoPreviewUrl: '/assets/img/admin/rockets.png'
         });
       }
+
+
     }
     reader.readAsDataURL(file);
   }
@@ -252,12 +260,9 @@ class MissileModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-   
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
-
-
     const { missileMunitionFiles } = this.state;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
@@ -279,9 +284,6 @@ class MissileModal extends React.Component {
     if (missileMunitionFiles.MunitionDatasheet) {
       formData.append('MunitionDatasheet', missileMunitionFiles.MunitionDatasheet, missileMunitionFiles.MunitionDatasheet.name);
     }
-
-
-
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       formData.append("munitionFormData", JSON.stringify(munition));
@@ -301,7 +303,10 @@ class MissileModal extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({ clear: true });
+      this.setState({
+         clear: true,
+         missilePhotoPreviewUrl: '/assets/img/admin/rockets.png'
+        });
       document.getElementById('munitionform').reset();
     }
     else {
@@ -314,14 +319,13 @@ class MissileModal extends React.Component {
     if (!this.props.show) {
       return null;
     }
-
     let { missilePhotoPreviewUrl } = this.state;
     let $imagePreview = '';
     const imageUrl = this.props.oneMunition.MunitionPhoto;
-    if (imageUrl) {
+
+    if (imageUrl !== undefined && imageUrl !== "") {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
-    }
-    else {
+    } else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
     if (missilePhotoPreviewUrl) {
@@ -372,18 +376,14 @@ class MissileModal extends React.Component {
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
       { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file' }
     ];
 
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="munitionform">
-
-        {/*  <div className="close-button" >
-            <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-          </div> */}
         <div className="payload-content">
           <div className="row personnel" >
             <div className="header-line">

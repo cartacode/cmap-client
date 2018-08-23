@@ -27,7 +27,7 @@ class IntelRequestComponent extends React.Component {
      /*  {title: translations['request'], url: `${match.url}/request`}, */
       // {title: translations['review'], url: `${match.url}/review`},
       {title: translations["CollectionPlan"], url: `${match.url}/collection-plan` },
-      {title: translations["nat'l imagery"], url: `${match.url}/natl-imagery`},
+      /* {title: translations["nat'l imagery"], url: `${match.url}/natl-imagery`}, */
       
     ];
 
