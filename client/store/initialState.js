@@ -55,6 +55,7 @@ export default {
     oneCcirPir: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   platforms: {

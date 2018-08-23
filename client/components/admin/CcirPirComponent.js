@@ -5,7 +5,8 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import CcirPirModal from './ccir-pirs/CcirPirModal';
 import { defaultFilter } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
+import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 class CcirPirComponent extends React.Component {
 
@@ -16,6 +17,7 @@ class CcirPirComponent extends React.Component {
       tableRowDetailModalOpen: false     ,
       addCcirPirModalOpen: false,
       editId: '0', 
+      loading:false
     }
   }
 
@@ -64,24 +66,37 @@ callCloseCcirPirForm = () =>{
 
 // Delete Record
 deleteCcirPirRecord(row){
+  // Start Loader
+  this.setState({loading:true});
   this.props.deleteCcirPirById(row).then(() => {
-    //Refresh List
-    this.loadData('DELETE');
+    // Stop Loader
+    this.setState({loading:false});
+    //if Deleted Successfully
+    if(this.props.isDeleted){
+      this.closeCcirPirForm(NoticeType.DELETE);
+    }
+    else{
+      this.notify(NoticeType.NOT_DELETE);
+    }
+    
   });
 }
 
 // function to Display Success Messages
 notify =(type)=>{
   const { translations } = this.props;
-  if(type === 'DELETE'){
+  if(type === NoticeType.NOT_DELETE){
+    NotificationManager.error(translations['DeleteUnSuccessfull'], translations['CCIRPIR Title'], 5000);
+  }
+  else if(type === NoticeType.DELETE){
     NotificationManager.success(translations['DeletedSuccesfully'], translations['CCIRPIR Title'], 5000);
 
   }
-  else if(type === 'ADD'){
+  else if(type === NoticeType.ADD){
     //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
     NotificationManager.success(translations['AddedSuccesfully'], translations['CCIRPIR Title'], 5000);
   }
-  else if(type === 'UPDATE'){
+  else if(type === NoticeType.UPDATE){
     NotificationManager.success(translations['UpdatedSuccesfully'], translations['CCIRPIR Title'], 5000);
   }
   else{
@@ -164,6 +179,7 @@ notify =(type)=>{
       
       <div className="row orders-assets">
         <div className="header-line">
+        <Loader loading={this.state.loading} />
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
           <div className="header-text">
             {translations["Ccir/Pir"]}

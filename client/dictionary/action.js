@@ -69,7 +69,7 @@ export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
 export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');
 export const CCIRPIR__FETCH = createActionType('CCIRPIR__FETCH');
 export const CCIRPIR__FETCH_ONE = createActionType('CCIRPIR__FETCH_ONE');
-export const CCIRPIR__DELETE = createActionType('CCIRPIR__DELETE');
+export const CCIRPIR__DELETE_ONE = createActionType('CCIRPIR__DELETE_ONE');
 
 
 export const PLATFORM__ADD = createActionType('PLATFORM__ADD');

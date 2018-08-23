@@ -1,4 +1,4 @@
-import { CCIRPIR__FETCH, CCIRPIR__FETCH_ONE } from 'dictionary/action';
+import { CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function ccirpir(state = initialState.ccirpir, { payload, type }) {
@@ -25,7 +25,21 @@ export default function ccirpir(state = initialState.ccirpir, { payload, type })
         isFetching: false,
         oneCcirPir: payload.data,
       };
-      
+      case CCIRPIR__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case CCIRPIR__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case CCIRPIR__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
+      };
    
 
     default:

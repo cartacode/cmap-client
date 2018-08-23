@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ContentBlock from '../../reusable/ContentBlock';
 import { connect } from 'react-redux';
 import { addCcirPir, updateCcirPir, fetchCcirPirById } from 'actions/ccirpir';
+import {NoticeType} from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
 
 class CcirPirModal extends React.Component {
 
@@ -26,6 +28,7 @@ class CcirPirModal extends React.Component {
       ccirpir:{},
       EffectiveAreaKML: null,
       oneCcirPir: {},
+      loading:false
     };
 
   }
@@ -135,14 +138,26 @@ resetForm = () => {
       formData.append('EffectiveAreaKML', kmlFile, kmlFile.name);
     }
     if (editId !== undefined && editId !== '0') {
+      // Start Loader
+      this.setState({loading:true});
       ccirpir.CCIRPIRId = editId;
       ccirpir.LastUpdateUserId =  null;
       formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-      this.props.updateCcirPir(editId, formData).then( () => {this.props.onClose('UPDATE');});
+      this.props.updateCcirPir(editId, formData).then( () => {
+        //Stop Loader
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.UPDATE);
+      });
     } else {
       ccirpir.LastUpdateUserId =  null;
       formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-      this.props.addCcirPir(formData).then( () => {this.props.onClose('ADD');});
+      // Start Loader
+      this.setState({loading:true});
+      this.props.addCcirPir(formData).then( () => {
+        // Stop Loader
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.ADD);
+      });
     }
     
   }
@@ -192,6 +207,7 @@ resetForm = () => {
       
       <form action="" onSubmit={this.handleSubmit} >
         <div className="payload-content">
+        <Loader loading={this.state.loading} />
           <div className="row personnel" >
 
             <div className="header-line">
