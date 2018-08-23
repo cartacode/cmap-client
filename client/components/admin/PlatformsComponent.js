@@ -71,7 +71,7 @@ class PlatformComponent extends React.Component {
 	      //this.notify(NoticeType.DELETE);
         //this.props.fetchPlatformInventory();
         if(this.props.isDeleted){
-          this.closePlatformForm(NoticeType.DELETE);
+          this.loadData(NoticeType.DELETE);
         }
         else{
           this.notify(NoticeType.NOT_DELETE);

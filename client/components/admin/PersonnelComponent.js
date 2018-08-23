@@ -124,7 +124,7 @@ stopupdate = () =>
         // End Loader
         this.setState({loading:false});
         if(this.props.isDeleted){
-          this.closePersonnelForm(NoticeType.DELETE);
+          this.loadData(NoticeType.DELETE);
         }
         else{
           // Display Error Message

@@ -73,7 +73,7 @@ deleteCcirPirRecord(row){
     this.setState({loading:false});
     //if Deleted Successfully
     if(this.props.isDeleted){
-      this.closeCcirPirForm(NoticeType.DELETE);
+      this.loadData(NoticeType.DELETE);
     }
     else{
       this.notify(NoticeType.NOT_DELETE);
