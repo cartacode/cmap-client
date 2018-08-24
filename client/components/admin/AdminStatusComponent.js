@@ -23,6 +23,7 @@ import PayloadStatus from './status/PayloadStatus';
 import PersonnelStatus from './status/PersonnelStatus';
 import MunitionsStatus from './status/MunitionsStatus';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
+import { TableDefaults } from '../../dictionary/constants';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -561,7 +562,8 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
-              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
                defaultFilterMethod={defaultFilter}
 
                   // getTdProps={(state, rowInfo, column, instance) => {
@@ -591,7 +593,8 @@ class AdminStatusComponent extends React.Component {
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
-              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
               />
             </div>
@@ -606,13 +609,15 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText="Munition" />
-              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5} className="-striped -highlight" filterable={true}
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable={true}
                defaultFilterMethod={defaultFilter}
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
-              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
 
                   getTdProps={(state, rowInfo, column, instance) => {
@@ -649,7 +654,8 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
-              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5} className="-striped -highlight" filterable
+              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
               />
             </div>
@@ -676,22 +682,7 @@ class AdminStatusComponent extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row action-buttons" >
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button" onClick={this.onClear.bind(this)}>
-              {translations["clear"]}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-          </div>
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button" onClick={this.onSubmit.bind(this)}>
-              {translations["submit"]}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-          </div>
-        </div>
+
         <Modal show={this.state.statusModalOpen}
           onClose={this.statusModal.bind(this)}>
           

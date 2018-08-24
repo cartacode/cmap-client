@@ -58,7 +58,7 @@ class PayloadStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPayloadStatusById(this.props.editId).then(() => {
+      this.props.fetchPayloadStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
           payload: this.props.onePayload,

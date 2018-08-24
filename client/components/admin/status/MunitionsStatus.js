@@ -58,7 +58,7 @@ class MunitionStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchMunitionsStatusById(this.props.editId).then(() => {
+      this.props.fetchMunitionsStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
           munition: this.props.oneMunition,

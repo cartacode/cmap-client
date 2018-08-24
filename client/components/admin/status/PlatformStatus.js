@@ -58,7 +58,7 @@ class PlatformStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPlatformStatusById(this.props.editId).then(() => {
+      this.props.fetchPlatformStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
           platform: this.props.onePlatform,

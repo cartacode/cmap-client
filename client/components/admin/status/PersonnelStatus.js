@@ -58,7 +58,7 @@ class PersonnelStatus extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPersonnelStatusById(this.props.editId).then(() => {
+      this.props.fetchPersonnelStatusById(editId).then(() => {
         this.setState({
           isUpdated: true,
           personnel: this.props.onePersonnel
