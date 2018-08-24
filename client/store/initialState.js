@@ -19,6 +19,7 @@ export default {
     isTypesFetching: false,
     locationList: [],
     locationTypes: [],
+    isDeleted: false
   },
 
   munitions: {
@@ -40,13 +41,14 @@ export default {
     payloadList: [],
     payloadTypes: [],    
     onePayloadInventory: {},
-    allPayloadInventory: [],
+    allPayloadInventory: []
   },
   personnels: {
     allPersonnels: [],
     onePersonnel: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   ccirpir: {
@@ -54,6 +56,7 @@ export default {
     oneCcirPir: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   platforms: {
@@ -61,8 +64,9 @@ export default {
     onePlatform: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted:false,
     allPlatformInventory: [],
-    onePlatformInventory: {},
+    onePlatformInventory: {}
   },
 
   collections: {
@@ -70,7 +74,13 @@ export default {
     allCollectionsPlan: [],
     isFetching: false,
   },
-
+  mssionmgts: {
+    allCollectionsPlan:[],
+    atoGenerations: [],
+    flightOps: [],
+    pedTasks: [],
+    isFetching: false,
+  },
   paygrades: {
     paygradeList: [],
     isListFetching: false,

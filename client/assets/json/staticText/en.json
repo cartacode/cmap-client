@@ -162,6 +162,7 @@
   "Image Date": "Image Date",
   "isr sync": "isr sync",
   "ato": "ato",
+  "flightops": "Flight Ops",
   "ped tasking": "ped tasking",
   "mission detail": "mission detail",
   "resource": "resource",
@@ -715,5 +716,9 @@
   "IntelEEI": "Intel EEI",
   "AddedSuccesfully": "Record Added Successfully",
   "UpdatedSuccesfully": "Record Updated Successfully",
-  "DeletedSuccesfully": "Record Deleted Successfully" 
+  "DeletedSuccesfully": "Record Deleted Successfully" ,
+  "DeleteUnSuccessfull":"Record Can Not Be Deleted",
+  "ATOGeneration":"ATO Generation",
+  "FlightOPS":"Flight OPS",
+  "PedTask":"Ped Tasks"
 }

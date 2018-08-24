@@ -134,7 +134,7 @@ function getPlugins(isDev) {
       template: path.join(__dirname, 'client/index.html'),
     }),
     new webpack.DefinePlugin({
-      CESIUM_BASE_URL: JSON.stringify('Cesium/'),
+      CESIUM_BASE_URL: JSON.stringify('/Cesium'),
     }),
     new CopyWebpackPlugin([
       { from: path.join(__dirname, 'node_modules/cesium/Build/Cesium/Workers'), to: 'Cesium/Workers' },
@@ -142,6 +142,10 @@ function getPlugins(isDev) {
     new CopyWebpackPlugin([
       { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
     ]),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
   ];
 
   if (isDev) {

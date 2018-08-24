@@ -17,7 +17,8 @@ class GunModal extends React.Component {
       editFetched: false,
       oneMunition: {},
       clear: false,
-      /* munition: {
+      munition: {
+        MunitionID: '',
         MunitionsReferenceCode: '',
         MunitionWireframe: '',
         MunitionPhoto: '',
@@ -48,7 +49,18 @@ class GunModal extends React.Component {
         MunitionMOS1: '',
         MunitionMOS2: '',
         MunitionMOS3: '',
-      } */
+        MunitionHeigh: '',
+        MunitionWeightUnloaded: '',
+        MunitionWeightLoaded: '',
+        MunitionRoundsCarried: '',
+        MunitionRateFire: '',
+        MunitionMuzzleVelocity: '',
+        MunitionProjectileWeight: '',
+        MunitionCaliber: '',
+        MunitionDriveSystem: '',
+        MunitionFeedSystem: '',
+        MunitionMuzzleEnergy: ''
+      },
       gunMunitionFiles: {
         MunitionPhoto: null,
         MunitionWireframe: null,
@@ -73,7 +85,9 @@ class GunModal extends React.Component {
    * Auto invoked functions and Once initialized.
    */
   componentDidMount = () => {
-    this.setState({ clear: true });
+    this.setState({ 
+      clear: true
+    });
     let { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
@@ -117,7 +131,9 @@ class GunModal extends React.Component {
     }
 
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true
+      });
     }
   }
 
@@ -256,7 +272,6 @@ class GunModal extends React.Component {
     const { munition } = this.state;
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
-
     const { gunMunitionFiles } = this.state;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
@@ -278,7 +293,6 @@ class GunModal extends React.Component {
     if (gunMunitionFiles.MunitionDatasheet) {
       formData.append('MunitionDatasheet', gunMunitionFiles.MunitionDatasheet, gunMunitionFiles.MunitionDatasheet.name);
     }
-
     if (editId !== undefined && editId !== '0') {
       munition.MunitionID = editId;
       console.log("editId " + editId);
@@ -302,13 +316,14 @@ class GunModal extends React.Component {
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({
         clear: true,
-        gunPhotoPreviewUrl: '/assets/img/admin/rockets.png'
+        gunPhotoPreviewUrl: '/assets/img/admin/rockets.png',
+        gunMunitionFiles : {}
       });
       document.getElementById('munitionform').reset();
     }
     else {
-
     }
+    
   }
 
   render() {
@@ -320,7 +335,7 @@ class GunModal extends React.Component {
     let $imagePreview = '';
     const imageUrl = this.props.oneMunition.MunitionPhoto;
 
-    if (imageUrl !== undefined && imageUrl !== "") {
+    if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt="" />);
     } else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
@@ -371,10 +386,10 @@ class GunModal extends React.Component {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file' },
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file'}
     ];
 
 

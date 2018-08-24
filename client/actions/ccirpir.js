@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { CCIRPIR__ADD, CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__UPDATE, CCIRPIR__DELETE } from 'dictionary/action';
+import { CCIRPIR__ADD, CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__UPDATE, CCIRPIR__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders , formDataRequestHeader} from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -40,7 +40,7 @@ export function fetchCcirPirById(id) {
 // function to Delete  CCIRPIR Record by Id
 export function deleteCcirPirById(id) {
     return createAction({
-      type: CCIRPIR__DELETE,
+      type: CCIRPIR__DELETE_ONE,
       action: () => axios.delete(`${baseUrl}/CCIRPIR/DeleteCCIRPIR/${id}`, requestHeaders),
     });
   }

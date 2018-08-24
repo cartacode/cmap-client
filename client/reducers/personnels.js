@@ -1,4 +1,4 @@
-import { PERSONNEL__FETCH, PERSONNEL__FETCH_ONE } from 'dictionary/action';
+import { PERSONNEL__FETCH, PERSONNEL__FETCH_ONE, PERSONNEL__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function personnels(state = initialState.personnels, { payload, type }) {
@@ -24,6 +24,21 @@ export default function personnels(state = initialState.personnels, { payload, t
         ...state,
         isFetchingOne: false,
         onePersonnel: payload.data,
+      };
+      case PERSONNEL__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case PERSONNEL__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case PERSONNEL__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
       };
 
     default:

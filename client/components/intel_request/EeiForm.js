@@ -82,9 +82,9 @@ class EeiForm extends React.Component {
       intelReqEEI: {
         ...intelReqEEI,
         targetName: intelEei1.targetName,
-        targetNum: intelEei1.targetNum,
-        objective: intelEei1.objective,
-        threatGroupID: intelEei1.threatGroupID
+        targetID: intelEei1.targetID,
+        objectiveID: intelEei1.objectiveID,
+        threatGroupID: intelEei1.threatGroupID,
       },
     });
   }
@@ -97,7 +97,7 @@ class EeiForm extends React.Component {
         location: intelEei2.location,
         district: intelEei2.district,
         gridCoordinates: intelEei2.gridCoordinates,
-        LIMIDS_Req: intelEei2.LIMIDS_Req
+        LIMIDS_ReqID: intelEei2.LIMIDS_ReqID,
       },
     });
   }
@@ -120,7 +120,6 @@ class EeiForm extends React.Component {
     let { intelReqEEI } = this.state;
     const { editId, intelId } = this.props;
     intelReqEEI.intelReqID = intelId;
-    
     console.log('Submitting' + JSON.stringify(intelReqEEI));
     if(editId !== undefined && editId !== '0') {
       delete intelReqEEI.LIMIDSReq;
@@ -162,8 +161,8 @@ class EeiForm extends React.Component {
     // FORM fields Array
     const eeiFiled1 = [
       { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
-      { name: translations['Target#'], type: 'input', domID: 'targetNum', valFieldID: 'targetNum', required: true },
-      { name: translations.Objective, type: 'number', domID: 'dispObjective', ddID: 'objective', valFieldID: 'objective', required: true },
+      { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets' , valFieldID: 'targetID', required: true },
+      { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },
     ];
 
@@ -171,7 +170,7 @@ class EeiForm extends React.Component {
       { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },
       { name: translations.District, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district', required: true },
       { name: translations['Grid Coordinates'], type: 'input', domID: 'gridCoordinates', valFieldID: 'gridCoordinates', required: true },
-      { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_Req', required: true },
+      { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_ReqID', required: true },
     ];
 
     const eeiFiled3 = [

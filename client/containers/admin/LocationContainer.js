@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     allLocations: state.locations.allLocations,
     fetchingLocations: state.locations.isFetching,
     isLoading: state.locations.isFetching,
+    isDeleted: state.locations.isDeleted
   };
 };
 

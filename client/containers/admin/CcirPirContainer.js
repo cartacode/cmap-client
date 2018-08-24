@@ -6,7 +6,8 @@ import {fetchCcirPirs, deleteCcirPirById} from 'actions/ccirpir';
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allCcirPirs: state.ccirpir.allCcirPirs
+    allCcirPirs: state.ccirpir.allCcirPirs,
+    isDeleted: state.ccirpir.isDeleted
   };
 };
 

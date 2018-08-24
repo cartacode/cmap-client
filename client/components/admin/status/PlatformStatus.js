@@ -142,9 +142,6 @@ class PlatformStatus extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} >
-          <div className="close-button" >
-          <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
-        </div> 
         <div className="payload-content">
           <div className="row personnel" >
 

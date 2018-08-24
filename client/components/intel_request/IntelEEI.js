@@ -9,7 +9,7 @@ import ModalFormBlock from '../reusable/ModalFormBlock';
 import  EeiForm from './EeiForm';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
-import { addIntelEei, fetchIntelEeisByIntelId, updateIntelEei } from '../../actions/inteleei';
+import { addIntelEei, fetchIntelEeisByIntelId, updateIntelEei, deleteIntelEEIById } from '../../actions/inteleei';
 import { defaultFilter } from '../../util/helpers';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import  { NoticeType, TableDefaults } from '../../dictionary/constants';
@@ -74,14 +74,15 @@ class IntelEEI extends React.Component {
   // }
 
   deleteEEI = (id) => {
-  //  TODO: Add delete EEI code
+    this.props.deleteIntelEEIById(id).then(() => {
+      this.closeEEI(NoticeType.DELETE);
+    });
   }
 
   closeEEI = (actionType) => {
     const { intelId} = this.props;
     this.notify(actionType);
     this.props.fetchIntelEeisByIntelId(intelId).then(() => {
-
       this.setState({
         editId: '0',
         isFormOpened: false,  
@@ -91,6 +92,7 @@ class IntelEEI extends React.Component {
   }
 
   openEEI = (id) => {
+    debugger;
     this.setState({
       editId: String(id),
       isFormOpened: true,
@@ -156,7 +158,8 @@ class IntelEEI extends React.Component {
         Header: translations.edit,
         accessor: 'id',
         filterable: false,
-        Cell: row => <div><a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value)}}><span className="glyphicon glyphicon-edit"/></a>&nbsp; <a href="#" className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
+        Cell: row => <div><a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value)}}><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+        <a href="javaScript:void('0');" onClick={()=>{this.deleteEEI(row.value)}} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a></div>,
       },
     ];
 
@@ -217,7 +220,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  addIntelEei, fetchIntelEeisByIntelId, updateIntelEei,
+  addIntelEei, fetchIntelEeisByIntelId, updateIntelEei, deleteIntelEEIById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IntelEEI);

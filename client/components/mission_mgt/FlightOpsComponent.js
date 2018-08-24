@@ -8,9 +8,7 @@ import { defaultFilter } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 
-
-class AtoComponent extends React.Component {
-
+class FlightOpsComponent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -85,12 +83,12 @@ class AtoComponent extends React.Component {
     ];
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="ATO" />
+        <TimelineFilter translations={translations} headerTxt="Flight Ops" />
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.ATOGeneration} />
+                <FullHeaderLine headerText={translations.FlightOPS} />
                 <div >
                   <ReactTable
                     data={data}
@@ -108,7 +106,7 @@ class AtoComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.FlightOPS} />
+                <FullHeaderLine headerText={translations.PedTask} />
                 <div >
                   <ReactTable
                     data={data}
@@ -131,12 +129,11 @@ class AtoComponent extends React.Component {
       </div>
     );
   }
-  
 }
 
-AtoComponent.propTypes = {
+FlightOpsComponent.propTypes = {
   children: PropTypes.element,
 
 };
 
-export default AtoComponent;
+export default FlightOpsComponent;

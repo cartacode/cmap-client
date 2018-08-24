@@ -19,6 +19,8 @@ import inteleei from 'reducers/inteleei';
 import collections from 'reducers/collections';
 import organicorgs from 'reducers/organicorg';
 import organicpersonnels from 'reducers/organicpersonnel';
+import mssionmgts from 'reducers/mssionmgts';
+
 
 export default function createReducer() {
   return combineReducers({
@@ -41,5 +43,6 @@ export default function createReducer() {
     collections,
     organicorgs,
     organicpersonnels,
+    mssionmgts,
   });
 }

@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 import AddPlatformInventory from './platform/AddPlatformInventory';
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
+import Loader from '../reusable/Loader';
 
 
 
@@ -57,11 +58,24 @@ class PlatformComponent extends React.Component {
   }
 
 	deletePayloadInventory = (value) => {
+
 	  if (value !== undefined && value !== '0') {
+      this.setState({
+        loading:true
+      });
 	    this.props.deletePlatformInventoryById(value).then(() => {
-	      //this.setState({ editId: '0' });
-	      this.notify(NoticeType.DELETE);
-	      this.props.fetchPlatformInventory();
+        this.setState({
+          loading:false
+        });
+        //this.setState({ editId: '0' });
+	      //this.notify(NoticeType.DELETE);
+        //this.props.fetchPlatformInventory();
+        if(this.props.isDeleted){
+          this.loadData(NoticeType.DELETE);
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+        }
 	    });
 	  }
 	}
@@ -75,7 +89,7 @@ class PlatformComponent extends React.Component {
         NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
       }
     }else{
-      NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Specification Title'], 5000);
+      NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Inventory Title'], 5000);
     }
   }
 
@@ -162,6 +176,8 @@ class PlatformComponent extends React.Component {
 
     return (
       <div>
+                <Loader loading={this.state.loading} />
+
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />

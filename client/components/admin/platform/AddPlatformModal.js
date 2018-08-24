@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import {NoticeType} from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
 
 
 
@@ -87,6 +88,7 @@ class AddPlatformModal extends React.Component {
         PlatformDatasheet: null,
       },
       isImagedRequired: true,
+      loading:false
     };
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
@@ -98,26 +100,14 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== undefined && editId !== '0') {
-      /* this.props.fetchPlatformById(editId).then(() => {
-        this.setState(
-          { isUpdated: true,
-            platform: this.props.onePlatform, 
-          });
-      }); */
-      this.editComponent(editId);
+        this.editComponent(editId);
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-      /* this.props.fetchPlatformById(editId).then(() => {
-        this.setState(
-          { isUpdated: true,
-            platform: this.props.onePlatform, 
-          });
-      }); */
-      this.editComponent(editId);
+        this.editComponent(editId);
 
     }
     if(editId === '0' && prevProps.editId !== editId) {
@@ -204,17 +194,9 @@ class AddPlatformModal extends React.Component {
         ...platform,
         PlatformPayloadCapacity: payloadData.PlatformPayloadCapacity,
         PlatformPayloadCount: payloadData.PlatformPayloadCount,
-        // PlatformPayload1: payloadData.PlatformPayload1,
-        // PlatformPayload2: payloadData.PlatformPayload2,
-        // PlatformPayload3: payloadData.PlatformPayload3,
         PlatformArmamentCapacity: payloadData.PlatformArmamentCapacity,
         PlatformArmamentCount: payloadData.PlatformArmamentCount,
-        // PlatformArmament1: payloadData.PlatformArmament1,
-        // PlatformArmament2: payloadData.PlatformArmament2,
-        // PlatformArmament3: payloadData.PlatformArmament3,
-        // PlatformComs1: payloadData.PlatformComs1,
-        // PlatformComs2: payloadData.PlatformComs2,
-
+        
       }
     }, () => {
       console.log("New state in ASYNC callback:22222", this.state.platform);
@@ -257,178 +239,12 @@ class AddPlatformModal extends React.Component {
     });
   }
 
-  /* handleUploadImgFile(event) {
-    event.preventDefault();
-    const { platform } = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        imagePreviewUrl: reader.result
-      });
-    }
-    reader.readAsDataURL(file);
-
-    this.setState({
-      platform: {
-        ...platform,
-        PlatformWireframe: event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.platform);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  }
- */
-  /* handleUploadPhotoFile(event) {
-    event.preventDefault();
-    const { platform } = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        imagePreviewUrl2: reader.result
-      });
-    }
-    reader.readAsDataURL(file);
-
-    let parametername = event.target.id;
-    this.setState({
-      platform: {
-        ...platform,
-        [parametername]: event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.platform);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  } */
-
-  /* handleUpload3DFile(event) {
-    event.preventDefault();
-    const { platform } = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-    }
-    reader.readAsDataURL(file);
-
-    this.setState({
-      platform: {
-        ...platform,
-        Platform3D: event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.platform);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  } */
-
-  /* handleUploadIconFile(event) {
-    event.preventDefault();
-    const { platform } = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-    }
-    reader.readAsDataURL(file);
-
-    this.setState({
-      platform: {
-        ...platform,
-        PlatformIcon: event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.platform);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  } */
-
-  /* handleUploadDatasheetsFile(event) {
-    event.preventDefault();
-    const { platform } = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-    }
-    reader.readAsDataURL(file);
-
-    this.setState({
-      platform: {
-        ...platform,
-        PlatformDatasheet: event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.platform);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  } */
-
+  
   handleSubmit = event => {
     event.preventDefault();
+    this.setState({
+      loading:true
+    });
     let { platform } = this.state;
     const { editId } = this.props;
 
@@ -455,11 +271,19 @@ class AddPlatformModal extends React.Component {
       platform.PlatformID = editId;
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.updatePlatform(editId, formData).then(() => {this.props.onClose(NoticeType.UPDATE);});
+      this.props.updatePlatform(editId, formData).then(() => {
+        this.setState({
+          loading:false
+        });
+        this.props.onClose(NoticeType.UPDATE);});
     } else {
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
-      this.props.addPlatform(formData).then(() => {this.props.onClose(NoticeType.ADD); });
+      this.props.addPlatform(formData).then(() => {
+        this.setState({
+          loading:false
+        });
+        this.props.onClose(NoticeType.ADD); });
     }
   }
 
@@ -526,11 +350,11 @@ class AddPlatformModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
+
+
   render() {
     // Render nothing if the "show" prop is false
-    /* if (!this.props.show) {
-      return null;
-    } */
+    
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = '';
@@ -540,7 +364,7 @@ class AddPlatformModal extends React.Component {
     const imageUrl2 = this.props.onePlatform.PlatformWireframe;
 
     
-  if (imageUrl !== undefined && imageUrl !== "") {
+  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
     $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
   }
   else {
@@ -551,7 +375,7 @@ class AddPlatformModal extends React.Component {
   }
  
 
-  if (imageUrl2 !== undefined && imageUrl2 !== "") {
+  if (imageUrl2 !== undefined && imageUrl2 !== "" && this.props.editId != '0') {
     $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
   }
   else {
@@ -568,7 +392,6 @@ class AddPlatformModal extends React.Component {
       nums.push({ 'label': i, 'value': i });
     }
 
-    //let { platform } = this.state;
     const { translations } = this.props;
 
     const generalFields = [
@@ -681,9 +504,34 @@ class AddPlatformModal extends React.Component {
     //   { name: '20' }
     // ];
 
+    /* const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    position: fixed;
+      z-index: 999;
+      height: 2em;
+      width: 2em;
+      overflow: show;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+`; */
+    
     return (
-
+      
       <form action="" onSubmit={this.handleSubmit} id="platform">
+      <Loader loading={this.state.loading} />
+      {/*  <div className='loadingjkjk'>
+      <BarLoader
+       className={override}
+        sizeUnit={"px"}
+        size={150}
+        color={'#123abc'}
+        loading={this.state.loading}
+      /> 
+    </div>  */}
         <div className="payload-content">
           <div className="row personnel" >
             <div className="header-line">
@@ -788,7 +636,6 @@ class AddPlatformModal extends React.Component {
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
         </div>
-
       </form>
 
     );

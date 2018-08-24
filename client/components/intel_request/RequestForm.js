@@ -2,14 +2,16 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FullHeaderLine from '../reusable/FullHeaderLine';
-import ShortHeaderLine from '../reusable/ShortHeaderLine';
+import FullHeaderLine from 'components/reusable/FullHeaderLine';
+import ShortHeaderLine from 'components/reusable/ShortHeaderLine';
 
-import ModalFormBlock from '../reusable/ModalFormBlock';
+import Map from 'components/reusable/Map';
+import ModalFormBlock from 'components/reusable/ModalFormBlock';
+import { viewerIdentifiers } from 'map/viewer';
 
 import 'react-table/react-table.css';
 import { NotificationManager } from 'react-notifications';
-import  { NoticeType } from '../../dictionary/constants';
+import  { NoticeType } from 'dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
@@ -62,7 +64,7 @@ class RequestForm extends React.Component {
   }
 
   componentDidMount = () =>{
-    
+
     const { match: { params } } = this.props;
     const editId = params.editId;
 
@@ -184,7 +186,7 @@ class RequestForm extends React.Component {
 
 notify = (type) => {
   const { translations  } = this.props;
-  
+
   if(type === NoticeType.ADD) {
     NotificationManager.success(translations['AddedSuccesfully'], translations['intel request'], 5000);
   } else if(type === NoticeType.UPDATE) {
@@ -273,7 +275,7 @@ resetForm() {
     // }
 
     const intelRequest4 = [
-      
+
       { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' },
       { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId' },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
@@ -288,7 +290,7 @@ resetForm() {
 
     return (
       <div>
-        
+
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
             <div className="img-header-line">
@@ -299,7 +301,7 @@ resetForm() {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <img className="photo" src="/assets/img/intel_request/request/request_pic.png" alt="" />
+              <Map viewerId={viewerIdentifiers.intelRequest} /> 
             </div>
           </div>
           <div className="col-md-4 one-block">
@@ -350,7 +352,7 @@ resetForm() {
               <FullHeaderLine headerText={translations['special instructions/notes']} />
             </div>
             <div className="col-md-12">
-               <input type="text" className="instruction" /> 
+               <input type="text" className="instruction" />
               <textarea className="instruction"/>
             </div>
           </div> */}
@@ -373,7 +375,7 @@ resetForm() {
             </div>
           </div>
         </form>
- 
+
         {this.state.intelRequest.IntelRequestID !== '' ?
           <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
           : null }

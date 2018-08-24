@@ -12,6 +12,7 @@ export const INTEL_EEI__ADD = createActionType('INTEL_EEI__ADD');
 export const INTEL_EEI__UPDATE = createActionType('INTEL_EEI__UPDATE');
 export const INTEL_EEI__FETCH = createActionType('INTEL_EEI__FETCH');
 export const INTEL_EEI__FETCH_ONE = createActionType('INTEL_EEI__FETCH_ONE');
+export const INTEL_EEI__DELETE = createActionType('INTEL_EEI__DELETE');
 
 export const INTEL_REQUEST__ADD = createActionType('INTEL_REQUEST__ADD');
 export const INTEL_REQUEST__UPDATE = createActionType('INTEL_REQUEST__UPDATE');
@@ -68,7 +69,7 @@ export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
 export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');
 export const CCIRPIR__FETCH = createActionType('CCIRPIR__FETCH');
 export const CCIRPIR__FETCH_ONE = createActionType('CCIRPIR__FETCH_ONE');
-export const CCIRPIR__DELETE = createActionType('CCIRPIR__DELETE');
+export const CCIRPIR__DELETE_ONE = createActionType('CCIRPIR__DELETE_ONE');
 
 
 export const PLATFORM__ADD = createActionType('PLATFORM__ADD');
@@ -103,11 +104,13 @@ export const MOVE_TO_INTEL__REQUEST = createActionType('MOVE_TO_INTEL__REQUEST')
 export const DELETE_COLLECTION__PLAN = createActionType('DELETE_COLLECTION__PLAN');
 export const INTEL_APPROVED_REQUEST__FETCH = createActionType('INTEL_APPROVED_REQUEST__FETCH');
 export const INTEL_APPROVED_REQUEST__DELETE_ONE = createActionType('INTEL_APPROVED_REQUEST__DELETE_ONE');
+export const ROUTE_COLLECTION__PLAN = createActionType('ROUTE_COLLECTION__PLAN');
 
 export const ORGANIC_ORG__FETCH = createActionType('ORGANIC_ORG__FETCH');
 export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
 export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 
-
-
+export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
+export const FLIGHT_OPS__FETCH = createActionType('FLIGHT_OPS__FETCH');
+export const PED_TASKS__FETCH = createActionType('PED_TASKS__FETCH');

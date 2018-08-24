@@ -1,11 +1,17 @@
 import {connect} from 'react-redux';
 
 import IsrSyncComponent from '../../components/mission_mgt/IsrSyncComponent';
+import { fetchCollectionPlans, fetchATOGeneration  } from 'actions/mssionmgt';
 
 const mapStateToProps = state => {
   return {
-    translations: state.localization.staticText
+    translations: state.localization.staticText,
   };
 };
 
-export default connect(mapStateToProps)(IsrSyncComponent);
+const mapDispatchToProps = {
+  fetchCollectionPlans,
+  fetchATOGeneration,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IsrSyncComponent);

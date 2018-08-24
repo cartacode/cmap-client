@@ -17,38 +17,50 @@ class MissileModal extends React.Component {
       clear: false,
       missilePhotoPreviewUrl: '',
       oneMunition: {},
-      /*  munition: {
-         MunitionsReferenceCode: '',
-         MunitionWireframe: '',
-         MunitionPhoto: '',
-         Munition3D: '',
-         MunitionIcon: '',
-         Munition2525B: '',
-         MunitionDatasheet: '',
-         MunitionName: '',
-         MunitionNomenclature: '',
-         MunitionRole: '',
-         MunitionManufacturer: '',
-         MunitionExecutiveAgent: '',
-         MunitionContractProgram: '',
-         MunitionCost: '',
-         MunitionCostNotes: '',
-         MunitionLength: '',
-         MunitionWidthDiameter: '',
-         MunitionWeight: '',
-         MunitionWingspan: '',
-         MunitionWarhead: '',
-         MunitionEngine: '',
-         MunitionRange: '',
-         MunitionSpeed: '',
-         MunitionGuideanceSys: '',
-         MunitionLaunchPlatform: '',
-         MunitionWeatherRestriction: '',
-         MunitionCrewCount: '',
-         MunitionMOS1: '',
-         MunitionMOS2: '',
-         MunitionMOS3: '',
-       } */
+      munition: {
+        MunitionID: '',
+        MunitionsReferenceCode: '',
+        MunitionWireframe: '',
+        MunitionPhoto: '',
+        Munition3D: '',
+        MunitionIcon: '',
+        Munition2525B: '',
+        MunitionDatasheet: '',
+        MunitionName: '',
+        MunitionNomenclature: '',
+        MunitionRole: '',
+        MunitionManufacturer: '',
+        MunitionExecutiveAgent: '',
+        MunitionContractProgram: '',
+        MunitionCost: '',
+        MunitionCostNotes: '',
+        MunitionLength: '',
+        MunitionWidthDiameter: '',
+        MunitionWeight: '',
+        MunitionWingspan: '',
+        MunitionWarhead: '',
+        MunitionEngine: '',
+        MunitionRange: '',
+        MunitionSpeed: '',
+        MunitionGuideanceSys: '',
+        MunitionLaunchPlatform: '',
+        MunitionWeatherRestriction: '',
+        MunitionCrewCount: '',
+        MunitionMOS1: '',
+        MunitionMOS2: '',
+        MunitionMOS3: '',
+        MunitionHeigh: '',
+        MunitionWeightUnloaded: '',
+        MunitionWeightLoaded: '',
+        MunitionRoundsCarried: '',
+        MunitionRateFire: '',
+        MunitionMuzzleVelocity: '',
+        MunitionProjectileWeight: '',
+        MunitionCaliber: '',
+        MunitionDriveSystem: '',
+        MunitionFeedSystem: '',
+        MunitionMuzzleEnergy: ''
+      },
       missileMunitionFiles: {
         MunitionPhoto: null,
         MunitionWireframe: null,
@@ -66,7 +78,6 @@ class MissileModal extends React.Component {
   }
 
   componentWillMount() {
-    //this.props.fetchMunitions();
   }
 
   /**
@@ -114,11 +125,11 @@ class MissileModal extends React.Component {
           });
       }); */
       this.editComponent(editId);
-
     }
-
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ 
+        clear: true
+      });
     }
   }
 
@@ -305,7 +316,8 @@ class MissileModal extends React.Component {
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({
          clear: true,
-         missilePhotoPreviewUrl: '/assets/img/admin/rockets.png'
+         missilePhotoPreviewUrl: '/assets/img/admin/rockets.png',
+         missileMunitionFiles : {}
         });
       document.getElementById('munitionform').reset();
     }
@@ -322,8 +334,7 @@ class MissileModal extends React.Component {
     let { missilePhotoPreviewUrl } = this.state;
     let $imagePreview = '';
     const imageUrl = this.props.oneMunition.MunitionPhoto;
-
-    if (imageUrl !== undefined && imageUrl !== "") {
+    if (imageUrl !== undefined && imageUrl !== "" &&  this.props.editId != '0') {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
     } else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
@@ -375,10 +386,10 @@ class MissileModal extends React.Component {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file', fileType: 'image' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file', fileType: 'image' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file', fileType: 'image' },
-      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file', fileType: 'image' }
+      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file' },
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file' }
     ];
 
     return (

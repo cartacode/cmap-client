@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
 import { defaultFilter } from '../../util/helpers';
 import {NoticeType, TableDefaults } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 
 
@@ -21,6 +22,7 @@ class PlatformsSpecificationComponent extends React.Component {
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
+      loading:false
     }
   }
 
@@ -68,18 +70,40 @@ class PlatformsSpecificationComponent extends React.Component {
 
 	deletePayload = (value) => {
 		if (value !== undefined && value !== '0') {
-			this.props.deletePlatformById(value).then(() => {
-        this.closePlatformForm(NoticeType.DELETE);
-				/* this.setState({ editId: '0', }); */
-        //this.props.fetchPlatforms();
-			});
+      this.setState({
+        loading:true
+      });
+			this.props.deletePlatformById(value).then((response) => {
+        
+        this.setState({
+          loading:false
+        });
+        if(this.props.isDeleted){
+          this.closePlatformForm(NoticeType.DELETE);
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+
+        }
+			
+      }).catch((err) => {
+        
+      });
+      
 		}
 	}
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if (NoticeType.DELETE != actionType) {
-        if (this.state.editId !== undefined && this.state.editId !== '0') {
+
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Platform Specification Title'], 5000);
+    }
+
+    else if (NoticeType.DELETE != actionType) {
+       
+        
+         if (this.state.editId !== undefined && this.state.editId !== '0') {
           NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
         }else{
           NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);
@@ -154,6 +178,7 @@ class PlatformsSpecificationComponent extends React.Component {
 
     return (
       <div>
+        <Loader loading={this.state.loading} />
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
