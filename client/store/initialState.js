@@ -74,7 +74,13 @@ export default {
     allCollectionsPlan: [],
     isFetching: false,
   },
-
+  mssionmgts: {
+    allCollectionsPlan:[],
+    atoGenerations: [],
+    flightOps: [],
+    pedTasks: [],
+    isFetching: false,
+  },
   paygrades: {
     paygradeList: [],
     isListFetching: false,

@@ -478,5 +478,8 @@
 	"AddedSuccesfully": "Record Added Successfully",
   	"UpdatedSuccesfully": "Record Updated Successfully",
   	"DeletedSuccesfully": "Record Deleted Successfully" ,
-    "DeleteUnSuccessfull":"Record Can Not Be Deleted" 
+	"DeleteUnSuccessfull":"Record Can Not Be Deleted",
+	"ATOGeneration":"ATO Generation",
+  	"FlightOPS":"Flight OPS",
+  	"PedTask":"Ped Tasks" 
 }

@@ -106,11 +106,11 @@ export const INTEL_APPROVED_REQUEST__FETCH = createActionType('INTEL_APPROVED_RE
 export const INTEL_APPROVED_REQUEST__DELETE_ONE = createActionType('INTEL_APPROVED_REQUEST__DELETE_ONE');
 export const ROUTE_COLLECTION__PLAN = createActionType('ROUTE_COLLECTION__PLAN');
 
-
 export const ORGANIC_ORG__FETCH = createActionType('ORGANIC_ORG__FETCH');
 export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
 export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 
-
-
+export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
+export const FLIGHT_OPS__FETCH = createActionType('FLIGHT_OPS__FETCH');
+export const PED_TASKS__FETCH = createActionType('PED_TASKS__FETCH');
