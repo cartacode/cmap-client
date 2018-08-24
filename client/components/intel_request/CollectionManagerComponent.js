@@ -279,6 +279,8 @@ class CollectionManagerComponent extends React.Component {
               </div>
             </div>
           </div>
+        
+        
         </div>
       </div>
     );
