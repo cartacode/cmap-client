@@ -1023,7 +1023,10 @@ body .login{
     height: 330px !important;
   }
 }
-
+.ReactTable .-pagination .-center {
+  flex-wrap: unset;
+  margin-top: 10px 0px 10px 0px;
+}
 //end status
 
 //start intel-request
