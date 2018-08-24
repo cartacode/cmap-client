@@ -57,9 +57,9 @@ class TimelineFilter extends React.Component {
           <div className="col-md-12 filter-line">
             <MissionMgtDropDown key="1" id="1" label={translations.resource} options={resource} />
             <MissionMgtDropDown key="2" id="2" label={translations.view} items={view} />
-            <MissionMgtDropDown key="3" id="3" label={translations.cocom} dropdownDataUrl="COCOM" />
-            <MissionMgtDropDown key="4" id="4" label={translations.unit} dropdownDataUrl="Units" />
-            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} items={assets_type} />
+            <MissionMgtDropDown key="3" id="3" label={translations.cocom} dropdownDataUrl="COCOM/GetCOCOMs" />
+            <MissionMgtDropDown key="4" id="4" label={translations.unit} dropdownDataUrl="Units/GetUnits" />
+            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} dropdownDataUrl="AssetTypes/GetAssetTypes" />
             <div className="each-select">
               <div className="date-pic">
                 <CustomDatePicker headerText={translations.start} />
