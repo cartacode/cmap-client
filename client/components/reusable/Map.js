@@ -11,7 +11,7 @@ import { createViewer, destroyViewer } from 'map/viewer';
  */
 export const viewerSize = {
   small: 300,
-  medium: 800,
+  medium: 100,
   large: 1300,
 };
 
@@ -41,7 +41,7 @@ export default class Map extends React.PureComponent {
     const { size = viewerSize.medium } = this.props;
 
     return (
-      <div id={this._elementId} style={{ width: `${size}px` }}/>
+      <div id={this._elementId} style={{ width: `${size}%` }}/>
     );
   }
 }

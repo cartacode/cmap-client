@@ -186,7 +186,7 @@ class ModalFormBlock extends React.Component {
 
               <div className="col-md-12 form-fields-gap" key={'elem' + i}>
                 <div className="col-md-12 label-title" style={{padding:0}}>{item.name}</div>
-                <div className="col-md-12 pull-right" style={{padding:0}}>{input}</div>
+                <div className="col-md-12" style={{padding:0}}>{input}</div>
               </div>
             )
           });
