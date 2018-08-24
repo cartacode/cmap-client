@@ -7,12 +7,12 @@ class NodeElement extends React.PureComponent {
     return (
       <div className={className}>
         <div className="element-bg">
-        <img className="img-valign" src={nodeData.image} height="55" width="55"/>
-          <div className="text-1">{nodeData.name} <br/>
+        <img className="img-valign" src={nodeData.unitLogo} height="55" width="55"/>
+          <div className="text-1">{nodeData.UnitName} <br/>
        
        {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
        <span className="unit-text"> {nodeData.attributes.Unit}</span></span>) : (<span> <br/>
-       <span className="unit-text"> {nodeData.attributes.Location}</span> <br/> </span>) }
+       <span className="unit-text"> {nodeData.Location}</span> <br/> </span>) }
           
           </div>
         </div>

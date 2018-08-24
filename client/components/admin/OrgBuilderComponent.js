@@ -18,6 +18,7 @@ import { fetchOrganicOrg } from '../../actions/organicorg';
 // import '../../../node_modules/treant-js/vendor/raphael.js';
 // import Treant from '../../../node_modules/treant-js/Treant.js';
 
+let forceRemount = 0;
 class OrgBuilderComponent extends React.Component {
 
   constructor(props) {
@@ -42,8 +43,8 @@ class OrgBuilderComponent extends React.Component {
       orgData: [
         {
           id: '1',
-          name: 'Larry Pickering',
-          image: '/assets/img/admin/avatar.png',
+          UnitName: 'Larry Pickering',
+          unitLogo: '/assets/img/admin/avatar.png',
           type:'Personnel',
           attributes: {
             Rank: 'Commanding General',
@@ -52,8 +53,8 @@ class OrgBuilderComponent extends React.Component {
           children: [
             {
               id: '1.1',
-              name: 'Steve Lockwood',
-              image: '/assets/img/admin/avatar.png',
+              UnitName: 'Steve Lockwood',
+              unitLogo: '/assets/img/admin/avatar.png',
               type:'Personnel',
               attributes: {
                 Rank: 'Commander',
@@ -62,8 +63,8 @@ class OrgBuilderComponent extends React.Component {
             },
             {
               id: '1.2',
-              name: 'Mike Kelly',
-              image: '/assets/img/admin/avatar.png',
+              UnitName: 'Mike Kelly',
+              unitLogo: '/assets/img/admin/avatar.png',
               type:'Personnel',
               attributes: {
                 Rank: 'Commander',
@@ -73,6 +74,7 @@ class OrgBuilderComponent extends React.Component {
           ],
         },
       ],
+      
     };
   }
 
@@ -101,7 +103,6 @@ class OrgBuilderComponent extends React.Component {
 
   openOptionModal = (nodeData, e) => {
     console.log('node data');
-    console.log(nodeData);
     this.setState({
       isOptionModalOpen: true,
     });
@@ -118,37 +119,67 @@ class OrgBuilderComponent extends React.Component {
     const { allOrganicOrgs } = this.props;
     console.log(allOrganicOrgs);
 
-    let orgData2 = [
-       {
-         id: '1',
-         name: allOrganicOrgs[0].UnitName,
-         image: '/assets/img/admin/primoris_backgr.png',
-         type:'Org',
-         attributes: {
-           Location: allOrganicOrgs[0].LocationName,
-          },
-         children: [
-           {
-             id: '1.1',
-             name: allOrganicOrgs[1].UnitName,
-             image: '/assets/img/admin/primoris_backgr.png',
-             type:'Org',
-             attributes: {
-               Location: allOrganicOrgs[1].LocationName,
-             },
-           },
-           {
-             id: '1.2',
-             name: allOrganicOrgs[2].UnitName,
-             image: '/assets/img/admin/primoris_backgr.png',
-             type:'Org',
-             attributes: {
-               Location: allOrganicOrgs[2].LocationName,
-             },
-           },
-         ],
-       },
-     ];
+    // let testdata = [
+    //   {
+    //     id:'1',
+    //     name:allOrganicOrgs.UnitName,
+    //     image: '/assets/img/admin/primoris_backgr.png',
+    //     type:'Org',
+    //     attributes: {
+    //       Location: allOrganicOrgs.LocationName,
+    //     }
+    //   }
+
+    // ];
+
+    
+
+    // testdata[0].children = [];
+    // for (let i=0; i<allOrganicOrgs.subordinateUnits.length; i++)
+    // {
+    //     testdata[0].children.push({name:allOrganicOrgs.subordinateUnits[i].UnitName, image: '/assets/img/admin/primoris_backgr.png',
+    //     type:'Org',
+    //     attributes: {
+    //       Location: allOrganicOrgs.subordinateUnits[i].LocationName,
+    //     }
+    //     });
+    // }
+    // console.log(testdata);
+    
+
+    // let orgData2 = [
+    //    {
+    //      id: '1',
+    //      name: allOrganicOrgs.UnitName,
+    //      image: '/assets/img/admin/primoris_backgr.png',
+    //      type:'Org',
+    //      attributes: {
+    //        Location: allOrganicOrgs.LocationName,
+    //       },
+    //      children: [
+    //        {
+    //          id: '1.1',
+    //          name: allOrganicOrgs.subordinateUnits[0].UnitName,
+    //          image: '/assets/img/admin/primoris_backgr.png',
+    //          type:'Org',
+    //          attributes: {
+    //            Location: allOrganicOrgs.subordinateUnits[0].LocationName,
+    //          },
+    //        },
+    //        {
+    //          id: '1.2',
+    //          name: allOrganicOrgs.subordinateUnits[1].UnitName,
+    //          image: '/assets/img/admin/primoris_backgr.png',
+    //          type:'Org',
+    //          attributes: {
+    //            Location: allOrganicOrgs.subordinateUnits[1].LocationName,
+    //          },
+    //        },
+    //      ],
+    //    },
+    //  ];
+
+    let orgData2 = [ allOrganicOrgs ];
    
      this.setState({
        orgData: orgData2
@@ -160,8 +191,8 @@ class OrgBuilderComponent extends React.Component {
     let orgData = [
        {
         id: '1',
-        name: 'Larry Pickering',
-        image: '/assets/img/admin/avatar.png',
+        UnitName: 'Larry Pickering',
+        unitLogo: '/assets/img/admin/avatar.png',
         type:'Personnel',
         attributes: {
           Rank: 'Commanding General',
@@ -170,8 +201,8 @@ class OrgBuilderComponent extends React.Component {
         children: [
           {
             id: '1.1',
-            name: 'Steve Lockwood',
-            image: '/assets/img/admin/avatar.png',
+            UnitName: 'Steve Lockwood',
+            unitLogo: '/assets/img/admin/avatar.png',
             type:'Personnel',
             attributes: {
               Rank: 'Commander',
@@ -180,8 +211,8 @@ class OrgBuilderComponent extends React.Component {
           },
           {
             id: '1.2',
-            name: 'Mike Kelly',
-            image: '/assets/img/admin/avatar.png',
+            UnitName: 'Mike Kelly',
+            unitLogo: '/assets/img/admin/avatar.png',
             type:'Personnel',
             attributes: {
               Rank: 'Commander',
@@ -191,9 +222,11 @@ class OrgBuilderComponent extends React.Component {
         ],
        },
      ];
+
+     forceRemount = forceRemount +1;
    
      this.setState({
-       orgData: orgData
+       orgData: orgData,       
      });
    }
 
@@ -356,7 +389,7 @@ render() {
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
-          <TreeComponent data={this.state.orgData} onNodeClick = {this.openOptionModal}/>
+          <TreeComponent data={this.state.orgData} onNodeClick = {this.openOptionModal} key={forceRemount} initialDepth={2} collapsible={false}/>
         </div>  
         </div>
       </div>
