@@ -102,7 +102,7 @@ class OrgBuilderComponent extends React.Component {
   }
 
   openOptionModal = (nodeData, e) => {
-    console.log('node data');
+    console.log(nodeData);
     this.setState({
       isOptionModalOpen: true,
     });
