@@ -44,14 +44,21 @@ updateDimension = () => {
 
 }
 
+postconsole = event => {
+  event.preventDefault();
+  console.log("Post Console");
+}
+
   render() {
+
     return (
         
       <div style={this.state.containerStyles} ref={tc => (this.treeContainer = tc)}>
-        <Tree data={this.props.data} collapsible={false} translate={this.state.translate} 
+      {/*Key prop to re-render*/}
+        <Tree data={this.props.data} collapsible={true} key={this.props.forceRemount} initialDepth={1} translate={this.state.translate} 
           separation={this.state.separation} allowForeignObjects = {true}
           nodeLabelComponent={{
-            render: <NodeElement className="myLabelComponentInSvg" />,
+            render: <NodeElement className="myLabelComponentInSvg" check={this.postconsole}/>,
             foreignObjectWrapper: {
               y: -20,
               x: 20,

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
+// import { fetchPersonnelsById } from 'actions/organicpersonnel.js'
 
 class Accordion extends React.Component {
 
@@ -215,6 +217,10 @@ class Accordion extends React.Component {
     
   }
 
+  handleFilterSubmit = () => {
+
+  }
+
   render() {
 
     const firstSectionDropdowns = [
@@ -229,7 +235,7 @@ class Accordion extends React.Component {
     ];
 
     const lastSectionDropdowns = [
-      {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'COCOM'},
+      {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType'},
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Units'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units'},
@@ -275,6 +281,7 @@ class Accordion extends React.Component {
                   <input placeholder="Search/Filter Name, CAC ID"/>
                 </div>
               </div>
+              <button type="submit" onClick={this.handleFilterSubmit}>Submit</button> <br/><br/>
             </div>
           </div>
         </div>
@@ -458,4 +465,17 @@ Accordion.propTypes = {
   personnelChart:PropTypes.func.isRequired,
 };
 
-export default Accordion;
+const mapStateToProps = state => {
+  return {
+    // translations: state.localization.staticText,
+    // onePlatform: state.status.onePlatform
+  };
+};
+
+const mapDispatchToProps = {
+  // fetchPlatformStatusById,
+  // updatePlatformStatus
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Accordion);

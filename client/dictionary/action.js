@@ -110,6 +110,8 @@ export const ORGANIC_ORG__FETCH = createActionType('ORGANIC_ORG__FETCH');
 export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
 export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
+export const ORGANIC_PERSONNEL__FETCH_LIST = createActionType('ORGANIC_PERSONNEL__FETCH_LIST');
+
 
 export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
 export const FLIGHT_OPS__FETCH = createActionType('FLIGHT_OPS__FETCH');

@@ -180,6 +180,8 @@ class OrgBuilderComponent extends React.Component {
     //  ];
 
     let orgData2 = [ allOrganicOrgs ];
+
+    forceRemount = forceRemount +1;
    
      this.setState({
        orgData: orgData2
@@ -222,8 +224,6 @@ class OrgBuilderComponent extends React.Component {
         ],
        },
      ];
-
-     forceRemount = forceRemount +1;
    
      this.setState({
        orgData: orgData,       
@@ -389,7 +389,7 @@ render() {
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
-          <TreeComponent data={this.state.orgData} onNodeClick = {this.openOptionModal} key={forceRemount} initialDepth={2} collapsible={false}/>
+          <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true}/>
         </div>  
         </div>
       </div>

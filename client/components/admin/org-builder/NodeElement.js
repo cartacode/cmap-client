@@ -18,9 +18,8 @@ class NodeElement extends React.PureComponent {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <a href="#">
-              <span className="glyphicon glyphicon-plus-sign"/>
-            </a>&nbsp;
+              <span className="glyphicon glyphicon-plus-sign" onClick={this.props.check}/>
+            &nbsp;
             <a href="#">
               <span className="glyphicon glyphicon-edit"/>
             </a>&nbsp;
