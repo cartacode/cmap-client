@@ -237,6 +237,7 @@ class Accordion extends React.Component {
     const lastSectionDropdowns = [
       {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType'},
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Units'},
+      {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units'},
     ];
