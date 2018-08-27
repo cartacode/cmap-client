@@ -102,14 +102,34 @@ class Table extends React.Component {
           {/* State {this.state.selectedDropDownValue} value
         Props {this.props.initValue} Value */}
 
-          {this.props.required ?
+         {/*  {this.props.required ?
             <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
               {this.renderItems()}
             </select>
             :
             <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} >
               {this.renderItems()}
-            </select>}
+            </select>} */}
+
+             {
+               this.props.required ? (this.props.disabled ? <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required disabled>
+                                                                {this.renderItems()}
+                                                            </select> 
+                                                            : 
+                                                            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
+                                                                {this.renderItems()}
+                                                            </select>)
+
+                                :
+            
+                                  this.props.disabled ?   <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} disabled>
+                                                                {this.renderItems()}
+                                                           </select> 
+                                                           :  
+                                                          <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} >
+                                                                {this.renderItems()}
+                                                          </select>
+              }
             
         </div>
       );

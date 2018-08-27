@@ -164,8 +164,8 @@ class RequestForm extends React.Component {
     intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
-
     if(editId !== undefined && editId !== '0') {
+
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
         this.notify(NoticeType.UPDATE);
@@ -174,6 +174,7 @@ class RequestForm extends React.Component {
         });
       });
     } else {
+
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
         this.setState({
@@ -276,8 +277,8 @@ resetForm() {
 
     const intelRequest4 = [
 
-      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' },
-      { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId' },
+      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' , required:true},
+      { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
     ];
 

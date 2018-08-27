@@ -115,7 +115,7 @@ class RequestComponent extends React.Component {
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
-        <a href="#" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a></div>,
+        <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a></div>,
       },
     ];
 

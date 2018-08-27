@@ -148,16 +148,22 @@ class ModalFormBlock extends React.Component {
     
               case 'dropdown':
                 let req = false;
+                let disabled = false;
                 if(item.required) {
                   req = true;
                 }
+
+                if(item.disabled){
+                  disabled = true;
+                }
+                
                 // if(value === '') {
                 //   value = 11;
                 // }
-                input = ( 
-                  <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req}/>
+                 input = ( 
+                    <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
                 
-                );
+                 );
                 break;
     
               case 'date':
