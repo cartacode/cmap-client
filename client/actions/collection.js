@@ -5,10 +5,10 @@ import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 
-export function fetchCollectionPlans(unitId, abbreviation, isInCollectionPlan) {
+export function fetchCollectionPlans(unitId, abbreviation) {
   return createAction({
     type: COLLECTION_PLAN__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestByAbbreviation?abbreviation=${abbreviation}&unitId=${unitId}&isInCollectionPlan=${isInCollectionPlan}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestForCollectionPlan?abbreviation=${abbreviation}&unitId=${unitId}`, requestHeaders),
   });
 }
 export function fetchApprovedIntelRequests(unitId, abbreviation, isInCollectionPlan) {
@@ -34,10 +34,10 @@ export function moveToCollectionPlan(intelRequestId) {
 }
 
 
-export function moveToIntelRequest(intelRequestId) {
+export function moveToIntelRequest(intelRequestId, statusId) {
   return createAction({
     type: MOVE_TO_INTEL__REQUEST,
-    action: () => axios.put(`${baseUrl}/IntelRequest/MoveOutFromCollectionPlan/${intelRequestId}`, requestHeaders),
+    action: () => axios.put(`${baseUrl}/IntelRequest/MoveOutFromCollectionPlan/${intelRequestId}/${statusId}`, requestHeaders),
   });
 }
 

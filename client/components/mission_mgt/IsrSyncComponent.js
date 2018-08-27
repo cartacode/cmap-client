@@ -87,7 +87,7 @@ class IsrSyncComponent extends React.Component {
     return (
       <div>
         <TimelineFilter translations={translations} headerTxt="isr sync" />
-        <div className="row mission-mgt">
+        {/* <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
@@ -128,7 +128,7 @@ class IsrSyncComponent extends React.Component {
             </div>
           </div>
 
-        </div>
+        </div> */}
       </div>
     );
   }

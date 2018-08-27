@@ -9,10 +9,8 @@ import FullHeaderLine from './FullHeaderLine';
 import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
 
-
-
 class TimelineFilter extends React.Component {
-	
+
   constructor(props) {
     super(props);
   }
@@ -24,11 +22,22 @@ class TimelineFilter extends React.Component {
   render() {
     const { translations } = this.props;
 
-    const resource = [translations.platform, translations.personnel ];
-    const view = [translations.pending, translations.avaliable, translations['off-line'], translations.booked, translations.active, translations['look-back'] ];
-    const cocom = [translations.all, translations.centcom, translations.africom, translations.eucom, translations.pacom, translations.northcom, translations.southcom, translations.socom, translations.startcom, translations.nato ];
+    //  const resource = [translations.platform, translations.personnel ];
+    const resource = [
+      { 'id': '1', 'description': translations.platform },
+      { 'id': '2', 'description': translations.personnel },
+    ];
+    const view = [
+      { 'id': '1', 'description': translations.pending },
+      { 'id': '2', 'description': 'avaliable' },
+      { 'id': '3', 'description': translations['off-line'] },
+      { 'id': '4', 'description': translations.booked },
+      { 'id': '5', 'description': translations.active },
+      { 'id': '6', 'description': translations['look-back'] },
+    ];
+   /*  const cocom = [translations.all, translations.centcom, translations.africom, translations.eucom, translations.pacom, translations.northcom, translations.southcom, translations.socom, translations.startcom, translations.nato ];
     const unit = [translations.all, translations['all ops'], translations['all intel'], '480th', '116th', '70th', '369th', '280th', '233th'];
-    const assets_type = [translations.all, translations.organic, translations.theater, translations.sro ];
+    const assets_type = [translations.all, translations.organic, translations.theater, translations.sro ]; */
 
     const groups = [
       { id: 1, title: '<table><tr><td style = "padding:20px">aaa</td><td>aaaa</td></tr></table>' },
@@ -42,12 +51,39 @@ class TimelineFilter extends React.Component {
       { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
     ];
 
-    const sideTableHeader = [translations.select, translations.unit, translations.team, translations.type, translations.Location ];
     const sideTableContent = [
       { select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater', group: 'name' },
       { select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater', group: 'name' },
       { select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater', group: 'name' },
     ];
+
+    const sideTableHeader = [
+      {
+        Header: translations.select,
+        accessor: 'select',
+        Cell: row => <div>
+          <input type="checkbox" id="chk" name="chk" />
+          <label htmlFor="chk"><span /></label>
+        </div>,
+      },
+      {
+        Header: translations.unit,
+        accessor: 'Unit',
+      },
+      {
+        Header: translations.team,
+        accessor: 'team',
+      },
+      {
+        Header: translations.Type,
+        accessor: 'type',
+      },
+      {
+        Header: translations.Location,
+        accessor: 'location',
+      },
+    ];
+
     return(
       <div>
         <div className="row mission-mgt">
@@ -56,7 +92,7 @@ class TimelineFilter extends React.Component {
           </div>
           <div className="col-md-12 filter-line">
             <MissionMgtDropDown key="1" id="1" label={translations.resource} options={resource} />
-            <MissionMgtDropDown key="2" id="2" label={translations.view} items={view} />
+            <MissionMgtDropDown key="2" id="2" label={translations.view} options={view} />
             <MissionMgtDropDown key="3" id="3" label={translations.cocom} dropdownDataUrl="COCOM/GetCOCOMs" />
             <MissionMgtDropDown key="4" id="4" label={translations.unit} dropdownDataUrl="Units/GetUnits" />
             <MissionMgtDropDown key="5" id="5" label={translations['assets type']} dropdownDataUrl="AssetTypes/GetAssetTypes" />
@@ -84,7 +120,7 @@ class TimelineFilter extends React.Component {
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="col-md-4" style={{ padding: 0 }}>
-              <StatusTable thead={sideTableHeader} lines={sideTableContent} />
+              <StatusTable thead={sideTableHeader} lines={sideTableContent} translations={translations} />
             </div>
             <div className="col-md-8" style={{ padding: 0 }}>
               <Timeline
@@ -104,7 +140,6 @@ class TimelineFilter extends React.Component {
   }
 
 }
-
 
 TimelineFilter.propTypes = {
   children: PropTypes.element,
