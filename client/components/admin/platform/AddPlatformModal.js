@@ -92,7 +92,7 @@ class AddPlatformModal extends React.Component {
     };
     this.resetForm = this.resetForm.bind(this);
     // preserve the initial state in a new object
-    // this.baseState = this.state;
+     this.baseState = this.state;
   }
 
  
