@@ -104,7 +104,7 @@ class IntelEEI extends React.Component {
     if(type === NoticeType.ADD) {
       NotificationManager.success(translations['AddedSuccesfully'], translations['IntelEEI'], 5000);
     } else if(type === NoticeType.UPDATE) {
-      NotificationManager.success(translations['UpdateSuccesfully'], translations['IntelEEI'], 5000);
+      NotificationManager.success(translations['UpdatedSuccesfully'], translations['IntelEEI'], 5000);
     } else if(type === NoticeType.DELETE) {
       NotificationManager.success(translations['DeletedSuccesfully'], translations['IntelEEI'], 5000);
     }
@@ -123,7 +123,7 @@ class IntelEEI extends React.Component {
       },
       {
         Header: translations.Name,
-        accessor: 'targetNum',
+        accessor: 'targetName',
 
       },
       {
