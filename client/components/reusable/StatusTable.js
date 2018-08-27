@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { TableDefaults } from '../../dictionary/constants';
+import { defaultFilter } from '../../util/helpers';
+import ReactTable from 'react-table';
 
 class StatusTable extends React.Component {
 
@@ -17,11 +20,11 @@ class StatusTable extends React.Component {
             {item}
           </div>
         </td>
-      )
+      );
     });
   }
 
-  renderTd(line, i) { 
+  renderTd(line, i) {
     return Object.values(line).map((item, j) => {
       let color;
 
@@ -66,7 +69,7 @@ class StatusTable extends React.Component {
           color = '#84888a'
       }
 
-      if(item =='view'){
+      if(item =='view') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/eye_icon.png" />
@@ -74,7 +77,7 @@ class StatusTable extends React.Component {
         )        
       }
 
-      if(item =='update'){
+      if(item =='update') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/eye_icon.png" onClick={this.props.fun} />
@@ -82,7 +85,7 @@ class StatusTable extends React.Component {
         )        
       }
 
-      else if(item =='detail'){
+      else if(item =='detail') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/detail_icon.png" />
@@ -90,14 +93,14 @@ class StatusTable extends React.Component {
         )        
       }
 
-      else if(item =='email'){
+      else if(item =='email') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/email_icon.png" />
           </td>
         )        
       }
-      else if(item =='export'){
+      else if(item =='export') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/export_icon.png" />
@@ -105,14 +108,14 @@ class StatusTable extends React.Component {
         )        
       }
 
-      else if(item =='edit'){
+      else if(item =='edit') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/pen_icon.png" />
           </td>
         )        
       }
-      else if(item =='del'){
+      else if(item =='del') {
         return (
           <td key={j} style={{color}} className="other-item">
             <img src="/assets/img/general/trash_icon.png" />
@@ -120,7 +123,7 @@ class StatusTable extends React.Component {
         )        
       }
 
-      else if(item =='check'){
+      else if(item =='check') {
         return (
           <td key={j} style={{color}}>
             <input type="checkbox" id={`checkbox${i}${j}`} name={`checkbox${i}{j}`}/>
@@ -129,13 +132,13 @@ class StatusTable extends React.Component {
         )        
       }
 
-      else{
+      
         return (
           <td key={j} style={{color}}>
             {item}
           </td>
         )  
-      }
+      
     });
   }
 
@@ -145,26 +148,41 @@ class StatusTable extends React.Component {
       return (
         <tr className={`${i % 2 === 0 ? 'striped' : 'no-striped'} tr`} key={i}>
           {this.renderTd(line, i)}
-        </tr>)
+        </tr>);
     });
   }
 
   render() {
+    const { translations } = this.props;
     return (
-    <div>
-      <table className="table">
+      <div>
+        {/* <table className="table">
         <thead className="thead">
         <tr className="tr">
           {this.renderThead()}
         </tr>
         </thead>
-        
+
         <tbody className="tbody">
           {this.renderLines()}
         </tbody>
-        
-      </table>
-    </div>
+
+      </table> */}
+
+        <ReactTable
+          data={this.props.lines}
+          columns={this.props.thead}
+          defaultPageSize={TableDefaults.PAGE_SIZE}
+          minRows={TableDefaults.MIN_ROWS}
+          className="-striped -highlight"
+          filterable={false}
+          showPageSizeOptions={false}
+          showPagination={false}
+          previousText="&#8678;"
+          nextText="&#8680;"
+          defaultFilterMethod={defaultFilter}
+        />
+      </div>
 
     );
   }

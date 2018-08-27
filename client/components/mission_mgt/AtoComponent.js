@@ -83,6 +83,7 @@ class AtoComponent extends React.Component {
         ),
       },
     ];
+
     return (
       <div>
         <TimelineFilter translations={translations} headerTxt="ATO" />
@@ -90,7 +91,7 @@ class AtoComponent extends React.Component {
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.ATOGeneration} />
+                <FullHeaderLine headerText={translations.CollectionPlan} />
                 <div >
                   <ReactTable
                     data={data}
@@ -108,7 +109,7 @@ class AtoComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.FlightOPS} />
+                <FullHeaderLine headerText={translations.ATOGeneration} />
                 <div >
                   <ReactTable
                     data={data}

@@ -51,7 +51,8 @@ class CollectionManagerComponent extends React.Component {
 
   moveToIntelRequest = (value) => {
     if (value !== undefined && value !== '0') {
-      this.props.moveToIntelRequest(value).then(() => {
+      const statusId = 21;
+      this.props.moveToIntelRequest(value, statusId).then(() => {
         this.setState({ editId: '0' });
         this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
         this.loadData();
@@ -86,8 +87,9 @@ class CollectionManagerComponent extends React.Component {
     let isInCollectionPlan = false;
     this.props.fetchApprovedIntelRequests(unitId, abbreviation, isInCollectionPlan);
 
-    isInCollectionPlan = true;
-    this.props.fetchCollectionPlans(unitId, abbreviation, isInCollectionPlan);
+     abbreviation = 'APR';
+    //isInCollectionPlan = true;
+    this.props.fetchCollectionPlans(unitId, abbreviation);
   };
 
   notify = actionType => {
@@ -123,10 +125,10 @@ class CollectionManagerComponent extends React.Component {
         Header: 'Command',
         accessor: 'COCOMText',
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "Status"
-      // },
+    /*   {
+        Header: "Status",
+        accessor: "Status"
+      }, */
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
@@ -174,6 +176,10 @@ class CollectionManagerComponent extends React.Component {
         Header: 'Priority',
         accessor: 'PriorityIntelRequirement',
       },
+     /*  {
+        Header: "Status",
+        accessor: "Status"
+      }, */
       {
         Header: 'Mission Type',
         accessor: 'MissionTypeText',
