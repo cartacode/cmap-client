@@ -32,6 +32,11 @@ export function createViewer(viewerId, elementId) {
     fullscreenButton: false,
     geocoder: false,
     homeButton: false,
+    // imageryProvider: new Cesium.WebMapServiceImageryProvider({
+    //   layers: 'GIS_Demo',
+    //   proxy: new Cesium.DefaultProxy('/proxy/'),
+    //   url: 'http://18.222.237.93:8080/geoserver/wms',
+    // }),
     imageryProvider: Cesium.createOpenStreetMapImageryProvider({
       url: 'https://a.tile.openstreetmap.org/',
     }),
