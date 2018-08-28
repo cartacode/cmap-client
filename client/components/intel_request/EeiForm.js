@@ -81,7 +81,7 @@ class EeiForm extends React.Component {
     this.setState({
       intelReqEEI: {
         ...intelReqEEI,
-        targetName: intelEei1.targetName,
+        
         targetID: intelEei1.targetID,
         objectiveID: intelEei1.objectiveID,
         threatGroupID: intelEei1.threatGroupID,
@@ -160,7 +160,7 @@ class EeiForm extends React.Component {
     
     // FORM fields Array
     const eeiFiled1 = [
-      { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
+      // { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
       { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets' , valFieldID: 'targetID', required: true },
       { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },

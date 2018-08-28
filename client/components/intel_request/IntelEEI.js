@@ -121,11 +121,11 @@ class IntelEEI extends React.Component {
         accessor: 'id',
 
       },
-      {
+      /* {
         Header: translations.Name,
         accessor: 'targetName',
 
-      },
+      }, */
       {
         Header: translations.threat,
         accessor: 'threatGroupID',
