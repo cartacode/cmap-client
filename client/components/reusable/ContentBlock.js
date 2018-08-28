@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from "../reusable/Dropdown";
 import CustomDatePicker from '../reusable/CustomDatePicker';
+import {InputAttributes} from '../../dictionary/constants';
 
 
 class ContentBlock extends React.Component {
@@ -135,15 +136,19 @@ class ContentBlock extends React.Component {
 
       switch (item.type) {
         case 'input':
+        let maxlength = InputAttributes.MAX_LENGTH;
+        if(item.maxlength){
+          maxlength = item.maxlength;
+        }
           if (item.required) {
             if (item.validationIcon) {
-              input = (<div className="input-group"><input type="text" className="form-control" value={value} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required /><span className="input-group-addon-validation-icon"> <img id="validationIcon" src="" /></span> </div>);
+              input = (<div className="input-group"><input type="text" className="form-control" value={value} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required maxlength={maxlength}/><span className="input-group-addon-validation-icon"> <img id="validationIcon" src="" /></span> </div>);
             } else {
-              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required />);
+              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxlength={maxlength} required />);
             }
           }
           else {
-            input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />)
+            input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxlength={maxlength} />)
           }
           break;
 

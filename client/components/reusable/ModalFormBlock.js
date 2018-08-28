@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Dropdown from "../reusable/Dropdown";
 import CustomDatePicker from '../reusable/CustomDatePicker';
+import {InputAttribute, InputAttributes} from '../../dictionary/constants';
 
 class ModalFormBlock extends React.Component {
 
@@ -111,14 +112,19 @@ class ModalFormBlock extends React.Component {
             switch (item.type) {
               case 'input':
                 let readOnly = false;
+                let maxlength = InputAttributes.MAX_LENGTH;
+                if(item.maxlength){
+                  maxlength = item.maxlength;
+                }
+
                 if(item.readOnly) {
                   readOnly = true;
                 }
                 if(item.required) {
-                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} required /> );
+                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxlength={maxlength} required /> );
                 }
                 else {
-                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly}/>)
+                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxlength={maxlength} />)
                 }
                 break;
     

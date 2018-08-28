@@ -100,3 +100,9 @@ export const IntelReqStatusCodes = [
     color: '#00FFFF',
   }
 ];
+
+
+export const InputAttributes = {
+  MAX_LENGTH : 50
+};
+
