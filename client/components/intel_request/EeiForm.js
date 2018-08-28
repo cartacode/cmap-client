@@ -97,7 +97,7 @@ class EeiForm extends React.Component {
         location: intelEei2.location,
         district: intelEei2.district,
         gridCoordinates: intelEei2.gridCoordinates,
-        LIMIDS_ReqID: intelEei2.LIMIDS_ReqID,
+        LIMIDS_Req: intelEei2.LIMIDS_ReqID,
       },
     });
   }
@@ -149,7 +149,7 @@ class EeiForm extends React.Component {
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({clear:true});
-      document.getElementById('personnelform').reset();
+      document.getElementById('EeiForm').reset();
     }
   }
 
@@ -184,7 +184,7 @@ class EeiForm extends React.Component {
 
     return (
       <div>
-        <form action="" onSubmit={this.handleSubmit}>
+        <form action="" onSubmit={this.handleSubmit} id="EeiForm">
           <div className="row intel-request">
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['eei generator']} />
