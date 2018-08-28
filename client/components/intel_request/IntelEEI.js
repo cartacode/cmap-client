@@ -128,7 +128,7 @@ class IntelEEI extends React.Component {
       }, */
       {
         Header: translations.threat,
-        accessor: 'threatGroupID',
+        accessor: 'threatGroup',
 
       },
       {
