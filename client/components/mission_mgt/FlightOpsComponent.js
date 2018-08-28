@@ -11,6 +11,10 @@ import TimelineFilter from '../reusable/TimelineFilter';
 class FlightOpsComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      defaultResource: '',
+      tab: 'FLIGHT_OPS',
+    };
   }
 
   onFind() {
@@ -20,6 +24,11 @@ class FlightOpsComponent extends React.Component {
   render() {
 
     const { translations } = this.props;
+
+    const resource = [
+      { 'id': '1', 'description': translations.platform },
+      { 'id': '2', 'description': translations.personnel },
+    ];
 
     const data = [{
       'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
@@ -83,7 +92,7 @@ class FlightOpsComponent extends React.Component {
     ];
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="Flight Ops" />
+        <TimelineFilter translations={translations} headerTxt="Flight Ops" resource={resource} tab={this.state.tab} />
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

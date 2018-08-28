@@ -13,6 +13,10 @@ class AtoComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      defaultResource: '1',
+      tab: 'ATO',
+    };
   }
 
   onFind() {
@@ -22,6 +26,10 @@ class AtoComponent extends React.Component {
   render() {
 
     const { translations } = this.props;
+
+    const resource = [
+      { 'id': '1', 'description': translations.platform },
+    ];
 
     const data = [{
       'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
@@ -86,7 +94,7 @@ class AtoComponent extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="ATO" />
+        <TimelineFilter translations={translations} headerTxt="ATO" defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab}/>
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
