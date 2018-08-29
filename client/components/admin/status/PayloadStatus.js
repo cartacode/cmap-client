@@ -97,7 +97,7 @@ class PayloadStatus extends React.Component {
     const { editId } = this.props;
     console.log(JSON.stringify(payload));
     if (editId !== undefined && editId !== '0') {
-      
+      payload.id = editId;
       this.props.updatePayloadStatus(editId, payload).then( () => {this.props.onClose();});
     } else {
       

@@ -8,7 +8,7 @@ class NodeElement extends React.PureComponent {
       <div className={className}>
         <div className="element-bg">
         <img className="img-valign" src={nodeData.unitLogo} height="55" width="55"/>
-          <div className="text-1">{nodeData.UnitName} <br/>
+          <div className="text-1">{nodeData.UnitName}{nodeData.FullName} <br/>
        
        {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
        <span className="unit-text"> {nodeData.attributes.Unit}</span></span>) : (<span> <br/>
