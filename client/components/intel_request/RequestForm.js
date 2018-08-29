@@ -302,7 +302,7 @@ resetForm() {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <Map viewerId={viewerIdentifiers.intelRequest} /> 
+              {/* <Map viewerId={viewerIdentifiers.intelRequest} />  */}
             </div>
           </div>
           <div className="col-md-4 one-block">

@@ -31,6 +31,15 @@ class TimelineFilter extends React.Component {
   componentDidMount = () => {
     const { defaultResource } = this.props;
     console.log('defaultResource' + defaultResource);
+    if(defaultResource != undefined && defaultResource !== '') {
+      const { filter } = this.state;
+      this.setState({
+        filter: {
+          ...filter,
+          selectedResource: defaultResource,
+        },
+      });
+    }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -51,8 +60,16 @@ class TimelineFilter extends React.Component {
     });
   }
 
+  radioFilterSelect=(value)=>{
+    const { filter } = this.state;
+    const generatedData = {
+      resourceId: filter.selectedResource,
+      value,
+    };
+    this.props.radioFilterSelect(generatedData);
+  }
+
   onFind() {
-    debugger;
     console.log('find');
     const { filter } = this.state;
   }
@@ -62,16 +79,16 @@ class TimelineFilter extends React.Component {
 
     const sideTableContent = [
       { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
-      { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
+      { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater' },
       { id: 3, select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater' },
     ];
 
     const sideTableHeader = [
       {
         Header: translations.select,
-        accessor: 'select',
+        accessor: 'id',
         Cell: row => <div>
-          <input type="radio" id={row.original.id} name="chk" />
+          <input type="radio" id={row.original.id} name="chk" onClick={() => this.radioFilterSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
@@ -171,6 +188,7 @@ TimelineFilter.propTypes = {
   children: PropTypes.element,
   defaultResource: PropTypes.string,
   headerTxt: PropTypes.string,
+  radioFilterSelect: PropTypes.func.isRequired,
   resource: PropTypes.array,
   tab: PropTypes.string,
 };

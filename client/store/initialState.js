@@ -75,8 +75,9 @@ export default {
     isFetching: false,
   },
   mssionmgts: {
-    allCollectionsPlan:[],
+    atoCollectionPlans:[],
     atoGenerations: [],
+    flightOpsAtoGenerations: [],
     flightOps: [],
     pedTasks: [],
     isFetching: false,

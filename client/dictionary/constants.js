@@ -98,6 +98,12 @@ export const IntelReqStatusCodes = [
     description: "Approved - Validated",
     abbreviation: 'AV',
     color: '#00FFFF',
+  },
+  {
+    id: 22,
+    description: "Approved - ATO Generated",
+    abbreviation: 'AAG',
+    color: '#00FFFF',
   }
 ];
 
