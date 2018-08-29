@@ -446,7 +446,8 @@ handlePhotoPreviewURL = (uploadedFile) => {
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="submit" className='highlighted-button'>
-              {(this.props.editId != undefined && this.props.editId != '0') ? translations['update'] : translations['save']}
+              {/* {(this.props.editId != undefined && this.props.editId != '0') ? translations['update'] : translations['save']} */}
+              {translations['submit']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
