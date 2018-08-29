@@ -103,6 +103,7 @@ class AddPayloadsInventory extends React.Component {
       console.log("Category Selected");
       this.updatelocationid(generalData);
     }
+    this.updateOwningUnit(generalData);
   }
 
   handleSubmit = event => {
@@ -142,6 +143,36 @@ class AddPayloadsInventory extends React.Component {
       .catch((error) => {
         locationselect.length = 0;
         locationselect.add(new Option('Error Fetching Locations', ''));
+        console.log('Exception comes:' + error);
+      });
+  }
+
+
+
+  updateOwningUnit (generalData) {
+    let unitselect = document.getElementsByName('owningUnit')[0];
+    unitselect.length = 0;
+    unitselect.add(new Option('--Fetching Units--', ''));
+    const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
+    axios.get(apiUrl)
+      .then(response => {
+        unitselect.length = 0;
+        if(response.data) {
+          unitselect.add(new Option('--Select Unit--', ''));
+          response.data.map(item => {
+            let selected = false;
+            if(item.id == generalData.owningUnit) {
+              selected = true;
+            }
+            unitselect.add(new Option(item.description, item.id.trim(), selected, selected));
+          });
+        }else{
+          unitselect.add(new Option('No Unit Found', ''));
+        }
+      })
+      .catch((error) => {
+        unitselect.length = 0;
+        unitselect.add(new Option('Error Fetching Units', ''));
         console.log('Exception comes:' + error);
       });
   }
