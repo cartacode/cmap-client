@@ -549,8 +549,8 @@ render() {
 
   const organisationFields = [
     {name: translations['Company'], type: 'dropdown', domID: 'dispCompany', ddID: "Companies", valFieldID: 'Company'},
-    {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: "Units", valFieldID: 'AssignedUnit'},
-    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units", valFieldID: 'DeployedUnit'},
+    {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: "Units/GetUnits", valFieldID: 'AssignedUnit'},
+    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units/GetUnits", valFieldID: 'DeployedUnit'},
     {name: translations['Duty Position#1'], type: 'dropdown', domID: 'dispDutyPosition1', ddID: "DutyPosition", valFieldID: 'DutyPosition1'},
     {name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'MOS1'},
     {name: translations['Duty Position#2'], type: 'dropdown', domID: 'dispDutyPosition2', ddID: "DutyPosition", valFieldID: 'DutyPosition2'},
@@ -660,8 +660,9 @@ const uploadFileFields = [
         <div className="menu-button">
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
           <button type="submit" className='highlighted-button'>
-          {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
-          </button>
+              {translations['submit']}
+{/*           {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+ */}          </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>
       </div>

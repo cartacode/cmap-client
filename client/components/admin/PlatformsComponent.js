@@ -186,11 +186,11 @@ class PlatformComponent extends React.Component {
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          <div className="col-md-12 filter-line">
+          {!this.state.addPlatformInventoryOpen ?<div className="col-md-12 filter-line">
             <div className="add-button">
               <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations["Add Platform"]}</button>
             </div>
-          </div>
+          </div> : null}
           {this.state.addPlatformInventoryOpen ?
             <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}

@@ -302,7 +302,7 @@ resetForm() {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <Map viewerId={viewerIdentifiers.intelRequest} /> 
+              {/* <Map viewerId={viewerIdentifiers.intelRequest} />  */}
             </div>
           </div>
           <div className="col-md-4 one-block">
@@ -370,7 +370,8 @@ resetForm() {
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='btn btn-warning'>
-                {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+                {/* {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']} */}
+                {translations['submit']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>

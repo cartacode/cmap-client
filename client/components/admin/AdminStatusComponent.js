@@ -723,7 +723,7 @@ class AdminStatusComponent extends React.Component {
               <div className="action-buttons" >
                 <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                 <button className="highlighted-button" onClick={this.updateRows.bind(this)}>
-                  Save
+                {translations["submit"]} 
                 </button>
                 <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
               </div>

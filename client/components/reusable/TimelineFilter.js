@@ -8,62 +8,88 @@ import CustomDatePicker from './CustomDatePicker';
 import FullHeaderLine from './FullHeaderLine';
 import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
+import { connect } from 'react-redux';
 
 class TimelineFilter extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      clear: false,
+      filter: {
+        selectedResource: '',
+        selectedView: '',
+        selectedCOCOM: '',
+        selectedUnit: '',
+        selectedAssetType: '',
+        startDate: '',
+        endDate: '',
+      },
+    };
+  }
+
+  componentDidMount = () => {
+    const { defaultResource } = this.props;
+    console.log('defaultResource' + defaultResource);
+    if(defaultResource != undefined && defaultResource !== '') {
+      const { filter } = this.state;
+      this.setState({
+        filter: {
+          ...filter,
+          selectedResource: defaultResource,
+        },
+      });
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+
+  }
+
+  handleFilterData = (selectedDropDownType, selectedDropdownValue) => {
+    const { filter } = this.state;
+    this.setState({
+      filter: {
+        ...filter,
+        selectedResource: selectedDropDownType === '1' ? selectedDropdownValue : filter.selectedResource,
+        selectedView: selectedDropDownType === '2' ? selectedDropdownValue : filter.selectedView,
+        selectedCOCOM: selectedDropDownType === '3' ? selectedDropdownValue : filter.selectedCOCOM,
+        selectedUnit: selectedDropDownType === '4' ? selectedDropdownValue : filter.selectedUnit,
+        selectedAssetType: selectedDropDownType === '5' ? selectedDropdownValue : filter.selectedAssetType,
+      },
+    });
+  }
+
+  radioFilterSelect=(value)=>{
+    const { filter } = this.state;
+    const generatedData = {
+      resourceId: filter.selectedResource,
+      value,
+    };
+    this.props.radioFilterSelect(generatedData);
   }
 
   onFind() {
     console.log('find');
+    const { filter } = this.state;
   }
 
   render() {
     const { translations } = this.props;
 
-    //  const resource = [translations.platform, translations.personnel ];
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.personnel },
-    ];
-    const view = [
-      { 'id': '1', 'description': translations.pending },
-      { 'id': '2', 'description': 'avaliable' },
-      { 'id': '3', 'description': translations['off-line'] },
-      { 'id': '4', 'description': translations.booked },
-      { 'id': '5', 'description': translations.active },
-      { 'id': '6', 'description': translations['look-back'] },
-    ];
-   /*  const cocom = [translations.all, translations.centcom, translations.africom, translations.eucom, translations.pacom, translations.northcom, translations.southcom, translations.socom, translations.startcom, translations.nato ];
-    const unit = [translations.all, translations['all ops'], translations['all intel'], '480th', '116th', '70th', '369th', '280th', '233th'];
-    const assets_type = [translations.all, translations.organic, translations.theater, translations.sro ]; */
-
-    const groups = [
-      { id: 1, title: '<table><tr><td style = "padding:20px">aaa</td><td>aaaa</td></tr></table>' },
-      { id: 2, title: 'group 2' },
-      { id: 3, title: 'group 3' },
-    ];
-
-    const items = [
-      { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour') },
-      { id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour') },
-      { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
-    ];
-
     const sideTableContent = [
-      { select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater', group: 'name' },
-      { select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater', group: 'name' },
-      { select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater', group: 'name' },
+      { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
+      { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater' },
+      { id: 3, select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater' },
     ];
 
     const sideTableHeader = [
       {
         Header: translations.select,
-        accessor: 'select',
+        accessor: 'id',
         Cell: row => <div>
-          <input type="checkbox" id="chk" name="chk" />
-          <label htmlFor="chk"><span /></label>
+          <input type="radio" id={row.original.id} name="chk" onClick={() => this.radioFilterSelect(row.value)} />
+          <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
       {
@@ -84,6 +110,23 @@ class TimelineFilter extends React.Component {
       },
     ];
 
+    const { tab } = this.props;
+    if(tab === 'ISR') {
+      sideTableHeader.splice(0, 1);
+    }
+
+    const groups = [
+      { id: 1, title: '<table><tr><td style = "padding:20px">aaa</td><td>aaaa</td></tr></table>' },
+      { id: 2, title: 'group 2' },
+      { id: 3, title: 'group 3' },
+    ];
+
+    const items = [
+      { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour') },
+      { id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour') },
+      { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
+    ];
+
     return(
       <div>
         <div className="row mission-mgt">
@@ -91,17 +134,17 @@ class TimelineFilter extends React.Component {
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line">
-            <MissionMgtDropDown key="1" id="1" label={translations.resource} options={resource} />
-            <MissionMgtDropDown key="2" id="2" label={translations.view} options={view} />
-            <MissionMgtDropDown key="3" id="3" label={translations.cocom} dropdownDataUrl="COCOM/GetCOCOMs" />
-            <MissionMgtDropDown key="4" id="4" label={translations.unit} dropdownDataUrl="Units/GetUnits" />
-            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} dropdownDataUrl="AssetTypes/GetAssetTypes" />
+            <MissionMgtDropDown key="1" id="1" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
+            <MissionMgtDropDown key="2" id="2" label={translations.view} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            <MissionMgtDropDown key="3" id="3" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
+            <MissionMgtDropDown key="4" id="4" label={translations.unit} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
+            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" />
             <div className="each-select">
               <div className="date-pic">
-                <CustomDatePicker headerText={translations.start} />
+                {/* <CustomDatePicker headerText={translations.start} /> */}
               </div>
               <div className="date-pic">
-                <CustomDatePicker headerText={translations.end} />
+                {/* <CustomDatePicker headerText={translations.end} /> */}
               </div>
             </div>
             <div className="filter-button">
@@ -143,7 +186,21 @@ class TimelineFilter extends React.Component {
 
 TimelineFilter.propTypes = {
   children: PropTypes.element,
+  defaultResource: PropTypes.string,
   headerTxt: PropTypes.string,
+  radioFilterSelect: PropTypes.func.isRequired,
+  resource: PropTypes.array,
+  tab: PropTypes.string,
 };
 
-export default TimelineFilter;
+const mapStateToProps = state => {
+  return {
+    translations: state.localization.staticText,
+  };
+};
+
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineFilter);
+

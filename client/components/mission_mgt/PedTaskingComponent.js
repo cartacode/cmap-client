@@ -12,6 +12,18 @@ import TimelineFilter from '../reusable/TimelineFilter';
 class PedTaskingComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      defaultResource: '2',
+      tab: 'PED_TASK',
+      teamId: '',
+    };
+  }
+
+
+  radioFilterSelect=(generatedData)=>{
+    this.setState({
+      teamId: generatedData.resourceId === '2' ? generatedData.value : '',
+    });
   }
 
   onFind() {
@@ -21,6 +33,11 @@ class PedTaskingComponent extends React.Component {
   render() {
 
     const { translations } = this.props;
+
+    const resource = [
+      /* { 'id': '1', 'description': translations.platform }, */
+      { 'id': '2', 'description': translations.personnel },
+    ];
 
     const data = [{
       'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
@@ -84,7 +101,7 @@ class PedTaskingComponent extends React.Component {
     ];
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="ped tasks" />
+        <TimelineFilter translations={translations} headerTxt="ped tasks" defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect}/>
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

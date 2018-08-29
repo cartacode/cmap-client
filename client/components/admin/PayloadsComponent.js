@@ -167,12 +167,13 @@ class PayloadsComponent extends React.Component {
 	          </div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
 	        </div>
-	        <div className="col-md-12 filter-line">
+	        {!this.state.addPayloadsInventoryOpen ?
+					<div className="col-md-12 filter-line">
 	          <div className="add-button">
 	            <button className="ccir-button" onClick={() => this.openPayloadsForm('0')} >{translations["Add Payload"]}</button>
 
 	          </div>
-	        </div>
+	        </div> : null}
 	        {this.state.addPayloadsInventoryOpen ?
 	          <AddPayloadsInventory editId={this.state.editId} onClose={this.closePayloadsForm} translations={translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
 	          : null

@@ -274,11 +274,11 @@ class MunitionsSpecificationComponent extends React.Component {
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          <div className="col-md-12 filter-line">
+          {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen? <div className="col-md-12 filter-line">
             <div className="add-button">
               <DropDownButton key='1' label={translations["Add Munition"]} id="1" items={munitions} />
             </div>
-          </div>
+          </div> : null}
 
           {this.state.missileModalOpen ?
             <MissileModal editId={this.state.editId} munitionType={this.state.munitionType} show={this.state.missileModalOpen} onClose={this.closeMunitionSpecifiction} translations={translations} />

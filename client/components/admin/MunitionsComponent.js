@@ -205,11 +205,12 @@ else{
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
-          <div className="col-md-12 filter-line">
+          { !this.state.addMunitionsInventoryOpen ?
+           <div className="col-md-12 filter-line">
             <div className="add-button">
               <button className="ccir-button" onClick={() => this.openMunitionsForm('0')} >{translations["Add Munition"]}</button>
             </div>
-          </div>
+          </div>  : null}
           { this.state.addMunitionsInventoryOpen ?
             <AddMunitionsInventory onClose={this.closeMunitionsForm} editId={this.state.editId} translations = {translations}/>
             : null

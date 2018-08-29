@@ -153,7 +153,11 @@ class ContentBlock extends React.Component {
           break;
 
         case 'textarea':
+        if (item.required){
+          input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} required/>);
+        }else{
           input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} />);
+        }
           break;
 
         case 'email':

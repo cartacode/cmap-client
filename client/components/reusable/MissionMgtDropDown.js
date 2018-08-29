@@ -12,7 +12,8 @@ class MissionMgtDropDown extends React.Component {
       super(props);
       this.state = {
         dropdownItems: [],
-        selectedDropDownValue: 0,
+        selectedDropDownValue: this.props.defaultResource,
+        selectedDropDownType: 1,
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -28,7 +29,8 @@ class MissionMgtDropDown extends React.Component {
       const { dropdownDataUrl } = this.props;
       const { options } = this.props;
       if(dropdownDataUrl) {
-        const items = [{ 'label': '--' + this.props.id + '--', 'value': 0 }];
+        //const items = [{ 'label': '--' + this.props.id + '--', 'value': 0 }];
+        const items = [{ 'label': '--' + 'select' + '--', 'value': 0 }];
         axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
           .then(response => {
             response.data.map(item => {
@@ -52,27 +54,34 @@ class MissionMgtDropDown extends React.Component {
       }
     }
 
+    componentDidUpdate() {
+     
+    }
+
+
     changeValue = (label, value) => {
       console.log('Display Lable : ' + label + ', Saved Value :' + value);
     };
 
     // render dropdown list of lang switcher
     renderItems() {
+      const { defaultResource } = this.props;
       return this.state.dropdownItems.map(function(data, key) {
         return (
-          <option key={key} value={data.value}>{data.label}</option>);
+          <option key={key} value={data.value}>{data.label}</option>
+        );
+        
       });
     }
 
     handleChange = (e) => {
       const { name, value } = e.target;
       console.log(name + '----' + value);
-      //debugger;
-      const { selectedDropDownValue } = this.state;
       this.setState({
+        selectedDropDownType: name,
         selectedDropDownValue: value,
       }, () =>{
-        //this.props.dropdownData(this.state.selectedDropDownValue, name);
+        this.props.data(this.state.selectedDropDownType , this.state.selectedDropDownValue);
       });
     }
 
@@ -80,7 +89,7 @@ class MissionMgtDropDown extends React.Component {
       const key = this.props.id || 0;
       return (
         <div className="each-select">
-          <select className="form-control" name={key} onChange={this.handleChange}>
+          <select className="form-control" name={key} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
             {this.renderItems()}
           </select>
         </div>
@@ -90,6 +99,7 @@ class MissionMgtDropDown extends React.Component {
 
 MissionMgtDropDown.propTypes = {
   children: PropTypes.element,
+  data: PropTypes.func,
 
 };
 
