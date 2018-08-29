@@ -300,11 +300,12 @@ class PayloadsSpecificationComponent extends React.Component {
 						</div>
 						<img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 					</div>
+				{!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ? 
 				<div className="col-md-12 filter-line">
 					<div className="add-button">
 						<DropDownButton key = '1' label="Add Library" id="1" items={addPayloads} />
 					</div>
-				</div>
+				</div> : null}
 				{this.state.eoirModalOpen ?
 				<EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 				: null }

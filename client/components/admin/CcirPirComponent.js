@@ -186,11 +186,11 @@ notify =(type)=>{
           </div>
           <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
         </div>
-        <div className="col-md-12 filter-line">
+        {!this.state.addCcirPirModalOpen ? <div className="col-md-12 filter-line">
           <div className="add-button">
             <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
           </div>
-        </div>
+        </div>:null}
         {this.state.addCcirPirModalOpen ?
           <CcirPirModal  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
           : null

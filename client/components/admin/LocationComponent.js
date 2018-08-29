@@ -185,7 +185,7 @@ class LocationComponent
               alt=""
             />
           </div>
-          <div className="col-md-12 filter-line">
+          {!this.state.baseModalOpen ? <div className="col-md-12 filter-line">
             <div className="add-button">
               <button
                 className="ccir-button"
@@ -194,7 +194,7 @@ class LocationComponent
                 {translations["Add Location"]}
               </button>
             </div>
-          </div>
+          </div> : null }
           {this.state.baseModalOpen ? (
             <BaseModal
               editId={this.state.editId}

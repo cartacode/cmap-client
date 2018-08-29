@@ -188,11 +188,11 @@ class PlatformsSpecificationComponent extends React.Component {
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
-          <div className="col-md-12 filter-line">
+          {!this.state.addPlatformModalOpen ? <div className="col-md-12 filter-line">
             <div className="add-button">
               <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Library</button>
             </div>
-          </div>
+          </div> : null}
 
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />
