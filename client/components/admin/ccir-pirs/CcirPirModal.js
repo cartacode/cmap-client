@@ -183,21 +183,21 @@ resetForm = () => {
       { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch'},
       { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country'},
       { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region'},
-      { name: 'Unit', type: 'dropdown',ddID: 'Units',  valFieldID: 'UnitId', domID: 'Unit'},
+      { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit'},
       { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander'},
       { name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname'},
       { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
     ];
 
     const ccirFields = [
-      { name: translations['ccir1'], type: 'textarea',  valFieldID: 'Description1', domID: 'desc1' },
+      { name: translations['ccir1'], type: 'textarea',  valFieldID: 'Description1', domID: 'desc1', required:true },
       { name: translations['ccir2'], type: 'textarea',  valFieldID: 'Description2', domID: 'desc2' },
       { name: translations['ccir3'], type: 'textarea',  valFieldID: 'Description3', domID: 'desc3' },
       { name: translations['ccir4'], type: 'textarea',  valFieldID: 'Description4', domID: 'desc4' },
     ];
 
     const pirFields = [
-      { name: translations['pir1'], type: 'textarea',  valFieldID: 'Description5', domID: 'desc5' },
+      { name: translations['pir1'], type: 'textarea',  valFieldID: 'Description5', domID: 'desc5', required:true },
       { name: translations['pir2'], type: 'textarea',  valFieldID: 'Description6', domID: 'desc6' },
       { name: translations['pir3'], type: 'textarea',  valFieldID: 'Description7', domID: 'desc7' },
       { name: translations['pir4'], type: 'textarea',  valFieldID: 'Description8', domID: 'desc8' },

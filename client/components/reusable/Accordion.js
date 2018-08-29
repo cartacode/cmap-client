@@ -226,8 +226,8 @@ class Accordion extends React.Component {
     const firstSectionDropdowns = [
       {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
       {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
-      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units'},
-      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units'},
+      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits'},
+      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
       {name: 'Team', type: 'dropdown', ddID:'Units'},
       {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
