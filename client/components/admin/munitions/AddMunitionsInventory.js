@@ -102,6 +102,7 @@ class AddMunitionsInventory extends React.Component {
       console.log("Category Selected");
       this.updatelocationid(generalData);
     }
+    this.updateOwningUnit(generalData);
   }
 
   handleSubmit = event => {
@@ -141,6 +142,37 @@ class AddMunitionsInventory extends React.Component {
       });
   }
 
+
+
+
+  updateOwningUnit(generalData) {
+    debugger;
+    let unitselect = document.getElementsByName('owningUnit')[0];
+    let items = [{ 'label': '--Select Item--', 'value': '' }];
+    const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
+    axios.get(apiUrl)
+      .then(response => {
+        console.log(response.data);
+        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }
+        response.data.map(item => {
+          items.push({ 'label': item['description'], 'value': item['id'].trim() });
+        });
+        if (unitselect.length > 0) { unitselect.length = 0; }
+        for (let i in items) {
+           let selected = false;
+            if( items[i].value == generalData.owningUnit) {
+              selected = true;
+            }
+            unitselect.add(new Option(items[i].label, items[i].value, selected, selected));
+        }
+      })
+      .catch((error) => {
+        console.log('Exception comes:' + error);
+      });
+  }
+
+
+
   stopset() {
     this.setState({ clear: false });
   }
@@ -168,7 +200,6 @@ class AddMunitionsInventory extends React.Component {
 
     let { munition } = this.state;
 
-    debugger;
 
     let generalFields = [
       { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
