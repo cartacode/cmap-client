@@ -18,18 +18,22 @@ class TimelineFilter extends React.Component {
       clear: false,
       filter: {
         selectedResource: '',
-        selectedView: '',
-        selectedCOCOM: '',
-        selectedUnit: '',
+        teamId: '',
+        platformId: '',
+        unitTypeId: '',
+        unitId:'',
         selectedAssetType: '',
         startDate: '',
         endDate: '',
       },
     };
+    // preserve the initial state in a new object
+    this.baseState = this.state;
   }
 
   componentDidMount = () => {
     const { defaultResource } = this.props;
+    this.setState({ clear: true });
     console.log('defaultResource' + defaultResource);
     if(defaultResource != undefined && defaultResource !== '') {
       const { filter } = this.state;
@@ -43,28 +47,45 @@ class TimelineFilter extends React.Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-
+          
   }
 
-  handleFilterData = (selectedDropDownType, selectedDropdownValue) => {
+  handleFilterData = (name, value) => {
     const { filter } = this.state;
     this.setState({
       filter: {
         ...filter,
-        selectedResource: selectedDropDownType === '1' ? selectedDropdownValue : filter.selectedResource,
-        selectedView: selectedDropDownType === '2' ? selectedDropdownValue : filter.selectedView,
-        selectedCOCOM: selectedDropDownType === '3' ? selectedDropdownValue : filter.selectedCOCOM,
-        selectedUnit: selectedDropDownType === '4' ? selectedDropdownValue : filter.selectedUnit,
-        selectedAssetType: selectedDropDownType === '5' ? selectedDropdownValue : filter.selectedAssetType,
+        [name]: value,
       },
     });
   }
+
+ 
+
+  handleChangeDate = (changeDate, name) => {
+    console.log(changeDate._d);
+    console.log(name);
+
+    const { filter } = this.state;
+    console.log(JSON.stringify(this.state.filter));
+    this.setState({
+      filter: {
+        ...filter,
+        [name]: changeDate._d,
+      },
+    });
+   
+    //console.log(JSON.stringify(this.state.filter));
+    console.log("*****************************"+JSON.stringify(filter));
+
+  }
+
 
   radioFilterSelect=(value)=>{
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
-      value,
+      value:value != undefined? value:'',
     };
     this.props.radioFilterSelect(generatedData);
   }
@@ -76,6 +97,7 @@ class TimelineFilter extends React.Component {
 
   render() {
     const { translations } = this.props;
+    const { selectedResource } = this.state;
 
     const sideTableContent = [
       { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
@@ -127,6 +149,8 @@ class TimelineFilter extends React.Component {
       { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
     ];
 
+    let currentDateTime = new Date();
+    
     return(
       <div>
         <div className="row mission-mgt">
@@ -134,17 +158,25 @@ class TimelineFilter extends React.Component {
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line">
-            <MissionMgtDropDown key="1" id="1" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
-            <MissionMgtDropDown key="2" id="2" label={translations.view} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
-            <MissionMgtDropDown key="3" id="3" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
-            <MissionMgtDropDown key="4" id="4" label={translations.unit} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
-            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" />
+            <MissionMgtDropDown key="1" id="1" name="selectedResource" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
+            <MissionMgtDropDown key="2" id="2" name="teamId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            <MissionMgtDropDown key="3" id="3" name="platformId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            { this.props.showUnitType ?
+              <MissionMgtDropDown key="4" id="4" name="unitTypeId" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
+              :''
+            }
+            <MissionMgtDropDown key="5" id="5" name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
+            {/* <MissionMgtDropDown key="6" id="6" name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select">
               <div className="date-pic">
-                {/* <CustomDatePicker headerText={translations.start} /> */}
+                <label>Start Date</label>
+                <CustomDatePicker name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
+            </div>
+            <div className="each-select">
               <div className="date-pic">
-                {/* <CustomDatePicker headerText={translations.end} /> */}
+                <label>End Date</label>
+                <CustomDatePicker name="endDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
             </div>
             <div className="filter-button">
@@ -188,8 +220,9 @@ TimelineFilter.propTypes = {
   children: PropTypes.element,
   defaultResource: PropTypes.string,
   headerTxt: PropTypes.string,
-  radioFilterSelect: PropTypes.func.isRequired,
+  radioFilterSelect: PropTypes.func,
   resource: PropTypes.array,
+  showUnitType: PropTypes.bool,
   tab: PropTypes.string,
 };
 

@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { addCcirPir, updateCcirPir, fetchCcirPirById } from 'actions/ccirpir';
 import {NoticeType} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
+
 
 class CcirPirModal extends React.Component {
 
@@ -87,6 +90,9 @@ class CcirPirModal extends React.Component {
         CCIRPIRId: this.props.editId,
       },
     });
+
+
+    this.updateUnit(generalData);
   }
 
 handleCcirData = (ccirData) => {
@@ -118,6 +124,43 @@ handlePirData = (pirData) => {
 stopset = () => {
   this.setState({clear:false});
 }
+
+
+
+
+
+updateUnit (generalData) {
+  let unitselect = document.getElementsByName('UnitId')[0];
+  unitselect.length = 0;
+  unitselect.add(new Option('--Fetching Units--', ''));
+  const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.BranchId;
+  axios.get(apiUrl)
+    .then(response => {
+      unitselect.length = 0;
+      if(response.data) {
+        unitselect.add(new Option('--Select Unit--', ''));
+        response.data.map(item => {
+          let selected = false;
+          if(item.id == generalData.UnitId) {
+            selected = true;
+          }
+          unitselect.add(new Option(item.description, item.id.trim(), selected, selected));
+        });
+      }else{
+        unitselect.add(new Option('No Unit Found', ''));
+      }
+    })
+    .catch((error) => {
+      unitselect.length = 0;
+      unitselect.add(new Option('Error Fetching Units', ''));
+      console.log('Exception comes:' + error);
+    });
+}
+
+
+
+
+
 
 resetForm = () => {
   this.setState(this.baseState);

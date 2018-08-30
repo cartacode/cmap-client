@@ -16,6 +16,7 @@ class PedTaskingComponent extends React.Component {
       defaultResource: '2',
       tab: 'PED_TASK',
       teamId: '',
+      showUnitType: false,
     };
   }
 
@@ -35,8 +36,7 @@ class PedTaskingComponent extends React.Component {
     const { translations } = this.props;
 
     const resource = [
-      /* { 'id': '1', 'description': translations.platform }, */
-      { 'id': '2', 'description': translations.personnel },
+      { 'id': '2', 'description': translations.teams },
     ];
 
     const data = [{
@@ -101,12 +101,12 @@ class PedTaskingComponent extends React.Component {
     ];
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="ped tasks" defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect}/>
+        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType}/>
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.PedTask} />
+                <FullHeaderLine headerText={translations.ATOGeneration} />
                 <div >
                   <ReactTable
                     data={data}
@@ -124,7 +124,7 @@ class PedTaskingComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.CollectionPlan} />
+                <FullHeaderLine headerText={translations.PedTask} />
                 <div >
                   <ReactTable
                     data={data}

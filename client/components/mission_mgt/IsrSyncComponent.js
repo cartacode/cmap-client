@@ -13,6 +13,7 @@ class IsrSyncComponent extends React.Component {
     this.state = {
       defaultResource: '1',
       tab: 'ISR',
+      showUnitType: true,
     };
   }
 
@@ -21,12 +22,12 @@ class IsrSyncComponent extends React.Component {
 
     const resource = [
       { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.personnel },
+      { 'id': '2', 'description': translations.teams },
     ];
     
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="isr sync" defaultResource={this.state.defaultResource} tab={this.state.tab} resource={resource} />
+        <TimelineFilter translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} resource={resource} showUnitType={this.state.showUnitType}/>
       </div>
     );
   }

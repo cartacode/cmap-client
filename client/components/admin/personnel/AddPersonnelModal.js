@@ -166,6 +166,9 @@ class AddPersonnelModal extends React.Component {
     if( generalData.Rank && generalData.Rank !== this.state.selectedRank ) {
       this.updatePaygrade(generalData.Rank);
     }
+    this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
+
+    this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
 
     this.setState({
       personnel: {
@@ -436,6 +439,66 @@ updateRanks= (branch,rank) => {
               selected = true;
             }
             rankSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      }
+           
+    })
+    .catch((error) => {
+      console.log('Exception comes:' + error);
+    });
+
+}
+
+updateAssignedUnits= (branch,unit) => {
+  let UnitSelect = document.getElementsByName('AssignedUnit')[0];
+  let items = [{'label': '--Select Item--', 'value': 0}];
+  const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
+  axios.get(apiUrl)
+    .then(response => {
+      console.log(response.data);
+      if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+      response.data.map(item => {
+        items.push({ 'label': item['description'], 'value': item['id'].trim() });
+      });
+      if (UnitSelect.length > 0) {
+        UnitSelect.length = 0;
+      }
+      for(let i in items) {
+        let selected = false;
+            if(unit && items[i].value === unit.toString()) {
+              selected = true;
+            }
+            UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      }
+           
+    })
+    .catch((error) => {
+      console.log('Exception comes:' + error);
+    });
+
+}
+
+
+
+updateDeployedUnits= (branch,unit) => {
+  let UnitSelect = document.getElementsByName('DeployedUnit')[0];
+  let items = [{'label': '--Select Item--', 'value': 0}];
+  const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
+  axios.get(apiUrl)
+    .then(response => {
+      console.log(response.data);
+      if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+      response.data.map(item => {
+        items.push({ 'label': item['description'], 'value': item['id'].trim() });
+      });
+      if (UnitSelect.length > 0) {
+        UnitSelect.length = 0;
+      }
+      for(let i in items) {
+        let selected = false;
+            if(unit && items[i].value === unit.toString()) {
+              selected = true;
+            }
+            UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
       }
            
     })
