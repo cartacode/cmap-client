@@ -106,7 +106,7 @@ class PedTaskingComponent extends React.Component {
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.PedTask} />
+                <FullHeaderLine headerText={translations.ATOGeneration} />
                 <div >
                   <ReactTable
                     data={data}
@@ -124,7 +124,7 @@ class PedTaskingComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.CollectionPlan} />
+                <FullHeaderLine headerText={translations.PedTask} />
                 <div >
                   <ReactTable
                     data={data}
