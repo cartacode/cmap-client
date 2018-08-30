@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, FLIGHT_OPS__FETCH, PED_TASKS__FETCH, ROUTE_ATO_GENERATION, COLLECTION_PLAN_TO_ATO_GENERATION, FLIGHT_OPS_ATO_GENERATION } from 'dictionary/action';
+import { COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, FLIGHT_OPS__FETCH, PED_TASKS__FETCH, ROUTE_ATO_GENERATION, COLLECTION_PLAN_TO_ATO_GENERATION, FLIGHT_OPS_ATO_GENERATION, SEARCH_MISSION_FILTER } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -22,6 +22,13 @@ export function routeATOGeneration(unitId, statusId) {
   return createAction({
     type: ROUTE_ATO_GENERATION,
     action: () => axios.put(`${baseUrl}/IntelRequest/RouteToMissionATOIntelRequest?unitId=${unitId}&statusId=${statusId}`, requestHeaders),
+  });
+}
+
+export function searachAndFilter(data) {
+  return createAction({
+    type: SEARCH_MISSION_FILTER,
+    action: () => axios.put(`${baseUrl}/Search/PutMissionPlatformInventory`, data, requestHeaders),
   });
 }
 

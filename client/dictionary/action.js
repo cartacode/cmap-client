@@ -119,3 +119,5 @@ export const PED_TASKS__FETCH = createActionType('PED_TASKS__FETCH');
 export const ROUTE_ATO_GENERATION = createActionType('ROUTE_ATO_GENERATION');
 export const COLLECTION_PLAN_TO_ATO_GENERATION = createActionType('COLLECTION_PLAN_TO_ATO_GENERATION');
 export const FLIGHT_OPS_ATO_GENERATION = createActionType('FLIGHT_OPS_ATO_GENERATION');
+export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
+

@@ -86,7 +86,6 @@ class MissionMgtDropDown extends React.Component {
     }
 
     render() {
-      const key = this.props.id || 0;
       const label = this.props.label;
       const name = this.props.name;
       return (

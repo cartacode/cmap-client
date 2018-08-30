@@ -9,6 +9,7 @@ import FullHeaderLine from './FullHeaderLine';
 import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
 import { connect } from 'react-redux';
+import { searachAndFilter } from '../../actions/mssionmgt';
 
 class TimelineFilter extends React.Component {
 
@@ -19,8 +20,9 @@ class TimelineFilter extends React.Component {
       filter: {
         selectedResource: '',
         teamId: '',
-        platformId: '',
+        platformStatusId: '',
         unitTypeId: '',
+        cocomId: '',
         unitId:'',
         selectedAssetType: '',
         startDate: '',
@@ -76,7 +78,7 @@ class TimelineFilter extends React.Component {
     });
    
     //console.log(JSON.stringify(this.state.filter));
-    console.log("*****************************"+JSON.stringify(filter));
+    console.log('*****************************' + JSON.stringify(filter));
 
   }
 
@@ -85,19 +87,62 @@ class TimelineFilter extends React.Component {
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
-      value:value != undefined? value:'',
+      value:value != undefined ? value:'',
     };
     this.props.radioFilterSelect(generatedData);
   }
 
   onFind() {
+    event.preventDefault();
     console.log('find');
+    const { selectedResource } = this.state.filter;
+    if(selectedResource === '1') {
+      this.findPlatformBased();
+    }else{
+      this.findTeamBased();
+    }   
+  }
+
+  findPlatformBased =()=>{
     const { filter } = this.state;
+    const data = 
+      {
+        'COCOMId': filter.cocomId,
+        'UnitId': filter.unitId,
+        'statusId': filter.platformStatusId,
+        'StartDate': filter.startDate,
+        'EndDate': filter.endDate,
+      };
+
+    this.props.searachAndFilter(data).then( () => {
+      const { filterResults } = this.props;
+      console.log('************************DONE searching**********And Results**************'+filterResults);
+    });
+  }
+
+  findTeamBased =()=>{
+    const { filter } = this.state;
+    const data = 
+      {
+        'COCOMId': filter.cocomId,
+        'UnitId': filter.unitTypeId,
+        'statusId': filter.platformStatusId,
+        'StartDate': '2018-08-29T12:29:33.755Z',
+        'EndDate': '2018-08-29T12:29:33.755Z'
+      };
+  /*   this.props.searachAndFilter(data).then( () => {
+      debugger;
+      const { filterResults } = this.props;
+      console.log('************************DONE searching**********And Results**************'+filterResults);
+    }); */
   }
 
   render() {
     const { translations } = this.props;
-    const { selectedResource } = this.state;
+    const { selectedResource } = this.state.filter;
+    const { filterResults } = this.props;
+    console.log('******************************************selectedResource**********************' + selectedResource + '*******************');
+    console.log('******************************************filterResults after searched**********************' + filterResults + '*******************');
 
     const sideTableContent = [
       { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
@@ -158,15 +203,33 @@ class TimelineFilter extends React.Component {
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line">
-            <MissionMgtDropDown key="1" id="1" name="selectedResource" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
-            <MissionMgtDropDown key="2" id="2" name="teamId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
-            <MissionMgtDropDown key="3" id="3" name="platformId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
-            { this.props.showUnitType ?
-              <MissionMgtDropDown key="4" id="4" name="unitTypeId" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
-              :''
+            <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
+            
+            {/* For Team */}
+            {selectedResource === '2' ? 
+              <MissionMgtDropDown name="teamId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=6" />
+              : ''
             }
-            <MissionMgtDropDown key="5" id="5" name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
-            {/* <MissionMgtDropDown key="6" id="6" name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
+
+            {/* For Platform  */}
+            {selectedResource === '1' ? 
+              <MissionMgtDropDown name="platformStatusId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+              : ''
+            } 
+
+            {/* For Platform  */}
+            {selectedResource === '1' ? 
+              <MissionMgtDropDown name="cocomId" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
+              : ''
+            }
+            {/* For Team */}
+            {selectedResource === '2' ? 
+              <MissionMgtDropDown name="unitTypeId" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
+              : ''
+            }
+         
+            <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
+            {/* <MissionMgtDropDown  name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select">
               <div className="date-pic">
                 <label>Start Date</label>
@@ -229,11 +292,12 @@ TimelineFilter.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
+    filterResults: state.mssionmgts.filterResults,
+    isLoading: state.mssionmgts.isFetching,
   };
 };
 
 const mapDispatchToProps = {
+  searachAndFilter,
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineFilter);
-

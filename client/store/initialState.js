@@ -78,6 +78,7 @@ export default {
     atoCollectionPlans:[],
     atoGenerations: [],
     flightOpsAtoGenerations: [],
+    filterResults: [],
     flightOps: [],
     pedTasks: [],
     isFetching: false,

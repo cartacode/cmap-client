@@ -1,4 +1,4 @@
-import { COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, FLIGHT_OPS__FETCH, PED_TASKS__FETCH, FLIGHT_OPS_ATO_GENERATION } from 'dictionary/action';
+import { COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, FLIGHT_OPS__FETCH, PED_TASKS__FETCH, FLIGHT_OPS_ATO_GENERATION, SEARCH_MISSION_FILTER } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function collections(state = initialState.mssionmgts, { payload, type }) {
@@ -59,6 +59,17 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         isFetching: false,
         pedTasks: payload.data,
       };
+    case SEARCH_MISSION_FILTER.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case SEARCH_MISSION_FILTER.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        filterResults: payload.data,
+      };  
     default:
       return state;
   }
