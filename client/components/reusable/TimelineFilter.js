@@ -101,6 +101,7 @@ console.log("*****************************"+JSON.stringify(filter));
 
   render() {
     const { translations } = this.props;
+    const { selectedResource } = this.state;
 
     const sideTableContent = [
       { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
@@ -162,10 +163,15 @@ console.log("*****************************"+JSON.stringify(filter));
           </div>
           <div className="col-md-12 filter-line">
             <MissionMgtDropDown key="1" id="1" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
-            <MissionMgtDropDown key="2" id="2" label={translations.view} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
-            <MissionMgtDropDown key="3" id="3" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
-            <MissionMgtDropDown key="4" id="4" label={translations.unit} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
-            <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" />
+            <MissionMgtDropDown key="2" id="2" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            <MissionMgtDropDown key="5" id="5" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            { this.props.showUnitType ?
+              <MissionMgtDropDown key="3" id="3" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
+              :''
+            }
+
+            <MissionMgtDropDown key="4" id="4" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
+            {/* <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select">
               <div className="date-pic">
                  <CustomDatePicker  name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
@@ -217,6 +223,7 @@ TimelineFilter.propTypes = {
   headerTxt: PropTypes.string,
   radioFilterSelect: PropTypes.func,
   resource: PropTypes.array,
+  showUnitType: PropTypes.bool,
   tab: PropTypes.string,
 };
 

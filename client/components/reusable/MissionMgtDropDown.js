@@ -87,8 +87,10 @@ class MissionMgtDropDown extends React.Component {
 
     render() {
       const key = this.props.id || 0;
+      const label = this.props.label;
       return (
         <div className="each-select">
+          <label>{label}</label>
           <select className="form-control" name={key} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
             {this.renderItems()}
           </select>

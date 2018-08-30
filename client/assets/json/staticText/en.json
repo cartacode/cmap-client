@@ -720,5 +720,10 @@
   "DeleteUnSuccessfull":"Record Can Not Be Deleted",
   "ATOGeneration":"ATO Generation",
   "FlightOPS":"Flight OPS",
-  "PedTask":"Ped Tasks"
+  "PedTask":"Ped Tasks",
+  "teamStatus":"Team Status",
+  "platformStatus":"Platform Status",
+  "unitType":"Unit Type",
+  "units":"Units",
+  "teams":"teams"
 }

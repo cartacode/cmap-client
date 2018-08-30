@@ -18,6 +18,7 @@ class AtoComponent extends React.Component {
       tab: 'ATO',
       unitdId: '',
       owningUnitsId: '',
+      showUnitType: true,
     };
   }
 
@@ -209,8 +210,8 @@ debugger;
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="ATO" defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} 
-          radioFilterSelect={this.radioFilterSelect} />
+        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} 
+          radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

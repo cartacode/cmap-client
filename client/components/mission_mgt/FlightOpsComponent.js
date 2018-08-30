@@ -17,6 +17,7 @@ class FlightOpsComponent extends React.Component {
       tab: 'FLIGHT_OPS',
       platformInvenotryId: '',
       teamId: '',
+      showUnitType: false,
     };
   }
 
@@ -93,7 +94,7 @@ class FlightOpsComponent extends React.Component {
 
     const resource = [
       { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.personnel },
+      { 'id': '2', 'description': translations.teams },
     ];
 
     const columnsATOGenerations = [
@@ -160,7 +161,7 @@ class FlightOpsComponent extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt="Flight Ops" resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect}/>
+        <TimelineFilter translations={translations} headerTxt={translations.flightops} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType}/>
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
