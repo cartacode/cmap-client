@@ -26,10 +26,13 @@ class TimelineFilter extends React.Component {
         endDate: '',
       },
     };
+    // preserve the initial state in a new object
+    this.baseState = this.state;
   }
 
   componentDidMount = () => {
     const { defaultResource } = this.props;
+    this.setState({ clear: true });
     console.log('defaultResource' + defaultResource);
     if(defaultResource != undefined && defaultResource !== '') {
       const { filter } = this.state;
@@ -43,7 +46,7 @@ class TimelineFilter extends React.Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-
+          
   }
 
   handleFilterData = (selectedDropDownType, selectedDropdownValue) => {
@@ -60,11 +63,33 @@ class TimelineFilter extends React.Component {
     });
   }
 
+ 
+
+  handleChangeDate = (changeDate, name) => {
+    console.log(changeDate._d);
+    console.log(name);
+
+    const { filter } = this.state;
+    console.log(JSON.stringify(this.state.filter));
+    this.setState({
+      filter: {
+        ...filter,
+        [name]: changeDate._d,
+      },
+    });
+   
+//console.log(JSON.stringify(this.state.filter));
+console.log("*****************************"+JSON.stringify(filter));
+
+  }
+
+
   radioFilterSelect=(value)=>{
+    debugger;
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
-      value,
+      value:value != undefined? value:'',
     };
     this.props.radioFilterSelect(generatedData);
   }
@@ -127,6 +152,8 @@ class TimelineFilter extends React.Component {
       { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
     ];
 
+    let currentDateTime = new Date();
+    
     return(
       <div>
         <div className="row mission-mgt">
@@ -141,10 +168,10 @@ class TimelineFilter extends React.Component {
             <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" />
             <div className="each-select">
               <div className="date-pic">
-                {/* <CustomDatePicker headerText={translations.start} /> */}
+                 <CustomDatePicker  name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
               <div className="date-pic">
-                {/* <CustomDatePicker headerText={translations.end} /> */}
+                  <CustomDatePicker  name="endDate" defaultValue={currentDateTime}  changeDate={this.handleChangeDate}/> 
               </div>
             </div>
             <div className="filter-button">
@@ -188,7 +215,7 @@ TimelineFilter.propTypes = {
   children: PropTypes.element,
   defaultResource: PropTypes.string,
   headerTxt: PropTypes.string,
-  radioFilterSelect: PropTypes.func.isRequired,
+  radioFilterSelect: PropTypes.func,
   resource: PropTypes.array,
   tab: PropTypes.string,
 };
