@@ -18,9 +18,10 @@ class TimelineFilter extends React.Component {
       clear: false,
       filter: {
         selectedResource: '',
-        selectedView: '',
-        selectedCOCOM: '',
-        selectedUnit: '',
+        teamId: '',
+        platformId: '',
+        unitTypeId: '',
+        unitId:'',
         selectedAssetType: '',
         startDate: '',
         endDate: '',
@@ -49,16 +50,12 @@ class TimelineFilter extends React.Component {
           
   }
 
-  handleFilterData = (selectedDropDownType, selectedDropdownValue) => {
+  handleFilterData = (name, value) => {
     const { filter } = this.state;
     this.setState({
       filter: {
         ...filter,
-        selectedResource: selectedDropDownType === '1' ? selectedDropdownValue : filter.selectedResource,
-        selectedView: selectedDropDownType === '2' ? selectedDropdownValue : filter.selectedView,
-        selectedCOCOM: selectedDropDownType === '3' ? selectedDropdownValue : filter.selectedCOCOM,
-        selectedUnit: selectedDropDownType === '4' ? selectedDropdownValue : filter.selectedUnit,
-        selectedAssetType: selectedDropDownType === '5' ? selectedDropdownValue : filter.selectedAssetType,
+        [name]: value,
       },
     });
   }
@@ -78,14 +75,13 @@ class TimelineFilter extends React.Component {
       },
     });
    
-//console.log(JSON.stringify(this.state.filter));
-console.log("*****************************"+JSON.stringify(filter));
+    //console.log(JSON.stringify(this.state.filter));
+    console.log("*****************************"+JSON.stringify(filter));
 
   }
 
 
   radioFilterSelect=(value)=>{
-    debugger;
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
@@ -162,22 +158,25 @@ console.log("*****************************"+JSON.stringify(filter));
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line">
-            <MissionMgtDropDown key="1" id="1" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
-            <MissionMgtDropDown key="2" id="2" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
-            <MissionMgtDropDown key="5" id="5" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            <MissionMgtDropDown key="1" id="1" name="selectedResource" label={translations.resource} data={this.handleFilterData} options={this.props.resource} defaultResource ={this.props.defaultResource}/>
+            <MissionMgtDropDown key="2" id="2" name="teamId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
+            <MissionMgtDropDown key="3" id="3" name="platformId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
             { this.props.showUnitType ?
-              <MissionMgtDropDown key="3" id="3" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
+              <MissionMgtDropDown key="4" id="4" name="unitTypeId" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
               :''
             }
-
-            <MissionMgtDropDown key="4" id="4" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
-            {/* <MissionMgtDropDown key="5" id="5" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
+            <MissionMgtDropDown key="5" id="5" name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
+            {/* <MissionMgtDropDown key="6" id="6" name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select">
               <div className="date-pic">
-                 <CustomDatePicker  name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
+                <label>Start Date</label>
+                <CustomDatePicker name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
+            </div>
+            <div className="each-select">
               <div className="date-pic">
-                  <CustomDatePicker  name="endDate" defaultValue={currentDateTime}  changeDate={this.handleChangeDate}/> 
+                <label>End Date</label>
+                <CustomDatePicker name="endDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
             </div>
             <div className="filter-button">
