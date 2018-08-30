@@ -4,14 +4,23 @@ import PropTypes from 'prop-types';
 class NodeElement extends React.PureComponent {
   render() {
     const {className, nodeData} = this.props;
+    let type;
+    if (nodeData.unitLogo == null) {
+        nodeData.unitLogo = nodeData.PhotoPath;
+    }
+
+    if(nodeData.Rank)
+    {
+      nodeData.type = "Personnel";
+    }
     return (
       <div className={className}>
         <div className="element-bg">
         <img className="img-valign" src={nodeData.unitLogo} height="55" width="55"/>
           <div className="text-1">{nodeData.UnitName}{nodeData.FullName} <br/>
        
-       {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.attributes.Rank}</span> <br/>
-       <span className="unit-text"> {nodeData.attributes.Unit}</span></span>) : (<span> <br/>
+       {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.Rank}</span> <br/>
+       <span className="unit-text"> {nodeData.DutyPosition}</span></span>) : (<span> <br/>
        <span className="unit-text"> {nodeData.Location}</span> <br/> </span>) }
           
           </div>

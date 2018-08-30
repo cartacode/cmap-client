@@ -3102,16 +3102,18 @@ tbody>tr>td, tbody>tr>th{
 .text-1 { display:inline-block;
           vertical-align:middle;
           padding-left: 0.5rem; 
-          background-color: #0f2b3d; 
+          /* background-color: rgba(56, 175, 248,0.1); */
+          background-color:rgba(177, 193, 219,0.1);
+          color:#ffffff;
 }
 
 .img-valign {border-radius: 50%; background: none;}
 
-.rank-text {font-size: 1.35rem;}
+.rank-text {font-size: 1.35rem; color:#cee3f5;}
 
-.unit-text {color:#687882; font-size: 1.35rem;}
+.unit-text {color:#cee3f5; font-size: 1.35rem;}
 
-.linkBase {stroke:#ffffff !important;}
+.linkBase {stroke:#79848e !important;}
 
 /* Style the buttons that are used to open and close the accordion panel */
 .custom-accordion {

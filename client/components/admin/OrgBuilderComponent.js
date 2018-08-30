@@ -8,6 +8,7 @@ import TreeComponent from './org-builder/TreeComponent';
 import AddNodeModal from './org-builder/AddNodeModal';
 import OptionsModal from './org-builder/OptionsModal';
 import { fetchOrganicOrg } from '../../actions/organicorg';
+import { fetchOrganicPersonnel } from '../../actions/organicpersonnel';
 // import '../../vendor/treant-js/Treant.css';
 // import '../../vendor/treant-js/examples/custom-colored/custom-colored.css';
 // import '../../vendor/treant-js/vendor/raphael.js';
@@ -80,6 +81,7 @@ class OrgBuilderComponent extends React.Component {
 
   componentDidMount = () => {
   this.props.fetchOrganicOrg();
+  this.props.fetchOrganicPersonnel().then(()=> { this.personnelChartView(); });
   }
 
   renderSchema = () => {
@@ -190,174 +192,143 @@ class OrgBuilderComponent extends React.Component {
 
    personnelChartView = () => {
     
-    let orgData = [
-       {
-        id: '1',
-        UnitName: 'Larry Pickering',
-        unitLogo: '/assets/img/admin/avatar.png',
-        type:'Personnel',
-        attributes: {
-          Rank: 'Commanding General',
-          Unit: '82nd Airborne Division',
-        },
-        children: [
-          {
-            id: '1.1',
-            UnitName: 'Steve Lockwood',
-            unitLogo: '/assets/img/admin/avatar.png',
-            type:'Personnel',
-            attributes: {
-              Rank: 'Commander',
-              Unit: '82nd Airborne Division',
-            },
-          },
-          {
-            id: '1.2',
-            UnitName: 'Mike Kelly',
-            unitLogo: '/assets/img/admin/avatar.png',
-            type:'Personnel',
-            attributes: {
-              Rank: 'Commander',
-              Unit: '82nd Airborne Division',
-            },
-          },
-        ],
-       },
-     ];
+      const { allOrganicPersonnels } = this.props;
+      console.log(allOrganicPersonnels);
+      let orgPersonnel =  allOrganicPersonnels;
 
-     let orgSample = [ {"PersonnelID": "123", "UnitName": "Test 1", "Rank": null, "RankAbbreviation": null, "DutyPosition": null, "PhotoPath": null, "AssignedUnitID": 0, "children" : [
-      {"PersonnelID": "123", "UnitName": "Test 1", "Rank": null, "RankAbbreviation": null, "DutyPosition": null, "PhotoPath": null, "AssignedUnitID": 0}, {"PersonnelID": "123", "UnitName": "Test 1", "Rank": null, "RankAbbreviation": null, "DutyPosition": null, "PhotoPath": null, "AssignedUnitID": 0}
-      ] } ];
+      let orgSample2 = [ 
+        {
+          "PersonnelID": null,
+          "FullName": null,
+          "Rank": null,
+          "RankAbbreviation": null,
+          "DutyPosition": null,
+          "PhotoPath": null,
+          "AssignedUnitID": null,
+          "Tier": 0,
+          "children": [
+            {
+              "PersonnelID": "2f4b3c05-e612-4411-a9aa-e60628821837",
+              "FullName": "mark koch",
+              "Rank": "Chief Warrant Officer 3",
+              "RankAbbreviation": "CW3",
+              "DutyPosition": null,
+              "PhotoPath": "/assets/img/admin/avatar.png",
+              "AssignedUnitID": 15,
+              "Tier": 1,
+              "children": [
+                {
+                  "PersonnelID": "4e2634a4-99d1-4673-a095-cb3e47a5a189",
+                  "FullName": "Nikhil Mahajan",
+                  "Rank": null,
+                  "RankAbbreviation": null,
+                  "DutyPosition": "ISR Operations NCO",
+                  "PhotoPath": "/assets/img/admin/avatar.png",
+                  "AssignedUnitID": 15,
+                  "Tier": 2,
+                  "children": null
+                },
+                {
+                  "PersonnelID": "64871d25-4940-4d4f-ae61-d590e65dfa52",
+                  "FullName": "john Layfield Layfield",
+                  "Rank": "Private",
+                  "RankAbbreviation": "PVT",
+                  "DutyPosition": null,
+                  "PhotoPath": "/assets/img/admin/avatar.png",
+                  "AssignedUnitID": 16,
+                  "Tier": 2,
+                  "children": [
+                    {
+                      "PersonnelID": "69eb4a99-c2b9-4fe5-b86b-cd01a9615b48",
+                      "FullName": "Jhon  Leus",
+                      "Rank": "Seaman",
+                      "RankAbbreviation": "SN",
+                      "DutyPosition": null,
+                      "PhotoPath": "/assets/img/admin/avatar.png",
+                      "AssignedUnitID": 16,
+                      "Tier": 3,
+                      "children": null
+                    },
+                    {
+                      "PersonnelID": "edebbbd7-64f4-4321-9a64-40b601430ca8",
+                      "FullName": "Fiona Gahlager",
+                      "Rank": "General",
+                      "RankAbbreviation": "GEN",
+                      "DutyPosition": "ISR Tactical Controller",
+                      "PhotoPath": "/assets/img/admin/avatar.png",
+                      "AssignedUnitID": 19,
+                      "Tier": 3,
+                      "children": []
+                    },
+                    {
+                      "PersonnelID": "c667a391-5cd3-4192-bd4a-65d38fe5ddd5",
+                      "FullName": "Bill Snyder",
+                      "Rank": null,
+                      "RankAbbreviation": null,
+                      "DutyPosition": "Chief, Analytical Control Element",
+                      "PhotoPath": "/assets/img/admin/avatar.png",
+                      "AssignedUnitID": 17,
+                      "Tier": 3,
+                      "children": [
+                        {
+                          "PersonnelID": "7af16e1f-04c5-4275-8e56-de5448ac8a00",
+                          "FullName": "bORIS J",
+                          "Rank": "Private First Class",
+                          "RankAbbreviation": "PFC",
+                          "DutyPosition": "Collection Planner",
+                          "PhotoPath": "/assets/img/admin/avatar.png",
+                          "AssignedUnitID": 17,
+                          "Tier": 4,
+                          "children": null
+                        }
+                      ]
+                    },
+                    {
+                      "PersonnelID": "d613a28a-b609-46f8-acd2-0b52720baa17",
+                      "FullName": "Hong ",
+                      "Rank": null,
+                      "RankAbbreviation": null,
+                      "DutyPosition": null,
+                      "PhotoPath": "map2.png",
+                      "AssignedUnitID": 18,
+                      "Tier": 3,
+                      "children": [
+                        {
+                          "PersonnelID": "e6125f8b-4626-4550-a7af-25ce07fe0941",
+                          "FullName": "jon shane",
+                          "Rank": "Master Sergeant",
+                          "RankAbbreviation": "MSGT",
+                          "DutyPosition": null,
+                          "PhotoPath": "/assets/img/admin/avatar.png",
+                          "AssignedUnitID": 18,
+                          "Tier": 4,
+                          "children": null
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "PersonnelID": "959658a1-6fe0-4d7c-bba6-4680d13a818e",
+                  "FullName": "Mike Martin",
+                  "Rank": null,
+                  "RankAbbreviation": null,
+                  "DutyPosition": null,
+                  "PhotoPath": "/assets/img/admin/avatar.png",
+                  "AssignedUnitID": 56,
+                  "Tier": 2,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+       ];
 
-      let orgSample2 = [{
-        "PersonnelID": null,
-        "FullName": null,
-        "Rank": null,
-        "RankAbbreviation": null,
-        "DutyPosition": null,
-        "PhotoPath": null,
-        "AssignedUnitID": null,
-        "Tier": 0,
-        "children": [
-          {
-            "PersonnelID": "2f4b3c05-e612-4411-a9aa-e60628821837",
-            "FullName": "mark koch",
-            "Rank": "Chief Warrant Officer 3",
-            "RankAbbreviation": "CW3",
-            "DutyPosition": null,
-            "PhotoPath": null,
-            "AssignedUnitID": 15,
-            "Tier": 1,
-            "children": [
-              {
-                "PersonnelID": "4e2634a4-99d1-4673-a095-cb3e47a5a189",
-                "FullName": "Nikhil Mahajan",
-                "Rank": null,
-                "RankAbbreviation": null,
-                "DutyPosition": "ISR Operations NCO",
-                "PhotoPath": null,
-                "AssignedUnitID": 15,
-                "Tier": 2,
-                "children": null
-              },
-              {
-                "PersonnelID": "64871d25-4940-4d4f-ae61-d590e65dfa52",
-                "FullName": "john Layfield Layfield",
-                "Rank": "Private",
-                "RankAbbreviation": "PVT",
-                "DutyPosition": null,
-                "PhotoPath": null,
-                "AssignedUnitID": 16,
-                "Tier": 2,
-                "children": [
-                  {
-                    "PersonnelID": "69eb4a99-c2b9-4fe5-b86b-cd01a9615b48",
-                    "FullName": "Jhon  Leus",
-                    "Rank": "Seaman",
-                    "RankAbbreviation": "SN",
-                    "DutyPosition": null,
-                    "PhotoPath": null,
-                    "AssignedUnitID": 16,
-                    "Tier": 3,
-                    "children": null
-                  },
-                  {
-                    "PersonnelID": "edebbbd7-64f4-4321-9a64-40b601430ca8",
-                    "FullName": "Fiona Gahlager",
-                    "Rank": "General",
-                    "RankAbbreviation": "GEN",
-                    "DutyPosition": "ISR Tactical Controller",
-                    "PhotoPath": null,
-                    "AssignedUnitID": 19,
-                    "Tier": 3,
-                    "children": []
-                  },
-                  {
-                    "PersonnelID": "c667a391-5cd3-4192-bd4a-65d38fe5ddd5",
-                    "FullName": "Bill Snyder",
-                    "Rank": null,
-                    "RankAbbreviation": null,
-                    "DutyPosition": "Chief, Analytical Control Element",
-                    "PhotoPath": null,
-                    "AssignedUnitID": 17,
-                    "Tier": 3,
-                    "children": [
-                      {
-                        "PersonnelID": "7af16e1f-04c5-4275-8e56-de5448ac8a00",
-                        "FullName": "bORIS J",
-                        "Rank": "Private First Class",
-                        "RankAbbreviation": "PFC",
-                        "DutyPosition": "Collection Planner",
-                        "PhotoPath": null,
-                        "AssignedUnitID": 17,
-                        "Tier": 4,
-                        "children": null
-                      }
-                    ]
-                  },
-                  {
-                    "PersonnelID": "d613a28a-b609-46f8-acd2-0b52720baa17",
-                    "FullName": "Hong ",
-                    "Rank": null,
-                    "RankAbbreviation": null,
-                    "DutyPosition": null,
-                    "PhotoPath": "map2.png",
-                    "AssignedUnitID": 18,
-                    "Tier": 3,
-                    "children": [
-                      {
-                        "PersonnelID": "e6125f8b-4626-4550-a7af-25ce07fe0941",
-                        "FullName": "jon shane",
-                        "Rank": "Master Sergeant",
-                        "RankAbbreviation": "MSGT",
-                        "DutyPosition": null,
-                        "PhotoPath": null,
-                        "AssignedUnitID": 18,
-                        "Tier": 4,
-                        "children": null
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "PersonnelID": "959658a1-6fe0-4d7c-bba6-4680d13a818e",
-                "FullName": "Mike Martin",
-                "Rank": null,
-                "RankAbbreviation": null,
-                "DutyPosition": null,
-                "PhotoPath": null,
-                "AssignedUnitID": 56,
-                "Tier": 2,
-                "children": []
-              }
-            ]
-          }
-        ]
-      }];
+       forceRemount = forceRemount +1;
    
      this.setState({
-       orgData: orgSample2,       
+       orgData: orgPersonnel,       
      });
    }
 
@@ -487,6 +458,7 @@ render() {
 
   const { translations } = this.props;
   const { allOrganicOrgs } = this.props;
+  const { allOrganicPersonnels } = this.props;
 
 
   return (
