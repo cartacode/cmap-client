@@ -31,45 +31,69 @@ class PedTaskingComponent extends React.Component {
     console.log('find');
   }
 
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
+    const unitId = 25;
+   
+    const statusId = 22; // 'AAG'
+
+    this.props.fetchPedTasks( statusId, unitId);
+
+    this.props.fetchPedTasksATOGenerations(statusId, unitId);
+  };
+
+
+
   render() {
 
     const { translations } = this.props;
+
+    const { pedTasksAtoGenerations } = this.props;
+    const { pedTasks } = this.props;
 
     const resource = [
       { 'id': '2', 'description': translations.teams },
     ];
 
-    const data = [{
-      'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
-      'ReqUserFrndlyID': 22,
-      'COCOMText': 'PACOM',
-      'MissionTypeText': 'Intelligence Preparation of the Battlefield (IPB)',
-      'PrimaryPayloadName': 'Electro-Optical/Infra-Red',
-    },
-    {
-      'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
-      'ReqUserFrndlyID': 22,
-      'COCOMText': 'PACOM',
-      'MissionTypeText': 'Intelligence Preparation of the Battlefield (IPB)',
-      'PrimaryPayloadName': 'Electro-Optical/Infra-Red',
-    },
-    {
-      'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
-      'ReqUserFrndlyID': 22,
-      'COCOMText': 'PACOM',
-      'MissionTypeText': 'Intelligence Preparation of the Battlefield (IPB)',
-      'PrimaryPayloadName': 'Electro-Optical/Infra-Red',
-    },
-    {
-      'IntelRequestID': '9a8abd12-ff5a-4287-8d64-a9a93f032d01',
-      'ReqUserFrndlyID': 22,
-      'COCOMText': 'PACOM',
-      'MissionTypeText': 'Intelligence Preparation of the Battlefield (IPB)',
-      'PrimaryPayloadName': 'Electro-Optical/Infra-Red',
-    },
+    
+
+    
+
+    const pedTasksAtoGenerationsColumns = [
+      {
+        Header: 'Request#',
+        accessor: 'ReqUserFrndlyID',
+      },
+      {
+        Header: 'Command',
+        accessor: 'COCOMText',
+      },
+      {
+        Header: 'Mission Type',
+        accessor: 'MissionTypeText',
+      },
+      {
+        Header: 'Payload',
+        accessor: 'PrimaryPayloadName',
+      },
+      {
+        Header: translations.view,
+        accessor: 'IntelRequestID',
+        filterable: false,
+        Cell: row => (
+          <div>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            &nbsp;
+            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+          </div>
+        ),
+      },
     ];
 
-    const columns = [
+    const pedTasksColumns = [
       {
         Header: 'Request#',
         accessor: 'ReqUserFrndlyID',
@@ -109,8 +133,8 @@ class PedTaskingComponent extends React.Component {
                 <FullHeaderLine headerText={translations.ATOGeneration} />
                 <div >
                   <ReactTable
-                    data={data}
-                    columns={columns}
+                    data={pedTasksAtoGenerations}
+                    columns={pedTasksAtoGenerationsColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE}
                     minRows={TableDefaults.MIN_ROWS}
                     className="-striped -highlight"
@@ -127,8 +151,8 @@ class PedTaskingComponent extends React.Component {
                 <FullHeaderLine headerText={translations.PedTask} />
                 <div >
                   <ReactTable
-                    data={data}
-                    columns={columns}
+                    data={pedTasks}
+                    columns={pedTasksColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE}
                     minRows={TableDefaults.MIN_ROWS}
                     className="-striped -highlight"

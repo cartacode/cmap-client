@@ -116,6 +116,9 @@ export const ORGANIC_PERSONNEL__FETCH_LIST = createActionType('ORGANIC_PERSONNEL
 export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
 export const FLIGHT_OPS__FETCH = createActionType('FLIGHT_OPS__FETCH');
 export const PED_TASKS__FETCH = createActionType('PED_TASKS__FETCH');
+export const PED_TASKS_ATO_GENERATION__FETCH = createActionType('PED_TASKS_ATO_GENERATION__FETCH');
+
+
 export const ROUTE_ATO_GENERATION = createActionType('ROUTE_ATO_GENERATION');
 export const COLLECTION_PLAN_TO_ATO_GENERATION = createActionType('COLLECTION_PLAN_TO_ATO_GENERATION');
 export const FLIGHT_OPS_ATO_GENERATION = createActionType('FLIGHT_OPS_ATO_GENERATION');

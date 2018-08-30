@@ -81,6 +81,7 @@ export default {
     filterResults: [],
     flightOps: [],
     pedTasks: [],
+    pedTasksAtoGenerations:[],
     isFetching: false,
   },
   paygrades: {
