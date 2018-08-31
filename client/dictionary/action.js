@@ -124,3 +124,8 @@ export const COLLECTION_PLAN_TO_ATO_GENERATION = createActionType('COLLECTION_PL
 export const FLIGHT_OPS_ATO_GENERATION = createActionType('FLIGHT_OPS_ATO_GENERATION');
 export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
 
+export const ATO_GEN_TO_FLIGHT_OPS__MOVE = createActionType('ATO_GEN_TO_FLIGHT_OPS__MOVE');
+export const FLIGHT_OPS_TO_ATO_GEN__MOVE = createActionType('FLIGHT_OPS_TO_ATO_GEN__MOVE');
+export const ATO_GEN_TO_PED_TASK__MOVE = createActionType('ATO_GEN_TO_PED_TASK__MOVE');
+export const PED_TASK_TO_ATO_GEN__MOVE = createActionType('PED_TASK_TO_ATO_GEN__MOVE');
+export const ATO_GEN_TO_COLLECTION_PLAN__MOVE = createActionType('ATO_GEN_TO_COLLECTION_PLAN__MOVE');

@@ -59,21 +59,28 @@ class AtoComponent extends React.Component {
     });
   }
 
+  /**
+   * sample request Body:-
+   *    /**
+     * {
+        "Id": 0,
+        "IntelReqID": "string",
+        "OwningUnit": 0,
+        "PlatformInventoryID": "string",
+        "CrewTeamID": 0,
+        "PedTeamID": 0,
+        "ATOIssueDate": "2018-08-31T08:23:15.380Z"
+      }
+     */
   moveToATOGenerationFromCollectionPlan = (row) => {
-
     const value = row.value;
     const intelRequestID = row.original.IntelRequestID;
     const owningUnit = row.original.UnitId;
     const platformInventoryID = row.original.PlatformInventoryID;
-debugger;
+    //@Note:- owningUnit or UnitId should be selected of Radio Button.
     const data = {
-      //'Id': 1,
       'IntelReqID': intelRequestID,
       'OwningUnit': owningUnit,
-      //'PlatformInventoryID': '0756dca8-ab05-44b2-8c96-e6870db5eb9e',
-      'CrewTeamID': 0,
-      'PedTeamID': 0,
-      'ATOIssueDate': '2018-08-29T04:36:37.827Z',
     };
     if (value !== undefined && value !== '0') {
       this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
@@ -81,6 +88,13 @@ debugger;
         this.loadData();
       });
     }
+  };
+
+  moveToCollectionPlanFromATOGeneration = (row) => {
+    const missionId = row.original.MissionId;
+    this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
+      this.loadData();
+    });
   };
 
   routeATOGenerations = () => {
@@ -91,16 +105,6 @@ debugger;
       this.loadData();
     });
   };
-
-  deleteCollectionPlan=(value)=>{
-    /*  if (value !== undefined && value !== '0') {
-      this.props.deleteCollectionPlanById(value).then(() => {
-        this.setState({ editId: '0' });
-        this.notify(NoticeType.DELETE);
-        this.loadData();
-      });
-    } */
-  }
 
   loadData = () => {
     const unitId = 25;
@@ -173,7 +177,7 @@ debugger;
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToATOGenerationFromCollectionPlan(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
@@ -201,7 +205,7 @@ debugger;
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlanFromATOGeneration(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),

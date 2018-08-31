@@ -144,11 +144,7 @@ class TimelineFilter extends React.Component {
     console.log('******************************************selectedResource**********************' + selectedResource + '*******************');
     console.log('******************************************filterResults after searched**********************' + filterResults + '*******************');
 
-    const sideTableContent = [
-      { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater' },
-      { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater' },
-      { id: 3, select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater' },
-    ];
+   
 
     const sideTableHeader = [
       {
@@ -182,6 +178,12 @@ class TimelineFilter extends React.Component {
       sideTableHeader.splice(0, 1);
     }
 
+    const sideTableContent = [
+      { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
+      { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
+      { id: 3, select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater'},
+    ];
+    
     const groups = [
       { id: 1, title: '<table><tr><td style = "padding:20px">aaa</td><td>aaaa</td></tr></table>' },
       { id: 2, title: 'group 2' },
@@ -190,7 +192,9 @@ class TimelineFilter extends React.Component {
 
     const items = [
       { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour') },
+      { id: 4, group: 1, title: 'item 4', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
       { id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour') },
+      { id: 5, group: 2, title: 'item 5', start_time: moment().add(1, 'hour'), end_time: moment().add(1.2, 'hour') },
       { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
     ];
 
@@ -222,8 +226,8 @@ class TimelineFilter extends React.Component {
               <MissionMgtDropDown name="cocomId" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
               : ''
             }
-            {/* For Team */}
-            {selectedResource === '2' ? 
+            {/* Should't be visible to the 'FLIGHT_OPS' Or 'PED_TASK' tabs.*/}
+            { (tab !== 'FLIGHT_OPS' && tab !== 'PED_TASK') ? 
               <MissionMgtDropDown name="unitTypeId" label={translations.unitType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
               : ''
             }

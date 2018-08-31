@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import AtoComponent from '../../components/mission_mgt/AtoComponent';
-import { fetchATOGenerations, fetchATOCollectionPlans, routeATOGeneration, moveToATOGenerationFromCollectionPlan } from 'actions/mssionmgt';
+import { fetchATOGenerations, fetchATOCollectionPlans, routeATOGeneration, moveToATOGenerationFromCollectionPlan, moveToCollectionPlanFromATOGeneration } from 'actions/mssionmgt';
 
 const mapStateToProps = state => {
   return {
@@ -18,6 +18,7 @@ const mapDispatchToProps = {
   fetchATOGenerations,
   routeATOGeneration,
   moveToATOGenerationFromCollectionPlan,
+  moveToCollectionPlanFromATOGeneration,
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AtoComponent);

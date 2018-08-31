@@ -20,6 +20,44 @@ class PedTaskingComponent extends React.Component {
     };
   }
 
+   /**
+   * sample request Body:-
+   *    /**
+     * {
+        "Id": 0,
+        "IntelReqID": "string",
+        "OwningUnit": 0,
+        "PlatformInventoryID": "string",
+        "CrewTeamID": 0,
+        "PedTeamID": 0,
+        "ATOIssueDate": "2018-08-31T08:23:15.380Z"
+      }
+     */
+  moveToPedTaskFromATOGeneration = (row) => {
+    const value = row.value;
+    const missionId = row.original.MissionId;
+    const intelRequestID = row.original.IntelRequestID;
+    const owningUnit = row.original.UnitId;
+    const platformInventoryID = row.original.PlatformInventoryID;
+    //@Note:- owningUnit or UnitId should be selected of Radio Button.
+    const data = {
+      "Id": missionId,
+      'IntelReqID': intelRequestID,
+      'OwningUnit': owningUnit,
+      "PedTeamID": 0,
+    };
+    if (value !== undefined && value !== '0') {
+      this.props.moveToPedTaskFromATOGeneration(missionId, data).then(() => {
+        this.loadData();
+      });
+  };
+ }
+
+  moveToATOGenerationFromPedTask = (row) => {
+    this.props.moveToATOGenerationFromPedTask(row.original.MissionId).then(() => {
+      this.loadData();
+    });
+  };
 
   radioFilterSelect=(generatedData)=>{
     this.setState({
@@ -39,10 +77,11 @@ class PedTaskingComponent extends React.Component {
     const unitId = 25;
    
     const statusId = 22; // 'AAG'
-
+    //LEFT SIDE TABLE
+    this.props.fetchPedTasksATOGenerations(statusId, unitId);
+    //RIGHT SIDE TABLE
     this.props.fetchPedTasks( statusId, unitId);
 
-    this.props.fetchPedTasksATOGenerations(statusId, unitId);
   };
 
 
@@ -50,8 +89,9 @@ class PedTaskingComponent extends React.Component {
   render() {
 
     const { translations } = this.props;
-
+    //For Left Table
     const { pedTasksAtoGenerations } = this.props;
+    //For Right Side Table
     const { pedTasks } = this.props;
 
     const resource = [
@@ -61,7 +101,7 @@ class PedTaskingComponent extends React.Component {
     
 
     
-
+    //For Left Table
     const pedTasksAtoGenerationsColumns = [
       {
         Header: 'Request#',
@@ -85,14 +125,15 @@ class PedTaskingComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Ped Task" onClick={() => this.moveToPedTaskFromATOGeneration(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+            {/*  <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
     ];
 
+    //For Right Table
     const pedTasksColumns = [
       {
         Header: 'Request#',
@@ -116,9 +157,9 @@ class PedTaskingComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToATOGenerationFromPedTask(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
