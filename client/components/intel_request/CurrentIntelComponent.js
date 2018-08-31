@@ -316,6 +316,7 @@ class CurrentIntelComponent extends React.Component {
               <ReactTable
                 data={searchResult}
                 columns={searchResultColumns}
+                minRows={TableDefaults.MIN_ROWS}
                 defaultPageSize={5}
                 className="-striped -highlight"
                 filterable

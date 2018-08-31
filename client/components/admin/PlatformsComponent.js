@@ -204,7 +204,7 @@ class PlatformComponent extends React.Component {
               className="-striped -highlight"              
               filterable={true}
               defaultPageSize={TableDefaults.PAGE_SIZE}
-						  minRows={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.MIN_ROWS}
               loading={this.props.isLoading}
 						  defaultFilterMethod={defaultFilter}
             />

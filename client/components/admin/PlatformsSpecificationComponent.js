@@ -207,7 +207,7 @@ class PlatformsSpecificationComponent extends React.Component {
               loading={this.props.isLoading}
               filterable={true}
               defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.MIN_ROWS}
               defaultFilterMethod={defaultFilter}
             />
           </div>

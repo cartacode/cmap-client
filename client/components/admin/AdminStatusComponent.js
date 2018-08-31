@@ -563,7 +563,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
               <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
                defaultFilterMethod={defaultFilter}
 
                   // getTdProps={(state, rowInfo, column, instance) => {
@@ -594,7 +594,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
               />
             </div>
@@ -617,7 +617,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
               <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
 
                   getTdProps={(state, rowInfo, column, instance) => {
@@ -655,7 +655,7 @@ class AdminStatusComponent extends React.Component {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter}
               />
             </div>

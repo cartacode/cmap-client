@@ -184,7 +184,7 @@ class PayloadsComponent extends React.Component {
 	            data={allPayloadInventory}
 	            columns={columns}
 	            defaultPageSize={TableDefaults.PAGE_SIZE}
-						  minRows={TableDefaults.PAGE_SIZE}
+						  minRows={TableDefaults.MIN_ROWS}
 	            loading={this.props.isLoading}
 	            className="-striped -highlight"
 							filterable={true}
