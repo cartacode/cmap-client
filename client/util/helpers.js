@@ -5,10 +5,14 @@ export const defaultFilter = (filter, row) => {
   const id = filter.pivotId || filter.id;
   let retVal = true;
 
-  if ((row[id] !== undefined && row[id] !== null)) {
+  if ((row[id] !== undefined && row[id] !== null && row[id] !== '')) {
     // if(typeof row[id] === 'string') {
     retVal = String(row[id]).toLowerCase().startsWith(filter.value.toLowerCase());
+
     // }
+  }
+  else{
+    retVal = false;
   }
   return retVal;
   //   return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
