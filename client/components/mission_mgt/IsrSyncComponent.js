@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'react-calendar-timeline/lib/Timeline.css';
 import 'react-table/react-table.css';
 import TimelineFilter from '../reusable/TimelineFilter';
 

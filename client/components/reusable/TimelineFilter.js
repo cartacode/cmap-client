@@ -48,9 +48,8 @@ class TimelineFilter extends React.Component {
     }
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-          
-  }
+  // componentDidUpdate = (prevProps, prevState) => {
+  // }
 
   handleFilterData = (name, value) => {
     const { filter } = this.state;
@@ -61,8 +60,6 @@ class TimelineFilter extends React.Component {
       },
     });
   }
-
- 
 
   handleChangeDate = (changeDate, name) => {
     console.log(changeDate._d);
@@ -76,10 +73,6 @@ class TimelineFilter extends React.Component {
         [name]: changeDate._d,
       },
     });
-   
-    //console.log(JSON.stringify(this.state.filter));
-    console.log('*****************************' + JSON.stringify(filter));
-
   }
 
 
@@ -87,7 +80,7 @@ class TimelineFilter extends React.Component {
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
-      value:value != undefined ? value:'',
+      value: value !== undefined ? value : '',
     };
     this.props.radioFilterSelect(generatedData);
   }
@@ -116,7 +109,6 @@ class TimelineFilter extends React.Component {
 
     this.props.searachAndFilter(data).then( () => {
       const { filterResults } = this.props;
-      console.log('************************DONE searching**********And Results**************'+filterResults);
     });
   }
 
@@ -141,12 +133,8 @@ class TimelineFilter extends React.Component {
     const { translations } = this.props;
     const { selectedResource } = this.state.filter;
     const { filterResults } = this.props;
-    console.log('******************************************selectedResource**********************' + selectedResource + '*******************');
-    console.log('******************************************filterResults after searched**********************' + filterResults + '*******************');
 
-   
-
-    const sideTableHeader = [
+    const sideTableHeader = [{ Header: 'Platforms', columns: [
       {
         Header: translations.select,
         accessor: 'id',
@@ -171,31 +159,41 @@ class TimelineFilter extends React.Component {
         Header: translations.Location,
         accessor: 'location',
       },
+    ] },
     ];
 
     const { tab } = this.props;
     if(tab === 'ISR') {
-      sideTableHeader.splice(0, 1);
+      sideTableHeader[0].columns.splice(0, 1);
     }
 
     const sideTableContent = [
       { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
       { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
       { id: 3, select: 'check', Unit: '116th MIB', team: 'Yellow', type: 'fmv', location: 'theater'},
+      { id: 4, select: 'check', Unit: '116th MIB', team: 'Delta', type: 'fmv', location: 'SRO'},
+      { id: 5, select: 'check', Unit: '116th MIB', team: 'Delta', type: 'fmv', location: 'SRO'},
+      { id: 6, select: 'check', Unit: '116th MIB', team: 'Alpha', type: 'fmv', location: 'ASR'},
     ];
     
     const groups = [
-      { id: 1, title: '<table><tr><td style = "padding:20px">aaa</td><td>aaaa</td></tr></table>' },
-      { id: 2, title: 'group 2' },
-      { id: 3, title: 'group 3' },
+      { id: 1, title: 'group 1', rightTitle: 'Plar', },
+      { id: 2, title: 'group 2', rightTitle: 'Plat', },
+      { id: 3, title: 'group 3', rightTitle: 'Plat', },
+      { id: 4, title: 'group 4', rightTitle: 'Platss' },
+      { id: 5, title: 'group 5', rightTitle: 'Platss' },
+      { id: 6, title: 'group 6', rightTitle: 'Platss' },
     ];
 
     const items = [
-      { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour') },
+      { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour')},
       { id: 4, group: 1, title: 'item 4', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
       { id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour') },
       { id: 5, group: 2, title: 'item 5', start_time: moment().add(1, 'hour'), end_time: moment().add(1.2, 'hour') },
       { id: 3, group: 3, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
+      { id: 6, group: 6, title: 'item 3', start_time: moment().add(3, 'hour'), end_time: moment().add(5, 'hour') },
+      { id: 7, group: 5, title: 'item 4', start_time: moment().add(3, 'hour'), end_time: moment().add(5, 'hour') },
+      { id: 8, group: 5, title: 'item 5', start_time: moment().add(5, 'hour'), end_time: moment().add(7, 'hour') },
     ];
 
     let currentDateTime = new Date();
@@ -234,13 +232,13 @@ class TimelineFilter extends React.Component {
          
             <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl="Units/GetUnits" />
             {/* <MissionMgtDropDown  name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
-            <div className="each-select">
+            <div className="each-select text-left">
               <div className="date-pic">
                 <label>Start Date</label>
                 <CustomDatePicker name="startDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
               </div>
             </div>
-            <div className="each-select">
+            <div className="each-select text-left">
               <div className="date-pic">
                 <label>End Date</label>
                 <CustomDatePicker name="endDate" defaultValue={currentDateTime} changeDate={this.handleChangeDate}/> 
@@ -270,9 +268,12 @@ class TimelineFilter extends React.Component {
                 sidebarWidth={0}
                 groups={groups}
                 lineHeight={51}
+                // rightSidebarWidth={100}
                 items={items}
-                defaultTimeStart={moment().add(-12, 'hour')}
-                defaultTimeEnd={moment().add(12, 'hour')}
+                defaultTimeStart={moment().add(-5, 'hours')}
+                defaultTimeEnd={moment().add(12, 'hours')}
+                visibleTimeStart={moment().add(-5, 'hours').valueOf()}
+                visibleTimeEnd={moment().add(12, 'hours').valueOf()}
               />
             </div>
           </div>

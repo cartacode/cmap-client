@@ -29,8 +29,8 @@ class MissionMgtDropDown extends React.Component {
       const { dropdownDataUrl } = this.props;
       const { options } = this.props;
       if(dropdownDataUrl) {
-        //const items = [{ 'label': '--' + this.props.id + '--', 'value': 0 }];
-        const items = [{ 'label': '--' + 'select' + '--', 'value': 0 }];
+        
+        const items = [{ 'label': '--' + 'Select ' + '--', 'value': 0 }];
         axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
           .then(response => {
             response.data.map(item => {
@@ -44,7 +44,7 @@ class MissionMgtDropDown extends React.Component {
             console.log('Exception comes:' + error);
           });
       }else if(options) {
-        const items = [{ 'label': '--' + 'select' + '--', 'value': 0 }];
+        const items = [{ 'label': '--' + 'Select ' + '--', 'value': 0 }];
         options.map(item => {
           items.push({ 'label': item[this.labelField], 'value': item[this.valueField] });
         });
@@ -54,14 +54,6 @@ class MissionMgtDropDown extends React.Component {
       }
     }
 
-    componentDidUpdate() {
-     
-    }
-
-
-    changeValue = (label, value) => {
-      console.log('Display Lable : ' + label + ', Saved Value :' + value);
-    };
 
     // render dropdown list of lang switcher
     renderItems() {
@@ -89,7 +81,7 @@ class MissionMgtDropDown extends React.Component {
       const label = this.props.label;
       const name = this.props.name;
       return (
-        <div className="each-select">
+        <div className="each-select text-left">
           <label>{label}</label>
           <select className="form-control" name={name} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
             {this.renderItems()}
