@@ -161,14 +161,14 @@ class AddPersonnelModal extends React.Component {
     console.log(personnel);
     if( generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
       this.updateRanks(generalData.ServiceBranch,generalData.Rank);
+      this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
+      this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
     }
 
     if( generalData.Rank && generalData.Rank !== this.state.selectedRank ) {
       this.updatePaygrade(generalData.Rank);
     }
-    this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
-
-    this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
+    
 
     this.setState({
       personnel: {

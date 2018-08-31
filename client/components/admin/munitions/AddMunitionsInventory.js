@@ -81,6 +81,8 @@ class AddMunitionsInventory extends React.Component {
   handleMunitionGeneralData = (generalData) => {
     const { munition } = this.state;
     this.setState({ locationCatg: generalData.locationCatg });
+    this.setState({ selectedBranch: generalData.branch });
+
     this.setState({
       munition: {
         metaDataID: generalData.metaDataID,
@@ -102,7 +104,9 @@ class AddMunitionsInventory extends React.Component {
       console.log("Category Selected");
       this.updatelocationid(generalData);
     }
-    this.updateOwningUnit(generalData);
+    if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
+      this.updateOwningUnit(generalData);
+    }
   }
 
   handleSubmit = event => {

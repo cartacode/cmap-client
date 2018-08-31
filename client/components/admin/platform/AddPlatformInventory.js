@@ -85,6 +85,8 @@ class AddPlatformInventory extends React.Component {
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
     this.setState({ locationcategory: generalData.locationcategory });
+    this.setState({ selectedBranch: generalData.branch });
+
     this.setState({
       platform: {
         ...platform,
@@ -109,7 +111,9 @@ class AddPlatformInventory extends React.Component {
     if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) {
       this.updatelocationid(generalData);
     }
+    if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
     this.updateOwningUnit(generalData);
+    }
   }
 
   handlePayloadData = (generalData) => {

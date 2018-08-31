@@ -74,6 +74,8 @@ class CcirPirModal extends React.Component {
 
   handleCcirPirGeneralData = (generalData) => {
     const { ccirpir } = this.state;
+    this.setState({ selectedBranch: generalData.BranchId });
+
     this.setState({
       EffectiveAreaKML : generalData.EffectiveAreaKML,
       ccirpir: {
@@ -91,8 +93,9 @@ class CcirPirModal extends React.Component {
       },
     });
 
-
+    if( generalData.BranchId && generalData.BranchId !== this.state.selectedBranch) {
     this.updateUnit(generalData);
+    }
   }
 
 handleCcirData = (ccirData) => {
