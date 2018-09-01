@@ -28,10 +28,17 @@ export function routeATOGeneration(unitId, statusId) {
   });
 }
 
-export function searachAndFilter(data) {
+export function platformFilter(data) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
     action: () => axios.put(`${baseUrl}/Search/SearchMissionPlatformInventory`, data, requestHeaders),
+  });
+}
+
+export function teamFilter(data) {
+  return createAction({
+    type: SEARCH_MISSION_FILTER,
+    action: () => axios.put(`${baseUrl}/Search/SearchMissionTeam`, data, requestHeaders),
   });
 }
 

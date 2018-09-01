@@ -60,10 +60,10 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         pedTasks: payload.data,
       };
     case SEARCH_MISSION_FILTER.REQUEST:
-    return {
-      ...state,
-      isFetching: true,
-    };
+      return {
+        ...state,
+        isFetching: true,
+      };
     case SEARCH_MISSION_FILTER.SUCCESS:
       return {
         ...state,

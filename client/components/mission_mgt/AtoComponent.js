@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { TableDefaults, NoticeType, MissionConsts } from '../../dictionary/constants';
 import { defaultFilter, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
@@ -14,8 +14,9 @@ class AtoComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '1',
-      tab: 'ATO',
+      defaultResource: MissionConsts.RESOURCE.PLATFORM,
+      tab: MissionConsts.TABS.ATO,
+      radioUnitId: '',
       unitdId: '',
       owningUnitsId: '',
       showUnitType: true,
@@ -52,10 +53,12 @@ class AtoComponent extends React.Component {
     } */
   };
 
-  radioFilterSelect=(generatedData)=>{
+  radioFilterSelect=(selectedRadio)=>{
+    //alert(selectedRadio);
     this.setState({
-      unitdId: generatedData.value,
-      owningUnitsId: generatedData.value,
+      // unitdId: generatedData.value,
+      // owningUnitsId: generatedData.value,
+      radioUnitId: selectedRadio
     });
   }
 
@@ -73,21 +76,29 @@ class AtoComponent extends React.Component {
       }
      */
   moveToATOGenerationFromCollectionPlan = (row) => {
-    const value = row.value;
-    const intelRequestID = row.original.IntelRequestID;
-    const owningUnit = row.original.UnitId;
-    const platformInventoryID = row.original.PlatformInventoryID;
-    //@Note:- owningUnit or UnitId should be selected of Radio Button.
-    const data = {
-      'IntelReqID': intelRequestID,
-      'OwningUnit': owningUnit,
-    };
-    if (value !== undefined && value !== '0') {
-      this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
+    
+    if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
+      const value = row.value;
+      const intelRequestID = row.original.IntelRequestID;
+      const owningUnit = row.original.UnitId;
+      const platformInventoryID = row.original.PlatformInventoryID;
+      const data = {
+        'IntelReqID': intelRequestID,
+        'OwningUnit': this.state.radioUnitId,
+      };
+      if (value !== undefined && value !== '0') {
+        this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
         // this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
-        this.loadData();
-      });
+          this.loadData();
+        });
+      }
+
+    } else {
+      // TODO: Add Notify Error to select Radio
+      alert('Select Platform');
     }
+    
+
   };
 
   moveToCollectionPlanFromATOGeneration = (row) => {
@@ -140,12 +151,9 @@ class AtoComponent extends React.Component {
     const { atoCollectionPlans } = this.props;
     const { atoGenerations } = this.props;
 
-    console.log('*********************************atoCollectionPlans***************************' + atoCollectionPlans);
-    console.log('*********************************atoGenerations***************************' + atoGenerations);
+    // console.log('*********************************atoCollectionPlans***************************' + atoCollectionPlans);
+    // console.log('*********************************atoGenerations***************************' + atoGenerations);
 
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-    ];
 
     const columnsATOCollectionPlans = [
       {
@@ -214,7 +222,7 @@ class AtoComponent extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} 
+        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">

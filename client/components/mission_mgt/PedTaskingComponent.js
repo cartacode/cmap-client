@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults } from '../../dictionary/constants';
+import { TableDefaults, MissionConsts } from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
@@ -13,10 +13,10 @@ class PedTaskingComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '2',
-      tab: 'PED_TASK',
+      defaultResource: MissionConsts.RESOURCE.TEAM,
+      tab: MissionConsts.TABS.ATO,
       teamId: '',
-      showUnitType: false,
+      // showUnitType: false,
     };
   }
 
@@ -166,7 +166,7 @@ class PedTaskingComponent extends React.Component {
     ];
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

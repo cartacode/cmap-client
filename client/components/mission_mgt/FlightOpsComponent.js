@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { TableDefaults, NoticeType, MissionConsts } from '../../dictionary/constants';
 import { defaultFilter, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
@@ -13,8 +13,8 @@ class FlightOpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '0',
-      tab: 'FLIGHT_OPS',
+      defaultResource: MissionConsts.RESOURCE.PLATFORM,
+      tab: MissionConsts.TABS.FOP,
       platformInvenotryId: '',
       teamId: '',
       showUnitType: false,
@@ -105,8 +105,8 @@ class FlightOpsComponent extends React.Component {
 
   radioFilterSelect=(generatedData)=>{
     this.setState({
-      platformInvenotryId: generatedData.resourceId === '1' ? generatedData.value : '',
-      teamId: generatedData.resourceId === '2' ? generatedData.value : '',
+      platformInvenotryId: generatedData.resourceId === MissionConsts.RESOURCE.PLATFORM ? generatedData.value : '',
+      teamId: generatedData.resourceId === MissionConsts.RESOURCE.TEAM ? generatedData.value : '',
     });
   }
 
@@ -118,10 +118,7 @@ class FlightOpsComponent extends React.Component {
     const { opsAtoGenerations } = this.props;
     const { flightOps } = this.props;
 
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.teams },
-    ];
+    
 
     const columnsATOGenerations = [
       {
@@ -187,7 +184,7 @@ class FlightOpsComponent extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect}/>
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
