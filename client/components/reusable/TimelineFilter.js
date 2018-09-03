@@ -11,6 +11,9 @@ import StatusTable from './StatusTable';
 import { connect } from 'react-redux';
 import { teamFilter, platformFilter } from '../../actions/mssionmgt';
 import { MissionConsts } from '../../dictionary/constants';
+import { defaultFilter } from '../../util/helpers';
+import ReactTable from 'react-table';
+
 
 class TimelineFilter extends React.Component {
 
@@ -19,12 +22,12 @@ class TimelineFilter extends React.Component {
     // setting timeline date range default to 24 hours from now
     const startDate = moment().startOf('hour').toDate();
     const endDate = moment().startOf('hour').add(24, 'hour').toDate();
-    console.log('resource '+props.defaultResource);
     this.state = {
       clear: false,
       selectedRadio: '',
+      results: [],
       filter: {
-        selectedResource: props.defaultResource,
+        selectedResource: '',
         teamId: '',
         platformStatusId: '',
         unitTypeId: '',
@@ -40,10 +43,8 @@ class TimelineFilter extends React.Component {
     this.baseState = this.state;
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     const { defaultResource } = this.props;
-    this.setState({ clear: true });
-    
     if(defaultResource != undefined && defaultResource !== '') {
       const { filter } = this.state;
       this.setState({
@@ -55,8 +56,9 @@ class TimelineFilter extends React.Component {
     }
   }
 
-  // componentDidUpdate = (prevProps, prevState) => {
-  // }
+  componentDidMount = () => {
+    this.onFind();
+  }
 
   handleFilterData = (name, value) => {
   
@@ -67,14 +69,13 @@ class TimelineFilter extends React.Component {
         [name]: value,
       },
     });
+    if(name === 'selectedResource' && this.props.tab === MissionConsts.TABS.FOP) {
+      this.props.updateResource(value);
+    }
   }
 
   handleChangeDate = (changeDate, name) => {
-    console.log(changeDate._d);
-    console.log(name);
-
     const { filter } = this.state;
-    console.log(JSON.stringify(this.state.filter));
     this.setState({
       filter: {
         ...filter,
@@ -161,8 +162,8 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.radioFilterSelect(row.value)} />
-          {/* <label htmlFor={row.original.id}><span /></label> */}
+          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
+          <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
       {
@@ -221,7 +222,7 @@ class TimelineFilter extends React.Component {
    * Click event of Find & Filter Button.
    */
   onFind = () => {
-    event.preventDefault();
+    // event.preventDefault();
     const { selectedResource } = this.state.filter;
     if(selectedResource === MissionConsts.RESOURCE.PLATFORM) {
       this.findPlatformBased();
@@ -243,6 +244,9 @@ class TimelineFilter extends React.Component {
 
     this.props.platformFilter(data).then( () => {
       const { filterResults } = this.props;
+      this.setState({
+        results: filterResults,
+      });
     });
   }
 
@@ -256,17 +260,20 @@ class TimelineFilter extends React.Component {
         'StartDate': '2018-08-29T12:29:33.755Z',
         'EndDate': '2018-08-29T12:29:33.755Z'
       };
-  /*   this.props.searachAndFilter(data).then( () => {
-      debugger;
-      const { filterResults } = this.props;
-      console.log('************************DONE searching**********And Results**************'+filterResults);
-    }); */
+  
+    // this.props.teamFilter(data).then(() => {
+    //   const { filterResults } = this.props;
+    //   this.setState({
+    //     results: filterResults,
+    //   });
+    // });
   }
 
   render() {
     const { translations, tab } = this.props;
     const { selectedResource, startDate, endDate } = this.state.filter;
-    let { filterResults } = this.props;
+    // let { filterResults } = this.props;
+    let { results } = this.state;
 
 
     const resourceFilter = [
@@ -276,18 +283,12 @@ class TimelineFilter extends React.Component {
 
     const columns = this.getColumns(selectedResource);
 
-    // const { tab } = this.props;
-    // if(tab === MissionConsts.TABS.ISR) {
-    //   sideTableHeader[0].columns.splice(0, 1);
-    // }
-
     const groups = [];
     // let content = [];
     let timelines = [];
     
-
-    if(filterResults) {
-      filterResults.map((row, index) => {
+    if(results !== undefined) {
+      results.map((row, index) => {
         // creating groups
         const group = { id: row.id, title: row.Name};
         groups.push(group);
@@ -296,11 +297,11 @@ class TimelineFilter extends React.Component {
         
       });
     } else {
-      filterResults = [];
+      results = [];
     }
 
-    console.log('Filter results' + JSON.stringify(filterResults));
-    console.log('Groups' + JSON.stringify(groups));
+    // console.log('Filter results' + JSON.stringify(filterResults));
+    // console.log('Groups' + JSON.stringify(groups));
     // const sideTableContent = [
     //   { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
     //   { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
@@ -343,11 +344,13 @@ class TimelineFilter extends React.Component {
       }
     }
     
+    // For ATO only Platform can be selecteed and for PED only Team can be selected
     let resourceDisabled = false;
     if(tab === MissionConsts.TABS.ATO || tab === MissionConsts.TABS.PED) {
       resourceDisabled = true;
     }
-
+    const pageSize = results.length === 0 ? 1 : results.length;
+    
     return(
       <div>
         <div className="row mission-mgt">
@@ -393,9 +396,9 @@ class TimelineFilter extends React.Component {
               <div className="row action-buttons" >
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button className="highlighted-button" onClick={this.onFind.bind(this)}>
+                  <a className="highlighted-button btn btn-info" onClick={this.onFind.bind(this)}>
                     {translations['find & filter']}
-                  </button>
+                  </a>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
@@ -404,10 +407,26 @@ class TimelineFilter extends React.Component {
         </div>
         
         <div className="row mission-mgt">
-          {filterResults.length > 0 ?
+          { (results !== undefined && results.length > 0) ?
             <div className="col-md-12">
               <div className="col-md-4" style={{ padding: 0 }}>
-                <StatusTable thead={columns} lines={filterResults} translations={translations} />
+                {/* <StatusTable thead={columns} lines={filterResults} translations={translations} /> */}
+              
+                <ReactTable
+                  data={results}
+                  columns={columns}
+                  loading={this.props.isLoading}
+                  defaultPageSize={pageSize}
+                  // minRows={this.props.lines.length}
+                  className="-striped -highlight"
+                  filterable={false}
+                  showPageSizeOptions={false}
+                  showPagination={false}
+                  previousText="&#8678;"
+                  nextText="&#8680;"
+                  defaultFilterMethod={defaultFilter}
+                /> 
+
               </div>
               <div className="col-md-8" style={{ padding: 0 }}>
                 <Timeline
@@ -451,6 +470,7 @@ TimelineFilter.propTypes = {
   headerTxt: PropTypes.string,
   radioFilterSelect: PropTypes.func,
   tab: PropTypes.string,
+  updateResource: PropTypes.func,
 };
 
 const mapStateToProps = state => {

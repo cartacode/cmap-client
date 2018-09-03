@@ -5,10 +5,10 @@ import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 
-export function fetchCollectionPlans(unitId, abbreviation) {
+export function fetchCollectionPlans(unitId, abbreviation, isInCollectionPlan) {
   return createAction({
     type: COLLECTION_PLAN__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestForCollectionPlan?abbreviation=${abbreviation}&unitId=${unitId}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestByAbbreviation?abbreviation=${abbreviation}&unitId=${unitId}&isInCollectionPlan=${isInCollectionPlan}`, requestHeaders),
   });
 }
 export function fetchApprovedIntelRequests(unitId, abbreviation, isInCollectionPlan) {

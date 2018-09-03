@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { IntelReqStatusCodes } from "../dictionary/constants";
+import { IntelConstants } from '../dictionary/constants';
 
 export const defaultFilter = (filter, row) => {
   const id = filter.pivotId || filter.id;
@@ -16,31 +16,29 @@ export const defaultFilter = (filter, row) => {
   }
   return retVal;
   //   return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-}
+};
 
 export const formatDate = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format("M-D-YY");
-}
+  return moment(dateObj).local().format('M-D-YY');
+};
 
 export const formatDateTime = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format("M-D-YY H:m A");
-}
+  return moment(dateObj).local().format('M-D-YY H:m A');
+};
 
 export const formatTime = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format("H:m A");
-}
+  return moment(dateObj).local().format('H:m A');
+};
 
-export const getIntelRequestStatusCodeColor = (abbreviation) => {
-  const statueCodes = IntelReqStatusCodes;
+export const getIntelStatusColor = (abbreviation) => {
+  const status = IntelConstants.STATUS[abbreviation];
   let colorCode;
-  for (let i = 0; i < statueCodes.length; i++) {
-    if (abbreviation === statueCodes[i].abbreviation) {
-      colorCode = {'color': statueCodes[i].color};
-      break;
-    }
+  if(status !== undefined) {
+    colorCode = {'color': status.color}
   }
   return colorCode;
 };
+

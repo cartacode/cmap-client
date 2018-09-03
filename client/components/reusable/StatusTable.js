@@ -156,6 +156,7 @@ class StatusTable extends React.Component {
     const { translations } = this.props;
     const { lines } = this.props;
     const pageSize = lines.length;
+    console.log('lines len=> '+lines.length);
     return (
       <div>
         {/* <table className="table">

@@ -193,7 +193,7 @@
   "organic": "organic",
   "theater": "theater",
   "sro": "sro",
-  "find & filter": "find & filter",
+  "find & filter": "Find & Filter",
   "select": "select",
   "team": "team",
   "Mission#": "Mission#",
@@ -725,5 +725,8 @@
   "platformStatus":"Platform Status",
   "teamType":"Team Type",
   "units":"Units",
-  "teams":"teams"
+  "teams":"teams",
+  "Date/Time": "Date/Time",
+  "IR#": "IR#",
+  "Command": "Command"
 }

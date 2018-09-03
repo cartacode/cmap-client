@@ -7,6 +7,7 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     allRequests: state.intelrequest.allRequests,
+    isLoading: state.intelrequest.isFetching,
   };
 };
 

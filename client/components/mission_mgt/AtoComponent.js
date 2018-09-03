@@ -3,8 +3,8 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, NoticeType, MissionConsts } from '../../dictionary/constants';
-import { defaultFilter, getIntelRequestStatusCodeColor } from '../../util/helpers';
+import { TableDefaults, NoticeType, MissionConsts, IntelConstants } from '../../dictionary/constants';
+import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
@@ -17,9 +17,6 @@ class AtoComponent extends React.Component {
       defaultResource: MissionConsts.RESOURCE.PLATFORM,
       tab: MissionConsts.TABS.ATO,
       radioUnitId: '',
-      unitdId: '',
-      owningUnitsId: '',
-      showUnitType: true,
     };
   }
 
@@ -38,70 +35,39 @@ class AtoComponent extends React.Component {
     } */
   };
 
-  getColor= (row)=>{
-    return getIntelRequestStatusCodeColor(row.original.Abbreviation);
+  getColor= (row) => {
+    return getIntelStatusColor(row.original.Abbreviation);
   }
 
-  moveToCollectionPlanFromATOGeneration = (row) => {
-    /* const value = row.value;
-    if (value !== undefined && value !== '0') {
-	    this.props.moveToCollectionPlan(value).then(() => {
-	      this.setState({ editId: '0' });
-	      this.notify(NoticeType.MOVE_TO_COLLECTION);
-	      this.loadData();
-      });
-    } */
-  };
-
   radioFilterSelect=(selectedRadio)=>{
-    //alert(selectedRadio);
+    
     this.setState({
       // unitdId: generatedData.value,
       // owningUnitsId: generatedData.value,
-      radioUnitId: selectedRadio
+      radioUnitId: selectedRadio,
     });
   }
 
-  /**
-   * sample request Body:-
-   *    /**
-     * {
-        "Id": 0,
-        "IntelReqID": "string",
-        "OwningUnit": 0,
-        "PlatformInventoryID": "string",
-        "CrewTeamID": 0,
-        "PedTeamID": 0,
-        "ATOIssueDate": "2018-08-31T08:23:15.380Z"
-      }
-     */
-  moveToATOGenerationFromCollectionPlan = (row) => {
-    
-    if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
-      const value = row.value;
-      const intelRequestID = row.original.IntelRequestID;
-      const owningUnit = row.original.UnitId;
-      const platformInventoryID = row.original.PlatformInventoryID;
-      const data = {
-        'IntelReqID': intelRequestID,
-        'OwningUnit': this.state.radioUnitId,
-      };
-      if (value !== undefined && value !== '0') {
-        this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
-        // this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
-          this.loadData();
-        });
-      }
+moveToAto = (row) => {
+  const intelRequestID = row.original.IntelRequestID;
+  if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
+    const data = {
+      'IntelReqID': intelRequestID,
+      'OwningUnit': this.state.radioUnitId,
+    };
 
-    } else {
-      // TODO: Add Notify Error to select Radio
-      alert('Select Platform');
-    }
-    
+    // Inserts new values in mission table
+    this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
+      this.loadData();
+    });
 
-  };
+  } else {
+    alert('Please Select a Platform');
+  }
+}
 
-  moveToCollectionPlanFromATOGeneration = (row) => {
+  moveToCP = (row) => {
+    // deletes from mission table by mission id
     const missionId = row.original.MissionId;
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
       this.loadData();
@@ -110,7 +76,7 @@ class AtoComponent extends React.Component {
 
   routeATOGenerations = () => {
     const unitId = 25;
-    const statusId = 22;// 'AAG';
+    const statusId = IntelConstants.STATUS.AAG.id;// 'AAG';
     this.props.routeATOGeneration(unitId, statusId).then(() => {
       // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
       this.loadData();
@@ -119,11 +85,11 @@ class AtoComponent extends React.Component {
 
   loadData = () => {
     const unitId = 25;
-    const abbreviation = 'APR';
-    this.props.fetchATOCollectionPlans(abbreviation, unitId);
+    // CP = All intel with Status = APR for given unitId
+    this.props.fetchATOCollectionPlans(IntelConstants.STATUS.APR.id, unitId);
 
-    const statusId = 10; // 'AAG'
-    this.props.fetchATOGenerations(statusId, unitId);
+    // ATO = All Intel with Status = AAG or APR and which has an entry in missionId table
+    this.props.fetchATOGenerations(unitId);
   };
 
   notify = actionType => {
@@ -151,26 +117,22 @@ class AtoComponent extends React.Component {
     const { atoCollectionPlans } = this.props;
     const { atoGenerations } = this.props;
 
-    // console.log('*********************************atoCollectionPlans***************************' + atoCollectionPlans);
-    // console.log('*********************************atoGenerations***************************' + atoGenerations);
-
 
     const columnsATOCollectionPlans = [
       {
-        Header: 'Request#',
+        Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
       },
       {
-        Header: 'Status',
-        accessor: 'Abbreviation',
+        Header: translations.Priority,
+        accessor: 'Priority',
       },
-    
       {
-        Header: 'Command',
+        Header: translations.Command,
         accessor: 'COCOMText',
       },
       {
-        Header: 'Mission Type',
+        Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
       {
@@ -178,12 +140,29 @@ class AtoComponent extends React.Component {
         accessor: 'PrimaryPayloadName',
       },
       {
+        Header: translations['Armed'],
+        accessor: 'IsArmed',
+        Cell: ({ value }) => (value ? 'Yes' : 'No'),
+      },
+      {
+        Header: translations['Date/Time'],
+        id: 'BestCollectionTime',
+        accessor: d => {
+          return formatDateTime(d.BestCollectionTime);
+        },
+      },
+      // {
+      //   Header: translations['Asset'],
+      //   accessor: 'Asset',
+      //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
+      // },
+      {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToATOGenerationFromCollectionPlan(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAto(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -192,15 +171,23 @@ class AtoComponent extends React.Component {
     ];
     const columnsATOGenerations = [
       {
-        Header: 'Request#',
+        Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row => <div>
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
       },
       {
-        Header: 'Command',
+        Header: translations.Priority,
+        accessor: 'Priority',
+      },
+      {
+        Header: translations.Command,
         accessor: 'COCOMText',
       },
       {
-        Header: 'Mission Type',
+        Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
       {
@@ -208,12 +195,29 @@ class AtoComponent extends React.Component {
         accessor: 'PrimaryPayloadName',
       },
       {
+        Header: translations['Armed'],
+        accessor: 'IsArmed',
+        Cell: ({ value }) => (value ? 'Yes' : 'No'),
+      },
+      {
+        Header: translations['Date/Time'],
+        id: 'BestCollectionTime',
+        accessor: d => {
+          return formatDateTime(d.BestCollectionTime);
+        },
+      },
+      // {
+      //   Header: translations['Asset'],
+      //   accessor: 'Asset',
+      //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
+      // },
+      {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlanFromATOGeneration(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCP(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),

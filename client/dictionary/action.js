@@ -111,21 +111,28 @@ export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
 export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 export const ORGANIC_PERSONNEL__FETCH_LIST = createActionType('ORGANIC_PERSONNEL__FETCH_LIST');
-
-
+ 
+export const ATO_COLLECTION_PLAN__FETCH = createActionType('ATO_COLLECTION_PLAN__FETCH');
 export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
-export const FLIGHT_OPS__FETCH = createActionType('FLIGHT_OPS__FETCH');
+
+export const FOP_ATO_PLATFORM__FETCH = createActionType('FOP_ATO_PLATFORM__FETCH');
+export const FOP_PLATFORM__FETCH = createActionType('FOP_PLATFORM__FETCH');
+
+export const FOP_ATO_CREW__FETCH = createActionType('FOP_ATO_CREW__FETCH');
+export const FOP_CREW__FETCH = createActionType('FOP_CREW__FETCH');
+
 export const PED_TASKS__FETCH = createActionType('PED_TASKS__FETCH');
 export const PED_TASKS_ATO_GENERATION__FETCH = createActionType('PED_TASKS_ATO_GENERATION__FETCH');
 
-
-export const ROUTE_ATO_GENERATION = createActionType('ROUTE_ATO_GENERATION');
 export const COLLECTION_PLAN_TO_ATO_GENERATION = createActionType('COLLECTION_PLAN_TO_ATO_GENERATION');
-export const FLIGHT_OPS_ATO_GENERATION = createActionType('FLIGHT_OPS_ATO_GENERATION');
-export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
+export const ATO_GEN_TO_COLLECTION_PLAN__MOVE = createActionType('ATO_GEN_TO_COLLECTION_PLAN__MOVE');
+export const ROUTE_ATO_GENERATION = createActionType('ROUTE_ATO_GENERATION');
 
 export const ATO_GEN_TO_FLIGHT_OPS__MOVE = createActionType('ATO_GEN_TO_FLIGHT_OPS__MOVE');
 export const FLIGHT_OPS_TO_ATO_GEN__MOVE = createActionType('FLIGHT_OPS_TO_ATO_GEN__MOVE');
+
 export const ATO_GEN_TO_PED_TASK__MOVE = createActionType('ATO_GEN_TO_PED_TASK__MOVE');
 export const PED_TASK_TO_ATO_GEN__MOVE = createActionType('PED_TASK_TO_ATO_GEN__MOVE');
-export const ATO_GEN_TO_COLLECTION_PLAN__MOVE = createActionType('ATO_GEN_TO_COLLECTION_PLAN__MOVE');
+
+export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
+

@@ -5,7 +5,7 @@ import { baseUrl } from 'dictionary/network';
 
 class MissionMgtDropDown extends React.Component {
 
-    labelField= 'description';
+    labelField = 'description';
     valueField = 'id';
 
     constructor(props) {
