@@ -120,9 +120,10 @@ class AtoComponent extends React.Component {
   loadData = () => {
     const unitId = 25;
     const abbreviation = 'APR';
-    this.props.fetchATOCollectionPlans(abbreviation, unitId);
-
     const statusId = 10; // 'AAG'
+    this.props.fetchATOCollectionPlans(statusId, unitId);
+
+    //const statusId = 10; // 'AAG'
     this.props.fetchATOGenerations(statusId, unitId);
   };
 

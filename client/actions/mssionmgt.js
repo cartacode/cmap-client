@@ -7,10 +7,10 @@ import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 
-export function fetchATOCollectionPlans(abbreviation, unitId) {
+export function fetchATOCollectionPlans(statusId, unitId) {
   return createAction({
     type: COLLECTION_PLAN__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestForCollectionPlan?abbreviation=${abbreviation}&unitId=${unitId}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetMissionCollectionPlanIntelRequest?statusId=${statusId}&unitId=${unitId}`, requestHeaders),
   });
 }
 
