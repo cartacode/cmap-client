@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { TableDefaults, NoticeType, MissionConsts } from '../../dictionary/constants';
 import { defaultFilter, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
@@ -13,14 +13,13 @@ class FlightOpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '',
-      tab: 'FLIGHT_OPS',
+      defaultResource: MissionConsts.RESOURCE.PLATFORM,
+      tab: MissionConsts.TABS.FOP,
       platformInvenotryId: '',
       teamId: '',
       showUnitType: false,
     };
   }
-
 
   componentDidMount() {
     this.loadData();
@@ -34,22 +33,47 @@ class FlightOpsComponent extends React.Component {
     return getIntelRequestStatusCodeColor(row.original.Abbreviation);
   }
 
-  moveToCollectionPlanFromATOGeneration = (row) => {
-   
-  };
 
+  /**
+   * sample request Body:-
+   *    /**
+     * {
+        "Id": 0,
+        "IntelReqID": "string",
+        "OwningUnit": 0,
+        "PlatformInventoryID": "string",
+        "CrewTeamID": 0,
+        "PedTeamID": 0,
+        "ATOIssueDate": "2018-08-31T08:23:15.380Z"
+      }
+     */
+
+  moveToFlightOPSFromATOGeneration = (row) => {
+
+    const value = row.value;
+    const missionId = row.original.MissionId;
+    const intelRequestID = row.original.IntelRequestID;
+    const owningUnit = row.original.UnitId;
+    const platformInventoryID = row.original.PlatformInventoryID;
+    //@Note:- owningUnit or UnitId should be selected of Radio Button.
+    const data = {
+      "Id": missionId,
+      'IntelReqID': intelRequestID,
+      'OwningUnit': owningUnit,
+    };
+    if (value !== undefined && value !== '0') {
+        this.props.moveToFlightOPSFromATOGeneration(missionId, data).then(() => {
+          this.loadData();
+        });
+    }
+  };
  
-  moveToATOGenerationFromCollectionPlan = (row) => {
+  moveToATOGenerationFromFlightOPS = (row) => {
+    this.props.moveToATOGenerationFromFlightOPS(row.original.MissionId).then(() => {
+      this.loadData();
+    });
 
   };
-
-  routeATOGenerations = () => {
-    
-  };
-
-  deleteCollectionPlan=(value)=>{
-   
-  }
 
   loadData = () => {
     let unitId = 25;
@@ -81,10 +105,12 @@ class FlightOpsComponent extends React.Component {
 
   radioFilterSelect=(generatedData)=>{
     this.setState({
-      platformInvenotryId: generatedData.resourceId === '1' ? generatedData.value : '',
-      teamId: generatedData.resourceId === '2' ? generatedData.value : '',
+      platformInvenotryId: generatedData.resourceId === MissionConsts.RESOURCE.PLATFORM ? generatedData.value : '',
+      teamId: generatedData.resourceId === MissionConsts.RESOURCE.TEAM ? generatedData.value : '',
     });
   }
+
+  
 
   render() {
 
@@ -92,10 +118,7 @@ class FlightOpsComponent extends React.Component {
     const { opsAtoGenerations } = this.props;
     const { flightOps } = this.props;
 
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.teams },
-    ];
+    
 
     const columnsATOGenerations = [
       {
@@ -120,10 +143,10 @@ class FlightOpsComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveToFlightOPSFromATOGeneration(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             &nbsp;
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
@@ -152,7 +175,7 @@ class FlightOpsComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToATOGenerationFromFlightOPS(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),
@@ -161,7 +184,7 @@ class FlightOpsComponent extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.flightops} resource={resource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect}/>
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

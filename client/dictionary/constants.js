@@ -13,6 +13,19 @@ export const TableDefaults = {
   MIN_ROWS: 1,
 }
 
+export const MissionConsts = {
+  RESOURCE: {
+    PLATFORM: '1',
+    TEAM: '2',
+  },
+  TABS: {
+    ISR: 'ISR',
+    ATO: 'ATO',
+    FOP: 'FOP',
+    PED: 'PED',
+  },
+}
+
 export const IntelReqStatusCodes = [
   {
     id: 1,

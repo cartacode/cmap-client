@@ -93,6 +93,8 @@ class AddPayloadsInventory extends React.Component {
         branch: generalData.branch,
         id: this.props.editId,
       },
+      selectedBranch: generalData.branch,
+
     }, () => {
       console.log('New state in ASYNC callback:22222', this.state.payloads);
     });
@@ -103,7 +105,9 @@ class AddPayloadsInventory extends React.Component {
       console.log("Category Selected");
       this.updatelocationid(generalData);
     }
-    this.updateOwningUnit(generalData);
+    if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
+      this.updateOwningUnit(generalData);
+    }
   }
 
   handleSubmit = event => {

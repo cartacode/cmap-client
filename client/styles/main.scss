@@ -1504,13 +1504,14 @@ body .login{
       margin-left: 5px;
       margin-right: 5px;
       display: inline-block;
-      text-transform: uppercase;
-      fload:left;
+      text-transform: uppercase;      
       vertical-align: middle;
 
       .form-control {
         padding: 0 7px!important;
-        background: rgba(0,0,0,0.01);
+        color: #84a1e0;
+        background-color: #0f2b3d;
+        font-size: 12px;
         height: 25px;
         width: 165px;
         border-radius: 0px;
@@ -1526,7 +1527,9 @@ body .login{
         input{
           width:165px;
           padding-left:5px;
-          color:#afc5d3 ;
+          color: #84a1e0;
+          background-color: #0f2b3d;
+          font-size: 12px;
         }
         .calendar {
           display: inline-block;
@@ -3615,17 +3618,18 @@ two-block, one-block {
   }
 }
 
-.react-calendar-timeline{
+.react-calendar-timeline {
   .rct-label-group {
       position: absolute;
       top: 0;
       font-size: 14px;
       overflow: hidden;
       text-align: center;
-      border: 2px solid #bbb;
-      color: #fff;
-      background: rgba(255,255,255,0.01) !important;
-      border-bottom: 1px solid #bbb;
+      border-left: 0.5px solid #ED7D31 !important;
+      border-top: 0.5px solid #001C2E !important;
+      border-bottom: 0.5px solid #ED7D31 !important;
+      color: #ED7D31 !important;
+      background: #0F2B3D !important;
       cursor: pointer;
   }
 
@@ -3633,11 +3637,26 @@ two-block, one-block {
     position: absolute;
     overflow: hidden;
     text-align: center;
-    border-left: 1px solid #bbb;
-    color: #ddd !important;
-    background: rgba(255,255,255,0.01) !important;
-    border-bottom: 1px solid #bbb;
+    color: #ED7D31 !important;
+    background: #0F2B3D !important;
+    border-left: 1px solid #001C2E !important;
+    border-bottom: 0.5px solid #ED7D31 !important;
     cursor: pointer;
+  }
+  .rct-hl-even {
+    background: #153448 !important;
+    border-bottom: 0.5px solid #001C2E !important;
+  }
+  .rct-hl-odd {
+    background: #06253A !important;
+    border: 0 !important;
+    border-bottom: 0.5px solid #001C2E !important;
+  }
+  .rct-vl {
+    // border: 0 !important;
+    background: transparent !important;
+    // background: #153448 !important;
+    border-left: 0.5px solid #001C2E !important;
   }
 }
 

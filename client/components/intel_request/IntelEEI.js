@@ -192,7 +192,7 @@ class IntelEEI extends React.Component {
               data={this.state.missionEEI}
               columns={missionColumns}
               defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE}
+              minRows={TableDefaults.MIN_ROWS}
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={defaultFilter}

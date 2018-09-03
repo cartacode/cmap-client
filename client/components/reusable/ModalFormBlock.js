@@ -113,7 +113,7 @@ class ModalFormBlock extends React.Component {
               case 'input':
                 let readOnly = false;
                 let maxlength = InputAttributes.MAX_LENGTH;
-                if(item.maxlength){
+                if(item.maxlength) {
                   maxlength = item.maxlength;
                 }
 
@@ -121,16 +121,16 @@ class ModalFormBlock extends React.Component {
                   readOnly = true;
                 }
                 if(item.required) {
-                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxlength={maxlength} required /> );
+                  input = ( <input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxLength={maxlength} required /> );
                 }
                 else {
-                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxlength={maxlength} />)
+                  input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} readOnly={readOnly} maxLength={maxlength} />)
                 }
                 break;
     
               case 'textarea':
                 input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} /> );
-                break;    
+                break;
                 
               case 'email':
                 if(item.required) {

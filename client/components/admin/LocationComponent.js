@@ -212,7 +212,7 @@ class LocationComponent
                 data={allLocations}
                 columns={columns}
                 defaultPageSize={TableDefaults.PAGE_SIZE}
-						    minRows={TableDefaults.PAGE_SIZE}
+						    minRows={TableDefaults.MIN_ROWS}
                 className="-striped -highlight"
                 loading={this.props.isLoading}
                 filterable={true}

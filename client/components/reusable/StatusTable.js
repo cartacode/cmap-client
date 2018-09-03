@@ -154,6 +154,8 @@ class StatusTable extends React.Component {
 
   render() {
     const { translations } = this.props;
+    const { lines } = this.props;
+    const pageSize = lines.length;
     return (
       <div>
         {/* <table className="table">
@@ -170,10 +172,10 @@ class StatusTable extends React.Component {
       </table> */}
 
         <ReactTable
-          data={this.props.lines}
+          data={lines}
           columns={this.props.thead}
-          defaultPageSize={TableDefaults.PAGE_SIZE}
-          minRows={TableDefaults.MIN_ROWS}
+          defaultPageSize={pageSize}
+          // minRows={this.props.lines.length}
           className="-striped -highlight"
           filterable={false}
           showPageSizeOptions={false}

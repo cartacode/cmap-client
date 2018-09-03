@@ -283,7 +283,7 @@ resetForm() {
     ];
 
     const intelRequest5 = [
-      { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: 'Priority', valFieldID: 'PriorityId', /* options: priorityOptions */ },
+      { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: 'Priority', valFieldID: 'PriorityId', required:true  /* options: priorityOptions */ },
       { name: translations['special instructions/notes'], type: 'textarea',  valFieldID: 'SpecialInstructions', domID: 'SpecialInstructions' },
     ]
 

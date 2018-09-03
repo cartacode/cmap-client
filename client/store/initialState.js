@@ -78,8 +78,10 @@ export default {
     atoCollectionPlans:[],
     atoGenerations: [],
     flightOpsAtoGenerations: [],
+    filterResults: [],
     flightOps: [],
     pedTasks: [],
+    pedTasksAtoGenerations:[],
     isFetching: false,
   },
   paygrades: {

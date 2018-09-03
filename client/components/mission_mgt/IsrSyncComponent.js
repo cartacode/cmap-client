@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'react-calendar-timeline/lib/Timeline.css';
 import 'react-table/react-table.css';
 import TimelineFilter from '../reusable/TimelineFilter';
-
+import { MissionConsts } from '../../dictionary/constants';
 
 
 class IsrSyncComponent extends React.Component {
@@ -11,23 +10,20 @@ class IsrSyncComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '1',
-      tab: 'ISR',
-      showUnitType: true,
+      defaultResource: MissionConsts.RESOURCE.PLATFORM,
+      tab: MissionConsts.TABS.ISR,
+      // showUnitType: true,
     };
   }
 
   render() {
     const { translations } = this.props;
 
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-      { 'id': '2', 'description': translations.teams },
-    ];
+    
     
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} resource={resource} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} showUnitType={this.state.showUnitType}/>
       </div>
     );
   }

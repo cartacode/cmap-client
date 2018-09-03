@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import FlightOpsComponent from '../../components/mission_mgt/FlightOpsComponent';
-import { fetchFlightOps, fetchPedTasks, fetchATOGenerations, flightOpsATOGenerations  } from 'actions/mssionmgt';
+import { fetchFlightOps, flightOpsATOGenerations, moveToFlightOPSFromATOGeneration, moveToATOGenerationFromFlightOPS } from 'actions/mssionmgt';
 
 const mapStateToProps = state => {
   return {
@@ -15,9 +15,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchFlightOps,
-  fetchPedTasks,
-  fetchATOGenerations,
-  flightOpsATOGenerations, 
+  flightOpsATOGenerations,
+  moveToFlightOPSFromATOGeneration,
+  moveToATOGenerationFromFlightOPS, 
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FlightOpsComponent);

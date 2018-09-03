@@ -12,8 +12,8 @@ class MissionMgtDropDown extends React.Component {
       super(props);
       this.state = {
         dropdownItems: [],
-        selectedDropDownValue: this.props.defaultResource,
-        selectedDropDownType: 1,
+        selectedDropDownValue: '',
+        // selectedDropDownType: 1,
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -29,8 +29,8 @@ class MissionMgtDropDown extends React.Component {
       const { dropdownDataUrl } = this.props;
       const { options } = this.props;
       if(dropdownDataUrl) {
-        //const items = [{ 'label': '--' + this.props.id + '--', 'value': 0 }];
-        const items = [{ 'label': '--' + 'select' + '--', 'value': 0 }];
+        
+        const items = [{ 'label': '--' + 'Select ' + '--', 'value': 0 }];
         axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
           .then(response => {
             response.data.map(item => {
@@ -44,7 +44,7 @@ class MissionMgtDropDown extends React.Component {
             console.log('Exception comes:' + error);
           });
       }else if(options) {
-        const items = [{ 'label': '--' + 'select' + '--', 'value': 0 }];
+        const items = [{ 'label': '--' + 'Select ' + '--', 'value': 0 }];
         options.map(item => {
           items.push({ 'label': item[this.labelField], 'value': item[this.valueField] });
         });
@@ -54,18 +54,23 @@ class MissionMgtDropDown extends React.Component {
       }
     }
 
-    componentDidUpdate() {
-     
+    componentDidUpdate = () => {
+      let { defaultValue } = this.props;
+      const { selectedDropDownValue } = this.state;
+      if(typeof defaultValue === 'string') {
+        defaultValue = defaultValue.trim();
+      }
+      if(defaultValue !== selectedDropDownValue) {
+        this.setState({
+          selectedDropDownValue: defaultValue,
+        });
+      }
     }
-
-
-    changeValue = (label, value) => {
-      console.log('Display Lable : ' + label + ', Saved Value :' + value);
-    };
+    
 
     // render dropdown list of lang switcher
     renderItems() {
-      const { defaultResource } = this.props;
+      
       return this.state.dropdownItems.map(function(data, key) {
         return (
           <option key={key} value={data.value}>{data.label}</option>
@@ -76,23 +81,27 @@ class MissionMgtDropDown extends React.Component {
 
     handleChange = (e) => {
       const { name, value } = e.target;
-      console.log(name + '----' + value);
+    
+      // const { selectedDropDownValue } = this.state;
       this.setState({
-        selectedDropDownType: name,
         selectedDropDownValue: value,
       }, () =>{
-        this.props.data(this.state.selectedDropDownType , this.state.selectedDropDownValue);
+        this.props.data( name, value);
       });
     }
 
     render() {
-      const key = this.props.id || 0;
-      const label = this.props.label;
-      const name = this.props.name;
+      const { label, name } = this.props;
+      let { disable } = this.props;
+      // if(disable) {
+      //   disable = true;
+      // }else{
+      //   disable = false;
+      // }
       return (
-        <div className="each-select">
+        <div className="each-select text-left">
           <label>{label}</label>
-          <select className="form-control" name={name} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
+          <select className="form-control" disabled={disable} name={name} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
             {this.renderItems()}
           </select>
         </div>
@@ -103,7 +112,10 @@ class MissionMgtDropDown extends React.Component {
 MissionMgtDropDown.propTypes = {
   children: PropTypes.element,
   data: PropTypes.func,
-
+  defaultValue: PropTypes.any,
+  disable: PropTypes.bool,
+  label: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default MissionMgtDropDown;

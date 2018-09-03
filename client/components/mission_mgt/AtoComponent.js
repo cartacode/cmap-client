@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { TableDefaults, NoticeType, MissionConsts } from '../../dictionary/constants';
 import { defaultFilter, getIntelRequestStatusCodeColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
@@ -14,8 +14,9 @@ class AtoComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultResource: '1',
-      tab: 'ATO',
+      defaultResource: MissionConsts.RESOURCE.PLATFORM,
+      tab: MissionConsts.TABS.ATO,
+      radioUnitId: '',
       unitdId: '',
       owningUnitsId: '',
       showUnitType: true,
@@ -52,35 +53,59 @@ class AtoComponent extends React.Component {
     } */
   };
 
-  radioFilterSelect=(generatedData)=>{
+  radioFilterSelect=(selectedRadio)=>{
+    //alert(selectedRadio);
     this.setState({
-      unitdId: generatedData.value,
-      owningUnitsId: generatedData.value,
+      // unitdId: generatedData.value,
+      // owningUnitsId: generatedData.value,
+      radioUnitId: selectedRadio
     });
   }
 
+  /**
+   * sample request Body:-
+   *    /**
+     * {
+        "Id": 0,
+        "IntelReqID": "string",
+        "OwningUnit": 0,
+        "PlatformInventoryID": "string",
+        "CrewTeamID": 0,
+        "PedTeamID": 0,
+        "ATOIssueDate": "2018-08-31T08:23:15.380Z"
+      }
+     */
   moveToATOGenerationFromCollectionPlan = (row) => {
-
-    const value = row.value;
-    const intelRequestID = row.original.IntelRequestID;
-    const owningUnit = row.original.UnitId;
-    const platformInventoryID = row.original.PlatformInventoryID;
-debugger;
-    const data = {
-      //'Id': 1,
-      'IntelReqID': intelRequestID,
-      'OwningUnit': owningUnit,
-      //'PlatformInventoryID': '0756dca8-ab05-44b2-8c96-e6870db5eb9e',
-      'CrewTeamID': 0,
-      'PedTeamID': 0,
-      'ATOIssueDate': '2018-08-29T04:36:37.827Z',
-    };
-    if (value !== undefined && value !== '0') {
-      this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
+    
+    if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
+      const value = row.value;
+      const intelRequestID = row.original.IntelRequestID;
+      const owningUnit = row.original.UnitId;
+      const platformInventoryID = row.original.PlatformInventoryID;
+      const data = {
+        'IntelReqID': intelRequestID,
+        'OwningUnit': this.state.radioUnitId,
+      };
+      if (value !== undefined && value !== '0') {
+        this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
         // this.notify(NoticeType.MOVE_TO_INTEL_REQUEST);
-        this.loadData();
-      });
+          this.loadData();
+        });
+      }
+
+    } else {
+      // TODO: Add Notify Error to select Radio
+      alert('Select Platform');
     }
+    
+
+  };
+
+  moveToCollectionPlanFromATOGeneration = (row) => {
+    const missionId = row.original.MissionId;
+    this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
+      this.loadData();
+    });
   };
 
   routeATOGenerations = () => {
@@ -92,22 +117,13 @@ debugger;
     });
   };
 
-  deleteCollectionPlan=(value)=>{
-    /*  if (value !== undefined && value !== '0') {
-      this.props.deleteCollectionPlanById(value).then(() => {
-        this.setState({ editId: '0' });
-        this.notify(NoticeType.DELETE);
-        this.loadData();
-      });
-    } */
-  }
-
   loadData = () => {
     const unitId = 25;
     const abbreviation = 'APR';
-    this.props.fetchATOCollectionPlans(abbreviation, unitId);
-
     const statusId = 10; // 'AAG'
+    this.props.fetchATOCollectionPlans(statusId, unitId);
+
+    //const statusId = 10; // 'AAG'
     this.props.fetchATOGenerations(statusId, unitId);
   };
 
@@ -136,12 +152,9 @@ debugger;
     const { atoCollectionPlans } = this.props;
     const { atoGenerations } = this.props;
 
-    console.log('*********************************atoCollectionPlans***************************' + atoCollectionPlans);
-    console.log('*********************************atoGenerations***************************' + atoGenerations);
+    // console.log('*********************************atoCollectionPlans***************************' + atoCollectionPlans);
+    // console.log('*********************************atoGenerations***************************' + atoGenerations);
 
-    const resource = [
-      { 'id': '1', 'description': translations.platform },
-    ];
 
     const columnsATOCollectionPlans = [
       {
@@ -173,7 +186,7 @@ debugger;
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToATOGenerationFromCollectionPlan(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a>
+            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
@@ -201,7 +214,7 @@ debugger;
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan"> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlanFromATOGeneration(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),
@@ -210,7 +223,7 @@ debugger;
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} resource={resource} tab={this.state.tab} 
+        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">
