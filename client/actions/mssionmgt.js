@@ -39,7 +39,7 @@ export function moveToATOGenerationFromCollectionPlan(data) {
 export function moveToCollectionPlanFromATOGeneration(missionId) {
   return createAction({
     type: ATO_GEN_TO_COLLECTION_PLAN__MOVE,
-    action: () => axios.delete(`${baseUrl}/Mission/${missionId}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/Mission/DeleteMission/${missionId}`, requestHeaders),
   });
 }
 
