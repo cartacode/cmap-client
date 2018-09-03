@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
 // import { fetchPersonnelsById } from 'actions/organicpersonnel.js'
+import { addOraganicOrg } from 'actions/organicorg';
 
 class Accordion extends React.Component {
 
@@ -14,7 +15,16 @@ class Accordion extends React.Component {
       uncheckedResults: [],
       showAddForm:false,
       addUnit: {
-        commandrelation:'organic',
+        description:'',
+        UnitIdentificationCode:'',
+        DerivativeUIC:'',
+        CommandRelationship:'',
+        LocationID:'',
+        BranchOfService:'',
+        Commander:'',
+        UnitType:'',
+        UnitSpecialization:'',
+        ParentUnitID:''
       }
     }
   }
@@ -62,8 +72,8 @@ class Accordion extends React.Component {
 
   addOrgForm = () => {
     console.log("Fired");
-    this.toggleHeader(3);
-    this.close(0); this.close(1);
+    this.toggleHeader(4);
+    this.close(1); this.close(2);
   }
 
   renderDropdowns(dropdowns) {
@@ -99,7 +109,10 @@ class Accordion extends React.Component {
 
         return (
           <div className="accordion-results" key={i}>
-           
+            <div className="result-checkbox">
+              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}/>
+              <label htmlFor={`checkbox${i}`}><span /></label>
+            </div>
             <div>
               <img className="result-avatar" src="/assets/img/admin/avatar.png" alt=""/>
             </div>
@@ -224,6 +237,13 @@ class Accordion extends React.Component {
 
   }
 
+  handleAddSubmit = () => {
+    let { addUnit } = this.state;
+    this.props.addOraganicOrg(addUnit).then( () => {
+     alert("Added");
+    });
+  }
+
   render() {
 
     const firstSectionDropdowns = [
@@ -242,7 +262,7 @@ class Accordion extends React.Component {
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Units'},
       {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
-      {name: 'Reports to Unit', type: 'dropdown', ddID:'Units'},
+      {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits'},
     ];
 
     let langs = ['val 1', 'val 2'];
@@ -373,7 +393,7 @@ class Accordion extends React.Component {
                 </div>
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={this.toggleAddForm}>
+                  <button onClick={this.handleAddSubmit}>
                     Add
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -509,6 +529,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   // fetchPlatformStatusById,
   // updatePlatformStatus
+  addOraganicOrg,
 
 };
 

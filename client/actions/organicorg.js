@@ -12,9 +12,9 @@ export function fetchOrganicOrg() {
   });
 }
 
-// export function addOraganicOrg(org) {
-//   return createAction({
-//     type: ORGANIC_ORG__ADD,
-//     action: () => axios.post(`${baseUrl}/CommandStructure/PostCommandStructure`, qs.stringify(org), requestHeaders),
-//   });
-// }
+export function addOraganicOrg(org) {
+  return createAction({
+    type: ORGANIC_ORG__ADD,
+    action: () => axios.post(`${baseUrl}/Units/PostUnits`, qs.stringify(org), requestHeaders),
+  });
+}
