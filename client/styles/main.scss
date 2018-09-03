@@ -3115,6 +3115,12 @@ tbody>tr>td, tbody>tr>th{
 
 .linkBase {stroke:#79848e !important;}
 
+.accordion-search {
+  text-align:left !important;
+}
+
+.custom-content {margin-bottom: 10px;}
+
 /* Style the buttons that are used to open and close the accordion panel */
 .custom-accordion {
   background-color: transparent;
@@ -3282,6 +3288,7 @@ tbody>tr>td, tbody>tr>th{
       .view-roster {
         .accordion-search {
           margin-left: 0;
+          text-align:left !important;
         }
       }
 

@@ -75,7 +75,6 @@ class OrgBuilderComponent extends React.Component {
           ],
         },
       ],
-      
     };
   }
 
