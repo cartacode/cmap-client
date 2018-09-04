@@ -111,14 +111,10 @@ moveToAto = (row) => {
     console.log('find');
   }
 
-  render() {
 
+  getLeftColumns = () => {
     const { translations } = this.props;
-    const { atoCollectionPlans } = this.props;
-    const { atoGenerations } = this.props;
-
-
-    const columnsATOCollectionPlans = [
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -169,7 +165,11 @@ moveToAto = (row) => {
         ),
       },
     ];
-    const columnsATOGenerations = [
+  }
+
+  getRightColumns = () => {
+    const { translations } = this.props;
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -223,6 +223,15 @@ moveToAto = (row) => {
         ),
       },
     ];
+  }
+
+  render() {
+
+    const { translations } = this.props;
+    const { atoCollectionPlans } = this.props;
+    const { atoGenerations } = this.props;
+    const columnsATOCollectionPlans = this.getLeftColumns();
+    const columnsATOGenerations = this.getRightColumns();
 
     return (
       <div>

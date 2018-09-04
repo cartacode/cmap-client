@@ -37,7 +37,7 @@ class FlightOpsTeam extends React.Component {
       const data = {
         'Id': missionId,
         'CrewTeamId': this.state.radioTeamId,
-        'Type': 'Teams',
+        'Type': 'Crew',
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
         this.loadData();
@@ -50,9 +50,21 @@ class FlightOpsTeam extends React.Component {
   // Move Right to Left
   // Updates CrewTeamId to null in mission
   moveToAtoTeam = (row) => {
-    this.props.moveToATOFromFlightOPS(row.original.MissionId).then(() => {
-      this.loadData();
-    });
+    const IntelReqID = row.original.IntelRequestID ;    
+    const missionId = row.original.MissionId ;    
+    if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
+      const data = {
+        'Id': missionId,
+        'IntelReqID': IntelReqID,
+        'CrewTeamID': null,
+        'Type': 'Crew',
+      };
+      this.props.moveToATOFromFlightOPS(data).then(() => {
+        this.loadData();
+      });
+    } else {
+      alert('Please Select Team');
+    }
   }
 
   loadData = () => {
@@ -69,11 +81,9 @@ class FlightOpsTeam extends React.Component {
     });
   }
 
-  render() {
-
-    const { translations, fopCrews, fopCrewAto } = this.props;
-
-    const columnsATOGenerations = [
+  getLeftColumns = () => {
+    const { translations } = this.props;
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -120,8 +130,11 @@ class FlightOpsTeam extends React.Component {
         ),
       },
     ];
+  }
 
-    const columnsFlightOps = [
+  getRightColumns = () => {
+    const { translations } = this.props;
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -157,6 +170,12 @@ class FlightOpsTeam extends React.Component {
         ),
       },
     ];
+  }
+
+  render() {
+    const { translations, fopCrews, fopCrewAto } = this.props;
+    const columnsATOGenerations = this.getLeftColumns();
+    const columnsFlightOps = this.getRightColumns();
 
     return (
       <div>

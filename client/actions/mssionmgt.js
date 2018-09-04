@@ -80,10 +80,10 @@ export function moveToFlightOPSFromATO(missionId, data) {
 }
 
 // Flight Ops Common. Right => Left Move
-export function moveToATOFromFlightOPS(missionId) {
+export function moveToATOFromFlightOPS(data) {
   return createAction({
     type: FLIGHT_OPS_TO_ATO_GEN__MOVE,
-    action: () => axios.get(`${baseUrl}/Mission/MoveOutFromFlightOPS?missionId=${missionId}`, requestHeaders),
+    action: () => axios.put(`${baseUrl}/Mission/MoveToMissionATO`, data, requestHeaders),
   });
 }
 
