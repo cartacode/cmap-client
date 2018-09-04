@@ -37,7 +37,7 @@ class FlightOpsTeam extends React.Component {
       const data = {
         'Id': missionId,
         'CrewTeamId': this.state.radioTeamId,
-        'Type': 'Teams',
+        'Type': 'Crew',
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
         this.loadData();
