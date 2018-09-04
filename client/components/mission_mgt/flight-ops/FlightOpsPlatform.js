@@ -16,9 +16,7 @@ class FlightOpsPlatform extends React.Component {
     this.state = {
       defaultResource: MissionConsts.RESOURCE.PLATFORM,
       tab: MissionConsts.TABS.FOP,
-      radioPlatformInvenotryId: '',
-      teamId: '',
-      showUnitType: false,
+      radioPlatformInvenotryId: '',      
     };
   }
 
@@ -68,6 +66,7 @@ class FlightOpsPlatform extends React.Component {
   };
 
   radioFilterSelect=(value)=> {
+    alert('Radio Platform ' + value);
     this.setState({
       radioPlatformInvenotryId: value,
     });

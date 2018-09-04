@@ -75,7 +75,7 @@ export function flightOpsCrew(unitId) {
 export function moveToFlightOPSFromATO(missionId, data) {
   return createAction({
     type: ATO_GEN_TO_FLIGHT_OPS__MOVE,
-    action: () => axios.put(`${baseUrl}/Mission/PutMission/missionId=${missionId}`, data, requestHeaders),
+    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, data, requestHeaders),
   });
 }
 
@@ -88,14 +88,14 @@ export function moveToATOFromFlightOPS(missionId) {
 }
 
 // PED Task APIs
-export function fetchPedTasksATOGenerations(statusId, unitId) {
+export function fetchPedTasksATO(unitId) {
   return createAction({
     type: PED_TASKS_ATO_GENERATION__FETCH,
     action: () => axios.get(`${baseUrl}/IntelRequest/GetMissionPEDTeamATOIntelRequest?unitId=${unitId}`, requestHeaders),
   });
 }
 
-export function fetchPedTasks(statusId, unitId) {
+export function fetchPedTasks(unitId) {
   return createAction({
     type: PED_TASKS__FETCH,
     action: () => axios.get(`${baseUrl}/IntelRequest/GetMissionPEDTaskingIntelRequest?unitId=${unitId}`, requestHeaders),

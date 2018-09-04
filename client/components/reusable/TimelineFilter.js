@@ -100,7 +100,7 @@ class TimelineFilter extends React.Component {
       // in case of ATO we are assigning unit id
       id = 'UnitId';
     }
-    const sidebarHeader = [{ Header: translations['platforms'], columns: [
+    const sidebarHeader = [{ Header: translations.platforms, columns: [
       {
         Header: translations.select,
         accessor: id,

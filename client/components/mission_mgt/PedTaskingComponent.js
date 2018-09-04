@@ -47,24 +47,22 @@ class PedTaskingComponent extends React.Component {
     });
   };
 
-  radioFilterSelect=(generatedData)=>{
+  radioFilterSelect=(value)=> {
     this.setState({
-      teamId: generatedData.resourceId === '2' ? generatedData.value : '',
+      radioTeamId: value,
     });
   }
 
   loadData = () => {
     const unitId = 25;
-    const statusId = IntelConstants.STATUS.AAG.id; // 'AAG'
+    // const statusId = IntelConstants.STATUS.AAG.id; // 'AAG'
 
     // LEFT SIDE TABLE = Where PedTeamId = null and Status Is = AAG
-    this.props.fetchPedTasksATOGenerations(statusId, unitId);
+    this.props.fetchPedTasksATO(unitId);
   
     // RIGHT SIDE TABLE = Where PedTeamId != null and Status Is = AAG
-    this.props.fetchPedTasks( statusId, unitId);
+    this.props.fetchPedTasks(unitId);
   };
-
-
 
   render() {
 
