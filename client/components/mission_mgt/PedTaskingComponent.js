@@ -64,12 +64,10 @@ class PedTaskingComponent extends React.Component {
     this.props.fetchPedTasks(unitId);
   };
 
-  render() {
 
-    const { pedTasksAtoGenerations, pedTasks, translations } = this.props;
-
-    // For Left Table
-    const pedTasksAtoGenerationsColumns = [
+  getLeftColumns = () => {
+    const { translations } = this.props;
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -115,9 +113,11 @@ class PedTaskingComponent extends React.Component {
         ),
       },
     ];
+  }
 
-    // For Right Table
-    const pedTasksColumns = [
+  getRightColumns = () => {
+    const { translations } = this.props;
+    return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
@@ -154,6 +154,15 @@ class PedTaskingComponent extends React.Component {
         ),
       },
     ];
+  }
+
+  render() {
+    const { pedTasksAtoGenerations, pedTasks, translations } = this.props;
+    // For Left Table
+    const pedTasksAtoGenerationsColumns = this.getLeftColumns();
+    // For Right Table
+    const pedTasksColumns = this.getRightColumns()
+    
     return (
       <div>
         <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
