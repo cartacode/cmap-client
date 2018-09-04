@@ -30,10 +30,11 @@ class TimelineFilter extends React.Component {
         selectedResource: '',
         teamId: '',
         platformStatusId: '',
-        unitTypeId: '',
+        UnitType: '',
         cocomId: '',
         unitId: '',
         selectedAssetType: '',
+        teamStatusId: '',
         startDate,
         endDate,
         
@@ -155,9 +156,9 @@ class TimelineFilter extends React.Component {
 
     const { translations, tab } = this.props;
 
-    let id = 'id'; // this varies based on tab // this will be team id
+    const id = 'id'; //  this will be team id
     
-    const sidebarHeader = [{ Header: translations['platforms'], columns: [
+    const sidebarHeader = [{ Header: translations.teams, columns: [
       {
         Header: translations.select,
         accessor: id,
@@ -168,23 +169,23 @@ class TimelineFilter extends React.Component {
       },
       {
         Header: translations.Location,
-        accessor: 'location',
+        accessor: 'Location',
       },
       {
-        Header: translations['Unit'],
-        accessor: 'unit',
+        Header: translations.Unit,
+        accessor: 'Unit',
       },
       {
-        Header: translations['Name'],
-        accessor: 'teamName',
+        Header: translations.Name,
+        accessor: 'TeamName',
       },
       
       {
-        Header: translations['Type'],
-        accessor: 'teamType',
+        Header: translations.Type,
+        accessor: 'TeamType',
       },
       {
-        Header: translations['Specialization'],
+        Header: translations.Specialization,
         accessor: 'Specialization',
       },
       
@@ -237,7 +238,7 @@ class TimelineFilter extends React.Component {
       {
         'COCOMId': filter.cocomId,
         'UnitId': filter.unitId,
-        'statusId': filter.platformStatusId,
+        'StatusId': filter.platformStatusId,
         'StartDate': filter.startDate,
         'EndDate': filter.endDate,
       };
@@ -254,19 +255,19 @@ class TimelineFilter extends React.Component {
     const { filter } = this.state;
     const data = 
       {
-        'COCOMId': filter.cocomId,
-        'UnitId': filter.unitTypeId,
-        'statusId': filter.platformStatusId,
-        'StartDate': '2018-08-29T12:29:33.755Z',
-        'EndDate': '2018-08-29T12:29:33.755Z'
+        'ParentUnitId': filter.unitId,
+        'UnitType': filter.UnitType,
+        'StatusId': filter.teamStatusId,
+        'StartDate': filter.startDate,
+        'EndDate': filter.endDate,
       };
   
-    // this.props.teamFilter(data).then(() => {
-    //   const { filterResults } = this.props;
-    //   this.setState({
-    //     results: filterResults,
-    //   });
-    // });
+    this.props.teamFilter(data).then(() => {
+      const { filterResults } = this.props;
+      this.setState({
+        results: filterResults,
+      });
+    });
   }
 
   render() {
@@ -362,7 +363,7 @@ class TimelineFilter extends React.Component {
             <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={resourceFilter} defaultValue = {selectedResource} disable={resourceDisabled}/>
             
             {selectedResource === MissionConsts.RESOURCE.TEAM ? 
-              <MissionMgtDropDown name="teamId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=6" />
+              <MissionMgtDropDown name="teamStatusId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=6" />
               : ''
             }
             {selectedResource === MissionConsts.RESOURCE.PLATFORM ? 
@@ -375,7 +376,7 @@ class TimelineFilter extends React.Component {
             }
 
             { (selectedResource === MissionConsts.RESOURCE.TEAM && tab == MissionConsts.TABS.ISR) ?
-              <MissionMgtDropDown name="unitTypeId" label={translations.teamType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
+              <MissionMgtDropDown name="UnitType" label={translations.teamType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
               : ''
             }
             <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl={unitsUrl} />

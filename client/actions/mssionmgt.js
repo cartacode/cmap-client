@@ -127,6 +127,6 @@ export function platformFilter(data) {
 export function teamFilter(data) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
-    action: () => axios.put(`${baseUrl}/Search/SearchMissionTeam`, data, requestHeaders),
+    action: () => axios.put(`${baseUrl}/Search/SearchMissionTeams`, data, requestHeaders),
   });
 }
