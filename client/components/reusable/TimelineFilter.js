@@ -312,14 +312,15 @@ console.log('Team data'+JSON.stringify(data));
 
 
     let titleField = 'Name';
+    const rootUnitId = 15;
     // unist api will be diff for FlighOps and Ped Screens
-    let unitsUrl = 'Units/GetUnits';
+    let unitsUrl = 'CommandStructure/GetUserUnitAndSubordinateUnits?rootUnitID=' + rootUnitId;
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
       titleField = 'TeamName';
       if(tab === MissionConsts.TABS.FOP) {
-        unitsUrl += '?unitType=2';
+        unitsUrl += '&unitType=2';
       } else if(tab === MissionConsts.TABS.PED) {
-        unitsUrl += '?unitType=1';
+        unitsUrl += '&unitType=1';
       }
     }
 
@@ -415,7 +416,7 @@ console.log('Team data'+JSON.stringify(data));
               <MissionMgtDropDown name="UnitType" label={translations.teamType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
               : ''
             }
-            <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl={unitsUrl} />
+            <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl={unitsUrl} labelName="UnitName" valueName = "unitID" />
             {/* <MissionMgtDropDown  name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select text-left">
               <div className="date-pic">
