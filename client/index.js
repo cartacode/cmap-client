@@ -10,6 +10,7 @@ import configureStore from 'store/configureStore';
 import 'styles/main.scss';
 
 import 'react-notifications/lib/notifications.css';
+import "./web.config";
 
 render(
   <Provider store={configureStore()}>

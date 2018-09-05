@@ -19,7 +19,6 @@ module.exports = function getWebpackConfig() {
       inline: true,
       port: 3001,
       stats: 'errors-only',
-      publicPath:'/'
     },
 
     devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map',
@@ -72,6 +71,8 @@ module.exports = function getWebpackConfig() {
           test: /\.woff(2)?(\?[a-z0-9]+)?$/,
           loader: 'url-loader?limit=10000&mimetype=application/font-woff',
         },
+        {test: /\.(config)$/, loader: 'file-loader?name=[name].[ext]'}
+
       ],
 
       unknownContextCritical: false,
