@@ -19,6 +19,7 @@ module.exports = function getWebpackConfig() {
       inline: true,
       port: 3001,
       stats: 'errors-only',
+      publicPath:'/'
     },
 
     devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map',
