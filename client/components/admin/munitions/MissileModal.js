@@ -3,7 +3,7 @@ import { addMunition, fetchMunitions, fetchMunitionsById, updateMunition } from 
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import ContentBlock from "../../reusable/ContentBlock";
+import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 
 

@@ -77,12 +77,16 @@ export default {
   mssionmgts: {
     atoCollectionPlans:[],
     atoGenerations: [],
-    flightOpsAtoGenerations: [],
-    filterResults: [],
-    flightOps: [],
+    
+    fopPlatformAto: [],
+    fopPlatforms: [],
+    fopCrews: [],
+    fopCrewAto: [],
+    
     pedTasks: [],
     pedTasksAtoGenerations:[],
     isFetching: false,
+    filterResults: [],
   },
   paygrades: {
     paygradeList: [],

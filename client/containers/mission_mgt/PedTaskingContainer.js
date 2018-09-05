@@ -1,7 +1,8 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import PedTaskingComponent from '../../components/mission_mgt/PedTaskingComponent';
-import { fetchPedTasks, fetchPedTasksATOGenerations, moveToPedTaskFromATOGeneration, moveToATOGenerationFromPedTask } from 'actions/mssionmgt';
+import { fetchPedTasks, fetchPedTasksATO, 
+  moveToPedTaskFromATOGeneration, moveToATOGenerationFromPedTask, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 
 const mapStateToProps = state => {
   return {
@@ -13,9 +14,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchPedTasks,
-  fetchPedTasksATOGenerations,
+  fetchPedTasksATO,
   moveToPedTaskFromATOGeneration,
   moveToATOGenerationFromPedTask,
+  moveToFlightOPSFromATO,
+  moveToATOFromFlightOPS,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PedTaskingComponent);

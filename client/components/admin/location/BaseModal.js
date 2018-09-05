@@ -20,7 +20,7 @@ class BaseModal extends React.Component {
       locationPhotoPreviewUrl: '',
       mapImagePreviewUrl: '',
       editFetched: false,
-      location: {
+      /* location: {
         LocationID: '',
         LocationReferenceCode: '',
         LocationPhoto: '',
@@ -50,7 +50,7 @@ class BaseModal extends React.Component {
         ICAO: '',
         FAA: '',
         UserLocationID: '',
-      },
+      }, */
       oneLocation: {},
       locationFiles: {
         LocationPhoto: null,
@@ -123,6 +123,7 @@ class BaseModal extends React.Component {
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
+    const userLocationId = location.UserLocationID;
     this.setState({
       location: {
         ...location,
@@ -134,48 +135,61 @@ class BaseModal extends React.Component {
         UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-      const { editId } = this.props;
+       if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId){
+        document.getElementById('validationIcon').src = '';
+       }
+     });
+  }
 
-      const userLocationId = positionData.UserLocationID;
-      if (userLocationId) {
-        let isUserLocationIdExits;
-        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
-          .then(response => {
-            isUserLocationIdExits = response.data;
-            document.getElementById('LocationID').placeholder = '';
-            if (isUserLocationIdExits === false) {
-              if (this.props.oneLocation.UserLocationID !== 'undefined') {
-                if (this.props.oneLocation.UserLocationID !== userLocationId) {
-                  const { location } = this.state;
-                  this.setState({
-                    location: {
-                      ...location,
-                      UserLocationID: '',
-                    }
-                  });
-                  document.getElementById('LocationID').value = '';
-                  document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
-                  document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
-                }
-              } else {
-                const { location } = this.state;
+
+  checkLocationId() {
+    const { editId } = this.props;
+    let {location} = this.state;
+    const userLocationId = location.UserLocationID;
+    if (userLocationId) {
+      let isUserLocationIdExits;
+      axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
+        .then(response => {
+          isUserLocationIdExits = response.data;
+          document.getElementById('LocationID').placeholder = '';
+          if (isUserLocationIdExits === false) {
+            if (this.props.oneLocation.UserLocationID !== 'undefined') {
+              if (this.props.oneLocation.UserLocationID !== userLocationId) {
                 this.setState({
                   location: {
                     ...location,
                     UserLocationID: '',
                   }
                 });
+                this.handleLocationPositionData(this.state.location);
                 document.getElementById('LocationID').value = '';
                 document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
                 document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
               }
+              else{
+                this.submitData();
+              }
             } else {
-              document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+
+              this.setState({
+                location: {
+                  ...location,
+                  UserLocationID: '',
+                }
+              });
+              //this.handleLocationPositionData(this.state.location);
+              document.getElementById('LocationID').value = '';
+              document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+              document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
             }
-          });
-      }
-      console.log("New state in ASYNC callback og location Section:22222", this.state.location);
-    });
+          } else {
+            document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+            this.submitData();
+          }
+        });
+    }
+    console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+ 
   }
 
   handleLocationInfoData = (infoData) => {
@@ -249,8 +263,7 @@ class BaseModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
+  submitData = () => {
     const { location } = this.state;
     const { editId } = this.props;
     const { locationFiles } = this.state;
@@ -286,6 +299,12 @@ class BaseModal extends React.Component {
         this.props.onClose();
       });
     }
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    debugger;
+    this.checkLocationId();
   }
 
   stopset() {
@@ -346,9 +365,9 @@ class BaseModal extends React.Component {
     ];
 
     const locationFields = [
-      { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory' },
-      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true },
-      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true },
+      { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
+      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true},
+      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true},
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },

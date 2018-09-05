@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { defaultFilter, formatDateTime, getIntelRequestStatusCodeColor } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
 
@@ -47,7 +47,7 @@ class RequestComponent extends React.Component {
 
 
   getColor= (row)=> {
-    return  getIntelRequestStatusCodeColor(row.original.Abbreviation);
+    return getIntelStatusColor(row.original.Abbreviation);
   }
   render() {
 
@@ -150,6 +150,7 @@ class RequestComponent extends React.Component {
           <div className="col-md-12">
             <ReactTable
               data={allRequests}
+              loading={this.props.isLoading}
               columns={columns}
               defaultPageSize={TableDefaults.PAGE_SIZE}
 						  minRows={TableDefaults.MIN_ROWS}

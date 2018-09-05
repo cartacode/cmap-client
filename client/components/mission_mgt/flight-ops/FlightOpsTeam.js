@@ -1,20 +1,21 @@
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React from 'react';
 import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { TableDefaults, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, formatDateTime } from '../../util/helpers';
-import FullHeaderLine from '../reusable/FullHeaderLine';
-import TimelineFilter from '../reusable/TimelineFilter';
+import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
+import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../../util/helpers';
+import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
+import FullHeaderLine from '../../reusable/FullHeaderLine';
+import TimelineFilter from '../../reusable/TimelineFilter';
 
-
-class PedTaskingComponent extends React.Component {
+class FlightOpsTeam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       defaultResource: MissionConsts.RESOURCE.TEAM,
-      tab: MissionConsts.TABS.PED,
+      tab: MissionConsts.TABS.FOP,
       radioTeamId: '',
     };
   }
@@ -23,62 +24,63 @@ class PedTaskingComponent extends React.Component {
     this.loadData();
   }
 
-  //  Move Intel from ATO table to PED table . i.e Left -> Right.
- moveToPED = (row) => {
-   const IntelReqID = row.original.IntelRequestID ;
-   const missionId = row.original.MissionId;    
-   if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
-     const data = {
-       'Id': missionId,
-       IntelReqID,
-       'PedTeamID': this.state.radioTeamId,
-       'Type': 'Ped',
-     };
-     this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
-       this.loadData();
-     });
-   } else {
-     alert('Please Select Ped Team.');
-   }
- }
-  
-  //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
-  moveToAto = (row) => {
-    const IntelReqID = row.original.IntelRequestID ;    
-    const missionId = row.original.MissionId ;    
+  getColor= (row)=>{
+    return getIntelStatusColor(row.original.Abbreviation);
+  }
+
+  // Move Left to Right
+  // Updates CrewId in mission
+  moveToFlightOpTeam = (row) => {
+    const IntelReqID = row.original.IntelRequestID ;
+    const missionId = row.original.MissionId;    
     if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
       const data = {
-        Id: missionId,
-        IntelReqID,
-        PedTeamID: null,
-        Type: 'Ped',
+        'Id': missionId,
+        'IntelReqID': IntelReqID,
+        'CrewTeamId': this.state.radioTeamId,
+        'Type': 'Crew',
+      };
+      this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
+        this.loadData();
+      });
+    } else {
+      alert('Please Select Team');
+    }
+  }
+
+  // Move Right to Left
+  // Updates CrewTeamId to null in mission
+  moveToAtoTeam = (row) => {
+    const IntelReqID = row.original.IntelRequestID ;    
+    const missionId = row.original.MissionId ;    
+    if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
+      const data = {
+        'Id': missionId,
+        'IntelReqID': IntelReqID,
+        'CrewTeamID': null,
+        'Type': 'Crew',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         this.loadData();
       });
     } else {
-      alert('Please Select Ped Team.');
+      alert('Please Select Team');
     }
-  };
-
-  radioFilterSelect=(value)=> {
-    debugger;
-    this.setState({
-      radioTeamId: value,
-    });
   }
 
   loadData = () => {
     const unitId = 25;
-    // const statusId = IntelConstants.STATUS.AAG.id; // 'AAG'
-
-    // LEFT SIDE TABLE = Where PedTeamId = null and Status Is = AAG
-    this.props.fetchPedTasksATO(unitId);
-  
-    // RIGHT SIDE TABLE = Where PedTeamId != null and Status Is = AAG
-    this.props.fetchPedTasks(unitId);
+    // Left Table: Status = AAG and Crew Team Id == null
+    this.props.flightOpsAtoCrew(unitId);
+    // Right Table: Status = AAG and Crew Team Id != null
+    this.props.flightOpsCrew(unitId);
   };
 
+  radioFilterSelect=(value)=> {
+    this.setState({
+      radioTeamId: value,
+    });
+  }
 
   getLeftColumns = () => {
     const { translations } = this.props;
@@ -117,13 +119,14 @@ class PedTaskingComponent extends React.Component {
       },
       {
         Header: translations.view,
-        accessor: 'missionId',
+        accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
-            <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Ped Task" onClick={() => this.moveToPED(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveToFlightOpTeam(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            {/*  <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
+            &nbsp;
+            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
@@ -158,13 +161,12 @@ class PedTaskingComponent extends React.Component {
       },
       {
         Header: translations.view,
-        accessor: 'missionId',
+        accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAto(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAtoTeam(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
-            {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
       },
@@ -172,24 +174,22 @@ class PedTaskingComponent extends React.Component {
   }
 
   render() {
-    const { pedTasksAtoGenerations, pedTasks, translations } = this.props;
-    // For Left Table
-    const pedTasksAtoGenerationsColumns = this.getLeftColumns();
-    // For Right Table
-    const pedTasksColumns = this.getRightColumns()
-    
+    const { translations, fopCrews, fopCrewAto } = this.props;
+    const columnsATOGenerations = this.getLeftColumns();
+    const columnsFlightOps = this.getRightColumns();
+
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
-        <div className="row mission-mgt" >
+        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource}/>
+        <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
                 <FullHeaderLine headerText={translations.ATOGeneration} />
                 <div >
                   <ReactTable
-                    data={pedTasksAtoGenerations}
-                    columns={pedTasksAtoGenerationsColumns}
+                    data={fopCrewAto}
+                    columns={columnsATOGenerations}
                     defaultPageSize={TableDefaults.PAGE_SIZE}
                     minRows={TableDefaults.MIN_ROWS}
                     className="-striped -highlight"
@@ -203,11 +203,11 @@ class PedTaskingComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.PedTask} />
+                <FullHeaderLine headerText={translations.FlightOPS} />
                 <div >
                   <ReactTable
-                    data={pedTasks}
-                    columns={pedTasksColumns}
+                    data={fopCrews}
+                    columns={columnsFlightOps}
                     defaultPageSize={TableDefaults.PAGE_SIZE}
                     minRows={TableDefaults.MIN_ROWS}
                     className="-striped -highlight"
@@ -228,9 +228,25 @@ class PedTaskingComponent extends React.Component {
   }
 }
 
-PedTaskingComponent.propTypes = {
+FlightOpsTeam.propTypes = {
   children: PropTypes.element,
+  updateResource: PropTypes.func,
 
 };
 
-export default PedTaskingComponent;
+const mapStateToProps = state => {
+  return {
+    translations: state.localization.staticText,
+    fopCrewAto: state.mssionmgts.fopCrewAto,
+    fopCrews: state.mssionmgts.fopCrews,
+  };
+};
+
+const mapDispatchToProps = {
+  flightOpsAtoCrew,
+  flightOpsCrew,
+  moveToFlightOPSFromATO,
+  moveToATOFromFlightOPS,
+
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FlightOpsTeam);

@@ -55,7 +55,7 @@
   "upcoming mission": "upcoming mission",
   "countdown": "countdown",
   "unit status report": "unit status report",
-  "tail": "tail",
+  "tail": "Tail",
   "move date": "move date",
   "remark": "remark",
   "etic": "etic",
@@ -193,7 +193,7 @@
   "organic": "organic",
   "theater": "theater",
   "sro": "sro",
-  "find & filter": "find & filter",
+  "find & filter": "Find & Filter",
   "select": "select",
   "team": "team",
   "Mission#": "Mission#",
@@ -725,5 +725,8 @@
   "platformStatus":"Platform Status",
   "teamType":"Team Type",
   "units":"Units",
-  "teams":"teams"
+  "teams":"Teams",
+  "Date/Time": "Date/Time",
+  "IR#": "IR#",
+  "Command": "Command"
 }

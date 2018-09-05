@@ -55,7 +55,7 @@ class CcirPirModal extends React.Component {
     let { editId } = this.props;
     
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchPersonnelById(editId).then(() => {
+      this.props.fetchCcirPirById(editId).then(() => {
         this.setState(
           {
             editFetched:true,
@@ -225,13 +225,13 @@ resetForm = () => {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM'},
-      { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch'},
-      { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country'},
-      { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region'},
-      { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit'},
-      { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander'},
-      { name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname'},
+      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM', required:true },
+      { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch', required:true},
+      { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country', required:true},
+      { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region', required:true},
+      { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
+      { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
+      { name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
       { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
     ];
 
@@ -299,13 +299,13 @@ resetForm = () => {
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
 
-          <div className="menu-button">
+        {/*   <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button type="submit" className="highlighted-button" onClick={() => this.props.onClose()}>
               {translations['close']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-          </div>
+          </div> */}
         </div>
 
       </form>
