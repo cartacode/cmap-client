@@ -15,13 +15,13 @@ class Accordion extends React.Component {
     this.state = {
       uncheckedResults: [],
       showAddForm:false,
+      branch:'1',
       addUnit: {
         description:'',
         UnitIdentificationCode:'',
         DerivativeUIC:'',
         CommandRelationship:'',
         LocationID:'',
-        BranchOfService:'',
         Commander:'',
         UnitType:'',
         UnitSpecialization:'',
@@ -97,13 +97,20 @@ class Accordion extends React.Component {
         DerivativeUIC:generalData.DerivativeUIC,
         CommandRelationship:generalData.CommandRelationship,
         LocationID:generalData.LocationID,
-        BranchOfService:generalData.BranchOfService,
         Commander:generalData.Commander,
         UnitType:generalData.UnitType,
         UnitSpecialization:generalData.UnitSpecialization,
         ParentUnitID:generalData.ParentUnitID
       },
     });
+
+  }
+
+  handleBranchData = (generalData) => {
+    
+
+    this.setState({
+      branch: generalData.branch    });
 
   }
 
@@ -269,6 +276,11 @@ class Accordion extends React.Component {
 
   }
 
+  submitBranch = () => {
+     let { branch } = this.state;
+     this.props.setBranch(branch);
+  }
+
   handleAddSubmit = () => {
     let { addUnit } = this.state;
     this.props.addOraganicOrg(addUnit).then( () => {
@@ -309,6 +321,11 @@ class Accordion extends React.Component {
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits'},
     ];
 
+
+    const branchFields = [
+      {name: 'Branch', type: 'dropdown', ddID:'BranchOfService/GetBranchOfService', domID: 'branch', valFieldID: 'branch'},
+    ];
+
     const lastSectionFields = [
       { name: 'Name', type: 'input', domID: 'description', valFieldID: 'description' },
       { name: 'Unit Identification Code', type: 'input', domID: 'UnitIdentificationCode', valFieldID: 'UnitIdentificationCode' },
@@ -335,9 +352,10 @@ class Accordion extends React.Component {
             <div className={`accordion-content-wrapper${0}`}>
               <div className="content info-content">
                 <ul>
-                <Dropdown className="form-control" dropdownDataUrl="BranchOfService/GetBranchOfService"/><br/>
+                <ContentFull fields={branchFields} data={this.handleBranchData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+
                 </ul> <br/>
-                <button>Submit</button>
+                <button onClick={this.submitBranch}>Submit</button>
               </div>
             </div>
           </div>
