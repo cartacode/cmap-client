@@ -31,11 +31,12 @@ class FlightOpsTeam extends React.Component {
   // Move Left to Right
   // Updates CrewId in mission
   moveToFlightOpTeam = (row) => {
-    
+    const IntelReqID = row.original.IntelRequestID ;
     const missionId = row.original.MissionId;    
-    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0) {
+    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
       const data = {
         'Id': missionId,
+        'IntelReqID': IntelReqID,
         'CrewTeamId': this.state.radioTeamId,
         'Type': 'Crew',
       };

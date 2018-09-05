@@ -32,11 +32,12 @@ class FlightOpsPlatform extends React.Component {
   // Updates PlatformInventoryId in mission
   moveToFlightOpPlatform = (row) => {
     const missionId = row.original.MissionId;
+    const IntelReqID = row.original.IntelRequestID ;
     // const intelRequestID = row.original.IntelRequestID;
-    if(this.state.radioPlatformInvenotryId !== undefined && this.state.radioPlatformInvenotryId !== 0) {
+    if(this.state.radioPlatformInvenotryId !== undefined && this.state.radioPlatformInvenotryId !== 0 && this.state.radioPlatformInvenotryId !== '') {
       const data = {
         'Id': missionId,
-        // 'IntelReqID': intelRequestID,
+        'IntelReqID': IntelReqID,
         'PlatformInventoryID': this.state.radioPlatformInvenotryId,
         'Type': 'Platform',
       };
@@ -66,7 +67,7 @@ class FlightOpsPlatform extends React.Component {
         this.loadData();
       });
     } else {
-      alert('Please Select Team');
+      alert('Please Select Platform');
     }
   
   }

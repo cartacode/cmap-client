@@ -106,7 +106,7 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row.value)} />
+          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row)} />
           <label htmlFor={row.original.id}><span /></label> 
         </div>,
       },
@@ -163,7 +163,7 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
+          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
@@ -201,7 +201,8 @@ class TimelineFilter extends React.Component {
 
   }
 
-  radioFilterSelect = (value) => {
+  radioFilterSelect = (row) => {
+    const value = row.value;
     const { filter } = this.state;
     const generatedData = {
       resourceId: filter.selectedResource,
@@ -210,7 +211,19 @@ class TimelineFilter extends React.Component {
     this.props.radioFilterSelect(generatedData);
   }
 
-  onRadioSelect = (value) => {
+  onRadioSelect = (row) => {
+    const {tab } = this.props;
+    const { selectedResource } = this.state.filter;
+    let value = row.original.id;
+    
+    if(selectedResource === MissionConsts.RESOURCE.TEAM) {
+      value = row.original.UnitId;
+    }
+    //IF Tab ATO selected.
+    if(tab === MissionConsts.TABS.ATO) {
+      value = row.original.UnitId;
+    }
+
     // alert(value);
     this.setState({
       selectedRadio: value,
@@ -301,8 +314,8 @@ class TimelineFilter extends React.Component {
       results = [];
     }
 
-    // console.log('Filter results' + JSON.stringify(filterResults));
-    // console.log('Groups' + JSON.stringify(groups));
+     console.log('Filter results' + JSON.stringify(results));
+     console.log('Groups' + JSON.stringify(groups));
     // const sideTableContent = [
     //   { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
     //   { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},

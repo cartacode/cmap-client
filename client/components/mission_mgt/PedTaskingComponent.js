@@ -25,26 +25,40 @@ class PedTaskingComponent extends React.Component {
 
   //  Move Intel from ATO table to PED table . i.e Left -> Right.
  moveToPED = (row) => {
-   const missionId = row.original.MissionId;
-   if(this.state.radioTeamId !== '' && this.state.radioTeamId !== 0) {
+   const IntelReqID = row.original.IntelRequestID ;
+   const missionId = row.original.MissionId;    
+   if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
      const data = {
        'Id': missionId,
+       'IntelReqID': IntelReqID,
        'PedTeamID': this.state.radioTeamId,
+       'Type': 'Ped',
      };
-     // updates PEDTeamId for that mission
-     this.props.moveToPedTaskFromATOGeneration(missionId, data).then(() => {
+     this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
        this.loadData();
      });
    } else {
-     alert('Please select PED Team')
+     alert('Please Select Ped Team.');
    }
  }
   
   //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
   moveToAto = (row) => {
-    this.props.moveToATOGenerationFromPedTask(row.original.MissionId).then(() => {
-      this.loadData();
-    });
+    const IntelReqID = row.original.IntelRequestID ;    
+    const missionId = row.original.MissionId ;    
+    if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
+      const data = {
+        'Id': missionId,
+        'IntelReqID': IntelReqID,
+        'PedTeamID': null,
+        'Type': 'Ped',
+      };
+      this.props.moveToATOFromFlightOPS(data).then(() => {
+        this.loadData();
+      });
+    } else {
+      alert('Please Select Ped Team.');
+    }
   };
 
   radioFilterSelect=(value)=> {
