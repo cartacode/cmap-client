@@ -12,6 +12,12 @@ export const TableDefaults = {
   MIN_ROWS: 1,
 }
 
+export const UnitConsts = {
+  TYPE: {
+    PED: 1,
+    CREW: 2,
+  }
+}
 export const MissionConsts = {
   RESOURCE: {
     PLATFORM: '1',

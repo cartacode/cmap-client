@@ -81,7 +81,6 @@ class FlightOpsPlatform extends React.Component {
   };
 
   radioFilterSelect=(value)=> {
-    alert('Radio Platform ' + value);
     this.setState({
       radioPlatformInvenotryId: value,
     });
@@ -157,6 +156,10 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
+      },
+      {
+        Header: translations.tail,
+        accessor: 'TailNumber',
       },
       {
         Header: translations['Date/Time'],

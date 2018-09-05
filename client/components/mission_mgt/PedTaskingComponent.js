@@ -30,7 +30,7 @@ class PedTaskingComponent extends React.Component {
    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
      const data = {
        'Id': missionId,
-       'IntelReqID': IntelReqID,
+       IntelReqID,
        'PedTeamID': this.state.radioTeamId,
        'Type': 'Ped',
      };
@@ -46,12 +46,12 @@ class PedTaskingComponent extends React.Component {
   moveToAto = (row) => {
     const IntelReqID = row.original.IntelRequestID ;    
     const missionId = row.original.MissionId ;    
-    if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
+    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
       const data = {
-        'Id': missionId,
-        'IntelReqID': IntelReqID,
-        'PedTeamID': null,
-        'Type': 'Ped',
+        Id: missionId,
+        IntelReqID,
+        PedTeamID: null,
+        Type: 'Ped',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         this.loadData();
@@ -62,6 +62,7 @@ class PedTaskingComponent extends React.Component {
   };
 
   radioFilterSelect=(value)=> {
+    debugger;
     this.setState({
       radioTeamId: value,
     });

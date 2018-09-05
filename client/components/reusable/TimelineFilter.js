@@ -10,7 +10,7 @@ import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
 import { connect } from 'react-redux';
 import { teamFilter, platformFilter } from '../../actions/mssionmgt';
-import { MissionConsts } from '../../dictionary/constants';
+import { MissionConsts, UnitConsts } from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 import ReactTable from 'react-table';
 
@@ -19,7 +19,7 @@ class TimelineFilter extends React.Component {
   constructor(props) {
     super(props);
     // setting timeline date range default to 24 hours from now
-    const startDate = moment().startOf('hour').toDate();
+    const startDate = moment().startOf('day').toDate();
     const endDate = moment().startOf('hour').add(24, 'hour').toDate();
     this.state = {
       clear: false,
@@ -46,6 +46,7 @@ class TimelineFilter extends React.Component {
   componentWillMount = () => {
     const { defaultResource } = this.props;
     if(defaultResource != undefined && defaultResource !== '') {
+      
       const { filter } = this.state;
       this.setState({
         filter: {
@@ -105,7 +106,7 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row)} />
+          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
@@ -162,7 +163,7 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row)} />
+          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
@@ -178,11 +179,10 @@ class TimelineFilter extends React.Component {
         Header: translations.Name,
         accessor: 'TeamName',
       },
-
       {
         Header: translations.Type,
         accessor: 'TeamType',
-      },
+      },      
       {
         Header: translations.Specialization,
         accessor: 'Specialization',
@@ -210,20 +210,18 @@ class TimelineFilter extends React.Component {
     this.props.radioFilterSelect(generatedData);
   }
 
-  onRadioSelect = (row) => {
-    const { tab } = this.props;
-    const { selectedResource } = this.state.filter;
-    let value = row.original.id;
+  onRadioSelect = (value) => {
+    // const { tab } = this.props;
+    // const { selectedResource } = this.state.filter;
+    // let value = row.original.id;
 
-    if(selectedResource === MissionConsts.RESOURCE.TEAM) {
-      value = row.original.UnitId;
-    }
-    // IF Tab ATO selected.
-    if(tab === MissionConsts.TABS.ATO) {
-      value = row.original.UnitId;
-    }
-
-    // alert(value);
+    // if(selectedResource === MissionConsts.RESOURCE.TEAM) {
+    //   value = row.original.UnitId;
+    // }
+    // // IF Tab ATO selected.
+    // if(tab === MissionConsts.TABS.ATO) {
+    //   value = row.original.UnitId;
+    // }
     this.setState({
       selectedRadio: value,
     }, () => {
@@ -265,15 +263,26 @@ class TimelineFilter extends React.Component {
 
   findTeamBased =()=> {
     const { filter } = this.state;
+    const {tab}  = this.props;
+
+    let unitType = '';
+    if(this.props.tab === MissionConsts.TABS.FOP) {
+      unitType = UnitConsts.TYPE.CREW;
+    }
+
+    if(this.props.tab === MissionConsts.TABS.PED) {
+      unitType = UnitConsts.TYPE.PED;
+    }
+    const unitId = 15; // this will come from session
     const data =
       {
-        'ParentUnitId': filter.unitId,
-        'UnitType': filter.UnitType,
+        'ParentUnitId': unitId,
+        'UnitType': unitType,
         'StatusId': filter.teamStatusId,
         'StartDate': filter.startDate,
         'EndDate': filter.endDate,
       };
-
+console.log('Team data'+JSON.stringify(data));
     this.props.teamFilter(data).then(() => {
       const { filterResults } = this.props;
       this.setState({
@@ -297,20 +306,32 @@ class TimelineFilter extends React.Component {
 
     const groups = [];
     // let content = [];
-    let newItems = [];
+    const newItems = [];
 
     let itemCount = 0;
+
+
+    let titleField = 'Name';
+    // unist api will be diff for FlighOps and Ped Screens
+    let unitsUrl = 'Units/GetUnits';
+    if(selectedResource === MissionConsts.RESOURCE.TEAM) {
+      titleField = 'TeamName';
+      if(tab === MissionConsts.TABS.FOP) {
+        unitsUrl += '?unitType=2';
+      } else if(tab === MissionConsts.TABS.PED) {
+        unitsUrl += '?unitType=1';
+      }
+    }
 
     if(results !== undefined) {
       results.map((row, index) => {
         // creating groups
-        const group = { id: row.id, title: row.Name };
+        const group = { id: row.id, title: row[titleField] };
         groups.push(group);
         const timeLine = row.TimeLine;
         for(let i = 0; i < timeLine.length; i++) {
           itemCount++;
-          let groupId = group.id;
-          let newItem = { id: itemCount, group: groupId, title: timeLine[i].statusId, start_time: timeLine[i].startDate, end_time: timeLine[i].endDate };
+          const newItem = { id: itemCount, group: group.id, title: timeLine[i].statusId, start_time: moment(timeLine[i].startDate), end_time: moment(timeLine[i].endDate) };
           newItems.push(newItem);
         }
 
@@ -358,15 +379,7 @@ class TimelineFilter extends React.Component {
     // let currentDateTime = new Date();
     const todate = moment().startOf('hour').toDate();
 
-    // unist api will be diff for FlighOps and Ped Screens
-    let unitsUrl = 'Units/GetUnits';
-    if(selectedResource === MissionConsts.RESOURCE.TEAM) {
-      if(tab === MissionConsts.TABS.FOP) {
-        unitsUrl += '?unitType=2';
-      } else if(tab === MissionConsts.TABS.PED) {
-        unitsUrl += '?unitType=1';
-      }
-    }
+    
 
     // For ATO only Platform can be selecteed and for PED only Team can be selected
     let resourceDisabled = false;
