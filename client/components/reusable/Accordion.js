@@ -6,6 +6,7 @@ import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
 // import { fetchPersonnelsById } from 'actions/organicpersonnel.js'
 import { addOraganicOrg } from 'actions/organicorg';
+import ContentFull from './ContentFull';
 
 class Accordion extends React.Component {
 
@@ -24,7 +25,9 @@ class Accordion extends React.Component {
         Commander:'',
         UnitType:'',
         UnitSpecialization:'',
-        ParentUnitID:''
+        ParentUnitID:'',
+        BranchOfService:'1',
+        CommandRelationship:'1'
       }
     }
   }
@@ -36,6 +39,10 @@ class Accordion extends React.Component {
   save = () => {
     console.log('saving');
   };
+
+  stopset () {
+    this.setState({clear:false});
+  }
 
   toggleAddForm = () => {
       this.setState({
@@ -66,6 +73,9 @@ class Accordion extends React.Component {
     } else {
       let wrapper = document.querySelector(`.accordion-content-wrapper${key}`);
       accordionContent.style.height = wrapper.clientHeight + "px";
+      if(key==4){
+        accordionContent.style.height = "max-content";
+      }
       this.refs[`section${key}`].childNodes[1].style.borderBottom = '1px solid #bbcfe2';
     }
   }
@@ -74,6 +84,27 @@ class Accordion extends React.Component {
     console.log("Fired");
     this.toggleHeader(4);
     this.close(1); this.close(2);
+  }
+
+  handleGeneralData = (generalData) => {
+    const { addUnit } = this.state;
+
+    this.setState({
+      addUnit: {
+        ...addUnit,
+        description: generalData.description,
+        UnitIdentificationCode:generalData.UnitIdentificationCode,
+        DerivativeUIC:generalData.DerivativeUIC,
+        CommandRelationship:generalData.CommandRelationship,
+        LocationID:generalData.LocationID,
+        BranchOfService:generalData.BranchOfService,
+        Commander:generalData.Commander,
+        UnitType:generalData.UnitType,
+        UnitSpecialization:generalData.UnitSpecialization,
+        ParentUnitID:generalData.ParentUnitID
+      },
+    });
+
   }
 
   renderDropdowns(dropdowns) {
@@ -90,6 +121,7 @@ class Accordion extends React.Component {
         )
       });
   }
+
 
   renderResults() {
 
@@ -251,18 +283,41 @@ class Accordion extends React.Component {
       {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
       {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits'},
       {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
-      {name: 'Team', type: 'dropdown', ddID:'Units'},
+      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1'},
       {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
       {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
+    const firstSectionFields = [
+      {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
+      {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
+      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits'},
+      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
+      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1'},
+      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
+      {name: 'MOS', type: 'dropdown', ddID:'MOS'},
+      {name: 'Search', type: 'input'},
+    ];
+
     const lastSectionDropdowns = [
       {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType'},
-      {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Units'},
+      {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Personnel/GetCommanderList'},
       {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations'},
       {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits'},
+    ];
+
+    const lastSectionFields = [
+      { name: 'Name', type: 'input', domID: 'description', valFieldID: 'description' },
+      { name: 'Unit Identification Code', type: 'input', domID: 'UnitIdentificationCode', valFieldID: 'UnitIdentificationCode' },
+      { name: 'Derivative UIC', type: 'input', domID: 'DerivativeUIC', valFieldID: 'DerivativeUIC' },
+      {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType', domID: 'UnitType', valFieldID: 'UnitType'},
+      {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Personnel/GetCommanderList', domID: 'Commander', valFieldID: 'Commander'},
+      {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations', domID: 'UnitSpecialization', valFieldID: 'UnitSpecialization' },
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2', domID: 'LocationID', valFieldID: 'LocationID'},
+      {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'ParentUnitID', valFieldID: 'ParentUnitID'},
     ];
 
     let langs = ['val 1', 'val 2'];
@@ -366,9 +421,9 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${4}`}>
-              <div className="content info-content">
+              <div className="content info-content form-content">
                 
-                <br/>
+                {/* <br/>
                 <div className="custom-content">
                 <div className="label-name">Name</div>
                   <input placeholder="Name"/> 
@@ -383,7 +438,7 @@ class Accordion extends React.Component {
                   <input placeholder="Derivative UIC"/>  
                   </div>
                 
-             { this.renderDropdowns(lastSectionDropdowns) }
+                { this.renderDropdowns(lastSectionDropdowns) }
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button onClick={() => this.close(4)}>
@@ -397,7 +452,18 @@ class Accordion extends React.Component {
                     Add
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                </div> */}
+
+          <ContentFull fields={lastSectionFields} data={this.handleGeneralData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+
+                <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                  <button onClick={this.handleAddSubmit}>
+                    Add
+                  </button>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
+
               </div>
             </div>
           </div>

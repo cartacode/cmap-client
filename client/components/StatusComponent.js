@@ -292,14 +292,14 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["platform"]} />
               <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter}
+                defaultFilterMethod={defaultFilter} showPagination={0}
               />
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter}
+                defaultFilterMethod={defaultFilter} showPagination={0}
               />
             </div>
           </div>
@@ -308,14 +308,14 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText="Munition" />
               <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter}
+                defaultFilterMethod={defaultFilter} showPagination={0}
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
               <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter}
+                defaultFilterMethod={defaultFilter} showPagination={0}
               />
             </div>
           </div>
@@ -324,7 +324,7 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter}
+                defaultFilterMethod={defaultFilter} showPagination={0}
               />
             </div>
             <div className="col-md-6">
@@ -351,20 +351,7 @@ class StatusComponent extends React.Component {
           </div>
         </div>
           <div className="row action-buttons" >
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className="highlighted-button" onClick={this.onClear.bind(this)}>
-                CLEAR
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className="highlighted-button" onClick={this.onSubmit.bind(this)}>
-                SUBMIT
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+
           </div>
           <Modal show={this.state.statusModalOpen}
             onClose={this.statusModal}>
