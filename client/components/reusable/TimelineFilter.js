@@ -14,7 +14,6 @@ import { MissionConsts } from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 import ReactTable from 'react-table';
 
-
 class TimelineFilter extends React.Component {
 
   constructor(props) {
@@ -37,7 +36,7 @@ class TimelineFilter extends React.Component {
         teamStatusId: '',
         startDate,
         endDate,
-        
+
       },
     };
     // preserve the initial state in a new object
@@ -62,7 +61,7 @@ class TimelineFilter extends React.Component {
   }
 
   handleFilterData = (name, value) => {
-  
+
     const { filter } = this.state;
     this.setState({
       filter: {
@@ -107,7 +106,7 @@ class TimelineFilter extends React.Component {
         accessor: id,
         Cell: row => <div>
           <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row)} />
-          <label htmlFor={row.original.id}><span /></label> 
+          <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
       {
@@ -123,15 +122,15 @@ class TimelineFilter extends React.Component {
         accessor: 'Name',
       },
       {
-        Header: translations['Unit'],
+        Header: translations.Unit,
         accessor: 'OwningUnit',
       },
       {
-        Header: translations['payload'],
+        Header: translations.payload,
         accessor: 'Payload',
       },
       {
-        Header: translations['Armed'],
+        Header: translations.Armed,
         accessor: 'IsArmed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
@@ -157,7 +156,7 @@ class TimelineFilter extends React.Component {
     const { translations, tab } = this.props;
 
     const id = 'id'; //  this will be team id
-    
+
     const sidebarHeader = [{ Header: translations.teams, columns: [
       {
         Header: translations.select,
@@ -179,7 +178,7 @@ class TimelineFilter extends React.Component {
         Header: translations.Name,
         accessor: 'TeamName',
       },
-      
+
       {
         Header: translations.Type,
         accessor: 'TeamType',
@@ -188,7 +187,7 @@ class TimelineFilter extends React.Component {
         Header: translations.Specialization,
         accessor: 'Specialization',
       },
-      
+
     ] },
     ];
 
@@ -212,14 +211,14 @@ class TimelineFilter extends React.Component {
   }
 
   onRadioSelect = (row) => {
-    const {tab } = this.props;
+    const { tab } = this.props;
     const { selectedResource } = this.state.filter;
     let value = row.original.id;
-    
+
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
       value = row.original.UnitId;
     }
-    //IF Tab ATO selected.
+    // IF Tab ATO selected.
     if(tab === MissionConsts.TABS.ATO) {
       value = row.original.UnitId;
     }
@@ -247,7 +246,7 @@ class TimelineFilter extends React.Component {
 
   findPlatformBased =()=>{
     const { filter } = this.state;
-    const data = 
+    const data =
       {
         'COCOMId': filter.cocomId,
         'UnitId': filter.unitId,
@@ -256,7 +255,7 @@ class TimelineFilter extends React.Component {
         'EndDate': filter.endDate,
       };
 
-    this.props.platformFilter(data).then( () => {
+    this.props.platformFilter(data).then(() => {
       const { filterResults } = this.props;
       this.setState({
         results: filterResults,
@@ -266,7 +265,7 @@ class TimelineFilter extends React.Component {
 
   findTeamBased =()=> {
     const { filter } = this.state;
-    const data = 
+    const data =
       {
         'ParentUnitId': filter.unitId,
         'UnitType': filter.UnitType,
@@ -274,7 +273,7 @@ class TimelineFilter extends React.Component {
         'StartDate': filter.startDate,
         'EndDate': filter.endDate,
       };
-  
+
     this.props.teamFilter(data).then(() => {
       const { filterResults } = this.props;
       this.setState({
@@ -289,7 +288,6 @@ class TimelineFilter extends React.Component {
     // let { filterResults } = this.props;
     let { results } = this.state;
 
-
     const resourceFilter = [
       { id: MissionConsts.RESOURCE.PLATFORM, description: translations.platform },
       { id: MissionConsts.RESOURCE.TEAM, description: translations.teams },
@@ -299,23 +297,35 @@ class TimelineFilter extends React.Component {
 
     const groups = [];
     // let content = [];
-    let timelines = [];
-    
+    let newItems = [];
+
+    let itemCount = 0;
+
     if(results !== undefined) {
       results.map((row, index) => {
         // creating groups
-        const group = { id: row.id, title: row.Name};
+        const group = { id: row.id, title: row.Name };
         groups.push(group);
+        const timeLine = row.TimeLine;
+        for(let i = 0; i < timeLine.length; i++) {
+          itemCount++;
+          let groupId = group.id;
+          let newItem = { id: itemCount, group: groupId, title: timeLine[i].statusId, start_time: timeLine[i].startDate, end_time: timeLine[i].endDate };
+          newItems.push(newItem);
+        }
 
-        //TODO : Timeline Content.
-        
+        /*    timeLine.map((timeRow, timeIndex) => {
+          const newItem = { id: index, group: groupId, title: timeRow.statusId, start_time: timeRow.startDate, end_time: timeRow.endDate};
+          newItems.push(newItem);
+        }); */
       });
     } else {
       results = [];
     }
 
-     console.log('Filter results' + JSON.stringify(results));
-     console.log('Groups' + JSON.stringify(groups));
+    console.log('Filter results' + JSON.stringify(results));
+    console.log('Groups' + JSON.stringify(groups));
+    console.log('*************TimeLines*********************** ' + JSON.stringify(newItems));
     // const sideTableContent = [
     //   { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
     //   { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
@@ -324,7 +334,7 @@ class TimelineFilter extends React.Component {
     //   { id: 5, select: 'check', Unit: '116th MIB', team: 'Delta', type: 'fmv', location: 'SRO'},
     //   { id: 6, select: 'check', Unit: '116th MIB', team: 'Alpha', type: 'fmv', location: 'ASR'},
     // ];
-    
+
     // const groups = [
     //   { id: 1, title: 'group 1', rightTitle: 'Plar', },
     //   { id: 2, title: 'group 2', rightTitle: 'Plat', },
@@ -334,7 +344,7 @@ class TimelineFilter extends React.Component {
     //   { id: 6, title: 'group 6', rightTitle: 'Platss' },
     // ];
 
-    const items = [
+    const items =  [
       { id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour')},
       { id: 4, group: 1, title: 'item 4', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour') },
       { id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour') },
@@ -343,28 +353,28 @@ class TimelineFilter extends React.Component {
       { id: 6, group: 6, title: 'item 3', start_time: moment().add(3, 'hour'), end_time: moment().add(5, 'hour') },
       { id: 7, group: 5, title: 'item 4', start_time: moment().add(3, 'hour'), end_time: moment().add(5, 'hour') },
       { id: 8, group: 5, title: 'item 5', start_time: moment().add(5, 'hour'), end_time: moment().add(7, 'hour') },
-    ];
+    ] ;
 
     // let currentDateTime = new Date();
     const todate = moment().startOf('hour').toDate();
 
     // unist api will be diff for FlighOps and Ped Screens
-    let unitsUrl = 'Units/GetUnits';    
+    let unitsUrl = 'Units/GetUnits';
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
-      if(tab === MissionConsts.TABS.FOP ) {
+      if(tab === MissionConsts.TABS.FOP) {
         unitsUrl += '?unitType=2';
       } else if(tab === MissionConsts.TABS.PED) {
         unitsUrl += '?unitType=1';
       }
     }
-    
+
     // For ATO only Platform can be selecteed and for PED only Team can be selected
     let resourceDisabled = false;
     if(tab === MissionConsts.TABS.ATO || tab === MissionConsts.TABS.PED) {
       resourceDisabled = true;
     }
     const pageSize = results.length === 0 ? 1 : results.length;
-    
+
     return(
       <div>
         <div className="row mission-mgt">
@@ -374,16 +384,16 @@ class TimelineFilter extends React.Component {
           <div className="col-md-12 filter-line ">
 
             <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={resourceFilter} defaultValue = {selectedResource} disable={resourceDisabled}/>
-            
-            {selectedResource === MissionConsts.RESOURCE.TEAM ? 
+
+            {selectedResource === MissionConsts.RESOURCE.TEAM ?
               <MissionMgtDropDown name="teamStatusId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=6" />
               : ''
             }
-            {selectedResource === MissionConsts.RESOURCE.PLATFORM ? 
+            {selectedResource === MissionConsts.RESOURCE.PLATFORM ?
               <MissionMgtDropDown name="platformStatusId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
               : ''
-            } 
-            {selectedResource === MissionConsts.RESOURCE.PLATFORM ? 
+            }
+            {selectedResource === MissionConsts.RESOURCE.PLATFORM ?
               <MissionMgtDropDown name="cocomId" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
               : ''
             }
@@ -419,13 +429,13 @@ class TimelineFilter extends React.Component {
             </div>
           </div>
         </div>
-        
+
         <div className="row mission-mgt">
           { (results !== undefined && results.length > 0) ?
             <div className="col-md-12">
               <div className="col-md-4" style={{ padding: 0 }}>
                 {/* <StatusTable thead={columns} lines={filterResults} translations={translations} /> */}
-              
+
                 <ReactTable
                   data={results}
                   columns={columns}
@@ -439,7 +449,7 @@ class TimelineFilter extends React.Component {
                   previousText="&#8678;"
                   nextText="&#8680;"
                   defaultFilterMethod={defaultFilter}
-                /> 
+                />
 
               </div>
               <div className="col-md-8" style={{ padding: 0 }}>
@@ -449,7 +459,7 @@ class TimelineFilter extends React.Component {
                   groups={groups}
                   lineHeight={51}
                   // rightSidebarWidth={100}
-                  items={items}
+                  items={newItems}
                   defaultTimeStart={startDate}
                   defaultTimeEnd={endDate}
                   visibleTimeStart={startDate.getTime()}
@@ -461,17 +471,17 @@ class TimelineFilter extends React.Component {
                 />
               </div>
             </div>
-            
+
             : <div className="col-md-12 text-center">
               <strong>Oops!</strong> No Records Found.
               {/* <span className="border">No Records Found</span> */}
               {/* <div className="alert alert-danger">
                 <strong>Oops!</strong> No Records Found.
               </div> */}
-              
-            </div> } 
+
+            </div> }
         </div>
-          
+
 	  </div>
     );
   }

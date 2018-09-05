@@ -125,3 +125,16 @@ export const InputAttributes = {
   MAX_LENGTH: 50,
 };
 
+export const TimelineStatus = [
+  {
+
+  }
+
+];
+
+/* Pending - Gray  
+Available - White
+Off-line – Red
+Booked – Green
+Active – Red (our suggesstion Orange/Blue)
+ */
