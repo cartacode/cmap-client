@@ -23,7 +23,7 @@ class IsrSyncComponent extends React.Component {
     
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} showUnitType={this.state.showUnitType}/>
       </div>
     );
   }

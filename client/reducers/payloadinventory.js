@@ -1,4 +1,4 @@
-import { PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, } from 'dictionary/action';
+import { PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD_INVENTORY__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function payloads(state = initialState.payloads, { payload, type }) {
@@ -25,6 +25,21 @@ export default function payloads(state = initialState.payloads, { payload, type 
         isFetchingOne: false,
         onePayloadInventory: payload.data,
       };  
+      case PAYLOAD_INVENTORY__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case PAYLOAD_INVENTORY__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case PAYLOAD_INVENTORY__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
+      };
     // case PAYLOAD_LIST__FETCH.REQUEST:
     //   return {
     //     ...state,

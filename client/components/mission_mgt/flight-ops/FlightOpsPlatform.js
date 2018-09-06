@@ -30,7 +30,7 @@ class FlightOpsPlatform extends React.Component {
 
   // Move Left to Right
   // Updates PlatformInventoryId in mission
-  moveToFlightOpPlatform = (row) => {
+  moveRight = (row) => {
     const missionId = row.original.MissionId;
     const IntelReqID = row.original.IntelRequestID ;
     // const intelRequestID = row.original.IntelRequestID;
@@ -43,6 +43,7 @@ class FlightOpsPlatform extends React.Component {
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
         this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       alert('Please Select Platform');
@@ -51,7 +52,7 @@ class FlightOpsPlatform extends React.Component {
 
   // Move Right to Left
   // Updates PlatformInventoryId to null in mission
-  moveToAtoPlatform = (row) => {
+  moveLeft = (row) => {
     const IntelReqID = row.original.IntelRequestID ;    
     const missionId = row.original.MissionId ;    
     const unitId  = row.original.UnitId ;
@@ -65,6 +66,7 @@ class FlightOpsPlatform extends React.Component {
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       alert('Please Select Platform');
@@ -127,7 +129,7 @@ class FlightOpsPlatform extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveToFlightOpPlatform(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
@@ -174,7 +176,7 @@ class FlightOpsPlatform extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAtoPlatform(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),
@@ -192,7 +194,7 @@ class FlightOpsPlatform extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
@@ -215,7 +217,7 @@ class FlightOpsPlatform extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.FlightOPS} />
+                <FullHeaderLine headerText={translations.FlightOPS + ' (' + translations.platform + ')'} />
                 <div >
                   <ReactTable
                     data={fopPlatforms}
