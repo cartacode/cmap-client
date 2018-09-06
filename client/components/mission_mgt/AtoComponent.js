@@ -48,7 +48,7 @@ class AtoComponent extends React.Component {
     });
   }
 
-moveToAto = (row) => {
+moveLeft = (row) => {
   const intelRequestID = row.original.IntelRequestID;
   if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
     const data = {
@@ -66,7 +66,7 @@ moveToAto = (row) => {
   }
 }
 
-  moveToCP = (row) => {
+  moveRight = (row) => {
     // deletes from mission table by mission id
     const missionId = row.original.MissionId;
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
@@ -158,7 +158,7 @@ moveToAto = (row) => {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAto(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -217,7 +217,7 @@ moveToAto = (row) => {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCP(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),

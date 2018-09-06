@@ -30,7 +30,7 @@ class FlightOpsTeam extends React.Component {
 
   // Move Left to Right
   // Updates CrewId in mission
-  moveToFlightOpTeam = (row) => {
+  moveRight = (row) => {
     const IntelReqID = row.original.IntelRequestID ;
     const missionId = row.original.MissionId;    
     if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
@@ -50,7 +50,7 @@ class FlightOpsTeam extends React.Component {
 
   // Move Right to Left
   // Updates CrewTeamId to null in mission
-  moveToAtoTeam = (row) => {
+  moveLeft = (row) => {
     const IntelReqID = row.original.IntelRequestID ;    
     const missionId = row.original.MissionId ;    
     if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
@@ -123,7 +123,7 @@ class FlightOpsTeam extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveToFlightOpTeam(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
@@ -165,7 +165,7 @@ class FlightOpsTeam extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAtoTeam(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),
@@ -203,7 +203,7 @@ class FlightOpsTeam extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.FlightOPS} />
+                <FullHeaderLine headerText={translations.FlightOPS + ' (' + translations.team + ')'} />
                 <div >
                   <ReactTable
                     data={fopCrews}
