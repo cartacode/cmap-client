@@ -58,7 +58,12 @@ class TimelineFilter extends React.Component {
   }
 
   componentDidMount = () => {
+    this.props.onRef(this);
     this.onFind();
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
   }
 
   handleFilterData = (name, value) => {
@@ -282,7 +287,7 @@ class TimelineFilter extends React.Component {
         'StartDate': filter.startDate,
         'EndDate': filter.endDate,
       };
-console.log('Team data'+JSON.stringify(data));
+    console.log('Team data'+JSON.stringify(data));
     this.props.teamFilter(data).then(() => {
       const { filterResults } = this.props;
       this.setState({

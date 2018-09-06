@@ -36,6 +36,7 @@ class PedTaskingComponent extends React.Component {
      };
      this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
        this.loadData();
+       this.timeLine.onFind();
      });
    } else {
      alert('Please Select Ped Team.');
@@ -55,6 +56,7 @@ class PedTaskingComponent extends React.Component {
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       alert('Please Select Ped Team.');
@@ -179,7 +181,7 @@ class PedTaskingComponent extends React.Component {
     
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

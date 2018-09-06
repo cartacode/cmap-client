@@ -59,6 +59,7 @@ moveLeft = (row) => {
     // Inserts new values in mission table
     this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
       this.loadData();
+      this.timeLine.onFind();
     });
 
   } else {
@@ -71,6 +72,7 @@ moveLeft = (row) => {
     const missionId = row.original.MissionId;
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
       this.loadData();
+      this.timeLine.onFind();
     });
   };
 
@@ -235,7 +237,7 @@ moveLeft = (row) => {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">

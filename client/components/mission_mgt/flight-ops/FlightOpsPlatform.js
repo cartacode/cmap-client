@@ -43,6 +43,7 @@ class FlightOpsPlatform extends React.Component {
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
         this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       alert('Please Select Platform');
@@ -65,6 +66,7 @@ class FlightOpsPlatform extends React.Component {
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       alert('Please Select Platform');
@@ -192,7 +194,7 @@ class FlightOpsPlatform extends React.Component {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
