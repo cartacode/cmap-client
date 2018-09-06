@@ -564,7 +564,7 @@ class AdminStatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["platform"]} />
               <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-               defaultFilterMethod={defaultFilter} showPagination={0}
+               defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
 
                   // getTdProps={(state, rowInfo, column, instance) => {
                   //   return {
@@ -595,7 +595,7 @@ class AdminStatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["payload"]} />
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPagination={0}
+                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>
           </div>
@@ -611,14 +611,14 @@ class AdminStatusComponent extends React.Component {
               <HalfHeaderLine headerText="Munition" />
               <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable={true}
-               defaultFilterMethod={defaultFilter} showPagination={0}
+               defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
               <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPagination={0}
+                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
 
                   getTdProps={(state, rowInfo, column, instance) => {
                     return {
@@ -656,7 +656,7 @@ class AdminStatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
               minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPagination={0}
+                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>
             <div className="col-md-6">
