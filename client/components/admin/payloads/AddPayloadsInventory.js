@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import { uploadFile } from 'actions/file';
 import { addPayloadInventory, updatePayloadInventory, fetchPayloadInventoryById } from 'actions/payloadinventory';
+import Loader from '../../reusable/Loader';
 
 class AddPayloadsInventory extends React.Component {
 
@@ -20,6 +21,8 @@ class AddPayloadsInventory extends React.Component {
       imagePreviewUrl: '',
       locationcategory: '',
       onePayloadInventory: {},
+      loading:false
+
       // payloads : {
       // metaDataID:'',
       // locationID:'',
@@ -115,10 +118,17 @@ class AddPayloadsInventory extends React.Component {
     const { editId } = this.props;
     let { payloads } = this.state;
     if (editId !== undefined && editId !== '0') {
+      this.setState({loading:true});
       payloads.id = editId;
-      this.props.updatePayloadInventory(editId, payloads).then( () => {this.props.onClose('UPDATE');});
+      this.props.updatePayloadInventory(editId, payloads).then( () => {
+        this.setState({loading:false});
+        this.props.onClose('UPDATE');});
     } else {
-      this.props.addPayloadInventory(this.state.payloads).then( () => {this.props.onClose('ADD');});
+      this.setState({loading:true});
+      this.props.addPayloadInventory(this.state.payloads).then( () => {
+        this.setState({loading:false});
+        this.props.onClose('ADD');}
+      );
     }
     
   }
@@ -227,6 +237,7 @@ class AddPayloadsInventory extends React.Component {
         </div> */}
         <div className="payload-content">
           <div className="row personnel" >
+          <Loader loading={this.state.loading} />
 
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt=""/>

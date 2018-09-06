@@ -17,6 +17,7 @@ const mapStateToProps = state => {
     // payload: state.payloads.onePayload, 
     isLoading: state.payloadinventory.isFetching,
     allPayloadInventory: state.payloadinventory.allPayloadInventory,
+    isDeleted: state.payloadinventory.isDeleted
 
   };
 };

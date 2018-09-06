@@ -15,6 +15,7 @@ const mapStateToProps = state => {
     locationList: state.locations.locationList,
     cocomList: state.cocoms.cocomList,
     payload: state.payloads.onePayload,
+    isDeleted: state.payloads.isDeleted
   };
 };
 

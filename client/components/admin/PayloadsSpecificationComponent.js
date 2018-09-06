@@ -6,12 +6,13 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import DropDownButton from '../reusable/DropDownButton';
 import { defaultFilter } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
+import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import EoirModal from './payloads/EoirModal';
 import EquipmentModal from './payloads/EquipmentModal';
 import SargmtiModal from './payloads/SargmtiModal';
 import SigintModal from './payloads/SigintModal';
 import WamiModal from './payloads/WamiModal';
+import Loader from '../reusable/Loader';
 
 
 
@@ -36,7 +37,8 @@ class PayloadsSpecificationComponent extends React.Component {
 			  },
 			editId: '0',
 			payloadSpecType: '',
-			payloadTypeId: 0
+			payloadTypeId: 0,
+			loading:false
 			
 		}
 	}
@@ -148,7 +150,10 @@ class PayloadsSpecificationComponent extends React.Component {
 	//actionType means ADD, UPDATE, DELETE
 	notify =(actionType)=>{
 		const { translations } = this.props;
-		if('DELETE' != actionType){
+		if(NoticeType.NOT_DELETE === actionType){
+			NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Payload Library Title'], 5000);
+		}
+		else if(NoticeType.DELETE != actionType){
 			if (this.state.editId !== undefined && this.state.editId !== '0') {
 				NotificationManager.success(translations['UpdatedSuccesfully'], translations['Payload Library Title'], 5000);
 			}else{
@@ -225,9 +230,14 @@ class PayloadsSpecificationComponent extends React.Component {
 
 	deletePayload= (value)=> {
 		if (value !== undefined && value !== '0') {
+			this.setState({loading:true});
 		  this.props.deletePayloadsById(value).then(() => { 
 			//this.setState({	editId: '0'});
-			  this.loadData('DELETE'); 
+			this.setState({loading:false});
+			if(this.props.isDeleted)
+			  this.loadData(NoticeType.DELETE);
+			  else
+			  this.notify(NoticeType.NOT_DELETE); 
 			});
 		} 
 	  }
@@ -294,6 +304,7 @@ class PayloadsSpecificationComponent extends React.Component {
 			<div>
 				<div className="row orders-assets">
 					<div className="header-line">
+					<Loader loading={this.state.loading} />
 						<img src="/assets/img/admin/personnel_1.png" alt=""/>
 						<div className="header-text">
 							Payloads Library

@@ -5,7 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
-
+import { NoticeType } from '../../../dictionary/constants';
+import Loader from '../../reusable/Loader';
 
 class SargmtiModal extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class SargmtiModal extends React.Component {
         PayloadDatasheet: null
       },
       isImagedRequired: true,
+      loading:false
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -294,12 +296,20 @@ class SargmtiModal extends React.Component {
     }
     payload.PayloadType = payloadTypeId;
     if (editId !== undefined && editId !== '0') {
+      this.setState({loading: true});
       payload.PayloadID = editId;
       formData.append("payloadFormData", JSON.stringify(payload));
-      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => {
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.UPDATE);
+      });
     } else {
       formData.append("payloadFormData", JSON.stringify(payload));
-      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
+      this.setState({loading: true});
+      this.props.addPayload(formData).then(() => {
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.ADD);
+      });
     }
   }
 
@@ -408,6 +418,7 @@ class SargmtiModal extends React.Component {
 
         <div className="payload-content">
           <div className="row personnel" >
+          <Loader loading={this.state.loading} />
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
