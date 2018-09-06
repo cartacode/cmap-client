@@ -57,7 +57,7 @@ class PlatformComponent extends React.Component {
 	  this.props.fetchPlatformInventory();
   }
 
-	deletePayloadInventory = (value) => {
+	deletePlatformInventory = (value) => {
 
 	  if (value !== undefined && value !== '0') {
       this.setState({
@@ -82,7 +82,10 @@ class PlatformComponent extends React.Component {
 
   notify =(actionType)=>{
     const { translations } = this.props;
-    if (NoticeType.DELETE != actionType) {
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
+    }
+    else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
       }else{
@@ -168,7 +171,7 @@ class PlatformComponent extends React.Component {
         filterable: false,
         Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
               {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-              <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+              <a href="javaScript:void('0');" onClick={() => this.deletePlatformInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
         </div>,
 
       }
