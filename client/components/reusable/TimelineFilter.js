@@ -351,8 +351,11 @@ class TimelineFilter extends React.Component {
     }
 
     console.log('Filter results' + JSON.stringify(results));
+    console.log('Filter results Size ' + results.length);
     console.log('Groups' + JSON.stringify(groups));
+    console.log('Groups Size ' + groups.length);
     console.log('*************TimeLines*********************** ' + JSON.stringify(newItems));
+    console.log('*************TimeLines Size *********************** ' + newItems.length);
     // const sideTableContent = [
     //   { id: 1, select: 'check', Unit: '116th MIB', team: 'Blue', type: 'FMV', location: 'theater'},
     //   { id: 2, select: 'check', Unit: '116th MIB', team: 'red', type: 'Fmv', location: 'theater'},
@@ -459,8 +462,8 @@ class TimelineFilter extends React.Component {
                   data={results}
                   columns={columns}
                   loading={this.props.isLoading}
-                  defaultPageSize={pageSize}
-                  // minRows={this.props.lines.length}
+                  //defaultPageSize={pageSize}
+                  minRows={pageSize}
                   className="-striped -highlight"
                   filterable={false}
                   showPageSizeOptions={false}
