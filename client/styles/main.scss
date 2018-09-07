@@ -689,9 +689,11 @@ body .login{
             padding-top:3px;
           }
         }
-
+.mission-mgt input{
+  width:100%;
+}
         .photo{
-          width:100%;
+          width:100%;   
           height:75%;
         }
 
@@ -1494,11 +1496,14 @@ body .login{
     border-radius: 0;
     width: auto;
   }
-
+  a.highlighted-button.btn.filter {
+    border: 1px solid #fff;
+    color: #fff;
+   }
   .filter-line{
-    padding: 0 30px 20px;
+   
     width: 100%;
-    text-align: right;
+    text-align: center;
 
     .each-select{
       margin-left: 5px;
@@ -4670,6 +4675,12 @@ label {
   margin-bottom: 0px;
   
 }
+.mission-mgt input{
+  width:100%;
+}
+.info-field.pull-right {
+  float: unset!important;
+}
 .num-block {
   width: 100% !important;
 }
@@ -4695,8 +4706,12 @@ label {
    width: 100%; 
 }
 
-
-
+.mission-mgt .special-instruction {
+  font-size: 14px;
+}
+.mission-mgt .instructors {
+  font-size: 14px;
+}
 label {
 
   margin-bottom: 0px;
@@ -4704,7 +4719,7 @@ label {
 }
 .status .status-content .status-block .each-status {
   padding: 1%;
-      padding-top: 1%;
+  padding-top: 1%;
   padding-top: 5%;
   width: 100%;
   float: left;
@@ -4727,9 +4742,10 @@ ul.pull-right.setting-user {
 }
 .navbar-default .date-info  {
  
-  font-size: 13px;
+  font-size: 12px;
   width:155px!important;
 }
+
 .navbar-default a {
   color: #337ab7;
   text-decoration: none;
