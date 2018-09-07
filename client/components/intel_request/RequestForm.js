@@ -369,18 +369,18 @@ resetForm() {
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
+            {this.state.intelRequest.MissionId == null ? 
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='btn btn-warning'>
-                {/* {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']} */}
                 {translations['submit']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+            </div> : '' }
           </div>
         </form>
 
-        {this.state.intelRequest.IntelRequestID !== '' ?
+        { (this.state.intelRequest.IntelRequestID !== '' && this.state.intelRequest.MissionId == null) ?
           <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
           : null }
         {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
