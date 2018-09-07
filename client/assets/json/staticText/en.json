@@ -729,5 +729,6 @@
   "teams":"Teams",
   "Date/Time": "Date/Time",
   "IR#": "IR#",
-  "Command": "Command"
+  "Command": "Command",
+  "mission summary":"Summary"
 }

@@ -241,6 +241,8 @@ resetForm() {
     const { match: { params } } = this.props;
     const editId = params.editId;
 
+    let { intelRequest } = this.state;
+
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
       { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true },
@@ -275,9 +277,9 @@ resetForm() {
     //   priorityOptions.push({ label: i, value: i });
     // }
 
-    const intelRequest4 = [
+    let intelRequest4 = [
 
-      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' , required:true},
+      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
       { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
     ];
