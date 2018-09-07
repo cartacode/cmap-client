@@ -26,6 +26,7 @@ export default {
     allMunitions: [],
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
     allMunitionInventory: [],
     oneMunitionInventory: {},
     oneMunition: {}

@@ -188,7 +188,7 @@ class BaseModal extends React.Component {
           }
         });
     }
-    console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+    //console.log("New state in ASYNC callback og location Section:22222", this.state.location);
  
   }
 
@@ -205,7 +205,7 @@ class BaseModal extends React.Component {
         LocationChatID: infoData.LocationChatID
       }
     }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.location);
+      //console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
 
@@ -224,7 +224,7 @@ class BaseModal extends React.Component {
         KML: uploadFileData.KML,
       }
     }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
+      //console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.locationFiles);
     });
   }
 
@@ -303,7 +303,6 @@ class BaseModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    debugger;
     this.checkLocationId();
   }
 
@@ -313,7 +312,6 @@ class BaseModal extends React.Component {
 
   resetForm() {
     this.setState(this.baseState);
-    console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({
          clear: true,

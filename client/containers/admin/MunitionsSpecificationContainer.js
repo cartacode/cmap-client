@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     allMunitions: state.munitions.allMunitions,
     munition: state.munitions.oneMunition,
     isLoading: state.munitions.isFetching,
+    isDeleted: state.munitions.isDeleted
 
   };
 };
