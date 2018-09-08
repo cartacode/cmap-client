@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
-// import { fetchPersonnelsById } from 'actions/organicpersonnel.js'
+import { fetchPersonnelsByFilter } from 'actions/organicpersonnel.js'
 import { addOraganicOrg } from 'actions/organicorg';
 import ContentFull from './ContentFull';
 
@@ -28,6 +28,17 @@ class Accordion extends React.Component {
         ParentUnitID:'',
         BranchOfService:'1',
         CommandRelationship:'1'
+      },
+      searchUnit: {
+        COCOM: '',
+        BranchOfService: '',
+        AssignedUnit: '',
+        DeployedUnit:'',
+        TeamID: '',
+        DutyPosition: '',
+        LocationID: '',
+        MOS: '',
+        FreeFormSearchText: ''
       }
     }
   }
@@ -112,6 +123,27 @@ class Accordion extends React.Component {
     this.setState({
       branch: generalData.branch    });
 
+  }
+
+  handleSearchData = (generalData) => {
+    const { searchUnit } = this.state;
+
+    this.setState({
+      searchUnit: {
+        ...searchUnit,
+        COCOM: generalData.COCOM,
+        BranchOfService: generalData.BranchOfService,
+        AssignedUnit: generalData.AssignedUnit,
+        DeployedUnit:generalData.DeployedUnit,
+        TeamID: generalData.TeamID,
+        DutyPosition: generalData.DutyPosition,
+        LocationID: generalData.LocationID,
+        MOS: generalData.MOS,
+        FreeFormSearchText: generalData.FreeFormSearchText
+      },
+    });
+
+    console.log(searchUnit);
   }
 
   renderDropdowns(dropdowns) {
@@ -272,8 +304,9 @@ class Accordion extends React.Component {
     
   }
 
-  handleFilterSubmit = () => {
-
+  handleSearchSubmit = () => {
+      let { searchUnit } = this.state;
+      this.props.fetchPersonnelsByFilter(searchUnit);
   }
 
   submitBranch = () => {
@@ -290,6 +323,8 @@ class Accordion extends React.Component {
 
   render() {
 
+    console.log(this.props);
+
     const firstSectionDropdowns = [
       {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
       {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
@@ -301,16 +336,16 @@ class Accordion extends React.Component {
       {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
-    const firstSectionFields = [
-      {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
-      {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
-      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits'},
-      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
-      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1'},
-      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
-      {name: 'MOS', type: 'dropdown', ddID:'MOS'},
-      {name: 'Search', type: 'input'},
+    const searchFields = [
+      {name: 'COCOM', type: 'dropdown', ddID:'COCOM', domID: 'COCOM', valFieldID: 'COCOM'},
+      {name: 'Service', type: 'dropdown', ddID:'BranchOfService', domID: 'BranchOfService', valFieldID: 'BranchOfService' },
+      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'AssignedUnit', valFieldID: 'AssignedUnit'},
+      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'DeployedUnit', valFieldID: 'DeployedUnit'},
+      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1', domID: 'TeamID', valFieldID: 'TeamID'},
+      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition', domID: 'DutyPosition', valFieldID: 'DutyPosition'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2', domID: 'LocationID', valFieldID: 'LocationID'},
+      {name: 'MOS', type: 'dropdown', ddID:'MOS', domID: 'MOS', valFieldID: 'MOS'},
+      {name: 'Search', type: 'input', domID: 'FreeFormSearchText', valFieldID: 'FreeFormSearchText'},
     ];
 
     const lastSectionDropdowns = [
@@ -389,14 +424,15 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${2}`}>
-              <div className="content info-content">
-                {this.renderDropdowns(firstSectionDropdowns)}
+              <div className="content info-content form-content">
+                {/* {this.renderDropdowns(firstSectionDropdowns)}
                 <div className="accordion-search">
                 <br/>
                   <input placeholder="Search/Filter Name, CAC ID"/>
-                </div>
+                </div> */}
+                <ContentFull fields={searchFields} data={this.handleSearchData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
               </div>
-              <button type="submit" onClick={this.handleFilterSubmit}>Submit</button> <br/><br/>
+              <button type="submit" onClick={this.handleSearchSubmit}>Submit</button> <br/><br/>
             </div>
           </div>
         </div>
@@ -614,6 +650,7 @@ const mapDispatchToProps = {
   // fetchPlatformStatusById,
   // updatePlatformStatus
   addOraganicOrg,
+  fetchPersonnelsByFilter,
 
 };
 
