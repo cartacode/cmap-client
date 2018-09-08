@@ -6,6 +6,7 @@ import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
 import { fetchPersonnelsByFilter } from 'actions/organicpersonnel.js'
 import { addOraganicOrg } from 'actions/organicorg';
+import { addOraganicPersonnel } from 'actions/organicpersonnel';
 import ContentFull from './ContentFull';
 
 class Accordion extends React.Component {
@@ -39,7 +40,8 @@ class Accordion extends React.Component {
         LocationID: '',
         MOS: '',
         FreeFormSearchText: ''
-      }
+      },
+      TeamMembers: []
     }
   }
 
@@ -188,7 +190,7 @@ class Accordion extends React.Component {
         return (
           <div className="accordion-results" key={i}>
             <div className="result-checkbox">
-              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}/>
+              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}  onClick={() => this.handleChange(i)} checked={this.state.uncheckedResults.indexOf(i) === -1}/>
               <label htmlFor={`checkbox${i}`}><span /></label>
             </div>
             <div>
@@ -218,7 +220,8 @@ class Accordion extends React.Component {
     }
     this.setState({
       uncheckedResults
-    })
+    }, () => { console.log(uncheckedResults); });
+    
   };
 
   renderOrders() {
@@ -313,7 +316,8 @@ class Accordion extends React.Component {
 
   handleSearchSubmit = () => {
       let { searchUnit } = this.state;
-      this.props.fetchPersonnelsByFilter(searchUnit);
+      this.props.fetchPersonnelsByFilter(searchUnit).then(() => { this.close(3); this.toggleHeader(3);
+        this.close(1); this.close(2); });
   }
 
   submitBranch = () => {
@@ -323,6 +327,7 @@ class Accordion extends React.Component {
 
   handleAddSubmit = () => {
     let { addUnit } = this.state;
+    let { TeamMembers } = this.state;
     this.props.addOraganicOrg(addUnit).then( () => {
      alert("Added");
     });
@@ -659,6 +664,7 @@ const mapDispatchToProps = {
   // updatePlatformStatus
   addOraganicOrg,
   fetchPersonnelsByFilter,
+  addOraganicPersonnel,
 
 };
 

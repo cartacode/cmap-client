@@ -12,12 +12,12 @@ export function fetchOrganicPersonnel() {
   });
 }
 
-// export function addOraganicPersonnel(personnel) {
-//   return createAction({
-//     type: ORGANIC_PERSONNEL__ADD,
-//     action: () => axios.post(`${baseUrl}/CommandStructure/PostCommandStructure`, qs.stringify(personnel), requestHeaders),
-//   });
-// }
+export function addOraganicPersonnel(personnel) {
+  return createAction({
+    type: ORGANIC_PERSONNEL__ADD,
+    action: () => axios.put(`${baseUrl}/Personnel/SetPersonnelUnits`, personnel, requestHeaders),
+  });
+}
 
 export function fetchPersonnelsByFilter(id) {
     return createAction({
