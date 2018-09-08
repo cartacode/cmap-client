@@ -241,6 +241,8 @@ resetForm() {
     const { match: { params } } = this.props;
     const editId = params.editId;
 
+    let { intelRequest } = this.state;
+
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
       { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true },
@@ -275,9 +277,9 @@ resetForm() {
     //   priorityOptions.push({ label: i, value: i });
     // }
 
-    const intelRequest4 = [
+    let intelRequest4 = [
 
-      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' , required:true},
+      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
       { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
     ];
@@ -367,18 +369,18 @@ resetForm() {
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
+            {this.state.intelRequest.MissionId == null ? 
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className='btn btn-warning'>
-                {/* {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']} */}
                 {translations['submit']}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
+            </div> : '' }
           </div>
         </form>
 
-        {this.state.intelRequest.IntelRequestID !== '' ?
+        { (this.state.intelRequest.IntelRequestID !== '' && this.state.intelRequest.MissionId == null) ?
           <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
           : null }
         {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }

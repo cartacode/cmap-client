@@ -6,8 +6,8 @@ import ReactTable from 'react-table';
 import AddMunitionsInventory from './munitions/AddMunitionsInventory';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { defaultFilter } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
-
+import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 class MunitionsComponent extends React.Component {
 
@@ -25,6 +25,7 @@ class MunitionsComponent extends React.Component {
         type: 'Test'
       },
       editId: '0',
+      loading: false
 
     }
   }
@@ -51,17 +52,29 @@ closeMunitionsForm = (actionType) => {
 
 deleteMunitions = (value) => {
   if (value !== undefined && value !== '0') {
+    this.setState({loading: true});
     this.props.deleteMunitionInventoryById(value).then(() => {
+      this.setState({loading: false});
+
       //this.setState({ editId: '0' });
+      if(this.props.isDeleted){
       this.props.fetchMunitionInventory();
-      this.notify('DELETE');
+      this.notify(NoticeType.DELETE);
+      }
+      else{
+        this.notify(NoticeType.NOT_DELETE);
+
+      }
     });
   }
 }
 
 notify =(actionType)=>{
   const { translations } = this.props;
-  if ('DELETE' != actionType) {
+  if(NoticeType.NOT_DELETE === actionType){
+    NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Munition Inventory Title'], 5000);
+  }
+ else if ('DELETE' != actionType) {
   if (this.state.editId !== undefined && this.state.editId !== '0') {
     NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Inventory Title'], 5000);
   }else{
@@ -199,6 +212,7 @@ else{
       <div>
         <div className="row orders-assets">
           <div className="header-line">
+          <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["Munitions"]}

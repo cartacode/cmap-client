@@ -1,13 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import { Switch, Route, NavLink } from 'react-router-dom';
-
-import IsrSyncContainer from '../containers/mission_mgt/IsrSyncContainer';
+import React from 'react';
+import { connect } from 'react-redux';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import AtoContainer from '../containers/mission_mgt/AtoContainer';
-import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
-import MissionDetailContainer from '../containers/mission_mgt/MissionDetailContainer';
 import FlightOpsContainer from '../containers/mission_mgt/FlightOpsContainer';
+import IsrSyncContainer from '../containers/mission_mgt/IsrSyncContainer';
+import MissionDetailContainer from '../containers/mission_mgt/MissionDetailContainer';
+import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
+import MissionSummaryContainer from '../containers/mission_mgt/MissionSummaryContainer';
+
 
 class MissionMGTComponent extends React.Component {
 
@@ -24,9 +25,11 @@ class MissionMGTComponent extends React.Component {
       {title: translations['ato'], url: `${match.url}/ato`},
       {title: translations['flightops'], url: `${match.url}/flightops`},
       {title: translations['ped tasking'], url: `${match.url}/ped-tasking`},
-      {title: translations['mission detail'], url: `${match.url}/mission-detail`},
+      {title: translations['mission summary'], url: `${match.url}/mission-summary`},
+      /* {title: translations['mission detail'], url: `${match.url}/mission-detail`}, */
     ];
 
+    
     return menuItems.map((item, i) => {
       let image = '/assets/img/menu/button-line-highlight.png';
       let matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
@@ -63,6 +66,7 @@ class MissionMGTComponent extends React.Component {
           <Route path={`${match.url}/flightops`} component={FlightOpsContainer} />
           <Route path={`${match.url}/ato`} component={AtoContainer} />
           <Route path={`${match.url}/ped-tasking`} component={PedTaskingContainer} />
+          <Route path={`${match.url}/mission-summary`} component={MissionSummaryContainer} />
           <Route path={`${match.url}/mission-detail`} component={MissionDetailContainer} />
         </Switch>
       </div>
