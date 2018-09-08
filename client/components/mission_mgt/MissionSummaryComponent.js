@@ -9,10 +9,6 @@ import Loader from '../reusable/Loader';
 import MissionDetailModel from '../mission/MissionDetailModel';
 import { NotificationManager } from 'react-notifications';
 
-
-
-
-
 class MissionSummaryComponent extends React.Component {
 
   constructor(props) {
@@ -189,11 +185,7 @@ class MissionSummaryComponent extends React.Component {
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          {!this.state.addPlatformInventoryOpen ?<div className="col-md-12 filter-line">
-            <div className="add-button">
-              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations["Add Platform"]}</button>
-            </div>
-          </div> : null}
+          
           {this.state.addPlatformInventoryOpen ?
             <MissionDetailModel editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}

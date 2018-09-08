@@ -360,28 +360,28 @@ resetForm() {
             </div>
           </div> */}
 
-
-          <div className="row action-buttons">
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
-                {translations['clear']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          {this.state.intelRequest.MissionId === null ? 
+            <div className="row action-buttons">
+              <div className="menu-button">
+                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
+                  {translations['clear']}
+                </button>
+                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+              </div>
+              <div className="menu-button">
+                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                <button type="submit" className='btn btn-warning'>
+                  {translations['submit']}
+                </button>
+                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+              </div> 
             </div>
-            {this.state.intelRequest.MissionId == null ? 
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="submit" className='btn btn-warning'>
-                {translations['submit']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div> : '' }
-          </div>
+            : '' }
         </form>
 
-        { (this.state.intelRequest.IntelRequestID !== '' && this.state.intelRequest.MissionId == null) ?
-          <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        { (this.state.intelRequest.IntelRequestID !== '') ?
+          <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
           : null }
         {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
