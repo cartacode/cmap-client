@@ -3129,6 +3129,8 @@ tbody>tr>td, tbody>tr>th{
 
 .form-content { padding: 0px !important; .form-fields-gap { padding:0px !important; } }
 
+.results-content {overflow-y: scroll; max-height: 326px;}
+
 .custom-content {margin-bottom: 10px;}
 
 /* Style the buttons that are used to open and close the accordion panel */
@@ -3221,6 +3223,8 @@ tbody>tr>td, tbody>tr>th{
         .accordion-results {
           height: 50px;
           margin: 10px 0;
+          clear: both;
+          display: flex;
 
           > div {
             float: left;

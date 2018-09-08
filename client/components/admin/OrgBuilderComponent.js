@@ -344,6 +344,10 @@ onSelecOption = (nodeId, name) => {
 
 }
 
+fetchPersonnels = (searchUnit) => {
+  this.props.fetchPersonnelsByFilter(searchUnit).then(() => {console.log("DoneFetch")});
+}
+
 chartData = ()=> {
 
   var config = {
@@ -465,7 +469,9 @@ render() {
   const { translations } = this.props;
   const { allOrganicOrgs } = this.props;
   const { allOrganicPersonnels } = this.props;
+  const { listOrganicPersonnels } = this.props;
 
+  console.log(listOrganicPersonnels);
 
   return (
     <div>
@@ -494,7 +500,7 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} setBranch={this.setBranch}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}

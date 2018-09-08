@@ -164,17 +164,24 @@ class Accordion extends React.Component {
 
   renderResults() {
 
-    const results = [
-      {name: 'First Name', type: 'input'},
-      {name: 'Middle Initial', type: 'input'},
-      {name: 'Last Name', type: 'input'},
-      {name: 'Rank', type: 'dropdown'},
-      {name: 'Pay Grade', type: 'dropdown'},
-      // {name: 'Nationality', type: 'dropdown'},
-      // {name: 'Clearance Level', type: 'dropdown'},
-      // {name: 'CAC ID', type: 'input'},
-      // {name: 'Call Sign', type: 'input'},
-    ];
+    // const results = [
+    //   {name: 'First Name', type: 'input'},
+    //   {name: 'Middle Initial', type: 'input'},
+    //   {name: 'Last Name', type: 'input'},
+    //   {name: 'Rank', type: 'dropdown'},
+    //   {name: 'Pay Grade', type: 'dropdown'},
+    //   // {name: 'Nationality', type: 'dropdown'},
+    //   // {name: 'Clearance Level', type: 'dropdown'},
+    //   // {name: 'CAC ID', type: 'input'},
+    //   // {name: 'Call Sign', type: 'input'},
+    // ];
+    let results = [];
+
+    const { listPersonnel } = this.props;
+
+    if (listPersonnel) {
+      results = listPersonnel;
+    }
 
       return results.map((item, i) => {
 
@@ -189,10 +196,10 @@ class Accordion extends React.Component {
             </div>
             <div className="result-user">
               <div className="result-name">
-                cmd larry pickering
+                {item.Name} 
               </div>
               <div className="result-from">
-                82nd Airborne Division
+                {item.Unit}
               </div>
             </div>
           </div>
@@ -323,7 +330,8 @@ class Accordion extends React.Component {
 
   render() {
 
-    console.log(this.props);
+    const { listPersonnel } = this.props;
+    console.log(listPersonnel);
 
     const firstSectionDropdowns = [
       {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
@@ -445,7 +453,7 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${3}`}>
-              <div className="content">
+              <div className="content results-content">
                 {this.renderResults()}
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
