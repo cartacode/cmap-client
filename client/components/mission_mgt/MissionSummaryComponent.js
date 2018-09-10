@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import MissionDetailModel from '../mission/MissionDetailModel';
 import { NotificationManager } from 'react-notifications';
@@ -24,7 +24,6 @@ class MissionSummaryComponent extends React.Component {
   }
 
   componentDidMount() {
-
     this.props.fetchMissionSummary();
   }
   
@@ -49,10 +48,10 @@ class MissionSummaryComponent extends React.Component {
     });
   } */
 
-  loadData = (actionType) => {
-    this.notify(actionType);
-	  this.props.fetchMissionSummary();
-  }
+  // loadData = (actionType) => {
+  //   this.notify(actionType);
+	//   this.props.fetchMissionSummary();
+  // }
 
 /* 	deletePlatformInventory = (value) => {
 
@@ -77,40 +76,31 @@ class MissionSummaryComponent extends React.Component {
 	  }
 	} */
 
-  notify =(actionType)=>{
-    const { translations } = this.props;
-    if(NoticeType.NOT_DELETE === actionType) {
-      NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
-    }
-    else if (NoticeType.DELETE != actionType) {
-      if (this.state.editId !== undefined && this.state.editId !== '0') {
-        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
-      }else{
-        NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
-      }
-    }else{
-      NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Inventory Title'], 5000);
-    }
-  }
-
-
-
-  // renderItems(optionItem) {
-  //   let items = [{"label": "-Select Item-", "value": 0}];
-  //   optionItem.map((item, i) => {
-  //       items.push({"label": item.description, "value": i});
-  //   });
-  //   return items.map(function(data, key){
-  //       if(data.label == "-Select Item-"){
-  //         return ( <option key={key} value=""> {data.label} </option>) ;
-  //       } else {
-  //         return (<option key={key} value={data.label}>{data.label}</option> );
-  //       }
-  //   })
+  // notify =(actionType)=>{
+  //   const { translations } = this.props;
+  //   if(NoticeType.NOT_DELETE === actionType) {
+  //     NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
+  //   }
+  //   else if (NoticeType.DELETE != actionType) {
+  //     if (this.state.editId !== undefined && this.state.editId !== '0') {
+  //       NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
+  //     }else{
+  //       NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
+  //     }
+  //   }else{
+  //     NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Inventory Title'], 5000);
+  //   }
   // }
+
+
+
 
   handleChange(value) {
     //console.log(value);
+  }
+
+  getColor= (row)=> {
+    return getIntelStatusColor(row.original.Status);
   }
 
   render() {
@@ -122,6 +112,10 @@ class MissionSummaryComponent extends React.Component {
       {
         Header: translations["Tail#"],
         accessor: 'TailNumber',
+        Cell: row => <div>
+        <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+        <span>{row.value}</span>
+      </div>,
         // filterMethod: (filter, row) =>
         //   row[filter.id].startsWith(filter.value),
 
@@ -158,22 +152,18 @@ class MissionSummaryComponent extends React.Component {
         Header: translations['view'],
         accessor: 'MissionId',
         filterable: false,
-      /*   Cell: row => <div>
-          <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
-            <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
-          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
-          <span className="glyphicon glyphicon-trash"/></a> :
-            <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-        </div>, */
+      //   Cell: row => <div>
+        //  <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
+         //   <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
+        //  {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
+        //  <span className="glyphicon glyphicon-trash"/></a> :
+       //     <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+       // </div>,
         Cell: row => <div>
-        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
-          <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
-        {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
-       </a> :
-         ''}
-      </div>,
-
-      }
+        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="View" >
+          <span className="glyphicon glyphicon-eye-open"/></a>  
+        </div>,
+      } 
     ];
 
     return (
