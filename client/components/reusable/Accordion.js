@@ -28,7 +28,8 @@ class Accordion extends React.Component {
         UnitSpecialization:'',
         ParentUnitID:'',
         BranchOfService:'1',
-        CommandRelationship:'1'
+        CommandRelationship:'1',
+        UnitPersonnel: []
       },
       searchUnit: {
         COCOM: '',
@@ -41,7 +42,7 @@ class Accordion extends React.Component {
         MOS: '',
         FreeFormSearchText: ''
       },
-      TeamMembers: []
+      
     }
   }
 
@@ -61,6 +62,20 @@ class Accordion extends React.Component {
       this.setState({
         showAddForm:true
       }, () => {this.addOrgForm();});   
+
+      const { listPersonnel } = this.props;
+      let { uncheckedResults } = this.state;
+      let { UnitPersonnel } = this.state.addUnit;
+      console.log("Printing These");
+      console.log(listPersonnel); 
+      for (let i = 0; i<listPersonnel.length; i++)
+      {
+        if (!(uncheckedResults.includes(i))) 
+        {  UnitPersonnel.push(listPersonnel[i].ID); 
+          console.log(UnitPersonnel);
+          console.log(this.state.addUnit.UnitPersonnel);
+        }
+      }
   }
 
   close = (key) => {
