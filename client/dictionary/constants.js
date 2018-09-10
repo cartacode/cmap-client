@@ -124,6 +124,24 @@ export const IntelConstants = {
       abbreviation: 'AAG',
       color: 'darkkhaki',
     },
+    MP: {
+      id: 35,
+      description: 'Mission Pending',
+      abbreviation: 'MP',
+      color: 'Gray',
+    },
+    MA: {
+      id: 36,
+      description: 'Mission Active',
+      abbreviation: 'MA',
+      color: 'Red',
+    },
+    MG: {
+      id: 37,
+      description: 'Mission Generated',
+      abbreviation: 'MG',
+      color: 'White',
+    },
   },
 };
 

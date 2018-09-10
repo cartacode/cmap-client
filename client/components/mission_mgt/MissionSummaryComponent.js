@@ -148,7 +148,7 @@ class MissionSummaryComponent extends React.Component {
         accessor: 'StatusId'
       },
      
-      /* {
+      {
         Header: translations['view'],
         accessor: 'MissionId',
         filterable: false,
@@ -160,14 +160,10 @@ class MissionSummaryComponent extends React.Component {
        //     <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
        // </div>,
         Cell: row => <div>
-        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
-          <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
-        {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
-       </a> :
-        ''} 
-      </div>,
-
-      } */
+        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="View" >
+          <span className="glyphicon glyphicon-eye-open"/></a>  
+        </div>,
+      } 
     ];
 
     return (
