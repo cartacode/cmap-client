@@ -6,7 +6,8 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import AddPayloadsInventory from './payloads/AddPayloadsInventory';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
-import {TableDefaults} from '../../dictionary/constants';
+import {TableDefaults, NoticeType} from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 class PayloadsComponent extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class PayloadsComponent extends React.Component {
       filter: [],
       addPayloadsInventoryOpen: false,
       editId: '0',
-      editForm:false,
+			editForm:false,
+			loading:false
       		// counter:0
     };
   }
@@ -67,17 +69,28 @@ class PayloadsComponent extends React.Component {
 	}
 
 	deletePayloadInventory = (value) => {
+
 	  if (value !== undefined && value !== '0') {
+			this.setState({loading:true});
 	    this.props.deletePayloadInventoryById(value).then(() => {
-	      //this.setState({ editId: '0' });
-	      this.loadData('DELETE');
+				//this.setState({ editId: '0' });
+				this.setState({loading:false});
+				if(this.props.isDeleted)
+					this.loadData(NoticeType.DELETE);
+				else
+					this.notify(NoticeType.NOT_DELETE);
+
 	    });
 	  }
 	}
 
 	notify = (actionType) => {
-	  const { translations } = this.props;
-	  if ('DELETE' != actionType) {
+		const { translations } = this.props;
+		
+		if(NoticeType.NOT_DELETE === actionType){
+	    NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Payload Inventory Title'], 5000);
+		}
+	  else if (NoticeType.DELETE != actionType) {
 	    if (this.state.editId !== undefined && this.state.editId !== '0') {
 	      NotificationManager.success(translations['UpdatedSuccesfully'], translations['Payload Inventory Title'], 5000);
 	    } else {
@@ -160,6 +173,7 @@ class PayloadsComponent extends React.Component {
 	  return (
 	    <div>
 	      <div className="row orders-assets">
+				<Loader loading={this.state.loading} />
 	        <div className="header-line">
 	          <img src="/assets/img/admin/personnel_1.png" alt="" />
 	          <div className="header-text">

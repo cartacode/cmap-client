@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
+import Loader from '../../reusable/Loader';
 
 
 
@@ -23,6 +24,7 @@ class AddMunitionsInventory extends React.Component {
       imagePreviewUrl: '',
       locationUpdate: true,
       oneMunitionInventory: {},
+      loading: false
       // munition: {
       //   metaDataID: '',
       //   locationID: '',
@@ -114,10 +116,18 @@ class AddMunitionsInventory extends React.Component {
     const { editId } = this.props;
     let { munition } = this.state;
     if (editId !== undefined && editId !== '0') {
+      this.setState({loading: true});
       munition.id = editId;
-      this.props.updateMunitionInventory(editId, munition).then(() => { this.props.onClose(); });
+      this.props.updateMunitionInventory(editId, munition).then(() => { 
+      this.setState({loading: false});
+      this.props.onClose();
+     });
     } else {
-      this.props.addMunitionInventory(munition).then(() => { this.props.onClose(); });
+      this.setState({loading: true});
+      this.props.addMunitionInventory(munition).then(() => { 
+        this.setState({loading: false});
+        this.props.onClose(); 
+      });
     }
   }
 
@@ -226,7 +236,7 @@ class AddMunitionsInventory extends React.Component {
           </div> */}
         <div className="payload-content">
           <div className="row personnel" >
-
+            <Loader loading={this.state.loading} />
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">

@@ -24,27 +24,43 @@ class PedTaskingComponent extends React.Component {
   }
 
   //  Move Intel from ATO table to PED table . i.e Left -> Right.
- moveToPED = (row) => {
-   const missionId = row.original.MissionId;
-   if(this.state.radioTeamId !== '' && this.state.radioTeamId !== 0) {
+ moveRight = (row) => {
+   const IntelReqID = row.original.IntelRequestID ;
+   const missionId = row.original.MissionId;    
+   if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
      const data = {
        'Id': missionId,
+       IntelReqID,
        'PedTeamID': this.state.radioTeamId,
+       'Type': 'Ped',
      };
-     // updates PEDTeamId for that mission
-     this.props.moveToPedTaskFromATOGeneration(missionId, data).then(() => {
+     this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
        this.loadData();
+       this.timeLine.onFind();
      });
    } else {
-     alert('Please select PED Team')
+     alert('Please Select Ped Team.');
    }
  }
   
   //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
-  moveToAto = (row) => {
-    this.props.moveToATOGenerationFromPedTask(row.original.MissionId).then(() => {
-      this.loadData();
-    });
+  moveLeft = (row) => {
+    const IntelReqID = row.original.IntelRequestID ;    
+    const missionId = row.original.MissionId ;    
+    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+      const data = {
+        Id: missionId,
+        IntelReqID,
+        PedTeamID: null,
+        Type: 'Ped',
+      };
+      this.props.moveToATOFromFlightOPS(data).then(() => {
+        this.loadData();
+        this.timeLine.onFind();
+      });
+    } else {
+      alert('Please Select Ped Team.');
+    }
   };
 
   radioFilterSelect=(value)=> {
@@ -106,7 +122,7 @@ class PedTaskingComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Ped Task" onClick={() => this.moveToPED(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Ped Task" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             {/*  <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -147,7 +163,7 @@ class PedTaskingComponent extends React.Component {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAto(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -165,7 +181,7 @@ class PedTaskingComponent extends React.Component {
     
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

@@ -58,7 +58,6 @@ export const PAYLOAD_INVENTORY__FETCH = createActionType('PAYLOAD_INVENTORY__FET
 export const PAYLOAD_INVENTORY__FETCH_ONE = createActionType('PAYLOAD_INVENTORY__FETCH_ONE');
 export const PAYLOAD_INVENTORY__DELETE_ONE = createActionType('PAYLOAD_INVENTORY__DELETE_ONE');
 
-
 export const PERSONNEL__ADD = createActionType('PERSONNEL__ADD');
 export const PERSONNEL__UPDATE = createActionType('PERSONNEL__UPDATE');
 export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');

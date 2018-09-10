@@ -38,6 +38,7 @@ export default {
     isListFetching: false,
     isTypesFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
     payloadList: [],
     payloadTypes: [],    
     onePayloadInventory: {},

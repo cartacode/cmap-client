@@ -20,8 +20,8 @@ class MissionMgtDropDown extends React.Component {
       if(undefined !== props.labelName) {
         this.labelField = props.labelName;
       }
-      if(undefined !== props.finalValue) {
-        this.valueField = props.finalValue;
+      if(undefined !== props.valueName) {
+        this.valueField = props.valueName;
       }
     }
 

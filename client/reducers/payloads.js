@@ -1,4 +1,4 @@
-import { PAYLOAD__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE } from 'dictionary/action';
+import { PAYLOAD__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE, PAYLOAD__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function payloads(state = initialState.payloads, { payload, type }) {
@@ -46,6 +46,21 @@ export default function payloads(state = initialState.payloads, { payload, type 
         ...state,
         isFetching: false,
         onePayload: payload.data,
+      };
+      case PAYLOAD__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case PAYLOAD__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case PAYLOAD__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
       };
 
     default:

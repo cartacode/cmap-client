@@ -9,17 +9,17 @@ import { viewers } from 'map/viewer';
  * @param   {string}          config.viewerId The identifier of the representative viewer.
  * @returns {Promise} Resolves with the KML entity.
  */
-export function addKML({ kml, viewerId }) {
+export function addKML( kml, viewerId ) {
   if (!viewers.has(viewerId)) {
     return;
   }
 
   const viewer = viewers.get(viewerId);
 
-  return viewer.dataSources.add(Cesium.KmlDataSource.load(kml, {
+  return viewer.flyTo(viewer.dataSources.add(Cesium.KmlDataSource.load(kml, {
     camera: viewer.scene.camera,
     canvas: viewer.scene.canvas,
-  }));
+  })));
 }
 
 /**

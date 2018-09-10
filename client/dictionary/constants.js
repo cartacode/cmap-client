@@ -12,6 +12,12 @@ export const TableDefaults = {
   MIN_ROWS: 1,
 }
 
+export const UnitConsts = {
+  TYPE: {
+    PED: 1,
+    CREW: 2,
+  }
+}
 export const MissionConsts = {
   RESOURCE: {
     PLATFORM: '1',
@@ -125,3 +131,16 @@ export const InputAttributes = {
   MAX_LENGTH: 50,
 };
 
+export const TimelineStatus = [
+  {
+
+  }
+
+];
+
+/* Pending - Gray  
+Available - White
+Off-line – Red
+Booked – Green
+Active – Red (our suggesstion Orange/Blue)
+ */

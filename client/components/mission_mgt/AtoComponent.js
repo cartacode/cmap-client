@@ -48,7 +48,7 @@ class AtoComponent extends React.Component {
     });
   }
 
-moveToAto = (row) => {
+moveLeft = (row) => {
   const intelRequestID = row.original.IntelRequestID;
   if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
     const data = {
@@ -59,6 +59,7 @@ moveToAto = (row) => {
     // Inserts new values in mission table
     this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
       this.loadData();
+      this.timeLine.onFind();
     });
 
   } else {
@@ -66,11 +67,12 @@ moveToAto = (row) => {
   }
 }
 
-  moveToCP = (row) => {
+  moveRight = (row) => {
     // deletes from mission table by mission id
     const missionId = row.original.MissionId;
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
       this.loadData();
+      this.timeLine.onFind();
     });
   };
 
@@ -158,7 +160,7 @@ moveToAto = (row) => {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveToAto(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -217,7 +219,7 @@ moveToAto = (row) => {
         filterable: false,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCP(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
             &nbsp;
           </div>
         ),
@@ -235,7 +237,7 @@ moveToAto = (row) => {
 
     return (
       <div>
-        <TimelineFilter translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">

@@ -28,6 +28,7 @@ class OrgBuilderComponent extends React.Component {
       isAddNodeFormOpen: false,
       isOptionModalOpen: false,
       nodeId: null,
+      branch:'1',
       treeConfig: {
         orientation: 'vertical',
         svgSquare: {
@@ -79,7 +80,7 @@ class OrgBuilderComponent extends React.Component {
   }
 
   componentDidMount = () => {
-  this.props.fetchOrganicOrg();
+  this.props.fetchOrganicOrg(this.state.branch);
   this.props.fetchOrganicPersonnel().then(()=> { this.personnelChartView(); });
   }
 
@@ -187,6 +188,12 @@ class OrgBuilderComponent extends React.Component {
      this.setState({
        orgData: orgData2
      });
+   }
+
+   setBranch = (id) => {
+      this.setState ({
+        branch:id
+      }, () => { this.props.fetchOrganicOrg(this.state.branch).then( ()  => { this.orgChartView(); } ) })
    }
 
    personnelChartView = () => {
@@ -487,7 +494,7 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} setBranch={this.setBranch}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}

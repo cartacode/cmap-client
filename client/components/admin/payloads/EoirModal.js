@@ -5,6 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
+import Loader from '../../reusable/Loader';
+import {NoticeType} from '../../../dictionary/constants';
 
 
 
@@ -72,6 +74,7 @@ class EoirModal extends React.Component {
         PayloadDatasheet: null
       },
       isImagedRequired: true,
+      loading:false
     }
 
     this.resetForm = this.resetForm.bind(this);
@@ -304,19 +307,33 @@ class EoirModal extends React.Component {
     }
     payload.PayloadType = payloadTypeId;
     if (editId !== undefined && editId !== '0') {
+      this.setState({loading:true});
       payload.PayloadID = editId;
       formData.append("payloadFormData", JSON.stringify(payload));
-      this.props.updatePayload(editId, formData).then(() => { this.props.onClose('UPDATE'); });
+      this.props.updatePayload(editId, formData).then(() => {
+         this.setState({loading:false});
+         this.props.onClose(NoticeType.UPDATE); 
+        });
     } else {
+
+      this.setState({loading:true});
       formData.append("payloadFormData", JSON.stringify(payload));
-      this.props.addPayload(formData).then(() => { this.props.onClose('ADD'); });
+      this.props.addPayload(formData).then(() => {
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.ADD); 
+      });
     }
   }
 
   deletePayload = () => {
+
     const { editId } = this.props;
     if (editId !== undefined && editId !== '0') {
-      this.props.deletePayloadsById(editId).then(() => { this.props.onClose('DELETE'); });
+      this.setState({loading:true});
+      this.props.deletePayloadsById(editId).then(() => { 
+        this.setState({loading:false});
+        this.props.onClose(NoticeType.DELETE);
+       });
     }
   }
 
@@ -422,6 +439,7 @@ class EoirModal extends React.Component {
 
         <div className="payload-content">
           <div className="row personnel" >
+            <Loader loading={this.state.loading} />
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">

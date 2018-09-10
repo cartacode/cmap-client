@@ -22,7 +22,7 @@ class BaseModal extends React.Component {
       locationPhotoPreviewUrl: '',
       mapImagePreviewUrl: '',
       editFetched: false,
-      location: {
+       location: {
         LocationID: '',
         LocationReferenceCode: '',
         LocationPhoto: '',
@@ -52,7 +52,7 @@ class BaseModal extends React.Component {
         ICAO: '',
         FAA: '',
         UserLocationID: '',
-      },
+      }, 
       oneLocation: {},
       locationFiles: {
         LocationPhoto: null,
@@ -348,9 +348,9 @@ class BaseModal extends React.Component {
     ];
 
     const locationFields = [
-      { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory' },
-      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true },
-      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true },
+      { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
+      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true, minValue: -180},
+      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true, minValue: -180},
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },

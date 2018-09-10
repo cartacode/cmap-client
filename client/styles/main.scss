@@ -109,7 +109,7 @@ body {
     color: #98a5ae;
     float: left;
     margin-left: 15px;
-    font-size: 18px;
+    font-size: 16px;
 
 
 
@@ -131,7 +131,7 @@ body {
   .date-info {
     position: absolute;
     right: 7px;
-    font-size: 18px;
+    font-size: 16px;
     padding-top: 20px;
     color: #98a5ae;
     float: left;
@@ -3122,6 +3122,8 @@ tbody>tr>td, tbody>tr>th{
   text-align:left !important;
 }
 
+.form-content { padding: 0px !important; .form-fields-gap { padding:0px !important; } }
+
 .custom-content {margin-bottom: 10px;}
 
 /* Style the buttons that are used to open and close the accordion panel */
@@ -4226,7 +4228,7 @@ textarea.instruction {
 .navbar-default .date-info {
   position: absolute;
   right: 15px;
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 20px;
   color: #98a5ae;
   float: left;
