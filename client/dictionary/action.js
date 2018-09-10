@@ -134,4 +134,6 @@ export const ATO_GEN_TO_PED_TASK__MOVE = createActionType('ATO_GEN_TO_PED_TASK__
 export const PED_TASK_TO_ATO_GEN__MOVE = createActionType('PED_TASK_TO_ATO_GEN__MOVE');
 
 export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
+export const MISSION_SUMMARY__FETCH = createActionType('MISSION_SUMMARY__FETCH');
+
 

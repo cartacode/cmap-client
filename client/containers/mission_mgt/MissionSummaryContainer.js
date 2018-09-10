@@ -1,4 +1,5 @@
-import { deletePlatformInventoryById, fetchPlatformInventory } from 'actions/platforminventory';
+import { fetchMissionSummary } from 'actions/mssionmgt';
+
 import { connect } from 'react-redux';
 import MissionSummaryComponent from '../../components/mission_mgt/MissionSummaryComponent';
 
@@ -6,15 +7,14 @@ import MissionSummaryComponent from '../../components/mission_mgt/MissionSummary
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allPlatformInventory: state.platforminventory.allPlatformInventory,
-    isLoading: state.platforminventory.isFetching,
-    isDeleted: state.platforminventory.isDeleted
+    allMissionSummary: state.mssionmgts.allMissionSummary,
+    isLoading: state.mssionmgts.isFetching,
+    //isDeleted: state.platforminventory.isDeleted
   };
 };
 
 const mapDispatchToProps = {
-  fetchPlatformInventory,
-  deletePlatformInventoryById,
+  fetchMissionSummary,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MissionSummaryComponent);

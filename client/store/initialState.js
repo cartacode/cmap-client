@@ -89,6 +89,7 @@ export default {
     pedTasksAtoGenerations:[],
     isFetching: false,
     filterResults: [],
+    allMissionSummary:[]
   },
   paygrades: {
     paygradeList: [],

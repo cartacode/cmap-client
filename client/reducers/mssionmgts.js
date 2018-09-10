@@ -2,7 +2,7 @@ import { ATO_COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH,
   FOP_ATO_PLATFORM__FETCH, FOP_PLATFORM__FETCH,
   FOP_ATO_CREW__FETCH, FOP_CREW__FETCH,
   PED_TASKS__FETCH ,PED_TASKS_ATO_GENERATION__FETCH, 
-  SEARCH_MISSION_FILTER } from 'dictionary/action';
+  SEARCH_MISSION_FILTER, MISSION_SUMMARY__FETCH } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function collections(state = initialState.mssionmgts, { payload, type }) {
@@ -107,6 +107,17 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         isFetching: false,
         pedTasksAtoGenerations: payload.data,
       };  
+      case MISSION_SUMMARY__FETCH.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };  
+    case MISSION_SUMMARY__FETCH.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        allMissionSummary: payload.data,
+      };
     default:
       return state;
   }

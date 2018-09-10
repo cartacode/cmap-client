@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ATO_COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, PED_TASKS__FETCH, ROUTE_ATO_GENERATION, COLLECTION_PLAN_TO_ATO_GENERATION,
   FOP_ATO_PLATFORM__FETCH, FOP_PLATFORM__FETCH, FOP_ATO_CREW__FETCH, FOP_CREW__FETCH, 
   PED_TASKS_ATO_GENERATION__FETCH, SEARCH_MISSION_FILTER, ATO_GEN_TO_FLIGHT_OPS__MOVE, FLIGHT_OPS_TO_ATO_GEN__MOVE,
-   ATO_GEN_TO_PED_TASK__MOVE, PED_TASK_TO_ATO_GEN__MOVE, ATO_GEN_TO_COLLECTION_PLAN__MOVE } from 'dictionary/action';
+   ATO_GEN_TO_PED_TASK__MOVE, PED_TASK_TO_ATO_GEN__MOVE, ATO_GEN_TO_COLLECTION_PLAN__MOVE, MISSION_SUMMARY__FETCH } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -128,5 +128,13 @@ export function teamFilter(data) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
     action: () => axios.put(`${baseUrl}/Search/SearchMissionTeams`, data, requestHeaders),
+  });
+}
+
+export function fetchMissionSummary() {
+
+  return createAction({
+    type: MISSION_SUMMARY__FETCH,
+    action: () => axios.get(`${baseUrl}/Mission/GetSummaryMission`,  requestHeaders),
   });
 }

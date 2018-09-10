@@ -730,5 +730,8 @@
   "Date/Time": "Date/Time",
   "IR#": "IR#",
   "Command": "Command",
-  "mission summary":"Summary"
+  "mission summary":"Summary",
+	"Crew Team":"Crew Team",
+	"Ped Team":"Ped Team",
+	"StatusId":"StatusId"
 }

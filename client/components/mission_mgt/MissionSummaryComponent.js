@@ -24,36 +24,37 @@ class MissionSummaryComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchPlatformInventory();
+
+    this.props.fetchMissionSummary();
   }
   
-  addPlatformInventory = () => {
+  /* addPlatformInventory = () => {
     this.setState({
       addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen,
     });
-  }
+  } */
 
-  openPlatformForm = (row) => {
+  /* openPlatformForm = (row) => {
     this.setState({
       editId: row,
       addPlatformInventoryOpen: true,
     });
-  }
+  } */
 
-  closePlatformForm = (actionType) => {
+ /*  closePlatformForm = (actionType) => {
     this.loadData(actionType);
     this.setState({
       editId: 0,
       addPlatformInventoryOpen: false,
     });
-  }
+  } */
 
   loadData = (actionType) => {
-	  this.notify(actionType);
-	  this.props.fetchPlatformInventory();
+    this.notify(actionType);
+	  this.props.fetchMissionSummary();
   }
 
-	deletePlatformInventory = (value) => {
+/* 	deletePlatformInventory = (value) => {
 
 	  if (value !== undefined && value !== '0') {
 	    this.setState({
@@ -74,7 +75,7 @@ class MissionSummaryComponent extends React.Component {
 	      }
 	    });
 	  }
-	}
+	} */
 
   notify =(actionType)=>{
     const { translations } = this.props;
@@ -109,19 +110,18 @@ class MissionSummaryComponent extends React.Component {
   // }
 
   handleChange(value) {
-    console.log(value);
+    //console.log(value);
   }
 
   render() {
 
     const { translations } = this.props;
-    const { allPlatformInventory } = this.props;
-
+    const { allMissionSummary } = this.props;
     const columns = [
 
       {
         Header: translations["Tail#"],
-        accessor: 'tailNbr',
+        accessor: 'TailNumber',
         // filterMethod: (filter, row) =>
         //   row[filter.id].startsWith(filter.value),
 
@@ -133,42 +133,45 @@ class MissionSummaryComponent extends React.Component {
         // }// String-based value accessors!
       },
       {
-        Header: translations['Manufacturer'],
-        accessor: 'manufacturer',
+        Header: translations['Crew Team'],
+        accessor: 'CrewTeam',
       },
       {
-        Header: translations['Platform Name'],
-        accessor: 'name',
+        Header: translations['Ped Team'],
+        accessor: 'PedTeam',
       },
       {
-        Header: translations['Category'],
-        accessor: 'category',
+        Header: translations['Start Date'],
+        accessor: 'StartDate',
         
       },
       {
-        Header: translations['Branch'],
-        accessor: 'branchOfService'
+        Header: translations['End Date'],
+        accessor: 'EndDate'
       },
       {
-        Header: translations['COCOM'],
-        accessor: 'COCOM'
+        Header: translations['StatusId'],
+        accessor: 'StatusId'
       },
-      {
-        Header: translations['Owning Unit'],
-        accessor: 'owningUnit'
-      },
-      {
-        Header: translations['Location'],
-        accessor: 'location'
-      },
+     
       {
         Header: translations['view'],
-        accessor: 'id',
+        accessor: 'MissionId',
         filterable: false,
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+      /*   Cell: row => <div>
+          <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
+            <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
+          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
+          <span className="glyphicon glyphicon-trash"/></a> :
             <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-        </div>,
+        </div>, */
+        Cell: row => <div>
+        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
+          <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
+        {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
+       </a> :
+         ''}
+      </div>,
 
       }
     ];
@@ -192,7 +195,7 @@ class MissionSummaryComponent extends React.Component {
       
           <div className="col-md-12">
             <ReactTable
-              data={allPlatformInventory}
+              data={allMissionSummary}
               columns={columns}
               className="-striped -highlight"              
               filterable={true}
