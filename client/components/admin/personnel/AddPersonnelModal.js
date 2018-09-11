@@ -25,9 +25,10 @@ class AddPersonnelModal extends React.Component {
     this.state = {
       selectedBranch: '',
       selectedRank: '',
+      selectedPaygrade: '',
       file: '',
-      clear:false,
-      editFetched:false,
+      clear: false,
+      editFetched: false,
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       personnel: {
@@ -154,21 +155,7 @@ class AddPersonnelModal extends React.Component {
 
   
   handleGeneralPersonnelData = (generalData) => {
-    const { personnel } = this.state;
-    console.log("Genera data is");
-    console.log(generalData);
-    console.log("Personnel State is");
-    console.log(personnel);
-    if( generalData.ServiceBranch && generalData.ServiceBranch !== this.state.selectedBranch) {
-      this.updateRanks(generalData.ServiceBranch,generalData.Rank);
-      this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
-      this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
-    }
-
-    if( generalData.Rank && generalData.Rank !== this.state.selectedRank ) {
-      this.updatePaygrade(generalData.Rank);
-    }
-    
+    const { personnel, selectedBranch, selectedRank } = this.state;
 
     this.setState({
       personnel: {
@@ -177,20 +164,30 @@ class AddPersonnelModal extends React.Component {
         MiddleInitial: generalData.MiddleInitial,
         LastName: generalData.LastName,
         ServiceBranch: generalData.ServiceBranch,
-        PayGrade: generalData.PayGrade,
         Rank: generalData.Rank,
+        PayGrade: generalData.PayGrade,
         Nationality: generalData.Nationality,
         Clearance: generalData.Clearance,
         CACid: generalData.CACid,
         CallSign: generalData.CallSign,
       },
-      selectedBranch: generalData.ServiceBranch,
-      selectedRank: generalData.Rank,
+      // selectedBranch: generalData.ServiceBranch,
+      // selectedRank: generalData.Rank,
+      // selectedPaygrade: paygrade,
+    }, () => {
+      if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
+        this.updateRanks(generalData.ServiceBranch, generalData.Rank);
+        this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
+        this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
+      }
+  
+      console.log('rank '+ generalData.Rank + '  selected ' + selectedRank);
+      if (generalData.Rank && generalData.Rank !== selectedRank) {
+        this.updatePaygrade(generalData.Rank);
+      }
+
     });
 
-    console.log('personnal'+personnel);
-    //let personnell = generalData.Rank;
-    //this.setPaygrade(personnell);
   }
 
   handleOrganizationAndDutyData = (organizationAndDutyData) => {
@@ -270,7 +267,7 @@ class AddPersonnelModal extends React.Component {
 
   //} */
 
- /*  handleUploadTxtFile(event) {
+  /*  handleUploadTxtFile(event) {
     event.preventDefault();
 
     let reader = new FileReader();
@@ -345,7 +342,7 @@ class AddPersonnelModal extends React.Component {
 
 
 
-   /**
+  /**
    * This is callback method called automatically and show selected image preview.
    */
   handlePhotoPreviewURL = (uploadedFile) => {
@@ -397,7 +394,7 @@ class AddPersonnelModal extends React.Component {
       // Start Loader
       this.setState({loading:true});
       personnel.PersonnelID = editId;
-      console.log('handle Submit '+ JSON.stringify(personnel));
+      
       formData.append("personnelFormData", JSON.stringify(personnel));
       this.props.updatePersonnel(editId, formData).then(() => {
         // Stop Loader
@@ -415,17 +412,15 @@ class AddPersonnelModal extends React.Component {
       });
     }
 
-    
-    
   }
 
-updateRanks= (branch,rank) => {
+updateRanks= (branch, rank) => {
   let rankSelect = document.getElementsByName('Rank')[0];
   let items = [{'label': '--Select Item--', 'value': 0}];
   const apiUrl = `${baseUrl}/Ranks/GetRanksByBranch?branchID=${branch}`;
   axios.get(apiUrl)
     .then(response => {
-      console.log(response.data);
+      
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
       response.data.map(item => {
         items.push({ 'label': item['description'], 'value': item['id'].trim() });
@@ -435,11 +430,17 @@ updateRanks= (branch,rank) => {
       }
       for(let i in items) {
         let selected = false;
-            if(rank && items[i].value === rank.toString()) {
-              selected = true;
-            }
-            rankSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+        if(rank && items[i].value === rank.toString()) {
+          selected = true;
+        }
+        rankSelect.add(new Option(items[i].label, items[i].value, selected, selected));
       }
+
+      this.setState(
+        {
+          selectedBranch: branch,
+          selectedRank: rank,
+        });
            
     })
     .catch((error) => {
@@ -454,7 +455,6 @@ updateAssignedUnits= (branch,unit) => {
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
   axios.get(apiUrl)
     .then(response => {
-      console.log(response.data);
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
       response.data.map(item => {
         items.push({ 'label': item['description'], 'value': item['id'].trim() });
@@ -464,10 +464,10 @@ updateAssignedUnits= (branch,unit) => {
       }
       for(let i in items) {
         let selected = false;
-            if(unit && items[i].value === unit.toString()) {
-              selected = true;
-            }
-            UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+        if(unit && items[i].value === unit.toString()) {
+          selected = true;
+        }
+        UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
       }
            
     })
@@ -485,7 +485,7 @@ updateDeployedUnits= (branch,unit) => {
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
   axios.get(apiUrl)
     .then(response => {
-      console.log(response.data);
+     
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
       response.data.map(item => {
         items.push({ 'label': item['description'], 'value': item['id'].trim() });
@@ -495,10 +495,10 @@ updateDeployedUnits= (branch,unit) => {
       }
       for(let i in items) {
         let selected = false;
-            if(unit && items[i].value === unit.toString()) {
-              selected = true;
-            }
-            UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+        if(unit && items[i].value === unit.toString()) {
+          selected = true;
+        }
+        UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
       }
            
     })
@@ -516,10 +516,18 @@ updatePaygrade= (rank) => {
   axios.get(apiUrl)
     .then(response => {
       const paygrade = response.data[0];
-      console.log(paygrade);
-      this.setState({personnel: {  ...personnel, 
-        PayGrade: paygrade.id }
-      });
+      
+      this.setState(
+        { 
+          personnel:
+            { ...personnel,
+              PayGrade: paygrade.id,
+              // Rank: rank,
+            },
+          selectedPaygrade: paygrade.id,
+          selectedRank: rank,
+          editFetched: true, // to update data in chil components
+        });
       paygradeSelect.selectedIndex = paygrade.id;
            
     })
@@ -636,18 +644,18 @@ render() {
   ];
 
 
-const uploadFileFields = [
-  { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image'},
-  { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image' },
-  { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'Datasheet', fileType: 'file' },
-];
+  const uploadFileFields = [
+    { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image'},
+    { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image' },
+    { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'Datasheet', fileType: 'file' },
+  ];
 
   return (
 
     <form action="" onSubmit={this.handleSubmit} id="personnelform">
     
       <div className="payload-content">
-      <Loader loading={this.state.loading} />
+        <Loader loading={this.state.loading} />
         <div className="row personnel" >
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -702,7 +710,7 @@ const uploadFileFields = [
         <div className="row personnel" >
           <div className="under-payload-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title="Organization & Duty" fields={organisationFields}
               data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
@@ -723,8 +731,8 @@ const uploadFileFields = [
         <div className="menu-button">
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
           <button type="submit" className='highlighted-button'>
-              {translations['submit']}
-{/*           {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
+            {translations['submit']}
+            {/*           {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']}
  */}          </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>

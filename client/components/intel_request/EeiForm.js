@@ -167,8 +167,8 @@ class EeiForm extends React.Component {
     ];
 
     const eeiFiled2 = [
-      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },
-      { name: translations.District, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district', required: true },
+      { name: translations.Country, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district', required: true },
+      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },      
       { name: translations['Grid Coordinates'], type: 'input', domID: 'gridCoordinates', valFieldID: 'gridCoordinates', required: true },
       { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_ReqID', required: true },
     ];
