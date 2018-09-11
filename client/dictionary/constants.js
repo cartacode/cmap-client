@@ -128,19 +128,19 @@ export const IntelConstants = {
       id: 35,
       description: 'Mission Pending',
       abbreviation: 'MP',
-      color: 'Gray',
+      color: 'Red',
     },
     MA: {
       id: 36,
       description: 'Mission Active',
       abbreviation: 'MA',
-      color: 'Red',
+      color: 'Orange',
     },
     MG: {
       id: 37,
       description: 'Mission Generated',
       abbreviation: 'MG',
-      color: 'White',
+      color: 'Blue',
     },
   },
 };
