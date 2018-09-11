@@ -41,14 +41,14 @@ export default class Map extends React.PureComponent {
       }).then(res=>{ 
         console.log("ress", res);
 
-        // var arr = res;
-        // if(JSON.parse(localStorage.getItem("centerPoints"))){
-        //   arr = JSON.parse(localStorage.getItem("centerPoints"));
-        //   arr[arr.length-1] = res;
-        // }
+        var arr = res;
+        if(JSON.parse(localStorage.getItem("centerPoints"))){
+          arr = JSON.parse(localStorage.getItem("centerPoints"));
+          arr[arr.length-1] = res;
+        }
 
-        // //JSON.parse(localStorage.getItem("centerPoints")).length > 0 ? JSON.parse(localStorage.getItem("centerPoints")).push(res) : "";
-        // localStorage.setItem("centerPoints", JSON.stringify(arr));
+        //JSON.parse(localStorage.getItem("centerPoints")).length > 0 ? JSON.parse(localStorage.getItem("centerPoints")).push(res) : "";
+        localStorage.setItem("centerPoints", JSON.stringify(arr));
         
         for(let i =0; this.props.kmlDataSource[i];i++){
           addKML(this.props.kmlDataSource[i], this.props.viewerId);

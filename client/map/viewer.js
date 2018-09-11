@@ -74,14 +74,12 @@ export function createViewer(viewerId, elementId) {
 viewer.canvas.style.height = '100%';
 viewer.canvas.style.width = '100%';
 
+
 /**
  * TODO: Move to separate file
  * Attaching double click event on canvas, to retrieve lat, long values
 */
-viewer.canvas.addEventListener('dblclick', function(e){
-  let currentLatLong = getCurrentLatLong(e, viewer);
-  clickHandler[viewerId](currentLatLong, viewerId);	
-}, false);
+  getCurrentLatLong(viewer, viewerId)
 
   viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
 
@@ -93,18 +91,23 @@ viewer.canvas.addEventListener('dblclick', function(e){
  * getCurrentLatLong: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 
  */
-function getCurrentLatLong(e, viewer){
-  var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
-  var ellipsoid = viewer.scene.globe.ellipsoid;
-  var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
-  if (cartesian) {
-      var cartographic = ellipsoid.cartesianToCartographic(cartesian);
-      var longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
-      var latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
-      return {longitude: longitudeString, latitude: latitudeString};
-  } else {
-    console.log('Globe was not picked');
-  }
+function getCurrentLatLong(viewer, viewerId){
+  var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+  // Event handler for left click
+  screenSpaceEventHandler.setInputAction(function(click) {
+
+    // get position  of click
+    var clickPosition = viewer.camera.pickEllipsoid(click.position);
+
+    // add point at initial click position
+    var cartographicClick = Cesium.Ellipsoid.WGS84.cartesianToCartographic(clickPosition);
+    var currentLatLong = {
+      longitude: Cesium.Math.toDegrees(cartographicClick.longitude),
+      latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
+    }
+      clickHandler[viewerId](currentLatLong, viewerId);
+  },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
 }
 
@@ -146,5 +149,5 @@ viewer.entities.add({
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-viewer.zoomTo(viewer.entities);
+//viewer.zoomTo(viewer.entities);
 }
