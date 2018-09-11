@@ -2,6 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class NodeElement extends React.PureComponent {
+  handleClick = function(event,nodeData){
+    event.stopPropagation();
+    console.log("Stopped");
+    console.log(nodeData.unitID);
+    if(nodeData.unitID)
+    {
+      console.log("Org");
+      this.props.check(nodeData);
+    }
+  }
+
   render() {
     const {className, nodeData} = this.props;
     let type;
@@ -27,7 +38,7 @@ class NodeElement extends React.PureComponent {
         </div>
         <div className="row">
           <div className="col-md-12">
-              <span className="glyphicon glyphicon-plus-sign" onClick={this.props.check}/>
+              <span className="glyphicon glyphicon-plus-sign" onClick={(e) => this.handleClick(e,nodeData)}/>
             &nbsp;
             <a href="#">
               <span className="glyphicon glyphicon-edit"/>
@@ -37,7 +48,7 @@ class NodeElement extends React.PureComponent {
             </a>
           </div>
         </div>
-        {/*  {nodeData._children && 
+         {/* {nodeData._children && 
         <button>{nodeData._collapsed ? 'Expand' : 'Collapse'}</button>
         }  */}
       </div>

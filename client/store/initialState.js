@@ -136,6 +136,7 @@ export default {
   organicpersonnels: {
     allOrganicPersonnels: [],
     listOrganicPersonnels: [],
+    oneUnit: {},
     isFetching: false,
   },
 
