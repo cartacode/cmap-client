@@ -25,9 +25,9 @@ class ContentBlock extends React.Component {
 
   componentDidUpdate() {
 
-    const { content } = this.state;
-    const { initstate, editId } = this.props;
-    const { editFetched } = this.props;
+    
+    const { initstate, editFetched } = this.props;
+    // const { editFetched } = this.props;
 
     // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
     //   // if(editId !== undefined && editId !== '0') {
@@ -41,7 +41,7 @@ class ContentBlock extends React.Component {
     if (editFetched) {
       console.log(this.props.initstate);
       this.props.stopupd();
-      this.setState({ content: initstate }, () => { console.log("Init State Updated"); console.log(this.state.content); this.props.data(this.state.content); });
+      this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
     }
 
@@ -153,10 +153,14 @@ class ContentBlock extends React.Component {
             break;
 
           case 'textarea':
+            let maxlen = InputAttributes.TEXTAREA_LEN;
+            if(item.maxlength) {
+              maxlen = item.maxlength;
+            }
             if (item.required) {
-              input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} required/>);
+              input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} maxLength={maxlen} onChange={this.handleChange} required/>);
             } else {
-              input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} onChange={this.handleChange} />);
+              input = (<textarea rows="3" className="instruction" value={value} name={item.valFieldID} maxLength={maxlen} onChange={this.handleChange} />);
             }
             break;
 

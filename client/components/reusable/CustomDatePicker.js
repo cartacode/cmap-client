@@ -12,9 +12,12 @@ import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import moment from 'moment';
 import 'moment/locale/en-ca';
 import 'moment/locale/en-gb';
+import { DateConsts } from '../../dictionary/constants';
 
 
-const format = 'YYYY-MM-DDTHH:mm:ss';
+
+// const format = DateConsts.DB_DATETIME_FORMAT;
+const format = DateConsts.DB_DATETIME_FORMAT;
 // const cn = location.search.indexOf('cn') !== -1;
 moment.locale('en');
 const now = moment();
@@ -22,37 +25,37 @@ const now = moment();
 // if (cn) {
 //     now.locale('zh-cn').utcOffset(8);
 // } else {
-    now.locale('en-gb').utcOffset(0);
+now.locale('en-gb').utcOffset(0);
 // }
 
 function getFormat(time) {
-    return time ? format : 'YYYY-MM-DD';
+  return time ? format : DateConsts.DB_DATE_FORMAT;
 }
 
 
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month');
 
-const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:20', 'HH:mm:ss')}/>;
+const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:20', DateConsts.DB_TIME_FORMAT)}/>;
 
 function disabledTime(date) {
-    if (date && (date.date() === 15)) {
-        return {
-            disabledHours() {
-                return [3, 4];
-            },
-        };
-    }
+  if (date && (date.date() === 15)) {
     return {
-        disabledHours() {
-            return [1, 2];
-        },
+      disabledHours() {
+        return [3, 4];
+      },
     };
+  }
+  return {
+    disabledHours() {
+      return [1, 2];
+    },
+  };
 }
 
 
 function disabledDate(current) {
-    /*if (!current) {
+  /*if (!current) {
         // allow empty select
         return false;
     }
@@ -97,7 +100,7 @@ class CustomDatePicker extends React.Component {
       const name = this.props.name;
       this.setState({
         value,
-      }, () =>{
+      }, () => {
         this.props.changeDate(this.state.value, name);
       });
     }
@@ -121,7 +124,7 @@ class CustomDatePicker extends React.Component {
     }
 
     render() {
-
+    
       const state = this.state;
       const calendar = (<Calendar
         className="custom-calendar"
@@ -131,7 +134,7 @@ class CustomDatePicker extends React.Component {
         formatter={getFormat(state.showTime)}
         disabledTime={state.showTime ? disabledTime : null}
         timePicker={state.showTime ? timePickerElement : null}
-        defaultValue={this.props.defaultCalendarValue}
+        defaultValue={this.props.defaultValue}
         showDateInput={state.showDateInput}
         disabledDate={disabledDate}
       />);
@@ -181,7 +184,7 @@ class CustomDatePicker extends React.Component {
 }
 
 CustomDatePicker.propTypes = {
-    children: PropTypes.element,
+  children: PropTypes.element,
 
 };
 

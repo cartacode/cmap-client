@@ -27,6 +27,7 @@ class RequestForm extends React.Component {
       clear: false,
       intelRequest: {
         IntelRequestID: '',
+        MissionId: null,
         // AreaOfOperations: '',
         // SupportedCommand: '',
         // SupportedUnit: '',
@@ -256,8 +257,8 @@ resetForm() {
       { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true },
       { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true },
       { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
-      { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
-      { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
+      // { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
+      // { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
     ];
 
 
@@ -360,7 +361,7 @@ resetForm() {
             </div>
           </div> */}
 
-          {this.state.intelRequest.MissionId === null ? 
+          {this.state.intelRequest.MissionId === null ?
             <div className="row action-buttons">
               <div className="menu-button">
                 <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>

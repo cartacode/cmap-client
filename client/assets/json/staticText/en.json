@@ -728,10 +728,12 @@
   "units":"Units",
   "teams":"Teams",
   "Date/Time": "Date/Time",
-  "IR#": "IR#",
+  "IR": "IR#",
   "Command": "Command",
   "mission summary":"Summary",
 	"Crew Team":"Crew Team",
 	"Ped Team":"Ped Team",
-	"StatusId":"StatusId"
+	"StatusId":"StatusId",
+  "Active Dates":"Active Dates"
+  
 }

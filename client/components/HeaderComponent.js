@@ -60,10 +60,10 @@ class HeaderComponent extends React.Component {
       {title: translations['status'], url: '/status'},
       {title: translations['intel request'], url: '/intel-request/request'},
       {title: translations['mission mgt'], url: '/mission-mgt/isr-sync'},
-      {title: translations['schedules'], url: '/schedules'},
-      {title: translations['orders/assets'], url: '/orders-assets/orders'},
-      {title: translations['intel library'], url: '/intel-library'},
-      {title: translations['messages'], url: '/messages'},
+      // {title: translations['schedules'], url: '/schedules'},
+      // {title: translations['orders/assets'], url: '/orders-assets/orders'},
+      // {title: translations['intel library'], url: '/intel-library'},
+      // {title: translations['messages'], url: '/messages'},
       {title: translations['admin'], url: '/admin/personnel'},
       //{title: translations['logout'], url: '/logout'}
     ];
@@ -195,7 +195,7 @@ class HeaderComponent extends React.Component {
           <div className="buttons-list">
           
             {this.renderMenuItems()}
-            <div className="search">
+            {/* <div className="search">
            
               <NavLink to="/search">
                 <div className="search-button" style={{width: this.state.width}} ref="search" onClick={() => this.search()}>
@@ -203,7 +203,7 @@ class HeaderComponent extends React.Component {
                 </div>
               </NavLink>
               <input type="text" className="search-input" placeholder={translations['enter values']} name="search" />
-            </div>
+            </div> */}
       
           </div>
         </div>
