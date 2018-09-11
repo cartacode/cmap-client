@@ -129,6 +129,7 @@ export default {
 
   organicorgs: {
     allOrganicOrgs: [],
+    allDeployedOrgs: [],
     isFetching: false,
   },
 

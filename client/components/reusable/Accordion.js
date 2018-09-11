@@ -17,6 +17,7 @@ class Accordion extends React.Component {
       uncheckedResults: [],
       showAddForm:false,
       branch:'1',
+      editId: '0',
       addUnit: {
         description:'',
         UnitIdentificationCode:'',
@@ -76,6 +77,13 @@ class Accordion extends React.Component {
           console.log(this.state.addUnit.UnitPersonnel);
         }
       }
+  }
+
+  openEditForm = () => {
+    this.setState({
+      editId: 14,
+      showAddForm:true,
+    }, () => {this.addOrgForm();});
   }
 
   close = (key) => {
@@ -435,7 +443,7 @@ class Accordion extends React.Component {
               <div className="content info-content">
                 <ul>
                   <li onClick={this.props.orgChart}>Organic Org View</li>
-                  <li>Deployed Org View</li>
+                  <li onClick={this.props.deployedChart}>Deployed Org View</li>
                   <li onClick={this.props.personnelChart}>Organic Personnel View</li>
                   <li>Deployed Personnel View</li>
                 </ul>
