@@ -20,8 +20,8 @@ class CollectionManagerComponent extends React.Component {
 
   deleteApprovedIntelRequests = (value) => {
     if (value !== undefined && value !== '0') {
-      const statusId = IntelConstants.Status.DRC.id; // 'DRC'
-      this.props.deleteApprovedIntelRequestById(value, statusId).then(() => {
+      const statusId = IntelConstants.STATUS.DRC.id; // 'DRC'
+      this.props.updateIntelStatus(value, statusId).then(() => {
         // this.setState({ editId: '0' });
         this.notify(NoticeType.DELETE);
         this.loadData();

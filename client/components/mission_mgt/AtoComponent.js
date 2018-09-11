@@ -70,9 +70,15 @@ moveLeft = (row) => {
   moveRight = (row) => {
     // deletes from mission table by mission id
     const missionId = row.original.MissionId;
+    const intelRequestID = row.original.IntelRequestID;
+
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
-      this.loadData();
-      this.timeLine.onFind();
+
+      const statusId = IntelConstants.STATUS.APR.id; // 'APR'
+      this.props.updateIntelStatus(intelRequestID, statusId).then(() => {
+        this.loadData();
+        this.timeLine.onFind();
+      });
     });
   };
 

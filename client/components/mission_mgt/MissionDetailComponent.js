@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
 
 import FormBlock from '../reusable/FormBlock';
-import FullHeaderLine from '../reusable/FullHeaderLine';
-import StatusTable from '../reusable/StatusTable';
 
 
-class LiveViewComponent extends React.Component {
+class MissionDetailComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,13 +23,13 @@ class LiveViewComponent extends React.Component {
 
     if(editId !== undefined && editId !== '') {
       this.props.fetchMissionDetailById(editId).then(()=> {
-         this.setState(
-           {
+        this.setState(
+          {
             
-              missionDetail: this.props.oneMissionDetail[0],
-              editFetched: true
+            missionDetail: this.props.oneMissionDetail[0],
+            editFetched: true
      
-           });
+          });
       });
     }
   }
@@ -58,7 +56,7 @@ class LiveViewComponent extends React.Component {
     const {translations} = this.props;
 
     const {missionDetail} = this.state;
-    debugger;
+    
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input', name:"MissionName" , valueField:"MissionName",readonly:true},
       {name: translations['Mission#'], type: 'input', readonly:true, name:"Mission", valueField:"Mission"},
@@ -118,27 +116,28 @@ class LiveViewComponent extends React.Component {
       <div>
         <div className="row mission-mgt">
           <div className="col-md-12 header-line">
-            <img className="full-line" src="/assets/img/general/full_line.png" />
+            {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
+            <div className="header-text">
+              {translations['mission detail']}
+            </div>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
           <div className="col-md-12">
-            <FormBlock fields={missionBlock1} data={this.handleMissionBlock1} initstate ={this.state.missionDetail} editFetched={this.state.editFetched}  stopupd = {this.stopupd}/>
-            <FormBlock fields={missionBlock2} data={this.handleMissionBlock2} initstate ={this.state.missionDetail} editFetched={this.state.editFetched}  stopupd = {this.stopupd}/>
-            <FormBlock fields={missionBlock3} data={this.handleMissionBlock3} initstate ={this.state.missionDetail} editFetched={this.state.editFetched}  stopupd = {this.stopupd}/>
+            <FormBlock fields={missionBlock1} data={this.handleMissionBlock1} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
+            <FormBlock fields={missionBlock2} data={this.handleMissionBlock2} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
+            <FormBlock fields={missionBlock3} data={this.handleMissionBlock3} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>
-        
-         
-         
-         
-        
+
       </div>
     );
   }
 }
 
-LiveViewComponent.propTypes = {
+MissionDetailComponent.propTypes = {
   children: PropTypes.element,
 
 };
 
-export default LiveViewComponent;
+export default MissionDetailComponent;

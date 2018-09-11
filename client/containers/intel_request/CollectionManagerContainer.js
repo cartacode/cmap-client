@@ -1,5 +1,5 @@
 import { fetchCollectionPlans, fetchApprovedIntelRequests, moveToCollectionPlan, moveToIntelRequest,
-  deleteApprovedIntelRequestById, routeCollectionIntelRequest  } from 'actions/collection';
+  updateIntelStatus, routeCollectionIntelRequest  } from 'actions/collection';
 // import { fetchIntelRequestById, updateIntelRequest } from 'actions/intel';
 import { connect } from 'react-redux';
 import CollectionManagerComponent from '../../components/intel_request/CollectionManagerComponent';
@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchCollectionPlans,
   fetchApprovedIntelRequests,
-  deleteApprovedIntelRequestById,
+  updateIntelStatus,
   moveToCollectionPlan,
   moveToIntelRequest,
   // fetchIntelRequestById,
