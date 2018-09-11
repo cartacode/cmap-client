@@ -8,19 +8,58 @@ class FormBlock extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      content: []
+    }
   }
 
-  renderFields() {
+  componentWillMount() {
+    this.setState({
+      content: this.props.initstate,
+    });
+  }
 
+  componentDidUpdate() {
+        
+    const { content } = this.state;
+    const { initstate, editFetched } = this.props;
+        
+     if (editFetched)
+     {
+      
+       this.props.stopupd();
+       this.setState({content:initstate});
+      
+     }
+        
+   
+  }
+
+
+  
+
+ 
+
+  renderFields() {
     let langs = ['val 1', 'val 2'];
 
     return this.props.fields.map((item, i) => {
 
       let input;
+      let value = '';
+            
+      
 
+      if(item.valueField !== undefined && this.state.content[item.valueField] !== undefined && this.state.content[item.valueField] !== null) {
+        value = this.state.content[item.valueField];
+      }
+     
       switch(item.type) {
         case 'input':
-          input = (<input type="text"/>);
+        if(item.readonly){
+          input = (<input type="text" readOnly={true} name={item.valueField} value={value} />);
+        }else
+          input = (<input type="text" name={item.valueField} value={value}  />);
           break;
 
         case 'dropdown':
@@ -73,8 +112,9 @@ class FormBlock extends React.Component {
 }
 
 FormBlock.propTypes = {
-  children: PropTypes.element,
-
+  data: PropTypes.func,
+  editFetched: PropTypes.bool,
+  initstate: PropTypes.any
 };
 
 export default FormBlock;
