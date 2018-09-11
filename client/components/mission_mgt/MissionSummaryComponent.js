@@ -8,6 +8,7 @@ import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import MissionDetailModel from '../mission/MissionDetailModel';
 import { NotificationManager } from 'react-notifications';
+import { Link } from 'react-router-dom';
 
 class MissionSummaryComponent extends React.Component {
 
@@ -27,71 +28,13 @@ class MissionSummaryComponent extends React.Component {
     this.props.fetchMissionSummary();
   }
   
-  /* addPlatformInventory = () => {
-    this.setState({
-      addPlatformInventoryOpen: !this.state.addPlatformInventoryOpen,
-    });
-  } */
+ 
 
-  /* openPlatformForm = (row) => {
-    this.setState({
-      editId: row,
-      addPlatformInventoryOpen: true,
-    });
-  } */
+  
 
- /*  closePlatformForm = (actionType) => {
-    this.loadData(actionType);
-    this.setState({
-      editId: 0,
-      addPlatformInventoryOpen: false,
-    });
-  } */
+ 
 
-  // loadData = (actionType) => {
-  //   this.notify(actionType);
-	//   this.props.fetchMissionSummary();
-  // }
-
-/* 	deletePlatformInventory = (value) => {
-
-	  if (value !== undefined && value !== '0') {
-	    this.setState({
-	      loading:true
-	    });
-	    this.props.deletePlatformInventoryById(value).then(() => {
-	      this.setState({
-	        loading:false
-	      });
-	      //this.setState({ editId: '0' });
-	      //this.notify(NoticeType.DELETE);
-	      //this.props.fetchPlatformInventory();
-	      if(this.props.isDeleted) {
-	        this.loadData(NoticeType.DELETE);
-	      }
-	      else{
-	        this.notify(NoticeType.NOT_DELETE);
-	      }
-	    });
-	  }
-	} */
-
-  // notify =(actionType)=>{
-  //   const { translations } = this.props;
-  //   if(NoticeType.NOT_DELETE === actionType) {
-  //     NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
-  //   }
-  //   else if (NoticeType.DELETE != actionType) {
-  //     if (this.state.editId !== undefined && this.state.editId !== '0') {
-  //       NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
-  //     }else{
-  //       NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
-  //     }
-  //   }else{
-  //     NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Inventory Title'], 5000);
-  //   }
-  // }
-
+  
 
 
 
@@ -107,6 +50,10 @@ class MissionSummaryComponent extends React.Component {
 
     const { translations } = this.props;
     const { allMissionSummary } = this.props;
+    const { match } = this.props;
+
+    const editurl = match.url.replace('/mission-summary', '/mission-detail/');
+
     const columns = [
 
       {
@@ -160,9 +107,10 @@ class MissionSummaryComponent extends React.Component {
        //     <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
        // </div>,
         Cell: row => <div>
-        <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="View" >
-          <span className="glyphicon glyphicon-eye-open"/></a>  
-        </div>,
+                        <Link to={`${editurl}${row.value}`} className="btn btn-primary">
+                          <span className="glyphicon glyphicon-eye-open"/>
+                        </Link>
+                     </div>,
       } 
     ];
 

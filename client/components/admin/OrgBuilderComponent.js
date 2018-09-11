@@ -82,6 +82,7 @@ class OrgBuilderComponent extends React.Component {
   componentDidMount = () => {
   this.props.fetchOrganicOrg(this.state.branch);
   this.props.fetchOrganicPersonnel().then(()=> { this.personnelChartView(); });
+  this.props.fetchDeployedOrg(this.state.branch);
   }
 
   renderSchema = () => {
@@ -114,6 +115,20 @@ class OrgBuilderComponent extends React.Component {
     this.setState({
       isOptionModalOpen: false,
     });
+  }
+
+  deployedChartView = () => {
+    
+    const { allDeployedOrgs } = this.props;
+
+    let orgData3 = [ allDeployedOrgs ];
+
+    forceRemount = forceRemount +1;
+   
+     this.setState({
+       orgData: orgData3
+     });
+
   }
 
   orgChartView = () => {
@@ -500,7 +515,7 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}

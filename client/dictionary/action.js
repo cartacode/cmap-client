@@ -110,6 +110,8 @@ export const ORGANIC_ORG__ADD = createActionType('ORGANIC_ORG__ADD');
 export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FETCH');
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 export const ORGANIC_PERSONNEL__FETCH_LIST = createActionType('ORGANIC_PERSONNEL__FETCH_LIST');
+export const DEPLOYED_ORG__FETCH = createActionType('DEPLOYED_ORG__FETCH');
+export const ORGANIC_ORG__FETCH_ONE = createActionType('ORGANIC_ORG__FETCH_ONE');
  
 export const ATO_COLLECTION_PLAN__FETCH = createActionType('ATO_COLLECTION_PLAN__FETCH');
 export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');
@@ -135,5 +137,8 @@ export const PED_TASK_TO_ATO_GEN__MOVE = createActionType('PED_TASK_TO_ATO_GEN__
 
 export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
 export const MISSION_SUMMARY__FETCH = createActionType('MISSION_SUMMARY__FETCH');
+export const MISSION_DETAIL__FETCH = createActionType('MISSION_DETAIL__FETCH');
+
+
 
 

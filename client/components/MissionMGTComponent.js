@@ -67,7 +67,7 @@ class MissionMGTComponent extends React.Component {
           <Route path={`${match.url}/ato`} component={AtoContainer} />
           <Route path={`${match.url}/ped-tasking`} component={PedTaskingContainer} />
           <Route path={`${match.url}/mission-summary`} component={MissionSummaryContainer} />
-          <Route path={`${match.url}/mission-detail`} component={MissionDetailContainer} />
+          <Route path={`${match.url}/mission-detail/:editId`} component={MissionDetailContainer} />
         </Switch>
       </div>
     );
