@@ -10,7 +10,7 @@ class LoginComponent extends React.Component {
   }
 
   onClear(){
-    console.log("clear");
+    console.log("Cleared");
   }
 
   onEnter(){
