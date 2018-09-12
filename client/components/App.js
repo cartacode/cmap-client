@@ -44,6 +44,7 @@ class App extends React.Component {
             <Route exact path="/status" component={NavigationComponent} />
             <Route path="/admin" component={NavigationComponent} />
             <Route path="/search" component={NavigationComponent} />
+            <Route path="/login" component={NavigationComponent} />
           </Switch>
         </div>
       </ConnectedRouter>

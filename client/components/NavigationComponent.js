@@ -39,6 +39,7 @@ class NavigationComponent extends React.Component {
           <Route exact path="/status" component={StatusContainer} />
           <Route path="/admin" component={AdminComponent} />
           <Route path="/search" component={SearchContainer} />
+          <Route path="/login" component={LoginContainer} />
         </Switch>
       </div>
     );
