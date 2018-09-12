@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import MissionDetailModel from '../mission/MissionDetailModel';
 import { NotificationManager } from 'react-notifications';
@@ -83,12 +83,18 @@ class MissionSummaryComponent extends React.Component {
       },
       {
         Header: translations['Start Date'],
-        accessor: 'StartDate',
+        id: 'StartDate',
+        accessor: d => {
+          return formatDateTime(d.StartDate);
+        }
         
       },
       {
         Header: translations['End Date'],
-        accessor: 'EndDate'
+        id: 'EndDate',
+        accessor: d => {
+          return formatDateTime(d.EndDate);
+        }
       },
       {
         Header: translations['StatusId'],
