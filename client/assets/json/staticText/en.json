@@ -735,6 +735,7 @@
 	"Ped Team":"Ped Team",
 	"StatusId":"StatusId",
   "Active Dates":"Active Dates",
-  "File Upload": "File Upload"
+  "File Upload": "File Upload",
+	"upload": "UPLOAD"
   
 }

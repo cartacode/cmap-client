@@ -154,7 +154,7 @@ class MissionDetailComponent extends React.Component {
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
             <button type="submit" className="highlighted-button">
-              {translations['submit']}
+              {translations['upload']}
 
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>

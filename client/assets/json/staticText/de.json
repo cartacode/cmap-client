@@ -676,6 +676,7 @@
 	"Ped Team":"Ped Team",
 	"StatusId":"StatusId",
 	"IR#":"IR#",
-  "File Upload": "File Upload"
+  "File Upload": "File Upload",
+	"upload": "UPLOAD"
   
 }
