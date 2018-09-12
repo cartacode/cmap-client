@@ -209,8 +209,6 @@ class FlightOpsPlatform extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -227,8 +225,6 @@ class FlightOpsPlatform extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
