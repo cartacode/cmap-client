@@ -87,7 +87,7 @@ class FormBlock extends React.Component {
       }
 
       return (
-        <div className="info-line" key={i}>
+        <div className="info-line" key={'elem' + i}>
           <div>
             {item.name}
           </div>
@@ -103,6 +103,13 @@ class FormBlock extends React.Component {
 
     return (
       <div className="col-md-4 info-block">
+       <div className="info-header">
+            <img src={this.props.headerLine} alt="" />
+            <div className="header-text">
+              {this.props.title}
+            </div>
+            <img className="mirrored-X-image" src={this.props.headerLine} alt="" />
+          </div>
         <div className={`${this.props.bigBackground ? 'big-background' : ''} info-content`}>
           {this.renderFields()}
         </div>

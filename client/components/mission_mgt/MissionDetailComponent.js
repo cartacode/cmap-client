@@ -58,45 +58,45 @@ class MissionDetailComponent extends React.Component {
     const {missionDetail} = this.state;
     
     const missionBlock1= [
-      {name: translations['Mission Name'], type: 'input', name:"MissionName" , valueField:"MissionName",readonly:true},
-      {name: translations['Mission#'], type: 'input', readonly:true, name:"Mission", valueField:"Mission"},
+      {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
+      {name: translations['Mission#'], type: 'input', readonly:true,  valueField:"Mission"},
       {name: translations['Originating Req #'], type: 'input', readonly:true},
       {name: translations['Air Tasking Order #'], type: 'input', readonly:true},
-      {name: translations['ATO Issue Date'], type: 'input', readonly:true, name:"ATOIssueDate", valueField: "ATOIssueDate"},
-      {name: translations['Supported Command'], type: 'input', readonly:true, name: "SupportedCommand", valueField:"SupportedCommand"},
-      {name: translations['Supported Unit'], type: 'input', readonly:true, name:"SupportedUnit", valueField:"SupportedUnit"},
-      {name: translations['Named Operation'], type: 'input', readonly:true, name:"NamedOperation", valueField: "NamedOperation"},
-      {name: translations['Mission Type'], type: 'input', readonly:true, name:"MissionType", valueField:"MissionType"},
-      {name: translations['Sub-Mission Type'], type: 'input', readonly:true, name:"SubMissionType", valueField:"SubMissionType"},
-      {name: translations['Active Dates'], type: 'input', readonly:true, name:"ActiveDateTimeStart", valueField:"ActiveDateTimeStart" }
+      {name: translations['ATO Issue Date'], type: 'input', readonly:true,  valueField: "ATOIssueDate"},
+      {name: translations['Supported Command'], type: 'input', readonly:true, valueField:"SupportedCommand"},
+      {name: translations['Supported Unit'], type: 'input', readonly:true,  valueField:"SupportedUnit"},
+      {name: translations['Named Operation'], type: 'input', readonly:true, valueField: "NamedOperation"},
+      {name: translations['Mission Type'], type: 'input', readonly:true,  valueField:"MissionType"},
+      {name: translations['Sub-Mission Type'], type: 'input', readonly:true,  valueField:"SubMissionType"},
+      {name: translations['Active Dates'], type: 'input', readonly:true,  valueField:"ActiveDateTimeStart" }
     ];
     
     const missionBlock2= [
-      {name: translations['ISR Asset Country'], type: 'input', readonly:true, name:"ISRAssetCountary", valueField:"ISRAssetCountary"},
-      {name: translations['ISR Unit'], type: 'input', readonly:true, name:"ISRUnit", valueField:"ISRUnit"},
-      {name: translations['ISR Platform'], type: 'input', readonly:true, name:"ISRPlatform", valueField:"ISRPlatform"},
-      {name: translations['Primary Payload'], type: 'input', readonly:true, name:"PrimaryPayload", valueField:"PrimaryPayload"},
-      {name: translations['Secondary Payload'], type: 'input', readonly:true, name:"SecondaryPayload", valueField:"SecondaryPayload"},
-      {name: translations['Armed'], type: 'input', readonly:true, name:"Armed", valueField:"Armed"},
-      {name: translations['Operations Area'], type: 'input', readonly:true, name:"AreaOfOperations", valueField:"AreaOfOperations"},
-      {name: translations['Air Operation Center'], type: 'input', readonly:true, name:"AirOperationsCenter", valueField:"AirOperationsCenter"},
-      {name: translations['Collection Operations COCOM'], type: 'input', readonly:true, name:"CollectionOperationsCOCOM", valueField:"CollectionOperationsCOCOM"},
+      {name: translations['ISR Asset Country'], type: 'input', readonly:true,  valueField:"ISRAssetCountary"},
+      {name: translations['ISR Unit'], type: 'input', readonly:true,  valueField:"ISRUnit"},
+      {name: translations['ISR Platform'], type: 'input', readonly:true,  valueField:"ISRPlatform"},
+      {name: translations['Primary Payload'], type: 'input', readonly:true, valueField:"PrimaryPayload"},
+      {name: translations['Secondary Payload'], type: 'input', readonly:true,  valueField:"SecondaryPayload"},
+      {name: translations['Armed'], type: 'input', readonly:true,  valueField:"Armed"},
+      {name: translations['Operations Area'], type: 'input', readonly:true,  valueField:"AreaOfOperations"},
+      {name: translations['Air Operation Center'], type: 'input', readonly:true,  valueField:"AirOperationsCenter"},
+      {name: translations['Collection Operations COCOM'], type: 'input', readonly:true,  valueField:"CollectionOperationsCOCOM"},
       {name: translations['Take-off Beddown COCOM'], type: 'input', readonly:true},
       {name: translations['Recovery Beddown COCOM'], type: 'input', readonly:true}
     ];
 
     const missionBlock3= [
-      {name: translations['Priority Intel Req'], type: 'input', readonly:true, name:"PriorityIntelRequirement", valueField:"PriorityIntelRequirement"},
-      {name: translations['Departure Time'], type: 'input', readonly:true, name:"DepartureTime", valueField:"DepartureTime"},
-      {name: translations['On Station'], type: 'input', readonly:true, name:"OnStation", valueField:"OnStation"},
-      {name: translations['Off Station'], type: 'input', readonly:true, name:"OffStation", valueField:"OffStation"},
-      {name: translations['Land Time'], type: 'input', readonly:true, name:"LandTime", valueField:"LandTime"},
-      {name: translations['Best Collection Time'], type: 'input', readonly:true, name:"BestCollectionTime", valueField:"BestCollectionTime"},
+      {name: translations['Priority Intel Req'], type: 'input', readonly:true,  valueField:"PriorityIntelRequirement"},
+      {name: translations['Departure Time'], type: 'input', readonly:true,  valueField:"DepartureTime"},
+      {name: translations['On Station'], type: 'input', readonly:true,  valueField:"OnStation"},
+      {name: translations['Off Station'], type: 'input', readonly:true,  valueField:"OffStation"},
+      {name: translations['Land Time'], type: 'input', readonly:true,  valueField:"LandTime"},
+      {name: translations['Best Collection Time'], type: 'input', readonly:true,  valueField:"BestCollectionTime"},
       {name: translations['Latest Time of Intel Value'], type: 'input', readonly:true},
       {name: translations['Report Classification'], type: 'input', readonly:true},
-      {name: translations['Ped Team']+' #1', type: 'input', readonly:true, name:"PedTeam", valueField:"PedTeam"},
+      {name: translations['Ped Team']+' #1', type: 'input', readonly:true,  valueField:"PedTeam"},
       {name: translations['Crew Team'], type: 'input', readonly:true, },
-      {name: translations['IR'], type: 'input', readonly:true, name:"ReqUserFrndlyID", valueField:"ReqUserFrndlyID"},
+      {name: translations['IR'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
 
 
       
