@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 
 import FormBlock from '../reusable/FormBlock';
+import ContentBlock from '../reusable/ContentBlock';
 
 
 class MissionDetailComponent extends React.Component {
@@ -102,6 +103,8 @@ class MissionDetailComponent extends React.Component {
       
     ];
 
+    const missionBlock4 = [  {name: 'Upload FIle', type: 'file'}, ];
+
     const requirementsHeader = [translations['Priority#'], translations['eei#'], translations['Name'], translations['threat'], translations['Location'], translations['grid'], translations['POIs'], translations['LIMIDS Request'], translations['view'], translations['edit'], translations['del'],];
     const requirementContent = [
       { priority:'001', eei:'0000-01', name:'torani farmhouse', threat:'ied', locaton:'gardez, afg', grid:'42swc20821753', pois:'poi-06', limid:'us/noforn', view:'view', edit:'edit', del:'del'},
@@ -128,6 +131,36 @@ class MissionDetailComponent extends React.Component {
             <FormBlock fields={missionBlock2} data={this.handleMissionBlock2} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
             <FormBlock fields={missionBlock3} data={this.handleMissionBlock3} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
+
+        </div>
+
+
+
+        <div className="row mission-mgt">
+
+         <div className="col-md-12 header-line">
+            {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
+            <div className="header-text">
+             File Upload {translations['File Upload']}
+            </div>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
+          </div>
+           <div className="col-md-12 header-line">
+           <ContentBlock fields={missionBlock4} />
+           </div> 
+
+              <div className="row action-buttons">
+          <div className="menu-button">
+            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+            <button type="submit" className="highlighted-button">
+              {translations['submit']}
+
+            </button>
+            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          </div>
+          </div>
+          
         </div>
 
       </div>
