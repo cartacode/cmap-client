@@ -98,6 +98,7 @@ class EeiForm extends React.Component {
         district: intelEei2.district,
         gridCoordinates: intelEei2.gridCoordinates,
         LIMIDS_Req: intelEei2.LIMIDS_ReqID,
+        LIMIDS_ReqID: intelEei2.LIMIDS_ReqID
       },
     });
   }
@@ -120,15 +121,18 @@ class EeiForm extends React.Component {
     let { intelReqEEI } = this.state;
     const { editId, intelId } = this.props;
     intelReqEEI.intelReqID = intelId;
-    console.log('Submitting' + JSON.stringify(intelReqEEI));
     if(editId !== undefined && editId !== '0') {
       delete intelReqEEI.LIMIDSReq;
       delete intelReqEEI.EEIThreat;
       intelReqEEI.id = editId;
+        // as in response we get ID integer value for LIMIDS REQUEST Field in variable LIMIDS_ReqID and String value in LIMIDS_Req
+        // but during save/update we have to send integer ID in LIMIDS_Req
+        intelReqEEI.LIMIDS_Req = intelReqEEI.LIMIDS_ReqID;
       this.props.updateIntelEei(editId, intelReqEEI).then(() => {
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
+      delete intelReqEEI.LIMIDS_ReqID;
       this.props.addIntelEei(intelReqEEI).then(() => {
         this.props.onClose(NoticeType.ADD);
       });
