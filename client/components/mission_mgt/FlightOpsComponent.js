@@ -15,7 +15,6 @@ class FlightOpsComponent extends React.Component {
 
 
   updateSelectedResource = (resource) => {
-    debugger;
     this.setState({
       selectedResource: resource,
     });

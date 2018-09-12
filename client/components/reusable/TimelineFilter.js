@@ -67,6 +67,8 @@ class TimelineFilter extends React.Component {
   }
 
   handleFilterData = (name, value) => {
+    if( value === '0' ) 
+      return;
 
     const { filter } = this.state;
     this.setState({

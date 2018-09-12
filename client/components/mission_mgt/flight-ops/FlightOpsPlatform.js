@@ -146,6 +146,10 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row => <div>
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
       },
       {
         Header: translations.Priority,
