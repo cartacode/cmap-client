@@ -26,7 +26,7 @@ class MissionDetailComponent extends React.Component {
         this.setState(
           {
             
-            missionDetail: this.props.oneMissionDetail[0],
+            missionDetail: this.props.oneMissionDetail,
             editFetched: true
      
           });
@@ -60,8 +60,8 @@ class MissionDetailComponent extends React.Component {
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
       {name: translations['Mission#'], type: 'input', readonly:true,  valueField:"Mission"},
-      {name: translations['Originating Req #'], type: 'input', readonly:true},
-      {name: translations['Air Tasking Order #'], type: 'input', readonly:true},
+      {name: translations['Originating Req #'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
+      //{name: translations['Air Tasking Order #'], type: 'input', readonly:true},
       {name: translations['ATO Issue Date'], type: 'input', readonly:true,  valueField: "ATOIssueDate"},
       {name: translations['Supported Command'], type: 'input', readonly:true, valueField:"SupportedCommand"},
       {name: translations['Supported Unit'], type: 'input', readonly:true,  valueField:"SupportedUnit"},
@@ -92,11 +92,11 @@ class MissionDetailComponent extends React.Component {
       {name: translations['Off Station'], type: 'input', readonly:true,  valueField:"OffStation"},
       {name: translations['Land Time'], type: 'input', readonly:true,  valueField:"LandTime"},
       {name: translations['Best Collection Time'], type: 'input', readonly:true,  valueField:"BestCollectionTime"},
-      {name: translations['Latest Time of Intel Value'], type: 'input', readonly:true},
-      {name: translations['Report Classification'], type: 'input', readonly:true},
+      {name: translations['Latest Time of Intel Value'], type: 'input', readonly:true, valueField:"LatestTimeIntelValue"},
+      {name: translations['Report Classification'], type: 'input', readonly:true, valueField:"ReportClassification"},
       {name: translations['Ped Team']+' #1', type: 'input', readonly:true,  valueField:"PedTeam"},
-      {name: translations['Crew Team'], type: 'input', readonly:true, },
-      {name: translations['IR'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
+      //{name: translations['Crew Team'], type: 'input', readonly:true, },
+      //{name: translations['IR'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
 
 
       
