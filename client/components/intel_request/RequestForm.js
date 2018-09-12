@@ -15,6 +15,7 @@ import  { NoticeType } from 'dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
+import Loader from '../reusable/Loader'
 
 class RequestForm extends React.Component {
 
@@ -56,6 +57,7 @@ class RequestForm extends React.Component {
         // Payload1: '',
         // Unit: '',
       },
+      loading:false
     };
 
     // this.resetForm = this.resetForm.bind(this);
@@ -166,17 +168,20 @@ class RequestForm extends React.Component {
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
     if(editId !== undefined && editId !== '0') {
-
+        this.setState({loading: true});
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
+        this.setState({loading: false});
         this.notify(NoticeType.UPDATE);
         this.setState({
           toSummary: true,
         });
       });
     } else {
+      this.setState({loading: true});
 
       this.props.addIntelRequest(intelRequest).then(() => {
+        this.setState({loading: false});
         this.notify(NoticeType.ADD);
         this.setState({
           toSummary: true,
@@ -297,6 +302,7 @@ resetForm() {
 
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
+          <Loader loading={this.state.loading} />
             <div className="img-header-line">
               <img src="/assets/img/status/theader_line.png" alt=""/>
               <div className="header-text">

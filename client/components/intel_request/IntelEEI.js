@@ -11,6 +11,7 @@ import { addIntelEei, fetchIntelEeisByIntelId, updateIntelEei, deleteIntelEEIByI
 import { defaultFilter } from '../../util/helpers';
 import { NotificationManager } from 'react-notifications';
 import { NoticeType, TableDefaults } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 class IntelEEI extends React.Component {
 
@@ -24,6 +25,7 @@ class IntelEEI extends React.Component {
       clear: false,
       eeiFetched: false,
       missionEEI: [],
+      loading: false
     };
   }
 
@@ -36,7 +38,9 @@ class IntelEEI extends React.Component {
   }
 
   deleteEEI = (id) => {
+    this.setState({loading: true});
     this.props.deleteIntelEEIById(id).then(() => {
+      this.setState({loading: false});
       this.closeEEI(NoticeType.DELETE);
     });
   }
@@ -133,6 +137,7 @@ class IntelEEI extends React.Component {
         { this.state.isFormOpened ? <EeiForm editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
+        <Loader loading={this.state.loading} />
           <div className="col-md-12">
             <FullHeaderLine headerText={translations['mission eei\'s']} />
           </div>

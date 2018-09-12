@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
+import Loader from '../reusable/Loader';
 
 class RequestComponent extends React.Component {
 
@@ -24,7 +25,8 @@ class RequestComponent extends React.Component {
       nameVal:'',
       form : {
         type: 'Test'
-      }
+      },
+      loading:false
 
     }
 
@@ -39,7 +41,11 @@ class RequestComponent extends React.Component {
 
   deleteIntelRequestById =(value)=>{
     const { translations } = this.props;
+    this.setState({loading: true});
+
     this.props.deleteIntelRequestById(value).then(() => {
+      this.setState({loading: false});
+
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
       this.props.fetchIntelRequests();
     });
@@ -129,6 +135,7 @@ class RequestComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
+          <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               Summary

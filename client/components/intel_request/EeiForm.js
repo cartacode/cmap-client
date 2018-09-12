@@ -5,6 +5,7 @@ import { addIntelEei,fetchIntelEeiById, updateIntelEei } from '../../actions/int
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import  { NoticeType } from '../../dictionary/constants';
 import ModalFormBlock from '../reusable/ModalFormBlock';
+import Loader from '../reusable/Loader';
 
 
 class EeiForm extends React.Component {
@@ -36,6 +37,7 @@ class EeiForm extends React.Component {
         // EEIThreat: '',
         // LIMIDSReq: '',
       },
+      loading: false
     };
   }
 
@@ -128,12 +130,16 @@ class EeiForm extends React.Component {
         // as in response we get ID integer value for LIMIDS REQUEST Field in variable LIMIDS_ReqID and String value in LIMIDS_Req
         // but during save/update we have to send integer ID in LIMIDS_Req
         intelReqEEI.LIMIDS_Req = intelReqEEI.LIMIDS_ReqID;
+        this.setState({loading: true});
       this.props.updateIntelEei(editId, intelReqEEI).then(() => {
+        this.setState({loading: false});
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
       delete intelReqEEI.LIMIDS_ReqID;
+      this.setState({loading: true});
       this.props.addIntelEei(intelReqEEI).then(() => {
+        this.setState({loading: false});
         this.props.onClose(NoticeType.ADD);
       });
     }
@@ -190,6 +196,7 @@ class EeiForm extends React.Component {
       <div>
         <form action="" onSubmit={this.handleSubmit} id="EeiForm">
           <div className="row intel-request">
+          <Loader loading={this.state.loading} />
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['eei generator']} />
             </div>
