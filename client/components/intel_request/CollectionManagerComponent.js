@@ -80,7 +80,7 @@ class CollectionManagerComponent extends React.Component {
     // fetch approved intel requests
     this.props.fetchApprovedIntelRequests(unitId, IntelConstants.STATUS.AV.abbreviation, false);
     // fetch collectiion plans 
-    this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.AV.abbreviation);
+    this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.APR.abbreviation);
   };
 
   notify = actionType => {
