@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
 import { fetchPersonnelsByFilter } from 'actions/organicpersonnel.js'
-import { addOraganicOrg } from 'actions/organicorg';
+import { fetchUnitById } from 'actions/organicorg.js'
+import { addOraganicOrg, updateUnit } from 'actions/organicorg';
 import { addOraganicPersonnel } from 'actions/organicpersonnel';
 import ContentFull from './ContentFull';
 
@@ -18,18 +19,18 @@ class Accordion extends React.Component {
       showAddForm:false,
       branch:'1',
       editId: '0',
+      isUpdated: false,
       addUnit: {
         description:'',
         UnitIdentificationCode:'',
         DerivativeUIC:'',
-        CommandRelationship:'',
+        CommandRelationship:'1',
         LocationID:'',
         Commander:'',
         UnitType:'',
         UnitSpecialization:'',
         ParentUnitID:'',
         BranchOfService:'1',
-        CommandRelationship:'1',
         UnitPersonnel: []
       },
       searchUnit: {
@@ -43,12 +44,52 @@ class Accordion extends React.Component {
         MOS: '',
         FreeFormSearchText: ''
       },
+      unit: {}
       
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    const { editId } = this.state;
+    console.log(this.state.editId);
+    console.log("Props are");
+    console.log(this.props);
+    this.setState({ clear: true });
+    if (editId !== '0') {
+      this.props.fetchUnitById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          unit: this.props.oneUnit,
+        });
+      });
+    }
+  }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.state;
+    console.log(this.state.editId);
+    if(editId !== '0' && prevState.editId !== editId) {
+      this.props.fetchUnitById(this.state.editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          unit: this.props.oneUnit,
+        });
+        console.log(this.state.unit);  
+      });
+    }
+
+    if(editId === '0' && prevState.editId !== editId) {
+      this.setState({ clear: true });
+    }
+
+    if(this.props.callEdit) 
+    {
+      
+      const { edit } = this.props;
+      console.log(edit);
+      this.props.stopCall();
+      this.openEditForm(edit);
+    }
   }
 
   save = () => {
@@ -59,9 +100,16 @@ class Accordion extends React.Component {
     this.setState({clear:false});
   }
 
+  stopUpdate = ()=> {
+    this.setState({
+      isUpdated: false,
+    });
+  }
+
   toggleAddForm = () => {
       this.setState({
-        showAddForm:true
+        showAddForm:true,
+        editId:'0'
       }, () => {this.addOrgForm();});   
 
       const { listPersonnel } = this.props;
@@ -79,12 +127,7 @@ class Accordion extends React.Component {
       }
   }
 
-  openEditForm = () => {
-    this.setState({
-      editId: 14,
-      showAddForm:true,
-    }, () => {this.addOrgForm();});
-  }
+ 
 
   close = (key) => {
     let accordionContent = document.getElementsByClassName(`accordion-content`)[key];
@@ -122,6 +165,15 @@ class Accordion extends React.Component {
     this.close(1); this.close(2);
   }
 
+  openEditForm = (id) => {
+    console.log("It is here");
+    console.log(this.state.editId);
+    this.setState({
+      editId: id,
+      showAddForm:true,
+    }, () => { this.addOrgForm();});
+  }
+
   handleGeneralData = (generalData) => {
     const { addUnit } = this.state;
 
@@ -131,7 +183,7 @@ class Accordion extends React.Component {
         description: generalData.description,
         UnitIdentificationCode:generalData.UnitIdentificationCode,
         DerivativeUIC:generalData.DerivativeUIC,
-        CommandRelationship:generalData.CommandRelationship,
+        CommandRelationship:1,
         LocationID:generalData.LocationID,
         Commander:generalData.Commander,
         UnitType:generalData.UnitType,
@@ -337,6 +389,10 @@ class Accordion extends React.Component {
     
   }
 
+  stopset () {
+    this.setState({clear:false});
+  }
+
   handleSearchSubmit = () => {
       let { searchUnit } = this.state;
       this.props.fetchPersonnelsByFilter(searchUnit).then(() => { this.close(3); this.toggleHeader(3);
@@ -349,17 +405,29 @@ class Accordion extends React.Component {
   }
 
   handleAddSubmit = () => {
+    let { editId } = this.state;
     let { addUnit } = this.state;
     let { TeamMembers } = this.state;
+    if (editId !== undefined && editId !== '0') {
+        addUnit.id = editId;
+        this.props.updateUnit(editId, addUnit);
+        alert("Org Added");
+    }
+    else {
+      addUnit.CommandRelationship = '1';
     this.props.addOraganicOrg(addUnit).then( () => {
-     alert("Added");
+     alert("Org Added");
     });
+  }
   }
 
   render() {
 
     const { listPersonnel } = this.props;
     console.log(listPersonnel);
+
+    const { oneUnit } = this.props;
+    console.log(oneUnit);
 
     const firstSectionDropdowns = [
       {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
@@ -423,7 +491,7 @@ class Accordion extends React.Component {
             <div className={`accordion-content-wrapper${0}`}>
               <div className="content info-content">
                 <ul>
-                <ContentFull fields={branchFields} data={this.handleBranchData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+                <ContentFull fields={branchFields} data={this.handleBranchData} initstate={this.state.unit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
 
                 </ul> <br/>
                 <button onClick={this.submitBranch}>Submit</button>
@@ -466,7 +534,7 @@ class Accordion extends React.Component {
                 <br/>
                   <input placeholder="Search/Filter Name, CAC ID"/>
                 </div> */}
-                <ContentFull fields={searchFields} data={this.handleSearchData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+                <ContentFull fields={searchFields} data={this.handleSearchData} initstate={this.state.addUnit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
               </div>
               <button type="submit" onClick={this.handleSearchSubmit}>Submit</button> <br/><br/>
             </div>
@@ -485,7 +553,7 @@ class Accordion extends React.Component {
                 {this.renderResults()}
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={() => this.close(3)}>
+                  <button onClick={this.openEditForm}>
                     Close
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -544,7 +612,7 @@ class Accordion extends React.Component {
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div> */}
 
-          <ContentFull fields={lastSectionFields} data={this.handleGeneralData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+          <ContentFull fields={lastSectionFields} data={this.handleGeneralData} initstate={this.state.unit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
 
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -688,7 +756,8 @@ const mapDispatchToProps = {
   addOraganicOrg,
   fetchPersonnelsByFilter,
   addOraganicPersonnel,
-
+  fetchUnitById,
+  updateUnit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accordion);
