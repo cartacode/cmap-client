@@ -142,7 +142,7 @@ class MissionDetailComponent extends React.Component {
             {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-             File Upload {translations['File Upload']}
+            {translations['File Upload']}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
