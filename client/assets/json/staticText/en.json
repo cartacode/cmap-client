@@ -128,7 +128,7 @@
   "selected platform and ped teams": "selected platform and ped teams",
   "ped teams available": "ped teams available",
   "Best Collection Time": "Best Collection Time",
-  "Latest Time of Intel Value": "Latest Time of Intel Value",
+  "Latest Time of Intel Value": "LTI Value",
   "requirements/eei's": "requirements/eei's",
   "view": "view",
   "special instrunctions/notes": "Special Instrunctions/Notes",
@@ -684,6 +684,7 @@
   "Update Payload Inventory Message": "Record updated successfully.",
   "Payload Library Title": "Payload Library",
   "Munition Inventory Title": "Munition inventory",
+  "Munition Library Title":"Munition Library",
   "Add Munition Inventory Message": "Record add successfully.",
   "Update Munition Inventory Message": "Record updated successfully.",
   "Delete CCIRPIR Message":"Record Deleted Successfully.",
@@ -727,6 +728,14 @@
   "units":"Units",
   "teams":"Teams",
   "Date/Time": "Date/Time",
-  "IR#": "IR#",
-  "Command": "Command"
+  "IR": "IR#",
+  "Command": "Command",
+  "mission summary":"Summary",
+	"Crew Team":"Crew Team",
+	"Ped Team":"Ped Team",
+	"StatusId":"StatusId",
+  "Active Dates":"Active Dates",
+  "File Upload": "File Upload",
+	"upload": "UPLOAD"
+  
 }

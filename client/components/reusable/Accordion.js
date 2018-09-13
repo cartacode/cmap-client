@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Dropdown from "../reusable/Dropdown";
 import ContentBlock from './ContentBlock';
-// import { fetchPersonnelsById } from 'actions/organicpersonnel.js'
-import { addOraganicOrg } from 'actions/organicorg';
+import { fetchPersonnelsByFilter } from 'actions/organicpersonnel.js'
+import { fetchUnitById } from 'actions/organicorg.js'
+import { addOraganicOrg, updateUnit } from 'actions/organicorg';
+import { addOraganicPersonnel } from 'actions/organicpersonnel';
 import ContentFull from './ContentFull';
 
 class Accordion extends React.Component {
@@ -16,24 +18,78 @@ class Accordion extends React.Component {
       uncheckedResults: [],
       showAddForm:false,
       branch:'1',
+      editId: '0',
+      isUpdated: false,
       addUnit: {
         description:'',
         UnitIdentificationCode:'',
         DerivativeUIC:'',
-        CommandRelationship:'',
+        CommandRelationship:'1',
         LocationID:'',
         Commander:'',
         UnitType:'',
         UnitSpecialization:'',
         ParentUnitID:'',
         BranchOfService:'1',
-        CommandRelationship:'1'
-      }
+        UnitPersonnel: []
+      },
+      searchUnit: {
+        COCOM: '',
+        BranchOfService: '',
+        AssignedUnit: '',
+        DeployedUnit:'',
+        TeamID: '',
+        DutyPosition: '',
+        LocationID: '',
+        MOS: '',
+        FreeFormSearchText: ''
+      },
+      unit: {}
+      
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    const { editId } = this.state;
+    console.log(this.state.editId);
+    console.log("Props are");
+    console.log(this.props);
+    this.setState({ clear: true });
+    if (editId !== '0') {
+      this.props.fetchUnitById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          unit: this.props.oneUnit,
+        });
+      });
+    }
+  }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    let { editId } = this.state;
+    console.log(this.state.editId);
+    if(editId !== '0' && prevState.editId !== editId) {
+      this.props.fetchUnitById(this.state.editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          unit: this.props.oneUnit,
+        });
+        console.log(this.state.unit);  
+      });
+    }
+
+    if(editId === '0' && prevState.editId !== editId) {
+      this.setState({ clear: true });
+    }
+
+    if(this.props.callEdit) 
+    {
+      
+      const { edit } = this.props;
+      console.log(edit);
+      this.props.stopCall();
+      this.openEditForm(edit);
+    }
   }
 
   save = () => {
@@ -44,11 +100,34 @@ class Accordion extends React.Component {
     this.setState({clear:false});
   }
 
+  stopUpdate = ()=> {
+    this.setState({
+      isUpdated: false,
+    });
+  }
+
   toggleAddForm = () => {
       this.setState({
-        showAddForm:true
+        showAddForm:true,
+        editId:'0'
       }, () => {this.addOrgForm();});   
+
+      const { listPersonnel } = this.props;
+      let { uncheckedResults } = this.state;
+      let { UnitPersonnel } = this.state.addUnit;
+      console.log("Printing These");
+      console.log(listPersonnel); 
+      for (let i = 0; i<listPersonnel.length; i++)
+      {
+        if (!(uncheckedResults.includes(i))) 
+        {  UnitPersonnel.push(listPersonnel[i].ID); 
+          console.log(UnitPersonnel);
+          console.log(this.state.addUnit.UnitPersonnel);
+        }
+      }
   }
+
+ 
 
   close = (key) => {
     let accordionContent = document.getElementsByClassName(`accordion-content`)[key];
@@ -86,6 +165,15 @@ class Accordion extends React.Component {
     this.close(1); this.close(2);
   }
 
+  openEditForm = (id) => {
+    console.log("It is here");
+    console.log(this.state.editId);
+    this.setState({
+      editId: id,
+      showAddForm:true,
+    }, () => { this.addOrgForm();});
+  }
+
   handleGeneralData = (generalData) => {
     const { addUnit } = this.state;
 
@@ -95,7 +183,7 @@ class Accordion extends React.Component {
         description: generalData.description,
         UnitIdentificationCode:generalData.UnitIdentificationCode,
         DerivativeUIC:generalData.DerivativeUIC,
-        CommandRelationship:generalData.CommandRelationship,
+        CommandRelationship:1,
         LocationID:generalData.LocationID,
         Commander:generalData.Commander,
         UnitType:generalData.UnitType,
@@ -112,6 +200,27 @@ class Accordion extends React.Component {
     this.setState({
       branch: generalData.branch    });
 
+  }
+
+  handleSearchData = (generalData) => {
+    const { searchUnit } = this.state;
+
+    this.setState({
+      searchUnit: {
+        ...searchUnit,
+        COCOM: generalData.COCOM,
+        BranchOfService: generalData.BranchOfService,
+        AssignedUnit: generalData.AssignedUnit,
+        DeployedUnit:generalData.DeployedUnit,
+        TeamID: generalData.TeamID,
+        DutyPosition: generalData.DutyPosition,
+        LocationID: generalData.LocationID,
+        MOS: generalData.MOS,
+        FreeFormSearchText: generalData.FreeFormSearchText
+      },
+    });
+
+    console.log(searchUnit);
   }
 
   renderDropdowns(dropdowns) {
@@ -132,24 +241,31 @@ class Accordion extends React.Component {
 
   renderResults() {
 
-    const results = [
-      {name: 'First Name', type: 'input'},
-      {name: 'Middle Initial', type: 'input'},
-      {name: 'Last Name', type: 'input'},
-      {name: 'Rank', type: 'dropdown'},
-      {name: 'Pay Grade', type: 'dropdown'},
-      // {name: 'Nationality', type: 'dropdown'},
-      // {name: 'Clearance Level', type: 'dropdown'},
-      // {name: 'CAC ID', type: 'input'},
-      // {name: 'Call Sign', type: 'input'},
-    ];
+    // const results = [
+    //   {name: 'First Name', type: 'input'},
+    //   {name: 'Middle Initial', type: 'input'},
+    //   {name: 'Last Name', type: 'input'},
+    //   {name: 'Rank', type: 'dropdown'},
+    //   {name: 'Pay Grade', type: 'dropdown'},
+    //   // {name: 'Nationality', type: 'dropdown'},
+    //   // {name: 'Clearance Level', type: 'dropdown'},
+    //   // {name: 'CAC ID', type: 'input'},
+    //   // {name: 'Call Sign', type: 'input'},
+    // ];
+    let results = [];
+
+    const { listPersonnel } = this.props;
+
+    if (listPersonnel) {
+      results = listPersonnel;
+    }
 
       return results.map((item, i) => {
 
         return (
           <div className="accordion-results" key={i}>
             <div className="result-checkbox">
-              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}/>
+              <input type="checkbox" id={`checkbox${i}`} name={`checkbox${i}`}  onClick={() => this.handleChange(i)} checked={this.state.uncheckedResults.indexOf(i) === -1}/>
               <label htmlFor={`checkbox${i}`}><span /></label>
             </div>
             <div>
@@ -157,10 +273,10 @@ class Accordion extends React.Component {
             </div>
             <div className="result-user">
               <div className="result-name">
-                cmd larry pickering
+                {item.Name} 
               </div>
               <div className="result-from">
-                82nd Airborne Division
+                {item.Unit}
               </div>
             </div>
           </div>
@@ -179,7 +295,8 @@ class Accordion extends React.Component {
     }
     this.setState({
       uncheckedResults
-    })
+    }, () => { console.log(uncheckedResults); });
+    
   };
 
   renderOrders() {
@@ -272,8 +389,14 @@ class Accordion extends React.Component {
     
   }
 
-  handleFilterSubmit = () => {
+  stopset () {
+    this.setState({clear:false});
+  }
 
+  handleSearchSubmit = () => {
+      let { searchUnit } = this.state;
+      this.props.fetchPersonnelsByFilter(searchUnit).then(() => { this.close(3); this.toggleHeader(3);
+        this.close(1); this.close(2); });
   }
 
   submitBranch = () => {
@@ -282,13 +405,29 @@ class Accordion extends React.Component {
   }
 
   handleAddSubmit = () => {
+    let { editId } = this.state;
     let { addUnit } = this.state;
+    let { TeamMembers } = this.state;
+    if (editId !== undefined && editId !== '0') {
+        addUnit.id = editId;
+        this.props.updateUnit(editId, addUnit);
+        alert("Org Added");
+    }
+    else {
+      addUnit.CommandRelationship = '1';
     this.props.addOraganicOrg(addUnit).then( () => {
-     alert("Added");
+     alert("Org Added");
     });
+  }
   }
 
   render() {
+
+    const { listPersonnel } = this.props;
+    console.log(listPersonnel);
+
+    const { oneUnit } = this.props;
+    console.log(oneUnit);
 
     const firstSectionDropdowns = [
       {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
@@ -301,16 +440,16 @@ class Accordion extends React.Component {
       {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
-    const firstSectionFields = [
-      {name: 'COCOM', type: 'dropdown', ddID:'COCOM'},
-      {name: 'Service', type: 'dropdown', ddID:'BranchOfService' },
-      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits'},
-      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
-      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1'},
-      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
-      {name: 'MOS', type: 'dropdown', ddID:'MOS'},
-      {name: 'Search', type: 'input'},
+    const searchFields = [
+      {name: 'COCOM', type: 'dropdown', ddID:'COCOM', domID: 'COCOM', valFieldID: 'COCOM'},
+      {name: 'Service', type: 'dropdown', ddID:'BranchOfService', domID: 'BranchOfService', valFieldID: 'BranchOfService' },
+      {name: 'Assigned Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'AssignedUnit', valFieldID: 'AssignedUnit'},
+      {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'DeployedUnit', valFieldID: 'DeployedUnit'},
+      {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1', domID: 'TeamID', valFieldID: 'TeamID'},
+      {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition', domID: 'DutyPosition', valFieldID: 'DutyPosition'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2', domID: 'LocationID', valFieldID: 'LocationID'},
+      {name: 'MOS', type: 'dropdown', ddID:'MOS', domID: 'MOS', valFieldID: 'MOS'},
+      {name: 'Search', type: 'input', domID: 'FreeFormSearchText', valFieldID: 'FreeFormSearchText'},
     ];
 
     const lastSectionDropdowns = [
@@ -352,7 +491,7 @@ class Accordion extends React.Component {
             <div className={`accordion-content-wrapper${0}`}>
               <div className="content info-content">
                 <ul>
-                <ContentFull fields={branchFields} data={this.handleBranchData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+                <ContentFull fields={branchFields} data={this.handleBranchData} initstate={this.state.unit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
 
                 </ul> <br/>
                 <button onClick={this.submitBranch}>Submit</button>
@@ -372,7 +511,7 @@ class Accordion extends React.Component {
               <div className="content info-content">
                 <ul>
                   <li onClick={this.props.orgChart}>Organic Org View</li>
-                  <li>Deployed Org View</li>
+                  <li onClick={this.props.deployedChart}>Deployed Org View</li>
                   <li onClick={this.props.personnelChart}>Organic Personnel View</li>
                   <li>Deployed Personnel View</li>
                 </ul>
@@ -389,14 +528,15 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${2}`}>
-              <div className="content info-content">
-                {this.renderDropdowns(firstSectionDropdowns)}
+              <div className="content info-content form-content">
+                {/* {this.renderDropdowns(firstSectionDropdowns)}
                 <div className="accordion-search">
                 <br/>
                   <input placeholder="Search/Filter Name, CAC ID"/>
-                </div>
+                </div> */}
+                <ContentFull fields={searchFields} data={this.handleSearchData} initstate={this.state.addUnit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
               </div>
-              <button type="submit" onClick={this.handleFilterSubmit}>Submit</button> <br/><br/>
+              <button type="submit" onClick={this.handleSearchSubmit}>Submit</button> <br/><br/>
             </div>
           </div>
         </div>
@@ -409,11 +549,11 @@ class Accordion extends React.Component {
           </div>
           <div className="accordion-content">
             <div className={`accordion-content-wrapper${3}`}>
-              <div className="content">
+              <div className="content results-content">
                 {this.renderResults()}
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={() => this.close(3)}>
+                  <button onClick={this.openEditForm}>
                     Close
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -472,7 +612,7 @@ class Accordion extends React.Component {
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div> */}
 
-          <ContentFull fields={lastSectionFields} data={this.handleGeneralData} initstate={this.state.addUnit} editId={0} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
+          <ContentFull fields={lastSectionFields} data={this.handleGeneralData} initstate={this.state.unit} editId={this.state.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)}  />
 
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
@@ -614,7 +754,10 @@ const mapDispatchToProps = {
   // fetchPlatformStatusById,
   // updatePlatformStatus
   addOraganicOrg,
-
+  fetchPersonnelsByFilter,
+  addOraganicPersonnel,
+  fetchUnitById,
+  updateUnit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accordion);

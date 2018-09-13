@@ -7,17 +7,30 @@ export const NoticeType = {
   NOT_DELETE: 'NOT_DELETE',
 };
 
+export const DateConsts = {
+  DATE_FORMAT: 'M-D-YY',
+  TIME_FORMAT: 'H:m A',
+  DATETIME_FORMAT: 'M-D-YY H:m A',
+  DB_DATETIME_FORMAT: 'YYYY-MM-DDTHH:mm:ss',
+  DB_DATE_FORMAT: 'YYYY-MM-DD',
+  DB_TIME_FORMAT: 'HH:mm:ss',
+  UI_DATETIME_FORMAT: 'MM-DD-YYYY HH:mm:ss',
+  UI_DATE_FORMAT: 'MM-DD-YYYY',
+  UI_TIME_FORMAT: 'HH:mm:ss',
+};
+
 export const TableDefaults = {
   PAGE_SIZE: 5,
   MIN_ROWS: 1,
-}
+};
 
 export const UnitConsts = {
   TYPE: {
     PED: 1,
     CREW: 2,
-  }
-}
+  },
+};
+
 export const MissionConsts = {
   RESOURCE: {
     PLATFORM: '1',
@@ -124,11 +137,30 @@ export const IntelConstants = {
       abbreviation: 'AAG',
       color: 'darkkhaki',
     },
+    MP: {
+      id: 35,
+      description: 'Mission Pending',
+      abbreviation: 'MP',
+      color: 'Red',
+    },
+    MA: {
+      id: 36,
+      description: 'Mission Active',
+      abbreviation: 'MA',
+      color: 'Orange',
+    },
+    MG: {
+      id: 37,
+      description: 'Mission Generated',
+      abbreviation: 'MG',
+      color: 'Blue',
+    },
   },
 };
 
 export const InputAttributes = {
   MAX_LENGTH: 50,
+  TEXTAREA_LEN: 500,
 };
 
 export const TimelineStatus = [

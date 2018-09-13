@@ -70,9 +70,15 @@ moveLeft = (row) => {
   moveRight = (row) => {
     // deletes from mission table by mission id
     const missionId = row.original.MissionId;
+    const intelRequestID = row.original.IntelRequestID;
+
     this.props.moveToCollectionPlanFromATOGeneration(missionId).then(() => {
-      this.loadData();
-      this.timeLine.onFind();
+
+      const statusId = IntelConstants.STATUS.APR.id; // 'APR'
+      this.props.updateIntelStatus(intelRequestID, statusId).then(() => {
+        this.loadData();
+        this.timeLine.onFind();
+      });
     });
   };
 
@@ -139,7 +145,7 @@ moveLeft = (row) => {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -198,7 +204,7 @@ moveLeft = (row) => {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -253,8 +259,6 @@ moveLeft = (row) => {
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -271,8 +275,6 @@ moveLeft = (row) => {
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>

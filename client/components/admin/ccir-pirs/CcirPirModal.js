@@ -244,7 +244,7 @@ resetForm = () => {
       { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region', required:true},
       { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
       { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
-      { name: 'Operation/Mission Name', type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
+      { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
       { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
     ];
 

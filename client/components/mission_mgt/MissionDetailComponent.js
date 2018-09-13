@@ -1,71 +1,109 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
 
 import FormBlock from '../reusable/FormBlock';
-import FullHeaderLine from '../reusable/FullHeaderLine';
-import StatusTable from '../reusable/StatusTable';
+import ContentBlock from '../reusable/ContentBlock';
 
 
-class LiveViewComponent extends React.Component {
+class MissionDetailComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      missionDetail: {},
+      editFetched: false
+    };
   }
 
+
+  componentDidMount = () =>{
+
+    const { match: { params } } = this.props;
+    const editId = params.editId;
+
+    if(editId !== undefined && editId !== '') {
+      this.props.fetchMissionDetailById(editId).then(()=> {
+        this.setState(
+          {
+            
+            missionDetail: this.props.oneMissionDetail,
+            editFetched: true
+     
+          });
+      });
+    }
+  }
+
+
   onClear(){
-    console.log("clear");
+    //console.log("clear");
   }
 
   onRoute(){
-    console.log("route");
+    //console.log("route");
   }
+
+
+  stopupd = () => {
+    this.setState({editFetched:false});
+  }
+
+
+
 
   render() {
 
     const {translations} = this.props;
 
+    const {missionDetail} = this.state;
+    
     const missionBlock1= [
-      {name: translations['Mission Name'], type: 'input'},
-      {name: translations['Mission#'], type: 'input'},
-      {name: translations['Originating Req #'], type: 'input'},
-      {name: translations['Air Tasking Order #'], type: 'input'},
-      {name: translations['ATO Issue Date'], type: 'input'},
-      {name: translations['Supported Command'], type: 'input'},
-      {name: translations['Supported Unit'], type: 'input'},
-      {name: translations['Named Operation'], type: 'input'},
-      {name: translations['Mission Type'], type: 'input'},
-      {name: translations['Sub-Mission Type'], type: 'input'},
-      {name: translations['Active Dates'], type: 'input'},
+      {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
+      {name: translations['Mission#'], type: 'input', readonly:true,  valueField:"Mission"},
+      {name: translations['Originating Req #'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
+      //{name: translations['Air Tasking Order #'], type: 'input', readonly:true},
+      {name: translations['ATO Issue Date'], type: 'input', readonly:true,  valueField: "ATOIssueDate"},
+      {name: translations['Supported Command'], type: 'input', readonly:true, valueField:"SupportedCommand"},
+      {name: translations['Supported Unit'], type: 'input', readonly:true,  valueField:"SupportedUnit"},
+      {name: translations['Named Operation'], type: 'input', readonly:true, valueField: "NamedOperation"},
+      {name: translations['Mission Type'], type: 'input', readonly:true,  valueField:"MissionType"},
+      {name: translations['Sub-Mission Type'], type: 'input', readonly:true,  valueField:"SubMissionType"},
+      {name: translations['Active Dates'], type: 'input', readonly:true,  valueField:"ActiveDateTimeStart" }
     ];
-
+    
     const missionBlock2= [
-      {name: translations['ISR Asset Country'], type: 'input'},
-      {name: translations['ISR Unit'], type: 'input'},
-      {name: translations['ISR Platform'], type: 'input'},
-      {name: translations['Primary Payload'], type: 'input'},
-      {name: translations['Secondary Payload'], type: 'input'},
-      {name: translations['Armed'], type: 'input'},
-      {name: translations['Operations Area'], type: 'input'},
-      {name: translations['Air Operation Center'], type: 'input'},
-      {name: translations['Collection Operations COCOM'], type: 'input'},
-      {name: translations['Take-off Beddown COCOM'], type: 'input'},
-      {name: translations['Recovery Beddown COCOM'], type: 'input'},
+      {name: translations['ISR Asset Country'], type: 'input', readonly:true,  valueField:"ISRAssetCountary"},
+      {name: translations['ISR Unit'], type: 'input', readonly:true,  valueField:"ISRUnit"},
+      {name: translations['ISR Platform'], type: 'input', readonly:true,  valueField:"ISRPlatform"},
+      {name: translations['Primary Payload'], type: 'input', readonly:true, valueField:"PrimaryPayload"},
+      {name: translations['Secondary Payload'], type: 'input', readonly:true,  valueField:"SecondaryPayload"},
+      {name: translations['Armed'], type: 'input', readonly:true,  valueField:"Armed"},
+      {name: translations['Operations Area'], type: 'input', readonly:true,  valueField:"AreaOfOperations"},
+      {name: translations['Air Operation Center'], type: 'input', readonly:true,  valueField:"AirOperationsCenter"},
+      {name: translations['Collection Operations COCOM'], type: 'input', readonly:true,  valueField:"CollectionOperationsCOCOM"},
+      {name: translations['Take-off Beddown COCOM'], type: 'input', readonly:true},
+      {name: translations['Recovery Beddown COCOM'], type: 'input', readonly:true}
     ];
 
     const missionBlock3= [
-      {name: translations['Priority Intel Req'], type: 'input'},
-      {name: translations['Departure Time'], type: 'input'},
-      {name: translations['On Station'], type: 'input'},
-      {name: translations['Off Station'], type: 'input'},
-      {name: translations['Land Time'], type: 'input'},
-      {name: translations['Best Collection Time'], type: 'input'},
-      {name: translations['Latest Time of Intel Value'], type: 'input'},
-      {name: translations['Report Classification'], type: 'input'},
-      {name: translations['PED Team']+' #1', type: 'input'},
-      {name: translations['PED Team']+' #2', type: 'input'},
-      {name: translations['PED Team']+' #3', type: 'input'},
+      {name: translations['Priority Intel Req'], type: 'input', readonly:true,  valueField:"PriorityIntelRequirement"},
+      {name: translations['Departure Time'], type: 'input', readonly:true,  valueField:"DepartureTime"},
+      {name: translations['On Station'], type: 'input', readonly:true,  valueField:"OnStation"},
+      {name: translations['Off Station'], type: 'input', readonly:true,  valueField:"OffStation"},
+      {name: translations['Land Time'], type: 'input', readonly:true,  valueField:"LandTime"},
+      {name: translations['Best Collection Time'], type: 'input', readonly:true,  valueField:"BestCollectionTime"},
+      {name: translations['Latest Time of Intel Value'], type: 'input', readonly:true, valueField:"LatestTimeIntelValue"},
+      {name: translations['Report Classification'], type: 'input', readonly:true, valueField:"ReportClassification"},
+      {name: translations['Ped Team']+' #1', type: 'input', readonly:true,  valueField:"PedTeam"},
+      //{name: translations['Crew Team'], type: 'input', readonly:true, },
+      //{name: translations['IR'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
+
+
+      
     ];
+
+    const missionBlock4 = [  {name: 'Upload FIle', type: 'file'}, ];
 
     const requirementsHeader = [translations['Priority#'], translations['eei#'], translations['Name'], translations['threat'], translations['Location'], translations['grid'], translations['POIs'], translations['LIMIDS Request'], translations['view'], translations['edit'], translations['del'],];
     const requirementContent = [
@@ -81,64 +119,58 @@ class LiveViewComponent extends React.Component {
       <div>
         <div className="row mission-mgt">
           <div className="col-md-12 header-line">
-            <img className="full-line" src="/assets/img/general/full_line.png" />
+            {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
+            <div className="header-text">
+              {translations['mission detail']}
+            </div>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
           <div className="col-md-12">
-            <FormBlock fields={missionBlock1} />
-            <FormBlock fields={missionBlock2} />
-            <FormBlock fields={missionBlock3} />
+            <FormBlock fields={missionBlock1} data={this.handleMissionBlock1} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
+            <FormBlock fields={missionBlock2} data={this.handleMissionBlock2} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
+            <FormBlock fields={missionBlock3} data={this.handleMissionBlock3} initstate ={missionDetail} editFetched={this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
+
         </div>
+
+
+
         <div className="row mission-mgt">
-          <div className="col-md-12 header-line">
-            <FullHeaderLine headerText={translations["requirements/eei's"]} />
-          </div>
-          <div className='col-md-12'>
-            <StatusTable thead={requirementsHeader} lines={requirementContent} />
-          </div>
-        </div>
-        <div className="row mission-mgt">
-          <div className="col-md-12 header-line">
-            <FullHeaderLine headerText={translations["special instructions/notes"]} />
-          </div>
-          <div className="col-md-12 special-instruction">
-            this mission will be coordinated in conjunction with local forces. a joint, pre-mission planning meeting will be held at the jioc at 0900 tuesday
-          </div>
-          <div className="col-md-12 instructors">
-            <div className="col-md-6 prepare-instructor">
-              <span className="name-label">{translations["prepared by:"]}  </span>
-              LTC John Smith            
+
+         <div className="col-md-12 header-line">
+            {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
+            <img src="/assets/img/admin/personnel_1.png" alt="" />
+            <div className="header-text">
+            {translations['File Upload']}
             </div>
-            <div className="col-md-6 approve-instructor">
-              <span className="name-label">{translations["approved by:"]} </span>
-              CMD paul Matis
-            </div>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-        </div>
-        <div className="row action-buttons" >
+           <div className="col-md-12 header-line">
+           <ContentBlock fields={missionBlock4} />
+           </div> 
+
+              <div className="row action-buttons">
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button" onClick={this.onClear.bind(this)}>
-              {translations["clear"]}
+            <button type="submit" className="highlighted-button">
+              {translations['upload']}
+
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button className="highlighted-button" onClick={this.onRoute.bind(this)}>
-              {translations["route"]}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
           </div>
+          
         </div>
+
       </div>
     );
   }
 }
 
-LiveViewComponent.propTypes = {
+MissionDetailComponent.propTypes = {
   children: PropTypes.element,
 
 };
 
-export default LiveViewComponent;
+export default MissionDetailComponent;

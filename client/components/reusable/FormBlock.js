@@ -8,19 +8,58 @@ class FormBlock extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      content: []
+    }
   }
 
-  renderFields() {
+  componentWillMount() {
+    this.setState({
+      content: this.props.initstate,
+    });
+  }
 
+  componentDidUpdate() {
+        
+    const { content } = this.state;
+    const { initstate, editFetched } = this.props;
+        
+     if (editFetched)
+     {
+      
+       this.props.stopupd();
+       this.setState({content:initstate});
+      
+     }
+        
+   
+  }
+
+
+  
+
+ 
+
+  renderFields() {
     let langs = ['val 1', 'val 2'];
 
     return this.props.fields.map((item, i) => {
 
       let input;
+      let value = '';
+            
+      
 
+      if(item.valueField !== undefined && this.state.content[item.valueField] !== undefined && this.state.content[item.valueField] !== null) {
+        value = this.state.content[item.valueField];
+      }
+     
       switch(item.type) {
         case 'input':
-          input = (<input type="text"/>);
+        if(item.readonly){
+          input = (<input type="text" readOnly={true} name={item.valueField} value={value} />);
+        }else
+          input = (<input type="text" name={item.valueField} value={value}  />);
           break;
 
         case 'dropdown':
@@ -48,7 +87,7 @@ class FormBlock extends React.Component {
       }
 
       return (
-        <div className="info-line" key={i}>
+        <div className="info-line" key={'elem' + i}>
           <div>
             {item.name}
           </div>
@@ -64,6 +103,13 @@ class FormBlock extends React.Component {
 
     return (
       <div className="col-md-4 info-block">
+       <div className="info-header">
+            <img src={this.props.headerLine} alt="" />
+            <div className="header-text">
+              {this.props.title}
+            </div>
+            <img className="mirrored-X-image" src={this.props.headerLine} alt="" />
+          </div>
         <div className={`${this.props.bigBackground ? 'big-background' : ''} info-content`}>
           {this.renderFields()}
         </div>
@@ -73,8 +119,9 @@ class FormBlock extends React.Component {
 }
 
 FormBlock.propTypes = {
-  children: PropTypes.element,
-
+  data: PropTypes.func,
+  editFetched: PropTypes.bool,
+  initstate: PropTypes.any
 };
 
 export default FormBlock;

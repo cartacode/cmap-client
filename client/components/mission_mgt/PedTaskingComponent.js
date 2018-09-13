@@ -106,7 +106,7 @@ class PedTaskingComponent extends React.Component {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -196,8 +196,6 @@ class PedTaskingComponent extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -214,8 +212,6 @@ class PedTaskingComponent extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>

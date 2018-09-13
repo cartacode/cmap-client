@@ -44,9 +44,15 @@ updateDimension = () => {
 
 }
 
-postconsole = event => {
-  event.preventDefault();
+postconsole = (nodeData) => {
   console.log("Post Console");
+  console.log(nodeData);
+  this.props.callfunc(nodeData.unitID);
+}
+
+test = event => {
+  event.preventDefault();
+  console.log("Testing");
 }
 
   render() {

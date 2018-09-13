@@ -20,11 +20,16 @@ class CollectionManagerComponent extends React.Component {
 
   deleteApprovedIntelRequests = (value) => {
     if (value !== undefined && value !== '0') {
-      const statusId = IntelConstants.Status.DRC.id; // 'DRC'
-      this.props.deleteApprovedIntelRequestById(value, statusId).then(() => {
+      const statusId = IntelConstants.STATUS.DRC.id; // 'DRC'
+      this.props.updateIntelStatus(value, statusId).then(() => {
         // this.setState({ editId: '0' });
+        if(this.props.isDeleted){
         this.notify(NoticeType.DELETE);
         this.loadData();
+      }
+      else{
+        this.notify(NoticeType.NOT_DELETE);
+      }
       });
     }
   };
@@ -80,7 +85,7 @@ class CollectionManagerComponent extends React.Component {
     // fetch approved intel requests
     this.props.fetchApprovedIntelRequests(unitId, IntelConstants.STATUS.AV.abbreviation, false);
     // fetch collectiion plans 
-    this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.AV.abbreviation, true);
+    this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.APR.abbreviation);
   };
 
   notify = actionType => {
@@ -95,6 +100,9 @@ class CollectionManagerComponent extends React.Component {
       // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.DELETE == actionType) {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
+    }
+    else if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
     }
   };
 
@@ -237,8 +245,6 @@ class CollectionManagerComponent extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>  
@@ -255,8 +261,6 @@ class CollectionManagerComponent extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>

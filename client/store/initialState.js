@@ -26,6 +26,7 @@ export default {
     allMunitions: [],
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
     allMunitionInventory: [],
     oneMunitionInventory: {},
     oneMunition: {}
@@ -74,6 +75,7 @@ export default {
     allApprovedIntelRequests: [],
     allCollectionsPlan: [],
     isFetching: false,
+    isDeleted:false
   },
   mssionmgts: {
     atoCollectionPlans:[],
@@ -88,6 +90,8 @@ export default {
     pedTasksAtoGenerations:[],
     isFetching: false,
     filterResults: [],
+    allMissionSummary:[],
+    oneMissionDetail:{}
   },
   paygrades: {
     paygradeList: [],
@@ -116,6 +120,7 @@ export default {
     oneIntelRequest: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   inteleei: {
@@ -123,15 +128,19 @@ export default {
     oneEei: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
   },
 
   organicorgs: {
     allOrganicOrgs: [],
+    allDeployedOrgs: [],
     isFetching: false,
   },
 
   organicpersonnels: {
     allOrganicPersonnels: [],
+    listOrganicPersonnels: [],
+    oneUnit: {},
     isFetching: false,
   },
 

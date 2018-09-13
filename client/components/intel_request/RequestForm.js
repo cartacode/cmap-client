@@ -15,6 +15,7 @@ import  { NoticeType } from 'dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
+import Loader from '../reusable/Loader'
 
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
@@ -59,6 +60,7 @@ class RequestForm extends React.Component {
       
       intelRequest: {
         IntelRequestID: '',
+        MissionId: null,
         // AreaOfOperations: '',
         // SupportedCommand: '',
         // SupportedUnit: '',
@@ -87,6 +89,7 @@ class RequestForm extends React.Component {
         // Payload1: '',
         // Unit: '',
       },
+      loading:false
     };
 
     // this.resetForm = this.resetForm.bind(this);
@@ -217,17 +220,20 @@ class RequestForm extends React.Component {
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
     if(editId !== undefined && editId !== '0') {
-
+        this.setState({loading: true});
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
+        this.setState({loading: false});
         this.notify(NoticeType.UPDATE);
         this.setState({
           toSummary: true,
         });
       });
     } else {
+      this.setState({loading: true});
 
       this.props.addIntelRequest(intelRequest).then(() => {
+        this.setState({loading: false});
         this.notify(NoticeType.ADD);
         this.setState({
           toSummary: true,
@@ -349,6 +355,8 @@ resetForm() {
     const { match: { params } } = this.props;
     const editId = params.editId;
 
+    let { intelRequest } = this.state;
+
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
       { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true },
@@ -383,9 +391,9 @@ resetForm() {
     //   priorityOptions.push({ label: i, value: i });
     // }
 
-    const intelRequest4 = [
+    let intelRequest4 = [
 
-      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', valFieldID: 'StatusId' , required:true},
+      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
       { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
       { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
     ];
@@ -402,6 +410,7 @@ resetForm() {
 
         <div className="row intel-request" >
           <div className="col-md-8 two-block" >
+          <Loader loading={this.state.loading} />
             <div className="img-header-line">
               <img src="/assets/img/status/theader_line.png" alt=""/>
               <div className="header-text">
@@ -478,28 +487,28 @@ resetForm() {
             </div>
           </div> */}
 
-
-          <div className="row action-buttons">
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
-                {translations['clear']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+          {this.state.intelRequest.MissionId === null ?
+            <div className="row action-buttons">
+              <div className="menu-button">
+                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
+                  {translations['clear']}
+                </button>
+                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+              </div>
+              <div className="menu-button">
+                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                <button type="submit" className='btn btn-warning'>
+                  {translations['submit']}
+                </button>
+                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+              </div> 
             </div>
-            <div className="menu-button">
-              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="submit" className='btn btn-warning'>
-                {/* {(this.props.editId != undefined && this.props.editId !='0') ?translations['update']:translations['save']} */}
-                {translations['submit']}
-              </button>
-              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-            </div>
-          </div>
+            : '' }
         </form>
 
-        {this.state.intelRequest.IntelRequestID !== '' ?
-          <IntelEEI intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        { (this.state.intelRequest.IntelRequestID !== '') ?
+          <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
           : null }
         {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 

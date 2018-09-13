@@ -1,4 +1,4 @@
-import { MUNITION__FETCH, MUNITION__FETCH_ONE } from 'dictionary/action';
+import { MUNITION__FETCH, MUNITION__FETCH_ONE, MUNITION__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function munitions(state = initialState.munitions, { payload, type }) {
@@ -25,6 +25,21 @@ export default function munitions(state = initialState.munitions, { payload, typ
         isFetching: false,
         oneMunition: payload.data,
       };
+      case MUNITION__DELETE_ONE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case MUNITION__DELETE_ONE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case MUNITION__DELETE_ONE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
+      }; 
     default:
       return state;
   }

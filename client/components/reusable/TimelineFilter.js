@@ -67,6 +67,8 @@ class TimelineFilter extends React.Component {
   }
 
   handleFilterData = (name, value) => {
+    if( value === '0' ) 
+      return;
 
     const { filter } = this.state;
     this.setState({
@@ -403,7 +405,7 @@ class TimelineFilter extends React.Component {
           <div className="col-md-12">
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
-          <div className="col-md-12 filter-line ">
+          <div className="col-md-12 filter-line text-center">
 
             <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={resourceFilter} defaultValue = {selectedResource} disable={resourceDisabled}/>
 
@@ -442,7 +444,7 @@ class TimelineFilter extends React.Component {
               <div className="row action-buttons" >
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <a className="highlighted-button btn btn-info" onClick={this.onFind.bind(this)}>
+                  <a className="highlighted-button btn filter" onClick={this.onFind.bind(this)}>
                     {translations['find & filter']}
                   </a>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>

@@ -109,7 +109,7 @@ class FlightOpsTeam extends React.Component {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -141,6 +141,10 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row => <div>
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
       },
       {
         Header: translations.Priority,
@@ -197,8 +201,6 @@ class FlightOpsTeam extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -215,9 +217,7 @@ class FlightOpsTeam extends React.Component {
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
-                    previousText="&#8678;"
-                    nextText="&#8680;"
-                    defaultFilterMethod={defaultFilter}
+                   defaultFilterMethod={defaultFilter}
                   />
                 </div>
               </div>

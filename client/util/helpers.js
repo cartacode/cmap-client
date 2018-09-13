@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { IntelConstants } from '../dictionary/constants';
+import { IntelConstants, DateConsts } from '../dictionary/constants';
 
 export const defaultFilter = (filter, row) => {
   const id = filter.pivotId || filter.id;
@@ -20,17 +20,17 @@ export const defaultFilter = (filter, row) => {
 
 export const formatDate = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format('M-D-YY');
+  return moment(dateObj).local().format(DateConsts.DATE_FORMAT);
 };
 
 export const formatDateTime = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format('M-D-YY H:m A');
+  return moment(dateObj).local().format(DateConsts.DATETIME_FORMAT);
 };
 
 export const formatTime = (dateObj) => {
   moment.locale('en');
-  return moment(dateObj).local().format('H:m A');
+  return moment(dateObj).local().format(DateConsts.TIME_FORMAT);
 };
 
 export const getIntelStatusColor = (abbreviation) => {

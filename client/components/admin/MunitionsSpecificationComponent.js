@@ -12,8 +12,8 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import { defaultFilter } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
-
+import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import Loader from '../reusable/Loader';
 
 class MunitionsSpecificationComponent extends React.Component {
 
@@ -39,6 +39,7 @@ class MunitionsSpecificationComponent extends React.Component {
         rocket: 2,
         gun: 3,
       },
+      loading: false
 
     }
   }
@@ -134,10 +135,17 @@ class MunitionsSpecificationComponent extends React.Component {
 
   deleteMunitions = (value) => {
     if (value !== undefined && value !== '0') {
+      this.setState({loading: true});
       this.props.deleteMunitionsById(value).then(() => {
        // this.setState({ editId: '0' });
+       this.setState({loading: false});
+       if(this.props.isDeleted){
         this.props.fetchMunitions();
-        this.notify('DELETE');
+        this.notify(NoticeType.DELETE);
+       }
+       else{
+        this.notify(NoticeType.NOT_DELETE);
+       }
       });
     }
   }
@@ -145,14 +153,17 @@ class MunitionsSpecificationComponent extends React.Component {
   //actionType means ADD, UPDATE, DELETE
   notify = (actionType) => {
     const { translations } = this.props;
-    if ('DELETE' != actionType) {
+    if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Munition Library Title'], 5000);
+    }
+    else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
-        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Inventory Title'], 5000);
+        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Library Title'], 5000);
       } else {
-        NotificationManager.success(translations['AddedSuccesfully'], translations['Munition Inventory Title'], 5000);
+        NotificationManager.success(translations['AddedSuccesfully'], translations['Munition Library Title'], 5000);
       }
     } else {
-        NotificationManager.success(translations['DeletedSuccesfully'],translations['Munition Inventory Title'], 5000);
+        NotificationManager.success(translations['DeletedSuccesfully'],translations['Munition Library Title'], 5000);
     }
   }
 
@@ -268,6 +279,7 @@ class MunitionsSpecificationComponent extends React.Component {
       <div>
         <div className="row orders-assets">
           <div className="header-line">
+          <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
               Munitions Library

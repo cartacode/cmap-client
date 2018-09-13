@@ -468,6 +468,7 @@
 	"Add Payload Inventory Message": "Record add successfully.",
 	"Update Payload Inventory Message": "Record updated successfully.",
 	"Munition Inventory Title": "Munition inventory",
+	"Munition Library Title":"Munition Library",
 	"Add Munition Inventory Message": "Record add successfully.",
 	"Update Munition Inventory Message": "Record updated successfully.",
 	"Delete CCIRPIR Message":"Record Deleted Successfully.",
@@ -481,5 +482,12 @@
 	"DeleteUnSuccessfull":"Record Can Not Be Deleted",
 	"ATOGeneration":"ATO Generation",
 	"FlightOPS":"Flight OPS",
-	"PedTask":"Ped Tasks"
+	"PedTask":"Ped Tasks",
+	"Crew Team":"Crew Team",
+	"Ped Team":"Ped Team",
+	"StatusId":"StatusId",
+	"IR#":"IR#",
+	"File Upload": "File Upload",
+	"upload": "UPLOAD",
+	"upload": "UPLOAD"
 }

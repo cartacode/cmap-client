@@ -29,6 +29,8 @@ class OrgBuilderComponent extends React.Component {
       isOptionModalOpen: false,
       nodeId: null,
       branch:'1',
+      callEdit:false,
+      edit:'0',
       treeConfig: {
         orientation: 'vertical',
         svgSquare: {
@@ -82,6 +84,7 @@ class OrgBuilderComponent extends React.Component {
   componentDidMount = () => {
   this.props.fetchOrganicOrg(this.state.branch);
   this.props.fetchOrganicPersonnel().then(()=> { this.personnelChartView(); });
+  this.props.fetchDeployedOrg(this.state.branch);
   }
 
   renderSchema = () => {
@@ -116,70 +119,25 @@ class OrgBuilderComponent extends React.Component {
     });
   }
 
+  deployedChartView = () => {
+    
+    const { allDeployedOrgs } = this.props;
+
+    let orgData3 = [ allDeployedOrgs ];
+   
+    console.log(allDeployedOrgs);
+    console.log(orgData3);
+
+     this.setState({
+       orgData: orgData3
+     }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
+
+  }
+
   orgChartView = () => {
     console.log("Here");
     const { allOrganicOrgs } = this.props;
     console.log(allOrganicOrgs);
-
-    // let testdata = [
-    //   {
-    //     id:'1',
-    //     name:allOrganicOrgs.UnitName,
-    //     image: '/assets/img/admin/primoris_backgr.png',
-    //     type:'Org',
-    //     attributes: {
-    //       Location: allOrganicOrgs.LocationName,
-    //     }
-    //   }
-
-    // ];
-
-    
-
-    // testdata[0].children = [];
-    // for (let i=0; i<allOrganicOrgs.subordinateUnits.length; i++)
-    // {
-    //     testdata[0].children.push({name:allOrganicOrgs.subordinateUnits[i].UnitName, image: '/assets/img/admin/primoris_backgr.png',
-    //     type:'Org',
-    //     attributes: {
-    //       Location: allOrganicOrgs.subordinateUnits[i].LocationName,
-    //     }
-    //     });
-    // }
-    // console.log(testdata);
-    
-
-    // let orgData2 = [
-    //    {
-    //      id: '1',
-    //      name: allOrganicOrgs.UnitName,
-    //      image: '/assets/img/admin/primoris_backgr.png',
-    //      type:'Org',
-    //      attributes: {
-    //        Location: allOrganicOrgs.LocationName,
-    //       },
-    //      children: [
-    //        {
-    //          id: '1.1',
-    //          name: allOrganicOrgs.subordinateUnits[0].UnitName,
-    //          image: '/assets/img/admin/primoris_backgr.png',
-    //          type:'Org',
-    //          attributes: {
-    //            Location: allOrganicOrgs.subordinateUnits[0].LocationName,
-    //          },
-    //        },
-    //        {
-    //          id: '1.2',
-    //          name: allOrganicOrgs.subordinateUnits[1].UnitName,
-    //          image: '/assets/img/admin/primoris_backgr.png',
-    //          type:'Org',
-    //          attributes: {
-    //            Location: allOrganicOrgs.subordinateUnits[1].LocationName,
-    //          },
-    //        },
-    //      ],
-    //    },
-    //  ];
 
     let orgData2 = [ allOrganicOrgs ];
 
@@ -344,6 +302,10 @@ onSelecOption = (nodeId, name) => {
 
 }
 
+fetchPersonnels = (searchUnit) => {
+  this.props.fetchPersonnelsByFilter(searchUnit).then(() => {console.log("DoneFetch")});
+}
+
 chartData = ()=> {
 
   var config = {
@@ -460,12 +422,40 @@ setTimeout(() => {
 
 }
 
+fetchUnits = (edit) => 
+{
+  this.props.fetchUnitById(edit);
+}
+
+func = (id) => 
+{
+  console.log("Call Func Called");
+  this.setState({
+      callEdit:true,
+      edit:id
+  });
+}
+
+stopCall = () => 
+{
+  this.setState({
+    callEdit:false
+});
+}
+
+testfunc = (nodeData) => {
+  console.log(nodeData.unitID);
+}
+
+
 render() {
 
   const { translations } = this.props;
   const { allOrganicOrgs } = this.props;
   const { allOrganicPersonnels } = this.props;
+  const { listOrganicPersonnels } = this.props;
 
+  console.log(listOrganicPersonnels);
 
   return (
     <div>
@@ -494,11 +484,11 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} setBranch={this.setBranch}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels} fetchUnitById={this.fetchUnits} oneUnit={this.props.oneUnit} callEdit={this.state.callEdit} edit={this.state.edit} stopCall={this.stopCall}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
-          <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true}/>
+          <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true} callfunc={this.func} />
         </div>  
         </div>
       </div>

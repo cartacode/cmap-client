@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,    
     allMunitionInventory: state.munitionsinventory.allMunitionInventory,
     isLoading: state.munitionsinventory.isFetching,
+    isDeleted: state.munitionsinventory.isDeleted
   };
 };
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { ORGANIC_PERSONNEL__FETCH, ORGANIC_PERSONNEL__ADD, PERSONNEL__FETCH_LIST } from 'dictionary/action';
+import { ORGANIC_PERSONNEL__FETCH, ORGANIC_PERSONNEL__ADD, ORGANIC_PERSONNEL__FETCH_LIST } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -12,16 +12,16 @@ export function fetchOrganicPersonnel() {
   });
 }
 
-// export function addOraganicPersonnel(personnel) {
-//   return createAction({
-//     type: ORGANIC_PERSONNEL__ADD,
-//     action: () => axios.post(`${baseUrl}/CommandStructure/PostCommandStructure`, qs.stringify(personnel), requestHeaders),
-//   });
-// }
+export function addOraganicPersonnel(personnel) {
+  return createAction({
+    type: ORGANIC_PERSONNEL__ADD,
+    action: () => axios.put(`${baseUrl}/Personnel/SetPersonnelUnits`, personnel, requestHeaders),
+  });
+}
 
-// export function fetchPersonnelsById(id) {
-//     return createAction({
-//       type: ORGANIC_PERSONNEL__FETCH_LIST,
-//       action: () => axios.get(`${baseUrl}/Personnel/GetPersonnel/${id}`, requestHeaders),
-//     });
-//   }
+export function fetchPersonnelsByFilter(id) {
+    return createAction({
+      type: ORGANIC_PERSONNEL__FETCH_LIST,
+      action: () => axios.put(`${baseUrl}/Search/SearchPersonnel/`, id, requestHeaders),
+    });
+  }
