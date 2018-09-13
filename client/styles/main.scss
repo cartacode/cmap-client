@@ -4933,4 +4933,63 @@ input[type="checkbox"]:checked + label span {
   height: 15px;
 }
 }
+.cesium-viewer{
+  position: relative;
+  .cesium-viewer-toolbar{
+    position: absolute;
+    top:0;
+    left: 94%;
+  }
+  .cesium-home-button{
+    border: 2px solid #f2f2f2;
+    background: azure;
+  }
+}
+.map-wrapper{
+  position: relative;
+  .ico-location{
+    width: 50px;
+    height: 40px;
+    z-index: 2;
+    position: absolute;
+    top:50px;
+    left:94%;
+    a{
+      border-radius:4px;
+      background-color: azure;
+      display: block;
+      &:hover{
+        background: violet;
+        border-radius:50px;
+        transition: 10ms;
+      }
+    }
+    
+    &--img{
+      max-width: 50px;
+      height: 36px;
+      background-image: url("/assets/img/intel_request/locationicon.png");
+    }
+  }
+}
 
+.Modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  }
+  .ReactModalPortal{
+    .ReactModal__Overlay--after-open{
+      background-color: none !important;
+    }
+  }

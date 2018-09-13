@@ -16,15 +16,47 @@ import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
 
+import { baseUrl } from 'dictionary/network';
+import axios from 'axios';
+import Modal from 'react-modal';
+import { addKML } from '../../map/kml';
+import {addPoint } from 'map/viewer';
+
+
+
+const ModalCustomStyles = {
+  overlay:  {
+    backgroundColor       : "none",
+  },
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    backgroundColor       : 'rebeccapurple',
+    button: {
+      border: "2px solid #f2f2f2"
+    }
+  }
+};
+
 class RequestForm extends React.Component {
 
   constructor(props) {
     super(props);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.currentLatLong={};
 
     this.state = {
       toSummary: false,
       editFetched: false,
       clear: false,
+      showModal: false,
+      
       intelRequest: {
         IntelRequestID: '',
         // AreaOfOperations: '',
@@ -62,6 +94,18 @@ class RequestForm extends React.Component {
     this.baseState = this.state;
 
   }
+  openModal() {
+    this.setState({showModal: true});
+  }
+ 
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+   // this.subtitle.style.color = '#f00';
+  }
+ 
+  closeModal() {
+    this.setState({showModal: false});
+  }
 
   componentDidMount = () =>{
 
@@ -76,9 +120,17 @@ class RequestForm extends React.Component {
             editFetched: true,
           });
       });
-    }
-  }
 
+    }
+    this.getKMLdata();
+  }
+   getKMLdata = () =>{
+    const apiUrl = `${baseUrl}/CCIRPIR/GetCCIRPIRData`;
+    axios.get(apiUrl).then(response =>{
+      localStorage.setItem("KMLdata", JSON.stringify(response.data));
+      console.log("response --->", response.data);
+    });
+   }
   // componentDidUpdate = (prevProps) => {
   //   const { oneIntelRequest } = this.props;
   //   const { intelRequest } = this.state;
@@ -183,6 +235,62 @@ class RequestForm extends React.Component {
       });
     }
 
+  }
+  handleIntelRequestClick = (currentLatLong, viewerId, viewer) =>{
+    console.log("---", viewerId);
+    console.log("---", currentLatLong);
+    console.log("--", viewer);
+    this.currentLatLong = currentLatLong;
+    this.viewer = viewer;
+    this.viewerId = viewerId;
+
+    //addPoint(currentLatLong.longitude, currentLatLong.latitude, this.viewerId, "Current point");
+    this.openModal();
+  }
+  performLookUp = () =>{
+    let centerPoints = [];
+    let KMLdata = JSON.parse(localStorage.getItem("KMLdata"));
+    for(let i=0; KMLdata[i]; i++){
+      if(KMLdata[i].CenterPoint){
+        var centers=KMLdata[i].CenterPoint.split(";");
+        if(centers.length > 1){
+          for(let j=0; centers[j]; j++) {
+            centerPoints.push({point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: (KMLdata[i].Description4 || "")+(" "+KMLdata[i].Description5 || "")+(" "+KMLdata[i].Description6 || "")});
+          }
+        } else{
+          centerPoints.push({point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: (KMLdata[i].Description4 || "")+(" "+KMLdata[i].Description5 || "")+(" "+KMLdata[i].Description6 || "")});
+          
+        }
+      }
+      
+    }
+    console.log("centers", centerPoints);
+
+
+    //finding nearest point
+
+    let distances = [];
+    for(let i=0; centerPoints[i]; i++){
+      let point = centerPoints[i].point.split(",");
+      let xDistance = Number(point[0]) - this.currentLatLong.longitude;
+      let yDistance = Number(point[1]) - this.currentLatLong.latitude;
+      let distance = Math.sqrt(yDistance*yDistance + xDistance*xDistance);
+      distances.push({distance, index: i});
+
+    }
+    
+    distances.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+    console.log("nearest--", centerPoints[distances[0].index]);
+    let nearestPoint = centerPoints[distances[0].index].point.split(",");
+    addKML(centerPoints[distances[0].index].KMLUri, this.viewerId);
+    addPoint(Number(nearestPoint[0]), Number(nearestPoint[1]), Number(nearestPoint[2]), this.viewerId, "nearest point "+nearestPoint[0]+","+nearestPoint[1]);
+    this.setState({
+      CCIRPIR: centerPoints[distances[0].index].CCIRPIR
+    });
+    this.closeModal();
+    
   }
 
 notify = (type) => {
@@ -302,14 +410,25 @@ resetForm() {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-              <Map viewerId={viewerIdentifiers.intelRequest} kmlDataSource={['http://localhost:3001/assets/doc.kml' 
-                                                                             ]} /> 
+            <Modal
+             isOpen={this.state.showModal}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={ModalCustomStyles}
+              contentLabel="Example Modal">
+                  <h4>You can do following actions</h4>
+                  <button onClick={this.performLookUp}>Perform nearest KML lookup</button>
+              </Modal>
+              
+              <Map viewerId={viewerIdentifiers.intelRequest} handleClick={this.handleIntelRequestClick} kmlDataSource="http://localhost:3001/assets/doc.kml">
+              
+              </Map> 
             </div>
           </div>
           <div className="col-md-4 one-block">
             <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
             <div className="ccir-content">
-              CCIR:
+              CCIR: {this.state.CCIRPIR}
             </div>
             <ShortHeaderLine headerText={translations['associate intelligence report']} />
             <div className="associate-content" />

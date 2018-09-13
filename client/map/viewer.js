@@ -1,6 +1,5 @@
 import Cesium from 'cesium/Cesium'; // eslint-disable-line import/no-unresolved
 import {getImageryurl} from 'map/config';
-import {clickHandler} from 'map/MapClickHandler';
 
 
 /**
@@ -25,7 +24,7 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId) {
+export function createViewer(viewerId, elementId, clickHandler) {
   if (viewers.has(viewerId)) {
     return;
   }
@@ -34,12 +33,13 @@ export function createViewer(viewerId, elementId) {
     baseLayerPicker: false,
     fullscreenButton: false,
     geocoder: false,
-    homeButton: false,
+    homeButton: true,
     infoBox: false,
-    sceneModePicker: true,
+    sceneModePicker: false,
     selectionIndicator: false,
     navigationHelpButton : false,
     timeline: false,
+    shadows: true,
     // imageryProvider: new Cesium.WebMapServiceImageryProvider({
     //     layers: 'amps:WORLDGEOTIF',
     //     proxy: new Cesium.DefaultProxy('/proxy/'),
@@ -79,7 +79,7 @@ viewer.canvas.style.width = '100%';
  * TODO: Move to separate file
  * Attaching double click event on canvas, to retrieve lat, long values
 */
-  getCurrentLatLong(viewer, viewerId)
+  getCurrentLatLong(viewer, viewerId, clickHandler)
 
   viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
 
@@ -91,11 +91,11 @@ viewer.canvas.style.width = '100%';
  * getCurrentLatLong: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 
  */
-function getCurrentLatLong(viewer, viewerId){
+function getCurrentLatLong(viewer, viewerId, clickHandler){
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
   // Event handler for left click
-  screenSpaceEventHandler.setInputAction(function(click) {
+  screenSpaceEventHandler.setInputAction(click => {
 
     // get position  of click
     var clickPosition = viewer.camera.pickEllipsoid(click.position);
@@ -106,7 +106,8 @@ function getCurrentLatLong(viewer, viewerId){
       longitude: Cesium.Math.toDegrees(cartographicClick.longitude),
       latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
     }
-      clickHandler[viewerId](currentLatLong, viewerId);
+    clickHandler(currentLatLong, viewerId, viewer);
+      //clickHandler[viewerId](currentLatLong, viewerId);
   },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
 }
@@ -124,16 +125,16 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
-export function addPoint(x, y, viewerId, label){
+export function addPoint(x, y, z, viewerId, label){
   if (!viewers.has(viewerId)) {
     return;
   }
 
   const viewer = viewers.get(viewerId);
   viewer.entities.removeAll();
-viewer.entities.add({
+  viewer.entities.add({
   name : 'Bounding Box Center',
-  position : Cesium.Cartesian3.fromDegrees(x, y),
+  position : Cesium.Cartesian3.fromDegrees(x, y, z),
   point : {
       pixelSize : 5,
       color : Cesium.Color.RED,
