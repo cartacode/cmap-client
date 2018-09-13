@@ -9,6 +9,7 @@ import IntelLibraryContainer from '../containers/IntelLibraryContainer';
 import IntelRequestComponent from '../components/IntelRequestComponent';
 import LiveViewContainer from '../containers/LiveViewContainer';
 import LoginContainer from '../containers/LoginContainer';
+import ChangePasswordContainer from '../containers/ChangePasswordContainer';
 import MessagesContainer from '../containers/MessagesContainer';
 import MissionMGTComponent from '../components/MissionMGTComponent';
 import OrdersAssetsComponent from '../components/OrdersAssetsComponent';
@@ -24,7 +25,7 @@ class NavigationComponent extends React.Component {
       <div>
       <Route path="/" render={(route) =>{
 
-            return route.location.pathname==='/main' ? null : <HeaderContainer/>;
+            return route.location.pathname==='/login' ? null : <HeaderContainer/>;
         }} />
         <Switch>
           <Route exact path="/" component={DashboardContainer} />
@@ -40,6 +41,7 @@ class NavigationComponent extends React.Component {
           <Route path="/admin" component={AdminComponent} />
           <Route path="/search" component={SearchContainer} />
           <Route path="/login" component={LoginContainer} />
+          <Route path="/change-password" component={ChangePasswordContainer} />
         </Switch>
       </div>
     );
