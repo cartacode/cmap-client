@@ -41,7 +41,12 @@ class IntelEEI extends React.Component {
     this.setState({loading: true});
     this.props.deleteIntelEEIById(id).then(() => {
       this.setState({loading: false});
-      this.closeEEI(NoticeType.DELETE);
+      if(this.props.isDeleted){
+        this.closeEEI(NoticeType.DELETE);
+      }
+      else{
+        this.notify(NoticeType.NOT_DELETE);
+      }
     });
   }
 
@@ -67,7 +72,10 @@ class IntelEEI extends React.Component {
 
   notify = (type) => {
     const { translations } = this.props;
-    if(type === NoticeType.ADD) {
+    if(type === NoticeType.NOT_DELETE){
+      NotificationManager.error(translations.DeleteUnSuccessfull, translations.IntelEEI, 5000);
+    }
+    else if(type === NoticeType.ADD) {
       NotificationManager.success(translations.AddedSuccesfully, translations.IntelEEI, 5000);
     } else if(type === NoticeType.UPDATE) {
       NotificationManager.success(translations.UpdatedSuccesfully, translations.IntelEEI, 5000);
@@ -178,6 +186,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     oneEEI: state.inteleei.oneEei,
     inteleeis: state.inteleei.eeis,
+    isDeleted: state.inteleei.isDeleted,
   };
 };
 

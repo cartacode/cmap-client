@@ -126,6 +126,7 @@ export default {
     oneEei: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
   },
 
   organicorgs: {

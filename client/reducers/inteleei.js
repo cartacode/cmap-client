@@ -1,4 +1,4 @@
-import { INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE } from 'dictionary/action';
+import { INTEL_EEI__FETCH, INTEL_EEI__FETCH_ONE, INTEL_EEI__DELETE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function inteleei(state = initialState.inteleei, { payload, type }) {
@@ -24,6 +24,21 @@ export default function inteleei(state = initialState.inteleei, { payload, type 
         ...state,
         isFetchingOne: false,
         oneEei: payload.data,
+      };
+      case INTEL_EEI__DELETE.REQUEST:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case INTEL_EEI__DELETE.SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+      case INTEL_EEI__DELETE.FAILURE:
+      return {
+        ...state,
+        isDeleted: false,
       };
     default:
       return state;
