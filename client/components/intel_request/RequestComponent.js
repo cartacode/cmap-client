@@ -71,7 +71,6 @@ class RequestComponent extends React.Component {
 
     const addurl = match.url.replace('/request', '/request-form');
     const editurl = match.url.replace('/request', '/detail/');
-
     const columns = [
       {
         Header: 'IR#',
@@ -125,8 +124,13 @@ class RequestComponent extends React.Component {
         Header: translations['view'],
         accessor: 'IntelRequestID',
         filterable: false,
-        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
-        <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a></div>,
+        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
+        
+      {   (row.original.IsInCollectionPlan || row.original.MissionId != null || row.original.Abbreviation === "APR") ?  '' :
+          <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
+      }
+      
+      </div>,
       },
     ];
 
