@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     allRequests: state.intelrequest.allRequests,
     isLoading: state.intelrequest.isFetching,
+    isDeleted: state.intelrequest.isDeleted
   };
 };
 

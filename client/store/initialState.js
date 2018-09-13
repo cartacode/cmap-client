@@ -119,6 +119,7 @@ export default {
     oneIntelRequest: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   inteleei: {

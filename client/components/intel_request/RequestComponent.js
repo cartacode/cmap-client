@@ -39,15 +39,20 @@ class RequestComponent extends React.Component {
     this.props.fetchIntelRequests();
   }
 
+
   deleteIntelRequestById =(value)=>{
     const { translations } = this.props;
     this.setState({loading: true});
 
     this.props.deleteIntelRequestById(value).then(() => {
       this.setState({loading: false});
-
-      NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
-      this.props.fetchIntelRequests();
+      if(this.props.isDeleted){
+        NotificationManager.success(translations.DeletedSuccesfully, translations['Intel Request Title'], 5000);
+        this.props.fetchIntelRequests();
+      }
+      else{
+        NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
+      }
     });
   }
 
