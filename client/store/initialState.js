@@ -75,6 +75,7 @@ export default {
     allApprovedIntelRequests: [],
     allCollectionsPlan: [],
     isFetching: false,
+    isDeleted:false
   },
   mssionmgts: {
     atoCollectionPlans:[],

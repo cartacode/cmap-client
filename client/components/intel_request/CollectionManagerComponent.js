@@ -23,8 +23,13 @@ class CollectionManagerComponent extends React.Component {
       const statusId = IntelConstants.STATUS.DRC.id; // 'DRC'
       this.props.updateIntelStatus(value, statusId).then(() => {
         // this.setState({ editId: '0' });
+        if(this.props.isDeleted){
         this.notify(NoticeType.DELETE);
         this.loadData();
+      }
+      else{
+        this.notify(NoticeType.NOT_DELETE);
+      }
       });
     }
   };
@@ -95,6 +100,9 @@ class CollectionManagerComponent extends React.Component {
       // NotificationManager.success(translations['Intel Request moved'], translations['Intel Request Title'], 5000);
     } else if (NoticeType.DELETE == actionType) {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
+    }
+    else if(NoticeType.NOT_DELETE === actionType){
+      NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
     }
   };
 

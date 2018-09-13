@@ -10,6 +10,7 @@ const mapStateToProps = state => {
     allApprovedIntelRequests: state.collections.allApprovedIntelRequests,
     allCollectionsPlan: state.collections.allCollectionsPlan,
     isLoading: state.collections.isFetching,
+    isDeleted: state.collections.isDeleted
   };
 };
 
