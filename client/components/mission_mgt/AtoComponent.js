@@ -145,7 +145,7 @@ moveLeft = (row) => {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -204,7 +204,7 @@ moveLeft = (row) => {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {

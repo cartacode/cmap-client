@@ -113,7 +113,7 @@ class FlightOpsPlatform extends React.Component {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
