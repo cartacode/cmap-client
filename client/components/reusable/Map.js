@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import uuid from 'uuid/v4';
 
-import { createViewer, destroyViewer } from 'map/viewer';
+import { createViewer, destroyViewer, } from 'map/viewer';
+import ToolBar from 'map/ToolBar';
 
 /**
  * The map of Cesium viewer sizes.
@@ -26,10 +27,11 @@ export default class Map extends React.PureComponent {
 
     this._elementId = `Map_${uuid()}`;
     this._viewer = null;
+    this.center = [];
   }
 
   componentDidMount() {
-    this._viewer = createViewer(this.props.viewerId, this._elementId);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.props.handleClick);
   }
 
   componentWillUnmount() {
@@ -41,7 +43,9 @@ export default class Map extends React.PureComponent {
     const { size = viewerSize.medium } = this.props;
 
     return (
-      <div id={this._elementId} style={{ width: `${size}%` }}/>
+      <div id={this._elementId} className="map-wrapper" style={{ width: `${size}%` }}>
+        <ToolBar></ToolBar>
+      </div>
     );
   }
 }

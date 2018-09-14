@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
+import Map, { viewerSize } from 'components/reusable/Map';
+import { viewerIdentifiers } from 'map/viewer';
 
 
 class BaseModal extends React.Component {
@@ -123,7 +125,6 @@ class BaseModal extends React.Component {
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
-    const userLocationId = location.UserLocationID;
     this.setState({
       location: {
         ...location,
@@ -135,61 +136,49 @@ class BaseModal extends React.Component {
         UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-       if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId){
-        document.getElementById('validationIcon').src = '';
-       }
-     });
-  }
+      const { editId } = this.props;
 
-
-  checkLocationId() {
-    const { editId } = this.props;
-    let {location} = this.state;
-    const userLocationId = location.UserLocationID;
-    if (userLocationId) {
-      let isUserLocationIdExits;
-      axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
-        .then(response => {
-          isUserLocationIdExits = response.data;
-          document.getElementById('LocationID').placeholder = '';
-          if (isUserLocationIdExits === false) {
-            if (this.props.oneLocation.UserLocationID !== 'undefined') {
-              if (this.props.oneLocation.UserLocationID !== userLocationId) {
+      const userLocationId = positionData.UserLocationID;
+      if (userLocationId) {
+        let isUserLocationIdExits;
+        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
+          .then(response => {
+            isUserLocationIdExits = response.data;
+            document.getElementById('LocationID').placeholder = '';
+            if (isUserLocationIdExits === false) {
+              if (this.props.oneLocation.UserLocationID !== 'undefined') {
+                if (this.props.oneLocation.UserLocationID !== userLocationId) {
+                  const { location } = this.state;
+                  this.setState({
+                    location: {
+                      ...location,
+                      UserLocationID: '',
+                    }
+                  });
+                  document.getElementById('LocationID').value = '';
+                  document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+                  document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+                }
+              } else {
+                const { location } = this.state;
                 this.setState({
                   location: {
                     ...location,
                     UserLocationID: '',
                   }
                 });
-                this.handleLocationPositionData(this.state.location);
                 document.getElementById('LocationID').value = '';
                 document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
                 document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
               }
-              else{
-                this.submitData();
-              }
             } else {
-
-              this.setState({
-                location: {
-                  ...location,
-                  UserLocationID: '',
-                }
-              });
-              //this.handleLocationPositionData(this.state.location);
-              document.getElementById('LocationID').value = '';
-              document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
-              document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+              document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+              this.submitData();
             }
-          } else {
-            document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
-            this.submitData();
-          }
-        });
-    }
-    //console.log("New state in ASYNC callback og location Section:22222", this.state.location);
- 
+          });
+      }
+     // console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+    });
   }
 
   handleLocationInfoData = (infoData) => {
@@ -263,7 +252,8 @@ class BaseModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  submitData = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     const { location } = this.state;
     const { editId } = this.props;
     const { locationFiles } = this.state;
@@ -411,6 +401,11 @@ class BaseModal extends React.Component {
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
               data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
           </div>
+        </div>
+		<div className = "row personnel">
+          <div className="col-md-12">
+                  <Map size='100%' viewerId={viewerIdentifiers.location} />
+              </div>
         </div>
         <div className="row personnel" >
           <div className="under-location-content">
