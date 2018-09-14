@@ -4,7 +4,7 @@ import { ATO_COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, PED_TASKS__FETCH, RO
   FOP_ATO_PLATFORM__FETCH, FOP_PLATFORM__FETCH, FOP_ATO_CREW__FETCH, FOP_CREW__FETCH, 
   PED_TASKS_ATO_GENERATION__FETCH, SEARCH_MISSION_FILTER, ATO_GEN_TO_FLIGHT_OPS__MOVE, FLIGHT_OPS_TO_ATO_GEN__MOVE,
    ATO_GEN_TO_PED_TASK__MOVE, PED_TASK_TO_ATO_GEN__MOVE, ATO_GEN_TO_COLLECTION_PLAN__MOVE, MISSION_SUMMARY__FETCH, MISSION_DETAIL__FETCH } from 'dictionary/action';
-import { baseUrl, requestHeaders } from 'dictionary/network';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 // ATO Tab APIs
@@ -71,11 +71,22 @@ export function flightOpsCrew(unitId) {
   });
 }
 
+/* 
 // Flight Ops Common.  Left => Right Move
 export function moveToFlightOPSFromATO(missionId, data) {
   return createAction({
     type: ATO_GEN_TO_FLIGHT_OPS__MOVE,
     action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, data, requestHeaders),
+  });
+} */
+
+// Flight Ops Common.  Left => Right Move
+export function moveToFlightOPSFromATO(missionId, data) {
+  const formData = new FormData();
+  formData.append("missionFormData", JSON.stringify(data));
+  return createAction({
+    type: ATO_GEN_TO_FLIGHT_OPS__MOVE,
+    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, formData, formDataRequestHeader),
   });
 }
 
