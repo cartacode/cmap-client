@@ -9,7 +9,7 @@ import { createAction } from 'util/action';
 export function addCcirPir(ccirpir) {
   return createAction({
     type: CCIRPIR__ADD,
-    action: () => axios.post(`${baseUrl}/CCIRPIR`, ccirpir, formDataRequestHeader),
+    action: () => axios.post(`${baseUrl}/CCIRPIR`, ccirpir, { headers:formDataRequestHeader }),
   });
 }
 
@@ -17,7 +17,7 @@ export function addCcirPir(ccirpir) {
 export function updateCcirPir(id, ccirpir) {
   return createAction({
     type: CCIRPIR__UPDATE,
-    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR?id=${id}`, ccirpir, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/CCIRPIR/PutCCIRPIR?id=${id}`, ccirpir, { headers:formDataRequestHeader }),
   });
 }
 
@@ -25,7 +25,7 @@ export function updateCcirPir(id, ccirpir) {
 export function fetchCcirPirs() {
   return createAction({
     type: CCIRPIR__FETCH,
-    action: () => axios.get(`${baseUrl}/CCIRPIR/GetCCIRPIRData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/CCIRPIR/GetCCIRPIRData`, {headers:requestHeaders}),
   });
 }
 
@@ -33,7 +33,7 @@ export function fetchCcirPirs() {
 export function fetchCcirPirById(id) {
   return createAction({
     type: CCIRPIR__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/CCIRPIR/GetCCIRPIRData/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/CCIRPIR/GetCCIRPIRData/${id}`, {headers:requestHeaders}),
   });
 }
 
@@ -41,7 +41,7 @@ export function fetchCcirPirById(id) {
 export function deleteCcirPirById(id) {
     return createAction({
       type: CCIRPIR__DELETE_ONE,
-      action: () => axios.delete(`${baseUrl}/CCIRPIR/DeleteCCIRPIR/${id}`, requestHeaders),
+      action: () => axios.delete(`${baseUrl}/CCIRPIR/DeleteCCIRPIR/${id}`, {headers:requestHeaders}),
     });
   }
 /* 

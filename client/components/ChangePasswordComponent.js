@@ -125,14 +125,14 @@ class ChangePasswordComponent extends React.Component {
         <div className="row action-buttons">
         <div className="menu-button">
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-          <button className='highlighted-button' onClick={this.handleSubmit}>
+          <button className='highlighted-button' >
             Clear
           </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>
         <div className="menu-button">
           <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-          <button type="submit" className='highlighted-button'>
+          <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
             Submit        </button>
           <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
         </div>

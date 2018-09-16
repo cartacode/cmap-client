@@ -1,12 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import {connect} from 'react-redux';
 import { Link,  NavLink} from 'react-router-dom';
 import FullHeaderLine from './reusable/FullHeaderLine';
+import ContentBlock from './reusable/ContentBlock';
+import ContentFull from './reusable/ContentFull';
+import PersonnelComponent from '../components/admin/PersonnelComponent.js';
+import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
 
 class LoginComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      login: {
+          'grant_type':'password',
+      }
+  }
   }
 
   onClear(){
@@ -17,7 +28,56 @@ class LoginComponent extends React.Component {
     console.log("enter");
   }
 
+  handleGeneralPersonnelData = (generalData) => {
+    const { login } = this.state;
+
+    this.setState({
+      login: {
+        ...login,
+        username: generalData.username,
+        password: generalData.password,
+      },
+      // selectedBranch: generalData.ServiceBranch,
+      // selectedRank: generalData.Rank,
+      // selectedPaygrade: paygrade,
+    });
+
+  }
+
+  setSession = () => {
+    const { loginData } = this.props;
+    const { authenticated } = this.props;
+    console.log(authenticated);
+    sessionStorage.setItem('jwtToken', loginData.access_token);
+    if (authenticated)
+    { 
+      requestHeaders['Authorization']='Bearer '+ loginData.access_token;
+      formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
+      this.props.history.push('/admin/personnel'); }
+  }
+
+  handleSubmit = event => {
+
+    event.preventDefault();
+    let {  login } = this.state;
+    let { loginData } = this.props;
+    console.log(login);
+      this.props.login(login).then(() => {
+        // Stop Loader
+        // this.setState({loading:false});
+        // this.props.onClose(NoticeType.ADD);
+        this.setSession();
+      //  this.props.history.push('/admin/personnel');
+      });
+
+  }
+
   render() {
+
+    const generalFields = [
+      {name: 'Username', type: 'input', domID: 'username', valFieldID: 'username', required: true },
+      {name: 'Password', type: 'password', domID: 'password', valFieldID: 'password', required: true },
+    ];
     
     return (
       <div className="login">
@@ -43,8 +103,8 @@ class LoginComponent extends React.Component {
           <div className="col-md-6 login-win">
             <div><img src="/assets/img/login/line_top.png" /></div>
             <div className="login-info">
-              <div className="col-md-12 login-text">
-                NON-CAC Authentication
+              {/* <div className="col-md-12 login-text">
+                Change Password
               </div>
               <div className="col-md-12 login-input">
                 <input defaultValue="User Name" />
@@ -71,11 +131,37 @@ class LoginComponent extends React.Component {
                     <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                   </div>
                 </div>
+              </div> */}
+
+            <div className="col-md-3"></div>
+              <ContentBlock 
+              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.login} editId = {0} />
+              
+
+              <div className="row action-buttons">
+                  <div className="menu-button">
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                    <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
+                      Submit        
+                    </button>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                </div>
               </div>
+              
             </div>
-            <div><img src="/assets/img/login/line_down.png" /></div>
+
+            <div>
+              <img src="/assets/img/login/line_down.png" /></div>
+
+
+
           </div>
+
+          
         </div>
+
+                        
+
         <div className="col-md-12 app-name">
           centcom a-isr mission manager
         </div>
@@ -100,5 +186,8 @@ LoginComponent.propTypes = {
   children: PropTypes.element,
 
 };
+
+
+
 
 export default LoginComponent;

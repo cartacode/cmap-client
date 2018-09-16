@@ -8,34 +8,34 @@ import { createAction } from 'util/action';
 export function addMunitionInventory(munition) {
   return createAction({
     type: MUNITION_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, qs.stringify(munition), requestHeaders),
+    action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, qs.stringify(munition), {headers:requestHeaders}),
   });
 }
 
 export function updateMunitionInventory(id, data) {  
   return createAction({
     type: MUNITION_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, qs.stringify(data), {headers:requestHeaders}),
   });
 }
 
 export function fetchMunitionInventoryById(id) {
   return createAction({
     type: MUNITION_INVENTORY__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventory/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventory/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function fetchMunitionInventory() {
   return createAction({
     type: MUNITION_INVENTORY__FETCH,
-    action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventoryData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/MunitionsInventory/GetMunitionsInventoryData`, {headers:requestHeaders}),
   });
 }
 
 export function deleteMunitionInventoryById(id) {
   return createAction({
     type: MUNITION_INVENTORY__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/MunitionsInventory/DeleteMunitionsInventory/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/MunitionsInventory/DeleteMunitionsInventory/${id}`, {headers:requestHeaders}),
   });
 }

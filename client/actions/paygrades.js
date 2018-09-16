@@ -7,6 +7,6 @@ import { createAction } from 'util/action';
 export function fetchPaygrades() {
   return createAction({
     type: PAYGRADE_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/PayGrades/GetPayGrades`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PayGrades/GetPayGrades`, {headers:requestHeaders}),
   });
 }

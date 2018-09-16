@@ -8,34 +8,34 @@ import { createAction } from 'util/action';
 export function addPlatformInventory(platform) {
   return createAction({
     type: PLATFORM_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/PlatformInventory/PostPlatformInventory`, qs.stringify(platform), requestHeaders),
+    action: () => axios.post(`${baseUrl}/PlatformInventory/PostPlatformInventory`, qs.stringify(platform), {headers:requestHeaders}),
   });
 }
 
 export function updatePlatformInventory(id, platform) {  
   return createAction({
     type: PLATFORM_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PlatformInventory/PutPlatformInventory/${id}`, qs.stringify(platform), requestHeaders),
+    action: () => axios.put(`${baseUrl}/PlatformInventory/PutPlatformInventory/${id}`, qs.stringify(platform), {headers:requestHeaders}),
   });
 }
 
 export function fetchPlatformInventory() {
   return createAction({
     type: PLATFORM_INVENTORY__FETCH,
-    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventoryData`, {headers:requestHeaders}),
   });
 }
 
 export function fetchPlatformInventoryById(id) {
   return createAction({
     type: PLATFORM_INVENTORY__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventory/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PlatformInventory/GetPlatformInventory/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function deletePlatformInventoryById(id) {
   return createAction({
     type: PLATFORM_INVENTORY__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/PlatformInventory/DeletePlatformInventory/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/PlatformInventory/DeletePlatformInventory/${id}`, {headers:requestHeaders}),
   });
 }

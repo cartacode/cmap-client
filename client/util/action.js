@@ -6,16 +6,19 @@
  * @param   {Object}    config.type     The action type.
  * @returns {Function}
  */
-export function createAction({ action, header = {}, type }) {
+
+let token = sessionStorage.getItem('jwtToken');
+
+export function createAction({ action, headers = {}, type }) {
   return async(dispatch) => {
-    dispatch({ type: type.REQUEST, header });
+    dispatch({ type: type.REQUEST, headers });
 
     try {
-      dispatch({ type: type.SUCCESS, header, payload: await action() });
+      dispatch({ type: type.SUCCESS, headers, payload: await action() });
       
     } catch (error) {
       
-      dispatch({ type: type.FAILURE, header, error});
+      dispatch({ type: type.FAILURE, headers, error});
       
       //alert('API ERROR:'+JSON.stringify(error));
       console.log('API ERROR:'+JSON.stringify(error));

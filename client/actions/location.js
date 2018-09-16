@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addLocation(location) {
   return createAction({
     type: LOCATION__ADD,
-    action: () => axios.post(`${baseUrl}/Locations/PostLocations`, location, formDataRequestHeader),
+    action: () => axios.post(`${baseUrl}/Locations/PostLocations`, location, {headers:formDataRequestHeader}),
   });
 }
 
@@ -16,21 +16,21 @@ export function addLocation(location) {
 export function updateLocation(id, location) {
   return createAction({
     type: LOCATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Locations/PutLocations/${id}`, location, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Locations/PutLocations/${id}`, location, {headers:formDataRequestHeader}),
   });
 }
 
 export function fetchLocationList() {
   return createAction({
     type: LOCATION_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/Locations/GetLocations`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Locations/GetLocations`, {headers:requestHeaders}),
   });
 }
 
 export function fetchLocations() {
   return createAction({
     type: LOCATION__FETCH,
-    action: () => axios.get(`${baseUrl}/Locations/GetLocationsDataByCategory?categoryId=1`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Locations/GetLocationsDataByCategory?categoryId=1`, {headers:requestHeaders}),
   });
 }
 
@@ -38,20 +38,20 @@ export function fetchLocations() {
 export function fetchLocationById(id) {
   return createAction({
     type: LOCATION__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Locations/GetLocations/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Locations/GetLocations/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function fetchLocationTypes() {
   return createAction({
     type: LOCATION_TYPE__FETCH,
-    action: () => axios.get(`${baseUrl}/LocationCategory`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/LocationCategory`, {headers:requestHeaders}),
   });
 }
 
 export function deleteLocationById(id) {
   return createAction({
     type: LOCATION__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Locations/DeleteLocations/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/Locations/DeleteLocations/${id}`, {headers:requestHeaders}),
   });
 }

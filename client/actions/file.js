@@ -8,6 +8,6 @@ import { createAction } from 'util/action';
 export function uploadFile(fileData) {
   return createAction({
     type: FILE__UPLOAD,
-    action: () => axios.post(`${baseUrl}/Upload`, qs.stringify(fileData), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Upload`, qs.stringify(fileData), {headers:requestHeaders}),
   });
 }
