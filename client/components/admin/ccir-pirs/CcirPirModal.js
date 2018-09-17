@@ -8,6 +8,7 @@ import Loader from '../../reusable/Loader';
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
 import {getKMLCenter} from 'map/kmlGrinder';
+import { requestHeaders } from '../../../dictionary/network';
 
 
 class CcirPirModal extends React.Component {
@@ -130,15 +131,12 @@ stopset = () => {
 }
 
 
-
-
-
 updateUnit (generalData) {
   let unitselect = document.getElementsByName('UnitId')[0];
   unitselect.length = 0;
   unitselect.add(new Option('--Fetching Units--', ''));
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.BranchId;
-  axios.get(apiUrl)
+  axios.get(apiUrl, {headers: requestHeaders })
     .then(response => {
       unitselect.length = 0;
       if(response.data) {

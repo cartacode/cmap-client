@@ -49,7 +49,7 @@ export default class Map extends React.PureComponent {
             this.props.setCCIRPIR(nearestNeighbour);
             break;
       default:
-        this.props.getLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+        this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
 
     }
   }
