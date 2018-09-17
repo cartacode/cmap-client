@@ -117,7 +117,7 @@ class PedTaskingComponent extends React.Component {
         },
       },
       {
-        Header: translations.view,
+        Header: translations.Assign,
         accessor: 'missionId',
         filterable: false,
         Cell: row => (
@@ -158,7 +158,7 @@ class PedTaskingComponent extends React.Component {
         },
       },
       {
-        Header: translations.view,
+        Header: translations.Unassign,
         accessor: 'missionId',
         filterable: false,
         Cell: row => (

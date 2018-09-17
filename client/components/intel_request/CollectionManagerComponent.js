@@ -144,7 +144,7 @@ class CollectionManagerComponent extends React.Component {
         </div>,
       },
       {
-        Header: translations.view,
+        Header: translations.Actions,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
@@ -199,7 +199,7 @@ class CollectionManagerComponent extends React.Component {
         accessor: 'COCOMText',
       }, */
       {
-        Header: translations.view,
+        Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
