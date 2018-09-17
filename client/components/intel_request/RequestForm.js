@@ -274,43 +274,48 @@ resetForm() {
 }
 
 updateCCIROptions = (items, ccirid) => {
-  const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
-  nameOperationSelect.length = 0;
-  
-  items.forEach((element) => {
-    let selected = false;
-    if(ccirid && element.value === ccirid) {
-      selected = true;
-    }
-    nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
-  });
-  // for(const i in items) {
-  //   let selected = false;
-  //   if(ccirid && items[i].value === ccirid) {
-  //     selected = true;
-  //   }
-  //   nameOperationSelect.add(new Option(items[i].label, items[i].value, selected, selected));
-  // }
+
+  if(items !== null && items !== undefined){
+      const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
+      nameOperationSelect.length = 0;
+      
+      items.forEach((element) => {
+        let selected = false;
+        if(ccirid && element.value === ccirid) {
+          selected = true;
+        }
+        nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
+      });
+      // for(const i in items) {
+      //   let selected = false;
+      //   if(ccirid && items[i].value === ccirid) {
+      //     selected = true;
+      //   }
+      //   nameOperationSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      // }
+  }
 }
 
 updatePirOptions = (items, pirdesc) => {
-  const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
-  pirSelect.length = 0;
-  items.forEach((element) => {
-    let selected = false;
-    if(pirdesc && element.value === pirdesc) {
-      selected = true;
-    }
-    pirSelect.add(new Option(element.label, element.value, selected, selected));
-  });
+  if(items !== null && items !== undefined){
+      const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
+      pirSelect.length = 0;
+      items.forEach((element) => {
+        let selected = false;
+        if(pirdesc && element.value === pirdesc) {
+          selected = true;
+        }
+        pirSelect.add(new Option(element.label, element.value, selected, selected));
+      });
 
-  // for(const i in items) {
-  //   let selected = false;
-  //   if(pirdesc && items[i].value === pirdesc) {
-  //     selected = true;
-  //   }
-  //   pirSelect.add(new Option(items[i].label, items[i].value, selected, selected));
-  // }
+      // for(const i in items) {
+      //   let selected = false;
+      //   if(pirdesc && items[i].value === pirdesc) {
+      //     selected = true;
+      //   }
+      //   pirSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      // }
+  }
 
 }
 
@@ -325,6 +330,10 @@ updatePirOptions = (items, pirdesc) => {
     const editId = params.editId;
 
     let { intelRequest } = this.state;
+
+    if(intelRequest != null){
+        console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
+    }
 
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
@@ -390,7 +399,7 @@ updatePirOptions = (items, pirdesc) => {
             <div className="two-block">
             
               
-              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} />
+              {/* <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} /> */}
               
             </div>
           </div>
