@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+import  { Redirect } from 'react-router-dom'
 
 import HeaderComponent from '../components/HeaderComponent';
 import { updateLocalization } from 'actions/localization';

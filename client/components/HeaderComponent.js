@@ -36,6 +36,10 @@ class HeaderComponent extends React.Component {
    debugger;
   }
 
+  logout = () => {
+    sessionStorage.removeItem('jwtToken');
+  }
+
   //render dropdown list of lang switcher
   renderLangsList() {
     let langsList;
@@ -176,7 +180,7 @@ class HeaderComponent extends React.Component {
                        <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
             <li><a href="#"> <i className="fa fa-key"></i> Change Password</a></li>
             <li className="divider"></li>
-            <li><a href="#"><i className="fa fa-sign-out"></i> Log Out</a></li>
+            <li><a href="javascript:void(0)" onClick={this.logout}><i className="fa fa-sign-out"></i> Log Out</a></li>
           </ul>
         </li>
       
