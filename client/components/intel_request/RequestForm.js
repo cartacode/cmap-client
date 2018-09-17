@@ -62,7 +62,9 @@ class RequestForm extends React.Component {
         // Payload1: '',
         // Unit: '',
       },
-      loading:false
+      loading:false,
+      ccirPirOptions: [],
+      pirs: {},
     };
 
     // this.resetForm = this.resetForm.bind(this);
@@ -90,11 +92,38 @@ class RequestForm extends React.Component {
 
     }
     this.props.fetchCcirPirs().then(() =>{
-      localStorage.setItem("KMLdata", JSON.stringify(this.props.allCcirPirs));
-      console.log("response --->", this.props.allCcirPirs);
+      const { allCcirPirs } = this.props;
+      localStorage.setItem('KMLdata', JSON.stringify(allCcirPirs));
+      const ccirPirOptions = [{'label': '--Select Item--', 'value': ''}];
+      const pirs = {};
+      allCcirPirs.map(item => {
+        let val = item.CCIRPIRId;
+        if(typeof val === 'string') {
+          val = val.trim();
+        }
+        ccirPirOptions.push({ 'label': item.MissionName, 'value': val });
+        const pirOptions = [
+          { 'value': 'Description5', 'label': item.Description5 },
+          { 'value': 'Description6', 'label': item.Description6 },
+          { 'value': 'Description7', 'label': item.Description7 },
+          { 'value': 'Description8', 'label': item.Description8 },
+        ];
+        pirs[item.CCIRPIRId] = pirOptions;
+
+      });
+
+      this.setState({
+        ccirPirOptions,
+        pirs,
+      }, () => {
+        this.updateCCIROptions(ccirPirOptions, '');
+        //  const selectedCcirId = '689817d6-b45f-493b-955f-e2fe7a18f061';
+        // this.updatePirOptions(pirs[selectedCcirId]);
+      });
+
 
     });
-   }
+  }
    
   //  getKMLdata = () =>{
   //   const apiUrl = `${baseUrl}/CCIRPIR/GetCCIRPIRData`;
@@ -123,6 +152,7 @@ class RequestForm extends React.Component {
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
       },
     });
+    this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
   }
 
   handleIntelRequest2 = (ir) => {
@@ -243,22 +273,51 @@ resetForm() {
   }
 }
 
-  deleteStuff = () => {
+updateCCIROptions = (items, ccirid) => {
 
-    console.log(this);
-    let a = rowInfo.index;
-
-    console.log(this.state.missionEEI);
-    let array = [...this.state.missionEEI];
-    array.splice(a, 1);
-
-    console.log(array);
-
-    this.setState({
-      missionEEI: array,
-    });
-
+  if(items !== null && items !== undefined){
+      const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
+      nameOperationSelect.length = 0;
+      
+      items.forEach((element) => {
+        let selected = false;
+        if(ccirid && element.value === ccirid) {
+          selected = true;
+        }
+        nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
+      });
+      // for(const i in items) {
+      //   let selected = false;
+      //   if(ccirid && items[i].value === ccirid) {
+      //     selected = true;
+      //   }
+      //   nameOperationSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      // }
   }
+}
+
+updatePirOptions = (items, pirdesc) => {
+  if(items !== null && items !== undefined){
+      const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
+      pirSelect.length = 0;
+      items.forEach((element) => {
+        let selected = false;
+        if(pirdesc && element.value === pirdesc) {
+          selected = true;
+        }
+        pirSelect.add(new Option(element.label, element.value, selected, selected));
+      });
+
+      // for(const i in items) {
+      //   let selected = false;
+      //   if(pirdesc && items[i].value === pirdesc) {
+      //     selected = true;
+      //   }
+      //   pirSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      // }
+  }
+
+}
 
   render() {
 
@@ -272,12 +331,16 @@ resetForm() {
 
     let { intelRequest } = this.state;
 
+    if(intelRequest != null){
+        console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
+    }
+
     const intelRequest1 = [
       { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
-      { name: translations['Named Operation'], type: 'input', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true },
+      { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }] },
       { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true },
       { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true },
-      { name: translations['Priority Intel Req'], type: 'input', domID: 'PriorityIntelRequirement', ddID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true },
+      { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }] },
     ];
 
     const intelRequest2 = [
@@ -336,7 +399,7 @@ resetForm() {
             <div className="two-block">
             
               
-              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} />
+              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} /> 
               
             </div>
           </div>

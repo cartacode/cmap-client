@@ -238,14 +238,14 @@ resetForm = () => {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM', required:true },
+      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM' },
       { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch', required:true},
       { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country', required:true},
       { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region', required:true},
       { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
       { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
       { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
-      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
+      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', required: true}
     ];
 
     const ccirFields = [

@@ -736,6 +736,11 @@
 	"StatusId":"StatusId",
   "Active Dates":"Active Dates",
   "MissionReport": "Mission Report",
-	"upload": "UPLOAD"
+  "upload": "UPLOAD",
+  "Assign": "Assign",
+  "Unassign": "Unassign",
+  "Remove": "Remove",
+  "Add": "Add",
+  "Actions": "Actions"
   
 }

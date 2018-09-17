@@ -4572,6 +4572,13 @@ body .dropdown-menu div:hover {
 button.btn.btn-secondary.dropdown-toggle {
   margin-left: 12px;
 }
+#intel-request .ReactTable .btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  float: left;
+  margin-left:22px;
+}
 
 /**
   * This css is use for change mouse cursor to pointer
@@ -4629,6 +4636,9 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  #intel-request .ReactTable .btn-primary {
+    margin-left: 0px;
+}
 
   .mission-mgt .special-instruction {
     font-size: 14px;

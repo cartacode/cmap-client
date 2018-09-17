@@ -310,10 +310,10 @@ class BaseModal extends React.Component {
     }
   }
 
-  handleSubmit = event => {
+  /* handleSubmit = event => {
     event.preventDefault();
     this.checkLocationId();
-  }
+  } */
 
   stopset() {
     this.setState({ clear: false });
@@ -367,7 +367,7 @@ class BaseModal extends React.Component {
       { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
       { name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity' },
       { name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry', required: true },
-      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM', required: true },
+      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM' },
       { name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion', required: true },
     ];
 
@@ -429,11 +429,11 @@ class BaseModal extends React.Component {
         <div className="row personnel" >
           <div className="under-location-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationGeneralData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
               data={this.handleLocationPositionData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationInfoData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
           </div>
         </div>
         <div className="row action-buttons">

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 import Calendar from 'rc-calendar';
 import DatePicker from 'rc-calendar/lib/Picker';
 import 'rc-calendar/assets/index.css';
@@ -14,25 +13,23 @@ import 'moment/locale/en-ca';
 import 'moment/locale/en-gb';
 import { DateConsts } from '../../dictionary/constants';
 
-
-
 // const format = DateConsts.DB_DATETIME_FORMAT;
 const DBFormat = DateConsts.DB_DATETIME_FORMAT;
 const UIFormat = DateConsts.UI_DATETIME_FORMAT;
 // const cn = location.search.indexOf('cn') !== -1;
 moment.locale('en');
-//const now = moment();
-//now.locale('en-ca').utcOffset(8);
+// const now = moment();
+// now.locale('en-ca').utcOffset(8);
 // if (cn) {
 //     now.locale('zh-cn').utcOffset(8);
 // } else {
-//now.locale('en-gb').utcOffset(0);
+// now.locale('en-gb').utcOffset(0);
 // }
 
 function getFormat(time) {
   return time ? UIFormat : DateConsts.UI_DATE_FORMAT;
 }
-/* 
+/*
 
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month'); */
@@ -54,7 +51,6 @@ function disabledTime(date) {
   };
 }
 
-
 function disabledDate(current) {
   /* if (!current) {
     // allow empty select
@@ -66,7 +62,6 @@ function disabledDate(current) {
   date.second(0);
   return current.valueOf() < date.valueOf();  // can not select days before today */
 }
-
 
 class CustomDatePicker extends React.Component {
 
@@ -97,23 +92,25 @@ class CustomDatePicker extends React.Component {
     }
 
     onChange = (value) => {
-      const name = this.props.name;
-     /*  value = moment(this.props.defaultValue, DBFormat);
+      if(value !== null && value !== undefined ) {
+        const name = this.props.name;
+        /*  value = moment(this.props.defaultValue, DBFormat);
       value.set({hour:0,minute:0,second:0,millisecond:0}) */
-      this.setState({
-        value,
-      }, () => {
-        this.props.changeDate(this.state.value, name);
-      });
+        this.setState({
+          value,
+        }, () => {
+          this.props.changeDate(this.state.value, name);
+        });
+      }
     }
 
     render() {
-    
+
       const state = this.state;
       const calendar = (<Calendar
         className="custom-calendar"
         locale={enUS}
-        style={{zIndex: 1000, background: '#002034'}}
+        style={{ zIndex: 1000, background: '#002034' }}
         dateInputPlaceholder="please input"
         formatter={getFormat(state.showTime)}
         disabledTime={state.showTime ? disabledTime : null}

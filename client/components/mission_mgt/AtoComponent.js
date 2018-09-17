@@ -161,7 +161,7 @@ moveLeft = (row) => {
       //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
       // },
       {
-        Header: translations.view,
+        Header: translations.Add,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
@@ -220,7 +220,7 @@ moveLeft = (row) => {
       //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
       // },
       {
-        Header: translations.view,
+        Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
