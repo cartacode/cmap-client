@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { ACCOUNT__REGISTER, ACCOUNT__LOGIN, ACCOUNT__CHANGE_PASSWORD } from 'dictionary/action';
+import { ACCOUNT__REGISTER, ACCOUNT__LOGIN, ACCOUNT__CHANGE_PASSWORD, ACCOUNT__LOGOUT } from 'dictionary/action';
 import { baseUrl2, baseUrl3, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -25,5 +25,16 @@ export function login(login) {
     type: ACCOUNT__LOGIN,
     action: () => axios.post(`${baseUrl2}/Token`, qs.stringify(login), requestHeaders),
   });
+}
+
+export function logout() {
+  return createAction({
+    type: ACCOUNT__LOGOUT,
+    action: () => callLogout(),
+  });
+}
+
+function callLogout () {
+  console.log("Logged Out");
 }
 

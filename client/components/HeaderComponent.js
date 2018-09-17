@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import { NotificationContainer} from 'react-notifications';
 import { supportedLanguages } from 'dictionary/localization';
+import { Route, Redirect } from 'react-router-dom';
 
 class HeaderComponent extends React.Component {
 
@@ -36,7 +37,7 @@ class HeaderComponent extends React.Component {
    debugger;
   }
 
-  logout = () => {
+  logoutCall = () => {
     sessionStorage.removeItem('jwtToken');
   }
 
@@ -180,7 +181,7 @@ class HeaderComponent extends React.Component {
                        <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
             <li><a href="#"> <i className="fa fa-key"></i> Change Password</a></li>
             <li className="divider"></li>
-            <li><a href="javascript:void(0)" onClick={this.logout}><i className="fa fa-sign-out"></i> Log Out</a></li>
+            <li><NavLink to="/login" onClick={this.logoutCall}><i className="fa fa-sign-out"></i> Log Out</NavLink></li>
           </ul>
         </li>
       

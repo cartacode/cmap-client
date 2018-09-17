@@ -51,8 +51,8 @@ class LoginComponent extends React.Component {
     sessionStorage.setItem('jwtToken', loginData.access_token);
     if (authenticated)
     { 
-      // requestHeaders['Authorization']='Bearer '+ loginData.access_token;
-      // formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
+      requestHeaders['Authorization']='Bearer '+ loginData.access_token;
+      formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
       this.props.history.push('/admin/personnel'); }
   }
 
