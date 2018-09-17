@@ -179,7 +179,7 @@ class HeaderComponent extends React.Component {
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="fa fa-cog "></i><span className="caret"></span></a>
           <ul className="dropdown-menu" role="menu">
                        <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
-            <li><a href="#"> <i className="fa fa-key"></i> Change Password</a></li>
+            <li><NavLink to='/change-password'> <i className="fa fa-key"></i> Change Password</NavLink></li>
             <li className="divider"></li>
             <li><NavLink to="/login" onClick={this.logoutCall}><i className="fa fa-sign-out"></i> Log Out</NavLink></li>
           </ul>

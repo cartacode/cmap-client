@@ -54,7 +54,7 @@ class AdminComponent extends React.Component {
       {title: translations['Org builder'], url: `${match.url}/org-builder`},
       {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
       {title: translations['Sys. Health'], url: `${match.url}/sys-health`},
-      {title: translations['Sys. Config'], url: `${match.url}/sys-config`},
+      {title: 'Reference Docs', url: `${match.url}/sys-config`},
     ];
 
     return menuItems.map((item, i) => {
