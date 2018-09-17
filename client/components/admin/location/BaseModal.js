@@ -309,10 +309,10 @@ class BaseModal extends React.Component {
     }
   }
 
-  handleSubmit = event => {
+  /* handleSubmit = event => {
     event.preventDefault();
     this.checkLocationId();
-  }
+  } */
 
   stopset() {
     this.setState({ clear: false });
