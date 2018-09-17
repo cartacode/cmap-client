@@ -76,7 +76,8 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
-    this.updateContent(name, changeDate._d);
+    if(changeDate !== null)
+      this.updateContent(name, changeDate._d);
   }
 
   /**
