@@ -16,7 +16,7 @@ class BaseModal extends React.Component {
 
   constructor(props) {
     super(props);
- //   this.handleLocationPositionData = this.handleLocationPositionData.bind(this);
+    this.handleLocationPositionData = this.handleLocationPositionData.bind(this);
     this.state = {
       file: '',
       clear: false,
@@ -134,15 +134,16 @@ class BaseModal extends React.Component {
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
-    // if(positionData.length) {
-    //   this.setState({
-    //     location:{
-    //       LocationLatitude: positionData[1],
-    //       LocationLongitude: positionData[0],
-    //     }
-    //   });
-    //   return;
-    // }
+    if(positionData.length) {
+      this.setState({
+        location:{
+          ...location,
+          LocationLatitude: positionData[1],
+          LocationLongitude: positionData[0],
+        }
+      });
+      return;
+    }
     this.setState({
       location: {
         ...location,
@@ -422,7 +423,7 @@ class BaseModal extends React.Component {
         </div>
 		<div className = "row personnel">
           <div className="col-md-12">
-                  <Map size='100%' viewerId={viewerIdentifiers.location} />
+                  <Map size='100%' viewerId={viewerIdentifiers.location} handleLocationPositionData={this.handleLocationPositionData} />
               </div>
         </div>
         <div className="row personnel" >
@@ -430,7 +431,7 @@ class BaseModal extends React.Component {
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
               data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationPositionData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
               data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
           </div>
