@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { Link,  NavLink} from 'react-router-dom';
 import FullHeaderLine from './reusable/FullHeaderLine';
 import ContentBlock from './reusable/ContentBlock';
 import ContentFull from './reusable/ContentFull';
-import PersonnelComponent from '../components/admin/PersonnelComponent.js';
-import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
+import { changePassword } from 'actions/auth';
 
-class LoginComponent extends React.Component {
+class ChangePasswordComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      login: {
-          'grant_type':'password',
-      }
-  }
+        register: {}
+    }
   }
 
   onClear(){
@@ -29,13 +25,14 @@ class LoginComponent extends React.Component {
   }
 
   handleGeneralPersonnelData = (generalData) => {
-    const { login } = this.state;
+    const { register } = this.state;
 
     this.setState({
-      login: {
-        ...login,
-        username: generalData.username,
-        password: generalData.password,
+      register: {
+        ...register,
+        OldPassword: generalData.OldPassword,
+        Password: generalData.Password,
+        ConfirmPassword: generalData.ConfirmPassword,
       },
       // selectedBranch: generalData.ServiceBranch,
       // selectedRank: generalData.Rank,
@@ -44,41 +41,29 @@ class LoginComponent extends React.Component {
 
   }
 
-  setSession = () => {
-    const { loginData } = this.props;
-    const { authenticated } = this.props;
-    console.log(authenticated);
-    sessionStorage.setItem('jwtToken', loginData.access_token);
-    if (authenticated)
-    { 
-      requestHeaders['Authorization']='Bearer '+ loginData.access_token;
-      formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
-      this.props.history.push('/admin/personnel'); }
-  }
-
   handleSubmit = event => {
 
     event.preventDefault();
-    let {  login } = this.state;
-    let { loginData } = this.props;
-    console.log(login);
-      this.props.login(login).then(() => {
+    let {  register } = this.state;
+      
+      this.props.changePassword(register).then(() => {
         // Stop Loader
         // this.setState({loading:false});
         // this.props.onClose(NoticeType.ADD);
-        this.setSession();
-      //  this.props.history.push('/admin/personnel');
+        alert("Password Changed");
       });
 
   }
 
-  render() {
 
-    const generalFields = [
-      {name: 'Username', type: 'input', domID: 'username', valFieldID: 'username', required: true },
-      {name: 'Password', type: 'password', domID: 'password', valFieldID: 'password', required: true },
-    ];
+  render() {
     
+    const generalFields = [
+        {name: 'Old Password', type: 'password', domID: 'OldPassword', valFieldID: 'OldPassword', required: true },
+        {name: 'New Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
+        {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
+      ];
+
     return (
       <div className="login">
         <div className="col-md-12">
@@ -91,17 +76,13 @@ class LoginComponent extends React.Component {
           <div className="second-header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              a-isr mission Manager
+              Change Password
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
         </div>
         <div className="col-md-12 login-part"> 
-          <div className="col-md-6 login-img">
-            <div><img src="/assets/img/login/passport.png" /></div>
-          </div>
-          <div className="col-md-6 login-win">
-            <div><img src="/assets/img/login/line_top.png" /></div>
+            
             <div className="login-info">
               {/* <div className="col-md-12 login-text">
                 Change Password
@@ -133,35 +114,29 @@ class LoginComponent extends React.Component {
                 </div>
               </div> */}
 
-            <div className="col-md-3"></div>
+            <div className="col-md-4"></div>
               <ContentBlock 
-              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.login} editId = {0} />
+              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.register} editId = {0} />
               
-
-              <div className="row action-buttons">
-                  <div className="menu-button">
-                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                    <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
-                      Submit        
-                    </button>
-                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                </div>
-              </div>
-              
+              <div className="col-md-4"></div>
             </div>
-
-            <div>
-              <img src="/assets/img/login/line_down.png" /></div>
-
-
-
-          </div>
-
           
         </div>
-
-                        
-
+        <div className="row action-buttons">
+        <div className="menu-button">
+          <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+          <button className='highlighted-button' >
+            Clear
+          </button>
+          <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+        </div>
+        <div className="menu-button">
+          <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+          <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
+            Submit        </button>
+          <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+        </div>
+      </div>
         <div className="col-md-12 app-name">
           centcom a-isr mission manager
         </div>
@@ -182,12 +157,19 @@ DoD interest computer systems reveals violations of security regulations or unau
   }
 }
 
-LoginComponent.propTypes = {
+ChangePasswordComponent.propTypes = {
   children: PropTypes.element,
 
 };
 
+const mapStateToProps = state => {
+    return {
+      translations: state.localization.staticText,
+    };
+  };
 
+const mapDispatchToProps = {
+    changePassword,
+};
 
-
-export default LoginComponent;
+export default connect(mapStateToProps,mapDispatchToProps)(ChangePasswordComponent)

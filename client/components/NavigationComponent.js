@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+import { PrivateRoute } from '../components/PrivateRoute';
 import HeaderContainer from '../containers/HeaderContainer';
 import AdminComponent from '../components/AdminComponent';
 import DashboardContainer from '../containers/DashboardContainer';
@@ -9,6 +10,7 @@ import IntelLibraryContainer from '../containers/IntelLibraryContainer';
 import IntelRequestComponent from '../components/IntelRequestComponent';
 import LiveViewContainer from '../containers/LiveViewContainer';
 import LoginContainer from '../containers/LoginContainer';
+import ChangePasswordContainer from '../containers/ChangePasswordContainer';
 import MessagesContainer from '../containers/MessagesContainer';
 import MissionMGTComponent from '../components/MissionMGTComponent';
 import OrdersAssetsComponent from '../components/OrdersAssetsComponent';
@@ -24,21 +26,23 @@ class NavigationComponent extends React.Component {
       <div>
       <Route path="/" render={(route) =>{
 
-            return route.location.pathname==='/main' ? null : <HeaderContainer/>;
+            return route.location.pathname==='/login' ? null : <HeaderContainer/>;
         }} />
         <Switch>
-          <Route exact path="/" component={DashboardContainer} />
-          <Route exact path="/dashboard" component={DashboardContainer} />
-          <Route exact path="/intel-library" component={IntelLibraryContainer} />
-          <Route path="/intel-request" component={IntelRequestComponent} />
-          <Route exact path="/liveview" component={LiveViewContainer} />
-          <Route exact path="/messages" component={MessagesContainer} />
-          <Route path="/mission-mgt" component={MissionMGTComponent} />
-          <Route path="/orders-assets" component={OrdersAssetsComponent} />
-          <Route exact path="/schedules" component={SchedulesContainer} />
-          <Route exact path="/status" component={StatusContainer} />
-          <Route path="/admin" component={AdminComponent} />
-          <Route path="/search" component={SearchContainer} />
+          <PrivateRoute exact path="/" component={DashboardContainer} />
+          <PrivateRoute exact path="/dashboard" component={DashboardContainer} />
+          <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
+          <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
+          <PrivateRoute exact path="/liveview" component={LiveViewContainer} />
+          <PrivateRoute exact path="/messages" component={MessagesContainer} />
+          <PrivateRoute path="/mission-mgt" component={MissionMGTComponent} />
+          <PrivateRoute path="/orders-assets" component={OrdersAssetsComponent} />
+          <PrivateRoute exact path="/schedules" component={SchedulesContainer} />
+          <PrivateRoute exact path="/status" component={StatusContainer} />
+          <PrivateRoute path="/admin" component={AdminComponent} />
+          <PrivateRoute path="/search" component={SearchContainer} />
+          <Route path="/login" component={LoginContainer} />
+          <PrivateRoute path="/change-password" component={ChangePasswordContainer} />
         </Switch>
       </div>
     );

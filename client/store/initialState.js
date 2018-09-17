@@ -144,4 +144,10 @@ export default {
     isFetching: false,
   },
 
+  auth: {
+    loginData: {},
+    authenticated:false,
+    isFetching: false,
+  }
+
 };

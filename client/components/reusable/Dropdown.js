@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { baseUrl } from 'dictionary/network';
+import { baseUrl, requestHeaders } from 'dictionary/network';
 
 class Table extends React.Component {
 
@@ -31,7 +31,7 @@ class Table extends React.Component {
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
         
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
-        axios.get(apiUrl)
+        axios.get(apiUrl,{headers:requestHeaders})
           .then(response => {
             if(response.data) {
               response.data.map(item => {

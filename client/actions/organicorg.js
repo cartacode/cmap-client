@@ -8,21 +8,21 @@ import { createAction } from 'util/action';
 export function fetchOrganicOrg(id) {
   return createAction({
     type: ORGANIC_ORG__FETCH,
-    action: () => axios.get(`${baseUrl}/CommandStructure/GetCommandStructureByBranch?branchID=${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/CommandStructure/GetCommandStructureByBranch?branchID=${id}`, {headers:requestHeaders}),
   });
 }
 
 export function fetchDeployedOrg(id) {
   return createAction({
     type: DEPLOYED_ORG__FETCH,
-    action: () => axios.get(`${baseUrl}/CommandStructure/GetCommandStructureByBranch?branchID=${id}&CommandRelationship=4`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/CommandStructure/GetCommandStructureByBranch?branchID=${id}&CommandRelationship=4`, {headers:requestHeaders}),
   });
 }
 
 export function addOraganicOrg(org) {
   return createAction({
     type: ORGANIC_ORG__ADD,
-    action: () => axios.post(`${baseUrl}/Units/PostUnits`, qs.stringify(org), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Units/PostUnits`, qs.stringify(org), {headers:requestHeaders}),
   });
 }
 

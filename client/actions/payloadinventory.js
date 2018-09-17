@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addPayloadInventory(payload) {
   return createAction({
     type: PAYLOAD_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, qs.stringify(payload), requestHeaders),
+    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, qs.stringify(payload), {headers:requestHeaders}),
   });
 }
 
@@ -17,28 +17,28 @@ export function updatePayloadInventory(id, data) {
   
   return createAction({
     type: PAYLOAD_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, qs.stringify(data), {headers:requestHeaders}),
   });
 }
 
 export function fetchPayloadInventory() {
   return createAction({
     type: PAYLOAD_INVENTORY__FETCH,
-    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventoryData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventoryData`, {headers:requestHeaders}),
   });
 }
 
 export function fetchPayloadInventoryById(id) {
   return createAction({
     type: PAYLOAD_INVENTORY__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventory/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/PayloadInventory/GetPayloadInventory/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function deletePayloadInventoryById(id) {
   return createAction({
     type: PAYLOAD_INVENTORY__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/PayloadInventory/DeletePayloadInventory/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/PayloadInventory/DeletePayloadInventory/${id}`, {headers:requestHeaders}),
   });
 }
 
@@ -46,7 +46,7 @@ export function deletePayloadInventoryById(id) {
 export function fetchPayloadList() {
   return createAction({
     type: PAYLOAD_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/Payload/GetPayloads`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Payload/GetPayloads`, {headers:requestHeaders}),
   });
 }
 

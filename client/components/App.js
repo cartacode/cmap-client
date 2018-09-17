@@ -20,6 +20,8 @@ import SchedulesContainer from '../containers/SchedulesContainer';
 import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 import NavigationComponent from './NavigationComponent';
+import ChangePasswordContainer from '../containers/ChangePasswordContainer';
+import ChangePasswordComponent from '../components/ChangePasswordComponent';
 
 import { history } from 'store/configureStore';
 
@@ -44,6 +46,8 @@ class App extends React.Component {
             <Route exact path="/status" component={NavigationComponent} />
             <Route path="/admin" component={NavigationComponent} />
             <Route path="/search" component={NavigationComponent} />
+            <Route path="/login" component={NavigationComponent} />
+            <Route exact path="/change-password" component={NavigationComponent} />
           </Switch>
         </div>
       </ConnectedRouter>

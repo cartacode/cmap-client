@@ -143,5 +143,7 @@ export const MISSION_SUMMARY__FETCH = createActionType('MISSION_SUMMARY__FETCH')
 export const MISSION_DETAIL__FETCH = createActionType('MISSION_DETAIL__FETCH');
 
 
-
-
+export const ACCOUNT__REGISTER = createActionType('ACCOUNT__REGISTER');
+export const ACCOUNT__CHANGE_PASSWORD = createActionType('ACCOUNT__CHANGE_PASSWORD');
+export const ACCOUNT__LOGIN = createActionType('ACCOUNT__LOGIN');
+export const ACCOUNT__LOGOUT = createActionType('ACCOUNT__LOGOUT');

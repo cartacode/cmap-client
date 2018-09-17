@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addIntelEei(intelEei) {
   return createAction({
     type: INTEL_EEI__ADD,
-    action: () => axios.post(`${baseUrl}/IntelReqEEI/PostIntelReqEEI`, qs.stringify(intelEei), requestHeaders),
+    action: () => axios.post(`${baseUrl}/IntelReqEEI/PostIntelReqEEI`, qs.stringify(intelEei), {headers:requestHeaders}),
   });
 }
 
 export function updateIntelEei(id, data) {
   return createAction({
     type: INTEL_EEI__UPDATE,
-    action: () => axios.put(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, qs.stringify(data), requestHeaders),
+    action: () => axios.put(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, qs.stringify(data), {headers:requestHeaders}),
   });
 }
 
@@ -23,28 +23,28 @@ export function updateIntelEei(id, data) {
 export function fetchIntelEeiById(id) {
   return createAction({
     type: INTEL_EEI__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEI/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEI/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function fetchIntelEeisByIntelId(intelReqId) {
   return createAction({
     type: INTEL_EEI__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetAllIntelReqEEIByIntelReqId/${intelReqId}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetAllIntelReqEEIByIntelReqId/${intelReqId}`, {headers:requestHeaders}),
   });
 }
 
 export function fetchIntelEEI() {
   return createAction({
     type: INTEL_EEI__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEIs`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/IntelReqEEI/GetIntelReqEEIs`, {headers:requestHeaders}),
   });
 }
 
 export function deleteIntelEEIById(id) {
   return createAction({
     type: INTEL_EEI__DELETE,
-    action: () => axios.delete(`${baseUrl}/IntelReqEEI/DeleteIntelReqEEI/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/IntelReqEEI/DeleteIntelReqEEI/${id}`, {headers:requestHeaders}),
   });
 }
 

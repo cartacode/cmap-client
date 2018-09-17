@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddPersonnel from './personnel/AddPersonnelModal';
+import Register from './personnel/Register';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
@@ -18,6 +19,7 @@ class PersonnelComponent extends React.Component {
       filterValue: '',
       filter: [],
       addPersonnelModalOpen: false,
+      addRegisterModalOpen: false,
       tableRowDetailModalOpen: false,
       addshow: false,
       editId: '0',
@@ -48,6 +50,14 @@ class PersonnelComponent extends React.Component {
     this.setState({
       editId: row,
       addPersonnelModalOpen: true,
+    });
+  
+  }
+
+  openRegisterForm = (row) => {
+    this.setState({
+      editId: row,
+      addRegisterModalOpen: true,
     });
   
   }
@@ -203,10 +213,23 @@ render() {
         {!this.state.addPersonnelModalOpen ? <div className="col-md-12 filter-line">
           <div className="add-button">
             <button className="ccir-button" onClick={() => this.openPersonnelForm('0')} >{translations["Add Personnel"]}</button>
+          </div>  <div className="add-button">
+            <button className="ccir-button" onClick={() => this.openRegisterForm('0')} >Register User</button>
           </div>
-        </div> : null}
+        </div> :  
+        <div className="col-md-12 filter-line">
+        <div className="add-button">
+            <button className="ccir-button" onClick={() => this.openRegisterForm('0')} >Register User</button>
+        </div>
+        </div>
+        }
         {this.state.addPersonnelModalOpen ?
           <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} /* editForm = {this.state.editForm} */ stopupdate={this.stopupdate}/>
+          : null
+        }
+
+         {this.state.addRegisterModalOpen ?
+          <Register editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} /* editForm = {this.state.editForm} */ stopupdate={this.stopupdate}/>
           : null
         }
         <div className="col-md-12">

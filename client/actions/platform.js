@@ -4,6 +4,7 @@ import qs from 'qs';
 import { PLATFORM__ADD, PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__UPDATE, PLATFORM__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
+import { requestHeaders2 } from '../dictionary/network';
 
 export function addPlatform(platform) {
   return createAction({
@@ -22,7 +23,7 @@ export function updatePlatform(id, platform) {
 export function fetchPlatforms() {
   return createAction({
     type: PLATFORM__FETCH,
-    action: () => axios.get(`${baseUrl}/Platform/GetPlatformsData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Platform/GetPlatformsData`, {headers: requestHeaders}),
   });
 }
 

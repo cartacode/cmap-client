@@ -8,34 +8,34 @@ import { createAction } from 'util/action';
 export function addPersonnel(personnel) {
   return createAction({
     type: PERSONNEL__ADD,
-    action: () => axios.post(`${baseUrl}/Personnel`, personnel, formDataRequestHeader),
+    action: () => axios.post(`${baseUrl}/Personnel`, personnel, {headers : formDataRequestHeader}),
   });
 }
 
 export function updatePersonnel(id, data) {
   return createAction({
     type: PERSONNEL__UPDATE,
-    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, data, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, {headers : formDataRequestHeader}),
   });
 }
 
 export function fetchPersonnels() {
   return createAction({
     type: PERSONNEL__FETCH,
-    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnelData`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnelData`, { headers: requestHeaders }),
   });
 }
 
 export function fetchPersonnelById(id) {
   return createAction({
     type: PERSONNEL__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnel/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnel/${id}`, { headers: requestHeaders }),
   });
 }
 
 export function deletePersonnelById(id) {
   return createAction({
     type: PERSONNEL__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Personnel/DeletePersonnel/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/Personnel/DeletePersonnel/${id}`, { headers: requestHeaders }),
   });
 }

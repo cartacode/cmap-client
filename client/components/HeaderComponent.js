@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import { NotificationContainer} from 'react-notifications';
 import { supportedLanguages } from 'dictionary/localization';
+import { Route, Redirect } from 'react-router-dom';
 
 class HeaderComponent extends React.Component {
 
@@ -34,6 +35,10 @@ class HeaderComponent extends React.Component {
    
   collapse = () => {
    debugger;
+  }
+
+  logoutCall = () => {
+    sessionStorage.removeItem('jwtToken');
   }
 
   //render dropdown list of lang switcher
@@ -174,9 +179,9 @@ class HeaderComponent extends React.Component {
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="fa fa-cog "></i><span className="caret"></span></a>
           <ul className="dropdown-menu" role="menu">
                        <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
-            <li><a href="#"> <i className="fa fa-key"></i> Change Password</a></li>
+            <li><NavLink to='/change-password'> <i className="fa fa-key"></i> Change Password</NavLink></li>
             <li className="divider"></li>
-            <li><a href="#"><i className="fa fa-sign-out"></i> Log Out</a></li>
+            <li><NavLink to="/login" onClick={this.logoutCall}><i className="fa fa-sign-out"></i> Log Out</NavLink></li>
           </ul>
         </li>
       

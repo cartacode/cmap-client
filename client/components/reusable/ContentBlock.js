@@ -167,6 +167,14 @@ class ContentBlock extends React.Component {
             }
             break;
 
+          case 'password':
+            if (item.required) {
+              input = (<input type="password" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} required />);
+            } else {
+              input = (<input type="password" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
+            }
+            break;  
+
           case 'number':
             let minValue = 0;
             if (item.minValue) {

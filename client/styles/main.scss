@@ -555,6 +555,8 @@ body .login {
         .login-button {
           height: 80px;
         }
+        .col-md-4 { width: 50%; }
+        .menu-button { margin-top: 2em !important; }
       }
     }
   }
@@ -3054,6 +3056,10 @@ tbody > tr > th {
 .unit-text {
   color: #cee3f5;
   font-size: 1.35rem;
+}
+
+.img-wid {
+  width: 50% !important;
 }
 
 .linkBase {

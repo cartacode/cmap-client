@@ -20,7 +20,7 @@ import collections from 'reducers/collections';
 import organicorgs from 'reducers/organicorg';
 import organicpersonnels from 'reducers/organicpersonnel';
 import mssionmgts from 'reducers/mssionmgts';
-
+import auth from 'reducers/auth';
 
 export default function createReducer() {
   return combineReducers({
@@ -44,5 +44,6 @@ export default function createReducer() {
     organicorgs,
     organicpersonnels,
     mssionmgts,
+    auth,
   });
 }

@@ -7,6 +7,6 @@ import { createAction } from 'util/action';
 export function fetchCocoms() {
   return createAction({
     type: COCOM_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/COCOM`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/COCOM`, {headers:requestHeaders}),
   });
 }

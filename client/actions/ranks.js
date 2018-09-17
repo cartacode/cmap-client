@@ -7,6 +7,6 @@ import { createAction } from 'util/action';
 export function fetchRanksByBranch(id) {
   return createAction({
     type: RANK_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/Ranks/GetRanksByBranch?branchID=${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Ranks/GetRanksByBranch?branchID=${id}`, {headers:requestHeaders}),
   });
 }
