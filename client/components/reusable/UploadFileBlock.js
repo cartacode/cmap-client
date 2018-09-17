@@ -32,8 +32,8 @@ class UploadFileBlock extends React.Component {
         const name = event.target.name;
         const id = event.target.id;
         const file = event.target.files[0];
-        if(file.size > 1024000){
-            alert("File size should be less than 1 MB.");
+        if(file.size > (1024000 * 10)){
+            alert("File size should be less than 10 MB.");
             document.getElementById(id).value= null;
             if(this.props.isImagedRequired){
                 this.updateContent(name, new File([""], ""));
