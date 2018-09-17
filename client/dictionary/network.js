@@ -23,5 +23,6 @@ export const formDataRequestHeader = {
   //'Content-Type': 'multipart/form-data',
   'Authorization':`Bearer ${token}`,
   'Cache-Control' : 'no-cache'
+  // 'Content-Type': 'multipart/form-data',
 };
 

@@ -39,15 +39,20 @@ class RequestComponent extends React.Component {
     this.props.fetchIntelRequests();
   }
 
+
   deleteIntelRequestById =(value)=>{
     const { translations } = this.props;
     this.setState({loading: true});
 
     this.props.deleteIntelRequestById(value).then(() => {
       this.setState({loading: false});
-
-      NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
-      this.props.fetchIntelRequests();
+      if(this.props.isDeleted){
+        NotificationManager.success(translations.DeletedSuccesfully, translations['Intel Request Title'], 5000);
+        this.props.fetchIntelRequests();
+      }
+      else{
+        NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
+      }
     });
   }
 
@@ -66,7 +71,6 @@ class RequestComponent extends React.Component {
 
     const addurl = match.url.replace('/request', '/request-form');
     const editurl = match.url.replace('/request', '/detail/');
-
     const columns = [
       {
         Header: 'IR#',
@@ -120,8 +124,13 @@ class RequestComponent extends React.Component {
         Header: translations['view'],
         accessor: 'IntelRequestID',
         filterable: false,
-        Cell: row => <div><Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
-        <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a></div>,
+        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
+        
+      {   (row.original.IsInCollectionPlan || row.original.MissionId != null || row.original.Abbreviation === "APR") ?  '' :
+          <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
+      }
+      
+      </div>,
       },
     ];
 
@@ -154,8 +163,8 @@ class RequestComponent extends React.Component {
             </NavLink>
  */}
           </div>
-          <div className="col-md-12">
-            <ReactTable
+          <div className="col-md-12" id="intel-request" >
+            <ReactTable 
               data={allRequests}
               loading={this.props.isLoading}
               columns={columns}

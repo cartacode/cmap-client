@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import MissionDetailComponent from '../../components/mission_mgt/MissionDetailComponent';
-import {fetchMissionDetailById} from 'actions/mssionmgt';
+import {fetchMissionDetailById, uploadMissionReport } from 'actions/mssionmgt';
 
 
 const mapStateToProps = state => {
@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchMissionDetailById,
+  uploadMissionReport,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MissionDetailComponent);

@@ -7,6 +7,7 @@ import {NoticeType} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
+import {getKMLCenter} from 'map/kmlGrinder';
 
 
 class CcirPirModal extends React.Component {
@@ -178,33 +179,45 @@ resetForm = () => {
     event.preventDefault();
     const { editId } = this.props;
     let { ccirpir } = this.state;
+    ccirpir.CenterPoint = [];
     const formData = new FormData();
     const kmlFile = this.state.EffectiveAreaKML;
+    let centerPoints;
+    
     if (kmlFile) {
+      // instantiating new FileReader to read KML file
+      let  reader = new FileReader();
+        reader.onloadend=() => {
+            centerPoints = getKMLCenter(reader.result);
+            if (editId !== undefined && editId !== '0') {
+              // Start Loader
+              this.setState({loading:true});
+              ccirpir.CCIRPIRId = editId;
+              ccirpir.LastUpdateUserId =  null;
+              ccirpir.CenterPoint = centerPoints;
+              console.log("ccirpir", ccirpir);
+              formData.append("ccirpirFormData", JSON.stringify(ccirpir));
+              this.props.updateCcirPir(editId, formData).then( () => {
+                //Stop Loader
+                this.setState({loading:false});
+                this.props.onClose(NoticeType.UPDATE);
+              });
+            } else {
+              ccirpir.LastUpdateUserId =  null;
+              formData.append("ccirpirFormData", JSON.stringify(ccirpir));
+              // Start Loader
+              this.setState({loading:true});
+              this.props.addCcirPir(formData).then( () => {
+                // Stop Loader
+                this.setState({loading:false});
+                this.props.onClose(NoticeType.ADD);
+              });
+            }
+        }
+        reader.readAsText(kmlFile);
       formData.append('EffectiveAreaKML', kmlFile, kmlFile.name);
     }
-    if (editId !== undefined && editId !== '0') {
-      // Start Loader
-      this.setState({loading:true});
-      ccirpir.CCIRPIRId = editId;
-      ccirpir.LastUpdateUserId =  null;
-      formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-      this.props.updateCcirPir(editId, formData).then( () => {
-        //Stop Loader
-        this.setState({loading:false});
-        this.props.onClose(NoticeType.UPDATE);
-      });
-    } else {
-      ccirpir.LastUpdateUserId =  null;
-      formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-      // Start Loader
-      this.setState({loading:true});
-      this.props.addCcirPir(formData).then( () => {
-        // Stop Loader
-        this.setState({loading:false});
-        this.props.onClose(NoticeType.ADD);
-      });
-    }
+    
     
   }
 
@@ -225,14 +238,14 @@ resetForm = () => {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM', required:true },
+      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM' },
       { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch', required:true},
       { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country', required:true},
       { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region', required:true},
       { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
       { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
       { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
-      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML'}
+      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', required: true}
     ];
 
     const ccirFields = [

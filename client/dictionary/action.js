@@ -131,6 +131,7 @@ export const COLLECTION_PLAN_TO_ATO_GENERATION = createActionType('COLLECTION_PL
 export const ATO_GEN_TO_COLLECTION_PLAN__MOVE = createActionType('ATO_GEN_TO_COLLECTION_PLAN__MOVE');
 export const ROUTE_ATO_GENERATION = createActionType('ROUTE_ATO_GENERATION');
 
+export const MISSION_REPORT_UPLOAD = createActionType('MISSION_REPORT_UPLOAD');
 export const ATO_GEN_TO_FLIGHT_OPS__MOVE = createActionType('ATO_GEN_TO_FLIGHT_OPS__MOVE');
 export const FLIGHT_OPS_TO_ATO_GEN__MOVE = createActionType('FLIGHT_OPS_TO_ATO_GEN__MOVE');
 

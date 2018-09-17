@@ -75,6 +75,7 @@ export default {
     allApprovedIntelRequests: [],
     allCollectionsPlan: [],
     isFetching: false,
+    isDeleted:false
   },
   mssionmgts: {
     atoCollectionPlans:[],
@@ -119,6 +120,7 @@ export default {
     oneIntelRequest: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false
   },
 
   inteleei: {
@@ -126,6 +128,7 @@ export default {
     oneEei: {},
     isFetching: false,
     isFetchingOne: false,
+    isDeleted: false,
   },
 
   organicorgs: {

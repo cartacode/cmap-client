@@ -113,7 +113,7 @@ class FlightOpsPlatform extends React.Component {
       },
       {
         Header: translations['Armed'],
-        accessor: 'IsArmed',
+        accessor: 'Armed',
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -124,7 +124,7 @@ class FlightOpsPlatform extends React.Component {
         },
       },
       {
-        Header: translations.view,
+        Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (
@@ -175,7 +175,7 @@ class FlightOpsPlatform extends React.Component {
         },
       },
       {
-        Header: translations.view,
+        Header: translations.Unassign,
         accessor: 'IntelRequestID',
         filterable: false,
         Cell: row => (

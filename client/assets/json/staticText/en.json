@@ -735,7 +735,12 @@
 	"Ped Team":"Ped Team",
 	"StatusId":"StatusId",
   "Active Dates":"Active Dates",
-  "File Upload": "File Upload",
-	"upload": "UPLOAD"
+  "MissionReport": "Mission Report",
+  "upload": "UPLOAD",
+  "Assign": "Assign",
+  "Unassign": "Unassign",
+  "Remove": "Remove",
+  "Add": "Add",
+  "Actions": "Actions"
   
 }

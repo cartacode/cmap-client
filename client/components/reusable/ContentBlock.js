@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dropdown from "../reusable/Dropdown";
+import Dropdown from '../reusable/Dropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
-import {InputAttributes} from '../../dictionary/constants';
-
+import { InputAttributes } from '../../dictionary/constants';
 
 class ContentBlock extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      content: []
-    }
+      content: [],
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -22,10 +21,8 @@ class ContentBlock extends React.Component {
     });
   }
 
-
   componentDidUpdate() {
 
-    
     const { initstate, editFetched } = this.props;
     // const { editFetched } = this.props;
 
@@ -68,8 +65,7 @@ class ContentBlock extends React.Component {
     let parameterValue = '';
     if (value === 'on') {
       parameterValue = true;
-    }
-    else {
+    } else {
       parameterValue = false;
     }
     this.updateContent(name, parameterValue);
@@ -80,9 +76,9 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
-    this.updateContent(name, changeDate._d);
+    if(changeDate !== null)
+      this.updateContent(name, changeDate._d);
   }
-
 
   /**
      * This method is use for handle the selected file by browse.
@@ -91,13 +87,13 @@ class ContentBlock extends React.Component {
       const name = event.target.name;
       const id = event.target.id;
       const file = event.target.files[0];
-      if(file.size > 5242880){
-        alert("File size should be less than 5 MB.");
-        document.getElementById(id).value= null;
-        this.updateContent(name, new File([""], ""));
+      if(file.size > 5242880) {
+        alert('File size should be less than 5 MB.');
+        document.getElementById(id).value = null;
+        this.updateContent(name, new File([''], ''));
       }else {
         this.updateContent(name, file);
-      };
+      }
     }
 
     updateContent(name, value) {
@@ -146,9 +142,8 @@ class ContentBlock extends React.Component {
               } else {
                 input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxLength={maxlength} required />);
               }
-            }
-            else {
-              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxLength={maxlength} />)
+            } else {
+              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxLength={maxlength} />);
             }
             break;
 
@@ -191,12 +186,10 @@ class ContentBlock extends React.Component {
               }else {
                 input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} required />);
               }
+            } else if(item.isDecimal) {
+              input = (<input type="number" step="any" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             } else {
-              if(item.isDecimal) {
-                input = (<input type="number" step="any" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
-              } else {
-                input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
-              }
+              input = (<input type="number" min={minValue} value={value} className="form-control" name={item.valFieldID} onChange={this.handleChangeNumber} />);
             }
             break;
 
@@ -257,7 +250,6 @@ class ContentBlock extends React.Component {
     }
 
     render() {
-
 
       return (
         <div className="col-md-4 info-block">

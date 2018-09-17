@@ -3573,7 +3573,6 @@ one-block {
     border-width: 0 1px;
     margin-left: -1px;
     box-sizing: border-box;
-    width: 56px;
     max-height: 100%;
     overflow-y: auto;
     position: relative;
@@ -4579,6 +4578,13 @@ body .dropdown-menu div:hover {
 button.btn.btn-secondary.dropdown-toggle {
   margin-left: 12px;
 }
+#intel-request .ReactTable .btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  float: left;
+  margin-left:22px;
+}
 
 /**
   * This css is use for change mouse cursor to pointer
@@ -4636,6 +4642,9 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  #intel-request .ReactTable .btn-primary {
+    margin-left: 0px;
+}
 
   .mission-mgt .special-instruction {
     font-size: 14px;
@@ -4860,3 +4869,77 @@ select.form-control {
     height: 15px;
   }
 }
+.cesium-viewer{
+  position: relative;
+  .cesium-viewer-toolbar{
+    position: absolute;
+    top:0;
+    left: 94%;
+  }
+  .cesium-home-button{
+    border: 2px solid #f2f2f2;
+    background: azure;
+    
+  border-radius:18px;
+  }
+}
+@mixin  toolbar-border-radius {
+  -moz-transition: all .51s;
+  -o-transition: all .51s;
+  -webkit-transition: all .51s;
+  transition: all .51s;
+  border-radius:50px;
+}
+.map-wrapper{
+  position: relative;
+  .ico-location{
+    width: 50px;
+    height: 40px;
+    z-index: 2;
+    position: absolute;
+    top:50px;
+    left:94%;
+    a{
+      background-color: azure;
+      display: block;
+      cursor: pointer;
+      border-radius: 4px;
+      &:hover{
+        @include toolbar-border-radius;
+        background: #84a1e0;
+      }
+      &.is-active{
+        @include toolbar-border-radius;
+        background: #888888;
+        
+      }
+    }
+    
+    &--img{
+      max-width: 50px;
+      height: 36px;
+      background-image: url("/assets/img/intel_request/locationicon.png");
+    }
+  }
+}
+
+.Modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  }
+  .ReactModalPortal{
+    .ReactModal__Overlay--after-open{
+      background-color: none !important;
+    }
+  }

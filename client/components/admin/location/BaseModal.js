@@ -8,12 +8,15 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
+import Map, { viewerSize } from 'components/reusable/Map';
+import { viewerIdentifiers } from 'map/viewer';
 
 
 class BaseModal extends React.Component {
 
   constructor(props) {
     super(props);
+ //   this.handleLocationPositionData = this.handleLocationPositionData.bind(this);
     this.state = {
       file: '',
       clear: false,
@@ -120,10 +123,26 @@ class BaseModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
+  // getLatLong = (currentLatLong) =>{
+  //   this.setState({
+  //     location: {
+  //     LocationLatitude: currentLatLong.latitude,
+  //     LocationLongitude: currentLatLong.longitude,
+  //     }
+  //   })
+  // }
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
-    const userLocationId = location.UserLocationID;
+    // if(positionData.length) {
+    //   this.setState({
+    //     location:{
+    //       LocationLatitude: positionData[1],
+    //       LocationLongitude: positionData[0],
+    //     }
+    //   });
+    //   return;
+    // }
     this.setState({
       location: {
         ...location,
@@ -135,61 +154,49 @@ class BaseModal extends React.Component {
         UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-       if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId){
-        document.getElementById('validationIcon').src = '';
-       }
-     });
-  }
+      const { editId } = this.props;
 
-
-  checkLocationId() {
-    const { editId } = this.props;
-    let {location} = this.state;
-    const userLocationId = location.UserLocationID;
-    if (userLocationId) {
-      let isUserLocationIdExits;
-      axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
-        .then(response => {
-          isUserLocationIdExits = response.data;
-          document.getElementById('LocationID').placeholder = '';
-          if (isUserLocationIdExits === false) {
-            if (this.props.oneLocation.UserLocationID !== 'undefined') {
-              if (this.props.oneLocation.UserLocationID !== userLocationId) {
+      const userLocationId = positionData.UserLocationID;
+      if (userLocationId) {
+        let isUserLocationIdExits;
+        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, requestHeaders)
+          .then(response => {
+            isUserLocationIdExits = response.data;
+            document.getElementById('LocationID').placeholder = '';
+            if (isUserLocationIdExits === false) {
+              if (this.props.oneLocation.UserLocationID !== 'undefined') {
+                if (this.props.oneLocation.UserLocationID !== userLocationId) {
+                  const { location } = this.state;
+                  this.setState({
+                    location: {
+                      ...location,
+                      UserLocationID: '',
+                    }
+                  });
+                  document.getElementById('LocationID').value = '';
+                  document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+                  document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+                }
+              } else {
+                const { location } = this.state;
                 this.setState({
                   location: {
                     ...location,
                     UserLocationID: '',
                   }
                 });
-                this.handleLocationPositionData(this.state.location);
                 document.getElementById('LocationID').value = '';
                 document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
                 document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
               }
-              else{
-                this.submitData();
-              }
             } else {
-
-              this.setState({
-                location: {
-                  ...location,
-                  UserLocationID: '',
-                }
-              });
-              //this.handleLocationPositionData(this.state.location);
-              document.getElementById('LocationID').value = '';
-              document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
-              document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
+              document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+              this.submitData();
             }
-          } else {
-            document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
-            this.submitData();
-          }
-        });
-    }
-    //console.log("New state in ASYNC callback og location Section:22222", this.state.location);
- 
+          });
+      }
+     // console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+    });
   }
 
   handleLocationInfoData = (infoData) => {
@@ -263,7 +270,8 @@ class BaseModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  submitData = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     const { location } = this.state;
     const { editId } = this.props;
     const { locationFiles } = this.state;
@@ -301,10 +309,10 @@ class BaseModal extends React.Component {
     }
   }
 
-  handleSubmit = event => {
+  /* handleSubmit = event => {
     event.preventDefault();
     this.checkLocationId();
-  }
+  } */
 
   stopset() {
     this.setState({ clear: false });
@@ -358,14 +366,14 @@ class BaseModal extends React.Component {
       { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
       { name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity' },
       { name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry', required: true },
-      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM', required: true },
+      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM' },
       { name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion', required: true },
     ];
 
     const locationFields = [
       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
-      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true, minValue: -180},
-      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true, minValue: -180},
+      { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true,},
+      { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true,},
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },
@@ -412,14 +420,19 @@ class BaseModal extends React.Component {
               data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
           </div>
         </div>
+		<div className = "row personnel">
+          <div className="col-md-12">
+                  <Map size='100%' viewerId={viewerIdentifiers.location} />
+              </div>
+        </div>
         <div className="row personnel" >
           <div className="under-location-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationGeneralData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationPositionData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate={this.props.oneLocation} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+              data={this.handleLocationInfoData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
           </div>
         </div>
         <div className="row action-buttons">

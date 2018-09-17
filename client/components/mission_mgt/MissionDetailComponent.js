@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import UploadFileBlock from '../reusable/UploadFileBlock';
 
 import FormBlock from '../reusable/FormBlock';
-import ContentBlock from '../reusable/ContentBlock';
+
+import Loader from '../reusable/Loader';
 
 
 class MissionDetailComponent extends React.Component {
@@ -12,7 +13,10 @@ class MissionDetailComponent extends React.Component {
     super(props);
     this.state = {
       missionDetail: {},
-      editFetched: false
+      missionReport: null,
+      missionReportUrl: '',
+      editFetched: false,
+      loading: false,
     };
   }
 
@@ -26,29 +30,56 @@ class MissionDetailComponent extends React.Component {
       this.props.fetchMissionDetailById(editId).then(()=> {
         this.setState(
           {
-            
+
             missionDetail: this.props.oneMissionDetail,
-            editFetched: true
-     
+            missionId: editId,
+            editFetched: true,
+
           });
       });
     }
   }
 
 
-  onClear(){
-    //console.log("clear");
-  }
+  handleSubmit = event => {
+    event.preventDefault();
 
-  onRoute(){
-    //console.log("route");
-  }
+    const { missionId, missionReport, missionDetail } = this.state;
+    // adding Id field as missionId nede for put request of mission
+    const data = {...missionDetail, 'Id': missionId };
+    const formData = new FormData();
+    if (missionReport) {
+      formData.append('MissionReport', missionReport, missionReport.name);
+    }
+    formData.append('missionFormData', JSON.stringify(data));
+    this.setState({loading: true });
+    this.props.uploadMissionReport(missionId, formData).then(() => {
+      this.setState({loading: false});
+    });
 
+  }
 
   stopupd = () => {
     this.setState({editFetched:false});
   }
 
+  handleUploadFileData = (uploadFileData) => {
+    // const { missionReport } = this.state;
+    this.setState({
+      missionReport: uploadFileData.MissionReport,
+    });
+  }
+
+  /**
+   * This is callback method called automatically and show selected image preview.
+   */
+  handleFilePreview = (uploadedFile) => {
+    
+    let reader = new FileReader();
+    let file = uploadedFile.originalFile;
+    // Todo set download for Uploaded file
+    reader.readAsDataURL(file);
+  }
 
 
 
@@ -57,7 +88,7 @@ class MissionDetailComponent extends React.Component {
     const {translations} = this.props;
 
     const {missionDetail} = this.state;
-    
+
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
       {name: translations['Mission#'], type: 'input', readonly:true,  valueField:"Mission"},
@@ -71,7 +102,7 @@ class MissionDetailComponent extends React.Component {
       {name: translations['Sub-Mission Type'], type: 'input', readonly:true,  valueField:"SubMissionType"},
       {name: translations['Active Dates'], type: 'input', readonly:true,  valueField:"ActiveDateTimeStart" }
     ];
-    
+
     const missionBlock2= [
       {name: translations['ISR Asset Country'], type: 'input', readonly:true,  valueField:"ISRAssetCountary"},
       {name: translations['ISR Unit'], type: 'input', readonly:true,  valueField:"ISRUnit"},
@@ -100,10 +131,12 @@ class MissionDetailComponent extends React.Component {
       //{name: translations['IR'], type: 'input', readonly:true,  valueField:"ReqUserFrndlyID"},
 
 
-      
+
     ];
 
-    const missionBlock4 = [  {name: 'Upload FIle', type: 'file'}, ];
+    const missionBlock4 = [  
+      { name: translations.MissionReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file' },
+    ];
 
     const requirementsHeader = [translations['Priority#'], translations['eei#'], translations['Name'], translations['threat'], translations['Location'], translations['grid'], translations['POIs'], translations['LIMIDS Request'], translations['view'], translations['edit'], translations['del'],];
     const requirementContent = [
@@ -135,33 +168,35 @@ class MissionDetailComponent extends React.Component {
         </div>
 
 
+        <form action="" onSubmit={this.handleSubmit} id="platform">
+          <div className="row mission-mgt">
+            <Loader loading={this.state.loading} />
 
-        <div className="row mission-mgt">
-
-         <div className="col-md-12 header-line">
-            {/* <img className="full-line" src="/assets/img/general/full_line.png" /> */}
-            <img src="/assets/img/admin/personnel_1.png" alt="" />
-            <div className="header-text">
-            {translations['File Upload']}
+            <div className="col-md-12 header-line">
+              
+              <img src="/assets/img/admin/personnel_1.png" alt="" />
+              <div className="header-text">
+                {translations.MissionReport}
+              </div>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
+            <div className="col-md-12 text-center">
+              <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
+                initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
+                isImagedRequired={true} />
+            </div>
           </div>
-           <div className="col-md-12 header-line">
-           <ContentBlock fields={missionBlock4} />
-           </div> 
+          <div className="row action-buttons">
+            <div className="menu-button">
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+              <button type="submit" className="highlighted-button">
+                {translations['upload']}
 
-              <div className="row action-buttons">
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-            <button type="submit" className="highlighted-button">
-              {translations['upload']}
-
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+              </button>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+            </div>
           </div>
-          </div>
-          
-        </div>
+        </form>
 
       </div>
     );

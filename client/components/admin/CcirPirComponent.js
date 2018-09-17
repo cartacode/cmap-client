@@ -158,8 +158,8 @@ notify =(type)=>{
         accessor: 'CommanderName',
       },  
       {
-        Header: translations['Type'],
-        accessor: 'Type',
+        Header: translations.Branch,
+        accessor: 'BranchName',
        
       },
       {
