@@ -309,10 +309,10 @@ class BaseModal extends React.Component {
     }
   }
 
-  handleSubmit = event => {
+  /* handleSubmit = event => {
     event.preventDefault();
     this.checkLocationId();
-  }
+  } */
 
   stopset() {
     this.setState({ clear: false });
@@ -366,7 +366,7 @@ class BaseModal extends React.Component {
       { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
       { name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity' },
       { name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry', required: true },
-      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM', required: true },
+      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM' },
       { name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion', required: true },
     ];
 

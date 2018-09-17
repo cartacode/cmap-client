@@ -163,8 +163,8 @@ class RequestComponent extends React.Component {
             </NavLink>
  */}
           </div>
-          <div className="col-md-12">
-            <ReactTable
+          <div className="col-md-12" id="intel-request" >
+            <ReactTable 
               data={allRequests}
               loading={this.props.isLoading}
               columns={columns}
