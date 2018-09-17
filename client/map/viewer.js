@@ -12,6 +12,7 @@ export const viewerIdentifiers = {
   location:'LOCATION',
 };
 
+
 /**
  * The map of viewer identifiers to their corresponding viewer instance.
  * @type  {Map.<string, Object>}
@@ -24,12 +25,13 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, clickHandler) {
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK) {
   if (viewers.has(viewerId)) {
     return;
   }
   const viewer = new Cesium.Viewer(elementId, {
     animation: false,
+    fullscreenButton: true,
     baseLayerPicker: false,
     fullscreenButton: false,
     geocoder: false,
@@ -79,7 +81,7 @@ viewer.canvas.style.width = '100%';
  * TODO: Move to separate file
  * Attaching double click event on canvas, to retrieve lat, long values
 */
-  getCurrentLatLong(viewer, viewerId, clickHandler)
+  attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK)
 
   viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
 
@@ -88,26 +90,25 @@ viewer.canvas.style.width = '100%';
   return viewer;
 }
 /**
- * getCurrentLatLong: returns the lat-long values of point where mouse is double clicked
+ * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 
  */
-function getCurrentLatLong(viewer, viewerId, clickHandler){
+function attachDoubleClick(viewer, viewerId, dblClickHandler){
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
   // Event handler for left click
   screenSpaceEventHandler.setInputAction(click => {
 
-    // get position  of click
     var clickPosition = viewer.camera.pickEllipsoid(click.position);
 
-    // add point at initial click position
     var cartographicClick = Cesium.Ellipsoid.WGS84.cartesianToCartographic(clickPosition);
     var currentLatLong = {
       longitude: Cesium.Math.toDegrees(cartographicClick.longitude),
       latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
     }
-    clickHandler(currentLatLong, viewerId, viewer);
-      //clickHandler[viewerId](currentLatLong, viewerId);
+    if(typeof dblClickHandler === "function"){
+      dblClickHandler(currentLatLong, viewerId);
+    }
   },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
 }

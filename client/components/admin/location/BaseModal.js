@@ -16,6 +16,7 @@ class BaseModal extends React.Component {
 
   constructor(props) {
     super(props);
+ //   this.handleLocationPositionData = this.handleLocationPositionData.bind(this);
     this.state = {
       file: '',
       clear: false,
@@ -122,9 +123,26 @@ class BaseModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
+  // getLatLong = (currentLatLong) =>{
+  //   this.setState({
+  //     location: {
+  //     LocationLatitude: currentLatLong.latitude,
+  //     LocationLongitude: currentLatLong.longitude,
+  //     }
+  //   })
+  // }
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
+    // if(positionData.length) {
+    //   this.setState({
+    //     location:{
+    //       LocationLatitude: positionData[1],
+    //       LocationLongitude: positionData[0],
+    //     }
+    //   });
+    //   return;
+    // }
     this.setState({
       location: {
         ...location,
@@ -354,8 +372,8 @@ class BaseModal extends React.Component {
 
     const locationFields = [
       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
-      { name: translations['Lat'], type: 'number', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true, minValue: -180},
-      { name: translations['Lon'], type: 'number', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true, minValue: -180},
+      { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true,},
+      { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true,},
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },

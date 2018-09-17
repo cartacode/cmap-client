@@ -4863,7 +4863,16 @@ select.form-control {
   .cesium-home-button{
     border: 2px solid #f2f2f2;
     background: azure;
+    
+  border-radius:18px;
   }
+}
+@mixin  toolbar-border-radius {
+  -moz-transition: all .51s;
+  -o-transition: all .51s;
+  -webkit-transition: all .51s;
+  transition: all .51s;
+  border-radius:50px;
 }
 .map-wrapper{
   position: relative;
@@ -4875,13 +4884,18 @@ select.form-control {
     top:50px;
     left:94%;
     a{
-      border-radius:4px;
       background-color: azure;
       display: block;
+      cursor: pointer;
+      border-radius: 4px;
       &:hover{
-        background: violet;
-        border-radius:50px;
-        transition: 10ms;
+        @include toolbar-border-radius;
+        background: #84a1e0;
+      }
+      &.is-active{
+        @include toolbar-border-radius;
+        background: #888888;
+        
       }
     }
     
