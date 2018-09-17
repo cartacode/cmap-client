@@ -399,7 +399,7 @@ updatePirOptions = (items, pirdesc) => {
             <div className="two-block">
             
               
-              {/* <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} /> */}
+              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} /> 
               
             </div>
           </div>
