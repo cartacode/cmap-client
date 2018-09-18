@@ -150,7 +150,7 @@ class AddPlatformInventory extends React.Component {
     event.preventDefault();
     let { platform } = this.state;
     const { editId } = this.props;
-    console.log(JSON.stringify(platform));
+    
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
       this.props.updatePlatformInventory(editId, platform).then( () => {
@@ -311,9 +311,9 @@ class AddPlatformInventory extends React.Component {
 
           <div className="row personnel" >
             <div className="under-munitions-content">
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={payloadFields} data={this.handlePayloadData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock fields={armsFields} data={this.handleArmsData} initstate={this.props.onePlatformInventory} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.state.platform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={payloadFields} data={this.handlePayloadData} initstate={this.state.platform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={armsFields} data={this.handleArmsData} initstate={this.state.platform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
           
