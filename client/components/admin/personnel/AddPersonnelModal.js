@@ -84,20 +84,19 @@ class AddPersonnelModal extends React.Component {
     let { editId } = this.props;
     this.setState({ clear: true });
     if(editId !== '0') {
-      /* this.props.fetchPersonnelById(editId).then(() => { 
-        this.setState(
-          {
-            editFetched: true,
-            personnel: this.props.onePersonnel,
-            locationPhotoPreviewUrl: null,
-            mapImagePreviewUrl: null,
-            isImagedRequired:  false
-          });
-        //this.state.personnel = this.props.onePersonnel; 
-      }); */
-
       this.editComponent(editId);
+    }
+  }
 
+
+  componentDidUpdate = (prevProps, prevState) => {
+
+    const { editId } = this.props;
+    if (editId !== '0' && prevProps.editId !== editId) {
+      this.editComponent(editId);
+    }
+    if (editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
     }
   }
 
@@ -114,46 +113,9 @@ class AddPersonnelModal extends React.Component {
     });
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-
-    const { editId } = this.props;
-    if (editId !== '0' && prevProps.editId !== editId) {
-      this.editComponent(editId);
-    }
-    if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
-    }
-    
-  }
-
-  // componentDidMount = () => {
-  //   // this.setState({personnel: this.props.personnel});
-  //   let { editId } = this.props;
-
-  //   if(editId !== '0') {
-  //       console.log("this is called");
-  //       console.log("Edit ID is"+editId);
-  //     this.props.fetchPersonnelById(editId).then(() => { this.state.personnel = this.props.onePersonnel; });
-  //   }
-  // }
-
-  // componentDidUpdate = () => {
-  //   // this.setState({personnel: this.props.personnel});
-  //   let {editForm} = this.props;
-  //   let { editId } = this.props;
-  //   console.log("Outer Update Called");
-  //   if(editForm) {
-  //       console.log("Inner Update Called");
-  //       this.props.stopupdate();
-  //       this.props.fetchPersonnelById(editId).then(() => {this.setState({editFetched:true}); this.state.personnel = this.props.onePersonnel;});
-        
-  //   }
-  // }
-
   stopupd = () => {
-    this.setState({editFetched:false});
+    this.setState({ editFetched: false });
   }
-
   
   handleGeneralPersonnelData = (generalData) => {
     const { personnel, selectedBranch, selectedRank } = this.state;
@@ -181,8 +143,7 @@ class AddPersonnelModal extends React.Component {
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
         this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
       }
-  
-      console.log('rank '+ generalData.Rank + '  selected ' + selectedRank);
+      
       if (generalData.Rank && generalData.Rank !== selectedRank) {
         this.updatePaygrade(generalData.Rank);
       }
@@ -367,10 +328,6 @@ class AddPersonnelModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-
-
-
-
   handleSubmit = event => {
 
     event.preventDefault();
@@ -513,6 +470,7 @@ updatePaygrade= (rank) => {
 
   let paygradeSelect = document.getElementsByName('PayGrade')[0];
   const { personnel } = this.state;
+  console.log('perosnnel state'+ JSON.stringify(personnel));
   const apiUrl = `${baseUrl}/PayGrades/GetPayGradesByRank?rankID=${rank}`;
   axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
@@ -714,10 +672,10 @@ render() {
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title="Organization & Duty" fields={organisationFields}
-              data={this.handleOrganizationAndDutyData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              data={this.handleOrganizationAndDutyData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleContactInformationData} initstate ={this.props.onePersonnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              data={this.handleContactInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>
       </div>

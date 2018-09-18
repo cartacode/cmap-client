@@ -610,9 +610,9 @@ class AddPlatformModal extends React.Component {
           <div className="row personnel" >
             <div className="under-personnel-content">
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
-                data={this.handlePlatformGeneralData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                data={this.handlePlatformGeneralData} initstate ={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Technical specification"]} fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
-                data={this.handlePlatformTechnicalData} initstate ={this.props.onePlatform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
+                data={this.handlePlatformTechnicalData} initstate ={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
                 data={this.handlePlatformCrewData} initstate={this.state.platform} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)}/>
               {/* <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Payloads, Weapons & Coms"]} fields={payloadsFields} stopupd={this.stopUpdate} editFetched={this.state.isUpdated}
