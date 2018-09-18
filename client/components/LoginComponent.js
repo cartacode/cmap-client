@@ -49,6 +49,10 @@ class LoginComponent extends React.Component {
     const { authenticated } = this.props;
     console.log(authenticated);
     sessionStorage.setItem('jwtToken', loginData.access_token);
+    sessionStorage.setItem('PersonnelID', loginData.PersonnelID);
+    sessionStorage.setItem('AssignedUnit', loginData.AssignedUnit);
+    sessionStorage.setItem('DeployedUnit', loginData.DeployedUnit);
+    sessionStorage.setItem('userName', loginData.userName);
     if (authenticated)
     { 
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
