@@ -8,21 +8,21 @@ import { createAction } from 'util/action';
 export function addMunition(munition) {
   return createAction({
     type: MUNITION__ADD,
-    action: () => axios.post(`${baseUrl}/Munition/PostMunition`, munition, {header:formDataRequestHeader}),
+    action: () => axios.post(`${baseUrl}/Munition/PostMunition`, munition, {headers: formDataRequestHeader}),
   });
 }
 
 export function updateMunition(id, munition) {
   return createAction({
     type: MUNITION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Munition/PutMunition/${id}`, munition, {header:formDataRequestHeader}),
+    action: () => axios.put(`${baseUrl}/Munition/PutMunition/${id}`, munition, {headers: formDataRequestHeader}),
   });
 }
 
 export function fetchMunitions() {
   return createAction({
     type: MUNITION__FETCH,
-    action: () => axios.get(`${baseUrl}/Munition/GetMunitionsData`, {header:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Munition/GetMunitionsData`, {headers: requestHeaders}),
   });
 }
 
@@ -30,13 +30,13 @@ export function fetchMunitions() {
 export function fetchMunitionsById(id) {
   return createAction({
     type: MUNITION__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Munition/GetMunition/${id}`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Munition/GetMunition/${id}`, {headers: requestHeaders}),
   });
 }
 
 export function deleteMunitionsById(id) {
   return createAction({
     type: MUNITION__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Munition/DeleteMunition/${id}`, {headers:requestHeaders}),
+    action: () => axios.delete(`${baseUrl}/Munition/DeleteMunition/${id}`, {headers: requestHeaders}),
   });
 }

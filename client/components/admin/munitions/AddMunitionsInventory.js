@@ -161,8 +161,7 @@ class AddMunitionsInventory extends React.Component {
 
 
 
-  updateOwningUnit(generalData) {
-    debugger;
+  updateOwningUnit(generalData) {    
     let unitselect = document.getElementsByName('owningUnit')[0];
     let items = [{ 'label': '--Select Item--', 'value': '' }];
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;

@@ -31,14 +31,14 @@ export function fetchPlatforms() {
 export function fetchPlatformById(id) {
   return createAction({
     type: PLATFORM__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Platform/GetPlatform/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Platform/GetPlatform/${id}`, {headers: requestHeaders }),
   });
 }
 
 export function deletePlatformById(id) {
   return createAction({
     type: PLATFORM__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Platform/DeletePlatform/${id}`, requestHeaders),
+    action: () => axios.delete(`${baseUrl}/Platform/DeletePlatform/${id}`, {headers: requestHeaders }),
   });
 }
 

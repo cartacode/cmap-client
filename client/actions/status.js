@@ -24,7 +24,7 @@ export function fetchPlatformStatusById(id) {
 export function updatePlatformStatus(id, platform) {
   return createAction({
     type: STATUS_PLATFORM__UPDATE,
-    action: () => axios.put(`${baseUrl}/PlatformStatus/PutPlatformStatusUpdate/${id}`, qs.stringify(platform), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/PlatformStatus/PutPlatformStatusUpdate/${id}`, JSON.stringify(platform), {headers:requestHeaders}),
   });
 }
 
@@ -45,7 +45,7 @@ export function fetchPayloadStatusById(id) {
 export function updatePayloadStatus(id, payload) {
   return createAction({
     type: STATUS_PAYLOAD__UPDATE,
-    action: () => axios.put(`${baseUrl}/PayloadStatus/PutPayloadStatusUpdate/${id}`, qs.stringify(payload), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/PayloadStatus/PutPayloadStatusUpdate/${id}`, JSON.stringify(payload), {headers:requestHeaders}),
   });
 }
 
@@ -66,7 +66,7 @@ export function fetchPersonnelStatusById(id) {
 export function updatePersonnelStatus(id, personnel) {
   return createAction({
     type: STATUS_PERSONNEL__UPDATE,
-    action: () => axios.put(`${baseUrl}/PersonnelStatus/PutPersonnelStatu/${id}`, qs.stringify(personnel), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/PersonnelStatus/PutPersonnelStatu/${id}`, JSON.stringify(personnel), {headers:requestHeaders}),
   });
 }
 
@@ -87,6 +87,6 @@ export function fetchMunitionsStatusById(id) {
 export function updateMunitionStatus(id, munition) {
   return createAction({
     type: STATUS_MUNITION__UPDATE,
-    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatusUpdate/${id}`, qs.stringify(munition), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatusUpdate/${id}`, JSON.stringify(munition), {headers:requestHeaders}),
   });
 }

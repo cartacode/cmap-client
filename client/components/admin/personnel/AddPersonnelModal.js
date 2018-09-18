@@ -189,104 +189,7 @@ class AddPersonnelModal extends React.Component {
       },
     });
   }
-
-
   
-  /* handleUploadImgFile(event){
-
-    event.preventDefault();
-    const {personnel} = this.state;
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend =() =>{
-      this.setState({
-        imagePreviewUrl2: reader.result
-      });
-    }
-    reader.readAsDataURL(file);
-
-    let parametername = event.target.id;
-
-    this.setState({
-      personnel: {
-        ...personnel,
-        [parametername]: event.target.files[0].name
-      }
-    }, () => {
-      //   console.log("New state in ASYNC callback:", this.props.personnel);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-  /*    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-        console.log(response);
-      }); */
-
-  //} */
-
-  /*  handleUploadTxtFile(event) {
-    event.preventDefault();
-
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend =() =>{
-      this.setState({
-        file:file,
-      });
-    }
-    reader.readAsDataURL(file)
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-
-    axios.post('http://18.222.48.211:8080/api/Upload', data).then((response) => {
-      console.log(response);
-    });
-
-  }
- */
-  /* handleUploadFile(event){
-    event.preventDefault();
-    const {payload} = this.state;
-    if(event.target.id == "PayloadPhoto") {
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend =() =>{
-        this.setState({
-          imagePreviewUrl: reader.result
-        });
-      }
-      reader.readAsDataURL(file);
-    }
-
-
-    let parametername = event.target.id;
-
-    this.setState({
-      payload: {
-        ...payload,
-        [parametername] : event.target.files[0].name
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:", this.state.payload);
-    });
-
-    const data = new FormData();
-
-    data.append('file', event.target.files[0]);
-    data.append('name', event.target.files[0].name);
-
-    // this.props.uploadFile(data);
-  } */
-
   /**
    * This is callback method called automatically and update state with personnelFiles.
    */
@@ -470,7 +373,7 @@ updatePaygrade= (rank) => {
 
   let paygradeSelect = document.getElementsByName('PayGrade')[0];
   const { personnel } = this.state;
-  console.log('perosnnel state'+ JSON.stringify(personnel));
+  
   const apiUrl = `${baseUrl}/PayGrades/GetPayGradesByRank?rankID=${rank}`;
   axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
@@ -502,7 +405,7 @@ stopset () {
 
 resetForm() {
   this.setState(this.baseState);
-  console.log("FORM RESET DONE");
+  
   if (confirm("Do you want to clear all data from this form?")) {
     this.setState({clear:true,
       imagePreviewUrl:"/assets/img/admin/photo_1.png",

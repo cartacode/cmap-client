@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addMunitionInventory(munition) {
   return createAction({
     type: MUNITION_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, qs.stringify(munition), {headers:requestHeaders}),
+    action: () => axios.post(`${baseUrl}/MunitionsInventory/PostMunitionsInventory`, JSON.stringify(munition), {headers:requestHeaders}),
   });
 }
 
 export function updateMunitionInventory(id, data) {  
   return createAction({
     type: MUNITION_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, qs.stringify(data), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/MunitionsInventory/PutMunitionsInventory/${id}`, JSON.stringify(data), {headers:requestHeaders}),
   });
 }
 
