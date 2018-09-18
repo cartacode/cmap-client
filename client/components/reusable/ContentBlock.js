@@ -36,7 +36,6 @@ class ContentBlock extends React.Component {
     // }
 
     if (editFetched) {
-      console.log(this.props.initstate);
       this.props.stopupd();
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 

@@ -16,7 +16,7 @@ class BaseModal extends React.Component {
 
   constructor(props) {
     super(props);
- //   this.handleLocationPositionData = this.handleLocationPositionData.bind(this);
+    this.updateLatLong = this.updateLatLong.bind(this);
     this.state = {
       file: '',
       clear: false,
@@ -123,26 +123,26 @@ class BaseModal extends React.Component {
       console.log("New state in ASYNC callback:22222", this.state.location);
     });
   }
-  // getLatLong = (currentLatLong) =>{
-  //   this.setState({
-  //     location: {
-  //     LocationLatitude: currentLatLong.latitude,
-  //     LocationLongitude: currentLatLong.longitude,
-  //     }
-  //   })
-  // }
+  
+  updateLatLong = (positionData) => {
+    const { location } = this.state;
+    if(positionData.length) {
+      console.log('pos data' + JSON.stringify(positionData));
+      this.setState({
+        editFetched: true,
+        location: {
+          ...location,
+          LocationLatitude: positionData[1],
+          LocationLongitude: positionData[0],
+        },
+      });
+      
+    }
+  }
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
-    // if(positionData.length) {
-    //   this.setState({
-    //     location:{
-    //       LocationLatitude: positionData[1],
-    //       LocationLongitude: positionData[0],
-    //     }
-    //   });
-    //   return;
-    // }
+    console.log('loca pos data'+JSON.stringify(positionData));
     this.setState({
       location: {
         ...location,
@@ -272,10 +272,10 @@ class BaseModal extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { location } = this.state;
+    const { location, locationFiles } = this.state;
     const { editId } = this.props;
-    const { locationFiles } = this.state;
-    //We are going to upload files with JSON request body.
+    
+    // We are going to upload files with JSON request body.
     const formData = new FormData();
     if (locationFiles.LocationPhoto) {
       formData.append('LocationPhoto', locationFiles.LocationPhoto, locationFiles.LocationPhoto.name);
@@ -289,6 +289,7 @@ class BaseModal extends React.Component {
     if (locationFiles.KML) {
       formData.append('KML', locationFiles.KML, locationFiles.KML.name);
     }
+    
     // Start Loader
     this.setState({loading:true});
     if (editId !== undefined && editId !== '0') {
@@ -372,8 +373,8 @@ class BaseModal extends React.Component {
 
     const locationFields = [
       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
-      { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', isDecimal: true , required: true,},
-      { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude', isDecimal: true , required: true,},
+      { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', required: true,},
+      { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude',  required: true,},
       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },
@@ -422,7 +423,7 @@ class BaseModal extends React.Component {
         </div>
 		<div className = "row personnel">
           <div className="col-md-12">
-                  <Map size='100%' viewerId={viewerIdentifiers.location} />
+                  <Map size='100%' viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
               </div>
         </div>
         <div className="row personnel" >

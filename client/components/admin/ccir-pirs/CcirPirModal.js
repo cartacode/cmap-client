@@ -131,9 +131,6 @@ stopset = () => {
 }
 
 
-
-
-
 updateUnit (generalData) {
   let unitselect = document.getElementsByName('UnitId')[0];
   unitselect.length = 0;
