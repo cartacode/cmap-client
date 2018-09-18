@@ -60,15 +60,16 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeCheck = (e) => {
-    const { name, value } = e.target;
-
-    let parameterValue = '';
-    if (value === 'on') {
-      parameterValue = true;
-    } else {
-      parameterValue = false;
-    }
-    this.updateContent(name, parameterValue);
+    const { name, checked } = e.target;
+    // let parameterValue = '';
+    // if (value === 'on') {
+    //   parameterValue = true;
+    // } else {
+    //   parameterValue = false;
+    // }
+    // this.updateContent(name, parameterValue);
+    this.updateContent(name, checked);
+    
   }
 
   handleDropdownSelectedData = (dropdownData, name) => {
@@ -218,10 +219,9 @@ class ContentBlock extends React.Component {
             );
             break;
           case 'checkbox':
-            input = (
+            input = (      
               <div>
-
-                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck} />
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={value}/>
                 <label htmlFor={`checkbox${i}`}><span /></label>
               </div>
             );

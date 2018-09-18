@@ -404,9 +404,9 @@ class EoirModal extends React.Component {
     const payloadFields = [
       { name: translations['Day Spotter'], type: 'checkbox', domID: 'PayloadDaySpotter', valFieldID: 'PayloadDaySpotter' },
       { name: translations['Thermal Imager'], type: 'checkbox', domID: 'PayloadThermalImager', valFieldID: 'PayloadThermalImager' },
-      { name: translations['Laser Designator'], type: 'checkbox', domID: 'PayloadLaserDesignator', valFieldID: 'PayloadLaserDesignator' },
+      { name: translations['Laser Designator'], type: 'checkbox', domID: 'PayloadLaserDesginator', valFieldID: 'PayloadLaserDesginator' },
       { name: translations['Continuous Zoom'], type: 'checkbox', domID: 'PayloadContinuousZoom', valFieldID: 'PayloadContinuousZoom' },
-      { name: translations['Stabilization'], type: 'checkbox', domID: 'PayloadStabilization', valFieldID: 'PayloadStabilization' },
+      { name: translations['Stabilization'], type: 'checkbox', domID: 'PayloadStabalization', valFieldID: 'PayloadStabalization' },
       { name: translations['Vibration Isolation'], type: 'checkbox', domID: 'PayloadVibrationIsolation', valFieldID: 'PayloadVibrationIsolation' },
       { name: translations['Auto-Tracker'], type: 'checkbox', domID: 'PayloadAutoTracker', valFieldID: 'PayloadAutoTracker' },
       { name: translations['GPS Time Sync'], type: 'checkbox', domID: 'PayloadGPSTimeSync', valFieldID: 'PayloadGPSTimeSync' },
