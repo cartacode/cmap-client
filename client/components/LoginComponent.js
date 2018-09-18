@@ -53,6 +53,7 @@ class LoginComponent extends React.Component {
     sessionStorage.setItem('AssignedUnit', loginData.AssignedUnit);
     sessionStorage.setItem('DeployedUnit', loginData.DeployedUnit);
     sessionStorage.setItem('userName', loginData.userName);
+    sessionStorage.setItem('expires', loginData['.expires']);
     if (authenticated)
     { 
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
