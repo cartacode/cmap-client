@@ -20,6 +20,11 @@ export default class ToolBar extends React.Component {
             resetMap: true,
         })
     }
+    // resetMap = () => {
+    //     this.props.lookUpMode(MAPACTIONS.Home); 
+    //     this.activate("resetMap"); 
+    //  //   document.getElementsByClassName("cesium-home-button").click();
+    // }
     activate = (selectedOption) =>{
         for(let key in this.state) {
             if(key !== selectedOption){
@@ -55,9 +60,9 @@ export default class ToolBar extends React.Component {
         return (
             <div>
                 <div className="top-icon">
-                    <a onClick={() => {this.props.lookUpMode(MAPACTIONS.Home); this.activate("resetMap"); document.getElementsByClassName("cesium-home-button").click()}} className={this.state.resetMap ? "is-active": ""}>
+                    {/* <a onClick={this.resetMap} className={this.state.resetMap ? "is-active": ""}>
                             <img src="/assets/img/icons/top-icon.png" className="ico-location--img" title="Home" />
-                    </a>
+                    </a> */}
                     
                 </div>
                 <div  className="ico-location" aria-hidden="true">

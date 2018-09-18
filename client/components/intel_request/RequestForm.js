@@ -20,6 +20,8 @@ import Loader from '../reusable/Loader'
 import { baseUrl } from 'dictionary/network';
 import {fetchCcirPirs} from 'actions/ccirpir';
 
+import {fetchLocations} from 'actions/location';
+
 
 class RequestForm extends React.Component {
 
@@ -72,6 +74,8 @@ class RequestForm extends React.Component {
     // preserve the initial state in a new object
     this.baseState = this.state;
     this.setCCIRPIR = this.setCCIRPIR.bind(this);
+    
+    this.setOneLocation = this.setOneLocation.bind(this);
 
   }
 
@@ -91,6 +95,18 @@ class RequestForm extends React.Component {
       });
 
     }
+
+    this.props.fetchLocations(2).then(()=>{
+      const {allLocations}=this.props;
+      localStorage.setItem('NAI', JSON.stringify(allLocations));
+      
+    });
+    this.props.fetchLocations(3).then(()=>{
+      const {allLocations}=this.props;
+      localStorage.setItem('POI', JSON.stringify(allLocations));
+      
+    });
+
     this.props.fetchCcirPirs().then(() =>{
       const { allCcirPirs } = this.props;
       localStorage.setItem('KMLdata', JSON.stringify(allCcirPirs));
@@ -270,6 +286,11 @@ setCCIRPIR = (ccirpirObj) =>{
       CCIRPIR: ccirpirObj.CCIRPIR,
   });
 }
+setOneLocation = (location) =>{
+  this.setState({
+    eeiData: location,
+  })
+}
 
 resetForm() {
   // this.setState(this.baseState);
@@ -404,10 +425,7 @@ updatePirOptions = (items, pirdesc) => {
               <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
             </div>
             <div className="two-block">
-            
-              
-              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} /> 
-              
+              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} /> 
             </div>
           </div>
           <div className="col-md-4 one-block">
@@ -507,6 +525,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     oneIntelRequest: state.intelrequest.oneIntelRequest,
     allCcirPirs: state.ccirpir.allCcirPirs,
+    allLocations: state.locations.allLocations
   };
 };
 
@@ -515,6 +534,7 @@ const mapDispatchToProps = {
   fetchIntelRequestById,
   updateIntelRequest,
   fetchCcirPirs,
+  fetchLocations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestForm);

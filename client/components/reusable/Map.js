@@ -7,7 +7,6 @@ import {UTILS} from 'map/Utils';
 import {addKML} from "map/kml";
 import {addPoint} from "map/viewer";
 
-let mapOperatingMode = "";
 
 /**
  * The map of Cesium viewer sizes.
@@ -40,16 +39,25 @@ export default class Map extends React.PureComponent {
     }
   }
   dblClickCallback = (currenLatLong, viewerId) =>{
-    switch(mapOperatingMode) {
+    let nearestNeighbour;
+    switch(this.mapOperatingMode) {
       case "kmlLookUp":
-            let nearestNeighbour = UTILS["kmlLookUp"](currenLatLong, viewerId),
-                nearestPoint = nearestNeighbour.point.split(",");
+            nearestNeighbour = UTILS["kmlLookUp"](currenLatLong, viewerId);
+            let nearestPoint = nearestNeighbour.point.split(",");
             addKML(nearestNeighbour.KMLUri, viewerId);
             addPoint(Number(nearestPoint[0]), Number(nearestPoint[1]), Number(nearestPoint[2]), viewerId, "nearest point "+nearestPoint[0]+","+nearestPoint[1]);
             this.props.setCCIRPIR(nearestNeighbour);
             break;
+      case "naipoiLookUp":
+          nearestNeighbour = UTILS["naipoiLookUp"](currenLatLong, viewerId);
+          addPoint(Number(nearestNeighbour.locationLongitude), Number(nearestNeighbour.locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour.type+" "+nearestNeighbour.locationLatitude+","+nearestNeighbour.locationLongitude, true);
+          
+          console.log("nearest nai/poi", nearestNeighbour);
+          this.props.setOneLocation(nearestNeighbour);
+          break;
       default:
-        this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
+          this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
 
     }
   }
@@ -57,7 +65,7 @@ export default class Map extends React.PureComponent {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK);
   }
   lookUpMode = (mode) =>{
-    mapOperatingMode = mode;
+    this.mapOperatingMode = mode;
   }
   
 

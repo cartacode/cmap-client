@@ -2,9 +2,28 @@
 
 export const UTILS = {
     kmlLookUp: performKMLLookUp,
+    naipoiLookUp: performLocationLookUp,
 
 }
-function performKMLLookUp(currentLatLong, viewerId) {
+function performLocationLookUp(currentLatLong){
+  let nai=JSON.parse(localStorage.getItem("NAI")),
+      poi=JSON.parse(localStorage.getItem("POI")),
+      locations=nai.concat(poi),
+      distances = [];
+    for(var i=0; locations[i]; i++){
+      let xDistance = locations[i].locationLongitude-currentLatLong.longitude,
+          yDistance = locations[i].locationLatitude-currentLatLong.latitude,
+          distance = Math.sqrt(xDistance*xDistance + yDistance*yDistance);
+          distances.push({distance, index: i});
+    }
+    distances.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+    return locations[distances[0].index];
+  
+
+}
+function performKMLLookUp(currentLatLong) {
       let centerPoints = [];
       let KMLdata = JSON.parse(localStorage.getItem("KMLdata"));
       for(let i=0; KMLdata[i]; i++){

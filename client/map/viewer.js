@@ -126,7 +126,7 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
-export function addPoint(x, y, z, viewerId, label){
+export function addPoint(x, y, z, viewerId, label, focus=false){
   if (!viewers.has(viewerId)) {
     return;
   }
@@ -151,5 +151,8 @@ export function addPoint(x, y, z, viewerId, label){
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-//viewer.zoomTo(viewer.entities);
+if(focus) {
+  viewer.flyTo(viewer.entities);
+}
+
 }
