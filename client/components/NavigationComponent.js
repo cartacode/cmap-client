@@ -23,16 +23,6 @@ class NavigationComponent extends React.Component {
 
   componentWillMount () {
     
-      console.log("LoggedUpdate");
-      let expired = sessionStorage.getItem('expires');
-      let exp = new Date(expired).toISOString();
-      console.log(exp);
-      console.log(new Date().toISOString());
-      let current = new Date().toISOString();
-      if (exp < current)           
-      { sessionStorage.removeItem('jwtToken');
-       console.log("Logged Out");
-      }
 
   }
 
