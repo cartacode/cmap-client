@@ -396,14 +396,14 @@ class AddPersonnelModal extends React.Component {
       this.setState({loading:true});
       personnel.PersonnelID = editId;
       
-      formData.append("personnelFormData", JSON.stringify(personnel));
+      formData.append('personnelFormData', JSON.stringify(personnel));
       this.props.updatePersonnel(editId, formData).then(() => {
         // Stop Loader
         this.setState({loading:false});
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
-      formData.append("personnelFormData", JSON.stringify(personnel));
+      formData.append('personnelFormData', JSON.stringify(personnel));
       // Start Loader
       this.setState({loading:true});
       this.props.addPersonnel(formData).then(() => {

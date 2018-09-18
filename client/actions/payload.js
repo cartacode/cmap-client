@@ -8,35 +8,35 @@ import { createAction } from 'util/action';
 export function addPayload(payload) {
   return createAction({
     type: PAYLOAD__ADD,
-    action: () => axios.post(`${baseUrl}/Payload/PostPayload`, payload, {headers:requestHeaders}),
+    action: () => axios.post(`${baseUrl}/Payload/PostPayload`, payload, {headers: formDataRequestHeader }),
   });
 }
 
 export function updatePayload(id, payload) {
   return createAction({
     type: PAYLOAD__UPDATE,
-    action: () => axios.put(`${baseUrl}/Payload/PutPayload/${id}`, payload, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Payload/PutPayload/${id}`, payload, {headers: formDataRequestHeader }),
   });
 }
 
 export function fetchPayloadList() {
   return createAction({
     type: PAYLOAD_LIST__FETCH,
-    action: () => axios.get(`${baseUrl}/Payload/GetPayloads`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Payload/GetPayloads`, {headers: requestHeaders}),
   });
 }
 
 export function fetchPayloads() {
   return createAction({
     type: PAYLOAD__FETCH,
-    action: () => axios.get(`${baseUrl}/Payload/GetPayloadsData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Payload/GetPayloadsData`, {headers: requestHeaders }),
   });
 }
 
 export function fetchPayloadTypes() {
   return createAction({
     type: PAYLOAD_TYPE__FETCH,
-    action: () => axios.get(`${baseUrl}/PayloadType`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/PayloadType`, {headers: requestHeaders }),
   })
 }
 

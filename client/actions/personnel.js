@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addPersonnel(personnel) {
   return createAction({
     type: PERSONNEL__ADD,
-    action: () => axios.post(`${baseUrl}/Personnel`, personnel, {headers : formDataRequestHeader}),
+    action: () => axios.post(`${baseUrl}/Personnel`, personnel, { headers: formDataRequestHeader }),
   });
 }
 
 export function updatePersonnel(id, data) {
   return createAction({
     type: PERSONNEL__UPDATE,
-    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, {headers : formDataRequestHeader}),
+    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, data, { headers: formDataRequestHeader }),
   });
 }
 
