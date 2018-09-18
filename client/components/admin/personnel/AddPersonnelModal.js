@@ -17,6 +17,7 @@ import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } fr
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import {NoticeType} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
+import { requestHeaders } from '../../../dictionary/network';
 
 class AddPersonnelModal extends React.Component {
 
@@ -395,14 +396,14 @@ class AddPersonnelModal extends React.Component {
       this.setState({loading:true});
       personnel.PersonnelID = editId;
       
-      formData.append("personnelFormData", JSON.stringify(personnel));
+      formData.append('personnelFormData', JSON.stringify(personnel));
       this.props.updatePersonnel(editId, formData).then(() => {
         // Stop Loader
         this.setState({loading:false});
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
-      formData.append("personnelFormData", JSON.stringify(personnel));
+      formData.append('personnelFormData', JSON.stringify(personnel));
       // Start Loader
       this.setState({loading:true});
       this.props.addPersonnel(formData).then(() => {
@@ -418,7 +419,7 @@ updateRanks= (branch, rank) => {
   let rankSelect = document.getElementsByName('Rank')[0];
   let items = [{'label': '--Select Item--', 'value': 0}];
   const apiUrl = `${baseUrl}/Ranks/GetRanksByBranch?branchID=${branch}`;
-  axios.get(apiUrl)
+  axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
       
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
@@ -453,7 +454,7 @@ updateAssignedUnits= (branch,unit) => {
   let UnitSelect = document.getElementsByName('AssignedUnit')[0];
   let items = [{'label': '--Select Item--', 'value': 0}];
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
-  axios.get(apiUrl)
+  axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
       response.data.map(item => {
@@ -483,7 +484,7 @@ updateDeployedUnits= (branch,unit) => {
   let UnitSelect = document.getElementsByName('DeployedUnit')[0];
   let items = [{'label': '--Select Item--', 'value': 0}];
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
-  axios.get(apiUrl)
+  axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
      
       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
@@ -513,7 +514,7 @@ updatePaygrade= (rank) => {
   let paygradeSelect = document.getElementsByName('PayGrade')[0];
   const { personnel } = this.state;
   const apiUrl = `${baseUrl}/PayGrades/GetPayGradesByRank?rankID=${rank}`;
-  axios.get(apiUrl)
+  axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
       const paygrade = response.data[0];
       

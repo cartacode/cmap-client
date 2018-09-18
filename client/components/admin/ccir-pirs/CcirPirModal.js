@@ -136,7 +136,7 @@ updateUnit (generalData) {
   unitselect.length = 0;
   unitselect.add(new Option('--Fetching Units--', ''));
   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.BranchId;
-  axios.get(apiUrl, {headers: requestHeaders })
+  axios.get(apiUrl,{headers:requestHeaders})
     .then(response => {
       unitselect.length = 0;
       if(response.data) {

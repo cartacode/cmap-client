@@ -4,26 +4,26 @@ import qs from 'qs';
 import { PLATFORM__ADD, PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__UPDATE, PLATFORM__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
-import { requestHeaders2 } from '../dictionary/network';
+
 
 export function addPlatform(platform) {
   return createAction({
     type: PLATFORM__ADD,
-    action: () => axios.post(`${baseUrl}/Platform/PostPlatform`, platform, formDataRequestHeader),
+    action: () => axios.post(`${baseUrl}/Platform/PostPlatform`, platform, { headers: formDataRequestHeader }),
   });
 }
 
 export function updatePlatform(id, platform) {
   return createAction({
     type: PLATFORM__UPDATE,
-    action: () => axios.put(`${baseUrl}/Platform/PutPlatform/${id}`, platform, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Platform/PutPlatform/${id}`, platform, { headers: formDataRequestHeader }),
   });
 }
 
 export function fetchPlatforms() {
   return createAction({
     type: PLATFORM__FETCH,
-    action: () => axios.get(`${baseUrl}/Platform/GetPlatformsData`, {headers: requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Platform/GetPlatformsData`, {headers: requestHeaders }),
   });
 }
 

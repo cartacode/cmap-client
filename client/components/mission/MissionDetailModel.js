@@ -7,6 +7,7 @@ import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
 import Loader from '../reusable/Loader';
 import ContentBlock from '../reusable/ContentBlock';
+import { requestHeaders } from '../../dictionary/network';
 
 
 
@@ -173,7 +174,7 @@ class MissionDetailModel extends React.Component {
     locationselect.add(new Option('--Fetching Locations--', ''));
     let items = [{'label': 'Loading Locations', 'value': ''}];
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
-    axios.get(apiUrl)
+    axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         locationselect.length = 0;
         if(response.data) {
@@ -213,7 +214,7 @@ class MissionDetailModel extends React.Component {
     unitselect.add(new Option('--Fetching units--', ''));
     let items = [{'label': 'Loading Units', 'value': ''}];
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
-    axios.get(apiUrl)
+    axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         unitselect.length = 0;
         if(response.data) {

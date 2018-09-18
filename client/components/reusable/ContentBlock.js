@@ -226,6 +226,10 @@ class ContentBlock extends React.Component {
             );
             break;
           case 'file':
+          if(item.required)
+          {
+            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required/>);
+          }else
             input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
             break;
 
