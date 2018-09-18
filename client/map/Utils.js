@@ -12,10 +12,10 @@ function performKMLLookUp(currentLatLong, viewerId) {
           var centers=KMLdata[i].CenterPoint.split(";");
           if(centers.length > 1){
             for(let j=0; centers[j]; j++) {
-              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: (KMLdata[i].Description4 || "")+(" "+KMLdata[i].Description5 || "")+(" "+KMLdata[i].Description6 || "")});
+              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description4,KMLdata[i].Description5,KMLdata[i].Description6]});
             }
           } else{
-            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: (KMLdata[i].Description4 || "")+(" "+KMLdata[i].Description5 || "")+(" "+KMLdata[i].Description6 || "")});
+            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description4,KMLdata[i].Description5,KMLdata[i].Description6]});
             
           }
         }

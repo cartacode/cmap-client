@@ -27,6 +27,7 @@ class RequestForm extends React.Component {
     super(props);
 
     this.state = {
+      CCIRPIR:[],
       toSummary: false,
       editFetched: false,
       clear: false,
@@ -78,8 +79,7 @@ class RequestForm extends React.Component {
 
     const { match: { params } } = this.props;
     const editId = params.editId;
-    this.missionNames = [];
-    this.ccirpirId = [];
+   
 
     if(editId !== undefined && editId !== '') {
       this.props.fetchIntelRequestById(editId).then(()=> {
@@ -259,7 +259,14 @@ stopset = () => {
   this.setState({ clear: false });
 }
 setCCIRPIR = (ccirpirObj) =>{
+  const { intelRequest } = this.state;
   this.setState({
+    intelRequest: {
+      ...intelRequest,
+      NamedOperation: ccirpirObj.CCIRPIRId,
+    },
+      
+      editFetched: true,
       CCIRPIR: ccirpirObj.CCIRPIR,
   });
 }
@@ -399,14 +406,19 @@ updatePirOptions = (items, pirdesc) => {
             <div className="two-block">
             
               
-              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true}} /> 
+              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} /> 
               
             </div>
           </div>
           <div className="col-md-4 one-block">
             <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
             <div className="ccir-content">
-              CCIR: {this.state.CCIRPIR} 
+              <div className="fw-800">CCIR:</div>
+              <div>{this.state.CCIRPIR[0] || ""}</div>
+              
+              <div>{this.state.CCIRPIR[1] || ""}</div>
+              
+              <div>{this.state.CCIRPIR[2] || ""}</div>
             </div>
             <ShortHeaderLine headerText={translations['associate intelligence report']} />
             <div className="associate-content" />

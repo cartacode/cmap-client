@@ -1,6 +1,6 @@
 // Dev url
-export const baseUrl = 'http://18.222.48.211:8082/api';
-export const baseUrl2 = 'http://18.222.48.211:8082/api';
+export const baseUrl = 'http://18.222.48.211:8081/api';
+export const baseUrl2 = 'http://18.222.48.211:8081/api';
 
 import initialState from 'store/initialState';
 // Staging URL
