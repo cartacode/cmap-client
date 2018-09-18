@@ -4877,13 +4877,14 @@ select.form-control {
     left: 94%;
   }
   .cesium-home-button{
-    border: 2px solid #f2f2f2;
-    background: dimgray;
+    border: 2px solid #000;
+    background: #000;
+    width:0;
     
-  border-radius:10px;
   svg{
-    width: 23px;
-    height: 22px;
+    width: 46px;
+    height: 44px;
+    fill: darkgrey;
   }
   // display: none;
   }
@@ -4927,24 +4928,20 @@ select.form-control {
     z-index: 2;
     display: table;
     top:30%;
-    left:95%;
+    left:96%;
     position: absolute;
     border-collapse: collapse;
   
     a{
      
       display: table-row;
-      border-bottom: 2px solid transparent;
       cursor: pointer;
-      margin-top: 2px;
-      max-width: 50px;
       img{
         background: dimgrey;
         border-radius: 4px;
-        max-width: 42px;
-        height: 38px;
-        
-        border: 1px solid #fff;
+        max-width: 35px;
+        height: 34px;
+        border-bottom: 3px solid #000;
       }
       &.is-active{
         img{
