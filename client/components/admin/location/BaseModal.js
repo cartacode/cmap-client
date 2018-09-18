@@ -159,7 +159,7 @@ class BaseModal extends React.Component {
       const userLocationId = positionData.UserLocationID;
       if (userLocationId) {
         let isUserLocationIdExits;
-        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, {headers: requestHeaders })
+        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, {headers:requestHeaders})
           .then(response => {
             isUserLocationIdExits = response.data;
             document.getElementById('LocationID').placeholder = '';

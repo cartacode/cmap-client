@@ -21,6 +21,7 @@ import ReactTable from 'react-table';
 
 import { defaultFilter, formatDateTime } from '../util/helpers';
 import { TableDefaults } from 'dictionary/constants';
+import { requestHeaders } from '../dictionary/network';
 
 class StatusComponent extends React.Component {
 
@@ -63,7 +64,7 @@ class StatusComponent extends React.Component {
 
   stats = () => {
     const apiUrl = `${baseUrl}/StatusStats/GetStatusStats`;
-    axios.get(apiUrl)
+    axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         console.log(response.data);
         this.setState({

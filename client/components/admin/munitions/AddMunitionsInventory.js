@@ -1,7 +1,7 @@
 import { uploadFile } from 'actions/file';
 import { addMunitionInventory, fetchMunitionInventoryById, updateMunitionInventory } from 'actions/munitionsinventory';
 import axios from 'axios';
-import { baseUrl } from 'dictionary/network';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -85,6 +85,7 @@ class AddMunitionsInventory extends React.Component {
     this.setState({ locationCatg: generalData.locationCatg });
     this.setState({ selectedBranch: generalData.branch });
 
+
     this.setState({
       munition: {
         metaDataID: generalData.metaDataID,
@@ -124,6 +125,7 @@ class AddMunitionsInventory extends React.Component {
      });
     } else {
       this.setState({loading: true});
+      console.log(munition);
       this.props.addMunitionInventory(munition).then(() => { 
         this.setState({loading: false});
         this.props.onClose(); 
@@ -135,7 +137,7 @@ class AddMunitionsInventory extends React.Component {
     let locationselect = document.getElementsByName('locationID')[0];
     let items = [{ 'label': '--Select Item--', 'value': '' }];
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationCatg;
-    axios.get(apiUrl)
+    axios.get(apiUrl, {headers: requestHeaders})
       .then(response => {
         console.log(response.data);
         if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }
@@ -164,7 +166,7 @@ class AddMunitionsInventory extends React.Component {
     let unitselect = document.getElementsByName('owningUnit')[0];
     let items = [{ 'label': '--Select Item--', 'value': '' }];
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
-    axios.get(apiUrl)
+    axios.get(apiUrl, {headers: requestHeaders})
       .then(response => {
         console.log(response.data);
         if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }

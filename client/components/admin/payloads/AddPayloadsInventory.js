@@ -9,6 +9,7 @@ import axios from 'axios';
 import { uploadFile } from 'actions/file';
 import { addPayloadInventory, updatePayloadInventory, fetchPayloadInventoryById } from 'actions/payloadinventory';
 import Loader from '../../reusable/Loader';
+import { requestHeaders } from '../../../dictionary/network';
 
 class AddPayloadsInventory extends React.Component {
 
@@ -138,7 +139,7 @@ class AddPayloadsInventory extends React.Component {
     locationselect.length = 0;
     locationselect.add(new Option('--Fetching Locations--', ''));
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
-    axios.get(apiUrl)
+    axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         locationselect.length = 0;
         if(response.data) {
@@ -168,7 +169,7 @@ class AddPayloadsInventory extends React.Component {
     unitselect.length = 0;
     unitselect.add(new Option('--Fetching Units--', ''));
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
-    axios.get(apiUrl)
+    axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         unitselect.length = 0;
         if(response.data) {
