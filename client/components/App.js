@@ -27,6 +27,21 @@ import { history } from 'store/configureStore';
 
 class App extends React.Component {
 
+  componentDidUpdate () {
+    let token = sessionStorage.getItem('jwtToken');
+    console.log("Logged Out");
+    console.log(token);
+    let expired = sessionStorage.getItem('expires');
+if(!token || token === '') {//if there is no token, dont bother
+  return;
+    }
+
+    if (expired < Date.now() / 1000)           
+    { sessionStorage.removeItem('jwtToken');
+     console.log("Logged Out");
+    }
+  }
+
   render() {
     const { directionality } = this.props;
     return (
