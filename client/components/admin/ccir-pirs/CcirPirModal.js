@@ -179,9 +179,26 @@ resetForm = () => {
     let { ccirpir } = this.state;
     ccirpir.CenterPoint = [];
     const formData = new FormData();
-    const kmlFile = this.state.EffectiveAreaKML;
+    let kmlFile = this.state.EffectiveAreaKML;
     let centerPoints;
     
+
+
+
+// file extenstion to upload should be KML
+if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
+  if(kmlFile.name.split('.').pop() !== 'kml'){
+     // stop update 
+     kmlFile = null;
+
+     alert("Please Select a Valid KML file");
+     
+     // update dom 
+      document.getElementsByName('EffectiveAreaKML')[0].value = null;
+    }
+  }
+
+
     if (kmlFile) {
       // instantiating new FileReader to read KML file
       let  reader = new FileReader();
