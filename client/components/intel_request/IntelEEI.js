@@ -135,7 +135,7 @@ class IntelEEI extends React.Component {
         Cell: row => <div> { missionId === null ? <div>
           <a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value);}}><span className="glyphicon glyphicon-edit"/></a>&nbsp;
           <a href="javaScript:void('0');" onClick={()=>{this.deleteEEI(row.value);}} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a>
-        </div> : 'null' } </div>,
+        </div> : '' } </div>,
       },
     ];
 
