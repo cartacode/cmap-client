@@ -20,8 +20,8 @@ class BaseModal extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      locationPhotoPreviewUrl: '',
-      mapImagePreviewUrl: '',
+      locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
+      mapImagePreviewUrl: '/assets/img/admin/map2.png',
       editFetched: false,
        location: {
         LocationID: '',
@@ -85,11 +85,18 @@ class BaseModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ clear: true,
+        locationPhotoPreviewUrl: '',
+        mapImagePreviewUrl: '' 
+      });
     }
   }
 
   editComponent = (editId) => {
+    this.setState({
+      locationPhotoPreviewUrl: '',
+      mapImagePreviewUrl: '' 
+    });
     this.props.fetchLocationById(editId).then(() => {
       this.setState(
         {
