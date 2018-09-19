@@ -87,7 +87,7 @@ class TimelineFilter extends React.Component {
     this.setState({
       filter: {
         ...filter,
-        [name]: changeDate._d,
+        [name]: changeDate,
       },
     });
   }
