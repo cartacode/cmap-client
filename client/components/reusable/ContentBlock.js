@@ -224,9 +224,17 @@ class ContentBlock extends React.Component {
             );
             break;
           case 'checkbox':
+          let checkBoxValue = value;
+          // value of checkBoxes comes as String for few checkBox Variables AND Boolean for some checkBox variables
+          if(value !== undefined && value !== '' && value !== null && (value === "True" || value === "true" || value === true)){
+            checkBoxValue = true;
+          }
+          else{
+            checkBoxValue = false;
+          }
             input = (      
               <div>
-                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={value}/>
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={checkBoxValue}/>
                 <label htmlFor={`checkbox${i}`}><span /></label>
               </div>
             );
