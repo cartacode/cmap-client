@@ -86,18 +86,6 @@ class RequestForm extends React.Component {
     const { match: { params } } = this.props;
     const editId = params.editId;
 
-
-    if(editId !== undefined && editId !== '') {
-      this.props.fetchIntelRequestById(editId).then(()=> {
-        this.setState(
-          {
-            intelRequest: this.props.oneIntelRequest,
-            editFetched: true,
-          });
-      });
-
-    }
-
     this.props.fetchLocations(2).then(()=>{
       const {allLocations}=this.props;
       localStorage.setItem('NAI', JSON.stringify(allLocations));
@@ -135,12 +123,24 @@ class RequestForm extends React.Component {
         pirs,
       }, () => {
         this.updateCCIROptions(ccirPirOptions, '');
-        //  const selectedCcirId = '689817d6-b45f-493b-955f-e2fe7a18f061';
-        // this.updatePirOptions(pirs[selectedCcirId]);
+        
+      });
+    });
+    
+    if(editId !== undefined && editId !== '') {
+      this.props.fetchIntelRequestById(editId).then(()=> {
+        const { oneIntelRequest} = this.props
+        this.setState(
+          {
+            intelRequest: oneIntelRequest,
+            editFetched: true,
+          });
+
+        this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
       });
 
-
-    });
+    }
+  
   }
 
   //  getKMLdata = () =>{
