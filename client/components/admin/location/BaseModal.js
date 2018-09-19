@@ -20,8 +20,8 @@ class BaseModal extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      locationPhotoPreviewUrl: '',
-      mapImagePreviewUrl: '',
+      locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
+      mapImagePreviewUrl: '/assets/img/admin/map2.png',
       editFetched: false,
        location: {
         LocationID: '',
@@ -85,18 +85,25 @@ class BaseModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ clear: true,
+        locationPhotoPreviewUrl: '',
+        mapImagePreviewUrl: '' 
+      });
     }
   }
 
   editComponent = (editId) => {
+    this.setState({
+      locationPhotoPreviewUrl: '',
+      mapImagePreviewUrl: '' 
+    });
     this.props.fetchLocationById(editId).then(() => {
       this.setState(
         {
           editFetched: true,
           location: this.props.oneLocation,
-          locationPhotoPreviewUrl: null,
-          mapImagePreviewUrl: null,
+          locationPhotoPreviewUrl: this.props.oneLocation.LocationPhoto,
+          mapImagePreviewUrl: this.props.oneLocation.LocationMapImage,
           isImagedRequired: false
         });
     });
@@ -256,34 +263,30 @@ class BaseModal extends React.Component {
   handlePhotoPreviewURL = (uploadedFile) => {
     let reader = new FileReader();
     let file = uploadedFile.originalFile;
+    
     if (uploadedFile.name === 'LocationPhoto') {
-      if (file.size > 0) {
+    
         reader.onloadend = () => {
           this.setState({
             locationPhotoPreviewUrl: reader.result
           });
-        }
-      } else {
-        this.setState({
-          locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
-        });
+       
       }
     } else if (uploadedFile.name === 'LocationMapImage') {
-      if (file.size > 0) {
+     
         reader.onloadend = () => {
           this.setState({
             mapImagePreviewUrl: reader.result
           });
-        }
-      } else {
-        this.setState({
-          mapImagePreviewUrl: '/assets/img/admin/map2.png'
-        });
-      }
+       
+     
+       
+     
     }
-    reader.readAsDataURL(file);
+    
   }
-
+  reader.readAsDataURL(file);
+  }
   submitData = () => {
     event.preventDefault();
     const { location, locationFiles } = this.state;
@@ -354,26 +357,23 @@ class BaseModal extends React.Component {
     let { locationPhotoPreviewUrl, mapImagePreviewUrl } = this.state;
     let $locationPhoto = '';
     let $mpaImage = '';
-    const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
-    const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
+    //const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
+    //const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
    
-    if (locationPhotoUrl !== undefined && locationPhotoUrl !== "") {
-      $locationPhoto = (<img src={locationPhotoUrl} alt="" className="photo" alt="" />);
-    } else {
-      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
-    }
-    if (locationPhotoPreviewUrl) {
+    if (locationPhotoPreviewUrl || locationPhotoPreviewUrl === '') {
       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
-
-    if (locationMapImageUrl !== undefined && locationMapImageUrl !== "") {
-      $mpaImage = (<img src={locationMapImageUrl} alt="" className="photo" alt="" />);
-    } else {
-      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+     else {
+      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
     }
-    if (mapImagePreviewUrl) {
+   
+    if (mapImagePreviewUrl || mapImagePreviewUrl === '') {
       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
     }
+    else {
+      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+    }
+    
 
     const { translations } = this.props;
     const generalFields = [
@@ -438,7 +438,7 @@ class BaseModal extends React.Component {
 		<div className = "row personnel">
           <div className="col-md-12">
                   <Map size='100%' viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-               </div>
+                </div>
         </div>
         <div className="row personnel" >
           <div className="under-location-content">
