@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { PrivateRoute } from '../components/PrivateRoute';
 import HeaderContainer from '../containers/HeaderContainer';
 import AdminComponent from '../components/AdminComponent';
@@ -36,6 +36,7 @@ class NavigationComponent extends React.Component {
     if (exp < current)           
     { sessionStorage.removeItem('jwtToken');
      console.log("Logged Out");
+     <Redirect to="/login" />
     }
   }
 
