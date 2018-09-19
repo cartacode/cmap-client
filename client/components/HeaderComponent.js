@@ -104,7 +104,7 @@ class HeaderComponent extends React.Component {
 
   render () {
     const {translations} = this.props;
-
+    let userName = sessionStorage.getItem('userName');
     return (
 
 
@@ -131,7 +131,7 @@ class HeaderComponent extends React.Component {
               <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
-              Thomas
+              {userName}
             </div>
             <div className="">
               COL, 116th MI Brigade

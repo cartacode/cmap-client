@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { PrivateRoute } from '../components/PrivateRoute';
 import HeaderContainer from '../containers/HeaderContainer';
 import AdminComponent from '../components/AdminComponent';
@@ -18,7 +18,7 @@ import SchedulesContainer from '../containers/SchedulesContainer';
 import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 
-
+let condition = true;
 class NavigationComponent extends React.Component {
 
   componentWillMount () {
@@ -33,9 +33,11 @@ class NavigationComponent extends React.Component {
     console.log(exp);
     console.log(new Date().toISOString());
     let current = new Date().toISOString();
-    if (exp < current)           
+    if (exp < current && condition == true)           
     { sessionStorage.removeItem('jwtToken');
      console.log("Logged Out");
+     this.props.history.push('/'); 
+     condition = false;
     }
   }
 

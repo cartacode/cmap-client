@@ -13,6 +13,10 @@ export const requestHeaders = {
   'Cache-Control' : 'no-cache'
 };
 
+export const requestHeaders2 = {
+  'Authorization':`Bearer ${token}`,
+};
+
 export const formDataRequestHeader = {
   'Accept': 'application/json,text/plain',
   'Content-Type': '',
