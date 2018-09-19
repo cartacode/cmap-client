@@ -21,7 +21,7 @@ export function fetchApprovedIntelRequests(unitId, abbreviation, isInCollectionP
 export function updateIntelStatus(intelRequestId, statusId) {
   return createAction({
     type: INTEL_APPROVED_REQUEST__DELETE_ONE,
-    action: () => axios.put(`${baseUrl}/IntelRequest/ChangeIntelRequestStatus?intelRequestId=${intelRequestId}&statusId=${statusId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelRequest/ChangeIntelRequestStatus?intelRequestId=${intelRequestId}&statusId=${statusId}`, { },{headers:requestHeaders}),
   });
 }
 
