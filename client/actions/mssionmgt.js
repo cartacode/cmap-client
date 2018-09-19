@@ -26,7 +26,7 @@ export function fetchATOGenerations(unitId) {
 export function routeATOGeneration(unitId, statusId) {
   return createAction({
     type: ROUTE_ATO_GENERATION,
-    action: () => axios.put(`${baseUrl}/IntelRequest/RouteToMissionATOIntelRequest?unitId=${unitId}&statusId=${statusId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelRequest/RouteToMissionATOIntelRequest?unitId=${unitId}&statusId=${statusId}`, { }, {headers:requestHeaders}),
   });
 }
 
@@ -132,7 +132,7 @@ export function moveToPedTaskFromATOGeneration(missionId, data) {
 export function moveToATOGenerationFromPedTask(missionId) {
   return createAction({
     type: PED_TASK_TO_ATO_GEN__MOVE,
-    action: () => axios.put(`${baseUrl}/Mission/MoveOutFromFlightOPS?missionId=${missionId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Mission/MoveOutFromFlightOPS?missionId=${missionId}`, { } ,{headers:requestHeaders}),
   });
 }
 

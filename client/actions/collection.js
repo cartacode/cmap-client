@@ -29,7 +29,7 @@ export function updateIntelStatus(intelRequestId, statusId) {
 export function moveToCollectionPlan(intelRequestId) {
   return createAction({
     type: MOVE_TO_COLLECTION__PLAN,
-    action: () => axios.put(`${baseUrl}/IntelRequest/MoveToCollectionPlan/${intelRequestId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelRequest/MoveToCollectionPlan/${intelRequestId}`, { } , {headers:requestHeaders}),
   });
 }
 
@@ -37,7 +37,7 @@ export function moveToCollectionPlan(intelRequestId) {
 export function moveToIntelRequest(intelRequestId, statusId) {
   return createAction({
     type: MOVE_TO_INTEL__REQUEST,
-    action: () => axios.put(`${baseUrl}/IntelRequest/MoveOutFromCollectionPlan/${intelRequestId}/${statusId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelRequest/MoveOutFromCollectionPlan/${intelRequestId}/${statusId}`, { }, {headers:requestHeaders}),
   });
 }
 
@@ -51,6 +51,6 @@ export function deleteCollectionPlanById(id) {
 export function routeCollectionIntelRequest(unitId, statusId) {
   return createAction({
     type: ROUTE_COLLECTION__PLAN,
-    action: () => axios.put(`${baseUrl}/IntelRequest/RouteCollectionIntelRequest?unitId=${unitId}&statusId=${statusId}`, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelRequest/RouteCollectionIntelRequest?unitId=${unitId}&statusId=${statusId}`, { }, {headers:requestHeaders}),
   });
 }
