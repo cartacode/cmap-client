@@ -196,10 +196,14 @@ class LocationComponent
             />
           </div>
           
-          <div className="filter-line">
+          <div className="filter-line Location-filter">
             <div></div>
+        <div className="col-md-3 select-filter">
             <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
-            {!this.state.baseModalOpen ?   <div className="add-button">
+            </div>
+            {!this.state.baseModalOpen ?  
+              
+              <div className="add-button">
               <button
                 className="ccir-button"
                 onClick={() => this.openBaseModalFrom("0")}
