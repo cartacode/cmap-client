@@ -14,9 +14,9 @@ export const DateConsts = {
   DB_DATETIME_FORMAT: 'YYYY-MM-DDTHH:mm:ss',
   DB_DATE_FORMAT: 'YYYY-MM-DD',
   DB_TIME_FORMAT: 'HH:mm:ss',
-  UI_DATETIME_FORMAT: 'MM-DD-YYYY HH:mm:ss',
+  UI_DATETIME_FORMAT: 'MM-DD-YYYY hh:mm A',
   UI_DATE_FORMAT: 'MM-DD-YYYY',
-  UI_TIME_FORMAT: 'HH:mm:ss',
+  UI_TIME_FORMAT: 'hh:mm A',
 };
 
 export const TableDefaults = {

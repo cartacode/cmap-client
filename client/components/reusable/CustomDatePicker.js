@@ -99,7 +99,8 @@ class CustomDatePicker extends React.Component {
         this.setState({
           value,
         }, () => {
-          this.props.changeDate(this.state.value, name);
+          const strValue = moment(this.state.value).format(DBFormat);
+          this.props.changeDate(strValue, name);
         });
       }
     }

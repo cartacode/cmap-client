@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Dropdown from '../reusable/Dropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import { InputAttributes } from '../../dictionary/constants';
+import moment from 'moment';
 
 class ContentBlock extends React.Component {
 
@@ -77,8 +78,9 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
+    
     if(changeDate !== null)
-      this.updateContent(name, changeDate._d);
+      this.updateContent(name, changeDate);
   }
 
   /**
@@ -211,7 +213,10 @@ class ContentBlock extends React.Component {
           case 'date':
             if (value === '') {
               value = new Date();
+            } else {
+              value = moment(value);
             }
+            // console.log('value date '+ moment(value));
             input = (
               <div>
                 <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate} />
