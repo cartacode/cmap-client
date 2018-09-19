@@ -122,10 +122,10 @@ class LocationComponent
     ];
     const { allLocations } = this.props;
     const columns = [
-      {
+      /* {
         Header: translations["type"],
         accessor: "type"
-      },
+      }, */
       {
         Header: translations["Name"],
         accessor: "name"
