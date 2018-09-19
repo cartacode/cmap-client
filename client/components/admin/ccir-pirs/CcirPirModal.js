@@ -204,13 +204,13 @@ if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
       let  reader = new FileReader();
         reader.onloadend=() => {
             centerPoints = getKMLCenter(reader.result);
+            ccirpir.CenterPoint = centerPoints;
+              
             if (editId !== undefined && editId !== '0') {
               // Start Loader
               this.setState({loading:true});
               ccirpir.CCIRPIRId = editId;
               ccirpir.LastUpdateUserId =  null;
-              ccirpir.CenterPoint = centerPoints;
-              console.log("ccirpir", ccirpir);
               formData.append("ccirpirFormData", JSON.stringify(ccirpir));
               this.props.updateCcirPir(editId, formData).then( () => {
                 //Stop Loader
