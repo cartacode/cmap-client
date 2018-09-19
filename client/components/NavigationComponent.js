@@ -18,7 +18,7 @@ import SchedulesContainer from '../containers/SchedulesContainer';
 import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 
-
+let condition = true;
 class NavigationComponent extends React.Component {
 
   componentWillMount () {
@@ -33,10 +33,11 @@ class NavigationComponent extends React.Component {
     console.log(exp);
     console.log(new Date().toISOString());
     let current = new Date().toISOString();
-    if (exp < current)           
+    if (exp < current && condition == true)           
     { sessionStorage.removeItem('jwtToken');
      console.log("Logged Out");
-     <Redirect to="/login" />
+     this.props.history.push('/'); 
+     condition = false;
     }
   }
 
