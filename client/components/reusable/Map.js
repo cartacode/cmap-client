@@ -60,10 +60,13 @@ export default class Map extends React.PureComponent {
           addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[1].type+" "+nearestNeighbour[1].locationLatitude+","+nearestNeighbour[1].locationLongitude, false);
           console.log("nearest nai/poi", nearestNeighbour);
           this.props.setOneLocation(nearestNeighbour, currenLatLong);
-          //break;
+          
       default:
           addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
-         // this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+          if(!this.props.updateLatLong) {
+            this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+          }
+            
 
     }
   }
