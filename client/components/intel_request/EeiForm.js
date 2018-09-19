@@ -6,8 +6,6 @@ import FullHeaderLine from '../reusable/FullHeaderLine';
 import  { NoticeType } from '../../dictionary/constants';
 import ModalFormBlock from '../reusable/ModalFormBlock';
 import Loader from '../reusable/Loader';
-
-
 class EeiForm extends React.Component {
 
   constructor(props) {
@@ -49,6 +47,7 @@ class EeiForm extends React.Component {
     if(editId !== '0') {
       this.editComponent(editId);
     }
+    
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -251,6 +250,7 @@ const mapDispatchToProps = {
   addIntelEei,
   fetchIntelEeiById,
   updateIntelEei,
+  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EeiForm);

@@ -4877,10 +4877,16 @@ select.form-control {
     left: 94%;
   }
   .cesium-home-button{
-    border: 2px solid #f2f2f2;
-    background: azure;
+    border: 2px solid transparent;
+    background: transparent;
+    width:0;
     
-  border-radius:18px;
+  svg{
+    width: 46px;
+    height: 44px;
+    fill: darkgrey;
+  }
+  // display: none;
   }
 }
 @mixin  toolbar-border-radius {
@@ -4888,58 +4894,60 @@ select.form-control {
   -o-transition: all .51s;
   -webkit-transition: all .51s;
   transition: all .51s;
-  border-radius:50px;
+  border-radius:6px;
+}
+.fw-800{
+  font-weight: 800;
 }
 .map-wrapper{
   position: relative;
+  .top-icon{
+    top:0;
+    left:95%;
+    z-index: 2;
+    position: absolute;
+    cursor: pointer;
+    img{
+      background: dimgrey;
+      max-width: 40px;
+      height: 30px;
+      border-radius: 7px;
+      border: 2px solid firebrick;
+    }
+    a{
+      &.is-active{
+        img{
+          background: darkred;
+        }
+      }
+    }
+  }
   .ico-location{
     width: 50px;
     height: 40px;
     z-index: 2;
+    display: table;
+    top:30%;
+    left:96%;
     position: absolute;
-    top:50px;
-    left:94%;
+    border-collapse: collapse;
+  
     a{
-      background-color: azure;
-      display: block;
+     
+      display: table-row;
       cursor: pointer;
-      border-radius: 4px;
-      &:hover{
-        @include toolbar-border-radius;
-        background: #84a1e0;
+      img{
+        background: dimgrey;
+        border-radius: 4px;
+        max-width: 35px;
+        height: 34px;
+        border-bottom: 3px solid #000;
       }
       &.is-active{
-        @include toolbar-border-radius;
-        background: #888888;
-        
+        img{
+          background: darkred;
+        }
       }
     }
-    
-    &--img{
-      max-width: 50px;
-      height: 36px;
-      background-image: url("/assets/img/intel_request/locationicon.png");
-    }
   }
 }
-
-.Modal {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
-}
-
-.Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  }
-  .ReactModalPortal{
-    .ReactModal__Overlay--after-open{
-      background-color: none !important;
-    }
-  }

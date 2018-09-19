@@ -100,20 +100,18 @@ class AddPlatformModal extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== undefined && editId !== '0') {
-        this.editComponent(editId);
+      this.editComponent(editId);
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId } = this.props;
     if(editId !== '0' && prevProps.editId !== editId) {
-        this.editComponent(editId);
-
+      this.editComponent(editId);
     }
     if(editId === '0' && prevProps.editId !== editId) {
-      ;
-      this.setState({ clear: true });
       this.setState({
+        clear: true,
         imagePreviewUrl: '',
         imagePreviewUrl2: ''
       });
@@ -132,7 +130,7 @@ class AddPlatformModal extends React.Component {
           platform: this.props.onePlatform, 
           imagePreviewUrl: this.props.onePlatform.PlatformPhoto,
           imagePreviewUrl2: this.props.onePlatform.PlatformWireframe,
-          isImagedRequired:  false
+          isImagedRequired: false,
         });
     });
   }
@@ -162,9 +160,7 @@ class AddPlatformModal extends React.Component {
         PlatformIOCDate: generalData.PlatformIOCDate,
         // PlatformInventory: generalData.PlatformInventory,
         // PlatformGroundStation: generalData.PlatformGroundStation
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.platform);
+      },
     });
   }
 
@@ -190,9 +186,7 @@ class AddPlatformModal extends React.Component {
         PlatformArmamentCount: technicalData.PlatformArmamentCount,
         //  PlatformMinRunway: technicalData.PlatformMin
 
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.platform);
+      },
     });
   }
 

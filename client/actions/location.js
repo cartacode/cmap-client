@@ -27,10 +27,10 @@ export function fetchLocationList() {
   });
 }
 
-export function fetchLocations() {
+export function fetchLocations(id=2) {
   return createAction({
     type: LOCATION__FETCH,
-    action: () => axios.get(`${baseUrl}/Locations/GetLocationsDataByCategory?categoryId=1`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Locations/GetLocationsDataByCategory?categoryId=${id}`, {headers:requestHeaders}),
   });
 }
 

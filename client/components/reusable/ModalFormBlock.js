@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Dropdown from "../reusable/Dropdown";
+import Dropdown from '../reusable/Dropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
-import {InputAttribute, InputAttributes} from '../../dictionary/constants';
+import { InputAttributes } from '../../dictionary/constants';
+import moment from 'moment';
 
 class ModalFormBlock extends React.Component {
 
@@ -21,7 +21,6 @@ class ModalFormBlock extends React.Component {
       content: this.props.initstate,
     });
   }
-    
     
   componentDidUpdate() {
         
@@ -73,7 +72,7 @@ class ModalFormBlock extends React.Component {
         }
     
         handleChangeDate = (changeDate, name) => {
-          this.updateContent(name, changeDate._d);
+          this.updateContent(name, changeDate);
         }
     
         updateContent(name, value) {
@@ -175,6 +174,8 @@ class ModalFormBlock extends React.Component {
               case 'date':
                 if(value === '') {
                   value = new Date();
+                }else {
+                  value = moment(value);
                 }
                 input = (
                   <div>

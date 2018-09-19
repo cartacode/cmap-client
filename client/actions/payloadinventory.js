@@ -1,5 +1,5 @@
 import axios from 'axios';
-import qs from 'qs';
+
 
 import { PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_INVENTORY__UPDATE, PAYLOAD_LIST__FETCH, PAYLOAD_INVENTORY__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
@@ -8,7 +8,7 @@ import { createAction } from 'util/action';
 export function addPayloadInventory(payload) {
   return createAction({
     type: PAYLOAD_INVENTORY__ADD,
-    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, qs.stringify(payload), {headers:requestHeaders}),
+    action: () => axios.post(`${baseUrl}/PayloadInventory/PostPayloadInventory`, JSON.stringify(payload), {headers:requestHeaders}),
   });
 }
 
@@ -17,7 +17,7 @@ export function updatePayloadInventory(id, data) {
   
   return createAction({
     type: PAYLOAD_INVENTORY__UPDATE,
-    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, qs.stringify(data), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/PayloadInventory/PutPayloadInventory/${id}`, JSON.stringify(data), {headers:requestHeaders}),
   });
 }
 

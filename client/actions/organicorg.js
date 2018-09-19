@@ -22,7 +22,7 @@ export function fetchDeployedOrg(id) {
 export function addOraganicOrg(org) {
   return createAction({
     type: ORGANIC_ORG__ADD,
-    action: () => axios.post(`${baseUrl}/Units/PostUnits`, qs.stringify(org), {headers:requestHeaders}),
+    action: () => axios.post(`${baseUrl}/Units/PostUnits`, JSON.stringify(org), {headers:requestHeaders}),
   });
 }
 

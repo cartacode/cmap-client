@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Dropdown from '../reusable/Dropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import { InputAttributes } from '../../dictionary/constants';
+import moment from 'moment';
 
 class ContentBlock extends React.Component {
 
@@ -77,8 +78,9 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
+    
     if(changeDate !== null)
-      this.updateContent(name, changeDate._d);
+      this.updateContent(name, changeDate);
   }
 
   /**
@@ -211,7 +213,10 @@ class ContentBlock extends React.Component {
           case 'date':
             if (value === '') {
               value = new Date();
+            } else {
+              value = moment(value);
             }
+            // console.log('value date '+ moment(value));
             input = (
               <div>
                 <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate} />
@@ -219,9 +224,17 @@ class ContentBlock extends React.Component {
             );
             break;
           case 'checkbox':
+          let checkBoxValue = value;
+          // value of checkBoxes comes as String for few checkBox Variables AND Boolean for some checkBox variables
+          if(value !== undefined && value !== '' && value !== null && (value === "True" || value === "true" || value === true)){
+            checkBoxValue = true;
+          }
+          else{
+            checkBoxValue = false;
+          }
             input = (      
               <div>
-                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={value}/>
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={checkBoxValue}/>
                 <label htmlFor={`checkbox${i}`}><span /></label>
               </div>
             );

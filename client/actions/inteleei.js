@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addIntelEei(intelEei) {
   return createAction({
     type: INTEL_EEI__ADD,
-    action: () => axios.post(`${baseUrl}/IntelReqEEI/PostIntelReqEEI`, qs.stringify(intelEei), {headers:requestHeaders}),
+    action: () => axios.post(`${baseUrl}/IntelReqEEI/PostIntelReqEEI`, JSON.stringify(intelEei), {headers:requestHeaders}),
   });
 }
 
 export function updateIntelEei(id, data) {
   return createAction({
     type: INTEL_EEI__UPDATE,
-    action: () => axios.put(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, qs.stringify(data), {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/IntelReqEEI/PutIntelReqEEI/${id}`, JSON.stringify(data), {headers:requestHeaders}),
   });
 }
 

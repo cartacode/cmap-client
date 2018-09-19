@@ -1,6 +1,7 @@
 
 import React from 'react';
 const MAPACTIONS = {
+    Home:"resetMap",
     KMLLookUp: "kmlLookUp",
     LocationLookUp: "naipoiLookUp",
 }
@@ -9,11 +10,21 @@ export default class ToolBar extends React.Component {
         super();
         this.state = {
             performKMLLookUp: false,
+            naipoiLookUp: false,
+            resetMap: true,
         }
         
     }
     componentDidMount = () =>{
+        this.setState({
+            resetMap: true,
+        })
     }
+    // resetMap = () => {
+    //     this.props.lookUpMode(MAPACTIONS.Home); 
+    //     this.activate("resetMap"); 
+    //  //   document.getElementsByClassName("cesium-home-button").click();
+    // }
     activate = (selectedOption) =>{
         for(let key in this.state) {
             if(key !== selectedOption){
@@ -24,34 +35,40 @@ export default class ToolBar extends React.Component {
         this.setState(this.state);
     }
     renderToolBar = () =>{
+        let toolBar = [];
         if(!this.props.options){
             return;
         }
         if(this.props.options.kmlLookUp) {
-            return (
-                <div  className="ico-location" aria-hidden="true">
+               toolBar.push(
                     <a onClick={() => {this.props.lookUpMode(MAPACTIONS.KMLLookUp); this.activate("performKMLLookUp")}} className={this.state.performKMLLookUp ? "is-active": ""}>
-                        <img src="/assets/img/intel_request/locationicon.png" className="ico-location--img" title="Perform KML lookup" />
+                        <img src="/assets/img/icons/kmlLookup.png" className="ico-location--img" title="Perform KML lookup" />
                     </a>
-                </div>
-            );
+                );
         }
-        if(this.props.options.LocationLookUp) {
-            return (
-                <div  className="ico-location" aria-hidden="true">
-                    <a onClick={() => {this.props.lookUpMode(MAPACTIONS.LocationLookUp); this.activate("naipoiLookUp")}} className={this.state.performKMLLookUp ? "is-active": ""}>
-                        <img src="/assets/img/icons" className="ico-location--img" title="Perform KML lookup" />
+        if(this.props.options.naipoiLookUp) {
+            toolBar.push(
+               
+                    <a onClick={() => {this.props.lookUpMode(MAPACTIONS.LocationLookUp); this.activate("naipoiLookUp")}} className={this.state.naipoiLookUp ? "is-active": ""}>
+                        <img src="/assets/img/icons/nai-poi-lookup.png" className="top-icon--img" title="Perform Location lookup" />
                     </a>
-                </div>
-            );
+            )
         }
+        return toolBar;
     }
     render() {
         return (
-        <div>
-            {this.renderToolBar()}
-            
-        </div>
+            <div>
+                <div className="top-icon">
+                    {/* <a onClick={this.resetMap} className={this.state.resetMap ? "is-active": ""}>
+                            <img src="/assets/img/icons/top-icon.png" className="ico-location--img" title="Home" />
+                    </a> */}
+                    
+                </div>
+                <div  className="ico-location" aria-hidden="true">
+                    {this.renderToolBar()}
+                </div>
+            </div>
         )
     }
 }
