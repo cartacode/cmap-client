@@ -81,40 +81,40 @@ class RequestComponent extends React.Component {
         </div>,
       },
       {
-        Header: 'Status',
+        Header: translations.status,
         id: 'StatusId',
         accessor: 'Status',
       },
       {
-        Header: 'Named Operation',
-        accessor: 'NamedOperation',
+        Header: translations['Named Operation'],
+        accessor: 'CCIRPIRName',
       },
       {
-        Header: 'Command',
+        Header: translations.Command,
         accessor: 'COCOMText',
       },
       {
-        Header: 'Mission Type',
+        Header: translations.MissionType,
         accessor: 'MissionTypeText',
       },
       {
-        Header: 'Payload',
+        Header: translations.payload,
         accessor: 'PrimaryPayloadName',
       },
       {
-        Header: 'Originator',
+        Header: translations.originator,
         accessor: 'OrginatorPersonnelID',
         Cell: row => <div>{row.original.OriginatorFirstName} {row.original.OriginatorLastName} </div>,
       },
       {
-        Header: 'Date',
+        Header: translations.date,
         id: 'ActiveDateTimeStart',
         accessor: d => {
           return formatDateTime(d.ActiveDateTimeStart);
         },
       },
       {
-        Header: 'LTIV',
+        Header: translations.LTIV,
         id: 'LatestTimeIntelValue',
         accessor: d => {
           return formatDateTime(d.LatestTimeIntelValue);

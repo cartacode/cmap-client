@@ -346,9 +346,7 @@ render() {
 
   let { intelRequest } = this.state;
 
-  if(intelRequest != null) {
-    console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
-  }
+  
 
   const intelRequest1 = [
     { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
