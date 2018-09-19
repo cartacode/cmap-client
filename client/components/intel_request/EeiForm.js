@@ -47,19 +47,41 @@ class EeiForm extends React.Component {
     if(editId !== '0') {
       this.editComponent(editId);
     }
+    //this.setNAIPOI(this.props.nearestNAIPOI);
     
   }
+  setNAIPOI = (locationsData) =>{
+    const { intelReqEEI } = this.state;
+    this.setState({
+      intelReqEEI: {
+        ...intelReqEEI,
+        gridCoordinates: locationsData.currentLatLong.latitude+", "+locationsData.currentLatLong.longitude,
+        POI1_ID: locationsData.location[0].locationID || "no value",
+        POI2_ID:locationsData.location[1].locationID || "no value",
+        
+      },
+      eeiFetched: true,
+      clear: false,
+    });
+   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    let { editId } = this.props;
+    let { editId, nearestLocations } = this.props;
+    
     console.log('editId of eei did update' + editId);
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
+      //
     }
 
     if(editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
+      
     }
+    if(nearestLocations.uid !== prevProps.nearestLocations.uid){
+      this.setNAIPOI(nearestLocations);
+    }
+    //this.setNAIPOI(this.props.nearestLocations);
   }
 
   editComponent = (editId) => {

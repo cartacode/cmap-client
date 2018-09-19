@@ -142,7 +142,7 @@ class IntelEEI extends React.Component {
     return (
       <div id="intelEEIContainer">
 
-        { this.state.isFormOpened ? <EeiForm editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
+        { this.state.isFormOpened ? <EeiForm nearestLocations={this.props.nearestNAIPOI} editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
         <Loader loading={this.state.loading} />

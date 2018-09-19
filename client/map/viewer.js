@@ -126,12 +126,9 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
-export function addPoint(x, y, z, viewerId, label, removeAll=true){
+export function addPoint(x, y, z, viewerId, label, focus=false){
   if (!viewers.has(viewerId)) {
     return;
-  }
-  if(removeAll){
-    viewer.entities.removeAll();
   }
 
   const viewer = viewers.get(viewerId);
@@ -154,8 +151,13 @@ export function addPoint(x, y, z, viewerId, label, removeAll=true){
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-// if(focus) {
- // viewer.flyTo(viewer.entities);
-// }
+//if(focus) {
+  viewer.flyTo(viewer.entities);
+//}
 
+}
+export function moveFar(viewerId){
+  
+  var center = Cesium.Cartesian3.fromDegrees(-82.5, 35.3);
+viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, 0.0, 4200000.0));
 }
