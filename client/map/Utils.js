@@ -8,18 +8,27 @@ export const UTILS = {
 function performLocationLookUp(currentLatLong){
   let nai=JSON.parse(localStorage.getItem("NAI")),
       poi=JSON.parse(localStorage.getItem("POI")),
-      locations=nai.concat(poi),
-      distances = [];
-    for(var i=0; locations[i]; i++){
-      let xDistance = locations[i].locationLongitude-currentLatLong.longitude,
-          yDistance = locations[i].locationLatitude-currentLatLong.latitude,
+      //locations=nai.concat(poi),
+      naiDistances =[], poiDistances = [];
+    for(var i=0; nai[i]; i++){
+      let xDistance = nai[i].locationLongitude-currentLatLong.longitude,
+          yDistance = nai[i].locationLatitude-currentLatLong.latitude,
           distance = Math.sqrt(xDistance*xDistance + yDistance*yDistance);
-          distances.push({distance, index: i});
+          naiDistances.push({distance, index: i});
     }
-    distances.sort(function (a, b) {
+    naiDistances.sort(function (a, b) {
       return a.distance - b.distance;
     });
-    return locations[distances[0].index];
+    for(var i=0; poi[i]; i++){
+      let xDistance = poi[i].locationLongitude-currentLatLong.longitude,
+          yDistance = poi[i].locationLatitude-currentLatLong.latitude,
+          distance = Math.sqrt(xDistance*xDistance + yDistance*yDistance);
+          poiDistances.push({distance, index: i});
+    }
+    poiDistances.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+    return [nai[naiDistances[0].index], poi[poiDistances[0].index]];
   
 
 }
@@ -31,10 +40,10 @@ function performKMLLookUp(currentLatLong) {
           var centers=KMLdata[i].CenterPoint.split(";");
           if(centers.length > 1){
             for(let j=0; centers[j]; j++) {
-              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description4,KMLdata[i].Description5,KMLdata[i].Description6]});
+              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description5,KMLdata[i].Description6,KMLdata[i].Description7, KMLdata[i].Description8]});
             }
           } else{
-            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description4,KMLdata[i].Description5,KMLdata[i].Description6]});
+            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description5,KMLdata[i].Description6,KMLdata[i].Description7, KMLdata[i].Description8]});
             
           }
         }

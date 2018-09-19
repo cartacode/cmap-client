@@ -38,7 +38,7 @@ export default class Map extends React.PureComponent {
     
     }
   }
-  dblClickCallback = (currenLatLong, viewerId) =>{
+  dblClickCallback = (currenLatLong, viewerId, viewer) =>{
     let nearestNeighbour;
     switch(this.mapOperatingMode) {
       case "kmlLookUp":
@@ -50,14 +50,16 @@ export default class Map extends React.PureComponent {
             break;
       case "naipoiLookUp":
           nearestNeighbour = UTILS["naipoiLookUp"](currenLatLong, viewerId);
-          addPoint(Number(nearestNeighbour.locationLongitude), Number(nearestNeighbour.locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour.type+" "+nearestNeighbour.locationLatitude+","+nearestNeighbour.locationLongitude, true);
+          viewer.entities.removeAll();
+          addPoint(Number(nearestNeighbour[0].locationLongitude), Number(nearestNeighbour[0].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[0].type+" "+nearestNeighbour[0].locationLatitude+","+nearestNeighbour[0].locationLongitude, false);
           
+          addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[1].type+" "+nearestNeighbour[1].locationLatitude+","+nearestNeighbour[1].locationLongitude, false);
           console.log("nearest nai/poi", nearestNeighbour);
           this.props.setOneLocation(nearestNeighbour);
           break;
       default:
           addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
-          this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+         // this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
 
     }
   }

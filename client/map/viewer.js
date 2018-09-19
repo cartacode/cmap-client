@@ -107,7 +107,7 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
       latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
     }
     if(typeof dblClickHandler === "function"){
-      dblClickHandler(currentLatLong, viewerId);
+      dblClickHandler(currentLatLong, viewerId, viewer);
     }
   },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
@@ -126,13 +126,16 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
-export function addPoint(x, y, z, viewerId, label, focus=false){
+export function addPoint(x, y, z, viewerId, label, removeAll=true){
   if (!viewers.has(viewerId)) {
     return;
   }
+  if(removeAll){
+    viewer.entities.removeAll();
+  }
 
   const viewer = viewers.get(viewerId);
-  viewer.entities.removeAll();
+ 
   viewer.entities.add({
   name : 'Bounding Box Center',
   position : Cesium.Cartesian3.fromDegrees(x, y, z),
@@ -151,8 +154,8 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-if(focus) {
-  viewer.flyTo(viewer.entities);
-}
+// if(focus) {
+ // viewer.flyTo(viewer.entities);
+// }
 
 }
