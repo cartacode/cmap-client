@@ -87,7 +87,7 @@ export function moveToFlightOPSFromATO(missionId, data) {
   formData.append('missionFormData', JSON.stringify(data));
   return createAction({
     type: ATO_GEN_TO_FLIGHT_OPS__MOVE,
-    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, formData, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, formData, { headers: formDataRequestHeader }),
   });
 }
 
@@ -95,7 +95,7 @@ export function moveToFlightOPSFromATO(missionId, data) {
 export function uploadMissionReport(missionId, data) {
   return createAction({
     type: MISSION_REPORT_UPLOAD,
-    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, data, formDataRequestHeader),
+    action: () => axios.put(`${baseUrl}/Mission/PutMission/${missionId}`, data, { headers: formDataRequestHeader }),
   });
 }
 
@@ -103,7 +103,7 @@ export function uploadMissionReport(missionId, data) {
 export function moveToATOFromFlightOPS(data) {
   return createAction({
     type: FLIGHT_OPS_TO_ATO_GEN__MOVE,
-    action: () => axios.put(`${baseUrl}/Mission/MoveToMissionATO`, data, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Mission/MoveToMissionATO`, data, { headers: requestHeaders }),
   });
 }
 
