@@ -33,7 +33,7 @@ class RequestForm extends React.Component {
       toSummary: false,
       editFetched: false,
       clear: false,
-      
+
       intelRequest: {
         IntelRequestID: '',
         MissionId: null,
@@ -74,7 +74,7 @@ class RequestForm extends React.Component {
     // preserve the initial state in a new object
     this.baseState = this.state;
     this.setCCIRPIR = this.setCCIRPIR.bind(this);
-    
+
     this.setOneLocation = this.setOneLocation.bind(this);
 
   }
@@ -83,7 +83,7 @@ class RequestForm extends React.Component {
 
     const { match: { params } } = this.props;
     const editId = params.editId;
-   
+
 
     if(editId !== undefined && editId !== '') {
       this.props.fetchIntelRequestById(editId).then(()=> {
@@ -99,12 +99,12 @@ class RequestForm extends React.Component {
     this.props.fetchLocations(2).then(()=>{
       const {allLocations}=this.props;
       localStorage.setItem('NAI', JSON.stringify(allLocations));
-      
+
     });
     this.props.fetchLocations(3).then(()=>{
       const {allLocations}=this.props;
       localStorage.setItem('POI', JSON.stringify(allLocations));
-      
+
     });
 
     this.props.fetchCcirPirs().then(() =>{
@@ -140,7 +140,7 @@ class RequestForm extends React.Component {
 
     });
   }
-   
+
   //  getKMLdata = () =>{
   //   const apiUrl = `${baseUrl}/CCIRPIR/GetCCIRPIRData`;
   //   axios.get(apiUrl).
@@ -232,7 +232,7 @@ class RequestForm extends React.Component {
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
     if(editId !== undefined && editId !== '0') {
-        this.setState({loading: true});
+      this.setState({loading: true});
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
         this.setState({loading: false});
@@ -254,7 +254,7 @@ class RequestForm extends React.Component {
     }
 
   }
-  
+
 notify = (type) => {
   const { translations  } = this.props;
 
@@ -281,9 +281,9 @@ setCCIRPIR = (ccirpirObj) =>{
       ...intelRequest,
       NamedOperation: ccirpirObj.CCIRPIRId,
     },
-      
-      editFetched: true,
-      CCIRPIR: ccirpirObj.CCIRPIR,
+
+    editFetched: true,
+    CCIRPIR: ccirpirObj.CCIRPIR,
   });
 }
 setOneLocation = (location) =>{
@@ -303,180 +303,167 @@ resetForm() {
 
 updateCCIROptions = (items, ccirid) => {
 
-  if(items !== null && items !== undefined){
-      const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
-      nameOperationSelect.length = 0;
-      
-      items.forEach((element) => {
-        let selected = false;
-        if(ccirid && element.value === ccirid) {
-          selected = true;
-        }
-        nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
-      });
-      // for(const i in items) {
-      //   let selected = false;
-      //   if(ccirid && items[i].value === ccirid) {
-      //     selected = true;
-      //   }
-      //   nameOperationSelect.add(new Option(items[i].label, items[i].value, selected, selected));
-      // }
+  if(items !== null && items !== undefined) {
+    const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
+    nameOperationSelect.length = 0;
+
+    items.forEach((element) => {
+      let selected = false;
+      if(ccirid && element.value === ccirid) {
+        selected = true;
+      }
+      nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
+    });
+
   }
 }
 
 updatePirOptions = (items, pirdesc) => {
-  if(items !== null && items !== undefined){
-      const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
-      pirSelect.length = 0;
-      items.forEach((element) => {
-        let selected = false;
-        if(pirdesc && element.value === pirdesc) {
-          selected = true;
-        }
-        pirSelect.add(new Option(element.label, element.value, selected, selected));
-      });
+  if(items !== null && items !== undefined) {
+    const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
+    pirSelect.length = 0;
+    items.forEach((element) => {
+      let selected = false;
+      if(pirdesc && element.value === pirdesc) {
+        selected = true;
+      }
+      pirSelect.add(new Option(element.label, element.value, selected, selected));
+    });
 
-      // for(const i in items) {
-      //   let selected = false;
-      //   if(pirdesc && items[i].value === pirdesc) {
-      //     selected = true;
-      //   }
-      //   pirSelect.add(new Option(items[i].label, items[i].value, selected, selected));
-      // }
   }
 
 }
 
-  render() {
+render() {
 
-    const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
+  const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
 
-    const { translations } = this.props;
-
-
-    const { match: { params } } = this.props;
-    const editId = params.editId;
-
-    let { intelRequest } = this.state;
-
-    if(intelRequest != null){
-        console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
-    }
-
-    const intelRequest1 = [
-      { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
-      { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }] },
-      { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true },
-      { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true },
-      { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }] },
-    ];
-
-    const intelRequest2 = [
-
-      { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true },
-      { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true },
-      { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
-      { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
-      { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
-    ];
+  const { translations } = this.props;
 
 
-    // Following fields is visible only to Collection manager and also only in case of edit
-    const intelRequest3 = [
-      { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
-      { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
-      // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
-      { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
-      { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
-      { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
-    ];
+  const { match: { params } } = this.props;
+  const editId = params.editId;
+
+  let { intelRequest } = this.state;
+
+  if(intelRequest != null) {
+    console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
+  }
+
+  const intelRequest1 = [
+    { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
+    { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }] },
+    { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true },
+    { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true },
+    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }] },
+  ];
+
+  const intelRequest2 = [
+
+    { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true },
+    { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true },
+    { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
+    { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
+    { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
+  ];
 
 
-    const priorityOptions = [{ label: '--Select Item--', value: 0 }, { label: 'Low', value: 4 }, { label: 'Medium', value: 3 }, { label: 'High', value: 2 }, { label: 'urgent', value: 1 }];
-    // for(let i = 1; i <= 25; i++) {
-    //   priorityOptions.push({ label: i, value: i });
-    // }
+  // Following fields is visible only to Collection manager and also only in case of edit
+  const intelRequest3 = [
+    { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
+    { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
+    // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
+    { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
+    { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
+    { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
+  ];
 
-    let intelRequest4 = [
 
-      { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
-      { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
-      { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
-    ];
+  const priorityOptions = [{ label: '--Select Item--', value: 0 }, { label: 'Low', value: 4 }, { label: 'Medium', value: 3 }, { label: 'High', value: 2 }, { label: 'urgent', value: 1 }];
+  // for(let i = 1; i <= 25; i++) {
+  //   priorityOptions.push({ label: i, value: i });
+  // }
 
-    const intelRequest5 = [
-      { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: 'Priority', valFieldID: 'PriorityId', required:true  /* options: priorityOptions */ },
-      { name: translations['special instructions/notes'], type: 'textarea',  valFieldID: 'SpecialInstructions', domID: 'SpecialInstructions' },
-    ]
+  let intelRequest4 = [
 
-    const { editFetched } = this.state;
+    { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
+    { name: translations['OrganicUnit'], type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true  },
+    { name: translations['NextHigherUnit'], type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' }
+  ];
 
-    return (
-      <div>
+  const intelRequest5 = [
+    { name: translations['Priority'], type: 'dropdown', domID: 'intelPriority', ddID: 'Priority', valFieldID: 'PriorityId', required:true  /* options: priorityOptions */ },
+    { name: translations['special instructions/notes'], type: 'textarea',  valFieldID: 'SpecialInstructions', domID: 'SpecialInstructions' },
+  ]
 
-        <div className="row intel-request" >
-          <div className="col-md-8 two-block" >
+  const { editFetched } = this.state;
+
+  return (
+    <div>
+
+      <div className="row intel-request" >
+        <div className="col-md-8 two-block" >
           <Loader loading={this.state.loading} />
-            <div className="img-header-line">
-              <img src="/assets/img/status/theader_line.png" alt=""/>
-              <div className="header-text">
-                {translations['real-time intelligence/threat picture']}
-              </div>
-              <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
+          <div className="img-header-line">
+            <img src="/assets/img/status/theader_line.png" alt=""/>
+            <div className="header-text">
+              {translations['real-time intelligence/threat picture']}
             </div>
-            <div className="two-block">
-              <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} /> 
-            </div>
+            <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
-          <div className="col-md-4 one-block">
-            <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
-            <div className="ccir-content">
-              <div className="fw-800">CCIR:</div>
-              <div>{this.state.CCIRPIR[0] || ""}</div>
-              
-              <div>{this.state.CCIRPIR[1] || ""}</div>
-              
-              <div>{this.state.CCIRPIR[2] || ""}</div>
-            </div>
-            <ShortHeaderLine headerText={translations['associate intelligence report']} />
-            <div className="associate-content" />
+          <div className="two-block">
+            <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} />
           </div>
         </div>
-        <form action="" onSubmit={this.handleSubmit} id='personnelform'>
+        <div className="col-md-4 one-block">
+          <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
+          <div className="ccir-content">
+            <div className="fw-800">CCIR:</div>
+            <div>{this.state.CCIRPIR[0] || ""}</div>
+
+            <div>{this.state.CCIRPIR[1] || ""}</div>
+
+            <div>{this.state.CCIRPIR[2] || ""}</div>
+          </div>
+          <ShortHeaderLine headerText={translations['associate intelligence report']} />
+          <div className="associate-content" />
+        </div>
+      </div>
+      <form action="" onSubmit={this.handleSubmit} id='personnelform'>
+        <div className="row intel-request">
+          <div className="col-md-12">
+            <FullHeaderLine headerText={translations['intelligence request']} />
+          </div>
+          <div className="col-md-4">
+            <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+          </div>
+          <div className="col-md-4">
+            <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+          </div>
+          <div className="col-md-4">
+            <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+          </div>
+        </div>
+
+        {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
             <div className="col-md-12">
-              <FullHeaderLine headerText={translations['intelligence request']} />
+              <FullHeaderLine headerText={translations.route} />
             </div>
-            <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div>
-            <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div>
-            <div className="col-md-4">
-              <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div>
-          </div>
-
-          {editId != undefined && editId !== '0' ?
-            <div className="row intel-request">
-              <div className="col-md-12">
-                <FullHeaderLine headerText={translations.route} />
-              </div>
-              {/* <div className="col-md-4">
+            {/* <div className="col-md-4">
                 <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} stopupd={this.stopUpdate} /> }
               </div> */}
-              <div className="col-md-6">
-                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-              </div>
-              <div className="col-md-6">
-                <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear}  />
-              </div>
-
+            <div className="col-md-6">
+              <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
             </div>
-            : null
-          }
-          {/* <div className="row intel-request">
+            <div className="col-md-6">
+              <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear}  />
+            </div>
+
+          </div>
+          : null
+        }
+        {/* <div className="row intel-request">
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['special instructions/notes']} />
             </div>
@@ -486,34 +473,34 @@ updatePirOptions = (items, pirdesc) => {
             </div>
           </div> */}
 
-          {this.state.intelRequest.MissionId === null ?
-            <div className="row action-buttons">
-              <div className="menu-button">
-                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
-                  {translations['clear']}
-                </button>
-                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-              </div>
-              <div className="menu-button">
-                <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                <button type="submit" className='btn btn-warning'>
-                  {translations['submit']}
-                </button>
-                <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-              </div> 
+        {this.state.intelRequest.MissionId === null ?
+          <div className="row action-buttons">
+            <div className="menu-button">
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+              <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
+                {translations['clear']}
+              </button>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
-            : '' }
-        </form>
+            <div className="menu-button">
+              <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+              <button type="submit" className='btn btn-warning'>
+                {translations['submit']}
+              </button>
+              <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+            </div>
+          </div>
+          : '' }
+      </form>
 
-        { (this.state.intelRequest.IntelRequestID !== '') ?
-          <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
-          : null }
-        {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
+      { (this.state.intelRequest.IntelRequestID !== '') ?
+        <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        : null }
+      {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
-      </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 RequestForm.propTypes = {

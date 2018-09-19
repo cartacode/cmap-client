@@ -31,7 +31,7 @@ class Table extends React.Component {
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
         
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
-        axios.get(apiUrl,{headers:requestHeaders})
+        axios.get(apiUrl, {headers:requestHeaders})
           .then(response => {
             if(response.data) {
               response.data.map(item => {
