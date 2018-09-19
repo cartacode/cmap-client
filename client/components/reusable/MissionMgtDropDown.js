@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { baseUrl } from 'dictionary/network';
+import { baseUrl, requestHeaders } from 'dictionary/network';
 
 class MissionMgtDropDown extends React.Component {
 
@@ -31,7 +31,7 @@ class MissionMgtDropDown extends React.Component {
       if(dropdownDataUrl) {
         
         const items = [{ 'label': '--' + 'Select ' + '--', 'value': 0 }];
-        axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
+        axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`, {headers: requestHeaders })
           .then(response => {
             response.data.map(item => {
               items.push({ 'label': item[this.labelField], 'value': item[this.valueField] });

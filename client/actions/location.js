@@ -27,7 +27,7 @@ export function fetchLocationList() {
   });
 }
 
-export function fetchLocations(id=2) {
+export function fetchLocations(id = 1) {
   return createAction({
     type: LOCATION__FETCH,
     action: () => axios.get(`${baseUrl}/Locations/GetLocationsDataByCategory?categoryId=${id}`, {headers:requestHeaders}),
