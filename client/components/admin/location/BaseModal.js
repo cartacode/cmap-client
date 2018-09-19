@@ -142,7 +142,9 @@ class BaseModal extends React.Component {
 
   handleLocationPositionData = (positionData) => {
     const { location } = this.state;
-    console.log('loca pos data'+JSON.stringify(positionData));
+    const userLocationId = location.UserLocationID;
+
+    //console.log('loca pos data'+JSON.stringify(positionData));
     this.setState({
       location: {
         ...location,
@@ -154,30 +156,28 @@ class BaseModal extends React.Component {
         UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-      const { editId } = this.props;
+      if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId){
+        document.getElementById('validationIcon').src = '';
+       }
+     // console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+    });
+  }
 
-      const userLocationId = positionData.UserLocationID;
-      if (userLocationId) {
-        let isUserLocationIdExits;
-        axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, {headers:requestHeaders})
-          .then(response => {
-            isUserLocationIdExits = response.data;
-            document.getElementById('LocationID').placeholder = '';
-            if (isUserLocationIdExits === false) {
-              if (this.props.oneLocation.UserLocationID !== 'undefined') {
-                if (this.props.oneLocation.UserLocationID !== userLocationId) {
-                  const { location } = this.state;
-                  this.setState({
-                    location: {
-                      ...location,
-                      UserLocationID: '',
-                    }
-                  });
-                  document.getElementById('LocationID').value = '';
-                  document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
-                  document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
-                }
-              } else {
+
+
+  checkLocationId(){
+    const { editId } = this.props;
+    let {location} = this.state;
+    const userLocationId = location.UserLocationID;
+    if (userLocationId) {
+      let isUserLocationIdExits;
+      axios.get(`${baseUrl}/Locations/GetUserLocationIDUnique?userLocID=${userLocationId}`, {headers:requestHeaders})
+        .then(response => {
+          isUserLocationIdExits = response.data;
+          document.getElementById('LocationID').placeholder = '';
+          if (isUserLocationIdExits === false) {
+            if (this.props.oneLocation.UserLocationID !== 'undefined') {
+              if (this.props.oneLocation.UserLocationID !== userLocationId) {
                 const { location } = this.state;
                 this.setState({
                   location: {
@@ -185,18 +185,32 @@ class BaseModal extends React.Component {
                     UserLocationID: '',
                   }
                 });
+                this.handleLocationPositionData(this.state.location);
                 document.getElementById('LocationID').value = '';
                 document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
                 document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
               }
+              else{
+                this.submitData();
+              }
             } else {
-              document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
-              this.submitData();
+              const { location } = this.state;
+              this.setState({
+                location: {
+                  ...location,
+                  UserLocationID: '',
+                }
+              });
+              document.getElementById('LocationID').value = '';
+              document.getElementById('LocationID').placeholder = `${userLocationId} already exists`;
+              document.getElementById('validationIcon').src = '/assets/img/failure-icon.png';
             }
-          });
-      }
-     // console.log("New state in ASYNC callback og location Section:22222", this.state.location);
-    });
+          } else {
+            document.getElementById('validationIcon').src = '/assets/img/success-icon.png';
+            this.submitData();
+          }
+        });
+    }
   }
 
   handleLocationInfoData = (infoData) => {
@@ -270,7 +284,7 @@ class BaseModal extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  handleSubmit = event => {
+  submitData = () => {
     event.preventDefault();
     const { location, locationFiles } = this.state;
     const { editId } = this.props;
@@ -310,10 +324,10 @@ class BaseModal extends React.Component {
     }
   }
 
-  /* handleSubmit = event => {
+   handleSubmit = event => {
     event.preventDefault();
     this.checkLocationId();
-  } */
+  } 
 
   stopset() {
     this.setState({ clear: false });
@@ -424,7 +438,7 @@ class BaseModal extends React.Component {
 		<div className = "row personnel">
           <div className="col-md-12">
                   <Map size='100%' viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-              </div>
+               </div>
         </div>
         <div className="row personnel" >
           <div className="under-location-content">
