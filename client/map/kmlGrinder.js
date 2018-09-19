@@ -11,9 +11,9 @@
 import Contour from "map/Contour";
 export function getKMLCenter (kmlSource){
    
-    let vertices = __readKML(kmlSource);
-    let centerPoints = __getCenterPoints(vertices);
-    return centerPoints;
+    //let vertices = __readKML(kmlSource);
+   // let centerPoints = __getCenterPoints(vertices);
+    return __readKML(kmlSource);
     
 }
 /**
@@ -41,9 +41,13 @@ function __readKML(kmlSource){
                 y: Number(xyzValues[1]),
                 z: Number(xyzValues[2]),
             }
+            
         }
+        let con = new Contour(coordinates);
+        centerPointStr += con.centroid().x+","+con.centroid().y+","+coordinates[0].z+";";
+
     }
-    return coordinates;
+    return centerPointStr;
 }
 
 /**
