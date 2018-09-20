@@ -16,7 +16,7 @@ class RocketModal extends React.Component {
     super(props);
     this.state = {
       file: '',
-      rocketPhotoPreviewUrl: '',
+      rocketPhotoPreviewUrl: '/assets/img/admin/rockets.png',
       editFetched: false,
       oneMunition: {},
       clear: false,
@@ -103,12 +103,16 @@ class RocketModal extends React.Component {
 
 
   editComponent = (editId) => {
+    // on click of edit remove image if any in state
+    this.setState({
+      rocketPhotoPreviewUrl: '',
+    });
     this.props.fetchMunitionsById(editId).then(() => {
       this.setState(
         {
           editFetched: true,
           munition: this.props.oneMunition,
-          rocketPhotoPreviewUrl: null,
+          rocketPhotoPreviewUrl: this.props.oneMunition.MunitionPhoto,
           isImagedRequired: false
         });
     });
@@ -130,7 +134,10 @@ class RocketModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({clear: true});
+      this.setState({
+        clear: true,
+        rocketPhotoPreviewUrl: '',
+      });
     }
   }
 
@@ -338,16 +345,17 @@ class RocketModal extends React.Component {
 
     let { rocketPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
-    const imageUrl = this.props.oneMunition.MunitionPhoto;
+    //const imageUrl = this.props.oneMunition.MunitionPhoto;
 
-    if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
+   /*  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt="" />);
+    } */
+    if (rocketPhotoPreviewUrl || rocketPhotoPreviewUrl === '') {
+      $imagePreview = (<img src={rocketPhotoPreviewUrl} alt="" className="photo" alt="" />);
     } else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
-    if (rocketPhotoPreviewUrl) {
-      $imagePreview = (<img src={rocketPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    }
+    
 
     let { munition } = this.state;
     const { translations } = this.props;
