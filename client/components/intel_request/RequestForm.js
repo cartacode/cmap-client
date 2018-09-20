@@ -526,7 +526,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     oneIntelRequest: state.intelrequest.oneIntelRequest,
     allCcirPirs: state.ccirpir.allCcirPirs,
-    allLocations: state.locations.allLocations
+    allLocations: state.locations.allLocations,
   };
 };
 

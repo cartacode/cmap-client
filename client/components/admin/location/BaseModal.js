@@ -125,9 +125,7 @@ class BaseModal extends React.Component {
         LocationCOCOM: generalData.LocationCOCOM,
         LocationRegion: generalData.LocationRegion,
 
-      }
-    }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.location);
+      },
     });
   }
   
@@ -163,10 +161,9 @@ class BaseModal extends React.Component {
         UserLocationID: positionData.UserLocationID,
       }
     }, () => {
-      if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId){
+      if(positionData.UserLocationID && positionData.UserLocationID !== userLocationId) {
         document.getElementById('validationIcon').src = '';
-       }
-     // console.log("New state in ASYNC callback og location Section:22222", this.state.location);
+      }
     });
   }
 

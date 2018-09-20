@@ -63,7 +63,6 @@ class IntelEEI extends React.Component {
   }
 
   openEEI = (id) => {
-    debugger;
     this.setState({
       editId: String(id),
       isFormOpened: true,
