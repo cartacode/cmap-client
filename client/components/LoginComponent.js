@@ -48,17 +48,16 @@ class LoginComponent extends React.Component {
     const { loginData } = this.props;
     const { authenticated } = this.props;
     console.log(authenticated);
-    sessionStorage.setItem('jwtToken', loginData.access_token);
-    sessionStorage.setItem('PersonnelID', loginData.PersonnelID);
-    sessionStorage.setItem('AssignedUnit', loginData.AssignedUnit);
-    sessionStorage.setItem('DeployedUnit', loginData.DeployedUnit);
-    sessionStorage.setItem('userName', loginData.userName);
-    sessionStorage.setItem('expires', loginData['.expires']);
+    let mySession = JSON.stringify(loginData);
+    console.log(mySession);
+    localStorage.setItem('session',mySession);
     if (authenticated)
     { 
+      console.log("Authenticated");
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
       formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
-      this.props.history.push('/admin/personnel'); }
+      this.props.history.replace('/admin/personnel'); 
+    }
   }
 
   handleSubmit = event => {

@@ -29,13 +29,13 @@ export function addOraganicOrg(org) {
 export function fetchUnitById(id) {
   return createAction({
     type: UNIT__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Units/GetUnits/${id}`, requestHeaders),
+    action: () => axios.get(`${baseUrl}/Units/GetUnits/${id}`, {headers:requestHeaders}),
   });
 }
 
 export function updateUnit(id, unit) {
   return createAction({
     type: UNIT__UPDATE,
-    action: () => axios.put(`${baseUrl}/Units/PutUnitUpdate/${id}`, unit, requestHeaders),
+    action: () => axios.put(`${baseUrl}/Units/PutUnitUpdate/${id}`, unit, {headers:requestHeaders}),
   });
 }

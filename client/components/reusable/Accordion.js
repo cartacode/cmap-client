@@ -20,6 +20,7 @@ class Accordion extends React.Component {
       branch:'1',
       editId: '0',
       isUpdated: false,
+      clear:false,
       addUnit: {
         description:'',
         UnitIdentificationCode:'',
@@ -131,14 +132,17 @@ class Accordion extends React.Component {
 
   close = (key) => {
     let accordionContent = document.getElementsByClassName(`accordion-content`)[key];
-    this.closeSection(key, accordionContent);
+    // this.closeSection(key, accordionContent);
+    if(accordionContent){
+    accordionContent.style.height = 0;
+  }
   };
 
   closeSection = (key, accordionContent) => {
     setTimeout(() => {
-      this.refs[`section${key}`].childNodes[1].style.borderBottom = 'none';
+      // this.refs[`section${key}`].childNodes[1].style.borderBottom = 'none';
     }, 450);
-    accordionContent.style.height = 0;
+    // accordionContent.style.height = 0;
   };
 
   changeValue = (key, value) => {
@@ -148,7 +152,7 @@ class Accordion extends React.Component {
   toggleHeader(key) {
     let accordionContent = document.getElementsByClassName(`accordion-content`)[key];
     if (accordionContent.clientHeight) {
-      this.closeSection(key, accordionContent);
+      if(key!=3){this.close(key);}
     } else {
       let wrapper = document.querySelector(`.accordion-content-wrapper${key}`);
       accordionContent.style.height = wrapper.clientHeight + "px";
@@ -395,8 +399,8 @@ class Accordion extends React.Component {
 
   handleSearchSubmit = () => {
       let { searchUnit } = this.state;
-      this.props.fetchPersonnelsByFilter(searchUnit).then(() => { this.close(3); this.toggleHeader(3);
-        this.close(1); this.close(2); });
+      this.props.fetchPersonnelsByFilter(searchUnit).then(() => {  this.toggleHeader(3);
+        this.close(1); this.close(2); this.toggleHeader(3);});
   }
 
   submitBranch = () => {
@@ -417,6 +421,7 @@ class Accordion extends React.Component {
       addUnit.CommandRelationship = '1';
     this.props.addOraganicOrg(addUnit).then( () => {
      alert("Org Added");
+     this.setState({clear:true});
     });
   }
   }
@@ -551,13 +556,6 @@ class Accordion extends React.Component {
             <div className={`accordion-content-wrapper${3}`}>
               <div className="content results-content">
                 {this.renderResults()}
-                <div className="menu-button">
-                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button onClick={this.openEditForm}>
-                    Close
-                  </button>
-                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                </div>
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button onClick={this.toggleAddForm}>

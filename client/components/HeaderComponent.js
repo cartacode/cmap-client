@@ -38,7 +38,7 @@ class HeaderComponent extends React.Component {
   }
 
   logoutCall = () => {
-    sessionStorage.removeItem('jwtToken');
+    localStorage.removeItem('session');
   }
 
   //render dropdown list of lang switcher
@@ -104,7 +104,17 @@ class HeaderComponent extends React.Component {
 
   render () {
     const {translations} = this.props;
-    let userName = sessionStorage.getItem('userName');
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let userName, rank, assignedUnit, locationName = '';
+    if (ses)
+    {
+     userName = ses.userName;
+    rank = ses.rankAbbrev;
+     assignedUnit = ses.AssignedUnitName;
+     locationName = ses.LocationName;
+    console.log(ses);
+    }
+
     return (
 
 
@@ -134,10 +144,10 @@ class HeaderComponent extends React.Component {
               {userName}
             </div>
             <div className="">
-              COL, 116th MI Brigade
+              {rank}, {assignedUnit}
             </div>
             <div className="">
-              Fort Gordon, GA USA
+              {locationName}
             </div>
           </div>
           <div className="header-title text-center col-md-6 col-xs-12">

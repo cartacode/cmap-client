@@ -22,7 +22,7 @@ export default function auth(state = initialState.auth, { payload, type }) {
         
       };
     case ACCOUNT__LOGOUT.SUCCESS:
-    sessionStorage.removeItem('jwtToken');
+    localStorage.removeItem('jwtToken');
     <Redirect to='/login'/>
       return {
         ...state,
