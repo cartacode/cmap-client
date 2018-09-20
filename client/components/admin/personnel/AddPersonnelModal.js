@@ -30,8 +30,8 @@ class AddPersonnelModal extends React.Component {
       file: '',
       clear: false,
       editFetched: false,
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
+      imagePreviewUrl:"/assets/img/admin/photo_1.png",
+      imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png",
       personnel: {
         //     PersonnelPhoto: '',
         //     FirstName: '',
@@ -96,18 +96,26 @@ class AddPersonnelModal extends React.Component {
       this.editComponent(editId);
     }
     if (editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
+      this.setState({ clear: true,
+        imagePreviewUrl:'',
+        imagePreviewUrl2:''
+       });
     }
   }
 
   editComponent = (editId) => {
+    this.setState({
+       imagePreviewUrl:'',
+       imagePreviewUrl2:''
+   });
+
     this.props.fetchPersonnelById(editId).then(() => {
       this.setState(
         {
           editFetched: true,
           personnel: this.props.onePersonnel,
-          imagePreviewUrl: null,
-          imagePreviewUrl2: null,
+          imagePreviewUrl: this.props.onePersonnel.PersonnelPhoto,
+          imagePreviewUrl2: this.props.onePersonnel.OrganizationLogo,
           isImagedRequired:  false
         });
     });
@@ -439,26 +447,28 @@ render() {
 
 
 
-  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
+  /* if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
     $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
+  } */
+  if (imagePreviewUrl || imagePreviewUrl === '') {
+    $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
   }
   else {
     $imagePreview = (<img src="/assets/img/admin/photo_1.png" className="photo" alt=""/>);
   }
-  if (imagePreviewUrl) {
-    $imagePreview = (<img src={imagePreviewUrl} alt="" className="photo" alt=""/>);
-  }
+  
  
 
-  if (imageUrl2 !== undefined && imageUrl2 !=="" && this.props.editId != '0') {
+ /*  if (imageUrl2 !== undefined && imageUrl2 !=="" && this.props.editId != '0') {
     $imagePreview2 = (<img src={imageUrl2} alt="" className="photo" alt=""/>);
+  } */
+  if (imagePreviewUrl2 || imagePreviewUrl2 === '') {
+    $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
   }
   else {
     $imagePreview2 = (<img src="/assets/img/admin/primoris_backgr.png" className="photo" alt=""/>);
   }
-  if (imagePreviewUrl2) {
-    $imagePreview2 = (<img src={imagePreviewUrl2} alt="" className="photo" alt="" />);
-  }
+  
 
     
     
