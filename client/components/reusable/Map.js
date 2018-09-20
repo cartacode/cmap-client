@@ -5,7 +5,7 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 import {addKML} from "map/kml";
-import {addPoint} from "map/viewer";
+import {addPoint,} from "map/viewer";
 
 
 /**
@@ -38,34 +38,43 @@ export default class Map extends React.PureComponent {
     
     }
   }
-  dblClickCallback = (currenLatLong, viewerId) =>{
+  dblClickCallback = (currenLatLong, viewerId, viewer) =>{
     let nearestNeighbour;
     switch(this.mapOperatingMode) {
       case "kmlLookUp":
             nearestNeighbour = UTILS["kmlLookUp"](currenLatLong, viewerId);
             let nearestPoint = nearestNeighbour.point.split(",");
-            addKML(nearestNeighbour.KMLUri, viewerId);
+            viewer.entities.removeAll();
+          
             addPoint(Number(nearestPoint[0]), Number(nearestPoint[1]), Number(nearestPoint[2]), viewerId, "nearest point "+nearestPoint[0]+","+nearestPoint[1]);
+            addKML(nearestNeighbour.KMLUri, viewerId);
+            
             this.props.setCCIRPIR(nearestNeighbour);
             break;
       case "naipoiLookUp":
           nearestNeighbour = UTILS["naipoiLookUp"](currenLatLong, viewerId);
-          addPoint(Number(nearestNeighbour.locationLongitude), Number(nearestNeighbour.locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour.type+" "+nearestNeighbour.locationLatitude+","+nearestNeighbour.locationLongitude, true);
+          //moveFar(viewerId);
+          viewer.entities.removeAll();
+          addPoint(Number(nearestNeighbour[0].locationLongitude), Number(nearestNeighbour[0].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[0].type+" "+nearestNeighbour[0].locationLatitude+","+nearestNeighbour[0].locationLongitude, false);
           
+          addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[1].type+" "+nearestNeighbour[1].locationLatitude+","+nearestNeighbour[1].locationLongitude, false);
           console.log("nearest nai/poi", nearestNeighbour);
-          this.props.setOneLocation(nearestNeighbour);
-          break;
+          this.props.setOneLocation(nearestNeighbour, currenLatLong);
+          
       default:
-          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
-          this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
+          if(this.props.updateLatLong) {
+            this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
+          }
+            
 
     }
   }
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK);
   }
-  lookUpMode = (mode) =>{
-    this.mapOperatingMode = mode;
+  lookUpMode = (mode, isSet) =>{
+    this.mapOperatingMode = isSet && mode;
   }
   
 

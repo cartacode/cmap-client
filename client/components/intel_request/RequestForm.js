@@ -22,6 +22,7 @@ import {fetchCcirPirs} from 'actions/ccirpir';
 
 import {fetchLocations} from 'actions/location';
 
+import uuid from 'uuid/v4';
 
 class RequestForm extends React.Component {
 
@@ -30,6 +31,7 @@ class RequestForm extends React.Component {
 
     this.state = {
       CCIRPIR:[],
+      updatedLocation:'',
       toSummary: false,
       editFetched: false,
       clear: false,
@@ -84,18 +86,6 @@ class RequestForm extends React.Component {
     const { match: { params } } = this.props;
     const editId = params.editId;
 
-
-    if(editId !== undefined && editId !== '') {
-      this.props.fetchIntelRequestById(editId).then(()=> {
-        this.setState(
-          {
-            intelRequest: this.props.oneIntelRequest,
-            editFetched: true,
-          });
-      });
-
-    }
-
     this.props.fetchLocations(2).then(()=>{
       const {allLocations}=this.props;
       localStorage.setItem('NAI', JSON.stringify(allLocations));
@@ -133,12 +123,24 @@ class RequestForm extends React.Component {
         pirs,
       }, () => {
         this.updateCCIROptions(ccirPirOptions, '');
-        //  const selectedCcirId = '689817d6-b45f-493b-955f-e2fe7a18f061';
-        // this.updatePirOptions(pirs[selectedCcirId]);
+        
+      });
+    });
+    
+    if(editId !== undefined && editId !== '') {
+      this.props.fetchIntelRequestById(editId).then(()=> {
+        const { oneIntelRequest} = this.props
+        this.setState(
+          {
+            intelRequest: oneIntelRequest,
+            editFetched: true,
+          });
+
+        this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
       });
 
-
-    });
+    }
+  
   }
 
   //  getKMLdata = () =>{
@@ -286,9 +288,14 @@ setCCIRPIR = (ccirpirObj) =>{
     CCIRPIR: ccirpirObj.CCIRPIR,
   });
 }
-setOneLocation = (location) =>{
+setOneLocation = (location, currentLatLong) =>{
+  const updatedLocation = {
+    location,
+    uid: uuid(),
+    currentLatLong,
+  }
   this.setState({
-    eeiData: location,
+    updatedLocation
   })
 }
 
@@ -331,10 +338,23 @@ updatePirOptions = (items, pirdesc) => {
     });
 
   }
-
+}
+renderCCIRPIR = () =>{
+  if(this.state.CCIRPIR) {
+  const ccirpir = (
+    <ul>
+      {this.state.CCIRPIR.map((item, i) =>
+        <li key={i.toString()}>
+            {item}
+        </li>
+      )}
+    </ul>);
+    return ccirpir;
+  }
 }
 
 render() {
+  
 
   const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
 
@@ -346,9 +366,7 @@ render() {
 
   let { intelRequest } = this.state;
 
-  if(intelRequest != null) {
-    console.log("**********************intelRequest.BestCollectionTime********************"+intelRequest.BestCollectionTime);
-  }
+  
 
   const intelRequest1 = [
     { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
@@ -419,11 +437,7 @@ render() {
           <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
           <div className="ccir-content">
             <div className="fw-800">CCIR:</div>
-            <div>{this.state.CCIRPIR[0] || ""}</div>
-
-            <div>{this.state.CCIRPIR[1] || ""}</div>
-
-            <div>{this.state.CCIRPIR[2] || ""}</div>
+              {this.renderCCIRPIR()}
           </div>
           <ShortHeaderLine headerText={translations['associate intelligence report']} />
           <div className="associate-content" />
@@ -494,7 +508,7 @@ render() {
       </form>
 
       { (this.state.intelRequest.IntelRequestID !== '') ?
-        <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        <IntelEEI nearestNAIPOI={this.state.updatedLocation} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
       {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
@@ -512,7 +526,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     oneIntelRequest: state.intelrequest.oneIntelRequest,
     allCcirPirs: state.ccirpir.allCcirPirs,
-    allLocations: state.locations.allLocations
+    allLocations: state.locations.allLocations,
   };
 };
 

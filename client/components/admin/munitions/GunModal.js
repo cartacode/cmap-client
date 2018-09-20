@@ -15,7 +15,7 @@ class GunModal extends React.Component {
     super(props);
     this.state = {
       file: '',
-      gunPhotoPreviewUrl: '',
+      gunPhotoPreviewUrl: '/assets/img/admin/rockets.png',
       editFetched: false,
       oneMunition: {},
       clear: false,
@@ -107,12 +107,16 @@ class GunModal extends React.Component {
   }
 
   editComponent = (editId) => {
+    // On click of edit remove if any image in state
+    this.setState({
+      gunPhotoPreviewUrl: '',
+    });
     this.props.fetchMunitionsById(editId).then(() => {
       this.setState(
         {
           editFetched: true,
           munition: this.props.oneMunition,
-          gunPhotoPreviewUrl: null,
+          gunPhotoPreviewUrl: this.props.oneMunition.MunitionPhoto,
           isImagedRequired: false
         });
     });
@@ -136,6 +140,7 @@ class GunModal extends React.Component {
 
     if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ 
+        gunPhotoPreviewUrl: '',
         clear: true
       });
     }
@@ -347,16 +352,17 @@ class GunModal extends React.Component {
     }
     let { gunPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
-    const imageUrl = this.props.oneMunition.MunitionPhoto;
+    //const imageUrl = this.props.oneMunition.MunitionPhoto;
 
-    if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
+   /*  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt="" />);
-    } else {
+    } */ 
+    if (gunPhotoPreviewUrl || gunPhotoPreviewUrl === '') {
+      $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt="" />);
+    }else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
-    if (gunPhotoPreviewUrl) {
-      $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    }
+    
 
     let { munition } = this.state;
     const { translations } = this.props;

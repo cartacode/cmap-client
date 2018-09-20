@@ -63,7 +63,6 @@ class IntelEEI extends React.Component {
   }
 
   openEEI = (id) => {
-    debugger;
     this.setState({
       editId: String(id),
       isFormOpened: true,
@@ -135,14 +134,14 @@ class IntelEEI extends React.Component {
         Cell: row => <div> { missionId === null ? <div>
           <a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value);}}><span className="glyphicon glyphicon-edit"/></a>&nbsp;
           <a href="javaScript:void('0');" onClick={()=>{this.deleteEEI(row.value);}} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a>
-        </div> : 'null' } </div>,
+        </div> : '' } </div>,
       },
     ];
 
     return (
       <div id="intelEEIContainer">
 
-        { this.state.isFormOpened ? <EeiForm editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
+        { this.state.isFormOpened ? <EeiForm nearestLocations={this.props.nearestNAIPOI} editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
         <Loader loading={this.state.loading} />

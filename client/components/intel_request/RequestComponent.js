@@ -81,40 +81,40 @@ class RequestComponent extends React.Component {
         </div>,
       },
       {
-        Header: 'Status',
+        Header: translations.status,
         id: 'StatusId',
         accessor: 'Status',
       },
       {
-        Header: 'Named Operation',
-        accessor: 'NamedOperation',
+        Header: translations['Named Operation'],
+        accessor: 'CCIRPIRName',
       },
       {
-        Header: 'Command',
+        Header: translations.Command,
         accessor: 'COCOMText',
       },
       {
-        Header: 'Mission Type',
+        Header: translations.MissionType,
         accessor: 'MissionTypeText',
       },
       {
-        Header: 'Payload',
+        Header: translations.payload,
         accessor: 'PrimaryPayloadName',
       },
       {
-        Header: 'Originator',
+        Header: translations.originator,
         accessor: 'OrginatorPersonnelID',
         Cell: row => <div>{row.original.OriginatorFirstName} {row.original.OriginatorLastName} </div>,
       },
       {
-        Header: 'Date',
+        Header: translations.date,
         id: 'ActiveDateTimeStart',
         accessor: d => {
           return formatDateTime(d.ActiveDateTimeStart);
         },
       },
       {
-        Header: 'LTIV',
+        Header: translations.LTIV,
         id: 'LatestTimeIntelValue',
         accessor: d => {
           return formatDateTime(d.LatestTimeIntelValue);
@@ -126,7 +126,7 @@ class RequestComponent extends React.Component {
         filterable: false,
         Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
         
-      {   (row.original.IsInCollectionPlan || row.original.MissionId != null || row.original.Abbreviation === "APR") ?  '' :
+      {   (row.original.MissionId !== null) ? '' :
           <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
       }
       

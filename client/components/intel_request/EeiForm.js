@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addIntelEei,fetchIntelEeiById, updateIntelEei } from '../../actions/inteleei';
+import { addIntelEei, fetchIntelEeiById, updateIntelEei } from '../../actions/inteleei';
 import FullHeaderLine from '../reusable/FullHeaderLine';
-import  { NoticeType } from '../../dictionary/constants';
+import { NoticeType } from '../../dictionary/constants';
 import ModalFormBlock from '../reusable/ModalFormBlock';
 import Loader from '../reusable/Loader';
+
 class EeiForm extends React.Component {
 
   constructor(props) {
@@ -35,31 +36,53 @@ class EeiForm extends React.Component {
         // EEIThreat: '',
         // LIMIDSReq: '',
       },
-      loading: false
+      loading: false,
     };
   }
 
   componentDidMount = () => {
-    
-    let { editId } = this.props;
+
+    const { editId } = this.props;
     this.setState({ clear: true });
     console.log('editId of eei did mount' + editId);
     if(editId !== '0') {
       this.editComponent(editId);
     }
-    
+    // this.setNAIPOI(this.props.nearestNAIPOI);
+
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    let { editId } = this.props;
+    const { editId, nearestLocations } = this.props;
+
     console.log('editId of eei did update' + editId);
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
+      //
     }
 
     if(editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
+
     }
+    if(nearestLocations.uid !== prevProps.nearestLocations.uid) {
+      this.setNAIPOI(nearestLocations);
+    }
+    // this.setNAIPOI(this.props.nearestLocations);
+  }
+
+  setNAIPOI = (locationsData) => {
+    const { intelReqEEI } = this.state;
+    this.setState({
+      intelReqEEI: {
+        ...intelReqEEI,
+        gridCoordinates: locationsData.currentLatLong.latitude + ', ' + locationsData.currentLatLong.longitude,
+        POI1_ID: locationsData.location[0].id || 'no value',
+        POI2_ID: locationsData.location[1].id || 'no value',
+      },
+      eeiFetched: true,
+      clear: false,
+    });
   }
 
   editComponent = (editId) => {
@@ -67,7 +90,7 @@ class EeiForm extends React.Component {
     console.log('editId of eei' + editId);
 
     this.props.fetchIntelEeiById(editId).then(() => {
-      console.log('edit eei'+JSON.stringify(this.props.oneEEI));
+      console.log('edit eei' + JSON.stringify(this.props.oneEEI));
       this.setState(
         {
           eeiFetched: true,
@@ -82,7 +105,7 @@ class EeiForm extends React.Component {
     this.setState({
       intelReqEEI: {
         ...intelReqEEI,
-        
+
         targetID: intelEei1.targetID,
         objectiveID: intelEei1.objectiveID,
         threatGroupID: intelEei1.threatGroupID,
@@ -99,7 +122,7 @@ class EeiForm extends React.Component {
         district: intelEei2.district,
         gridCoordinates: intelEei2.gridCoordinates,
         LIMIDS_Req: intelEei2.LIMIDS_ReqID,
-        LIMIDS_ReqID: intelEei2.LIMIDS_ReqID
+        LIMIDS_ReqID: intelEei2.LIMIDS_ReqID,
       },
     });
   }
@@ -119,31 +142,30 @@ class EeiForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let { intelReqEEI } = this.state;
+    const { intelReqEEI } = this.state;
     const { editId, intelId } = this.props;
     intelReqEEI.intelReqID = intelId;
     if(editId !== undefined && editId !== '0') {
       delete intelReqEEI.LIMIDSReq;
       delete intelReqEEI.EEIThreat;
       intelReqEEI.id = editId;
-        // as in response we get ID integer value for LIMIDS REQUEST Field in variable LIMIDS_ReqID and String value in LIMIDS_Req
-        // but during save/update we have to send integer ID in LIMIDS_Req
-        intelReqEEI.LIMIDS_Req = intelReqEEI.LIMIDS_ReqID;
-        this.setState({loading: true});
+      // as in response we get ID integer value for LIMIDS REQUEST Field in variable LIMIDS_ReqID and String value in LIMIDS_Req
+      // but during save/update we have to send integer ID in LIMIDS_Req
+      intelReqEEI.LIMIDS_Req = intelReqEEI.LIMIDS_ReqID;
+      this.setState({ loading: true });
       this.props.updateIntelEei(editId, intelReqEEI).then(() => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
       delete intelReqEEI.LIMIDS_ReqID;
-      this.setState({loading: true});
+      this.setState({ loading: true });
       this.props.addIntelEei(intelReqEEI).then(() => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.props.onClose(NoticeType.ADD);
       });
     }
   }
-
 
   stopUpdate = () => {
     this.setState({ eeiFetched: false });
@@ -152,50 +174,47 @@ class EeiForm extends React.Component {
   stopset = () => {
     this.setState({ clear: false });
   }
-  
+
   resetForm() {
     // this.setState(this.baseState);
-    console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({clear:true});
+    console.log('FORM RESET DONE');
+    if (confirm('Do you want to clear all data from this form?')) {
+      this.setState({ clear: true });
       document.getElementById('EeiForm').reset();
     }
   }
 
-  
   render = () => {
 
     const { translations } = this.props;
-    
+
     // FORM fields Array
     const eeiFiled1 = [
       // { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
-      { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets' , valFieldID: 'targetID', required: true },
+      { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets', valFieldID: 'targetID', required: true },
       { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },
     ];
 
     const eeiFiled2 = [
       { name: translations.Country, type: 'dropdown', domID: 'dispDistrict', ddID: 'Countries', valFieldID: 'district', required: true },
-      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },      
+      { name: translations.Location, type: 'input', domID: 'location', valFieldID: 'location', required: true },
       { name: translations['Grid Coordinates'], type: 'input', domID: 'gridCoordinates', valFieldID: 'gridCoordinates', required: true },
       { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_ReqID', required: true },
     ];
 
     const eeiFiled3 = [
-      { name: translations['NearestNAI'], type: 'input', domID: 'POI1_ID', valFieldID: 'POI1_ID' },
-      { name: translations['NearestPOI'], type: 'input', domID: 'POI2_ID', valFieldID: 'POI2_ID' },
-      //{ name: translations.POIs, type: 'input', domID: 'POI3_ID', valFieldID: 'POI3_ID' },
+      { name: translations.NearestNAI, type: 'dropdown', domID: 'POI1_ID', valFieldID: 'POI1_ID', ddID: 'Locations/GetLocationsByCategory?Category=2' },
+      { name: translations.NearestPOI, type: 'dropdown', domID: 'POI2_ID', valFieldID: 'POI2_ID', ddID: 'Locations/GetLocationsByCategory?Category=3' },
+      // { name: translations.POIs, type: 'input', domID: 'POI3_ID', valFieldID: 'POI3_ID' },
       { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'EEIs' },
     ];
-  
-    
 
     return (
       <div>
         <form action="" onSubmit={this.handleSubmit} id="EeiForm">
           <div className="row intel-request">
-          <Loader loading={this.state.loading} />
+            <Loader loading={this.state.loading} />
             <div className="col-md-12">
               <FullHeaderLine headerText={translations['eei generator']} />
             </div>
@@ -232,7 +251,6 @@ class EeiForm extends React.Component {
 
 }
 
-
 EeiForm.propTypes = {
   editId: PropTypes.string,
   intelId: PropTypes.string,
@@ -250,7 +268,7 @@ const mapDispatchToProps = {
   addIntelEei,
   fetchIntelEeiById,
   updateIntelEei,
-  
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EeiForm);

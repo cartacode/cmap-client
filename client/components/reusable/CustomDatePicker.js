@@ -100,7 +100,6 @@ class CustomDatePicker extends React.Component {
           value,
         }, () => {
           const strValue = moment(this.state.value).format(DBFormat);
-          console.log('string date'+strValue);
           this.props.changeDate(strValue, name);
         });
       }

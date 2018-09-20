@@ -26,6 +26,23 @@ body {
     display: inline-block;
   }
 
+  
+  .Location-filter select.form-control {
+    display: block;
+     width: 100%;
+    height: 26px;
+    padding: 1px 12px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #84a1e0;
+    background-color: #0f2b3d;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
   .dropdown-menu {
     background-color: black;
     min-width: 200px;
@@ -127,6 +144,7 @@ body {
       height: 61px;
     }
   }
+
 
   .date-info {
     position: absolute;
@@ -1664,6 +1682,7 @@ body .login {
     }
   }
 
+  
   .schedule-manage {
     text-align: center;
 
@@ -4642,6 +4661,9 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  .select-filter {
+    margin-bottom: 20px;
+}
   #intel-request .ReactTable .btn-primary {
     margin-left: 0px;
 }
