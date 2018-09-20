@@ -286,7 +286,9 @@ class TimelineFilter extends React.Component {
     }
     const startDate = moment(filter.startDate).format(DateConsts.DB_DATETIME_FORMAT);
     const endDate = moment(filter.endDate).format(DateConsts.DB_DATETIME_FORMAT);
-    const unitId = 15; // this will come from session
+    // const unitId = 15; // this will come from session
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     const data =
       {
         'ParentUnitId': unitId,
@@ -334,7 +336,9 @@ class TimelineFilter extends React.Component {
 
 
     let titleField = 'Name';
-    const rootUnitId = 15;
+    // const rootUnitId = 15;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const rootUnitId = session.AssignedUnit;
     // unist api will be diff for FlighOps and Ped Screens
     let unitsUrl = 'CommandStructure/GetUserUnitAndSubordinateUnits?rootUnitID=' + rootUnitId;
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
@@ -354,7 +358,23 @@ class TimelineFilter extends React.Component {
         const timeLine = row.TimeLine;
         for(let i = 0; i < timeLine.length; i++) {
           itemCount++;
-          const newItem = { id: itemCount, group: group.id, title: timeLine[i].statusId, start_time: moment(timeLine[i].startDate), end_time: moment(timeLine[i].endDate) };
+          const newItem = {
+            id: itemCount,
+            group: group.id,
+            title: timeLine[i].statusId,
+            start_time: moment(timeLine[i].startDate),
+            end_time: moment(timeLine[i].endDate),
+            style: {
+              backgroundColor: 'ORANGE',
+              // color: 'yellow',
+            },
+            itemProps: {
+              // these optional attributes are passed to the root <div /> of each item as <div {...itemProps} />
+              'data-custom-attribute': 'Random content',
+              'aria-hidden': true,
+              onDoubleClick: () => { console.log('You clicked double!') }
+            },
+          };
           newItems.push(newItem);
         }
 

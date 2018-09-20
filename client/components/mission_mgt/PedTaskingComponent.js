@@ -70,7 +70,9 @@ class PedTaskingComponent extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 25;
+    // const unitId = 25;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     // const statusId = IntelConstants.STATUS.AAG.id; // 'AAG'
 
     // LEFT SIDE TABLE = Where PedTeamId = null and Status Is = AAG

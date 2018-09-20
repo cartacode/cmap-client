@@ -75,7 +75,9 @@ class FlightOpsPlatform extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 25;
+    // const unitId = 25;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     // Left Table: Status = AAG and Platfomr Id == null
     this.props.flightOpsAtoPlatform(unitId);
     // Right Table: Status = AAG and Platfomr Id != null

@@ -61,7 +61,9 @@ class CollectionManagerComponent extends React.Component {
   };
 
   routeCollectionIntelRequest = () => {
-    const unitId = 25; // TODO Make it of loggend in users units id once login is implemented
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
+    // const unitId = 25; // TODO Make it of loggend in users units id once login is implemented
     const statusId = IntelConstants.STATUS.APR.id;// 'APR';
     this.props.routeCollectionIntelRequest(unitId,statusId).then(() => {
       // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
@@ -81,7 +83,8 @@ class CollectionManagerComponent extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 25;// implement dynamic unit of logged in user
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     // fetch approved intel requests
     this.props.fetchApprovedIntelRequests(unitId, IntelConstants.STATUS.AV.abbreviation, false);
     // fetch collectiion plans 
