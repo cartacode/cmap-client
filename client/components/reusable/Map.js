@@ -63,7 +63,7 @@ export default class Map extends React.PureComponent {
           
       default:
           addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
-          if(!this.props.updateLatLong) {
+          if(this.props.updateLatLong) {
             this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
           }
             
@@ -73,8 +73,8 @@ export default class Map extends React.PureComponent {
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK);
   }
-  lookUpMode = (mode) =>{
-    this.mapOperatingMode = mode;
+  lookUpMode = (mode, isSet) =>{
+    this.mapOperatingMode = isSet && mode;
   }
   
 

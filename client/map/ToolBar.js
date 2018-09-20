@@ -41,7 +41,7 @@ export default class ToolBar extends React.Component {
         }
         if(this.props.options.kmlLookUp) {
                toolBar.push(
-                    <a key={1} onClick={() => {this.props.lookUpMode(MAPACTIONS.KMLLookUp); this.activate("performKMLLookUp")}} className={this.state.performKMLLookUp ? "is-active": ""}>
+                    <a key={1} onClick={() => {this.activate("performKMLLookUp"); this.props.lookUpMode(MAPACTIONS.KMLLookUp, this.state.performKMLLookUp);}} className={this.state.performKMLLookUp ? "is-active": ""}>
                         <img src="/assets/img/icons/kmlLookup.png" className="ico-location--img" title="Perform KML lookup" />
                     </a>
                 );
@@ -49,7 +49,7 @@ export default class ToolBar extends React.Component {
         if(this.props.options.naipoiLookUp) {
             toolBar.push(
                
-                    <a key={2} onClick={() => {this.props.lookUpMode(MAPACTIONS.LocationLookUp); this.activate("naipoiLookUp")}} className={this.state.naipoiLookUp ? "is-active": ""}>
+                    <a key={2} onClick={() => {this.activate("naipoiLookUp"); this.props.lookUpMode(MAPACTIONS.LocationLookUp, this.state.naipoiLookUp);}} className={this.state.naipoiLookUp ? "is-active": ""}>
                         <img src="/assets/img/icons/nai-poi-lookup.png" className="top-icon--img" title="Perform Location lookup" />
                     </a>
             )
