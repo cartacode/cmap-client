@@ -22,6 +22,7 @@ import {fetchCcirPirs} from 'actions/ccirpir';
 
 import {fetchLocations} from 'actions/location';
 
+import uuid from 'uuid/v4';
 
 class RequestForm extends React.Component {
 
@@ -30,6 +31,7 @@ class RequestForm extends React.Component {
 
     this.state = {
       CCIRPIR:[],
+      updatedLocation:'',
       toSummary: false,
       editFetched: false,
       clear: false,
@@ -286,9 +288,14 @@ setCCIRPIR = (ccirpirObj) =>{
     CCIRPIR: ccirpirObj.CCIRPIR,
   });
 }
-setOneLocation = (location) =>{
+setOneLocation = (location, currentLatLong) =>{
+  const updatedLocation = {
+    location,
+    uid: uuid(),
+    currentLatLong,
+  }
   this.setState({
-    eeiData: location,
+    updatedLocation
   })
 }
 
@@ -331,10 +338,23 @@ updatePirOptions = (items, pirdesc) => {
     });
 
   }
-
+}
+renderCCIRPIR = () =>{
+  if(this.state.CCIRPIR) {
+  const ccirpir = (
+    <ul>
+      {this.state.CCIRPIR.map((item, i) =>
+        <li key={i.toString()}>
+            {item}
+        </li>
+      )}
+    </ul>);
+    return ccirpir;
+  }
 }
 
 render() {
+  
 
   const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
 
@@ -417,11 +437,7 @@ render() {
           <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
           <div className="ccir-content">
             <div className="fw-800">CCIR:</div>
-            <div>{this.state.CCIRPIR[0] || ""}</div>
-
-            <div>{this.state.CCIRPIR[1] || ""}</div>
-
-            <div>{this.state.CCIRPIR[2] || ""}</div>
+              {this.renderCCIRPIR()}
           </div>
           <ShortHeaderLine headerText={translations['associate intelligence report']} />
           <div className="associate-content" />
@@ -492,7 +508,7 @@ render() {
       </form>
 
       { (this.state.intelRequest.IntelRequestID !== '') ?
-        <IntelEEI missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        <IntelEEI nearestNAIPOI={this.state.updatedLocation} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
       {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
 
