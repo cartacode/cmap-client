@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { NotificationContainer} from 'react-notifications';
 import { supportedLanguages } from 'dictionary/localization';
 import { Route, Redirect } from 'react-router-dom';
+import initialState from 'store/initialState';
 
 class HeaderComponent extends React.Component {
 
@@ -38,6 +39,7 @@ class HeaderComponent extends React.Component {
   }
 
   logoutCall = () => {
+    console.log(initialState.auth);
     localStorage.removeItem('session');
   }
 

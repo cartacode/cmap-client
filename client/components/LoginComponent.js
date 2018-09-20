@@ -136,7 +136,7 @@ class LoginComponent extends React.Component {
                   </div>
                 </div>
               </div> */}
-
+           <form action="" onSubmit={this.handleSubmit}>   
             <div className="col-md-3"></div>
               <ContentBlock 
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.login} editId = {0} />
@@ -145,15 +145,15 @@ class LoginComponent extends React.Component {
               <div className="row action-buttons">
                   <div className="menu-button">
                     <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                    <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
+                    <button type="submit" className='highlighted-button'>
                       Submit        
                     </button>
                     <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
-              
+              </form>    
             </div>
-
+            
             <div>
               <img src="/assets/img/login/line_down.png" /></div>
 
