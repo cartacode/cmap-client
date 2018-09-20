@@ -20,6 +20,19 @@ class LoginComponent extends React.Component {
   }
   }
 
+  componentDidMount () {
+    document.forms[0].elements[0].focus();
+    const { authenticated } = this.props;
+    if(authenticated) {
+      console.log("Called Auth");
+      console.log(location.href);
+      history.pushState(null, null, location.href);
+      window.onpopstate = function(event) {
+        history.go(1);
+      };
+    }
+  }
+
   onClear(){
     console.log("Cleared");
   }
