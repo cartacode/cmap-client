@@ -60,9 +60,9 @@ class LoginComponent extends React.Component {
   setSession = () => {
     const { loginData } = this.props;
     const { authenticated } = this.props;
-    console.log(authenticated);
+    // console.log(authenticated);
     let mySession = JSON.stringify(loginData);
-    console.log(mySession);
+    // console.log(mySession);
     localStorage.setItem('session',mySession);
     if (authenticated)
     { 

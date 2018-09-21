@@ -31,8 +31,8 @@ class NavigationComponent extends React.Component {
     if(ses) {
     let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
-    console.log(exp);
-    console.log(new Date().toISOString());
+    // console.log(exp);
+    // console.log(new Date().toISOString());
     let current = new Date().toISOString();
     if (exp < current && condition == true)           
     { localStorage.removeItem('session');

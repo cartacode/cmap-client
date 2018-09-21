@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NotificationManager } from 'react-notifications';
-import { Link } from 'react-router-dom';
+import Map, { viewerSize } from 'components/reusable/Map';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
 import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
+import { viewerIdentifiers } from '../../map/viewer';
 
 
 class CollectionManagerComponent extends React.Component {
@@ -216,14 +217,15 @@ class CollectionManagerComponent extends React.Component {
     
     return (
       <div>
-        <div className="row intel-request">
-          <div className="col-md-12 two-block">
+        <div className="row personnel">
+          <div className="two-block">
             <FullHeaderLine headerText={translations.CollectionMap} />
-            <img
+            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />
+            {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
               alt=""
-            />
+            /> */}
           </div>
 
           {/* <div className="col-md-6 two-block">
@@ -233,6 +235,8 @@ class CollectionManagerComponent extends React.Component {
           {/* <div className="col-md-6">
 
           </div> */}
+        </div>
+        <div className="row personnel">
           <div className="col-md-12">
 
             <div className="row collection-plan-table-margin-top">
