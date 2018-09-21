@@ -29,6 +29,9 @@ class RequestForm extends React.Component {
   constructor(props) {
     super(props);
 
+    const session = JSON.parse(localStorage.getItem('session'));
+
+    const fullName = session.FirstName + ' '+ session.LastName;
     this.state = {
       CCIRPIR:[],
       updatedLocation:'',
@@ -54,7 +57,7 @@ class RequestForm extends React.Component {
         // PrimaryPayload: '',
         // SecondaryPayload: '',
         //Armed: '',
-        PointofContact: 'UserProfile',
+        PointofContact: fullName,
         DSN: 'UserProfile',
         EmailSIPR: 'UserProfile',
         // ReportClassification: '',
@@ -230,7 +233,9 @@ class RequestForm extends React.Component {
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed == null || intelRequest.Armed == '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
-    intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
+    const session = JSON.parse(localStorage.getItem('session'));
+    intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
+    // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
     if(editId !== undefined && editId !== '0') {
@@ -388,19 +393,14 @@ render() {
 
   // Following fields is visible only to Collection manager and also only in case of edit
   const intelRequest3 = [
-    { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
+    // { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
-    { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
+    { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', valFieldID: 'OriginatorFirstName', readOnly: true },
     { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
     { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
   ];
 
-
-  const priorityOptions = [{ label: '--Select Item--', value: 0 }, { label: 'Low', value: 4 }, { label: 'Medium', value: 3 }, { label: 'High', value: 2 }, { label: 'urgent', value: 1 }];
-  // for(let i = 1; i <= 25; i++) {
-  //   priorityOptions.push({ label: i, value: i });
-  // }
 
   let intelRequest4 = [
 
