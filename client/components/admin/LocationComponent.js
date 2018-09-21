@@ -198,9 +198,10 @@ class LocationComponent
           
           <div className="filter-line Location-filter">
             <div></div>
-        <div className="col-md-3 select-filter">
+            {!this.state.baseModalOpen ?
+            <div className="col-md-3 select-filter">
             <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
-            </div>
+            </div>:null}
             {!this.state.baseModalOpen ?  
               
               <div className="add-button">

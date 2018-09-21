@@ -285,7 +285,7 @@ class BaseModal extends React.Component {
   reader.readAsDataURL(file);
   }
   submitData = () => {
-  
+    
     const { location, locationFiles } = this.state;
     const { editId } = this.props;
     
@@ -406,7 +406,7 @@ class BaseModal extends React.Component {
       { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image' },
       { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image' },
       { name: translations['Document'], type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file' },
-      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file' },
+      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file', extension: 'kml' },
     ];
 
     return (
@@ -434,8 +434,8 @@ class BaseModal extends React.Component {
         </div>
 		<div className = "row personnel">
           <div className="col-md-12">
-                  <Map size="100%" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-                </div>
+{/*                   <Map size='100%' viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
+ */}                </div>
         </div>
         <div className="row personnel" >
           <div className="under-location-content">
