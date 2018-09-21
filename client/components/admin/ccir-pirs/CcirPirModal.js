@@ -185,7 +185,7 @@ resetForm = () => {
 
 
 
-// file extenstion to upload should be KML
+/* // file extenstion to upload should be KML
 if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
   if(kmlFile.name.split('.').pop() !== 'kml'){
      // stop update 
@@ -196,8 +196,13 @@ if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
      // update dom 
       document.getElementsByName('EffectiveAreaKML')[0].value = null;
     }
-  }
 
+    console.log(JSON.stringify(kmlFile));
+    console.log(" h h h h "+kmlFile.size);
+    
+  } */
+
+ 
 
     if (kmlFile) {
       // instantiating new FileReader to read KML file
@@ -260,7 +265,7 @@ if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
       { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
       { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
       { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
-      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', required: true}
+      { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', extension:'kml', required: true}
     ];
 
     const ccirFields = [
