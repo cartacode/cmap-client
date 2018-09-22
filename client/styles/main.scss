@@ -1,7 +1,17 @@
+
 body {
   background: url("/assets/img/menu/background-dashboard.png") no-repeat;
   color: #cee3f5;
   background-size: cover;
+  #drawingToolBar{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    z-index: 2;
+    .toolbar{
+      max-width:50px;
+    }
+  }
 
   .mirrored-X-image {
     -moz-transform: scaleX(-1);
@@ -4895,8 +4905,8 @@ select.form-control {
   position: relative;
   .cesium-viewer-toolbar{
     position: absolute;
-    top:0;
-    left: 94%;
+    top:-10px;
+    left: -17px;
   }
   .cesium-home-button{
     border: 2px solid transparent;
@@ -4944,13 +4954,52 @@ select.form-control {
       }
     }
   }
+  #cesiumContainer {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    font-family: sans-serif;
+}
+#toolbar {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    display: inline;
+    margin: 10px;
+    padding: 0px;
+    background: white;
+}
+#logging {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    display: inline;
+    margin: 10px;
+    padding: 10px;
+    background: white;
+}
+.navigation-controls{
+  position: absolute;
+    right: 2px;
+    top: 0;
+    width: 33px;
+    border: 2px solid rgba(255,255,255,.1);
+}
+.navigation-control-icon-reset{
+  display: none;
+}
   .ico-location{
     width: 50px;
     height: 40px;
     z-index: 2;
     display: table;
-    top:30%;
-    left:96%;
+    top:45px;
+    left:1;
     position: absolute;
     border-collapse: collapse;
   
@@ -4959,11 +5008,9 @@ select.form-control {
       display: table-row;
       cursor: pointer;
       img{
-        background: dimgrey;
-        border-radius: 4px;
         max-width: 35px;
         height: 34px;
-        border-bottom: 3px solid #000;
+        border: 3px solid transparent;
       }
       &.is-active{
         img{

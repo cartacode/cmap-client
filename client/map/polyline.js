@@ -1,4 +1,4 @@
-import Cesium from 'cesium/Cesium'; // eslint-disable-line import/no-unresolved
+//import Cesium from 'cesium/Cesium'; // eslint-disable-line import/no-unresolved
 import uuid from 'uuid/v4';
 
 import { viewers } from 'map/viewer';
