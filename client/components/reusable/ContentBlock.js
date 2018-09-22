@@ -90,8 +90,28 @@ class ContentBlock extends React.Component {
       const name = event.target.name;
       const id = event.target.id;
       const file = event.target.files[0];
-      if(file.size > 5242880) {
-        alert('File size should be less than 5 MB.');
+      const extension = event.target.getAttribute('data-extension');
+      let fileSize = 5242880;   // 5Mb
+
+      // check for extension of file if extension mentioned
+      if(extension !== undefined && extension !== '' && extension !== null) {
+        if(file.name.split('.').pop() !== extension){
+            alert('Select a valid '+ extension+ ' File ');
+            document.getElementById(id).value= null;
+            return;
+        }else{
+          if(extension === 'kml')
+            {
+              // Set Size 2Mb
+              fileSize = 2097152;
+            }
+
+        }
+    }
+
+
+      if(file.size > fileSize) {
+        alert('File size should be less than '+ fileSize +' MB.');
         document.getElementById(id).value = null;
         this.updateContent(name, new File([''], ''));
       }else {
@@ -242,9 +262,9 @@ class ContentBlock extends React.Component {
           case 'file':
           if(item.required)
           {
-            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required/>);
+            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} required/>);
           }else
-            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />);
+            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} />);
             break;
 
         }

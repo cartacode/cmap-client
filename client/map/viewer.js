@@ -10,7 +10,8 @@ import {getImageryurl} from 'map/config';
 export const viewerIdentifiers = {
   intelRequest: 'INTEL_REQUEST',
   liveView: 'LIVE_VIEW',
-  location:'LOCATION',
+  location: 'LOCATION',
+  collectionPlan: 'COLLECTION_PLAN',
 };
 
 

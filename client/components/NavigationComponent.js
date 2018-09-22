@@ -27,18 +27,20 @@ class NavigationComponent extends React.Component {
   }
 
   componentDidUpdate () {
-    console.log("LoggedUpdate");
-    let expired = sessionStorage.getItem('expires');
+    let ses = JSON.parse(localStorage.getItem('session'));
+    if(ses) {
+    let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
-    console.log(exp);
-    console.log(new Date().toISOString());
+    // console.log(exp);
+    // console.log(new Date().toISOString());
     let current = new Date().toISOString();
     if (exp < current && condition == true)           
-    { sessionStorage.removeItem('jwtToken');
+    { localStorage.removeItem('session');
      console.log("Logged Out");
      this.props.history.push('/'); 
      condition = false;
     }
+  }
   }
 
   render() {

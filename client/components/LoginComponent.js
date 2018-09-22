@@ -20,6 +20,19 @@ class LoginComponent extends React.Component {
   }
   }
 
+  componentDidMount () {
+    document.forms[0].elements[0].focus();
+    const { authenticated } = this.props;
+    if(authenticated) {
+      console.log("Called Auth");
+      console.log(location.href);
+      history.pushState(null, null, location.href);
+      window.onpopstate = function(event) {
+        history.go(1);
+      };
+    }
+  }
+
   onClear(){
     console.log("Cleared");
   }
@@ -47,18 +60,17 @@ class LoginComponent extends React.Component {
   setSession = () => {
     const { loginData } = this.props;
     const { authenticated } = this.props;
-    console.log(authenticated);
-    sessionStorage.setItem('jwtToken', loginData.access_token);
-    sessionStorage.setItem('PersonnelID', loginData.PersonnelID);
-    sessionStorage.setItem('AssignedUnit', loginData.AssignedUnit);
-    sessionStorage.setItem('DeployedUnit', loginData.DeployedUnit);
-    sessionStorage.setItem('userName', loginData.userName);
-    sessionStorage.setItem('expires', loginData['.expires']);
+    // console.log(authenticated);
+    let mySession = JSON.stringify(loginData);
+    // console.log(mySession);
+    localStorage.setItem('session',mySession);
     if (authenticated)
     { 
+      console.log("Authenticated");
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
       formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
-      this.props.history.push('/admin/personnel'); }
+      this.props.history.replace('/admin/personnel'); 
+    }
   }
 
   handleSubmit = event => {
@@ -137,7 +149,7 @@ class LoginComponent extends React.Component {
                   </div>
                 </div>
               </div> */}
-
+           <form action="" onSubmit={this.handleSubmit}>   
             <div className="col-md-3"></div>
               <ContentBlock 
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.login} editId = {0} />
@@ -146,15 +158,15 @@ class LoginComponent extends React.Component {
               <div className="row action-buttons">
                   <div className="menu-button">
                     <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                    <button type="submit" className='highlighted-button' onClick={this.handleSubmit}>
+                    <button type="submit" className='highlighted-button'>
                       Submit        
                     </button>
                     <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
               </div>
-              
+              </form>    
             </div>
-
+            
             <div>
               <img src="/assets/img/login/line_down.png" /></div>
 

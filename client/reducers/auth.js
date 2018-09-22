@@ -17,12 +17,17 @@ export default function auth(state = initialState.auth, { payload, type }) {
         authenticated:true,
         isFetching: false,
       };
+      case ACCOUNT__LOGIN.FAILURE:
+      return {
+        ...state,
+        authenticated:false,
+      };
     case ACCOUNT__LOGOUT.REQUEST:
       return {
         
       };
     case ACCOUNT__LOGOUT.SUCCESS:
-    sessionStorage.removeItem('jwtToken');
+    localStorage.removeItem('jwtToken');
     <Redirect to='/login'/>
       return {
         ...state,

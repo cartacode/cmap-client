@@ -17,7 +17,7 @@ class MissileModal extends React.Component {
       file: '',
       editFetched: false,
       clear: false,
-      missilePhotoPreviewUrl: '',
+      missilePhotoPreviewUrl: '/assets/img/admin/rockets.png',
       oneMunition: {},
       munition: {
         MunitionID: '',
@@ -104,12 +104,16 @@ class MissileModal extends React.Component {
   }
 
   editComponent = (editId) => {
+    // on click of edit clear old image if any
+    this.setState({ 
+      missilePhotoPreviewUrl: ''
+    });
     this.props.fetchMunitionsById(editId).then(() => {
       this.setState(
         {
           editFetched: true,
           munition: this.props.oneMunition,
-          missilePhotoPreviewUrl: null,
+          missilePhotoPreviewUrl: this.props.oneMunition.MunitionPhoto,
           isImagedRequired:  false
         });
     });
@@ -132,7 +136,8 @@ class MissileModal extends React.Component {
     }
     if (editId === '0' && prevProps.editId !== editId) {
       this.setState({ 
-        clear: true
+        clear: true,
+        missilePhotoPreviewUrl: ''
       });
     }
   }
@@ -347,15 +352,18 @@ class MissileModal extends React.Component {
     }
     let { missilePhotoPreviewUrl } = this.state;
     let $imagePreview = '';
-    const imageUrl = this.props.oneMunition.MunitionPhoto;
-    if (imageUrl !== undefined && imageUrl !== "" &&  this.props.editId != '0') {
+    //const imageUrl = this.props.oneMunition.MunitionPhoto;
+    /* if (imageUrl !== undefined && imageUrl !== "" &&  this.props.editId != '0') {
       $imagePreview = (<img src={imageUrl} alt="" className="photo" alt=""/>);
-    } else {
+    }  */
+    
+    if (missilePhotoPreviewUrl || missilePhotoPreviewUrl === '' ) {
+      $imagePreview = (<img src={missilePhotoPreviewUrl} alt="" className="photo" alt="" />);
+    }  
+    else {
       $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
-    if (missilePhotoPreviewUrl) {
-      $imagePreview = (<img src={missilePhotoPreviewUrl} alt="" className="photo" alt="" />);
-    } 
+   
 
    
 

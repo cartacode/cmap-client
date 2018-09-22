@@ -17,8 +17,8 @@ class WamiModal extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      payloadPhotoPreviewUrl: '',
-      payloadWireframePreviewUrl: '',
+      payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
+      payloadWireframePreviewUrl: '/assets/img/admin/r2d2-1.png',
       payload: {
         PayloadID: '',
         PayloadReferenceCode: '',
@@ -104,6 +104,10 @@ class WamiModal extends React.Component {
   }
 
   editComponent = (editId) => {
+    this.setState({ 
+      payloadPhotoPreviewUrl: '',
+      payloadWireframePreviewUrl: '',
+    });
     this.props.fetchPayloadsById(editId).then(() => {
       this.setState({
         editFetched: true,
@@ -220,7 +224,6 @@ class WamiModal extends React.Component {
    */
   handlePhotoPreviewURL = (uploadedFile) => {
     let reader = new FileReader();
-    debugger;
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'PayloadPhoto') {
       reader.onloadend = () => {
@@ -335,6 +338,8 @@ class WamiModal extends React.Component {
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({ 
         clear: true,
+        payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
+        payloadWireframePreviewUrl: '/assets/img/admin/r2d2-1.png',
         wamiPayloadFiles : {}
        });
       document.getElementById('payloadform').reset();
@@ -355,13 +360,13 @@ class WamiModal extends React.Component {
     let $imagePreview = '';
     let $imagePreview2 = '';
 
-    if (payloadPhotoPreviewUrl) {
+    if (payloadPhotoPreviewUrl || payloadPhotoPreviewUrl === '') {
       $imagePreview = (<img src={payloadPhotoPreviewUrl} alt="" className="photo" alt="" />);
     } else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
 
-    if (payloadWireframePreviewUrl) {
+    if (payloadWireframePreviewUrl || payloadWireframePreviewUrl === '') {
       $imagePreview2 = (<img src={payloadWireframePreviewUrl} alt="" className="photo" alt="" />);
     } else {
       $imagePreview2 = (<img src="/assets/img/admin/r2d2-1.png" className="photo" alt="" />);

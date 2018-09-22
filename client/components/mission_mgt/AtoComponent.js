@@ -83,7 +83,8 @@ moveLeft = (row) => {
   };
 
   routeATOGenerations = () => {
-    const unitId = 25;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     const statusId = IntelConstants.STATUS.AAG.id;// 'AAG';
     this.props.routeATOGeneration(unitId, statusId).then(() => {
       // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
@@ -92,7 +93,8 @@ moveLeft = (row) => {
   };
 
   loadData = () => {
-    const unitId = 25;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     // CP = All intel with Status = APR for given unitId
     this.props.fetchATOCollectionPlans(IntelConstants.STATUS.APR.id, unitId);
 

@@ -13,8 +13,8 @@ class SargmtiModal extends React.Component {
     super(props);
     this.state = {
       file: '',
-      payloadPhotoPreviewUrl: '',
-      payloadWireframePreviewUrl: '',
+      payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
+      payloadWireframePreviewUrl: '/assets/img/admin/r2d2-1.png',
       clear: false,
       payload: {
         PayloadID: '',
@@ -101,6 +101,10 @@ class SargmtiModal extends React.Component {
   }
 
   editComponent = (editId) => {
+    this.setState({ 
+      payloadPhotoPreviewUrl: '',
+      payloadWireframePreviewUrl: '',
+   });
     this.props.fetchPayloadsById(editId).then(() => {
       this.setState({
         editFetched: true,
@@ -323,6 +327,8 @@ class SargmtiModal extends React.Component {
     if (confirm("Do you want to clear all data from this form?")) {
       this.setState({ 
         clear: true,
+        payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
+        payloadWireframePreviewUrl: '/assets/img/admin/r2d2-1.png',
         sargmtiPayloadFiles : {}
       });
       document.getElementById('payloadform').reset();
@@ -343,14 +349,14 @@ class SargmtiModal extends React.Component {
     let $imagePreview = '';
     let $imagePreview2 = '';
 
-    if (payloadPhotoPreviewUrl) {
+    if (payloadPhotoPreviewUrl || payloadPhotoPreviewUrl === '') {
       $imagePreview = (<img src={payloadPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }
     else {
       $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
     }
 
-    if (payloadWireframePreviewUrl) {
+    if (payloadWireframePreviewUrl || payloadWireframePreviewUrl === '') {
       $imagePreview2 = (<img src={payloadWireframePreviewUrl} alt="" className="photo" alt="" />);
     }
     else {

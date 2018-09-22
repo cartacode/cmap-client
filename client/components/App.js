@@ -29,8 +29,8 @@ class App extends React.Component {
 
   componentDidUpdate () {
     let token = sessionStorage.getItem('jwtToken');
-    console.log("Logged Out");
-    console.log(token);
+    // console.log("Logged Out");
+    // console.log(token);
     let expired = sessionStorage.getItem('expires');
 if(!token || token === '') {//if there is no token, dont bother
   return;

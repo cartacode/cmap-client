@@ -230,7 +230,11 @@ class RequestForm extends React.Component {
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed == null || intelRequest.Armed == '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
-    intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
+    const session = JSON.parse(localStorage.getItem('session'));
+    console.log('session '+session);
+  console.log('session personnel id'+session.PersonnelID);
+    intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
+    // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
 
     console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
     if(editId !== undefined && editId !== '0') {
@@ -398,11 +402,6 @@ render() {
   ];
 
 
-  const priorityOptions = [{ label: '--Select Item--', value: 0 }, { label: 'Low', value: 4 }, { label: 'Medium', value: 3 }, { label: 'High', value: 2 }, { label: 'urgent', value: 1 }];
-  // for(let i = 1; i <= 25; i++) {
-  //   priorityOptions.push({ label: i, value: i });
-  // }
-
   let intelRequest4 = [
 
     { name: translations['DispositionStaus'], type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId , valFieldID: 'StatusId' , required:true},
@@ -527,7 +526,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     oneIntelRequest: state.intelrequest.oneIntelRequest,
     allCcirPirs: state.ccirpir.allCcirPirs,
-    allLocations: state.locations.allLocations
+    allLocations: state.locations.allLocations,
   };
 };
 

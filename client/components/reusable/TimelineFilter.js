@@ -10,7 +10,7 @@ import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
 import { connect } from 'react-redux';
 import { teamFilter, platformFilter } from '../../actions/mssionmgt';
-import { MissionConsts, UnitConsts } from '../../dictionary/constants';
+import { MissionConsts, UnitConsts, DateConsts } from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 import ReactTable from 'react-table';
 
@@ -249,15 +249,18 @@ class TimelineFilter extends React.Component {
     }
   }
 
-  findPlatformBased =()=>{
+  findPlatformBased = () => {
+    
     const { filter } = this.state;
+    const startDate = moment(filter.startDate).format(DateConsts.DB_DATETIME_FORMAT);
+    const endDate = moment(filter.endDate).format(DateConsts.DB_DATETIME_FORMAT);
     const data =
       {
         'COCOMId': filter.cocomId,
         'UnitId': filter.unitId,
         'StatusId': filter.platformStatusId,
-        'StartDate': filter.startDate,
-        'EndDate': filter.endDate,
+        'StartDate': startDate,
+        'EndDate': endDate,
       };
 
     this.props.platformFilter(data).then(() => {
@@ -269,25 +272,30 @@ class TimelineFilter extends React.Component {
   }
 
   findTeamBased =()=> {
+
     const { filter } = this.state;
-    const {tab}  = this.props;
+    const { tab } = this.props;
 
     let unitType = '';
-    if(this.props.tab === MissionConsts.TABS.FOP) {
+    if(tab === MissionConsts.TABS.FOP) {
       unitType = UnitConsts.TYPE.CREW;
     }
 
-    if(this.props.tab === MissionConsts.TABS.PED) {
+    if(tab === MissionConsts.TABS.PED) {
       unitType = UnitConsts.TYPE.PED;
     }
-    const unitId = 15; // this will come from session
+    const startDate = moment(filter.startDate).format(DateConsts.DB_DATETIME_FORMAT);
+    const endDate = moment(filter.endDate).format(DateConsts.DB_DATETIME_FORMAT);
+    // const unitId = 15; // this will come from session
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     const data =
       {
         'ParentUnitId': unitId,
         'UnitType': unitType,
         'StatusId': filter.teamStatusId,
-        'StartDate': filter.startDate,
-        'EndDate': filter.endDate,
+        'StartDate': startDate,
+        'EndDate': endDate,
       };
     this.props.teamFilter(data).then(() => {
       const { filterResults } = this.props;
@@ -299,7 +307,17 @@ class TimelineFilter extends React.Component {
 
   render() {
     const { translations, tab } = this.props;
-    const { selectedResource, startDate, endDate } = this.state.filter;
+    const { selectedResource } = this.state.filter;
+    let { startDate, endDate } = this.state.filter;
+    
+    // as custom datepicker retunrs strig date on date select so nned to convert this to date obj
+    if(typeof startDate === 'string') {
+      startDate = moment(startDate).toDate();
+    }
+    if(typeof endDate === 'string') {
+      endDate = moment(endDate).toDate();
+    }
+
     // let { filterResults } = this.props;
     let { results } = this.state;
 
@@ -318,7 +336,9 @@ class TimelineFilter extends React.Component {
 
 
     let titleField = 'Name';
-    const rootUnitId = 15;
+    // const rootUnitId = 15;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const rootUnitId = session.AssignedUnit;
     // unist api will be diff for FlighOps and Ped Screens
     let unitsUrl = 'CommandStructure/GetUserUnitAndSubordinateUnits?rootUnitID=' + rootUnitId;
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
@@ -338,7 +358,23 @@ class TimelineFilter extends React.Component {
         const timeLine = row.TimeLine;
         for(let i = 0; i < timeLine.length; i++) {
           itemCount++;
-          const newItem = { id: itemCount, group: group.id, title: timeLine[i].statusId, start_time: moment(timeLine[i].startDate), end_time: moment(timeLine[i].endDate) };
+          const newItem = {
+            id: itemCount,
+            group: group.id,
+            title: timeLine[i].statusId,
+            start_time: moment(timeLine[i].startDate),
+            end_time: moment(timeLine[i].endDate),
+            style: {
+              backgroundColor: 'ORANGE',
+              // color: 'yellow',
+            },
+            itemProps: {
+              // these optional attributes are passed to the root <div /> of each item as <div {...itemProps} />
+              'data-custom-attribute': 'Random content',
+              'aria-hidden': true,
+              onDoubleClick: () => { console.log('You clicked double!') }
+            },
+          };
           newItems.push(newItem);
         }
 

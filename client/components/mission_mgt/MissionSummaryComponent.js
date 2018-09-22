@@ -28,20 +28,6 @@ class MissionSummaryComponent extends React.Component {
     this.props.fetchMissionSummary();
   }
   
- 
-
-  
-
- 
-
-  
-
-
-
-  handleChange(value) {
-    //console.log(value);
-  }
-
   getColor= (row)=> {
     return getIntelStatusColor(row.original.Status);
   }
@@ -60,18 +46,9 @@ class MissionSummaryComponent extends React.Component {
         Header: translations["Tail#"],
         accessor: 'TailNumber',
         Cell: row => <div>
-        <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
-        <span>{row.value}</span>
-      </div>,
-        // filterMethod: (filter, row) =>
-        //   row[filter.id].startsWith(filter.value),
-
-        // sortMethod: (a, b) => {
-        //   if (a.length === b.length) {
-        //     return a > b ? 1 : -1;
-        //   }
-        //   return a.length > b.length ? 1 : -1;
-        // }// String-based value accessors!
+          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          <span>{row.value}</span>
+        </div>,
       },
       {
         Header: translations['Crew Team'],
@@ -97,26 +74,26 @@ class MissionSummaryComponent extends React.Component {
         }
       },
       {
-        Header: translations['StatusId'],
-        accessor: 'StatusId'
+        Header: translations.status,
+        accessor: 'Status',
       },
      
       {
         Header: translations['view'],
         accessor: 'MissionId',
         filterable: false,
-      //   Cell: row => <div>
+        //   Cell: row => <div>
         //  <a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" >
-         //   <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
+        //   <span className="glyphicon glyphicon-edit"/></a>&nbsp;  
         //  {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > 
         //  <span className="glyphicon glyphicon-trash"/></a> :
-       //     <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-       // </div>,
+        //     <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+        // </div>,
         Cell: row => <div>
-                        <Link to={`${editurl}${row.value}`} className="btn btn-primary">
-                          <span className="glyphicon glyphicon-eye-open"/>
-                        </Link>
-                     </div>,
+          <Link to={`${editurl}${row.value}`} className="btn btn-primary">
+            <span className="glyphicon glyphicon-eye-open"/>
+          </Link>
+        </div>,
       } 
     ];
 

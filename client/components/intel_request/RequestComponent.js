@@ -126,7 +126,7 @@ class RequestComponent extends React.Component {
         filterable: false,
         Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
         
-      {   (row.original.IsInCollectionPlan || row.original.MissionId != null || row.original.Abbreviation === "APR") ?  '' :
+      {   (row.original.MissionId !== null) ? '' :
           <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
       }
       

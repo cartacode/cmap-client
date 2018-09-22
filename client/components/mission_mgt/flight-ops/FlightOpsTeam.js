@@ -71,7 +71,9 @@ class FlightOpsTeam extends React.Component {
   }
 
   loadData = () => {
-    const unitId = 25;
+    // const unitId = 25;
+    const session = JSON.parse(localStorage.getItem('session'));
+    const unitId = session.AssignedUnit;
     // Left Table: Status = AAG and Crew Team Id == null
     this.props.flightOpsAtoCrew(unitId);
     // Right Table: Status = AAG and Crew Team Id != null
