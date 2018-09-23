@@ -93,8 +93,7 @@ module.exports = function getWebpackConfig() {
 
     resolve: {
       alias: {
-       // cesium: 'cesium/Source',
-        //cesiumNav: 'cesium/Source/viewerCesiumNavigationMixin',
+        cesium: 'cesium/Source',
       },
       extensions: ['.js', '.json'],
       modules: [
