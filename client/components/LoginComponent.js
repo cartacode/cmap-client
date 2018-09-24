@@ -8,12 +8,14 @@ import ContentBlock from './reusable/ContentBlock';
 import ContentFull from './reusable/ContentFull';
 import PersonnelComponent from '../components/admin/PersonnelComponent.js';
 import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
+import Loader from './reusable/Loader';
 
 class LoginComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       login: {
           'grant_type':'password',
       }
@@ -66,7 +68,7 @@ class LoginComponent extends React.Component {
     localStorage.setItem('session',mySession);
     if (authenticated)
     { 
-      console.log("Authenticated");
+      //console.log("Authenticated");
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
       formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
       this.props.history.replace('/admin/personnel'); 
@@ -78,10 +80,11 @@ class LoginComponent extends React.Component {
     event.preventDefault();
     let {  login } = this.state;
     let { loginData } = this.props;
-    console.log(login);
+   // console.log(login);
+    this.setState({loading: true});
       this.props.login(login).then(() => {
         // Stop Loader
-        // this.setState({loading:false});
+         this.setState({ loading: false });
         // this.props.onClose(NoticeType.ADD);
         this.setSession();
       //  this.props.history.push('/admin/personnel');
@@ -98,6 +101,7 @@ class LoginComponent extends React.Component {
     
     return (
       <div className="login">
+      <Loader loading = { this.state.loading } />
         <div className="col-md-12">
           <FullHeaderLine headerText="unclassified"/>
         </div>

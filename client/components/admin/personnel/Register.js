@@ -359,9 +359,10 @@ class Register extends React.Component {
     let {  register } = this.state;
     let { editId } = this.props;
       
+    this.setState({ loading: true });
       this.props.addRegister(register).then(() => {
         // Stop Loader
-        // this.setState({loading:false});
+        this.setState({loading:false});
         // this.props.onClose(NoticeType.ADD);
         alert("User Registered");
       });
