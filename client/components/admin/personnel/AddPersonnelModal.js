@@ -141,11 +141,15 @@ class AddPersonnelModal extends React.Component {
         Clearance: generalData.Clearance,
         CACid: generalData.CACid,
         CallSign: generalData.CallSign,
+        UserName: generalData.UserName,
+        Password: generalData.Password,
+        ConfirmPassword: generalData.ConfirmPassword,
       },
       // selectedBranch: generalData.ServiceBranch,
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
     }, () => {
+      console.log(this.state.personnel);
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
@@ -240,7 +244,7 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-
+    console.log(this.state.personnel);
     event.preventDefault();
     let {  personnel } = this.state;
     let { editId } = this.props;
@@ -271,6 +275,7 @@ class AddPersonnelModal extends React.Component {
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
+      console.log(personnel);
       formData.append('personnelFormData', JSON.stringify(personnel));
       // Start Loader
       this.setState({loading:true});
@@ -488,6 +493,9 @@ render() {
     {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
     {name: translations['CAC ID'], type: 'number', domID: 'CACid', valFieldID: 'CACid'},
     {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
+    {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
+    {name: 'Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
+    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
   ];
 
   const organisationFields = [
