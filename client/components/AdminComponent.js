@@ -17,6 +17,7 @@ import OrgBuilderContainer from '../containers/admin/OrgBuilderContainer';
 import ComNetContainer from '../containers/admin/ComNetContainer';
 import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
+import ReferenceDocsContainer from '../containers/admin/ReferenceDocsContainer';
 import SubMenu from './reusable/SubMenu';
 
 class AdminComponent extends React.Component {
@@ -113,7 +114,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} />
           <Route path={`${match.url}/com-net`} component={ComNetContainer} />
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
-          <Route path={`${match.url}/sys-config`} component={SysConfigContainer} />
+          <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />
         </Switch>
       </div>
     );
