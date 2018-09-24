@@ -486,7 +486,7 @@ render() {
     {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
     {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
     {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
-    {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid'},
+    {name: translations['CAC ID'], type: 'number', domID: 'CACid', valFieldID: 'CACid'},
     {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
   ];
 
@@ -508,10 +508,10 @@ render() {
   ];
 
   const contactFields = [
-    {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required:true},
+    {name: translations['DSN'], type: 'number', domID: 'DSN', valFieldID: 'DSN', required:true},
     {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required: true },
     {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required: true },
-    {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
+    {name: translations['Chat ID'], type: 'number', domID: 'ChatID', valFieldID: 'ChatID'},
 
   ];
 
