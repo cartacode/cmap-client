@@ -677,6 +677,7 @@
 	"StatusId":"StatusId",
 	"IR#":"IR#",
   "File Upload": "File Upload",
-	"upload": "UPLOAD"
+	"upload": "UPLOAD",
+	"Telephone": "Telephone"
   
 }

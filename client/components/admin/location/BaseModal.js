@@ -394,7 +394,7 @@ class BaseModal extends React.Component {
 
     const contactFields = [
       { name: translations['Point of Contact'], type: 'input', domID: 'dispLocationPointofContact', valFieldID: 'LocationPointofContact' },
-      { name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'LocationDSN' },
+      { name: translations['Telephone'], type: 'input', domID: 'DSN', valFieldID: 'LocationDSN' },
       { name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'LocationEmailNIPR' },
       { name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'LocationEmailSIPR' },
       { name: translations['Frequency'], type: 'number', domID: 'LocationFrequency', valFieldID: 'LocationFrequency' },
