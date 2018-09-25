@@ -65,7 +65,7 @@ class ContentBlock extends React.Component {
       bool = regexValue.test(value);
       if(!bool){
         document.getElementById(id).value = '';
-        document.getElementById(id).placeholder = 'Kindly Select Only '+regexType+' Value';
+        document.getElementById(id).placeholder = 'Please Select Only '+regexType+' Value';
         value = '';
       }
     }
