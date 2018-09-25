@@ -743,6 +743,9 @@
   "Remove": "Remove",
   "Add": "Add",
   "Actions": "Actions",
-	"Telephone": "Telephone"
+	"Telephone": "Telephone",
+	"MissionData": "Mission Data",
+  "FlightPlan": "Flight Plan",
+	"IntelReport": "Intel Report"
   
 }

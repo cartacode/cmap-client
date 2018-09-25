@@ -135,7 +135,9 @@ class MissionDetailComponent extends React.Component {
     ];
 
     const missionBlock4 = [  
-      { name: translations.MissionReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file' },
+      { name: translations.IntelReport, type: 'file', domID: 'IntelReport', valFieldID: 'IntelReport', fileType: 'file' },
+      { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
+
     ];
 
     const requirementsHeader = [translations['Priority#'], translations['eei#'], translations['Name'], translations['threat'], translations['Location'], translations['grid'], translations['POIs'], translations['LIMIDS Request'], translations['view'], translations['edit'], translations['del'],];
@@ -176,7 +178,7 @@ class MissionDetailComponent extends React.Component {
               
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
-                {translations.MissionReport}
+                {translations.MissionData}
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>

@@ -488,5 +488,8 @@
 	"IR#":"IR#",
 	"File Upload": "File Upload",
 	"upload": "UPLOAD",
-	"Telephone": "Telephone"
+	"Telephone": "Telephone",
+	"MissionData": "Mission Data",
+	"FlightPlan": "Flight Plan",
+	"IntelReport": "Intel Report"
 }
