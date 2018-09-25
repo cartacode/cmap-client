@@ -111,6 +111,7 @@ class ContentBlock extends React.Component {
       const file = event.target.files[0];
       const extension = event.target.getAttribute('data-extension');
       let fileSize = 5242880;   // 5Mb
+      let fileSizeToDisplay = '5 MB';
 
       // check for extension of file if extension mentioned
       if(extension !== undefined && extension !== '' && extension !== null) {
@@ -123,6 +124,7 @@ class ContentBlock extends React.Component {
             {
               // Set Size 2Mb
               fileSize = 2097152;
+              fileSizeToDisplay = '2 MB';
             }
 
         }
@@ -130,7 +132,7 @@ class ContentBlock extends React.Component {
 
 
       if(file.size > fileSize) {
-        alert('File size should be less than '+ fileSize +' MB.');
+        alert('File size should be less than '+ fileSizeToDisplay);
         document.getElementById(id).value = null;
         this.updateContent(name, new File([''], ''));
       }else {
