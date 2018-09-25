@@ -578,7 +578,9 @@ body .login {
       }
     }
   }
-
+  .login-info .action-buttons .menu-button {
+  width: 100%;
+}
   .app-name {
     height: 10%;
     text-transform: uppercase;
@@ -4661,6 +4663,27 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  .login .header-line .header-text {
+      margin-top: -3px!important;
+    font-size: 14px!important;
+    text-transform: uppercase;
+}
+  .login-win img {
+    width: 100%;
+}
+
+.login .second-header-line .header-text {
+
+  font-size: 14px!important;
+  text-transform: uppercase;}
+
+.login-img img {
+  width: 100%;
+}
+.login .login-part .login-img {
+  text-align: center;
+  width: 100%!important;
+}
   .select-filter {
     margin-bottom: 20px;
 }

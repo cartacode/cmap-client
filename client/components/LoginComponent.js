@@ -154,7 +154,7 @@ class LoginComponent extends React.Component {
                 </div>
               </div> */}
            <form action="" onSubmit={this.handleSubmit}>   
-            <div className="col-md-3"></div>
+           
               <ContentBlock 
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.login} editId = {0} />
               

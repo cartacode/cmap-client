@@ -312,7 +312,7 @@ class ContentBlock extends React.Component {
     render() {
 
       return (
-        <div className="col-md-4 info-block">
+        <div className="col-md-6 col-md-offset-3  col-xs-12  info-block">
           <div className="info-header">
             <img src={this.props.headerLine} alt="" />
             <div className="header-text">
