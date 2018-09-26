@@ -4997,6 +4997,9 @@ select.form-control {
   // display: none;
   }
 }
+#logging{
+  display: none;
+}
 @mixin  toolbar-border-radius {
   -moz-transition: all .51s;
   -o-transition: all .51s;
@@ -5035,8 +5038,8 @@ select.form-control {
     height: 40px;
     z-index: 2;
     display: table;
-    top:30%;
-    left:96%;
+    top:20%;
+    left:4px;
     position: absolute;
     border-collapse: collapse;
   

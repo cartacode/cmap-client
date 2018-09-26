@@ -270,9 +270,9 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-//if(focus) {
+if(focus) {
   viewer.flyTo(viewer.entities);
-//}
+}
 
 }
 export function moveFar(viewerId){

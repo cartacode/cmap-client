@@ -62,11 +62,11 @@ export default class Map extends React.PureComponent {
           this.props.setOneLocation(nearestNeighbour, currenLatLong);
           
       default:
-          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
+          //addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude, true);
           if(this.props.updateLatLong) {
             viewer.entities.removeAll();
           
-            addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
+            addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude, true);
 
           
             this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
@@ -76,7 +76,7 @@ export default class Map extends React.PureComponent {
     }
   }
   componentDidMount() {
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar, true);
   }
   lookUpMode = (mode, isSet) =>{
     this.mapOperatingMode = isSet && mode;
