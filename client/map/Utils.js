@@ -40,10 +40,10 @@ function performKMLLookUp(currentLatLong) {
           var centers=KMLdata[i].CenterPoint.split(";");
           if(centers.length > 1){
             for(let j=0; centers[j]; j++) {
-              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description5,KMLdata[i].Description6,KMLdata[i].Description7, KMLdata[i].Description8]});
+              centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].MissionName});
             }
           } else{
-            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: [KMLdata[i].Description5,KMLdata[i].Description6,KMLdata[i].Description7, KMLdata[i].Description8]});
+            centerPoints.push({CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName,point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].MissionName});
             
           }
         }
@@ -57,10 +57,14 @@ function performKMLLookUp(currentLatLong) {
       let distances = [];
       for(let i=0; centerPoints[i]; i++){
         let point = centerPoints[i].point.split(",");
-        let xDistance = Number(point[0]) - currentLatLong.longitude;
-        let yDistance = Number(point[1]) - currentLatLong.latitude;
-        let distance = Math.sqrt(yDistance*yDistance + xDistance*xDistance);
-        distances.push({distance, index: i});
+        if(!isNaN(point[0] && !isNaN(point[1]))){
+
+          let xDistance = Number(point[0]) - currentLatLong.longitude;
+          let yDistance = Number(point[1]) - currentLatLong.latitude;
+          let distance = Math.sqrt(yDistance*yDistance + xDistance*xDistance);
+          distances.push({distance, index: i});
+        }
+       
     
       }
       

@@ -68,6 +68,7 @@ export default class Map extends React.PureComponent {
             viewer.entities.removeAll();
           
             addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
+
           
             this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
           }
@@ -76,7 +77,7 @@ export default class Map extends React.PureComponent {
     }
   }
   componentDidMount() {
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar);
   }
   lookUpMode = (mode, isSet) =>{
     this.mapOperatingMode = isSet && mode;
@@ -90,12 +91,13 @@ export default class Map extends React.PureComponent {
 
   render() {
     const { size = viewerSize.medium } = this.props;
-
+    
     return (
       <div id={this._elementId} className="map-wrapper" style={{ width: `${size}%` }}>
-      {/* <div id="drawingToolBar"></div>
-      <div id="logging">
-</div> */}
+        
+        <div id="drawingToolBar"></div>
+        <div id="logging">
+        </div>
         <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} />
       </div>
     );

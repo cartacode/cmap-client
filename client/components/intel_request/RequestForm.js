@@ -347,15 +347,13 @@ renderCCIRPIR = () =>{
   if(this.state.CCIRPIR) {
   const ccirpir = (
     <ul>
-      {this.state.CCIRPIR.map((item, i) =>
-        item ?
-        <li key={i.toString()}>
-            {item}
-        </li> : ""
-      )}
+      <li>
+          {this.state.CCIRPIR}
+        </li>
     </ul>);
     return ccirpir;
   }
+
 }
 
 render() {
