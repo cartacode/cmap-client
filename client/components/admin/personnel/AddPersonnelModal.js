@@ -106,6 +106,8 @@ class AddPersonnelModal extends React.Component {
   editComponent = (editId) => {
 
     document.getElementById('UserName').readOnly = true;
+    document.getElementsByName('Password')[0].required = false;
+    document.getElementsByName('ConfirmPassword')[0].required = false;
 
     this.setState({
        imagePreviewUrl:'',
@@ -127,7 +129,8 @@ class AddPersonnelModal extends React.Component {
   stopupd = () => {
     this.setState({ editFetched: false });
   }
-  
+
+
   handleGeneralPersonnelData = (generalData) => {
     const { personnel, selectedBranch, selectedRank } = this.state;
 
@@ -164,6 +167,25 @@ class AddPersonnelModal extends React.Component {
       }
 
     });
+
+    document.getElementById('UserName').onkeypress = function(e){
+      if (e.which == 32)
+      return false;
+  }
+
+  document.getElementsByName('ConfirmPassword')[0].onkeyup = function(){
+    if (document.getElementsByName('Password')[0].value !=
+    document.getElementsByName('ConfirmPassword')[0].value) {
+      document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'Password not matching';
+  } else {
+  
+
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'Password matching';
+  }
+  }
+
 
   }
 
@@ -602,6 +624,7 @@ render() {
               data={this.handleContactInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>
+        <span id='message'></span>
       </div>
       <div className="row action-buttons">
         <div className="menu-button">
