@@ -148,6 +148,17 @@ export default {
     loginData: {},
     authenticated:false,
     isFetching: false,
+  },
+
+  dashboards: {
+    opsPlatform: {},
+    opsPayload: {},
+    opsMission: [],
+    aisrOperation: [],
+    latestIntelligence: [],
+    upcomingMissions: [],
+    liveOperations: [],
+    isFetching: false,
   }
 
 };
