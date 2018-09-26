@@ -55,15 +55,14 @@ export default class Map extends React.PureComponent {
           nearestNeighbour = UTILS["naipoiLookUp"](currenLatLong, viewerId);
           //moveFar(viewerId);
           viewer.entities.removeAll();
-          addPoint(Number(nearestNeighbour[0].locationLongitude), Number(nearestNeighbour[0].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[0].type+" "+nearestNeighbour[0].locationLatitude+","+nearestNeighbour[0].locationLongitude, true);
+          addPoint(Number(nearestNeighbour[0].locationLongitude), Number(nearestNeighbour[0].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[0].type+" "+nearestNeighbour[0].locationLatitude+","+nearestNeighbour[0].locationLongitude, false);
           
-          addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[1].type+" "+nearestNeighbour[1].locationLatitude+","+nearestNeighbour[1].locationLongitude, true);
-          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude, true);
-          
+          addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, "Nearest "+nearestNeighbour[1].type+" "+nearestNeighbour[1].locationLatitude+","+nearestNeighbour[1].locationLongitude, false);
           console.log("nearest nai/poi", nearestNeighbour);
           this.props.setOneLocation(nearestNeighbour, currenLatLong);
           
       default:
+          addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude);
           if(this.props.updateLatLong) {
             viewer.entities.removeAll();
           
@@ -94,10 +93,13 @@ export default class Map extends React.PureComponent {
     
     return (
       <div id={this._elementId} className="map-wrapper" style={{ width: `${size}%` }}>
+<<<<<<< HEAD
         
         <div id="drawingToolBar"></div>
         <div id="logging">
         </div>
+=======
+>>>>>>> 9c4b3121a0f3d9283cbcdbd2e70aab09599d91b9
         <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} />
       </div>
     );

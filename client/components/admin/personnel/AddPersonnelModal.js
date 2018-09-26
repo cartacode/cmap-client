@@ -104,6 +104,11 @@ class AddPersonnelModal extends React.Component {
   }
 
   editComponent = (editId) => {
+
+    document.getElementById('UserName').readOnly = true;
+    document.getElementsByName('Password')[0].required = false;
+    document.getElementsByName('ConfirmPassword')[0].required = false;
+
     this.setState({
        imagePreviewUrl:'',
        imagePreviewUrl2:''
@@ -124,7 +129,8 @@ class AddPersonnelModal extends React.Component {
   stopupd = () => {
     this.setState({ editFetched: false });
   }
-  
+
+
   handleGeneralPersonnelData = (generalData) => {
     const { personnel, selectedBranch, selectedRank } = this.state;
 
@@ -141,11 +147,15 @@ class AddPersonnelModal extends React.Component {
         Clearance: generalData.Clearance,
         CACid: generalData.CACid,
         CallSign: generalData.CallSign,
+        UserName: generalData.UserName,
+        Password: generalData.Password,
+        ConfirmPassword: generalData.ConfirmPassword,
       },
       // selectedBranch: generalData.ServiceBranch,
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
     }, () => {
+      console.log(this.state.personnel);
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
@@ -157,6 +167,25 @@ class AddPersonnelModal extends React.Component {
       }
 
     });
+
+    document.getElementById('UserName').onkeypress = function(e){
+      if (e.which == 32)
+      return false;
+  }
+
+  document.getElementsByName('ConfirmPassword')[0].onkeyup = function(){
+    if (document.getElementsByName('Password')[0].value !=
+    document.getElementsByName('ConfirmPassword')[0].value) {
+      document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'Password not matching';
+  } else {
+  
+
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'Password matching';
+  }
+  }
+
 
   }
 
@@ -240,7 +269,7 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-
+    console.log(this.state.personnel);
     event.preventDefault();
     let {  personnel } = this.state;
     let { editId } = this.props;
@@ -271,6 +300,7 @@ class AddPersonnelModal extends React.Component {
         this.props.onClose(NoticeType.UPDATE);
       });
     } else {
+      console.log(personnel);
       formData.append('personnelFormData', JSON.stringify(personnel));
       // Start Loader
       this.setState({loading:true});
@@ -486,8 +516,11 @@ render() {
     {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
     {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
     {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
-    {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid'},
+    {name: translations['CAC ID'], type: 'number', domID: 'CACid', valFieldID: 'CACid'},
     {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
+    {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
+    {name: 'Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
+    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
   ];
 
   const organisationFields = [
@@ -508,10 +541,10 @@ render() {
   ];
 
   const contactFields = [
-    {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required:true},
+    {name: translations['DSN'], type: 'number', domID: 'DSN', valFieldID: 'DSN', required:true},
     {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required: true },
     {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required: true },
-    {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID'},
+    {name: translations['Chat ID'], type: 'number', domID: 'ChatID', valFieldID: 'ChatID'},
 
   ];
 
@@ -591,6 +624,7 @@ render() {
               data={this.handleContactInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>
+        <span id='message'></span>
       </div>
       <div className="row action-buttons">
         <div className="menu-button">

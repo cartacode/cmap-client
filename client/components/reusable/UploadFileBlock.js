@@ -37,6 +37,7 @@ class UploadFileBlock extends React.Component {
        
         // Size 5 Mb
         let fileSize = 5242880;
+        let fileSizeToDisplay = '5 MB';
 
         // check extension of file if extension mentioned
         if(extension !== undefined && extension !== '' && extension !== null) {
@@ -49,13 +50,14 @@ class UploadFileBlock extends React.Component {
                     {
                         // Size 2 Mb
                         fileSize = 2097152;
+                        fileSizeToDisplay = '2 MB';
                     }
             }
 
 
         }
         if(file.size > fileSize){
-            alert('File size should be less than '+ fileSize +' MB.');
+            alert('File size should be less than '+fileSizeToDisplay);
             document.getElementById(id).value= null;
             if(this.props.isImagedRequired){
                 this.updateContent(name, new File([""], ""));

@@ -51,8 +51,27 @@ class ContentBlock extends React.Component {
   }
 
   handleChange = (e) => {
-    const { name, value } = e.target;
+    
+    let { name, value, id } = e.target;
+    
+    let regex = e.target.getAttribute('data-regex');
+    let regexType = e.target.getAttribute('data-regex-type')
+    let bool = true;
+    
+    if(regex !== undefined && regex !== '' && regex !== null){
+      // Regular expression for field
+      let regexValue = new RegExp(regex);
+      
+      bool = regexValue.test(value);
+      if(!bool){
+        document.getElementById(id).value = '';
+        document.getElementById(id).placeholder = 'Please Select Only '+regexType+' Value';
+        value = '';
+      }
+    }
+    
     this.updateContent(name, value);
+
   }
 
   handleChangeNumber = (e) => {
@@ -92,6 +111,7 @@ class ContentBlock extends React.Component {
       const file = event.target.files[0];
       const extension = event.target.getAttribute('data-extension');
       let fileSize = 5242880;   // 5Mb
+      let fileSizeToDisplay = '5 MB';
 
       // check for extension of file if extension mentioned
       if(extension !== undefined && extension !== '' && extension !== null) {
@@ -104,6 +124,7 @@ class ContentBlock extends React.Component {
             {
               // Set Size 2Mb
               fileSize = 2097152;
+              fileSizeToDisplay = '2 MB';
             }
 
         }
@@ -111,7 +132,7 @@ class ContentBlock extends React.Component {
 
 
       if(file.size > fileSize) {
-        alert('File size should be less than '+ fileSize +' MB.');
+        alert('File size should be less than '+ fileSizeToDisplay);
         document.getElementById(id).value = null;
         this.updateContent(name, new File([''], ''));
       }else {
@@ -156,18 +177,20 @@ class ContentBlock extends React.Component {
         switch (item.type) {
           case 'input':
             let maxlength = InputAttributes.MAX_LENGTH;
+           
             if(item.maxlength) {
               maxlength = item.maxlength;
             }
             if (item.required) {
               if (item.validationIcon) {
-                input = (<div className="input-group"><input type="text" className="form-control" value={value} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required maxLength={maxlength}/><span className="input-group-addon-validation-icon"> <img id="validationIcon" src="" /></span> </div>);
+                input = (<div className="input-group"><input type="text" className="form-control" value={value} data-regex={item.regex} data-regex-type={item.regexType} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required maxLength={maxlength}/><span className="input-group-addon-validation-icon"> <img id="validationIcon" src="" /></span> </div>);
               } else {
-                input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxLength={maxlength} required />);
+                input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType}  id={item.domID} onChange={this.handleChange} maxLength={maxlength} required />);
               }
             } else {
-              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} maxLength={maxlength} />);
+              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType}  id={item.domID} onChange={this.handleChange} maxLength={maxlength} />);
             }
+           
             break;
 
           case 'textarea':
@@ -289,7 +312,7 @@ class ContentBlock extends React.Component {
     render() {
 
       return (
-        <div className="col-md-4 info-block">
+        <div className="col-md-4  col-xs-12  info-block">
           <div className="info-header">
             <img src={this.props.headerLine} alt="" />
             <div className="header-text">

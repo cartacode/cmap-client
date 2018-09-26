@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import Cesium from 'cesium/Cesium';
 import {DrawHelper} from 'map/DrawHelper';
 // eslint-disable-line import/no-unresolved
 //  import ViewerCesiumNavigationMixin from 'cesiumNav/viewerCesiumNavigationMixin';
 import {LAYERS} from 'map/layer-names';
 import {COORDINATE_SYTEM} from 'map/coordinate-system';
+=======
+import Cesium from 'cesium/Cesium'; // eslint-disable-line import/no-unresolved
+>>>>>>> 9c4b3121a0f3d9283cbcdbd2e70aab09599d91b9
 import {getImageryurl} from 'map/config';
 
 /**
@@ -270,9 +274,9 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
       pixelOffset : new Cesium.Cartesian2(0, -9)
   }
 });
-if(focus) {
+//if(focus) {
   viewer.flyTo(viewer.entities);
-}
+//}
 
 }
 export function moveFar(viewerId){

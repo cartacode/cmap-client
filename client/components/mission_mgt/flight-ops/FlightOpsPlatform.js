@@ -148,9 +148,9 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        Cell: row => <div>
-          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
-          <span>{row.value}</span>
+        Cell: row =>  <div className = 'tooltip-custom'>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          <span> {row.value}</span>
         </div>,
       },
       {

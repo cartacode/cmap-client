@@ -147,3 +147,11 @@ export const ACCOUNT__REGISTER = createActionType('ACCOUNT__REGISTER');
 export const ACCOUNT__CHANGE_PASSWORD = createActionType('ACCOUNT__CHANGE_PASSWORD');
 export const ACCOUNT__LOGIN = createActionType('ACCOUNT__LOGIN');
 export const ACCOUNT__LOGOUT = createActionType('ACCOUNT__LOGOUT');
+
+export const FETCH_DASHBOARD_OPS_PAYLOAD = createActionType('FETCH_DASHBOARD_OPS_PAYLOAD');
+export const FETCH_DASHBOARD_OPS_PLATFORM = createActionType('FETCH_DASHBOARD_OPS_PLATFORM');
+export const FETCH_DASHBOARD_OPS_MISSION = createActionType('FETCH_DASHBOARD_OPS_MISSION');
+export const FETCH_A_ISR_OPERATION_MISSION = createActionType('FETCH_A_ISR_OPERATION_MISSION');
+export const FETCH_LATEST_INTELLIGENCE = createActionType('FETCH_LATEST_INTELLIGENCE');
+export const FETCH_UPCOMING_MISSION = createActionType('FETCH_UPCOMING_MISSION');
+export const FETCH_LIVE_OPERATION = createActionType('FETCH_LIVE_OPERATION');

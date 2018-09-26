@@ -83,7 +83,9 @@ class OrgBuilderComponent extends React.Component {
 
   componentDidMount = () => {
   this.props.fetchOrganicOrg(this.state.branch);
-  this.props.fetchOrganicPersonnel().then(()=> { this.personnelChartView(); });
+  this.props.fetchOrganicPersonnel().then(()=> { 
+    this.personnelChartView(); 
+  });
   this.props.fetchDeployedOrg(this.state.branch);
   }
 
@@ -158,7 +160,7 @@ class OrgBuilderComponent extends React.Component {
     
       const { allOrganicPersonnels } = this.props;
       console.log(allOrganicPersonnels);
-      let orgPersonnel =  allOrganicPersonnels;
+      let orgPersonnel =  allOrganicPersonnels ;
 
       let orgSample2 = [ 
         {

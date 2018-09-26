@@ -742,6 +742,10 @@
   "Unassign": "Unassign",
   "Remove": "Remove",
   "Add": "Add",
-  "Actions": "Actions"
+  "Actions": "Actions",
+	"Telephone": "Telephone",
+	"MissionData": "Mission Data",
+  "FlightPlan": "Flight Plan",
+	"IntelReport": "Intel Report"
   
 }

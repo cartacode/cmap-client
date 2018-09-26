@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 import HeaderContainer from '../containers/HeaderContainer';
@@ -49,7 +49,7 @@ if(!token || token === '') {//if there is no token, dont bother
         <div dir={directionality}>
           <Switch>
             <Route exact path="/logout" component={LoginContainer} />
-            <Route exact path="/" component={NavigationComponent} />
+            <Route exact path="/" component={NavigationComponent} > <Redirect to='/dashboard' /> </Route>
             <Route exact path="/dashboard" component={NavigationComponent} />
             <Route exact path="/intel-library" component={NavigationComponent} />
             <Route path="/intel-request" component={NavigationComponent} />
