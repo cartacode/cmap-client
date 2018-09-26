@@ -125,7 +125,10 @@ class CollectionManagerComponent extends React.Component {
         //   <span>{row.value}</span>
         // </div>,
         Cell: row => ( 
-          <a href="Javascript: void('0');"  title="Edit"  > <Link to={`${editurl}${row.original.IntelRequestID}`} className="btn btn-primary">{row.value}</Link></a>
+          <div>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          <span><a href="Javascript: void('0');"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
+          </div>
           ),
       },
       {
@@ -170,8 +173,8 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Request# ',
         accessor: 'ReqUserFrndlyID',
-        Cell: row => <div>
-          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+        Cell: row => <div className = 'tooltip-custom'>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
           <span>{row.value}</span>
         </div>,
       },
