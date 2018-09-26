@@ -13,10 +13,13 @@ class MissionDetailComponent extends React.Component {
     super(props);
     this.state = {
       missionDetail: {},
-      missionReport: null,
       missionReportUrl: '',
       editFetched: false,
       loading: false,
+      missionDetailFiles:{
+        missionReport: null,
+        FlightPlan: null
+      },
     };
   }
 
@@ -44,12 +47,15 @@ class MissionDetailComponent extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { missionId, missionReport, missionDetail } = this.state;
+    const { missionId, missionDetailFiles, missionDetail } = this.state;
     // adding Id field as missionId nede for put request of mission
     const data = {...missionDetail, 'Id': missionId };
     const formData = new FormData();
-    if (missionReport) {
-      formData.append('MissionReport', missionReport, missionReport.name);
+    if (missionDetailFiles.missionReport) {
+      formData.append('MissionReport', missionDetailFiles.missionReport, missionDetailFiles.missionReport.name);
+    }
+    if(missionDetailFiles.FlightPlan){
+      formData.append('FlightPlan', missionDetailFiles.FlightPlan, missionDetailFiles.FlightPlan.name);
     }
     formData.append('missionFormData', JSON.stringify(data));
     this.setState({loading: true });
@@ -64,9 +70,13 @@ class MissionDetailComponent extends React.Component {
   }
 
   handleUploadFileData = (uploadFileData) => {
-    // const { missionReport } = this.state;
+     const { missionDetailFiles } = this.state;
     this.setState({
+      missionDetailFiles:{
+        ...missionDetailFiles,
       missionReport: uploadFileData.MissionReport,
+      FlightPlan: uploadFileData.FlightPlan
+    }
     });
   }
 
@@ -135,7 +145,7 @@ class MissionDetailComponent extends React.Component {
     ];
 
     const missionBlock4 = [  
-      { name: translations.IntelReport, type: 'file', domID: 'IntelReport', valFieldID: 'IntelReport', fileType: 'file' },
+      { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file' },
       { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
 
     ];
