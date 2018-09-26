@@ -20,6 +20,7 @@ import collections from 'reducers/collections';
 import organicorgs from 'reducers/organicorg';
 import organicpersonnels from 'reducers/organicpersonnel';
 import mssionmgts from 'reducers/mssionmgts';
+import dashboards from 'reducers/dashboards';
 import auth from 'reducers/auth';
 
 export default function createReducer() {
@@ -45,5 +46,6 @@ export default function createReducer() {
     organicpersonnels,
     mssionmgts,
     auth,
+    dashboards,
   });
 }
