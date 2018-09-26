@@ -3,6 +3,11 @@ body {
   color: #cee3f5;
   background-size: cover;
 
+
+
+
+
+
   .mirrored-X-image {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -517,6 +522,9 @@ body .login {
     }
   }
 
+
+
+  
   .second-header-line {
     padding: 20px 0px;
     overflow: hidden;
@@ -4663,6 +4671,9 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  .login .login-part .login-win .login-info .col-md-4 {
+    width: 100%!important;
+}
   .login .header-line .header-text {
       margin-top: -3px!important;
     font-size: 14px!important;
