@@ -93,13 +93,10 @@ export default class Map extends React.PureComponent {
     
     return (
       <div id={this._elementId} className="map-wrapper" style={{ width: `${size}%` }}>
-<<<<<<< HEAD
         
         <div id="drawingToolBar"></div>
         <div id="logging">
         </div>
-=======
->>>>>>> 9c4b3121a0f3d9283cbcdbd2e70aab09599d91b9
         <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} />
       </div>
     );
