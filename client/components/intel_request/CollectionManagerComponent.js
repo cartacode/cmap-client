@@ -126,7 +126,7 @@ class CollectionManagerComponent extends React.Component {
         // </div>,
         Cell: row => ( 
           <div>
-          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp;
           <span><a href="Javascript: void('0');"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
           </div>
           ),
