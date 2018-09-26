@@ -8,6 +8,7 @@ import FullHeaderLine from '../reusable/FullHeaderLine';
 import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
 import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
 import { viewerIdentifiers } from '../../map/viewer';
+import { Link } from 'react-router-dom';
 
 
 class CollectionManagerComponent extends React.Component {
@@ -114,7 +115,7 @@ class CollectionManagerComponent extends React.Component {
     const { translations } = this.props;
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
-    // const editurl = '/intel-request/detail/';
+    const editurl = '/intel-request/detail/';
     const intelRequestColumns = [
       {
         Header: 'Request#',
@@ -123,6 +124,12 @@ class CollectionManagerComponent extends React.Component {
         //   <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
         //   <span>{row.value}</span>
         // </div>,
+        Cell: row => ( 
+          <div>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp;
+          <span><a href="Javascript: void('0');"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
+          </div>
+          ),
       },
       {
         Header: 'Command',
@@ -166,8 +173,8 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Request# ',
         accessor: 'ReqUserFrndlyID',
-        Cell: row => <div>
-          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+        Cell: row => <div className = 'tooltip-custom'>
+          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
           <span>{row.value}</span>
         </div>,
       },

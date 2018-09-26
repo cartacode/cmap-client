@@ -19,50 +19,50 @@ class GunModal extends React.Component {
       editFetched: false,
       oneMunition: {},
       clear: false,
-      munition: {
-        MunitionID: '',
-        MunitionsReferenceCode: '',
-        MunitionWireframe: '',
-        MunitionPhoto: '',
-        Munition3D: '',
-        MunitionIcon: '',
-        Munition2525B: '',
-        MunitionDatasheet: '',
-        MunitionName: '',
-        MunitionNomenclature: '',
-        MunitionRole: '',
-        MunitionManufacturer: '',
-        MunitionExecutiveAgent: '',
-        MunitionContractProgram: '',
-        MunitionCost: '',
-        MunitionCostNotes: '',
-        MunitionLength: '',
-        MunitionWidthDiameter: '',
-        MunitionWeight: '',
-        MunitionWingspan: '',
-        MunitionWarhead: '',
-        MunitionEngine: '',
-        MunitionRange: '',
-        MunitionSpeed: '',
-        MunitionGuideanceSys: '',
-        MunitionLaunchPlatform: '',
-        MunitionWeatherRestriction: '',
-        MunitionCrewCount: '',
-        MunitionMOS1: '',
-        MunitionMOS2: '',
-        MunitionMOS3: '',
-        MunitionHeigh: '',
-        MunitionWeightUnloaded: '',
-        MunitionWeightLoaded: '',
-        MunitionRoundsCarried: '',
-        MunitionRateFire: '',
-        MunitionMuzzleVelocity: '',
-        MunitionProjectileWeight: '',
-        MunitionCaliber: '',
-        MunitionDriveSystem: '',
-        MunitionFeedSystem: '',
-        MunitionMuzzleEnergy: ''
-      },
+       munition: {
+      //   MunitionID: '',
+      //   MunitionsReferenceCode: '',
+      //   MunitionWireframe: '',
+      //   MunitionPhoto: '',
+      //   Munition3D: '',
+      //   MunitionIcon: '',
+      //   Munition2525B: '',
+      //   MunitionDatasheet: '',
+      //   MunitionName: '',
+      //   MunitionNomenclature: '',
+      //   MunitionRole: '',
+      //   MunitionManufacturer: '',
+      //   MunitionExecutiveAgent: '',
+      //   MunitionContractProgram: '',
+      //   MunitionCost: '',
+      //   MunitionCostNotes: '',
+      //   MunitionLength: '',
+      //   MunitionWidthDiameter: '',
+      //   MunitionWeight: '',
+      //   MunitionWingspan: '',
+      //   MunitionWarhead: '',
+      //   MunitionEngine: '',
+      //   MunitionRange: '',
+      //   MunitionSpeed: '',
+      //   MunitionGuideanceSys: '',
+      //   MunitionLaunchPlatform: '',
+      //   MunitionWeatherRestriction: '',
+      //   MunitionCrewCount: '',
+      //   MunitionMOS1: '',
+      //   MunitionMOS2: '',
+      //   MunitionMOS3: '',
+      //   MunitionHeigh: '',
+      //   MunitionWeightUnloaded: '',
+      //   MunitionWeightLoaded: '',
+      //   MunitionRoundsCarried: '',
+      //   MunitionRateFire: '',
+      //   MunitionMuzzleVelocity: '',
+      //   MunitionProjectileWeight: '',
+      //   MunitionCaliber: '',
+      //   MunitionDriveSystem: '',
+      //   MunitionFeedSystem: '',
+      //   MunitionMuzzleEnergy: ''
+       },
       gunMunitionFiles: {
         MunitionPhoto: null,
         MunitionWireframe: null,
@@ -316,7 +316,6 @@ class GunModal extends React.Component {
     } else {
       formData.append("munitionFormData", JSON.stringify(munition));
       this.setState({loading: true});
-
       this.props.addMunition(formData).then(() => { 
         this.setState({loading: false});
         this.props.onClose(NoticeType.ADD); 
@@ -336,7 +335,7 @@ class GunModal extends React.Component {
       this.setState({
         clear: true,
         gunPhotoPreviewUrl: '/assets/img/admin/rockets.png',
-        gunMunitionFiles : {}
+       // gunMunitionFiles : {}
       });
       document.getElementById('munitionform').reset();
     }
@@ -350,8 +349,10 @@ class GunModal extends React.Component {
     if (!this.props.show) {
       return null;
     }
+
     let { gunPhotoPreviewUrl } = this.state;
     let $imagePreview = '';
+
     //const imageUrl = this.props.oneMunition.MunitionPhoto;
 
    /*  if (imageUrl !== undefined && imageUrl !== "" && this.props.editId != '0') {
@@ -360,7 +361,8 @@ class GunModal extends React.Component {
     if (gunPhotoPreviewUrl || gunPhotoPreviewUrl === '') {
       $imagePreview = (<img src={gunPhotoPreviewUrl} alt="" className="photo" alt="" />);
     }else {
-      $imagePreview = (<img src="/assets/img/admin/aircraft.png" className="photo" alt="" />);
+
+      $imagePreview = (<img src="/assets/img/admin/rockets.png" className="photo" alt="" />);
     }
     
 

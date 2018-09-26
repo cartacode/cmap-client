@@ -20,49 +20,49 @@ class MissileModal extends React.Component {
       missilePhotoPreviewUrl: '/assets/img/admin/rockets.png',
       oneMunition: {},
       munition: {
-        MunitionID: '',
-        MunitionsReferenceCode: '',
-        MunitionWireframe: '',
-        MunitionPhoto: '',
-        Munition3D: '',
-        MunitionIcon: '',
-        Munition2525B: '',
-        MunitionDatasheet: '',
-        MunitionName: '',
-        MunitionNomenclature: '',
-        MunitionRole: '',
-        MunitionManufacturer: '',
-        MunitionExecutiveAgent: '',
-        MunitionContractProgram: '',
-        MunitionCost: '',
-        MunitionCostNotes: '',
-        MunitionLength: '',
-        MunitionWidthDiameter: '',
-        MunitionWeight: '',
-        MunitionWingspan: '',
-        MunitionWarhead: '',
-        MunitionEngine: '',
-        MunitionRange: '',
-        MunitionSpeed: '',
-        MunitionGuideanceSys: '',
-        MunitionLaunchPlatform: '',
-        MunitionWeatherRestriction: '',
-        MunitionCrewCount: '',
-        MunitionMOS1: '',
-        MunitionMOS2: '',
-        MunitionMOS3: '',
-        MunitionHeigh: '',
-        MunitionWeightUnloaded: '',
-        MunitionWeightLoaded: '',
-        MunitionRoundsCarried: '',
-        MunitionRateFire: '',
-        MunitionMuzzleVelocity: '',
-        MunitionProjectileWeight: '',
-        MunitionCaliber: '',
-        MunitionDriveSystem: '',
-        MunitionFeedSystem: '',
-        MunitionMuzzleEnergy: ''
-      },
+      //   MunitionID: '',
+      //   MunitionsReferenceCode: '',
+      //   MunitionWireframe: '',
+      //   MunitionPhoto: '',
+      //   Munition3D: '',
+      //   MunitionIcon: '',
+      //   Munition2525B: '',
+      //   MunitionDatasheet: '',
+      //   MunitionName: '',
+      //   MunitionNomenclature: '',
+      //   MunitionRole: '',
+      //   MunitionManufacturer: '',
+      //   MunitionExecutiveAgent: '',
+      //   MunitionContractProgram: '',
+      //   MunitionCost: '',
+      //   MunitionCostNotes: '',
+      //   MunitionLength: '',
+      //   MunitionWidthDiameter: '',
+      //   MunitionWeight: '',
+      //   MunitionWingspan: '',
+      //   MunitionWarhead: '',
+      //   MunitionEngine: '',
+      //   MunitionRange: '',
+      //   MunitionSpeed: '',
+      //   MunitionGuideanceSys: '',
+      //   MunitionLaunchPlatform: '',
+      //   MunitionWeatherRestriction: '',
+      //   MunitionCrewCount: '',
+      //   MunitionMOS1: '',
+      //   MunitionMOS2: '',
+      //   MunitionMOS3: '',
+      //   MunitionHeigh: '',
+      //   MunitionWeightUnloaded: '',
+      //   MunitionWeightLoaded: '',
+      //   MunitionRoundsCarried: '',
+      //   MunitionRateFire: '',
+      //   MunitionMuzzleVelocity: '',
+      //   MunitionProjectileWeight: '',
+      //   MunitionCaliber: '',
+      //   MunitionDriveSystem: '',
+      //   MunitionFeedSystem: '',
+      //   MunitionMuzzleEnergy: ''
+       },
       missileMunitionFiles: {
         MunitionPhoto: null,
         MunitionWireframe: null,
@@ -232,15 +232,21 @@ class MissileModal extends React.Component {
     let reader = new FileReader();
     let file = uploadedFile.originalFile;
     if (uploadedFile.name === 'MunitionPhoto') {
-      if (file.size > 0) {
-        reader.onloadend = () => {
-          this.setState({
-            missilePhotoPreviewUrl: reader.result
-          });
-        }
-      } else {
+      // if (file.size > 0) {
+      //   reader.onloadend = () => {
+      //     this.setState({
+      //       missilePhotoPreviewUrl: reader.result
+      //     });
+      //   }
+      // } else {
+      //   this.setState({
+      //     missilePhotoPreviewUrl: '/assets/img/admin/rockets.png'
+      //   });
+      // }
+
+      reader.onloadend = () => {
         this.setState({
-          missilePhotoPreviewUrl: '/assets/img/admin/rockets.png'
+          missilePhotoPreviewUrl: reader.result
         });
       }
 
@@ -336,7 +342,7 @@ class MissileModal extends React.Component {
       this.setState({
          clear: true,
          missilePhotoPreviewUrl: '/assets/img/admin/rockets.png',
-         missileMunitionFiles : {}
+         //missileMunitionFiles : {}
         });
       document.getElementById('munitionform').reset();
     }

@@ -4,7 +4,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, formatDateTime } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 
@@ -21,6 +21,10 @@ class PedTaskingComponent extends React.Component {
 
   componentDidMount() {
     this.loadData();
+  }
+
+  getColor= (row)=>{
+    return getIntelStatusColor(row.original.Abbreviation);
   }
 
   //  Move Intel from ATO table to PED table . i.e Left -> Right.
@@ -139,6 +143,10 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row =>  <div className = 'tooltip-custom'>
+        <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+        <span> {row.value}</span>
+      </div>,
       },
       {
         Header: translations.Priority,
