@@ -104,6 +104,9 @@ class AddPersonnelModal extends React.Component {
   }
 
   editComponent = (editId) => {
+
+    document.getElementById('UserName').readOnly = true;
+
     this.setState({
        imagePreviewUrl:'',
        imagePreviewUrl2:''
