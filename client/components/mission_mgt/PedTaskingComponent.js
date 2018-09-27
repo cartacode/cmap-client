@@ -7,6 +7,7 @@ import { TableDefaults, MissionConsts, IntelConstants } from '../../dictionary/c
 import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
+import Link from 'react-router-dom/Link';
 
 
 class PedTaskingComponent extends React.Component {
@@ -88,11 +89,15 @@ class PedTaskingComponent extends React.Component {
 
 
   getLeftColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row =>  <div className = 'tooltip-custom'>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+      </div>,
       },
       {
         Header: translations.Priority,
@@ -138,14 +143,15 @@ class PedTaskingComponent extends React.Component {
   }
 
   getRightColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
         Cell: row =>  <div className = 'tooltip-custom'>
-        <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
-        <span> {row.value}</span>
+                  <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+                  <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
       </div>,
       },
       {

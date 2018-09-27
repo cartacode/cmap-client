@@ -8,6 +8,7 @@ import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../util/h
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
+import { Link } from 'react-router-dom';
 
 class AtoComponent extends React.Component {
 
@@ -123,11 +124,15 @@ moveLeft = (row) => {
 
 
   getLeftColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row => <div className="tooltip-custom">
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+        </div>,
       },
       {
         Header: translations.Priority,
@@ -178,6 +183,7 @@ moveLeft = (row) => {
   }
 
   getRightColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
@@ -185,7 +191,7 @@ moveLeft = (row) => {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div className="tooltip-custom">
           <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
-          <span> {row.value}</span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
         </div>,
       },
       {

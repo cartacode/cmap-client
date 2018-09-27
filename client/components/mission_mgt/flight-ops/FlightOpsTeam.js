@@ -9,6 +9,7 @@ import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../../uti
 import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
+import Link from 'react-router-dom/Link';
 
 class FlightOpsTeam extends React.Component {
   constructor(props) {
@@ -87,11 +88,15 @@ class FlightOpsTeam extends React.Component {
   }
 
   getLeftColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        Cell: row => <div>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+        </div>,
       },
       {
         Header: translations.Priority,
@@ -138,6 +143,7 @@ class FlightOpsTeam extends React.Component {
   }
 
   getRightColumns = () => {
+    const editurl = '/intel-request/detail/';
     const { translations } = this.props;
     return [
       {
@@ -145,7 +151,7 @@ class FlightOpsTeam extends React.Component {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
-          <span>{row.value}</span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
         </div>,
       },
       {
