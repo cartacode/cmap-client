@@ -134,12 +134,6 @@ class RequestComponent extends React.Component {
       },
     ];
 
-   
-    //let itemurl = itemu.replace("/summary", "/request");
-
-    
-
-
     return (
       <div>
         <div className="row orders-assets">
@@ -147,14 +141,16 @@ class RequestComponent extends React.Component {
           <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              Summary
+              {translations.summary} &nbsp;
+              <Link to={ addurl } className="btn btn-info btn-xs"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+          
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
           <div className="col-md-12 filter-line">
 
             {/* <Link to={ itemurl } activeClassName="btn btn-warning">{translations['New request'}</Link> */}
-            <Link to={ addurl } className="btn btn-warning">New Request</Link>
+            {/* <Link to={ addurl } className="btn btn-warning">New Request</Link> */}
 
 {/*             <NavLink to={itemurl} className="submenu" activeClassName="active-submenu-item">
               <div className="add-button">

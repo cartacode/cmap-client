@@ -184,13 +184,13 @@ class PlatformComponent extends React.Component {
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
-            <div className="header-text">            
+            <div className="header-text">
+              {translations.inventory} &nbsp;
               {!this.state.addPlatformInventoryOpen ?
                 <span>
-                  {translations.summary} &nbsp;
                   <a className="btn btn-info btn-xs" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                 </span>
-                : translations.form }
+                : '' }
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>

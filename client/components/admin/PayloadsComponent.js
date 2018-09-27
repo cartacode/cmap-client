@@ -17,8 +17,8 @@ class PayloadsComponent extends React.Component {
       filter: [],
       addPayloadsInventoryOpen: false,
       editId: '0',
-			editForm:false,
-			loading:false
+      editForm: false,
+      loading: false,
       		// counter:0
     };
   }
@@ -33,26 +33,6 @@ class PayloadsComponent extends React.Component {
       addPayloadsInventoryOpen: true,
     });
   }
-
-	// openPayloadsForm = (row) => {
-	// 	this.setState({counter:this.state.counter + 1});
-	// 	if (this.state.counter == 0)
-  // 	{
-	// 		this.setState({
-	// 			editId: row,
-	// 			addPayloadsInventoryOpen: true,
-	// 		});
-	// 	}
-	// 	else {
-	// 			this.setState({
-	// 		 	editId: row,
-	// 			addPayloadsInventoryOpen: true
-	// 			}, () => { 
-	// 		 	 this.setState({
-	// 			 editForm: true
-	// 		  	}); });
-	// 	     }
-	// }
 
 	closePayloadsForm = (actionType) => {
 	  this.notify(actionType);
@@ -71,50 +51,34 @@ class PayloadsComponent extends React.Component {
 	deletePayloadInventory = (value) => {
 
 	  if (value !== undefined && value !== '0') {
-			this.setState({loading:true});
+	    this.setState({loading:true});
 	    this.props.deletePayloadInventoryById(value).then(() => {
-				//this.setState({ editId: '0' });
-				this.setState({loading:false});
-				if(this.props.isDeleted)
-					this.loadData(NoticeType.DELETE);
-				else
-					this.notify(NoticeType.NOT_DELETE);
+	      //this.setState({ editId: '0' });
+	      this.setState({loading:false});
+	      if(this.props.isDeleted)
+	        this.loadData(NoticeType.DELETE);
+	      else
+	        this.notify(NoticeType.NOT_DELETE);
 
 	    });
 	  }
 	}
 
 	notify = (actionType) => {
-		const { translations } = this.props;
+	  const { translations } = this.props;
 		
-		if(NoticeType.NOT_DELETE === actionType){
-	    NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Payload Inventory Title'], 5000);
-		}
-	  else if (NoticeType.DELETE != actionType) {
+	  if(NoticeType.NOT_DELETE === actionType) {
+	    NotificationManager.error(translations.DeleteUnSuccessfull, translations['Payload Inventory Title'], 5000);
+	  } else if (NoticeType.DELETE != actionType) {
 	    if (this.state.editId !== undefined && this.state.editId !== '0') {
-	      NotificationManager.success(translations['UpdatedSuccesfully'], translations['Payload Inventory Title'], 5000);
+	      NotificationManager.success(translations.UpdatedSuccesfully, translations['Payload Inventory Title'], 5000);
 	    } else {
-	      NotificationManager.success(translations['AddedSuccesfully'], translations['Payload Inventory Title'], 5000);
+	      NotificationManager.success(translations.AddedSuccesfully, translations['Payload Inventory Title'], 5000);
 	    }
 	  } else {
-	    NotificationManager.success(translations['DeletedSuccesfully'], translations['Payload Inventory Title'], 5000);
+	    NotificationManager.success(translations.DeletedSuccesfully, translations['Payload Inventory Title'], 5000);
 	  }
 	}
-
-
-	// renderItems(optionItem) {
-	// 	let items = [{"label": "-Select Item-", "value": 0}];
-	// 	optionItem.map((item, i) => {
-	// 		items.push({"label": item.description, "value": i});
-	// 	});
-	// 	return items.map(function(data, key){
-	// 		if(data.label == "-Select Item-"){
-	// 		  return ( <option key={key} value=""> {data.label} </option>) ;
-	// 		} else {
-	// 		  return (<option key={key} value={data.label}>{data.label}</option> );
-	// 		}
-	// 	})
-	// }
 
 	stopupdate = () => 
 	{
@@ -125,16 +89,16 @@ class PayloadsComponent extends React.Component {
 	  const { translations, allPayloadInventory } = this.props;
 
 	  const columns = [{
-	    Header: translations["type"],
+	    Header: translations.type,
 	    accessor: 'typeDesc',
 	  },
 	  {
-	    Header: translations['Manufacture'],
+	    Header: translations.Manufacture,
 	    accessor: 'manufacturer',
 
 	  },
 	  {
-	    Header: translations['Name'],
+	    Header: translations.Name,
 	    accessor: 'name',
 
 	  },
@@ -143,11 +107,11 @@ class PayloadsComponent extends React.Component {
 	    accessor: 'serialNumber',
 	  },
 	  {
-	    Header: translations['Branch'],
+	    Header: translations.Branch,
 	    accessor: 'branch',
 	  },
 	  {
-	    Header: translations['cocom'],
+	    Header: translations.cocom,
 	    accessor: 'COCOM',
 	  },
 	  {
@@ -155,17 +119,17 @@ class PayloadsComponent extends React.Component {
 	    accessor: 'owningUnit',
 	  },
 	  {
-	    Header: translations['Location'],
+	    Header: translations.Location,
 	    accessor: 'location',
 	  },
 	  {
-	    Header: translations['view'],
+	    Header: translations.view,
 	    accessor: 'ID',
 	    filterable: false,
-			Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openPayloadsForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-												{this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-                     <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-									</div>,
+	    Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openPayloadsForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+	      {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+	        <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+	    </div>,
 
 	  }
 	  ];
@@ -173,21 +137,27 @@ class PayloadsComponent extends React.Component {
 	  return (
 	    <div>
 	      <div className="row orders-assets">
-				<Loader loading={this.state.loading} />
+	        <Loader loading={this.state.loading} />
 	        <div className="header-line">
 	          <img src="/assets/img/admin/personnel_1.png" alt="" />
 	          <div className="header-text">
-	            {translations["payloads"]}
+						  {translations.inventory} &nbsp;
+	            {!this.state.addPayloadsInventoryOpen ?
+	              <span>
+	                <a className="btn btn-info btn-xs" onClick={() => this.openPayloadsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+	              </span>
+	              : '' }
 	          </div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
 	        </div>
-	        {!this.state.addPayloadsInventoryOpen ?
-					<div className="col-md-12 filter-line">
+	        {/* {!this.state.addPayloadsInventoryOpen ?
+	          <div className="col-md-12 filter-line">
 	          <div className="add-button">
 	            <button className="ccir-button" onClick={() => this.openPayloadsForm('0')} >{translations["Add Payload"]}</button>
 
 	          </div>
-	        </div> : null}
+	          </div> : null} */}
+					
 	        {this.state.addPayloadsInventoryOpen ?
 	          <AddPayloadsInventory editId={this.state.editId} onClose={this.closePayloadsForm} translations={translations} editForm = {this.state.editForm} stopupdate={this.stopupdate}/>
 	          : null
@@ -201,7 +171,7 @@ class PayloadsComponent extends React.Component {
 						  minRows={TableDefaults.MIN_ROWS}
 	            loading={this.props.isLoading}
 	            className="-striped -highlight"
-							filterable={true}
+	            filterable={true}
 	            defaultFilterMethod={(filter, row) => {
 	              const id = filter.pivotId || filter.id
 	              return (row[id] !== undefined && row[id] !== null) ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;

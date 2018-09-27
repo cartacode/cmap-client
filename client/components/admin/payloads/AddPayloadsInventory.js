@@ -200,11 +200,11 @@ class AddPayloadsInventory extends React.Component {
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
     if (confirm("Do you want to clear all data from this form?")) {
-       this.setState({clear:true});
-     }
-     else {
+      this.setState({clear:true});
+    }
+    else {
  
-     }
+    }
   }
 
   render() {
@@ -233,13 +233,12 @@ class AddPayloadsInventory extends React.Component {
 
       <form action="" onSubmit={this.handleSubmit} >
 
-       {/*  <div className="close-button" >
+        {/*  <div className="close-button" >
           <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
         </div> */}
         <div className="payload-content">
-          <div className="row personnel" >
           <Loader loading={this.state.loading} />
-
+          {/* <div className="row personnel" >
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt=""/>
               <div className="header-text">
@@ -247,10 +246,9 @@ class AddPayloadsInventory extends React.Component {
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
-          </div>
+          </div> */}
 
           <div className="row personnel" >
-
             <div className="under-munitions-content">
               <div className="col-md-4" />
               <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopUpdate}/>

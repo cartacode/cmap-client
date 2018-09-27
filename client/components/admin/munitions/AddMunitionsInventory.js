@@ -204,17 +204,8 @@ class AddMunitionsInventory extends React.Component {
   }
 
   render() {
-    // Render nothing if the "show" prop is false
-    // if(!this.props.show) {
-    //   return null;
-    // }
-
+  
     const { translations } = this.props;
-
-    let { locationCatg } = this.state;
-
-    let { munition } = this.state;
-
 
     let generalFields = [
       { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
@@ -236,8 +227,9 @@ class AddMunitionsInventory extends React.Component {
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
           </div> */}
         <div className="payload-content">
-          <div className="row personnel" >
-            <Loader loading={this.state.loading} />
+          <Loader loading={this.state.loading} />
+          {/* <div className="row personnel" >
+            
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
@@ -245,7 +237,7 @@ class AddMunitionsInventory extends React.Component {
                 </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
-          </div>
+          </div> */}
 
           <div className="row personnel" >
 
