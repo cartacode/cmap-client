@@ -206,19 +206,21 @@ render() {
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
           <div className="header-text">
-            {translations['personnel']}
+          {translations['personnel']} &nbsp;
+          {!this.state.addPersonnelModalOpen ? 
+          <a className="btn btn-warning btn-xs" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/></a> 
+          : '' }
+          &nbsp; 
           </div>
           <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
         </div>
-        {!this.state.addPersonnelModalOpen ? <div className="col-md-12 filter-line">
+        {/* {!this.state.addPersonnelModalOpen ? 
+        <div className="col-md-12 filter-line">
           <div className="add-button">
             <button className="ccir-button" onClick={() => this.openPersonnelForm('0')} >{translations["Add Personnel"]}</button>
           </div>  
-        </div> :  
-        <div className="col-md-12 filter-line">
-        
-        </div>
-        }
+        </div> :  ''
+        } */}
         {this.state.addPersonnelModalOpen ?
           <AddPersonnel editId = {this.state.editId} onClose={this.closePersonnelForm} translations = {translations} /* editForm = {this.state.editForm} */ stopupdate={this.stopupdate}/>
           : null

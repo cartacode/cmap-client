@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
-import { baseUrl } from 'dictionary/network';
+
 import axios from 'axios';
 import {NoticeType} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
-import { requestHeaders } from '../../../dictionary/network';
+import { requestHeaders, baseUrl } from '../../../dictionary/network';
 
 
 

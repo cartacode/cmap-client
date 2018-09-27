@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import axios from 'axios';
 import FullHeaderLine from 'components/reusable/FullHeaderLine';
 import ShortHeaderLine from 'components/reusable/ShortHeaderLine';
 
@@ -16,8 +16,7 @@ import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
 import Loader from '../reusable/Loader'
-
-import { baseUrl } from 'dictionary/network';
+import { requestHeaders, baseUrl } from '../../dictionary/network';
 import {fetchCcirPirs} from 'actions/ccirpir';
 
 import {fetchLocations} from 'actions/location';
@@ -39,6 +38,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         IntelRequestID: '',
         MissionId: null,
+        locationcategory: '',
         // AreaOfOperations: '',
         // SupportedCommand: '',
         // SupportedUnit: '',
@@ -135,7 +135,7 @@ class RequestForm extends React.Component {
             intelRequest: oneIntelRequest,
             editFetched: true,
           });
-
+          this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
         this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
       });
 
@@ -193,12 +193,19 @@ class RequestForm extends React.Component {
       intelRequest: {
         ...intelRequest,
         ReportClassification: ir.ReportClassification,
-        AssetId: ir.AssetId,
+        locationID: ir.locationID,
+        locationcategory: ir.locationcategory,
+        // AssetId: ir.AssetId,
         // PointofContact: intelRequest3.PointofContact,
         // DSN: intelRequest3.DSN,
         // EmailSIPR: intelRequest3.EmailSIPR,
       },
+      locationcategory: ir.locationcategory,
     });
+
+    if(ir.locationcategory && ir.locationcategory !== this.state.locationcategory) {
+      this.updatelocationid(ir);
+    }
   }
 
   handleIntelRequest4 = (ir) => {
@@ -343,14 +350,47 @@ updatePirOptions = (items, pirdesc) => {
 
   }
 }
+updatelocationid(generalData) {
+  let locationselect = document.getElementsByName('locationID')[0];
+  locationselect.length = 0;
+  locationselect.add(new Option('--Fetching Locations--', ''));
+  const items = [{'label': 'Loading Locations', 'value': ''}];
+  const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
+  axios.get(apiUrl, {headers: requestHeaders })
+    .then(response => {
+      locationselect.length = 0;
+      if(response.data) {
+        locationselect.add(new Option('--Select Location--', ''));
+        response.data.map(item => {
+          let selected = false;
+          if(item.id === generalData.locationID) {
+            selected = true;
+          }
+          locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
+        });
+      }else{
+        locationselect.add(new Option('No Location Found', ''));
+      }
+
+    })
+    .catch((error) => {
+      locationselect.length = 0;
+      locationselect.add(new Option('Error Fetching Locations', ''));
+      console.log('Exception comes:' + error);
+    });
+}
+
 renderCCIRPIR = () =>{
   if(this.state.CCIRPIR !== "") {
   const ccirpir = (
-    <ul>
-      <li>
-          {this.state.CCIRPIR}
-        </li>
-    </ul>);
+    <div>
+      {this.state.CCIRPIR}
+      <ul>
+        <li>
+            {this.state.pirs[this.state.NamedOperation]}
+          </li>
+      </ul>
+    </div>);
     return ccirpir;
   }
 
@@ -391,7 +431,9 @@ render() {
 
   // Following fields is visible only to Collection manager and also only in case of edit
   const intelRequest3 = [
-    { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
+    // { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
+    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true},
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true},
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
@@ -428,7 +470,7 @@ render() {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} />
+            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{kmlLookUp: true, naipoiLookUp: true}} />
           </div>
         </div>
         <div className="col-md-4 one-block">
