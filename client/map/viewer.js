@@ -1,5 +1,5 @@
 import Cesium from 'cesium/Cesium';
-import {DrawHelper} from 'map/DrawHelper';
+import {DrawHelper} from 'map/drawHelper';
 // eslint-disable-line import/no-unresolved
 //  import ViewerCesiumNavigationMixin from 'cesiumNav/viewerCesiumNavigationMixin';
 import {LAYERS} from 'map/layer-names';
