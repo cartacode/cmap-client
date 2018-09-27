@@ -42,7 +42,7 @@ class AdminComponent extends React.Component {
 
     const {translations, match} = this.props;
 
-    const subMenuNames = [translations['inventory'],translations['library']];
+    const subMenuNames = [translations['inventory'],translations['Specifications']];
 
     const menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel` },

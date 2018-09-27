@@ -183,14 +183,14 @@ class PlatformsSpecificationComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              Platforms Library
+              {translations['Platforms Specification']}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
           {!this.state.addPlatformModalOpen ? <div className="col-md-12 filter-line">
             <div className="add-button">
-              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >Add Library</button>
+              <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations['Add']}</button>
             </div>
           </div> : null}
 

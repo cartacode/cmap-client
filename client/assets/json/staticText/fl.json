@@ -492,5 +492,10 @@
 	  "Telephone": "Telephone",
 	  "MissionData": "Mission Data",
 	  "FlightPlan": "Flight Plan",
-	  "IntelReport": "Intel Report"
+	  "IntelReport": "Intel Report",
+	  "Specifications": "Specifications",
+	  "Platforms Specification":"Platforms Specifications",
+	  "Add Specification":"Add Specification",
+	  "Payloads Specifications":"Payloads Specifications",
+	  "Munitions Specifications" :"Munitions Specifications"
 }

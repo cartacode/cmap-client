@@ -282,13 +282,13 @@ class MunitionsSpecificationComponent extends React.Component {
           <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              Munitions Library
+              {translations['Munitions Specifications']}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
           {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen? <div className="col-md-12 filter-line">
             <div className="add-button">
-              <DropDownButton key='1' label={translations["Add Munition"]} id="1" items={munitions} />
+              <DropDownButton key='1' label={translations['Add']} id="1" items={munitions} />
             </div>
           </div> : null}
 
