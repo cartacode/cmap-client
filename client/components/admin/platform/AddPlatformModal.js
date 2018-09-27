@@ -322,8 +322,6 @@ class AddPlatformModal extends React.Component {
         PlatformIcon: uploadFileData.PlatformIcon,
         PlatformDatasheet: uploadFileData.PlatformDatasheet,
       }
-    }, () => {
-      console.log("New state in ASYNC callback of UPLOAD IMAGERY & DATASHEETS() LOcation screen :", this.state.personnel);
     });
   }
 
@@ -482,70 +480,20 @@ class AddPlatformModal extends React.Component {
       { name: translations['DataSheet'], type: 'file', domID: 'PlatformDatasheet', valFieldID: 'PlatformDatasheet', fileType: 'file', required: true },
     ];
 
-
-    
-
-    // const nums = [
-    //   { name: '0' },
-    //   { name: '1' },
-    //   { name: '2' },
-    //   { name: '3' },
-    //   { name: '4' },
-    //   { name: '5' },
-    //   { name: '6' },
-    //   { name: '7' },
-    //   { name: '8' },
-    //   { name: '9' },
-    //   { name: '10' },
-    //   { name: '11' },
-    //   { name: '12' },
-    //   { name: '13' },
-    //   { name: '14' },
-    //   { name: '15' },
-    //   { name: '16' },
-    //   { name: '17' },
-    //   { name: '18' },
-    //   { name: '19' },
-    //   { name: '20' }
-    // ];
-
-    /* const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    position: fixed;
-      z-index: 999;
-      height: 2em;
-      width: 2em;
-      overflow: show;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-`; */
-    
     return (
       
       <form action="" onSubmit={this.handleSubmit} id="platform">
       <Loader loading={this.state.loading} />
-      {/*  <div className='loadingjkjk'>
-      <BarLoader
-       className={override}
-        sizeUnit={"px"}
-        size={150}
-        color={'#123abc'}
-        loading={this.state.loading}
-      /> 
-    </div>  */}
+      
         <div className="payload-content">
           <div className="row personnel" >
-            <div className="header-line">
+            {/* <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
                 {translations["Platform Administration"]}
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
-            </div>
+            </div> */}
             <div className="platform-and-munitions-content">
               <div className="col-md-4 image-block">
                 {$imagePreview}

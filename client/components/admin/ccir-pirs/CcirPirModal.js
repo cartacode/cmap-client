@@ -297,7 +297,7 @@ resetForm = () => {
       <form action="" onSubmit={this.handleSubmit} >
         <div className="payload-content">
         <Loader loading={this.state.loading} />
-          <div className="row personnel" >
+          {/* <div className="row personnel" >
 
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -306,7 +306,7 @@ resetForm = () => {
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
-          </div>
+          </div> */}
           <div className="row personnel" >
             <div className="under-payload-content">
               <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleCcirPirGeneralData}

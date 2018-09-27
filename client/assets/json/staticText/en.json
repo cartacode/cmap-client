@@ -751,5 +751,8 @@
   "Platforms Specification":"Platforms Specifications",
   "Add Specification":"Add Specification",
   "Payloads Specifications":"Payloads Specifications",
-  "Munitions Specifications" :"Munitions Specifications"
+  "Munitions Specifications" :"Munitions Specifications",
+  "form": "Form",
+  "Specification": "Specification",
+  "summary": "Summary"
 }

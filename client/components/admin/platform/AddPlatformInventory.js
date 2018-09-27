@@ -190,14 +190,7 @@ class AddPlatformInventory extends React.Component {
         }else{
           locationselect.add(new Option('No Location Found', ''));
         }
-        // if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
-        // response.data.map(item => {
-        //   items.push({ 'label': item['description'], 'value': item['id'].trim() });
-        // });
-        // if (locationselect.length > 0) {locationselect.length = 0;}
-        // for(let i in items) {
-        //   locationselect.add(new Option(items[i].label, items[i].value));
-        // }
+        
       })
       .catch((error) => {
         locationselect.length = 0;
@@ -297,7 +290,7 @@ class AddPlatformInventory extends React.Component {
               <Loader loading={this.state.loading} />
 
         <div className="payload-content">
-          <div className="row personnel" >
+          {/* <div className="row personnel" >
 
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
@@ -307,7 +300,7 @@ class AddPlatformInventory extends React.Component {
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
-          </div>
+          </div> */}
 
           <div className="row personnel" >
             <div className="under-munitions-content">

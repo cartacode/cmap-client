@@ -606,14 +606,14 @@ render() {
       <div className="payload-content">
         <Loader loading={this.state.loading} />
         <div className="row personnel" >
-          <div className="header-line">
+          {/* <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations["Personnel Administration"]}              
 
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
-          </div>
+          </div> */}
           <div className="personnel-content">
             <div className="col-md-4 image-block">
               {$imagePreview}
@@ -624,36 +624,6 @@ render() {
 
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
               data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
-
-            {/* <div className="col-md-4 upload-block">
-              <div className="upload-imagery">
-                <img src="/assets/img/admin/upload_1.png" alt=""/>
-                <div className="header-text">
-                      upload imagery & datasheets
-                </div>
-                <img className="mirrored-X-image" src="/assets/img/admin/upload_1.png" alt=""/>
-              </div>
-              <div className="upload-content">
-                <div className="upload-line">
-                  <div>
-                    {translations['Photo Image']}
-                  </div>
-                  <input type="file"  name="file" id="PayloadPhoto" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*"  />
-                </div>
-                <div className="upload-line">
-                  <div>
-                        Organization Logo 
-                  </div>
-                  <input type="file"  name="file" id="PaylodWireframe" onChange= {this.handleUploadImgFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                </div>
-                <div className="upload-line">
-                  <div>                      
-                   Datasheet 
-                  </div>
-                  <input type="file"  name="file" id="Datasheet" onChange= {this.handleUploadFile.bind(this)} className="hidden_input pull-right" accept="image/*" />
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
         <div className="row personnel" >

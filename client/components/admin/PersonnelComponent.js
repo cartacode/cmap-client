@@ -206,11 +206,14 @@ render() {
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
           <div className="header-text">
-          {translations['personnel']} &nbsp;
+          
           {!this.state.addPersonnelModalOpen ? 
-          <a className="btn btn-warning btn-xs" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/></a> 
-          : '' }
-          &nbsp; 
+          <span>
+            {translations.summary} &nbsp;
+          <a className="btn btn-info btn-xs" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+          </span>
+          : translations.form }
+          &nbsp;
           </div>
           <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
         </div>

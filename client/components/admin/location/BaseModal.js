@@ -23,7 +23,7 @@ class BaseModal extends React.Component {
       locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
       mapImagePreviewUrl: '/assets/img/admin/map2.png',
       editFetched: false,
-       location: {
+      location: {
         LocationID: '',
         LocationReferenceCode: '',
         LocationPhoto: '',
@@ -263,26 +263,26 @@ class BaseModal extends React.Component {
     
     if (uploadedFile.name === 'LocationPhoto') {
     
-        reader.onloadend = () => {
-          this.setState({
-            locationPhotoPreviewUrl: reader.result
-          });
+      reader.onloadend = () => {
+        this.setState({
+          locationPhotoPreviewUrl: reader.result
+        });
        
       }
     } else if (uploadedFile.name === 'LocationMapImage') {
      
-        reader.onloadend = () => {
-          this.setState({
-            mapImagePreviewUrl: reader.result
-          });
+      reader.onloadend = () => {
+        this.setState({
+          mapImagePreviewUrl: reader.result
+        });
        
      
        
      
-    }
+      }
     
-  }
-  reader.readAsDataURL(file);
+    }
+    reader.readAsDataURL(file);
   }
   submitData = () => {
     
@@ -325,157 +325,157 @@ class BaseModal extends React.Component {
   }
 
    handleSubmit = event => {
-    event.preventDefault();
-    this.checkLocationId();
-  } 
+     event.preventDefault();
+     this.checkLocationId();
+   } 
 
-  stopset() {
-    this.setState({ clear: false });
-  }
+   stopset() {
+     this.setState({ clear: false });
+   }
 
-  resetForm() {
-    this.setState(this.baseState);
-    if (confirm("Do you want to clear all data from this form?")) {
-      this.setState({
+   resetForm() {
+     this.setState(this.baseState);
+     if (confirm("Do you want to clear all data from this form?")) {
+       this.setState({
          clear: true,
          locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
          mapImagePreviewUrl: '/assets/img/admin/map2.png'
-        });
-      document.getElementById('locationform').reset();
-    }
-    else {
-
-    }
-  }
-
-  render() {
-    // Render nothing if the "show" prop is false
-
-    let { locationPhotoPreviewUrl, mapImagePreviewUrl } = this.state;
-    let $locationPhoto = '';
-    let $mpaImage = '';
-    //const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
-    //const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
-   
-    if (locationPhotoPreviewUrl || locationPhotoPreviewUrl === '') {
-      $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
-    }
+       });
+       document.getElementById('locationform').reset();
+     }
      else {
-      $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
-    }
+
+     }
+   }
+
+   render() {
+     // Render nothing if the "show" prop is false
+
+     let { locationPhotoPreviewUrl, mapImagePreviewUrl } = this.state;
+     let $locationPhoto = '';
+     let $mpaImage = '';
+     //const locationPhotoUrl = this.props.oneLocation.LocationPhoto;
+     //const locationMapImageUrl = this.props.oneLocation.LocationMapImage;
    
-    if (mapImagePreviewUrl || mapImagePreviewUrl === '') {
-      $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
-    }
-    else {
-      $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
-    }
+     if (locationPhotoPreviewUrl || locationPhotoPreviewUrl === '') {
+       $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
+     }
+     else {
+       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
+     }
+   
+     if (mapImagePreviewUrl || mapImagePreviewUrl === '') {
+       $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
+     }
+     else {
+       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+     }
     
 
-    const { translations } = this.props;
-    const generalFields = [
-      { name: translations['Name'], type: 'input', domID: 'LocationName', valFieldID: 'LocationName', required: true },
-      { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
-      { name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity' },
-      { name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry', required: true },
-      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM' },
-      { name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion', required: true },
-    ];
+     const { translations } = this.props;
+     const generalFields = [
+       { name: translations['Name'], type: 'input', domID: 'LocationName', valFieldID: 'LocationName', required: true },
+       { name: translations['Street/Road'], type: 'input', domID: 'LocationStreet', valFieldID: 'LocationStreet' },
+       { name: translations['City/Town'], type: 'input', domID: 'LocationCity', valFieldID: 'LocationCity' },
+       { name: translations['Country'], type: 'dropdown', domID: 'dispLocationCountry', ddID: 'Countries', valFieldID: 'LocationCountry', required: true },
+       { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'LocationCOCOM' },
+       { name: translations['Region'], type: 'dropdown', domID: 'dispLocationRegion', ddID: 'Regions', valFieldID: 'LocationRegion', required: true },
+     ];
 
-    const locationFields = [
-      { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
-      { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', required: true,},
-      { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude',  required: true,},
-      { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
-      { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
-      { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },
+     const locationFields = [
+       { name: translations['LocationType'], type: 'dropdown', domID: 'LocationType', ddID: 'LocationCategory', valFieldID: 'LocationCategory', required: true },
+       { name: translations['Lat'], type: 'input', domID: 'LocationLat', valFieldID: 'LocationLatitude', required: true,},
+       { name: translations['Lon'], type: 'input', domID: 'LocationLon', valFieldID: 'LocationLongitude',  required: true,},
+       { name: translations['Elevation'], type: 'number', domID: 'LocationElevation', valFieldID: 'LocationElevation' },
+       { name: translations['MGRS'], type: 'input', domID: 'LocationMGRS', valFieldID: 'LocationMGRS' },
+       { name: translations['LocationID'], type: 'input', domID: 'LocationID', ddID: '', valFieldID: 'UserLocationID', required: true, validationIcon: true },
 
-    ];
+     ];
 
-    const contactFields = [
-      { name: translations['Point of Contact'], type: 'input', domID: 'dispLocationPointofContact', valFieldID: 'LocationPointofContact' },
-      { name: translations['Telephone'], type: 'input', domID: 'DSN', valFieldID: 'LocationDSN' },
-      { name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'LocationEmailNIPR' },
-      { name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'LocationEmailSIPR' },
-      { name: translations['Frequency'], type: 'number', domID: 'LocationFrequency', valFieldID: 'LocationFrequency' },
-      { name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'LocationChatID' },
-    ];
+     const contactFields = [
+       { name: translations['Point of Contact'], type: 'input', domID: 'dispLocationPointofContact', valFieldID: 'LocationPointofContact' },
+       { name: translations['Telephone'], type: 'input', domID: 'DSN', valFieldID: 'LocationDSN' },
+       { name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'LocationEmailNIPR' },
+       { name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'LocationEmailSIPR' },
+       { name: translations['Frequency'], type: 'number', domID: 'LocationFrequency', valFieldID: 'LocationFrequency' },
+       { name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'LocationChatID' },
+     ];
 
 
-    const uploadFileFields = [
-      { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image' },
-      { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image' },
-      { name: translations['Document'], type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file' },
-      { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file', extension: 'kml' },
-    ];
+     const uploadFileFields = [
+       { name: translations['Photo Image'], type: 'file', domID: 'LocationPhoto', valFieldID: 'LocationPhoto', fileType: 'image' },
+       { name: translations['Map Image'], type: 'file', domID: 'LocationMapImage', valFieldID: 'LocationMapImage', fileType: 'image' },
+       { name: translations.Document, type: 'file', domID: 'LocationDocument', valFieldID: 'LocationDocument', fileType: 'file' },
+       { name: translations['KML Marker'], type: 'file', domID: 'KML', valFieldID: 'KML', fileType: 'file', extension: 'kml' },
+     ];
 
-    return (
+     return (
 
-      <form action="" onSubmit={this.handleSubmit} id="locationform">
-        <div className="row personnel" >
-        <Loader loading={this.state.loading} />
-          <div className="header-line">
+       <form action="" onSubmit={this.handleSubmit} id="locationform">
+         <div className="row personnel" >
+           <Loader loading={this.state.loading} />
+           {/* <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" style={{ width: "35%" }} />
             <div className="header-text" style={{ width: "30%" }}>
               {translations["Base Location Administration"]}
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" style={{ width: "35%" }} />
-          </div>
-          <div className="personnel-content">
-            <div className="col-md-4 image-block">
-              {$locationPhoto}
-            </div>
-            <div className="col-md-4 image-block">
-              {$mpaImage}
-            </div>
-            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
-          </div>
-        </div>
-		<div className = "row personnel">
-          <div className="col-md-12">
-            <Map size="100" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-          </div>
-        </div>
-        <div className="row personnel" >
-          <div className="under-location-content">
-            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
-              data={this.handleLocationGeneralData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
-            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
-              data={this.handleLocationPositionData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
-            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
-              data={this.handleLocationInfoData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
-          </div>
-        </div>
-        <div className="row action-buttons">
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
-            <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
-              {translations['clear']}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
-          </div>
-          {/* <div className="menu-button">
+          </div> */}
+           <div className="personnel-content">
+             <div className="col-md-4 image-block">
+               {$locationPhoto}
+             </div>
+             <div className="col-md-4 image-block">
+               {$mpaImage}
+             </div>
+             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+               data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
+           </div>
+         </div>
+         <div className = "row personnel">
+           <div className="col-md-12">
+             <Map size="100" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
+           </div>
+         </div>
+         <div className="row personnel" >
+           <div className="under-location-content">
+             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields}
+               data={this.handleLocationGeneralData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Location"]} fields={locationFields}
+               data={this.handleLocationPositionData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Contact Information"]} fields={contactFields}
+               data={this.handleLocationInfoData} initstate={this.state.location} editId={this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched={this.state.editFetched} stopupd={this.stopupd} />
+           </div>
+         </div>
+         <div className="row action-buttons">
+           <div className="menu-button">
+             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+             <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
+               {translations['clear']}
+             </button>
+             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+           </div>
+           {/* <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button className='highlighted-button'>
               {translations['Delete']}
             </button>
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div> */}
-          <div className="menu-button">
-            <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
-            <button type="submit" className='highlighted-button'>
-              {/* {translations['save']} */}
-              {translations['submit']}
-            </button>
-            <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
-          </div>
-        </div>
+           <div className="menu-button">
+             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
+             <button type="submit" className='highlighted-button'>
+               {/* {translations['save']} */}
+               {translations['submit']}
+             </button>
+             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
+           </div>
+         </div>
 
-      </form>
+       </form>
 
-    );
-  }
+     );
+   }
 }
 
 BaseModal.propTypes = {

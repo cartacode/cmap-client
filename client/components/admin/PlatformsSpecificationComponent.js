@@ -64,33 +64,33 @@ class PlatformsSpecificationComponent extends React.Component {
 
 
   loadData = (actionType) => {
-		this.notify(actionType);
-		this.props.fetchPlatforms();
-	}
+    this.notify(actionType);
+    this.props.fetchPlatforms();
+  }
 
 	deletePayload = (value) => {
-		if (value !== undefined && value !== '0') {
-      this.setState({
-        loading:true
-      });
-			this.props.deletePlatformById(value).then((response) => {
+	  if (value !== undefined && value !== '0') {
+	    this.setState({
+	      loading:true
+	    });
+	    this.props.deletePlatformById(value).then((response) => {
         
-        this.setState({
-          loading:false
-        });
-        if(this.props.isDeleted){
-          this.closePlatformForm(NoticeType.DELETE);
-        }
-        else{
-          this.notify(NoticeType.NOT_DELETE);
+	      this.setState({
+	        loading:false
+	      });
+	      if(this.props.isDeleted){
+	        this.closePlatformForm(NoticeType.DELETE);
+	      }
+	      else{
+	        this.notify(NoticeType.NOT_DELETE);
 
-        }
+	      }
 			
-      }).catch((err) => {
+	    }).catch((err) => {
         
-      });
+	    });
       
-		}
+	  }
 	}
 
   notify =(actionType)=>{
@@ -103,14 +103,14 @@ class PlatformsSpecificationComponent extends React.Component {
     else if (NoticeType.DELETE != actionType) {
        
         
-         if (this.state.editId !== undefined && this.state.editId !== '0') {
-          NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
-        }else{
-          NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);
-        }
+      if (this.state.editId !== undefined && this.state.editId !== '0') {
+        NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Specification Title'], 5000);
       }else{
-        NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Specification Title'], 5000);
+        NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Specification Title'], 5000);
       }
+    }else{
+      NotificationManager.success(translations['DeletedSuccesfully'],translations['Platform Specification Title'], 5000);
+    }
 
   }
   
@@ -169,9 +169,9 @@ class PlatformsSpecificationComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                  {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-                     <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-                  </div>,
+          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+            <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+        </div>,
 
       }
     ];
@@ -183,16 +183,22 @@ class PlatformsSpecificationComponent extends React.Component {
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              {translations['Platforms Specification']}
+              {translations.Specifications} &nbsp;
+              {!this.state.addPlatformModalOpen ?
+                <span>
+                  {/* {translations.summary} &nbsp; */}
+                  <a className="btn btn-info btn-xs" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                </span>
+                : '' }
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
 
-          {!this.state.addPlatformModalOpen ? <div className="col-md-12 filter-line">
+          {/* {!this.state.addPlatformModalOpen ? <div className="col-md-12 filter-line">
             <div className="add-button">
               <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations['Add']}</button>
             </div>
-          </div> : null}
+          </div> : null} */}
 
           {this.state.addPlatformModalOpen ?
             <AddPlatform editId={this.state.editId} onClose={this.closePlatformForm} translations={translations} />

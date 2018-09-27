@@ -188,30 +188,33 @@ class LocationComponent
           <div className="row" />
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
-            <div className="header-text">{translations["Location"]}</div>
-            <img
-              className="mirrored-X-image"
-              src="/assets/img/admin/personnel_1.png"
-              alt=""
-            />
+            <div className="header-text">
+              {!this.state.baseModalOpen ?
+                <span>
+                  {translations.summary} &nbsp;
+                  <a className="btn btn-info btn-xs" onClick={() => this.openBaseModalFrom('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                </span>
+                : translations.form }
+            </div>
+            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" />
           </div>
           
           <div className="filter-line Location-filter">
-            <div></div>
+            
             {!this.state.baseModalOpen ?
-            <div className="col-md-3 select-filter">
-            <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
-            </div>:null}
-            {!this.state.baseModalOpen ?  
+              <div className="col-md-3 select-filter">
+                <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
+              </div>:null}
+            {/* {!this.state.baseModalOpen ?  
               
               <div className="add-button">
-              <button
-                className="ccir-button"
-                onClick={() => this.openBaseModalFrom("0")}
-              >
-                {translations["Add Location"]}
-              </button>
-            </div> : null }
+                <button
+                  className="ccir-button"
+                  onClick={() => this.openBaseModalFrom("0")}
+                >
+                  {translations["Add Location"]}
+                </button>
+              </div> : null } */}
           
           </div> 
           {this.state.baseModalOpen ? (

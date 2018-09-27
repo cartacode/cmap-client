@@ -60,22 +60,22 @@ class PlatformComponent extends React.Component {
 	deletePlatformInventory = (value) => {
 
 	  if (value !== undefined && value !== '0') {
-      this.setState({
-        loading:true
-      });
+	    this.setState({
+	      loading:true
+	    });
 	    this.props.deletePlatformInventoryById(value).then(() => {
-        this.setState({
-          loading:false
-        });
-        //this.setState({ editId: '0' });
+	      this.setState({
+	        loading:false
+	      });
+	      //this.setState({ editId: '0' });
 	      //this.notify(NoticeType.DELETE);
-        //this.props.fetchPlatformInventory();
-        if(this.props.isDeleted){
-          this.loadData(NoticeType.DELETE);
-        }
-        else{
-          this.notify(NoticeType.NOT_DELETE);
-        }
+	      //this.props.fetchPlatformInventory();
+	      if(this.props.isDeleted){
+	        this.loadData(NoticeType.DELETE);
+	      }
+	      else{
+	        this.notify(NoticeType.NOT_DELETE);
+	      }
 	    });
 	  }
 	}
@@ -170,8 +170,8 @@ class PlatformComponent extends React.Component {
         accessor: 'id',
         filterable: false,
         Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-              {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-              <a href="javaScript:void('0');" onClick={() => this.deletePlatformInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+            <a href="javaScript:void('0');" onClick={() => this.deletePlatformInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
         </div>,
 
       }
@@ -179,21 +179,27 @@ class PlatformComponent extends React.Component {
 
     return (
       <div>
-                <Loader loading={this.state.loading} />
+        <Loader loading={this.state.loading} />
 
         <div className="row orders-assets">
           <div className="header-line">
             <img src="/assets/img/admin/personnel_1.png" alt="" />
-            <div className="header-text">
-              {translations["platform"]}
+            <div className="header-text">            
+              {!this.state.addPlatformInventoryOpen ?
+                <span>
+                  {translations.summary} &nbsp;
+                  <a className="btn btn-info btn-xs" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                </span>
+                : translations.form }
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          {!this.state.addPlatformInventoryOpen ?<div className="col-md-12 filter-line">
+          {/* {!this.state.addPlatformInventoryOpen ?<div className="col-md-12 filter-line">
             <div className="add-button">
               <button className="ccir-button" onClick={() => this.openPlatformForm('0')} >{translations["Add Platform"]}</button>
             </div>
-          </div> : null}
+          </div> : null} */}
+
           {this.state.addPlatformInventoryOpen ?
             <AddPlatformInventory editId = {this.state.editId} onClose={this.closePlatformForm} translations={translations} />
             : null}

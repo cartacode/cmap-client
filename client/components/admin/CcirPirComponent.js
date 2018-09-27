@@ -34,7 +34,7 @@ class CcirPirComponent extends React.Component {
 
 
 
-// Open form Add/Edit Rerocd
+  // Open form Add/Edit Rerocd
   openCcirPirForm = (row) => {
     this.setState({
       editId: row,
@@ -105,110 +105,115 @@ notify =(type)=>{
 }
 
 
-  // tableRowDetailModal = () => {
-  //   this.setState({
-  //     tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-  //   })
-  // }
+// tableRowDetailModal = () => {
+//   this.setState({
+//     tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
+//   })
+// }
 
-  // onFind(){
-  //   console.log("find");
-  // }
+// onFind(){
+//   console.log("find");
+// }
 
 
-  render() {
+render() {
 
     
-    const {translations} = this.props;
-    const {allCcirPirs} = this.props;
+  const {translations} = this.props;
+  const {allCcirPirs} = this.props;
 
-    const ccirPirs = [translations['missile'], translations['rocket'], translations['gun'],];
+  const ccirPirs = [translations['missile'], translations['rocket'], translations['gun'],];
 
-    // const data = [    
-    //   {cocom: 'a-cocom', country:'j-country', region:'a-region', unit:'unit', commander:'c-commander', recorddate:'3/15/2018', view:'view'},
+  // const data = [    
+  //   {cocom: 'a-cocom', country:'j-country', region:'a-region', unit:'unit', commander:'c-commander', recorddate:'3/15/2018', view:'view'},
       
-    // ];
+  // ];
 
-    // Set Columns and Data to display in the Table List
-    const columns = [
-      {
-        Header: translations['Mission Name'],
-        accessor: 'MissionName',
-      },
-      {
-        Header: translations['COCOM'],
-        accessor: 'COCOM',
-      },
-      {
-        Header: translations['Region'],
-        accessor: 'RegionName',
-      }, 
-      {
-        Header: translations['Country'],
-        accessor: 'CountryName',
-      },
+  // Set Columns and Data to display in the Table List
+  const columns = [
+    {
+      Header: translations['Mission Name'],
+      accessor: 'MissionName',
+    },
+    {
+      Header: translations['COCOM'],
+      accessor: 'COCOM',
+    },
+    {
+      Header: translations['Region'],
+      accessor: 'RegionName',
+    }, 
+    {
+      Header: translations['Country'],
+      accessor: 'CountryName',
+    },
      
-      {
-        Header: translations['Unit'],
-        accessor: 'UnitName',
+    {
+      Header: translations['Unit'],
+      accessor: 'UnitName',
        
-      },
-      {
-        Header: translations['Commander'],
-        accessor: 'CommanderName',
-      },  
-      {
-        Header: translations.Branch,
-        accessor: 'BranchName',
+    },
+    {
+      Header: translations['Commander'],
+      accessor: 'CommanderName',
+    },  
+    {
+      Header: translations.Branch,
+      accessor: 'BranchName',
        
-      },
-      {
-        Header: translations['view'],
-        accessor: 'CCIRPIRId',
-        filterable: false,
-        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openCcirPirForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-                            <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
-                      </div>,
+    },
+    {
+      Header: translations['view'],
+      accessor: 'CCIRPIRId',
+      filterable: false,
+      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openCcirPirForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+        {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
+          <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+      </div>,
 
-      } 
-    ];
+    } 
+  ];
 
   return (
     <div>
       
       <div className="row orders-assets">
         <div className="header-line">
-        <Loader loading={this.state.loading} />
+          <Loader loading={this.state.loading} />
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
           <div className="header-text">
-            {translations["Ccir/Pir"]}
+            {!this.state.addCcirPirModalOpen ?
+              <span>
+                {translations.summary} &nbsp;
+                <a className="btn btn-info btn-xs" onClick={() => this.openCcirPirForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+              </span>
+              : translations.form }
           </div>
           <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
         </div>
-        {!this.state.addCcirPirModalOpen ? <div className="col-md-12 filter-line">
+        {/* {!this.state.addCcirPirModalOpen ? <div className="col-md-12 filter-line">
           <div className="add-button">
             <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
           </div>
-        </div>:null}
+        </div>:null} */}
         {this.state.addCcirPirModalOpen ?
           <CcirPirModal  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
           : null
         }
         
-          <div className="col-md-12">
-            <ReactTable
-              data={allCcirPirs}
-              columns={columns}
-              defaultPageSize={TableDefaults.PAGE_SIZE}
+        <div className="col-md-12">
+          <ReactTable
+            data={allCcirPirs}
+            columns={columns}
+            defaultPageSize={TableDefaults.PAGE_SIZE}
 						  minRows={TableDefaults.MIN_ROWS}
-              className="-striped -highlight"
-              filterable={true}
+            className="-striped -highlight"
+            filterable={true}
 						  defaultFilterMethod={defaultFilter}
-            />
-          </div>
+          />
         </div>
       </div>
+    </div>
   );
 }
 }
