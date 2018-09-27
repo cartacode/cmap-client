@@ -16,11 +16,11 @@ class ConfigBlock extends React.Component {
     return this.props.fields.map((item, i) => {
       return (
         <div className=" col-md-12 check-list" key={i}>
-          <div className="check-box col-md-3 col-xs-3">
+          <div className="check-box col-md-2 col-xs-2">
             <input type="checkbox" id={`checkbox${i}${j}`} name={`checkbox${i}${j}`}/>
             <label htmlFor={`checkbox${i}${j}`}><span /></label>
           </div>
-          <div className="check-label col-md-9 col-xs-9">  
+          <div className="check-label col-md-10 col-xs-10">  
             {item.name}
           </div>
         </div>
