@@ -44,7 +44,7 @@ body {
   }
 
   .menu-button {
-    margin-bottom: 31px;
+    margin-bottom: 0px;
     display: inline-block;
   }
 
@@ -137,8 +137,7 @@ body {
 
   .header {
     font-size: 14px;
-    border-bottom: 1px solid #232f38;
-    padding-bottom: 7px;
+   
   }
 
   .float {
@@ -150,28 +149,30 @@ body {
     color: #98a5ae;
     float: left;
     margin-left: 15px;
-    font-size: 16px;
+    font-size: 14px;
 
     div:not(:first-child) {
       margin-bottom: 4px;
-      font-weight: bold;
-    }
+         }
 
     .header-line {
       float: left;
       margin-right: 5px;
     }
     .line-img {
-      margin: 9px 10px 0 10px;
-      height: 61px;
+      margin: 3px 10px 0 10px;
+      height: 55px
     }
   }
+  img.right-image {
+    float: right;
+}
 
 
   .date-info {
     position: absolute;
     right: 7px;
-    font-size: 16px;
+    font-size: 14px;
     padding-top: 20px;
     color: #98a5ae;
     float: left;
@@ -186,8 +187,8 @@ body {
     }
 
     div {
-      margin-bottom: 4px;
-      font-weight: bold;
+      margin-bottom: 2px;
+      
       text-align: right;
     }
   }
@@ -202,20 +203,20 @@ body {
 
     .header-unclassified {
       text-align: center;
-      font-size: 18px;
+      font-size: 15px;
       color: #9af92e;
       margin-bottom: 10px;
     }
 
     .header-isr {
-      font-size: 25px;
+      font-size: 20px;
       color: #cee3f5;
     }
   }
 }
 
 .buttons {
-  border-bottom: 1px solid #232f38;
+
 
   .horiz-line {
     margin-top: -0.6%;
@@ -476,7 +477,7 @@ body {
 .sub-buttons {
   .buttons-list {
     .submenu-button {
-      margin-bottom: 20px;
+      margin-bottom: 2px;
       display: inline-block;
       margin-right: 40px;
       height: 31px;
@@ -1786,6 +1787,13 @@ body .login {
 .orders-assets .filter-line .add-button .dropdown-menu {
   margin-left: 12px!important;
 }
+a.btn.btn-warning {
+  border-radius: none!important;
+  background: #ed7d31;
+  border-radius: 0px;
+  padding: 8px 30px;
+  margin-bottom: 15px;
+}
 
 //start orders-assets
 .orders-assets {
@@ -1794,7 +1802,7 @@ body .login {
 
   .header-line {
     overflow: hidden;
-    margin-bottom: 17px;
+    margin-bottom: 7px;
 
     img {
       float: left;
@@ -1809,9 +1817,23 @@ body .login {
       text-transform: uppercase;
     }
   }
+  .filter-line .add-button {
+    margin-bottom: 20px;
+    padding: 0px 14px;
+}
+.orders-assets button.ccir-button {
+  margin-bottom: 0px!important;
+  padding: 10px 25px!important;
+  margin: 0px 14px!important;
+
+  
+}
+button.ccir-button {
+  margin-bottom: 0px;
+}
 
   .filter-line {
-    padding: 0 30px 20px;
+    padding: 0 17px;
     width: 100%;
     text-align: right;
 
@@ -3197,7 +3219,7 @@ tbody > tr > th {
         .menu-button {
           width: 50%;
           margin-top: 10px;
-          margin-bottom: 20px;
+          margin-bottom: 0px;
 
           button {
             margin: 3px 0;
@@ -4231,11 +4253,11 @@ textarea.instruction {
 .navbar-default .date-info {
   position: absolute;
   right: 15px;
-  font-size: 16px;
+  font-size: 14px;
   padding-top: 20px;
   color: #98a5ae;
   float: left;
-  width: 199px;
+  width: 175px;
   text-align: left;
 }
 .rowdata-modal {
@@ -5089,5 +5111,7 @@ select.form-control {
    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3) !important;
    background-color: #15354c !important;
   }
+
+
 
 

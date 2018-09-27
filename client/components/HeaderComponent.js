@@ -208,6 +208,7 @@ class HeaderComponent extends React.Component {
   
         <div className="container-fluid buttons">
           <img src="/assets/img/menu/horiz-line.png" className="horiz-line" alt=""/>
+          <img className="right-image" src="/assets/img/menu/horiz-line-right.png"  alt=""/>
           <div className="collapse navbar-collapse" id="bs-AMPS-navbar-collapse-1">
           <div className="buttons-list">
           
