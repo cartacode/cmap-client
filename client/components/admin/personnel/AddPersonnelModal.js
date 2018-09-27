@@ -30,6 +30,8 @@ class AddPersonnelModal extends React.Component {
       file: '',
       clear: false,
       editFetched: false,
+      editSet: false,
+      gPaygrade:'',
       imagePreviewUrl:"/assets/img/admin/photo_1.png",
       imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png",
       personnel: {
@@ -130,6 +132,9 @@ class AddPersonnelModal extends React.Component {
     this.setState({ editFetched: false });
   }
 
+  stopupdset = () => {
+    this.setState({ editSet: false });
+  }
 
   handleGeneralPersonnelData = (generalData) => {
     const { personnel, selectedBranch, selectedRank } = this.state;
@@ -224,6 +229,30 @@ class AddPersonnelModal extends React.Component {
         EmailSIPR: contactInformationData.EmailSIPR,
         ChatID: contactInformationData.ChatID
       },
+    });
+  }
+
+  handleRoleInformationData = (roleData) => {
+      let roleIDs = [];
+      if(roleData.RoleIDs!=undefined) { 
+        console.log(roleData.RoleIDs); 
+        console.log(roleData); } 
+        else { console.log(roleData);  
+        }
+      
+        for (var key in roleData) {
+          console.log("Value: " + roleData[key]);
+          roleIDs.push(roleData[key]);
+      }   
+
+    const {personnel} = this.state;
+    this.setState({
+      personnel: {
+        ...personnel,
+        RoleIDs: roleIDs
+      },
+    }, () => {
+      console.log("New state in ASYNC callback:22222", this.state.personnel);
     });
   }
   
@@ -426,7 +455,8 @@ updatePaygrade= (rank) => {
             },
           selectedPaygrade: paygrade.id,
           selectedRank: rank,
-          editFetched: true, // to update data in chil components
+          // gPaygrade:paygrade
+          editSet: true, // to update data in chil components
         });
       paygradeSelect.selectedIndex = paygrade.id;
            
@@ -540,6 +570,20 @@ render() {
 
   ];
 
+  const roleFields = [
+    { name: 'CollectionManager:', type: 'check', domID: 'CollectionManager', valFieldID: 'CollectionManager', domValue:'b63ca868-af4b-486f-9540-3d01eca089fe'},
+    { name: 'Flight Ops Lead:', type: 'check', domID: 'FlightOpsLead', valFieldID: 'FlightOpsLead', domValue:'7554b13b-bb2b-4203-a334-5417f5b03650' },
+    { name: 'Flight Ops Personnel:', type: 'check', domID: 'FlightOpsPersonnel', valFieldID: 'FlightOpsPersonnel', domValue:'d669b1ed-5e2c-4c27-8d16-60388dffcc2a' },
+    { name: 'Group Admin:', type: 'check', domID: 'GroupAdmin', valFieldID: 'GroupAdmin', domValue:'6dd5ba55-f445-4a30-8270-fdbc992434af' },
+    { name: 'Intel Customer:', type: 'check', domID: 'IntelCustomer', valFieldID: 'IntelCustomer', domValue:'0425a61c-f00e-40d7-93d4-f811e1891ade' },
+    { name: 'Leadership:', type: 'check', domID: 'Leadership', valFieldID: 'Leadership', domValue:'f09c4e3a-eebe-434e-a2a2-b0b44cbcca93' },
+    { name: 'Mission Manager:', type: 'check', domID: 'MissionManager', valFieldID: 'MissionManager', domValue:'36c9952b-3f63-468d-9335-3294a91e9c97' },
+    { name: 'Operations Officer:', type: 'check', domID: 'OperationsOfficer', valFieldID: 'OperationsOfficer', domValue:'d3afa700-751d-4f08-b99e-f9a15361c7a1' },
+    { name: 'PED Personnel:', type: 'check', domID: 'PEDPersonnel', valFieldID: 'PEDPersonnel', domValue:'7637f5c8-aa0c-4447-b7a9-939aadd07c7a' },
+    { name: 'PED Team Lead:', type: 'check', domID: 'PEDTeamLead', valFieldID: 'PEDTeamLead', domValue:'af036592-2598-4727-bc36-7f71c665f787' },
+    { name: 'Super Admin:', type: 'check', domID: 'SuperAdmin', valFieldID: 'SuperAdmin', domValue:'f5bfb78f-38c6-48f4-8773-59c2543e0805' },
+  ];
+
   const contactFields = [
     {name: translations['DSN'], type: 'number', domID: 'DSN', valFieldID: 'DSN', required:true},
     {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required: true },
@@ -615,10 +659,13 @@ render() {
         <div className="row personnel" >
           <div className="under-payload-content">
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
-              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+              fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}  editSet = {this.state.editSet} stopupdset = {this.stopupdset}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title="Organization & Duty" fields={organisationFields}
               data={this.handleOrganizationAndDutyData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
+            <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png"
+              title="User Roles" fields={roleFields}
+              data={this.handleRoleInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>  
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title={translations["Contact Information"]} fields={contactFields}
               data={this.handleContactInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>

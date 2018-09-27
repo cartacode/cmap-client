@@ -24,7 +24,7 @@ class ContentBlock extends React.Component {
 
   componentDidUpdate() {
 
-    const { initstate, editFetched } = this.props;
+    const { initstate, editFetched, editSet } = this.props;
     // const { editFetched } = this.props;
 
     // if(Object.keys(content).length === 0 && content.constructor === Object && editId !== undefined && editId !== '0') {
@@ -38,6 +38,13 @@ class ContentBlock extends React.Component {
 
     if (editFetched) {
       this.props.stopupd();
+     // console.log('inint state '+ JSON.stringify(initstate));
+      this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
+
+    }
+
+    if (editSet) {
+      this.props.stopupdset();
      // console.log('inint state '+ JSON.stringify(initstate));
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
@@ -81,6 +88,7 @@ class ContentBlock extends React.Component {
 
   handleChangeCheck = (e) => {
     const { name, checked } = e.target;
+    console.log(e.target.value);
     // let parameterValue = '';
     // if (value === 'on') {
     //   parameterValue = true;
@@ -89,6 +97,20 @@ class ContentBlock extends React.Component {
     // }
     // this.updateContent(name, parameterValue);
     this.updateContent(name, checked);
+    
+  }
+
+  handleChangedCheck = (e) => {
+    const { name, value } = e.target;
+    console.log(e.target.value);
+    // let parameterValue = '';
+    // if (value === 'on') {
+    //   parameterValue = true;
+    // } else {
+    //   parameterValue = false;
+    // }
+    // this.updateContent(name, parameterValue);
+    this.updateContent(name, value);
     
   }
 
@@ -282,6 +304,15 @@ class ContentBlock extends React.Component {
               </div>
             );
             break;
+            case 'check':
+            
+              input = (      
+                <div>
+                  <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangedCheck}   value={item.domValue}/>
+                  <label htmlFor={`checkbox${i}`}><span /></label>
+                </div>
+              );
+              break;  
           case 'file':
           if(item.required)
           {

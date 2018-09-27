@@ -159,6 +159,7 @@ class SargmtiModal extends React.Component {
 
   handlePayloadFeatureData = (featureData) => {
     const { payload } = this.state;
+    console.log(this.state.payload.PayloadGroundMapping);
     this.setState({
       payload: {
         ...payload,
