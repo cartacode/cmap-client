@@ -2,6 +2,23 @@ body {
   background: url("/assets/img/menu/background-dashboard.png") no-repeat;
   color: #cee3f5;
   background-size: cover;
+  #drawingToolBar{
+    position: absolute;
+    top: 120px;
+    left: 0px;
+    z-index: 5;
+    .toolbar{
+      max-width:50px;
+      background: transparent;
+      .button{
+        background: grey;
+        border-radius: 4px;
+      }
+    }
+  }
+.cesium-widget-credits{
+  display: none;
+}
 
 
 
@@ -4930,15 +4947,47 @@ select.form-control {
 }
 .cesium-viewer{
   position: relative;
-  .cesium-viewer-toolbar{
+  margin-top:34px;
+  .cesium-viewer-geocoderContainer{
     position: absolute;
-    top:0;
-    left: 94%;
+    left: 0;
+    top: -42px;
+    ul{
+      background: black;
+    border-radius: 4px;
+    color: aquamarine;
+    z-index: 14;
+    position: relative;
+    padding: 7px;
+    list-style-type:none;
+    }
+    input{
+      border: 1px solid #9b9b9b;
+      background: #fff;
+      color: #000;
+      border-radius: 20px;
+      font-weight: normal;
+      padding-left: 5px;
+      vertical-align: text-bottom;
+      width: 200px;
+      height: 32px;
+      /* margin-top: -12px; */
+      display: inline-block;
+    }
+    svg{
+      fill: #fff;
+      width: 33px;
+      padding-top: 6px;
+    }
+    
   }
   .cesium-home-button{
     border: 2px solid transparent;
     background: transparent;
     width:0;
+    position: absolute;
+    top:-10px;
+    left: -17px;
     
   svg{
     width: 46px;
@@ -4947,6 +4996,9 @@ select.form-control {
   }
   // display: none;
   }
+}
+#logging{
+  display: none;
 }
 @mixin  toolbar-border-radius {
   -moz-transition: all .51s;
@@ -4986,8 +5038,8 @@ select.form-control {
     height: 40px;
     z-index: 2;
     display: table;
-    top:30%;
-    left:96%;
+    top:20%;
+    left:4px;
     position: absolute;
     border-collapse: collapse;
   

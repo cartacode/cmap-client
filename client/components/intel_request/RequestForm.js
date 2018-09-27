@@ -30,7 +30,7 @@ class RequestForm extends React.Component {
     super(props);
 
     this.state = {
-      CCIRPIR:[],
+      CCIRPIR:'',
       updatedLocation:'',
       toSummary: false,
       editFetched: false,
@@ -344,17 +344,16 @@ updatePirOptions = (items, pirdesc) => {
   }
 }
 renderCCIRPIR = () =>{
-  if(this.state.CCIRPIR) {
+  if(this.state.CCIRPIR !== "") {
   const ccirpir = (
     <ul>
-      {this.state.CCIRPIR.map((item, i) =>
-        <li key={i.toString()}>
-            {item}
+      <li>
+          {this.state.CCIRPIR}
         </li>
-      )}
     </ul>);
     return ccirpir;
   }
+
 }
 
 render() {
