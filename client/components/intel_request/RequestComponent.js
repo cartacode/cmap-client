@@ -77,7 +77,7 @@ class RequestComponent extends React.Component {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
-          <span>{row.value}</span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}> <span>{row.value}</span></Link>
         </div>,
       },
       {
