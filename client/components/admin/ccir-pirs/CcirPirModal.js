@@ -175,70 +175,64 @@ resetForm = () => {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { editId } = this.props;
-    let { ccirpir } = this.state;
-    ccirpir.CenterPoint = [];
     const formData = new FormData();
     let kmlFile = this.state.EffectiveAreaKML;
-    let centerPoints;
-    
-
-
-
-/* // file extenstion to upload should be KML
-if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
-  if(kmlFile.name.split('.').pop() !== 'kml'){
-     // stop update 
-     kmlFile = null;
-
-     alert("Please Select a Valid KML file");
-     
-     // update dom 
-      document.getElementsByName('EffectiveAreaKML')[0].value = null;
-    }
-
-    console.log(JSON.stringify(kmlFile));
-    console.log(" h h h h "+kmlFile.size);
-    
-  } */
-
- 
 
     if (kmlFile) {
       // instantiating new FileReader to read KML file
       let  reader = new FileReader();
+
         reader.onloadend=() => {
-            centerPoints = getKMLCenter(reader.result);
-            ccirpir.CenterPoint = centerPoints;
-              
-            if (editId !== undefined && editId !== '0') {
-              // Start Loader
-              this.setState({loading:true});
-              ccirpir.CCIRPIRId = editId;
-              ccirpir.LastUpdateUserId =  null;
-              formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-              this.props.updateCcirPir(editId, formData).then( () => {
-                //Stop Loader
-                this.setState({loading:false});
-                this.props.onClose(NoticeType.UPDATE);
-              });
-            } else {
-              ccirpir.LastUpdateUserId =  null;
-              formData.append("ccirpirFormData", JSON.stringify(ccirpir));
-              // Start Loader
-              this.setState({loading:true});
-              this.props.addCcirPir(formData).then( () => {
-                // Stop Loader
-                this.setState({loading:false});
-                this.props.onClose(NoticeType.ADD);
-              });
-            }
+          this.submitData(kmlFile, reader, formData);
         }
-        reader.readAsText(kmlFile);
-      formData.append('EffectiveAreaKML', kmlFile, kmlFile.name);
+        // if new file Selected
+        if(typeof kmlFile === 'object'){
+          reader.readAsText(kmlFile);
+          formData.append('EffectiveAreaKML', kmlFile, kmlFile.name);
+        }
+        else
+        {
+          this.submitData(kmlFile, reader, formData);
+        }
+    }   
+    
+  }
+
+  submitData(kmlFile, reader, formData){
+    let centerPoints;
+    let { ccirpir } = this.state;
+    const { editId } = this.props;
+
+    // if New File Selected
+    if(typeof kmlFile === 'object' ){
+      // Empty old CenterPoint
+      ccirpir.CenterPoint = [];
+      centerPoints = getKMLCenter(reader.result);
+      ccirpir.CenterPoint = centerPoints;
     }
-    
-    
+        
+      if (editId !== undefined && editId !== '0') {
+        // Start Loader
+        this.setState({loading:true});
+        ccirpir.CCIRPIRId = editId;
+        ccirpir.LastUpdateUserId =  null;
+        formData.append("ccirpirFormData", JSON.stringify(ccirpir));
+        this.props.updateCcirPir(editId, formData).then( () => {
+          //Stop Loader
+          this.setState({loading:false});
+          this.props.onClose(NoticeType.UPDATE);
+        });
+      } else {
+        ccirpir.LastUpdateUserId =  null;
+        formData.append("ccirpirFormData", JSON.stringify(ccirpir));
+        // Start Loader
+        this.setState({loading:true});
+        this.props.addCcirPir(formData).then( () => {
+          // Stop Loader
+          this.setState({loading:false});
+          this.props.onClose(NoticeType.ADD);
+        });
+      }
   }
 
   render() {
@@ -256,8 +250,23 @@ if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
     //   else {$newdiv = '';}
 
     const { translations } = this.props;
-
-    const generalFields = [
+    const {EffectiveAreaKML} = this.state;
+    let generalFields = [];
+    if(EffectiveAreaKML !== undefined && EffectiveAreaKML !== null && EffectiveAreaKML !== '' ) {
+       generalFields = [
+        { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM' },
+        { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch', required:true},
+        { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country', required:true},
+        { name: 'Region', type: 'dropdown', ddID: 'Regions',  valFieldID: 'RegionId', domID: 'Region', required:true},
+        { name: 'Unit', type: 'dropdown',ddID: 'Units/GetUnits',  valFieldID: 'UnitId', domID: 'Unit', required:true},
+        { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList',  valFieldID: 'CommanderId', domID: 'Commander', required:true},
+        { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
+        { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', extension:'kml'}
+      ];
+    }
+    else
+    {
+       generalFields = [
       { name: 'COCOM', type: 'dropdown', ddID: 'COCOM' , valFieldID: 'COCOMId', domID: 'COCOM' },
       { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService',  valFieldID: 'BranchId', domID: 'Branch', required:true},
       { name: 'Country', type: 'dropdown', ddID: 'Countries',  valFieldID: 'CountryId', domID: 'Country', required:true},
@@ -267,6 +276,7 @@ if(kmlFile.name !== undefined && kmlFile.name !== null && kmlFile.name !==''){
       { name: translations['Named Operation'], type: 'input',  valFieldID: 'MissionName', domID: 'Opname', required:true},
       { name: 'Effective Area KML', type: 'file',  valFieldID: 'EffectiveAreaKML', domID: 'KML', extension:'kml', required: true}
     ];
+  }
 
     const ccirFields = [
       { name: translations['ccir1'], type: 'textarea',  valFieldID: 'Description1', domID: 'desc1', required:true },
