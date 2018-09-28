@@ -40,7 +40,7 @@ class MissionNameModal extends React.Component {
     }
 
     return (
-      <div className="mission-name rowdata-modal modal-overlay" >
+      <div className="react-confirm-alert-overlay" >
         <div className="modal-content">
           <div className="close-button mission-mgt-close-padding">
             <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
