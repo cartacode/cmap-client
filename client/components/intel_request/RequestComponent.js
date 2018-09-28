@@ -142,7 +142,7 @@ class RequestComponent extends React.Component {
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations.summary} &nbsp;
-              <Link to={ addurl } className="btn btn-info btn-xs"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+              <Link to={ addurl } className="btn btn-info btn-xs add-data"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
           
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>

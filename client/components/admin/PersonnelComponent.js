@@ -220,10 +220,15 @@ render() {
           <div className="header-text">
           
           {!this.state.addPersonnelModalOpen ? 
+          
           <span>
             {translations.summary} &nbsp;
-          <a className="btn btn-info btn-xs" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
-          </span>
+         
+          
+       
+          <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+        
+               </span>
           : translations.form }
           &nbsp;
           </div>
