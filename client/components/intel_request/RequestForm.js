@@ -17,9 +17,9 @@ import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'acti
 import { Redirect } from 'react-router-dom';
 import Loader from '../reusable/Loader'
 import { requestHeaders, baseUrl } from '../../dictionary/network';
-import {fetchCcirPirs} from 'actions/ccirpir';
+import { fetchCcirPirs } from 'actions/ccirpir';
 
-import {fetchLocations} from 'actions/location';
+import { fetchLocations } from 'actions/location';
 
 import uuid from 'uuid/v4';
 
@@ -28,10 +28,12 @@ class RequestForm extends React.Component {
   constructor(props) {
     super(props);
 
+    const session = JSON.parse(localStorage.getItem('session'));
+
     this.state = {
-      CCIRPIR:'',
-      updatedLocation:'',
-      toSummary: false,
+      CCIRPIR: '',
+      updatedLocation: '',
+      toRedirect: false,
       editFetched: false,
       clear: false,
 
@@ -40,7 +42,7 @@ class RequestForm extends React.Component {
         MissionId: null,
         locationcategory: '',
         // AreaOfOperations: '',
-        // SupportedCommand: '',
+        SupportedCommand: session.COCOMID,
         // SupportedUnit: '',
         // NamedOperation: '',
         // MissionType: '',
@@ -54,9 +56,9 @@ class RequestForm extends React.Component {
         // PrimaryPayload: '',
         // SecondaryPayload: '',
         //Armed: '',
-        PointofContact: 'UserProfile',
-        DSN: 'UserProfile',
-        EmailSIPR: 'UserProfile',
+        OriginatorFirstName: session.userName,
+        OriginatorDSN: session.Telephone,
+        OriginatorEmail: session.EmailSIPR,
         // ReportClassification: '',
         // LIMIDSRequest: '',
         // IC_ISM_Classifications: '',
@@ -76,8 +78,8 @@ class RequestForm extends React.Component {
     // preserve the initial state in a new object
     this.baseState = this.state;
     this.setCCIRPIR = this.setCCIRPIR.bind(this);
-
     this.setOneLocation = this.setOneLocation.bind(this);
+    console.log('this. state to ' + this.state.toRedirect);
 
   }
 
@@ -135,28 +137,11 @@ class RequestForm extends React.Component {
             intelRequest: oneIntelRequest,
             editFetched: true,
           });
-          this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
+        this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
         this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
       });
-
     }
-  
   }
-
-  //  getKMLdata = () =>{
-  //   const apiUrl = `${baseUrl}/CCIRPIR/GetCCIRPIRData`;
-  //   axios.get(apiUrl).
-  //  }
-  // componentDidUpdate = (prevProps) => {
-  //   const { oneIntelRequest } = this.props;
-  //   const { intelRequest } = this.state;
-  //   if(intelRequest.IntelRequestID !== oneIntelRequest.IntelRequestID) {
-  //     this.setState(
-  //       {
-  //         intelRequest: oneIntelRequest,
-  //       });
-  //   }
-  // }
 
   handleIntelRequest1 = (ir) => {
     const { intelRequest } = this.state;
@@ -234,38 +219,34 @@ class RequestForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     let { intelRequest } = this.state;
-    intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed == null || intelRequest.Armed == '') ? 'true' : intelRequest.Armed;
+    intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
     const session = JSON.parse(localStorage.getItem('session'));
-    console.log('session '+session);
-  console.log('session personnel id'+session.PersonnelID);
     intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
-
-    console.log(" Intel Update ==> " +JSON.stringify(intelRequest));
-    if(editId !== undefined && editId !== '0') {
-      this.setState({loading: true});
+    this.setState({loading: true});
+    
+    if(editId !== undefined && editId !== '0') {      
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
-        this.setState({loading: false});
+        
         this.notify(NoticeType.UPDATE);
         this.setState({
-          toSummary: true,
+          // toRedirect: true,
+          loading: false,
         });
       });
     } else {
-      this.setState({loading: true});
-
       this.props.addIntelRequest(intelRequest).then(() => {
-        this.setState({loading: false});
         this.notify(NoticeType.ADD);
         this.setState({
-          toSummary: true,
+          intelRequest: this.props.oneIntelRequest,
+          loading: false,
+          toRedirect: true,
         });
       });
     }
-
   }
 
 notify = (type) => {
@@ -312,7 +293,7 @@ setOneLocation = (location, currentLatLong) =>{
 
 resetForm() {
   // this.setState(this.baseState);
-  console.log("FORM RESET DONE");
+  
   if (confirm("Do you want to clear all data from this form?")) {
     this.setState({clear:true});
     document.getElementById('personnelform').reset();
@@ -382,27 +363,24 @@ updatelocationid(generalData) {
 
 renderCCIRPIR = () =>{
   if(this.state.CCIRPIR !== "") {
-  const ccirpir = (
-    <div>
-      {this.state.CCIRPIR}
-      <ul>
-        <li>
+    const ccirpir = (
+      <div>
+        {this.state.CCIRPIR}
+        <ul>
+          <li>
             {this.state.pirs[this.state.NamedOperation]}
           </li>
-      </ul>
-    </div>);
+        </ul>
+      </div>);
     return ccirpir;
   }
 
 }
 
 render() {
-  
 
   const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No'}];
-
   const { translations } = this.props;
-
 
   const { match: { params } } = this.props;
   const editId = params.editId;
@@ -433,7 +411,7 @@ render() {
   const intelRequest3 = [
     // { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
     { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true},
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true},
+    { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true},
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations['originator'], type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
@@ -456,6 +434,8 @@ render() {
 
   const { editFetched } = this.state;
 
+  const redirectUrl = '/intel-request/detail/';
+
   return (
     <div>
 
@@ -477,13 +457,13 @@ render() {
           <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
           <div className="ccir-content">
             <div className="fw-800">CCIR:</div>
-              {this.renderCCIRPIR()}
+            {this.renderCCIRPIR()}
           </div>
           <ShortHeaderLine headerText={translations['associate intelligence report']} />
           <div className="associate-content" />
         </div>
       </div>
-      <form action="" onSubmit={this.handleSubmit} id='personnelform'>
+      <form action="" onSubmit={this.handleSubmit} id="personnelform">
         <div className="row intel-request">
           <div className="col-md-12">
             <FullHeaderLine headerText={translations['intelligence request']} />
@@ -502,7 +482,7 @@ render() {
         {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
             <div className="col-md-12">
-              <FullHeaderLine headerText={translations.route} />
+              <FullHeaderLine headerText={translations.collectionValidation} />
             </div>
             {/* <div className="col-md-4">
                 <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} stopupd={this.stopUpdate} /> }
@@ -531,15 +511,17 @@ render() {
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className='btn btn-warning'  onClick={this.resetForm.bind(this)}>
-                {translations['clear']}
+              <button className="btn btn-warning" onClick={this.resetForm.bind(this)}>
+                {translations.clear}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button type="submit" className='btn btn-warning'>
-                {translations['submit']}
+              <button type="submit" className="btn btn-warning">
+                {(this.state.intelRequest.IntelRequestID !== '') ? translations.submit
+                  : translations.generateEei
+                }
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
@@ -550,7 +532,8 @@ render() {
       { (this.state.intelRequest.IntelRequestID !== '') ?
         <IntelEEI nearestNAIPOI={this.state.updatedLocation} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
-      {this.state.toSummary ? <Redirect to="/intel-request/request" /> : null }
+        
+      {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null }
 
     </div>
   );

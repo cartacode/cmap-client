@@ -24,22 +24,17 @@ class HeaderComponent extends React.Component {
     this.props.updateLocalization(lang);
 
     setTimeout(() => {
-      console.log(this.refs.search.innerText.length)
+      
       let widthValue = this.refs.search.innerText.length * 12;
       this.setState({
         width:`${widthValue}px`
       });
-    }, 0)
+    }, 0);
 
-  }
-
-   
-  collapse = () => {
-   debugger;
   }
 
   logoutCall = () => {
-    console.log(initialState.auth);
+    
     localStorage.removeItem('session');
   }
 
@@ -101,7 +96,7 @@ class HeaderComponent extends React.Component {
   }
 
   search() {
-    console.log(this.refs.search.value);
+    // console.log(this.refs.search.value);
   }
 
   render () {
@@ -114,7 +109,7 @@ class HeaderComponent extends React.Component {
     rank = ses.rankAbbrev;
      assignedUnit = ses.AssignedUnitName;
      locationName = ses.LocationName;
-    console.log(ses);
+    
     }
 
     return (

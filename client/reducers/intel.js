@@ -1,7 +1,17 @@
-import { INTEL_EEI__FETCH, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE, INTEL_REQUEST__DELETE } from 'dictionary/action';
+import {
+  INTEL_EEI__FETCH,
+  INTEL_REQUEST__FETCH,
+  INTEL_REQUEST__FETCH_ONE,
+  INTEL_REQUEST__ADD,
+  INTEL_REQUEST__UPDATE,
+  INTEL_REQUEST__DELETE,
+} from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function intel(state = initialState.intelrequest, { payload, type }) {
+export default function intel(state = initialState.intelrequest, {
+  payload,
+  type,
+}) {
   switch (type) {
     case INTEL_EEI__FETCH.REQUEST:
       return {
@@ -36,7 +46,18 @@ export default function intel(state = initialState.intelrequest, { payload, type
         isFetchingOne: false,
         oneIntelRequest: payload.data,
       };
-      case INTEL_REQUEST__DELETE.REQUEST:
+    case INTEL_REQUEST__ADD.REQUEST || INTEL_REQUEST__UPDATE:
+      return {
+        ...state,
+        isFetchingOne: true,
+      };
+    case INTEL_REQUEST__ADD.SUCCESS || INTEL_REQUEST__UPDATE:
+      return {
+        ...state,
+        isFetchingOne: false,
+        oneIntelRequest: payload.data,
+      };
+    case INTEL_REQUEST__DELETE.REQUEST:
       return {
         ...state,
         isDeleted: false,
@@ -46,7 +67,7 @@ export default function intel(state = initialState.intelrequest, { payload, type
         ...state,
         isDeleted: true,
       };
-      case INTEL_REQUEST__DELETE.FAILURE:
+    case INTEL_REQUEST__DELETE.FAILURE:
       return {
         ...state,
         isDeleted: false,

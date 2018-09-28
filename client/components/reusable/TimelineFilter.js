@@ -63,11 +63,12 @@ class TimelineFilter extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined);
+    // this.props.onRef(undefined);
   }
 
   handleFilterData = (name, value) => {
-    if( value === '0' ) 
+    console.log('filetr value ' + value);
+    if( value === '0' )
       return;
 
     const { filter } = this.state;
@@ -77,7 +78,7 @@ class TimelineFilter extends React.Component {
         [name]: value,
       },
     });
-    if(name === 'selectedResource' && this.props.tab === MissionConsts.TABS.FOP) {
+    if(name === 'selectedResource' /* && this.props.tab === MissionConsts.TABS.FOP */) {
       this.props.updateResource(value);
     }
   }
@@ -189,9 +190,9 @@ class TimelineFilter extends React.Component {
       {
         Header: translations.Type,
         accessor: 'TeamType',
-      },      
+      },
       {
-        Header: translations.Specialization,
+        Header: translations.specialization,
         accessor: 'Specialization',
       },
 
@@ -201,6 +202,8 @@ class TimelineFilter extends React.Component {
     // remove radio button column if tab is ISR
     if(tab === MissionConsts.TABS.ISR) {
       sidebarHeader[0].columns.splice(0, 1);
+    } else{
+      sidebarHeader[0].columns.splice(4, 1);
     }
 
     return sidebarHeader;
@@ -241,7 +244,9 @@ class TimelineFilter extends React.Component {
    */
   onFind = () => {
     // event.preventDefault();
+    
     const { selectedResource } = this.state.filter;
+    console.log('selectedReource'+selectedResource);
     if(selectedResource === MissionConsts.RESOURCE.PLATFORM) {
       this.findPlatformBased();
     } else if(selectedResource === MissionConsts.RESOURCE.TEAM) {
@@ -275,7 +280,7 @@ class TimelineFilter extends React.Component {
 
     const { filter } = this.state;
     const { tab } = this.props;
-
+    const session = JSON.parse(localStorage.getItem('session'));
     let unitType = '';
     if(tab === MissionConsts.TABS.FOP) {
       unitType = UnitConsts.TYPE.CREW;
@@ -287,7 +292,7 @@ class TimelineFilter extends React.Component {
     const startDate = moment(filter.startDate).format(DateConsts.DB_DATETIME_FORMAT);
     const endDate = moment(filter.endDate).format(DateConsts.DB_DATETIME_FORMAT);
     // const unitId = 15; // this will come from session
-    const session = JSON.parse(localStorage.getItem('session'));
+   
     const unitId = session.AssignedUnit;
     const data =
       {
@@ -333,7 +338,6 @@ class TimelineFilter extends React.Component {
     const newItems = [];
 
     let itemCount = 0;
-
 
     let titleField = 'Name';
     // const rootUnitId = 15;
