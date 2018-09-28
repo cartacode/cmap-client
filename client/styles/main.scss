@@ -21,7 +21,25 @@ body {
 }
 
 
+ .rowdata-modal .modal-content {
+  height: 200px !important;
+  padding: 20px !important;
+  background: #07253a !important;
+  z-index: 1 !important;
+}
+.mission-mgt-close-padding{
+    padding:0px !important;
+  }
 
+  .mission-mgt-txt-padding{
+    padding-top: 10px !important;
+  }
+
+  .mission-mgt-save-btn-padding{
+    padding-top: 26px !important;
+  }
+ 
+  
 
 
 
