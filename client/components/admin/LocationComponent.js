@@ -8,6 +8,7 @@ import { defaultFilter, getConfirmation  } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
+import FilterDropDown from '../reusable/FilterDropdown';
 
 
 class LocationComponent
@@ -127,19 +128,21 @@ class LocationComponent
 
   render() {
     const { translations } = this.props;
-    const locations = [
-      { name: translations["Base"], onClick: this.baseModal },
-      { name: translations["NAI"], onClick: this.naiModal },
-      { name: translations["POI"], onClick: this.poiModal }
-    ];
+    // const locations = [
+    //   { name: translations["Base"], onClick: this.baseModal },
+    //   { name: translations["NAI"], onClick: this.naiModal },
+    //   { name: translations["POI"], onClick: this.poiModal }
+    // ];
     const { allLocations } = this.props;
     const columns = [
-      /* {
-        Header: translations["type"],
-        accessor: "type"
-      }, */
       {
-        Header: translations["Name"],
+        Header: translations.type,
+        accessor: 'type',
+        Filter: ({ filter, onChange }) =>
+          <FilterDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} dropdownData={this.handleFilterData} dropdownDataUrl="LocationCategory"/>,
+      },
+      {
+        Header: translations.Name,
         accessor: "name"
       },
       {
@@ -213,10 +216,10 @@ class LocationComponent
           
           <div className="filter-line Location-filter">
             
-            {!this.state.baseModalOpen ?
+            {/* {!this.state.baseModalOpen ?
               <div className="col-md-3 select-filter">
                 <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
-              </div>:null}
+              </div>:null} */}
             {/* {!this.state.baseModalOpen ?  
               
               <div className="add-button">
