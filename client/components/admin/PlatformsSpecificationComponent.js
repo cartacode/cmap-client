@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import {NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -68,8 +68,9 @@ class PlatformsSpecificationComponent extends React.Component {
     this.props.fetchPlatforms();
   }
 
-	deletePayload = (value) => {
-	  if (value !== undefined && value !== '0') {
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
+    if (value !== undefined && value !== '0') {
 	    this.setState({
 	      loading:true
 	    });
@@ -90,7 +91,19 @@ class PlatformsSpecificationComponent extends React.Component {
         
 	    });
       
-	  }
+    }
+  }
+
+    // will call when user click on Delete Button
+	deletePayload = (value) => {
+	     
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
 	}
 
   notify =(actionType)=>{
