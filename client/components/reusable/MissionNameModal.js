@@ -64,7 +64,7 @@ MissionNameModal.propTypes = {
   children: PropTypes.node,
   moveLeft: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  row: PropTypes.string,
+  row: PropTypes.object,
   show: PropTypes.bool,
 };
 
