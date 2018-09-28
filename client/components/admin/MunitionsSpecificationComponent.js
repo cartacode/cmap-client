@@ -11,7 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -133,7 +133,8 @@ class MunitionsSpecificationComponent extends React.Component {
     this.props.fetchMunitions();
   }
 
-  deleteMunitions = (value) => {
+// This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     if (value !== undefined && value !== '0') {
       this.setState({loading: true});
       this.props.deleteMunitionsById(value).then(() => {
@@ -148,6 +149,17 @@ class MunitionsSpecificationComponent extends React.Component {
        }
       });
     }
+  }
+
+  // will call when user click on Delete Button
+  deleteMunitions = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
 
   //actionType means ADD, UPDATE, DELETE
@@ -206,6 +218,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Type",
         accessor: 'munitionType',        
+        maxWidth: 150,
         // Cell: row => <div>{
         //   row.value === 1 ? translations['Missile']
         //     : row.value === 2 ? translations['Rocket']
@@ -253,6 +266,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Ops range",
         accessor: 'opsRange',
+        maxWidth: 110,
         filterMethod: (filter, row) => {
           return String(row[filter.id]).startsWith(filter.value) 
         }
@@ -260,6 +274,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Weight",
         accessor: 'weight',
+        maxWidth: 70,
         filterMethod: (filter, row) => {
           return String(row[filter.id]).startsWith(filter.value) 
         }
@@ -268,6 +283,7 @@ class MunitionsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
+        maxWidth: 160,
         Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
                           {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
                           <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}

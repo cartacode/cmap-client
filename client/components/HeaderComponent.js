@@ -26,22 +26,17 @@ class HeaderComponent extends React.Component {
     this.props.updateLocalization(lang);
 
     setTimeout(() => {
-      console.log(this.refs.search.innerText.length)
+      
       let widthValue = this.refs.search.innerText.length * 12;
       this.setState({
         width:`${widthValue}px`
       });
-    }, 0)
+    }, 0);
 
-  }
-
-   
-  collapse = () => {
-   debugger;
   }
 
   logoutCall = () => {
-    console.log(initialState.auth);
+    
     localStorage.removeItem('session');
   }
 
@@ -147,7 +142,7 @@ class HeaderComponent extends React.Component {
   }
 
   search() {
-    console.log(this.refs.search.value);
+    // console.log(this.refs.search.value);
   }
 
   render () {
@@ -160,7 +155,7 @@ class HeaderComponent extends React.Component {
     rank = ses.rankAbbrev;
      assignedUnit = ses.AssignedUnitName;
      locationName = ses.LocationName;
-    console.log(ses);
+    
     }
 
     return (
@@ -227,7 +222,7 @@ class HeaderComponent extends React.Component {
       <div className="langs-dropdown" style={{position: "absolute",
               top: "45px", right: "200px"}}>
               <button type="button" className="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Change Lang
+               Language
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 {this.renderLangsList()}

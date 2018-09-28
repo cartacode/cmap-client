@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatformInventory from './platform/AddPlatformInventory';
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 
 
@@ -57,9 +57,9 @@ class PlatformComponent extends React.Component {
 	  this.props.fetchPlatformInventory();
   }
 
-	deletePlatformInventory = (value) => {
-
-	  if (value !== undefined && value !== '0') {
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value) {
+    if (value !== undefined && value !== '0') {
 	    this.setState({
 	      loading:true
 	    });
@@ -78,6 +78,17 @@ class PlatformComponent extends React.Component {
 	      }
 	    });
 	  }
+  }
+
+  // will call when user click on Delete Button
+	deletePlatformInventory = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );	 
 	}
 
   notify =(actionType)=>{
@@ -188,7 +199,7 @@ class PlatformComponent extends React.Component {
               {translations.inventory} &nbsp;
               {!this.state.addPlatformInventoryOpen ?
                 <span>
-                  <a className="btn btn-info btn-xs" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                 </span>
                 : '' }
             </div>

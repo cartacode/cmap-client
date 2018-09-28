@@ -16,14 +16,21 @@ class IsrSyncComponent extends React.Component {
     };
   }
 
+  updateSelectedResource = (resource) => {
+    this.setState({
+      defaultResource: resource,
+    }, () => {
+      this.timeLine.onFind();
+    });
+  }
+
   render() {
     const { translations } = this.props;
 
     
-    
     return (
       <div>
-        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} showUnitType={this.state.showUnitType}/>
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} updateResource={this.updateSelectedResource} translations={translations} headerTxt={translations['isr sync']} defaultResource={this.state.defaultResource} tab={this.state.tab} showUnitType={this.state.showUnitType}/>
       </div>
     );
   }

@@ -4,10 +4,11 @@ import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation  } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
+import FilterDropDown from '../reusable/FilterDropdown';
 
 
 class LocationComponent
@@ -63,7 +64,8 @@ class LocationComponent
     this.notify(dataMessage);
   }
 
-  deleteLocations = (value) => {
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     if (value !== undefined && value !== '0') {
       // Start Loader
       this.setState({loading:true});
@@ -81,6 +83,17 @@ class LocationComponent
         }
       });
     }
+  }
+
+// will call when user click on Delete Button
+  deleteLocations = (value) => {
+   const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
   
   notify =(actionType)=>{
@@ -115,19 +128,21 @@ class LocationComponent
 
   render() {
     const { translations } = this.props;
-    const locations = [
-      { name: translations["Base"], onClick: this.baseModal },
-      { name: translations["NAI"], onClick: this.naiModal },
-      { name: translations["POI"], onClick: this.poiModal }
-    ];
+    // const locations = [
+    //   { name: translations["Base"], onClick: this.baseModal },
+    //   { name: translations["NAI"], onClick: this.naiModal },
+    //   { name: translations["POI"], onClick: this.poiModal }
+    // ];
     const { allLocations } = this.props;
     const columns = [
-      /* {
-        Header: translations["type"],
-        accessor: "type"
-      }, */
       {
-        Header: translations["Name"],
+        Header: translations.type,
+        accessor: 'type',
+        Filter: ({ filter, onChange }) =>
+          <FilterDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} dropdownData={this.handleFilterData} dropdownDataUrl="LocationCategory"/>,
+      },
+      {
+        Header: translations.Name,
         accessor: "name"
       },
       {
@@ -192,7 +207,7 @@ class LocationComponent
               {!this.state.baseModalOpen ?
                 <span>
                   {translations.summary} &nbsp;
-                  <a className="btn btn-info btn-xs" onClick={() => this.openBaseModalFrom('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openBaseModalFrom('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                 </span>
                 : translations.form }
             </div>
@@ -201,10 +216,10 @@ class LocationComponent
           
           <div className="filter-line Location-filter">
             
-            {!this.state.baseModalOpen ?
+            {/* {!this.state.baseModalOpen ?
               <div className="col-md-3 select-filter">
                 <MissionMgtDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} label={translations.LocationType} data={this.handleFilterData} dropdownDataUrl="LocationCategory" />
-              </div>:null}
+              </div>:null} */}
             {/* {!this.state.baseModalOpen ?  
               
               <div className="add-button">

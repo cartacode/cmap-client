@@ -134,7 +134,7 @@ class DashboardComponent extends React.Component {
         accessor: 'type',
       },
       {
-        Header: translations.class,
+        Header: translations.classification,
         accessor: 'class',
       },
     ];
@@ -177,7 +177,7 @@ class DashboardComponent extends React.Component {
         accessor: 'type',
       },
       {
-        Header: translations.class,
+        Header: translations.classification,
         accessor: 'class',
       },
     ];

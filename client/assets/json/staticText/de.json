@@ -686,6 +686,15 @@
   "Platforms Specification":"Platforms Specifications",
   "Add Specification":"Add Specification",
   "Payloads Specifications":"Payloads Specifications",
-  "Munitions Specifications" :"Munitions Specifications"
+  "Munitions Specifications" :"Munitions Specifications",
+  "form": "Form",
+  "specification": "Specification",
+  "summary": "Summary",
+  "generateEei": "Generate EEI",
+  "collectionValidation": "Collection Validation",
+  "specialization": "Specialization",
+	"DeleteConfirmation": "Confirm you wish to Delete Yes/No ?",
+	"Yes": "Yes",
+	"No": "No"
   
 }

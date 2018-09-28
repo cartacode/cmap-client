@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import AddPlatform from './platform/AddPlatformModal';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import {NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -68,8 +68,9 @@ class PlatformsSpecificationComponent extends React.Component {
     this.props.fetchPlatforms();
   }
 
-	deletePayload = (value) => {
-	  if (value !== undefined && value !== '0') {
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
+    if (value !== undefined && value !== '0') {
 	    this.setState({
 	      loading:true
 	    });
@@ -90,7 +91,19 @@ class PlatformsSpecificationComponent extends React.Component {
         
 	    });
       
-	  }
+    }
+  }
+
+    // will call when user click on Delete Button
+	deletePayload = (value) => {
+	     
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
 	}
 
   notify =(actionType)=>{
@@ -159,15 +172,18 @@ class PlatformsSpecificationComponent extends React.Component {
       {
         Header: translations['Payload Capacity(lbs.)'],
         accessor: 'payloadCapacity',
+        maxWidth: 200,
       },
       {
         Header: translations['Armament Capacity(lbs.)'],
         accessor: 'armamentCapacity',
+        maxWidth: 200,
       },
       {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
+        maxWidth: 150,
         Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
           {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
             <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
@@ -187,7 +203,7 @@ class PlatformsSpecificationComponent extends React.Component {
               {!this.state.addPlatformModalOpen ?
                 <span>
                   {/* {translations.summary} &nbsp; */}
-                  <a className="btn btn-info btn-xs" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                 </span>
                 : '' }
             </div>

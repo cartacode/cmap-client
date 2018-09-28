@@ -70,12 +70,10 @@ class MissionMgtDropDown extends React.Component {
 
     // render dropdown list of lang switcher
     renderItems() {
-      
-      return this.state.dropdownItems.map(function(data, key) {
+      return this.state.dropdownItems.map((data, key) => {
         return (
           <option key={key} value={data.value}>{data.label}</option>
         );
-        
       });
     }
 

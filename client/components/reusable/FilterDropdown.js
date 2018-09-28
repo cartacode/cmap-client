@@ -1,95 +1,104 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { baseUrl } from 'dictionary/network';
+import { baseUrl, requestHeaders } from 'dictionary/network';
 
 class Table extends React.Component {
 
-    labelField= "description";
+    labelField = 'description';
     valueField = 'id';
 
     constructor(props) {
-        super(props);
-        this.state = {
-            dropdownItems: [],
-            selectedDropDownValue : 0
-        };
+      super(props);
+      this.state = {
+        dropdownItems: [],
+        selectedDropDownValue: 0,
+      };
 
-        this.handleChange = this.handleChange.bind(this);
-        if(undefined !== props.labelName){
-            this.labelField = props.labelName;
-        }
-        if(undefined !== props.finalValue){
-            this.valueField = props.finalValue;
-        }
+      this.handleChange = this.handleChange.bind(this);
+      if(undefined !== props.labelName) {
+        this.labelField = props.labelName;
+      }
+      if(undefined !== props.finalValue) {
+        this.valueField = props.finalValue;
+      }
     }
 
     componentWillMount() {
-        let items = [{"label": "-Select Item-", "value": 0}];
+      const items = [{ 'label': '-Select Item-', 'value': '' }];
 
-		if (this.props.dropdownDataUrl === 'MunitionRoles') {
-			this.props.munitions.map(item => {
-				items.push({"label": item['name'], "value": item['name']});
-			});
-			this.setState({
-				dropdownItems: items
-			});
-		} else {
-			axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`)
-				.then(response => {
-					response.data.map(item => {
-						items.push({"label": item[this.labelField], "value": item[this.valueField]});
-					});
-					this.setState({
-						dropdownItems: items
-					});
-				})
-				.catch((error) => {
-					console.log("Exception comes:" + error);
-				});
-		}
+      console.log('this.props.dropdownDataUrl' + this.props.dropdownDataUrl);
+      if (this.props.dropdownDataUrl) {
+
+        axios.get(`${baseUrl}/${this.props.dropdownDataUrl}`, { headers: requestHeaders })
+          .then(response => {
+            response.data.map(item => {
+              items.push({ 'label': item[this.labelField], 'value': item[this.valueField] });
+            });
+            this.setState({
+              dropdownItems: items,
+            }, () => {
+              this.updateDefaults();
+            });
+          })
+          .catch((error) => {
+            console.log('Exception comes:' + error);
+          });
+
+      }
     }
 
-    changeValue = (label, value) => {
-        console.log("Display Lable : "+label+ ", Saved Value :"+value);
-    };
+    componentDidUpdate = () => {
+      this.updateDefaults();
+    }
 
-    //render dropdown list of lang switcher
+    updateDefaults = () => {
+      let { defaultValue } = this.props;
+      const { selectedDropDownValue } = this.state;
+      if(typeof defaultValue === 'string') {
+        defaultValue = defaultValue.trim();
+      }
+      if(defaultValue !== selectedDropDownValue) {
+        this.setState({
+          selectedDropDownValue: defaultValue,
+        });
+      }
+    }
+
     renderItems() {
-        return this.state.dropdownItems.map(function(data, key){
-            if(data.label == "-Select Item-"){
-                return ( <option key={key} value="">{data.label}</option>) ;
-            } else {
-                return (<option key={key} value={data.label}>{data.label}</option> );
-            }
-        })
+      return this.state.dropdownItems.map((data, key) => {
+        return (
+          <option key={key} value={data.value}>{data.label}</option>
+        );
+      });
     }
 
     handleChange = (e) => {
-        const { name, value } = e.target;
-        console.log(name +"----"+value);
-        const { selectedDropDownValue } = this.state;
-        this.setState({
-            selectedDropDownValue: value
-        }, () =>{
-            this.props.dropdownData(this.state.selectedDropDownValue);
-        });
+      const { name, value } = e.target;
+      this.setState({
+        selectedDropDownValue: value,
+      }, () =>{
+        this.props.dropdownData(name, value);
+      });
     }
 
     render() {
-        let key = this.props.id || 0;
-        return (
-            <div>
-                <select name={key} onChange={this.handleChange}>
-                    {this.renderItems()}
-                </select>
-            </div>
-        );
+
+      return (
+        <div>
+          <select name={ this.props.name } onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
+            {this.renderItems()}
+          </select>
+        </div>
+      );
     }
 }
 
 Table.propTypes = {
-    children: PropTypes.element,
+  children: PropTypes.element,
+  defaultValue: PropTypes.any,
+  dropdownData: PropTypes.func,
+  name: PropTypes.string,
 
 };
 

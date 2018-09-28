@@ -729,7 +729,7 @@
   "units":"Units",
   "teams":"Teams",
   "Date/Time": "Date/Time",
-  "IR": "IR#",
+  "IR#": "IR#",
   "Command": "Command",
   "mission summary":"Summary",
 	"Crew Team":"Crew Team",
@@ -754,5 +754,8 @@
   "Munitions Specifications" :"Munitions Specifications",
   "form": "Form",
   "specification": "Specification",
-  "summary": "Summary"
+  "summary": "Summary",
+  "generateEei": "Generate EEI",
+  "collectionValidation": "Collection Validation",
+  "specialization": "Specialization"
 }

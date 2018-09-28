@@ -86,7 +86,8 @@ class IntelEEI extends React.Component {
   render() {
 
     const { translations, missionId } = this.props;
-  console.log(missionId+ ' missiion id');
+    
+  
     // EEI columns
     const missionColumns = [
       {
@@ -117,10 +118,13 @@ class IntelEEI extends React.Component {
       {
         Header: translations.NearestNAI,
         accessor: 'POI1_ID',
+        Cell: row => (row.original.POI1 !== undefined && row.original.POI1 !== '') ? row.original.POI1 : row.original.POI1_ID,
+        
       },
       {
         Header: translations.NearestPOI,
         accessor: 'POI2_ID',
+        Cell: row => (row.original.POI2 !== undefined && row.original.POI2 !== '') ? row.original.POI2 : row.original.POI2_ID,
       },
       {
         Header: translations['LIMIDS Request'],

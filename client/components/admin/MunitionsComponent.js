@@ -5,7 +5,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import AddMunitionsInventory from './munitions/AddMunitionsInventory';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -50,7 +50,8 @@ closeMunitionsForm = (actionType) => {
   });
 }
 
-deleteMunitions = (value) => {
+// This will get call when user click on Yes to Delete a Record
+deleteLogic(value){
   if (value !== undefined && value !== '0') {
     this.setState({loading: true});
     this.props.deleteMunitionInventoryById(value).then(() => {
@@ -67,6 +68,17 @@ deleteMunitions = (value) => {
       }
     });
   }
+}
+
+// will call when user click on Delete Button
+deleteMunitions = (value) => {
+  const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
 }
 
 notify =(actionType)=>{
@@ -164,7 +176,7 @@ notify =(actionType)=>{
               {translations.inventory} &nbsp;
               {!this.state.addMunitionsInventoryOpen ?
 	              <span>
-	                <a className="btn btn-info btn-xs" onClick={() => this.openMunitionsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+	                <a className="btn btn-info btn-xs add-data" onClick={() => this.openMunitionsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
 	              </span>
 	              : '' }
             </div>
