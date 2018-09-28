@@ -8,6 +8,7 @@ import AddPayloadsInventory from './payloads/AddPayloadsInventory';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import {TableDefaults, NoticeType} from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
+import {  getConfirmation } from '../../util/helpers';
 
 class PayloadsComponent extends React.Component {
   constructor(props) {
@@ -48,9 +49,9 @@ class PayloadsComponent extends React.Component {
 	  this.props.fetchPayloadInventory();
 	}
 
-	deletePayloadInventory = (value) => {
-
-	  if (value !== undefined && value !== '0') {
+  // This will get call when user click on Yes to Delete a Record
+	deleteLogic(value){
+		if (value !== undefined && value !== '0') {
 	    this.setState({loading:true});
 	    this.props.deletePayloadInventoryById(value).then(() => {
 	      //this.setState({ editId: '0' });
@@ -62,6 +63,17 @@ class PayloadsComponent extends React.Component {
 
 	    });
 	  }
+	}
+
+  // will call when user click on Delete Button
+	deletePayloadInventory = (value) => {
+ 		const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
 	}
 
 	notify = (actionType) => {
@@ -144,7 +156,7 @@ class PayloadsComponent extends React.Component {
 						  {translations.inventory} &nbsp;
 	            {!this.state.addPayloadsInventoryOpen ?
 	              <span>
-	                <a className="btn btn-info btn-xs" onClick={() => this.openPayloadsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+	                <a className="btn btn-info btn-xs add-data" onClick={() => this.openPayloadsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
 	              </span>
 	              : '' }
 	          </div>

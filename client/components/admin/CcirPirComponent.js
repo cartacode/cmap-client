@@ -4,7 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import CcirPirModal from './ccir-pirs/CcirPirModal';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation  } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -64,22 +64,33 @@ callCloseCcirPirForm = () =>{
   this.closeCcirPirForm('');
 }
 
-// Delete Record
+// This will get call when user click on Yes to Delete a Record
+deleteLogic(row){
+   // Start Loader
+   this.setState({loading:true});
+   this.props.deleteCcirPirById(row).then(() => {
+     // Stop Loader
+     this.setState({loading:false});
+     //if Deleted Successfully
+     if(this.props.isDeleted){
+       this.loadData(NoticeType.DELETE);
+     }
+     else{
+       this.notify(NoticeType.NOT_DELETE);
+     }
+     
+   });
+}
+
+// Delete Record will call when user click on Delete Button
 deleteCcirPirRecord(row){
-  // Start Loader
-  this.setState({loading:true});
-  this.props.deleteCcirPirById(row).then(() => {
-    // Stop Loader
-    this.setState({loading:false});
-    //if Deleted Successfully
-    if(this.props.isDeleted){
-      this.loadData(NoticeType.DELETE);
-    }
-    else{
-      this.notify(NoticeType.NOT_DELETE);
-    }
-    
-  });
+  const { translations } = this.props;
+  // Get Confirm user wish to Delete Yes/No 
+  getConfirmation(translations['DeleteConfirmation'],
+                  translations['Yes'],
+                  translations['No'],
+                  () => this.deleteLogic(row)
+                  );
 }
 
 // function to Display Success Messages
@@ -172,7 +183,7 @@ render() {
             {!this.state.addCcirPirModalOpen ?
               <span>
                 {translations.summary} &nbsp;
-                <a className="btn btn-info btn-xs" onClick={() => this.openCcirPirForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                <a className="btn btn-info btn-xs add-data" onClick={() => this.openCcirPirForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
               </span>
               : translations.form }
           </div>

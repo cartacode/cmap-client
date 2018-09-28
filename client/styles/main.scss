@@ -20,7 +20,6 @@ body {
   display: none;
 }
 
-
  .rowdata-modal .modal-content {
   height: 200px !important;
   padding: 20px !important;
@@ -39,7 +38,16 @@ body {
     padding-top: 26px !important;
   }
  
-  
+a.submenu:hover {
+  color:#ed7d31!important;
+}
+.sub-list a:hover {
+ color:#ed7d31!important;
+}
+button:hover {
+  color: #ed7d31!important;
+}
+
 
 
 
@@ -66,7 +74,7 @@ body {
     display: inline-block;
   }
 
-  
+
   .Location-filter select.form-control {
     display: block;
      width: 100%;
@@ -1421,6 +1429,7 @@ body .login {
 
         .highlighted-button:hover {
           background-color: #ed7d31;
+          color: #fff!important;
         }
 
         .button-line {
@@ -1429,7 +1438,9 @@ body .login {
       }
     }
   }
-
+  button.highlighted-button:hover {
+    color: #fff!important;
+}
   .national-imagery {
     width: 100%;
     height: 650px;
@@ -1824,7 +1835,7 @@ a.btn.btn-warning {
 
   .header-line {
     overflow: hidden;
-    margin-bottom: 7px;
+    margin-bottom: 15px;
 
     img {
       float: left;
@@ -2572,11 +2583,10 @@ input {
         margin: 15px 0px;
       }
 
-      .highlighted-button {
-      }
-
+    
       .highlighted-button:hover {
         background-color: #ed7d31;
+        color:#fff!important;
       }
 
       .line {
@@ -2941,11 +2951,11 @@ input {
     width: 200px;
   }
 
-  .highlighted-button {
-  }
+ 
 
   .highlighted-button:hover {
     background-color: #ed7d31;
+    color:#fff!important;
   }
 
   .line {
@@ -4619,9 +4629,9 @@ input.custom-file-input {
   margin-top: 10px;
   color: #fff;
   text-align: left;
-
   background: #06253a;
   padding: 8px 6px 8px 6px;
+  text-transform: capitalize;
 }
 
 .submenu a {
@@ -5136,6 +5146,7 @@ select.form-control {
    background-color: #15354c !important;
   }
 
+
 /************************ Confimation Pop Up ***********************/
   .custom-ui.popup {
     border: 1px solid #5e6367;
@@ -5149,3 +5160,15 @@ select.form-control {
 }
 
 /**********************************************************************/
+
+/********************** add-data-button ********************/
+.add-data {
+  background: transparent;
+  padding: 4px 23px;
+  border: 1px solid #989494;
+}
+.add-data:hover{
+
+  background: #ed7d31; 
+}
+

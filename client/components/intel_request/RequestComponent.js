@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelStatusColor, getConfirmation } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
 import Loader from '../reusable/Loader';
@@ -40,7 +40,8 @@ class RequestComponent extends React.Component {
   }
 
 
-  deleteIntelRequestById =(value)=>{
+// This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     const { translations } = this.props;
     this.setState({loading: true});
 
@@ -54,6 +55,17 @@ class RequestComponent extends React.Component {
         NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
       }
     });
+  }
+
+    // will call when user click on Delete Button
+  deleteIntelRequestById =(value)=>{
+      const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
 
 
@@ -142,7 +154,7 @@ class RequestComponent extends React.Component {
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations.summary} &nbsp;
-              <Link to={ addurl } className="btn btn-info btn-xs"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+              <Link to={ addurl } className="btn btn-info btn-xs add-data"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
           
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>

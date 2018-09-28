@@ -5,7 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import DropDownButton from '../reusable/DropDownButton';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import EoirModal from './payloads/EoirModal';
 import EquipmentModal from './payloads/EquipmentModal';
@@ -228,7 +228,8 @@ class PayloadsSpecificationComponent extends React.Component {
 		})
 	}
 
-	deletePayload= (value)=> {
+    // This will get call when user click on Yes to Delete a Record
+	deleteLogic(value){
 		if (value !== undefined && value !== '0') {
 			this.setState({loading:true});
 		  this.props.deletePayloadsById(value).then(() => { 
@@ -240,6 +241,17 @@ class PayloadsSpecificationComponent extends React.Component {
 			  this.notify(NoticeType.NOT_DELETE); 
 			});
 		} 
+	}
+
+    // will call when user click on Delete Button
+	deletePayload= (value)=> {
+		const { translations } = this.props;
+		// Get Confirm user wish to Delete Yes/No 
+		getConfirmation(translations['DeleteConfirmation'],
+						translations['Yes'],
+						translations['No'],
+						() => this.deleteLogic(value)
+						);
 	  }
 
 	handleChange(value) {

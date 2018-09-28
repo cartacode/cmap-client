@@ -6,24 +6,33 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, getConfirmation } from '../../util/helpers';
 import { viewerIdentifiers } from '../../map/viewer';
 import { Link } from 'react-router-dom';
+import Loader from '../reusable/Loader';
+
 
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      loading:false
+    }
   }
 
   componentDidMount() {
     this.loadData();
   }
 
-  deleteApprovedIntelRequests = (value) => {
+
+// This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     if (value !== undefined && value !== '0') {
+      this.setState({loading: true});
       const statusId = IntelConstants.STATUS.DRC.id; // 'DRC'
       this.props.updateIntelStatus(value, statusId).then(() => {
+        this.setState({loading: false});
         // this.setState({ editId: '0' });
         if(this.props.isDeleted){
         this.notify(NoticeType.DELETE);
@@ -34,6 +43,17 @@ class CollectionManagerComponent extends React.Component {
       }
       });
     }
+  }
+
+// will call when user click on Delete Button
+  deleteApprovedIntelRequests = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   };
 
   getColor= (row)=>{
@@ -226,6 +246,7 @@ class CollectionManagerComponent extends React.Component {
       <div>
         <div className="row personnel">
           <div className="two-block">
+          <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />
             {/* <img

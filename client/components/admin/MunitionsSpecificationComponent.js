@@ -11,7 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -133,7 +133,8 @@ class MunitionsSpecificationComponent extends React.Component {
     this.props.fetchMunitions();
   }
 
-  deleteMunitions = (value) => {
+// This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     if (value !== undefined && value !== '0') {
       this.setState({loading: true});
       this.props.deleteMunitionsById(value).then(() => {
@@ -148,6 +149,17 @@ class MunitionsSpecificationComponent extends React.Component {
        }
       });
     }
+  }
+
+  // will call when user click on Delete Button
+  deleteMunitions = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
 
   //actionType means ADD, UPDATE, DELETE

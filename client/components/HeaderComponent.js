@@ -176,7 +176,7 @@ class HeaderComponent extends React.Component {
       <div className="langs-dropdown" style={{position: "absolute",
               top: "45px", right: "200px"}}>
               <button type="button" className="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Change Lang
+               Language
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                 {this.renderLangsList()}
