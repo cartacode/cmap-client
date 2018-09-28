@@ -23,6 +23,8 @@ import { defaultFilter, formatDateTime } from '../util/helpers';
 import { TableDefaults } from 'dictionary/constants';
 import { requestHeaders } from '../dictionary/network';
 
+import { statusUser } from '../dictionary/auth';
+
 class StatusComponent extends React.Component {
 
   constructor(props) {
@@ -90,6 +92,12 @@ class StatusComponent extends React.Component {
     const { statuspayload } = this.props;
     const { statuspersonnel } = this.props;
     const { statusmunition } = this.props;
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => statusUser.includes(v));
+    console.log(access);
 
     const platform = [
       { platform:'grey eagle', tail:'fg2592', status:'flight ready', remark:'none', etic:'90 days', update:'update' },
@@ -270,7 +278,7 @@ class StatusComponent extends React.Component {
       'Currently coordinating with U.S. units and anto patners on joint mission training to begin on 05 januar...'
     ];
 
-    return (
+    return ( access ? (
       <div>
           <div className="row status" >
             <FullHeaderLine headerText={translations["unit status report"]} />
@@ -393,7 +401,7 @@ class StatusComponent extends React.Component {
                 <CustomButton buttonName="save" />
               </div>            
           </Modal>
-      </div>
+    </div> ): null
     );
   }
 }

@@ -9,6 +9,7 @@ import MissionDetailContainer from '../containers/mission_mgt/MissionDetailConta
 import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
 import MissionSummaryContainer from '../containers/mission_mgt/MissionSummaryContainer';
 
+import { missionManageUser, missionATOUser, missionFlightUser, missionPEDUser } from '../dictionary/auth';
 
 class MissionMGTComponent extends React.Component {
 
@@ -20,14 +21,40 @@ class MissionMGTComponent extends React.Component {
 
     const {translations, match} = this.props;
 
-    const menuItems = [
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let missionATOAccess = roles2.some(v => missionATOUser.includes(v));
+    let missionFlightAccess = roles2.some(v => missionFlightUser.includes(v));
+    let missionPEDAccess = roles2.some(v => missionPEDUser.includes(v));
+
+    let menuItems = [];
+
+    //  menuItems = [
+    //   {title: translations['isr sync'], url: `${match.url}/isr-sync`},
+    //   {title: translations['ato'], url: `${match.url}/ato`},
+    //   {title: translations['flightops'], url: `${match.url}/flightops`},
+    //   {title: translations['ped tasking'], url: `${match.url}/ped-tasking`},
+    //   {title: translations['mission summary'], url: `${match.url}/mission-summary`},
+    //   /* {title: translations['mission detail'], url: `${match.url}/mission-detail`}, */
+    // ];
+
+     menuItems = [
       {title: translations['isr sync'], url: `${match.url}/isr-sync`},
-      {title: translations['ato'], url: `${match.url}/ato`},
-      {title: translations['flightops'], url: `${match.url}/flightops`},
-      {title: translations['ped tasking'], url: `${match.url}/ped-tasking`},
       {title: translations['mission summary'], url: `${match.url}/mission-summary`},
-      /* {title: translations['mission detail'], url: `${match.url}/mission-detail`}, */
     ];
+
+    if(missionATOAccess) {
+      menuItems.push({title: translations['ato'], url: `${match.url}/ato`});
+    }
+
+    if(missionFlightAccess){
+      menuItems.push({title: translations['flightops'], url: `${match.url}/flightops`});
+    }
+
+    if(missionPEDAccess){
+      menuItems.push({title: translations['ped tasking'], url: `${match.url}/ped-tasking`});
+    }
 
     
     return menuItems.map((item, i) => {
@@ -54,7 +81,12 @@ class MissionMGTComponent extends React.Component {
   render() {
     const {translations, match} = this.props;
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => missionManageUser.includes(v));
+
+    return ( access ? (
       <div>
         <div className="container-fluid sub-buttons">
           <div className="buttons-list">
@@ -69,7 +101,7 @@ class MissionMGTComponent extends React.Component {
           <Route path={`${match.url}/mission-summary`} component={MissionSummaryContainer} />
           <Route path={`${match.url}/mission-detail/:editId`} component={MissionDetailContainer} />
         </Switch>
-      </div>
+    </div> ) : null
     );
   }
 }

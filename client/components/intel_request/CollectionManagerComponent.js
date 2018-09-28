@@ -10,6 +10,7 @@ import { defaultFilter, getIntelStatusColor } from '../../util/helpers';
 import { viewerIdentifiers } from '../../map/viewer';
 import { Link } from 'react-router-dom';
 
+import { collectionManagerUser } from '../../dictionary/auth';
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
@@ -116,6 +117,12 @@ class CollectionManagerComponent extends React.Component {
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
     const editurl = '/intel-request/detail/';
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => collectionManagerUser.includes(v));
+
     const intelRequestColumns = [
       {
         Header: 'Request#',
@@ -283,9 +290,11 @@ class CollectionManagerComponent extends React.Component {
             <div className="row intel-request-table-margin-top">
               <div className="col-md-12 text-center">
                 {/* <img className="line" src="/assets/img/admin/edit_up.png" alt=""/> */}
-                <a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
+                { access ? 
+                (<a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
                     Route
-                </a>
+                </a>) : null
+                }
                 {/* <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/> */}
               </div>
             </div>

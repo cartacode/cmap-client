@@ -10,6 +10,8 @@ import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 
+import { missionATOUser } from '../../dictionary/auth';
+
 class AtoComponent extends React.Component {
 
   constructor(props) {
@@ -249,7 +251,12 @@ moveLeft = (row) => {
     const columnsATOCollectionPlans = this.getLeftColumns();
     const columnsATOGenerations = this.getRightColumns();
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => missionATOUser.includes(v));
+
+    return ( access ? (
       <div>
         <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab} 
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
@@ -298,7 +305,7 @@ moveLeft = (row) => {
           </div>
 
         </div>
-      </div>
+    </div> ) : null
     );
   }
 

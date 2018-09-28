@@ -9,6 +9,7 @@ import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
 
+import { missionPEDUser } from '../../dictionary/auth';
 
 class PedTaskingComponent extends React.Component {
   constructor(props) {
@@ -193,9 +194,14 @@ class PedTaskingComponent extends React.Component {
     // For Left Table
     const pedTasksAtoGenerationsColumns = this.getLeftColumns();
     // For Right Table
-    const pedTasksColumns = this.getRightColumns()
+    const pedTasksColumns = this.getRightColumns();
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => missionPEDUser.includes(v));
     
-    return (
+    return ( access ? (
       <div>
         <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
         <div className="row mission-mgt" >
@@ -236,7 +242,7 @@ class PedTaskingComponent extends React.Component {
           </div>
 
         </div>
-      </div>
+      </div>) : null
     );
   }
 }

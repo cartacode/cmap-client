@@ -71,7 +71,7 @@ class LoginComponent extends React.Component {
       //console.log("Authenticated");
       requestHeaders['Authorization']='Bearer '+ loginData.access_token;
       formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
-      this.props.history.replace('/admin/personnel'); 
+      this.props.history.replace('/dashboard'); 
     }
   }
 

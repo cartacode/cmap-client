@@ -4,6 +4,8 @@ import { MissionConsts } from '../../dictionary/constants';
 import FlightOpsPlatform from './flight-ops/FlightOpsPlatform';
 import FlightOpsTeam from './flight-ops/FlightOpsTeam';
 
+import { missionFlightUser } from '../../dictionary/auth';
+
 class FlightOpsComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,13 @@ class FlightOpsComponent extends React.Component {
 
     const { translations } = this.props;
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => missionFlightUser.includes(v));
+
+
+    return ( access ? (
       <div>
         { this.state.selectedResource === MissionConsts.RESOURCE.PLATFORM ?
           <FlightOpsPlatform updateResource={this.updateSelectedResource}/>
@@ -36,7 +44,7 @@ class FlightOpsComponent extends React.Component {
           : null
         }
         
-      </div>
+      </div>) : null
     );
   }
 }

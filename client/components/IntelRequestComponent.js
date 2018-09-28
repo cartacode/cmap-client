@@ -11,6 +11,7 @@ import NatlImageryContainer from '../containers/intel_request/NatlImageryContain
 import ResourcesContainer from '../containers/intel_request/ResourcesContainer';
 import CollectionManagerContainer from '../containers/intel_request/CollectionManagerContainer';
 
+import { intelReqUser } from '../dictionary/auth';
 
 class IntelRequestComponent extends React.Component {
 
@@ -68,7 +69,12 @@ class IntelRequestComponent extends React.Component {
   render() {
     const {translations, match} = this.props;
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => intelReqUser.includes(v));
+
+    return ( access ? (
       <div>
         <div className="container-fluid sub-buttons">
           <div className="buttons-list">
@@ -83,7 +89,7 @@ class IntelRequestComponent extends React.Component {
           <Route path={`${match.url}/collection-plan`} component={CollectionManagerContainer} />
           <Route path={`${match.url}/natl-imagery`} component={NatlImageryContainer} />
         </Switch>
-      </div>
+    </div> ) : null
     );
   }
 }

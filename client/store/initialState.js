@@ -148,6 +148,7 @@ export default {
     loginData: {},
     authenticated:false,
     isFetching: false,
+    userRoles: [],
   },
 
   dashboards: {
