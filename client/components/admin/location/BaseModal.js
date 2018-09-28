@@ -20,7 +20,7 @@ class BaseModal extends React.Component {
     this.state = {
       file: '',
       clear: false,
-      locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
+      locationPhotoPreviewUrl: '/assets/img/admin/map1.png',
       mapImagePreviewUrl: '/assets/img/admin/map2.png',
       editFetched: false,
       location: {
@@ -338,7 +338,7 @@ class BaseModal extends React.Component {
      if (confirm("Do you want to clear all data from this form?")) {
        this.setState({
          clear: true,
-         locationPhotoPreviewUrl: '/assets/img/admin/map2.png',
+         locationPhotoPreviewUrl: '/assets/img/admin/map1.png',
          mapImagePreviewUrl: '/assets/img/admin/map2.png'
        });
        document.getElementById('locationform').reset();
@@ -361,14 +361,14 @@ class BaseModal extends React.Component {
        $locationPhoto = (<img src={locationPhotoPreviewUrl} alt="" className="photo" alt="" />);
      }
      else {
-       $locationPhoto = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
+       $locationPhoto = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
      }
    
      if (mapImagePreviewUrl || mapImagePreviewUrl === '') {
        $mpaImage = (<img src={mapImagePreviewUrl} alt="" className="photo" alt="" />);
      }
      else {
-       $mpaImage = (<img src="/assets/img/admin/map1.png" className="photo" alt="" />);
+       $mpaImage = (<img src="/assets/img/admin/map2.png" className="photo" alt="" />);
      }
     
 
