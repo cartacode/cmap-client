@@ -40,7 +40,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         IntelRequestID: '',
         MissionId: null,
-        locationcategory: '',
+        locationcategory: 2,
         // AreaOfOperations: '',
         SupportedCommand: session.COCOMID,
         // SupportedUnit: '',
