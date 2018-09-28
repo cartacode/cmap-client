@@ -59,8 +59,8 @@ export const getConfirmation = (confirmationMessage, yes, no, callback) => {
    confirmAlert({
      customUI: ({ onClose }) => {
        return (
-         <div className='custom-ui popup'>
-           <h1>{confirmationMessage}</h1>
+         <div className='custom-ui popup text-center'>
+           <h2>{confirmationMessage}</h2>
            <div>
              <button onClick={onClose}>{no}</button>
              <button onClick={() => {
