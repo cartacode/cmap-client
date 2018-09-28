@@ -122,13 +122,6 @@ render() {
   const {translations} = this.props;
   const {allCcirPirs} = this.props;
 
-  const ccirPirs = [translations['missile'], translations['rocket'], translations['gun'],];
-
-  // const data = [    
-  //   {cocom: 'a-cocom', country:'j-country', region:'a-region', unit:'unit', commander:'c-commander', recorddate:'3/15/2018', view:'view'},
-      
-  // ];
-
   // Set Columns and Data to display in the Table List
   const columns = [
     {
@@ -142,28 +135,22 @@ render() {
     {
       Header: translations['Region'],
       accessor: 'RegionName',
-    }, 
+    },
     {
       Header: translations['Country'],
       accessor: 'CountryName',
     },
-     
     {
       Header: translations['Unit'],
       accessor: 'UnitName',
-       
     },
-    {
-      Header: translations['Commander'],
-      accessor: 'CommanderName',
-    },  
     {
       Header: translations.Branch,
       accessor: 'BranchName',
        
     },
     {
-      Header: translations['view'],
+      Header: translations.view,
       accessor: 'CCIRPIRId',
       filterable: false,
       Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openCcirPirForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
