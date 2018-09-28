@@ -172,15 +172,18 @@ class PlatformsSpecificationComponent extends React.Component {
       {
         Header: translations['Payload Capacity(lbs.)'],
         accessor: 'payloadCapacity',
+        maxWidth: 200,
       },
       {
         Header: translations['Armament Capacity(lbs.)'],
         accessor: 'armamentCapacity',
+        maxWidth: 200,
       },
       {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
+        maxWidth: 150,
         Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
           {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
             <a href="javaScript:void('0');" onClick={() => this.deletePayload(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}

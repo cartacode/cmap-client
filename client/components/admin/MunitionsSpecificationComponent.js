@@ -218,6 +218,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Type",
         accessor: 'munitionType',        
+        maxWidth: 150,
         // Cell: row => <div>{
         //   row.value === 1 ? translations['Missile']
         //     : row.value === 2 ? translations['Rocket']
@@ -265,6 +266,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Ops range",
         accessor: 'opsRange',
+        maxWidth: 110,
         filterMethod: (filter, row) => {
           return String(row[filter.id]).startsWith(filter.value) 
         }
@@ -272,6 +274,7 @@ class MunitionsSpecificationComponent extends React.Component {
       {
         Header: "Weight",
         accessor: 'weight',
+        maxWidth: 70,
         filterMethod: (filter, row) => {
           return String(row[filter.id]).startsWith(filter.value) 
         }
@@ -280,6 +283,7 @@ class MunitionsSpecificationComponent extends React.Component {
         Header: translations['view'],
         accessor: 'ID',
         filterable: false,
+        maxWidth: 160,
         Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
                           {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
                           <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
