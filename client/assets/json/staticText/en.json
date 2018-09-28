@@ -757,8 +757,5 @@
   "summary": "Summary",
   "generateEei": "Generate EEI",
   "collectionValidation": "Collection Validation",
-  "specialization": "Specialization",
-	"DeleteConfirmation": "Confirm you wish to Delete Yes/No ?",
-	"Yes": "Yes",
-	"No": "No"
+  "specialization": "Specialization"
 }
