@@ -21,7 +21,25 @@ body {
 }
 
 
+ .rowdata-modal .modal-content {
+  height: 200px !important;
+  padding: 20px !important;
+  background: #07253a !important;
+  z-index: 1 !important;
+}
+.mission-mgt-close-padding{
+    padding:0px !important;
+  }
 
+  .mission-mgt-txt-padding{
+    padding-top: 10px !important;
+  }
+
+  .mission-mgt-save-btn-padding{
+    padding-top: 26px !important;
+  }
+ 
+  
 
 
 
@@ -5118,6 +5136,16 @@ select.form-control {
    background-color: #15354c !important;
   }
 
+/************************ Confimation Pop Up ***********************/
+  .custom-ui.popup {
+    border: 1px solid #5e6367;
+    padding: 40px;
+    color: #fff;
+    background: #03111d;
+}
+.react-confirm-alert-overlay {
 
+  background: transparent;
+}
 
-
+/**********************************************************************/

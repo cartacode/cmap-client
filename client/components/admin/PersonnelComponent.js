@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { defaultFilter, formatDateTime } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getConfirmation } from '../../util/helpers';
 import { NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
@@ -124,8 +124,9 @@ stopupdate = () =>
   {
     this.setState({editForm:false});
   }
-  
-  deletePersonnel = (value) => {
+
+// This will get call when user click on Yes to Delete a Record
+  deleteLogic(value) {
 	  if (value !== undefined && value !== '0') {
       // Start Loader
       this.setState({loading:true});
@@ -143,7 +144,18 @@ stopupdate = () =>
         //this.props.fetchPersonnels();
         //this.notify('DELETE');
 	    });
-	  }
+    }
+  }
+  
+  // will call when user click on Delete Button
+  deletePersonnel = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
 
 render() {

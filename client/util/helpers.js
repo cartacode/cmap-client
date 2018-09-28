@@ -1,5 +1,11 @@
 import moment from 'moment';
 import { IntelConstants, DateConsts } from '../dictionary/constants';
+import { confirmAlert } from 'react-confirm-alert'; 
+import React from 'react';
+import 'react-confirm-alert/src/react-confirm-alert.css' 
+
+
+  
 
 export const defaultFilter = (filter, row) => {
   const id = filter.pivotId || filter.id;
@@ -41,4 +47,36 @@ export const getIntelStatusColor = (abbreviation) => {
   }
   return colorCode;
 };
+
+
+// Will call when user click on some icon like Add/Delete/Update and we want to confirm from user as yes/no/ok/cancel etc.
+//@param : 
+// confirmationMessage: Message to Display in Pop Up example Confirm you wish to Delete Yes/No
+// yes: options when user want to proceed example Yes/Ok
+// no: option when user donot want to proceed example No/Cancel
+// callback: callback function as per requirement 
+export const getConfirmation = (confirmationMessage, yes, no, callback) => {
+   confirmAlert({
+     customUI: ({ onClose }) => {
+       return (
+         <div className='custom-ui popup'>
+           <h1>{confirmationMessage}</h1>
+           <div>
+             <button onClick={onClose}>{no}</button>
+             <button onClick={() => {
+                  onClose()
+                  callback();
+                  }}>
+              {yes}
+            </button>
+          </div>
+        </div>
+      )
+     }
+  })
+
+
+  
+}
+
 
