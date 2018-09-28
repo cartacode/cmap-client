@@ -4,7 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import BaseModal from './location/BaseModal';
-import { defaultFilter } from '../../util/helpers';
+import { defaultFilter, getConfirmation  } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
@@ -63,7 +63,8 @@ class LocationComponent
     this.notify(dataMessage);
   }
 
-  deleteLocations = (value) => {
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value){
     if (value !== undefined && value !== '0') {
       // Start Loader
       this.setState({loading:true});
@@ -81,6 +82,17 @@ class LocationComponent
         }
       });
     }
+  }
+
+// will call when user click on Delete Button
+  deleteLocations = (value) => {
+   const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No 
+    getConfirmation(translations['DeleteConfirmation'],
+                    translations['Yes'],
+                    translations['No'],
+                    () => this.deleteLogic(value)
+                    );
   }
   
   notify =(actionType)=>{
