@@ -58,7 +58,10 @@ class HeaderComponent extends React.Component {
 
     const {translations} = this.props;
 
+    
     let ses = JSON.parse(localStorage.getItem('session'));
+    if (ses) 
+    {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let adminAccess = roles2.some(v => adminUser.includes(v));
@@ -139,6 +142,8 @@ class HeaderComponent extends React.Component {
         </div>
       );
     });
+
+  }
   }
 
   search() {
