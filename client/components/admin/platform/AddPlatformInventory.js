@@ -94,8 +94,10 @@ class AddPlatformInventory extends React.Component {
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
         owningUnit: generalData.owningUnit,
+        deployedUnit: generalData.deployedUnit,
         locationcategory: generalData.locationcategory,
         tailNumber: generalData.tailNumber,
+        Company: generalData.Company,
         payload1: generalData.payload1,
         payload2: generalData.payload2,
         payload3: generalData.payload3,
@@ -106,7 +108,7 @@ class AddPlatformInventory extends React.Component {
         coms2: generalData.coms2,       
         branch: generalData.branch,
         COCOM: generalData.COCOM,
-      },
+      }, 
     });
 
     if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) {
@@ -114,6 +116,7 @@ class AddPlatformInventory extends React.Component {
     }
     if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
     this.updateOwningUnit(generalData);
+    this.updateDeployedUnits(generalData.branch, platform.deployedUnit);
     }
   }
 
@@ -232,6 +235,40 @@ class AddPlatformInventory extends React.Component {
       });
   }
 
+
+
+
+// Will call when Any field mentioned in genral Fields will get Call
+// this is to update Deployed Unit DropDown on change of Branch
+updateDeployedUnits= (branch, unit) => {
+  let UnitSelect = document.getElementsByName('deployedUnit')[0];
+  let items = [{'label': '--Select Item--', 'value': 0}];
+  const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
+  axios.get(apiUrl,{headers:requestHeaders})
+    .then(response => {
+     
+      if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+      response.data.map(item => {
+        items.push({ 'label': item['description'], 'value': item['id'].trim() });
+      });
+      if (UnitSelect.length > 0) {
+        UnitSelect.length = 0;
+      }
+      for(let i in items) {
+        let selected = false;
+        if(unit && items[i].value === unit.toString()) {
+          selected = true;
+        }
+        UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+      }
+           
+    })
+    .catch((error) => {
+      console.log('Exception comes:' + error);
+    });
+
+}
+
   stopset () {
     this.setState({clear:false});
   }
@@ -259,11 +296,13 @@ class AddPlatformInventory extends React.Component {
     const generalFields = [
       { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true, regexType:'Alphanumeric', regex: '^[a-zA-Z0-9]+$' },
-      {name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'COCOM'},
+      { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'COCOM'},
+      { name: translations['Company'], type: 'input', domID: 'Company', valFieldID: 'Company', required: true },
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit'  , required: true},
+      { name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units/GetUnits", valFieldID: 'deployedUnit'},
       { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' , required: true},
+      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' , required: true}
     ];
 
     const payloadFields = [
