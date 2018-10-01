@@ -10,6 +10,7 @@ import { defaultFilter, formatDateTime, getConfirmation } from '../../util/helpe
 import { NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
+import { superAdmin } from '../../dictionary/auth';
 
 class PersonnelComponent extends React.Component {
 
@@ -162,6 +163,12 @@ render() {
 
   const { translations } = this.props;
   const { allPersonnels } = this.props;
+
+  let ses = JSON.parse(localStorage.getItem('session'));
+  let roles = ses.UserRoles;
+  let roles2 = JSON.parse(roles);
+  let access = roles2.some(v => superAdmin.includes(v));
+
   const columns = [
     {
       Header: translations['First Name'],
@@ -223,12 +230,9 @@ render() {
           
           <span>
             {translations.summary} &nbsp;
+          { access ? <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a> : null }
+          </span>
          
-          
-       
-          <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
-        
-               </span>
           : translations.form }
           &nbsp;
           </div>

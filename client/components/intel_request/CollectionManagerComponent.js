@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../reusable/Loader';
 
 
+import { collectionManagerUser } from '../../dictionary/auth';
 
 class CollectionManagerComponent extends React.Component {
   constructor(props) {
@@ -136,6 +137,12 @@ class CollectionManagerComponent extends React.Component {
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
     const editurl = '/intel-request/detail/';
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => collectionManagerUser.includes(v));
+
     const intelRequestColumns = [
       {
         Header: 'Request#',
@@ -147,7 +154,7 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => ( 
           <div>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp;
-          <span><a href="Javascript: void('0');"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
+          <span><a href="Javascript: void('0');" className="hand-cursor"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
           </div>
           ),
       },
@@ -195,7 +202,7 @@ class CollectionManagerComponent extends React.Component {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div className = 'tooltip-custom'>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
-          <span>{row.value}</span>
+          <span><a href="Javascript: void('0');" className="hand-cursor" title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
         </div>,
       },
       {
@@ -304,9 +311,11 @@ class CollectionManagerComponent extends React.Component {
             <div className="row intel-request-table-margin-top">
               <div className="col-md-12 text-center">
                 {/* <img className="line" src="/assets/img/admin/edit_up.png" alt=""/> */}
-                <a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
+                { access ? 
+                (<a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
                     Route
-                </a>
+                </a>) : null
+                }
                 {/* <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/> */}
               </div>
             </div>

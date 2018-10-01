@@ -13,6 +13,8 @@ import FullHeaderLine from './reusable/FullHeaderLine';
 import Map, { viewerSize } from 'components/reusable/Map';
 import { viewerIdentifiers } from 'map/viewer';
 
+import { livewViewUser } from '../dictionary/auth';
+
 class LiveViewComponent extends React.Component {
 
   constructor(props) {
@@ -29,7 +31,13 @@ class LiveViewComponent extends React.Component {
     let langs = ['val 1', 'val 2'];
     const {translations} = this.props;
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => livewViewUser.includes(v));
+    console.log(access);
+
+    return ( access ? (
       <div>
         <div className="row intel-request">
           <div className="col-md-12">
@@ -132,7 +140,7 @@ class LiveViewComponent extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </div>) : null
     );
   }
 }

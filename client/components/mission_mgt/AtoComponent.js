@@ -11,6 +11,8 @@ import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 import MissionNameModal from '../reusable/MissionNameModal';
 
+import { missionATOUser } from '../../dictionary/auth';
+
 class AtoComponent extends React.Component {
 
   constructor(props) {
@@ -202,7 +204,7 @@ moveLeft = (row, missionName) => {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div className="tooltip-custom">
           <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {
@@ -260,9 +262,12 @@ moveLeft = (row, missionName) => {
     const columnsATOCollectionPlans = this.getLeftColumns();
     const columnsATOGenerations = this.getRightColumns();
 
-   
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => missionATOUser.includes(v));
 
-    return (
+    return ( access ? (
       <div>
         <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab}
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
@@ -312,7 +317,7 @@ moveLeft = (row, missionName) => {
           </div>
 
         </div>
-      </div>
+    </div> ) : null
     );
   }
 

@@ -19,6 +19,7 @@ import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
 import ReferenceDocsContainer from '../containers/admin/ReferenceDocsContainer';
 import SubMenu from './reusable/SubMenu';
+import { adminUser } from '../dictionary/auth';
 
 class AdminComponent extends React.Component {
 
@@ -90,10 +91,16 @@ class AdminComponent extends React.Component {
 
   render() {
     const {translations, match} = this.props;
-      
-
-      
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    console.log(roles);
+    console.log(roles2);
+    console.log(adminUser);
+    let access = roles2.some(v => adminUser.includes(v));
+    console.log(access);
+    
+    return ( access ? (
       <div>
         <div className="container-fluid sub-buttons">
           <div className="buttons-list">
@@ -116,7 +123,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
           <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />
         </Switch>
-      </div>
+      </div>) : <div><div className="col-md-2"></div><h4 className="header-text">Not Authorized</h4><div className="col-md-4"></div></div>
     );
   }
 }
@@ -131,6 +138,7 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     router: state.router,
+    roles: state.auth.userRoles
   };
 };
 

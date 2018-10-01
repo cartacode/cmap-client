@@ -17,12 +17,13 @@ import OrdersAssetsComponent from '../components/OrdersAssetsComponent';
 import SchedulesContainer from '../containers/SchedulesContainer';
 import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
+import initialState from '../store/initialState';
 
 let condition = true;
 class NavigationComponent extends React.Component {
 
   componentWillMount () {
-    
+  
 
   }
 
@@ -44,7 +45,7 @@ class NavigationComponent extends React.Component {
   }
 
   render() {
-
+        let roles = initialState.auth.userRoles;
     return (
       <div>
       <Route path="/" render={(route) =>{
@@ -62,7 +63,7 @@ class NavigationComponent extends React.Component {
           <PrivateRoute path="/orders-assets" component={OrdersAssetsComponent} />
           <PrivateRoute exact path="/schedules" component={SchedulesContainer} />
           <PrivateRoute exact path="/status" component={StatusContainer} />
-          <PrivateRoute path="/admin" component={AdminComponent} />
+          <PrivateRoute path="/admin" component={AdminComponent} userRole="test"/>
           <PrivateRoute path="/search" component={SearchContainer} />
           <Route path="/login" component={LoginContainer} />
           <PrivateRoute path="/change-password" component={ChangePasswordContainer} />

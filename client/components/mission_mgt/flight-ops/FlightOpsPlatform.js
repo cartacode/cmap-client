@@ -99,7 +99,7 @@ class FlightOpsPlatform extends React.Component {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
         Cell: row =>  <div className = 'tooltip-custom'>
-                      <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+                      <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
                     </div>,
       },
       {
@@ -156,7 +156,7 @@ class FlightOpsPlatform extends React.Component {
         accessor: 'ReqUserFrndlyID',
         Cell: row =>  <div className = 'tooltip-custom'>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {

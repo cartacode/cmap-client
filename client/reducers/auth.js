@@ -16,6 +16,7 @@ export default function auth(state = initialState.auth, { payload, type }) {
         loginData: payload.data,
         authenticated:true,
         isFetching: false,
+        userRoles: payload.data.UserRoles
       };
       case ACCOUNT__LOGIN.FAILURE:
       alert('Incorrect Password')

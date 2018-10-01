@@ -10,6 +10,8 @@ import { supportedLanguages } from 'dictionary/localization';
 import { Route, Redirect } from 'react-router-dom';
 import initialState from 'store/initialState';
 
+import { adminUser, dashboardUser, livewViewUser, statusUser, intelReqUser, missionManageUser } from '../dictionary/auth';
+
 class HeaderComponent extends React.Component {
 
   constructor(props) {
@@ -56,43 +58,92 @@ class HeaderComponent extends React.Component {
 
     const {translations} = this.props;
 
-    const menuItems = [
-      {title: translations['dashboard'], url: '/dashboard'},
-      {title: translations['liveview'], url: '/liveview'},
-      {title: translations['status'], url: '/status'},
-      {title: translations['intel request'], url: '/intel-request/request'},
-      {title: translations['mission mgt'], url: '/mission-mgt/isr-sync'},
-      // {title: translations['schedules'], url: '/schedules'},
-      // {title: translations['orders/assets'], url: '/orders-assets/orders'},
-      // {title: translations['intel library'], url: '/intel-library'},
-      // {title: translations['messages'], url: '/messages'},
-      {title: translations['admin'], url: '/admin/personnel'},
-      //{title: translations['logout'], url: '/logout'}
-    ];
+    
+    let ses = JSON.parse(localStorage.getItem('session'));
+    if (ses) 
+    {
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let adminAccess = roles2.some(v => adminUser.includes(v));
+    let dashboardAccess = roles2.some(v => dashboardUser.includes(v));
+    let liveViewAccess = roles2.some(v => livewViewUser.includes(v));
+    let statusAccess = roles2.some(v => statusUser.includes(v));
+    let intelReqAccess = roles2.some(v => intelReqUser.includes(v));
+    let missionManageAccess = roles2.some(v => missionManageUser.includes(v));
+
+    let tr = true;
+    let fa = false;
+
+    let menuItems = [];
+
+
+    if(dashboardAccess){
+      menuItems.push({title: translations['dashboard'], url: '/dashboard'});
+    }
+
+    if(liveViewAccess) {
+      menuItems.push({title: translations['liveview'], url: '/liveview'});
+    }
+
+    if(statusAccess) {
+      menuItems.push({title: translations['status'], url: '/status'});
+    }
+
+    if(intelReqAccess) {
+      menuItems.push({title: translations['intel request'], url: '/intel-request/request'});
+    }
+
+    if(missionManageAccess) {
+      menuItems.push({title: translations['mission mgt'], url: '/mission-mgt/isr-sync'});
+    }
+
+    if(adminAccess) { 
+      menuItems.push({title: translations['admin'], url: '/admin/personnel'});
+    }
+
+    // menuItems = [
+    //   {title: translations['dashboard'], url: '/dashboard'},
+    //   {title: translations['liveview'], url: '/liveview'},
+    //   {title: translations['status'], url: '/status'},
+    //   {title: translations['intel request'], url: '/intel-request/request'},
+    //   {title: translations['mission mgt'], url: '/mission-mgt/isr-sync'},
+    //   // {title: translations['schedules'], url: '/schedules'},
+    //   // {title: translations['orders/assets'], url: '/orders-assets/orders'},
+    //   // {title: translations['intel library'], url: '/intel-library'},
+    //   // {title: translations['messages'], url: '/messages'},
+    //   {title: translations['admin'], url: '/admin/personnel'},
+    //   //{title: translations['logout'], url: '/logout'}
+    // ];
+
 
     return menuItems.map((item, i) => {
       let matchForLink = false;
 
+    
       if (item.url.indexOf('/', 1) !== -1) {
         matchForLink = (this.props.router.location.pathname.indexOf(item.url.substr(0, item.url.indexOf('/', 1))) !== -1);
       } else {
         matchForLink = (this.props.router.location.pathname.indexOf(item.url) !== -1);
       }
-
+    
+   
+    if (item.url == null) { keep == false; }
       return (
         <div className="menu-button" key={i}>
           <NotificationContainer />
-          <NavLink to={item.url} className={matchForLink ? "active-menu-item" : ''}>
+        <NavLink to={item.url} className={matchForLink ? "active-menu-item" : ''}> 
             <button data-target="#bs-AMPS-navbar-collapse-1"  data-toggle="collapse">
               {item.title}
             </button>
             <div className="under-button-line">
               <img src={matchForLink ? '/assets/img/menu/button-line-highlight.png' : '/assets/img/menu/button-line.png'} className="under-button-image pull-right" alt=""/>
             </div>
-          </NavLink>
+      </NavLink> 
         </div>
       );
     });
+
+  }
   }
 
   search() {

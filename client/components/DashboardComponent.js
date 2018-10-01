@@ -19,6 +19,8 @@ import FilterDatePicker from './reusable/FilterDatePicker';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 
+import { dashboardUser } from '../dictionary/auth';
+
 class DashboardComponent extends React.Component {
 
   constructor(props) {
@@ -48,6 +50,12 @@ class DashboardComponent extends React.Component {
   }
 
   render() {
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => dashboardUser.includes(v));
+    console.log(access);
 
     const langs = ['val 1', 'val 2'];
 
@@ -174,7 +182,7 @@ class DashboardComponent extends React.Component {
       },
     ];
 
-    return (
+    return ( access ? (
       <div>
         <div className="row dashboard">
           <div className="col-md-12" style={{ padding: 0 }}>
@@ -348,7 +356,7 @@ class DashboardComponent extends React.Component {
           </div>
         </div>
 
-      </div>
+      </div>) : null
     );
   }
 }
