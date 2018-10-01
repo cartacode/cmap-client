@@ -167,17 +167,17 @@ class PlatformsSpecificationComponent extends React.Component {
       },
       {
         Header: translations['Mission Role'],
-        accessor: 'role'
+        accessor: 'role',
       },
       {
-        Header: translations['Payload Capacity(lbs.)'],
+        Header: translations['Payload Cap(lbs.)'],
         accessor: 'payloadCapacity',
-        maxWidth: 200,
+        maxWidth: 150,
       },
       {
-        Header: translations['Armament Capacity(lbs.)'],
+        Header: translations['Armament Cap(lbs.)'],
         accessor: 'armamentCapacity',
-        maxWidth: 200,
+        maxWidth: 170,
       },
       {
         Header: translations['view'],

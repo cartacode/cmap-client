@@ -199,6 +199,7 @@ render() {
     {
       Header: translations['CAC ID'],
       accessor: 'CACID',
+      maxWidth: 100,
     },
     {
       Header: translations['view'],

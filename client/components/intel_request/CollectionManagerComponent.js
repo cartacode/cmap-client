@@ -147,6 +147,7 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Request#',
         accessor: 'ReqUserFrndlyID',
+        maxWidth: 100,
         // Cell: row => <div>
         //   <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
         //   <span>{row.value}</span>
@@ -161,6 +162,7 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Command',
         accessor: 'COCOMText',
+        maxWidth: 150,
       },
     /*   {
         Header: "Status",
@@ -177,6 +179,7 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        maxWidth: 80,
         Cell: row => <div>
           <span>{row.original.Armed ? 'YES' : 'NO'}</span>
         </div>,
@@ -185,6 +188,7 @@ class CollectionManagerComponent extends React.Component {
         Header: translations.Actions,
         accessor: 'IntelRequestID',
         filterable: false,
+        maxWidth: 100,
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
@@ -200,6 +204,7 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Request# ',
         accessor: 'ReqUserFrndlyID',
+        maxWidth: 100,
         Cell: row => <div className = 'tooltip-custom'>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
           <span><a href="Javascript: void('0');" className="hand-cursor" title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
@@ -228,6 +233,7 @@ class CollectionManagerComponent extends React.Component {
       {
         Header: 'Armed',
         accessor: 'Armed',
+        maxWidth: 80,
         Cell: row => <div>
           <span>{row.original.Armed ? 'YES' : 'NO'}</span>
         </div>,
@@ -240,6 +246,7 @@ class CollectionManagerComponent extends React.Component {
         Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
+        maxWidth: 100,
         Cell: row => (
           <div>
             <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>

@@ -142,10 +142,12 @@ render() {
     {
       Header: translations['COCOM'],
       accessor: 'COCOM',
+      maxWidth: 150,
     },
     {
       Header: translations['Region'],
       accessor: 'RegionName',
+      maxWidth: 500,
     },
     {
       Header: translations['Country'],
@@ -164,6 +166,7 @@ render() {
       Header: translations.view,
       accessor: 'CCIRPIRId',
       filterable: false,
+      maxWidth: 150,
       Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openCcirPirForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
         {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
           <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}

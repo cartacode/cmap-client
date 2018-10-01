@@ -138,6 +138,7 @@ class LocationComponent
       {
         Header: translations.type,
         accessor: 'type',
+        maxWidth: 150,
         Filter: ({ filter, onChange }) =>
           <FilterDropDown name="locationTypeId" defaultValue={this.state.locationTypeId} dropdownData={this.handleFilterData} dropdownDataUrl="LocationCategory"/>,
       },
@@ -147,7 +148,8 @@ class LocationComponent
       },
       {
         Header: translations["COCOM"],
-        accessor: "COCOM"
+        accessor: "COCOM",
+        maxWidth: 150,
       },
       {
         Header: translations["Region"],
@@ -163,7 +165,8 @@ class LocationComponent
       },
       {
         Header: translations["MGRS"],
-        accessor: "MGRS"
+        accessor: "MGRS",
+        maxWidth: 100,
       },
       {
         Header: translations["LocationID"],
@@ -173,6 +176,7 @@ class LocationComponent
         Header: translations["view"],
         accessor: "id",
         filterable: false,
+        maxWidth: 150,
         // Cell: row => (
         //   <div><span className="number change-cursor-to-pointer">
         //     <img

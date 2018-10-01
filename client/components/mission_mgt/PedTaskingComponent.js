@@ -96,6 +96,7 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        maxWidth: 100,
         Cell: row =>  <div className = 'tooltip-custom'>
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
       </div>,
@@ -107,6 +108,7 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations.Command,
         accessor: 'COCOMText',
+        maxWidth: 150,
       },
       {
         Header: translations['Mission Type'],
@@ -119,6 +121,7 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations['Armed'],
         accessor: 'Armed',
+        maxWidth: 80,
         Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
@@ -132,6 +135,7 @@ class PedTaskingComponent extends React.Component {
         Header: translations.Assign,
         accessor: 'missionId',
         filterable: false,
+        maxWidth: 100,
         Cell: row => (
           <div>
             <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Ped Task" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
@@ -150,6 +154,7 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
+        maxWidth: 100,
         Cell: row =>  <div className = 'tooltip-custom'>
                   <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
                   <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
@@ -162,6 +167,7 @@ class PedTaskingComponent extends React.Component {
       {
         Header: translations.Command,
         accessor: 'COCOMText',
+        maxWidth: 150,
       },
       {
         Header: translations['Mission Type'],
@@ -178,6 +184,7 @@ class PedTaskingComponent extends React.Component {
         Header: translations.Unassign,
         accessor: 'missionId',
         filterable: false,
+        maxWidth: 100,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
