@@ -507,5 +507,6 @@
   "specialization": "Specialization",
   "DeleteConfirmation": "Confirm you wish to Delete Yes/No ?",
   "Yes": "Yes",
-  "No": "No"
+  "No": "No",
+  "Contract Company": "Contract Company"
 }

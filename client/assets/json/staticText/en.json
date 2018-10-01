@@ -757,5 +757,6 @@
   "summary": "Summary",
   "generateEei": "Generate EEI",
   "collectionValidation": "Collection Validation",
-  "specialization": "Specialization"
+  "specialization": "Specialization",
+  "Contract Company": "Contract Company"
 }

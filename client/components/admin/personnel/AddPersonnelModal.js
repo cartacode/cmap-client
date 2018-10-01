@@ -160,7 +160,7 @@ class AddPersonnelModal extends React.Component {
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
     }, () => {
-      console.log(this.state.personnel);
+      //console.log(this.state.personnel);
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
@@ -623,7 +623,7 @@ render() {
             </div>
 
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
+              data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} editFetched = {this.state.editFetched} stopupd = {this.stopupd} ></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >
