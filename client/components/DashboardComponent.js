@@ -34,27 +34,36 @@ class DashboardComponent extends React.Component {
   loadData = () => {
     const session = JSON.parse(localStorage.getItem('session'));
     const unitId = session.AssignedUnit;
+
     this.props.fetchOPSUtilizationPayload();
     this.props.fetchOPSUtilizationPlatform();
     this.props.fetchOPSUtilizationMission();
     this.props.fetchAISROpreationStatus();
+
+    /* Latest Intelligence:- List of Missions with status Mission Pending.
+    "Statusid": 35, "StatusAbbrev": "MPNDG", */
+    this.props.fetchLatestIntelligence(35, unitId);
+
+    /* Upcoming Mission:- List of Missions with status Intel Posted.
+    "Statusid": 38,"StatusAbbrev": "IPOST", */
+    this.props.fetchUpcomingMission(38, unitId);
   };
 
   getAISROperationStatuses() {
     const { aisrOperation } = this.props;
-    let operationStatuses = '';
+    const operationStatuses = '';
     this.props.aisrOperation.map((item, i) => {
-      //operationStatuses = operationStatuses+(<NumBlock headerText="Requests" blockValue="23" /><img src= "/assets/img/dashboard/status_divider.png" />);
+      // operationStatuses = operationStatuses+(<NumBlock headerText="Requests" blockValue="23" /><img src= "/assets/img/dashboard/status_divider.png" />);
     });
     return operationStatuses;
   }
 
   render() {
 
-    let ses = JSON.parse(localStorage.getItem('session'));
-    let roles = ses.UserRoles;
-    let roles2 = JSON.parse(roles);
-    let access = roles2.some(v => dashboardUser.includes(v));
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = ses.UserRoles;
+    const roles2 = JSON.parse(roles);
+    const access = roles2.some(v => dashboardUser.includes(v));
     console.log(access);
 
     const langs = ['val 1', 'val 2'];
@@ -62,18 +71,30 @@ class DashboardComponent extends React.Component {
     const { translations } = this.props;
 
     // For Platform
-    const { opsPlatform } = this.props;
+    let { opsPlatform } = this.props;
     // For Payload
-    const { opsPayload } = this.props;
+    let { opsPayload } = this.props;
     // For Flight, Line, PED
-    const { opsMission } = this.props;
+    let { opsMissions } = this.props;
 
-    const { aisrOperation } = this.props;
+    let { aisrOperation } = this.props;
+    // For Left Table
+    let { allLatestIntelligence } = this.props;
+
+    // For right table
+    let { allUpcomingMissions } = this.props;
+
+    if(opsPlatform instanceof Object) {
+      opsPlatform = '0';
+    }
+    //  debugger;
 
     console.log('********************************opsPlatform*************' + JSON.stringify(opsPlatform));
     console.log('********************************opsPayload*************' + JSON.stringify(opsPayload));
-    console.log('********************************opsMission*************' + JSON.stringify(opsMission));
+    console.log('********************************opsMission*************' + JSON.stringify(opsMissions));
     console.log('********************************aisrOperation*************' + JSON.stringify(aisrOperation));
+    console.log('********************************allLatestIntelligence*************' + JSON.stringify(allLatestIntelligence));
+    console.log('********************************allUpcomingMissions*************' + JSON.stringify(allUpcomingMissions));
 
     const actionRequired = [
       { name: 'Intel request #8232-2 awating review', type: 'checkbox' },
@@ -96,14 +117,14 @@ class DashboardComponent extends React.Component {
       { name: 'DVB-RCS Channels 10-18 Down', type: 'checkbox' },
     ];
 
-    const latestIntellegence = [
+    const latestIntellegence = allLatestIntelligence /* [
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
       { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-    ];
+    ] */;
 
     const intelColumns = [
       {
@@ -139,14 +160,14 @@ class DashboardComponent extends React.Component {
       },
     ];
 
-    const upcomingMission = [
+    const upcomingMission = allUpcomingMissions /* [
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
       { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-    ];
+    ] */;
 
     const missionColumns = [
       {
@@ -182,7 +203,7 @@ class DashboardComponent extends React.Component {
       },
     ];
 
-    return ( access ? (
+    return (access ? (
       <div>
         <div className="row dashboard">
           <div className="col-md-12" style={{ padding: 0 }}>
@@ -207,6 +228,7 @@ class DashboardComponent extends React.Component {
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
             </div>
           </div>
+
           <div className="col-md-12 operating-status">
             <NumBlock headerText="Requests" blockValue="23" />
             <img src= "/assets/img/dashboard/status_divider.png" />
@@ -222,19 +244,20 @@ class DashboardComponent extends React.Component {
             <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
             <NumBlock headerText={translations.completed} blockValue="15" />
           </div>
+
           <div className="col-md-12">
-            <div className="col-md-6">
+           {/*  <div className="col-md-12"> */}
               <div className="status-block-header">{translations['ops utilization']}</div>
               <div className="status-block">
-                <DashboardCircleStatus statusHeader={translations.platform} statusPercent="88%" />
-                <DashboardCircleStatus statusHeader={translations.payload} statusPercent="55%" />
+                <DashboardCircleStatus statusHeader={translations.platform} statusPercent={(opsPlatform !== null && opsPlatform !== undefined) ? opsPlatform + '%' : '0%'} />
+                <DashboardCircleStatus statusHeader={translations.payload} statusPercent={(opsPayload !== null && opsPayload !== undefined) ? opsPayload + '%' : '0%' } />
 
                 <DashboardCircleStatus statusHeader={translations['flight crew']} statusPercent="89%" />
                 <DashboardCircleStatus statusHeader={translations['line crew']} statusPercent="80%" />
                 <DashboardCircleStatus statusHeader={translations['ped crew']} statusPercent="78%" />
               </div>
-            </div>
-            <div className="col-md-6">
+            {/* </div> */}
+            {/*  <div className="col-md-6">
               <div className="status-block-header">{translations['intel performance']}</div>
               <div className="status-block">
                 <DashboardCircleStatus statusHeader={translations['ccri\'s']} statusPercent="85%" />
@@ -243,7 +266,7 @@ class DashboardComponent extends React.Component {
                 <DashboardCircleStatus statusHeader={translations['nai\'s']} statusPercent="72%" />
                 <DashboardCircleStatus statusHeader={translations['pid\'s']} statusPercent="43%" />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row dashboard">

@@ -841,9 +841,10 @@ body .login {
   }
 
   .status-block-header {
+    text-align: center;
     padding: 40px 40px;
     margin-bottom: -70px;
-    margin-left: 10%;
+    // margin-left: 10%;
     color: #ed7d31;
     text-transform: uppercase;
   }
