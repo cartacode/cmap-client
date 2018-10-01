@@ -129,7 +129,7 @@ class DashboardComponent extends React.Component {
     const intelColumns = [
       {
         Header: translations.date,
-        accessor: 'date',
+        accessor: 'StartDate',
         filterMethod: (filter, row) =>
           row[filter.id].startsWith(filter.value),
 
@@ -142,21 +142,21 @@ class DashboardComponent extends React.Component {
       },
       {
         Header: translations['Mission Name'],
-        accessor: 'mission',
+        accessor: 'MissionName',
         filterMethod: (filter, row) =>
           row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations.area,
-        accessor: 'area',
+        accessor: 'Area',
       },
       {
         Header: translations['Mission Type'],
-        accessor: 'type',
+        accessor: 'Type',
       },
       {
         Header: translations.classification,
-        accessor: 'class',
+        accessor: 'Classification',
       },
     ];
 
@@ -185,21 +185,21 @@ class DashboardComponent extends React.Component {
       },
       {
         Header: translations['Mission Name'],
-        accessor: 'mission',
+        accessor: 'MissionName',
         filterMethod: (filter, row) =>
           row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations.area,
-        accessor: 'area',
+        accessor: 'Area',
       },
       {
         Header: translations['Mission Type'],
-        accessor: 'type',
+        accessor: 'Type',
       },
       {
         Header: translations.classification,
-        accessor: 'class',
+        accessor: 'Classification',
       },
     ];
 
