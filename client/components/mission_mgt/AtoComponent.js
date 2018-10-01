@@ -204,7 +204,7 @@ moveLeft = (row, missionName) => {
         accessor: 'ReqUserFrndlyID',
         Cell: row => <div className="tooltip-custom">
           <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {
