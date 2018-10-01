@@ -120,7 +120,7 @@ export default {
     oneIntelRequest: {},
     isFetching: false,
     isFetchingOne: false,
-    isDeleted: false
+    isDeleted: false,
   },
 
   inteleei: {
@@ -141,6 +141,7 @@ export default {
     allOrganicPersonnels: [],
     listOrganicPersonnels: [],
     oneUnit: {},
+    nextHigherUnit: {},
     isFetching: false,
   },
 

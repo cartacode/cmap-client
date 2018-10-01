@@ -114,6 +114,8 @@ export const DEPLOYED_ORG__FETCH = createActionType('DEPLOYED_ORG__FETCH');
 export const ORGANIC_ORG__FETCH_ONE = createActionType('ORGANIC_ORG__FETCH_ONE');
 export const UNIT__FETCH_ONE = createActionType('UNIT__FETCH_ONE');
 export const UNIT__UPDATE = createActionType('UNIT__UPDATE');
+export const UNIT__NEXT_HIGHER = createActionType('NEXT_HIGHER_UNIT');
+
  
 export const ATO_COLLECTION_PLAN__FETCH = createActionType('ATO_COLLECTION_PLAN__FETCH');
 export const ATO_GENERATION__FETCH = createActionType('ATO_GENERATION__FETCH');

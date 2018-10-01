@@ -1,7 +1,15 @@
-import { ORGANIC_ORG__FETCH, DEPLOYED_ORG__FETCH, UNIT__FETCH_ONE } from 'dictionary/action';
+import {
+  ORGANIC_ORG__FETCH,
+  DEPLOYED_ORG__FETCH,
+  UNIT__FETCH_ONE,
+  UNIT__NEXT_HIGHER,
+} from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function organicorgs(state = initialState.organicorgs, { payload, type }) {
+export default function organicorgs(state = initialState.organicorgs, {
+  payload,
+  type
+}) {
   switch (type) {
     case ORGANIC_ORG__FETCH.REQUEST:
       return {
@@ -35,6 +43,17 @@ export default function organicorgs(state = initialState.organicorgs, { payload,
         ...state,
         isFetching: false,
         oneUnit: payload.data,
+      };
+    case UNIT__NEXT_HIGHER.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case UNIT__NEXT_HIGHER.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        nextHigherUnit: payload.data,
       };
     default:
       return state;
