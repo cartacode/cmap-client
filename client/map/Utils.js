@@ -51,10 +51,10 @@ function performKMLLookUp(currentLatLong) {
       const centers = KMLdata[i].CenterPoint.split(';');
       if(centers.length > 1) {
         for(let j = 0; centers[j]; j++) {
-          centerPoints.push({ CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName, point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].MissionName });
+          centerPoints.push({ CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName, point: centers[j], KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].Description1 });
         }
       } else{
-        centerPoints.push({ CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName, point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].MissionName });
+        centerPoints.push({ CCIRPIRId: KMLdata[i].CCIRPIRId, missionName: KMLdata[i].MissionName, point: centers, KMLUri: KMLdata[i].EffectiveAreaKML, CCIRPIR: KMLdata[i].Description1 });
 
       }
     }
