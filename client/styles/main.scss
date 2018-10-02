@@ -20,6 +20,9 @@ body {
   display: none;
 }
 
+.hand-cursor{
+  cursor: pointer !important;
+}
  .rowdata-modal .modal-content {
   height: 200px !important;
   padding: 20px !important;
@@ -838,9 +841,10 @@ body .login {
   }
 
   .status-block-header {
+    text-align: center;
     padding: 40px 40px;
     margin-bottom: -70px;
-    margin-left: 10%;
+    // margin-left: 10%;
     color: #ed7d31;
     text-transform: uppercase;
   }
@@ -936,7 +940,7 @@ body .login {
 }
 
 .collection-plan-table-margin-top {
-  margin-top: 90px !important;
+  margin-top: 10px !important;
 }
 .intel-request-table-margin-top {
   margin-top: 37px !important;
@@ -946,11 +950,11 @@ body .login {
 // start status
 
 .status {
-  margin: 15px;
+  margin: 0px 15px;
 
   .header-line {
-    margin-bottom: 27px;
-    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     overflow: hidden;
 
     img {
@@ -984,10 +988,13 @@ body .login {
         width: 95%;
         height: 95%;
       }
-    }
 
+    }
+    .image-block {
+      height: 300px!important;
+  }
     .status-block {
-      height: 480px;
+      height: auto;
       .each-status {
         padding: 1%;
         padding-top: 5%;
@@ -996,22 +1003,23 @@ body .login {
         text-align: center;
 
         .status-header {
-          font-size: 20px !important;
+          font-size: 15px !important;
           color: #ed7d31;
           text-transform: uppercase;
         }
         .status-image {
-          height: 200px;
+          height: 100px;
           align-self: center;
           background-size: contain !important;
         }
         .status-percent {
-          padding-top: 70px;
-          font-size: 40px;
-          text-align: center;
+          padding-top: 39px;
+    font-size: 16px;
+    text-align: center;
+    margin: 30px 0px;
         }
         .status-number {
-          font-size: 30px;
+          font-size: 20px;
         }
       }
     }
@@ -1036,49 +1044,49 @@ body .login {
 
 .status-block {
   @media (max-width: 2000px) {
-    height: 470px !important;
+    height: auto !important;
   }
   @media (max-width: 1950px) {
-    height: 460px !important;
+    height: auto !important;
   }
   @media (max-width: 1900px) {
-    height: 450px !important;
+    height: auto !important;
   }
   @media (max-width: 1850px) {
-    height: 440px !important;
+    height: auto !important;
   }
   @media (max-width: 1800px) {
-    height: 430px !important;
+    height: auto !important;
   }
   @media (max-width: 1750px) {
-    height: 420px !important;
+    height: auto !important;
   }
   @media (max-width: 1700px) {
-    height: 410px !important;
+    height: auto !important;
   }
   @media (max-width: 1650px) {
-    height: 400px !important;
+    height: auto !important;
   }
   @media (max-width: 1600px) {
-    height: 390px !important;
+    height: auto !important;
   }
   @media (max-width: 1550px) {
-    height: 380px !important;
+    height:auto !important;
   }
   @media (max-width: 1500px) {
-    height: 370px !important;
+    height:auto !important;
   }
   @media (max-width: 1450px) {
-    height: 360px !important;
+    height: auto !important;
   }
   @media (max-width: 1400px) {
-    height: 350px !important;
+    height: auto !important;
   }
   @media (max-width: 1350px) {
-    height: 340px !important;
+    height:auto !important;
   }
   @media (max-width: 1300px) {
-    height: 330px !important;
+    height: auto !important;
   }
 }
 .ReactTable .-pagination .-center {
@@ -1091,7 +1099,7 @@ body .login {
 
 .intel-request {
   margin: 15px;
-  margin-bottom: 67px;
+  margin-bottom: 10px;
 
   .header-line {
     overflow: hidden;
@@ -1517,8 +1525,8 @@ body .login {
 
 //start mission-mgt
 .mission-mgt {
-  margin: 15px;
-  margin-bottom: 47px;
+  margin:  0px 15px;
+  margin-bottom: 10px;
 
   .header-line {
     overflow: hidden;
@@ -2370,7 +2378,7 @@ input {
 }
 
 .personnel {
-  margin: 15px;
+  margin: 0px 15px;
 
   .header-line {
     margin-bottom: 27px;
@@ -5171,4 +5179,19 @@ select.form-control {
 
   background: #ed7d31; 
 }
-
+/***************************  react-calendar-timeline  ****************************/
+.react-calendar-timeline .rct-scroll {
+  overflow-x: hidden!important;
+  height: 754px!important;
+}
+.react-calendar-timeline {
+  border: 1px solid #ed7d31;
+}
+.react-calendar-timeline .rct-outer {
+  height: 753px!important;
+}
+.mission-mgt .ReactTable.-striped.-highlight {
+  border: 1px solid #ed7d31;
+  border-right:none;
+  overflow-x: hidden!important;
+}

@@ -87,6 +87,7 @@ class RequestComponent extends React.Component {
       {
         Header: 'IR#',
         accessor: 'ReqUserFrndlyID',
+        maxWidth: 100,
         Cell: row => <div>
           <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
           <Link to={`${editurl}${row.original.IntelRequestID}`}> <span>{row.value}</span></Link>
@@ -104,6 +105,7 @@ class RequestComponent extends React.Component {
       {
         Header: translations.Command,
         accessor: 'COCOMText',
+        maxWidth: 150,
       },
       {
         Header: translations.MissionType,
@@ -121,6 +123,7 @@ class RequestComponent extends React.Component {
       {
         Header: translations.date,
         id: 'ActiveDateTimeStart',
+        maxWidth: 150,
         accessor: d => {
           return formatDateTime(d.ActiveDateTimeStart);
         },
@@ -128,6 +131,7 @@ class RequestComponent extends React.Component {
       {
         Header: translations.LTIV,
         id: 'LatestTimeIntelValue',
+        maxWidth: 150,
         accessor: d => {
           return formatDateTime(d.LatestTimeIntelValue);
         },
@@ -136,6 +140,7 @@ class RequestComponent extends React.Component {
         Header: translations['view'],
         accessor: 'IntelRequestID',
         filterable: false,
+        maxWidth: 150,
         Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
         
       {   (row.original.MissionId !== null) ? '' :

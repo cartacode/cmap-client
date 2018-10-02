@@ -212,12 +212,12 @@ class PayloadsSpecificationComponent extends React.Component {
 	      items.push({ 'label': item.description, 'value': i });
 	    });
 	    return items.map(function(data, key){
-			if(data.label == "-Select Item-"){
+	      if(data.label == "-Select Item-"){
 			  return ( <option key={key} value=""> {data.label} </option>) ;
-			} 
+	      } 
 			  return (<option key={key} value={data.label}>{data.label}</option> );
 			
-		});
+	    });
 	  }
 
 	  // This will get call when user click on Yes to Delete a Record
@@ -311,16 +311,16 @@ class PayloadsSpecificationComponent extends React.Component {
 	          <Loader loading={this.state.loading} />
 	          <img src="/assets/img/admin/personnel_1.png" alt=""/>
 	          <div className="header-text">
-	            {translations['Payloads Specifications']}
+	            {translations['Payloads Specifications']} &nbsp;
 	          </div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 	        </div>
-	        {!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
+	       {!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
 	          <div className="col-md-12 filter-line">
 	            <div className="add-button">
 	              <DropDownButton key = "1" label={translations.Add} id="1" items={addPayloads} />
 	            </div>
-	          </div> : null}
+	          </div> : null} 
 	        {this.state.eoirModalOpen ?
 	          <EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 	          : null }

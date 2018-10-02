@@ -757,5 +757,8 @@
   "summary": "Summary",
   "generateEei": "Generate EEI",
   "collectionValidation": "Collection Validation",
-  "specialization": "Specialization"
+  "specialization": "Specialization",
+  "Contract Company": "Contract Company",
+  "Payload Cap(lbs.)": "Payload Cap(lbs.)",
+  "Armament Cap(lbs.)" : "Armament Cap(lbs.)"
 }

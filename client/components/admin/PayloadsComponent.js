@@ -124,7 +124,8 @@ class PayloadsComponent extends React.Component {
 	  },
 	  {
 	    Header: translations.cocom,
-	    accessor: 'COCOM',
+			accessor: 'COCOM',
+			maxWidth: 150,
 	  },
 	  {
 	    Header: translations['Owning Unit'],
@@ -137,7 +138,8 @@ class PayloadsComponent extends React.Component {
 	  {
 	    Header: translations.view,
 	    accessor: 'ID',
-	    filterable: false,
+			filterable: false,
+			maxWidth: 150,
 	    Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openPayloadsForm(row.value)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
 	      {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
 	        <a href="javaScript:void('0');" onClick={() => this.deletePayloadInventory(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
