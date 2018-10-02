@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { ORGANIC_ORG__FETCH, ORGANIC_ORG__ADD, DEPLOYED_ORG__FETCH, UNIT__FETCH_ONE, UNIT__UPDATE } from 'dictionary/action';
+import { ORGANIC_ORG__FETCH, ORGANIC_ORG__ADD, DEPLOYED_ORG__FETCH, DEPLOYED_PERSONNEL__FETCH, UNIT__FETCH_ONE, UNIT__UPDATE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 

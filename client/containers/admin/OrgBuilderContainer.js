@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 
 import OrgBuilderComponent from '../../components/admin/OrgBuilderComponent';
 import { fetchOrganicOrg, fetchDeployedOrg, fetchUnitById } from 'actions/organicorg';
-import { fetchOrganicPersonnel, fetchPersonnelsByFilter } from 'actions/organicpersonnel';
+import { fetchOrganicPersonnel, fetchPersonnelsByFilter, fetchDeployedPersonnel } from 'actions/organicpersonnel';
 import Accordion from '../../components/reusable/Accordion';
 
 const mapStateToProps = state => {
@@ -12,6 +12,7 @@ const mapStateToProps = state => {
     allOrganicOrgs: state.organicorgs.allOrganicOrgs,
     allDeployedOrgs: state.organicorgs.allDeployedOrgs,
     allOrganicPersonnels: state.organicpersonnels.allOrganicPersonnels,
+    allDeployedPersonnels: state.organicpersonnels.allDeployedPersonnels,
     listOrganicPersonnels: state.organicpersonnels.listOrganicPersonnels,
     oneUnit: state.organicorgs.oneUnit,
     isLoading: state.organicorgs.isFetching,
@@ -24,6 +25,7 @@ const mapDispatchToProps = {
   fetchPersonnelsByFilter,
   fetchDeployedOrg,
   fetchUnitById,
+  fetchDeployedPersonnel,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrgBuilderComponent);

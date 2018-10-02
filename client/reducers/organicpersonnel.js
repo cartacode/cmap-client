@@ -1,4 +1,4 @@
-import { ORGANIC_PERSONNEL__FETCH, ORGANIC_PERSONNEL__FETCH_LIST } from 'dictionary/action';
+import { ORGANIC_PERSONNEL__FETCH, ORGANIC_PERSONNEL__FETCH_LIST, DEPLOYED_PERSONNEL__FETCH } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function organicpersonnels(state = initialState.organicpersonnels, { payload, type }) {
@@ -13,6 +13,17 @@ export default function organicpersonnels(state = initialState.organicpersonnels
         ...state,
         isFetching: false,
         allOrganicPersonnels: payload.data,
+      };
+    case DEPLOYED_PERSONNEL__FETCH.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case DEPLOYED_PERSONNEL__FETCH.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        allDeployedPersonnels: payload.data,
       };
       case ORGANIC_PERSONNEL__FETCH_LIST.REQUEST:
       return {

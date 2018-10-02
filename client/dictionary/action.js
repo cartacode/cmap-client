@@ -111,6 +111,7 @@ export const ORGANIC_PERSONNEL__FETCH = createActionType('ORGANIC_PERSONNEL__FET
 export const ORGANIC_PERSONNEL__ADD = createActionType('ORGANIC_PERSONNEL__ADD');
 export const ORGANIC_PERSONNEL__FETCH_LIST = createActionType('ORGANIC_PERSONNEL__FETCH_LIST');
 export const DEPLOYED_ORG__FETCH = createActionType('DEPLOYED_ORG__FETCH');
+export const DEPLOYED_PERSONNEL__FETCH = createActionType('DEPLOYED_PERSONNEL__FETCH');
 export const ORGANIC_ORG__FETCH_ONE = createActionType('ORGANIC_ORG__FETCH_ONE');
 export const UNIT__FETCH_ONE = createActionType('UNIT__FETCH_ONE');
 export const UNIT__UPDATE = createActionType('UNIT__UPDATE');

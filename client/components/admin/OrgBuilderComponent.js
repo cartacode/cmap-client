@@ -87,6 +87,7 @@ class OrgBuilderComponent extends React.Component {
     this.personnelChartView(); 
   });
   this.props.fetchDeployedOrg(this.state.branch);
+  this.props.fetchDeployedPersonnel(this.state.branch);
   }
 
   renderSchema = () => {
@@ -133,6 +134,22 @@ class OrgBuilderComponent extends React.Component {
      this.setState({
        orgData: orgData3
      }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
+
+  }
+
+  deployedPersonnelChartView = () => {
+
+    const { allDeployedPersonnels } = this.props;
+
+    let orgData4 = allDeployedPersonnels;
+   
+    console.log(allDeployedPersonnels);
+    console.log(orgData4);
+
+     this.setState({
+       orgData: orgData4
+     }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
+
 
   }
 
@@ -486,11 +503,11 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels} fetchUnitById={this.fetchUnits} oneUnit={this.props.oneUnit} callEdit={this.state.callEdit} edit={this.state.edit} stopCall={this.stopCall}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} deployedPersonneChart={this.deployedPersonnelChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels} fetchUnitById={this.fetchUnits} oneUnit={this.props.oneUnit} callEdit={this.state.callEdit} edit={this.state.edit} stopCall={this.stopCall}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
-          <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true} callfunc={this.func} />
+          <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true} callfunc={this.func} pathFunc="straight" />
         </div>  
         </div>
       </div>

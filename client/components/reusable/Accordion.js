@@ -518,7 +518,7 @@ class Accordion extends React.Component {
                   <li onClick={this.props.orgChart}>Organic Org View</li>
                   <li onClick={this.props.deployedChart}>Deployed Org View</li>
                   <li onClick={this.props.personnelChart}>Organic Personnel View</li>
-                  <li>Deployed Personnel View</li>
+                  <li onClick={this.props.deployedPersonneChart}>Deployed Personnel View</li>
                 </ul>
               </div>
             </div>

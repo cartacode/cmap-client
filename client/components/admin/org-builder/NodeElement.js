@@ -20,10 +20,14 @@ class NodeElement extends React.PureComponent {
         nodeData.unitLogo = nodeData.PhotoPath;
     }
 
-    if(nodeData.Rank)
+    if(nodeData.Rank || nodeData.Rank != undefined)
     {
       nodeData.type = "Personnel";
+      // if(nodeData.Rank == undefined) {
+      //   nodeData.type = "Personnel";
+      // }
     }
+
     return (
       <div className={className}>
         <div className="element-bg">
@@ -31,8 +35,10 @@ class NodeElement extends React.PureComponent {
           <div className="text-1">{nodeData.UnitName}{nodeData.FullName} <br/>
        
        {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.Rank}</span> <br/>
-       <span className="unit-text"> {nodeData.DutyPosition}</span></span>) : (<span> <br/>
-       <span className="unit-text"> {nodeData.Location}</span> <br/> </span>) }
+       <span className="unit-text"> {nodeData.DutyPosition}</span></span>) : (<span> 
+       <span className="unit-text"> {nodeData.Location}Personnel Count: <b>{nodeData.PersonnelCount}</b> 
+       {/* <br/> FMC Platform Count: <b>{nodeData.PlatformStatuses.FMCPlatformCount}</b> <br/> PMC Platform Count: <b>{nodeData.PlatformStatuses.PMCPlatformCount}</b> <br/> NMC Platform Count: <b>{nodeData.PlatformStatuses.NMCPlatformCount}</b>  */}
+       </span> <br/> </span>) }
           
           </div>
         </div>

@@ -62,7 +62,7 @@ test = event => {
       <div style={this.state.containerStyles} ref={tc => (this.treeContainer = tc)}>
       {/*Key prop to re-render*/}
         <Tree data={this.props.data} collapsible={true} key={this.props.forceRemount} initialDepth={1} translate={this.state.translate} 
-          separation={this.state.separation} allowForeignObjects = {true}
+          separation={this.state.separation} allowForeignObjects = {true} pathFunc="straight"
           nodeLabelComponent={{
             render: <NodeElement className="myLabelComponentInSvg" check={this.postconsole}/>,
             foreignObjectWrapper: {
