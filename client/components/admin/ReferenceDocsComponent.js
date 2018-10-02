@@ -14,7 +14,7 @@ class ReferenceDocsComponent extends React.Component {
   }
 
   handleClick = (i) => {
-    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS Architecture Diagram.pdf","../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf"];
+    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS Architecture Diagram.pdf","../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf","http://18.222.48.211:8081/swagger/ui/index#/"];
     window.location.href=documentHref[i];
   }
 
@@ -27,7 +27,7 @@ class ReferenceDocsComponent extends React.Component {
   render() {
 
     const {translations} = this.props;
-    const userPermissionButtons = ["Architecture Diagram", "End User Licence Agreement EULA", "AMPS Marketing Brief September 2018", "AMPS Product Marketing Sheet",];
+    const userPermissionButtons = ["Architecture Diagram", "End User Licence Agreement EULA", "AMPS Marketing Brief September 2018", "AMPS Product Marketing Sheet","API Documentation"];
     
     const serverConfigButtons = ["Product Roadmap September 2018", "Software Config Management Versioning Guidance", "Software License Agreement", "Software Maintenance and Hardware Warranty Agreement",];
     const storageConfigButtons = [translations['direct storage admin'], translations['storage status'], translations['repository quotas'], translations['distributed archive admin'],];
@@ -64,16 +64,22 @@ class ReferenceDocsComponent extends React.Component {
           <div className="col-md-2">
             </div>
             <div className="col-md-4">
-              <ButtonsBlock subHeaderText="Documents" buttons={userPermissionButtons} cl={this.handleClick}/>
+              <ButtonsBlock buttons={userPermissionButtons} cl={this.handleClick}/>
             </div>
             <div className="col-md-4">
-              <ButtonsBlock subHeaderText="Documents" buttons={serverConfigButtons} cl={this.handleClicks}/>
+              <ButtonsBlock buttons={serverConfigButtons} cl={this.handleClicks}/>
             </div>
             <div className="col-md-2">
             </div>
           </div>
-          
+
+
         </div>
+
+       
+            
+        
+
       </div>
     );
   }

@@ -30,7 +30,7 @@ class ButtonsBlock extends React.Component {
 		return(
 			<div className="button-block">
 				<div className="col-md-12">
-					<ShortHeaderLine headerText={this.props.subHeaderText} /> 
+					
 				</div>
 				<div className="col-md-12 " >
 					<div className="config-buttons">
