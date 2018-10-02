@@ -139,17 +139,21 @@ class OrgBuilderComponent extends React.Component {
 
   deployedPersonnelChartView = () => {
 
-    const { allDeployedPersonnels } = this.props;
+    this.props.fetchDeployedPersonnel(this.state.branch).then(() => { 
 
-    let orgData4 = allDeployedPersonnels;
-   
-    console.log(allDeployedPersonnels);
-    console.log(orgData4);
+      const { allDeployedPersonnels } = this.props;
 
-     this.setState({
-       orgData: orgData4
-     }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
-
+      let orgData4 = allDeployedPersonnels;
+     
+      console.log(allDeployedPersonnels);
+      console.log(orgData4);
+  
+       this.setState({
+         orgData: orgData4
+       }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
+  
+    });
+    
 
   }
 
