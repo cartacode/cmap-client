@@ -86,8 +86,6 @@ class IntelEEI extends React.Component {
   render() {
 
     const { translations, missionId } = this.props;
-    console.log('mission id '+missionId);
-    console.log('form opened '+this.state.isFormOpened);
   
     // EEI columns
     const missionColumns = [
