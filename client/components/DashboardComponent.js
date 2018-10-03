@@ -49,13 +49,132 @@ class DashboardComponent extends React.Component {
     this.props.fetchUpcomingMission(38, unitId);
   };
 
-  getAISROperationStatuses() {
+  getAISROperationStatuses(statusText) {
     const { aisrOperation } = this.props;
-    const operationStatuses = '';
-    this.props.aisrOperation.map((item, i) => {
-      // operationStatuses = operationStatuses+(<NumBlock headerText="Requests" blockValue="23" /><img src= "/assets/img/dashboard/status_divider.png" />);
-    });
-    return operationStatuses;
+    let statusCount = 0;
+    if(aisrOperation !== undefined && aisrOperation !== null) {
+      for(let index = 0; index < aisrOperation.length; index++) {
+        const isrStatus = aisrOperation[index];
+        if(statusText === isrStatus.Status) {
+          statusCount = isrStatus.Count;
+          break;
+        }
+      }
+    }
+    return statusCount;
+  }
+
+  getOPSUtilizationPercentage(unitType) {
+    const { opsMissions } = this.props;
+    let percent = 0;
+    if(opsMissions !== undefined && opsMissions !== null) {
+      for(let index = 0; index < opsMissions.length; index++) {
+        const opsMission = opsMissions[index];
+        if(unitType === opsMission.Unittype) {
+          percent = opsMission.percentage;
+          break;
+        }
+      }
+    }
+    return percent + '%';
+  }
+
+  getCountdown(row) {
+    //const oneDay = 1000 * 60 * 60 * 24;
+    let startDate = row.original.StartDate;
+    startDate = new Date(startDate);
+    const currentDate = new Date();
+    // get total seconds between the times
+    let differenceMS = Math.abs(startDate - currentDate) / 1000;
+    // calculate (and subtract) whole days
+    let days =  Math.floor(differenceMS / 86400);
+    differenceMS -= days * 86400;
+    // calculate (and subtract) whole hours
+    let hours = Math.floor(differenceMS / 3600) % 24;
+    differenceMS -= hours * 3600;
+    // calculate (and subtract) whole minutes
+    let minutes = Math.floor(differenceMS / 60) % 60;
+    differenceMS -= minutes * 60;
+    // what's left is seconds
+    let seconds = Math.floor(differenceMS) % 60;
+    return days + 'd ' + hours + 'h ' + minutes + 'm ' ;
+  }
+
+  getIntelColumns() {
+    const { translations } = this.props;
+    return  [
+      {
+        Header: translations.date,
+        accessor: 'StartDate',
+        filterMethod: (filter, row) =>
+          row[filter.id].startsWith(filter.value),
+
+        sortMethod: (a, b) => {
+          if (a.length === b.length) {
+            return a > b ? 1 : -1;
+          }
+          return a.length > b.length ? 1 : -1;
+        }, // String-based value accessors!
+      },
+      {
+        Header: translations['Mission Name'],
+        accessor: 'MissionName',
+        filterMethod: (filter, row) =>
+          row[filter.id].startsWith(filter.value),
+      },
+      {
+        Header: translations.area,
+        accessor: 'Area',
+      },
+      {
+        Header: translations['Mission Type'],
+        accessor: 'MissionType',
+      },
+      {
+        Header: translations.classification,
+        accessor: 'Classification',
+      },
+    ];
+  }
+
+  getMissionColumns(){
+    const { translations } = this.props;
+    return [
+      {
+        Header: translations.countdown,
+        accessor: 'countdown',
+        filterMethod: (filter, row) =>
+          row[filter.id].startsWith(filter.value),
+
+        sortMethod: (a, b) => {
+          if (a.length === b.length) {
+            return a > b ? 1 : -1;
+          }
+          return a.length > b.length ? 1 : -1;
+        }, // String-based value accessors!
+        Cell: row => <div>
+          <span>{this.getCountdown(row)}</span>
+        </div>,
+      },
+      {
+        Header: translations['Mission Name'],
+        accessor: 'MissionName',
+        filterMethod: (filter, row) =>
+          row[filter.id].startsWith(filter.value),
+      },
+      {
+        Header: translations.area,
+        accessor: 'Area',
+      },
+      {
+        Header: translations['Mission Type'],
+        accessor: 'MissionType',
+      },
+      {
+        Header: translations.classification,
+        accessor: 'Classification',
+      },
+    ]
   }
 
   render() {
@@ -75,19 +194,23 @@ class DashboardComponent extends React.Component {
     // For Payload
     let { opsPayload } = this.props;
     // For Flight, Line, PED
-    let { opsMissions } = this.props;
+    const { opsMissions } = this.props;
 
-    let { aisrOperation } = this.props;
+    const { aisrOperation } = this.props;
+
     // For Left Table
-    let { allLatestIntelligence } = this.props;
+    const { allLatestIntelligence } = this.props;
 
     // For right table
-    let { allUpcomingMissions } = this.props;
+    const { allUpcomingMissions } = this.props;
 
     if(opsPlatform instanceof Object) {
       opsPlatform = '0';
     }
-    //  debugger;
+
+    if(opsPayload instanceof Object) {
+      opsPayload = '0';
+    }
 
     console.log('********************************opsPlatform*************' + JSON.stringify(opsPlatform));
     console.log('********************************opsPayload*************' + JSON.stringify(opsPayload));
@@ -116,92 +239,10 @@ class DashboardComponent extends React.Component {
       { name: 'Mission LightHit Delay - Maintenance', type: 'checkbox' },
       { name: 'DVB-RCS Channels 10-18 Down', type: 'checkbox' },
     ];
-
-    const latestIntellegence = allLatestIntelligence /* [
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-      { date: '11/03/17', mission: 'end game', area: 'kandahar, afg', type: 'force protection', class: 'UNC' },
-    ] */;
-
-    const intelColumns = [
-      {
-        Header: translations.date,
-        accessor: 'StartDate',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
-
-        sortMethod: (a, b) => {
-          if (a.length === b.length) {
-            return a > b ? 1 : -1;
-          }
-          return a.length > b.length ? 1 : -1;
-        }, // String-based value accessors!
-      },
-      {
-        Header: translations['Mission Name'],
-        accessor: 'MissionName',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
-      },
-      {
-        Header: translations.area,
-        accessor: 'Area',
-      },
-      {
-        Header: translations['Mission Type'],
-        accessor: 'Type',
-      },
-      {
-        Header: translations.classification,
-        accessor: 'Classification',
-      },
-    ];
-
-    const upcomingMission = allUpcomingMissions /* [
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-      { countdown: '00d 00h 16m', mission: 'green eye', area: 'kandahar, AFG', type: 'force protection', class: 'UNC' },
-    ] */;
-
-    const missionColumns = [
-      {
-        Header: translations.countdown,
-        accessor: 'countdown',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
-
-        sortMethod: (a, b) => {
-          if (a.length === b.length) {
-            return a > b ? 1 : -1;
-          }
-          return a.length > b.length ? 1 : -1;
-        }, // String-based value accessors!
-      },
-      {
-        Header: translations['Mission Name'],
-        accessor: 'MissionName',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
-      },
-      {
-        Header: translations.area,
-        accessor: 'Area',
-      },
-      {
-        Header: translations['Mission Type'],
-        accessor: 'Type',
-      },
-      {
-        Header: translations.classification,
-        accessor: 'Classification',
-      },
-    ];
+    const latestIntellegence = allLatestIntelligence;
+    const intelColumns = this.getIntelColumns();
+    const upcomingMission = allUpcomingMissions;
+    const missionColumns = this.getMissionColumns();;
 
     return (access ? (
       <div>
@@ -230,32 +271,38 @@ class DashboardComponent extends React.Component {
           </div>
 
           <div className="col-md-12 operating-status">
-            <NumBlock headerText="Requests" blockValue="23" />
+            <NumBlock headerText="Requests" blockValue={this.getAISROperationStatuses('REQUEST')} />
             <img src= "/assets/img/dashboard/status_divider.png" />
-            <NumBlock headerText={translations.pending} blockValue="12" />
+
+            <NumBlock headerText={translations.pending} blockValue={this.getAISROperationStatuses('PENDING')} />
             <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
-            <NumBlock headerText={translations.denied} blockValue="3" />
+
+            <NumBlock headerText={translations.denied} blockValue={this.getAISROperationStatuses('DENIED')} />
             <img src= "/assets/img/dashboard/status_divider.png" />
-            <NumBlock headerText={translations.assigned} blockValue="16" />
+
+            <NumBlock headerText={translations.assigned} blockValue={this.getAISROperationStatuses('ASSIGNED')} />
             <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
-            <NumBlock headerText={translations.active} blockValue="12" />
+
+            <NumBlock headerText={translations.active} blockValue={this.getAISROperationStatuses('ACTIVE')} />
             <img src= "/assets/img/dashboard/status_divider.png" />
-            <NumBlock headerText={translations.canceled} blockValue="1" />
+
+            <NumBlock headerText={translations.canceled} blockValue={this.getAISROperationStatuses('CANCELED')} />
             <img className="mirrored-Y-image" src="/assets/img/dashboard/status_divider.png" alt=""/>
-            <NumBlock headerText={translations.completed} blockValue="15" />
+
+            <NumBlock headerText={translations.completed} blockValue={this.getAISROperationStatuses('COMPLETED')} />
+
           </div>
 
           <div className="col-md-12">
-           {/*  <div className="col-md-12"> */}
-              <div className="status-block-header">{translations['ops utilization']}</div>
-              <div className="status-block">
-                <DashboardCircleStatus statusHeader={translations.platform} statusPercent={(opsPlatform !== null && opsPlatform !== undefined) ? opsPlatform + '%' : '0%'} />
-                <DashboardCircleStatus statusHeader={translations.payload} statusPercent={(opsPayload !== null && opsPayload !== undefined) ? opsPayload + '%' : '0%' } />
-
-                <DashboardCircleStatus statusHeader={translations['flight crew']} statusPercent="89%" />
-                <DashboardCircleStatus statusHeader={translations['line crew']} statusPercent="80%" />
-                <DashboardCircleStatus statusHeader={translations['ped crew']} statusPercent="78%" />
-              </div>
+            {/*  <div className="col-md-12"> */}
+            <div className="status-block-header">{translations['ops utilization']}</div>
+            <div className="status-block">
+              <DashboardCircleStatus statusHeader={translations.platform} statusPercent={(opsPlatform !== null && opsPlatform !== undefined) ? opsPlatform + '%' : '0%'} />
+              <DashboardCircleStatus statusHeader={translations.payload} statusPercent={(opsPayload !== null && opsPayload !== undefined) ? opsPayload + '%' : '0%' } />
+              <DashboardCircleStatus statusHeader={translations['flight crew']} statusPercent={this.getOPSUtilizationPercentage(2)} />
+              <DashboardCircleStatus statusHeader={translations['line crew']} statusPercent={this.getOPSUtilizationPercentage(3)} />
+              <DashboardCircleStatus statusHeader={translations['ped crew']} statusPercent={this.getOPSUtilizationPercentage(1)} />
+            </div>
             {/* </div> */}
             {/*  <div className="col-md-6">
               <div className="status-block-header">{translations['intel performance']}</div>
