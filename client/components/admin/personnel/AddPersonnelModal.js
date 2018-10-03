@@ -105,6 +105,65 @@ class AddPersonnelModal extends React.Component {
     }
   }
 
+  checkValuedCheckboxes = (roleArray) => {
+
+    if (roleArray.includes("b63ca868-af4b-486f-9540-3d01eca089fe"))   
+    {
+      document.getElementById('checkbox0').checked = true;
+    }
+
+    if (roleArray.includes("7554b13b-bb2b-4203-a334-5417f5b03650"))   
+    {
+      document.getElementById('checkbox1').checked = true;
+    }
+
+    if (roleArray.includes("d669b1ed-5e2c-4c27-8d16-60388dffcc2a"))   
+    {
+      document.getElementById('checkbox2').checked = true;
+    }
+
+    if (roleArray.includes("6dd5ba55-f445-4a30-8270-fdbc992434af"))   
+    {
+      document.getElementById('checkbox3').checked = true;
+    }
+
+    if (roleArray.includes("0425a61c-f00e-40d7-93d4-f811e1891ade"))   
+    {
+      document.getElementById('checkbox4').checked = true;
+    }
+
+    if (roleArray.includes("f09c4e3a-eebe-434e-a2a2-b0b44cbcca93"))   
+    {
+      document.getElementById('checkbox5').checked = true;
+    }
+
+    if (roleArray.includes("36c9952b-3f63-468d-9335-3294a91e9c97"))   
+    {
+      document.getElementById('checkbox6').checked = true;
+    }
+
+    if (roleArray.includes("d3afa700-751d-4f08-b99e-f9a15361c7a1"))   
+    {
+      document.getElementById('checkbox7').checked = true;
+    }
+
+    if (roleArray.includes("7637f5c8-aa0c-4447-b7a9-939aadd07c7a"))   
+    {
+      document.getElementById('checkbox8').checked = true;
+    }
+
+    if (roleArray.includes("af036592-2598-4727-bc36-7f71c665f787"))   
+    {
+      document.getElementById('checkbox9').checked = true;
+    }
+
+    if (roleArray.includes("f5bfb78f-38c6-48f4-8773-59c2543e0805"))   
+    {
+      document.getElementById('checkbox10').checked = true;
+    }
+
+  }
+
   editComponent = (editId) => {
 
     document.getElementById('UserName').readOnly = true;
@@ -124,7 +183,13 @@ class AddPersonnelModal extends React.Component {
           imagePreviewUrl: this.props.onePersonnel.PersonnelPhoto,
           imagePreviewUrl2: this.props.onePersonnel.OrganizationLogo,
           isImagedRequired:  false
-        });
+        }, () => { console.log(this.state.personnel) });
+
+        let roleArray = this.props.onePersonnel.RoleIDs;
+        console.log(roleArray);
+
+        this.checkValuedCheckboxes(roleArray);
+    
     });
   }
 
@@ -160,7 +225,7 @@ class AddPersonnelModal extends React.Component {
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
     }, () => {
-      //console.log(this.state.personnel);
+      console.log(this.state.personnel);
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
@@ -236,14 +301,22 @@ class AddPersonnelModal extends React.Component {
       let roleIDs = [];
       if(roleData.RoleIDs!=undefined) { 
         console.log(roleData.RoleIDs); 
-        console.log(roleData); } 
-        else { console.log(roleData);  
+        console.log(roleData); 
+        roleData = roleData.RoleIDs;
+        for (let i=0; i<roleData.length; i++) {
+          console.log("Value: " + roleData[i]);
+          roleIDs.push(roleData[i]);
+      }  
+ 
+      } 
+        else { console.log(roleData); 
+          for (var key in roleData) {
+            console.log("Value: " + roleData[key]);
+            roleIDs.push(roleData[key]);
+        } 
         }
-      
-        for (var key in roleData) {
-          console.log("Value: " + roleData[key]);
-          roleIDs.push(roleData[key]);
-      }   
+      console.log(roleData);
+       
 
     const {personnel} = this.state;
     this.setState({

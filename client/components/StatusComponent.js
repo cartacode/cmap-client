@@ -125,6 +125,7 @@ class StatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['etic'],
@@ -160,6 +161,7 @@ class StatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['etic'],
@@ -193,6 +195,7 @@ class StatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }
     ];
     
@@ -231,7 +234,7 @@ class StatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
-
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }
     ];
 

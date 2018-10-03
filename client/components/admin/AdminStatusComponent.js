@@ -287,6 +287,7 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['etic'],
@@ -329,6 +330,7 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['etic'],
@@ -370,6 +372,7 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['update'],
@@ -415,6 +418,7 @@ class AdminStatusComponent extends React.Component {
       {
         Header: translations['remark'],
         accessor: 'remark',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
       {
         Header: translations['update'],
