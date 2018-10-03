@@ -408,9 +408,9 @@ class GunModal extends React.Component {
     const uploadFileFields = [
       { name: translations['Photo Image'], type: 'file', domID: 'MunitionPhoto', valFieldID: 'MunitionPhoto', fileType: 'image' },
       { name: translations['Wireframe Image'], type: 'file', domID: 'MunitionWireframe', valFieldID: 'MunitionWireframe', fileType: 'image' },
-      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'file' },
-      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'file' },
-      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'file' },
+      { name: translations['3D Model'], type: 'file', domID: 'Munition3D', valFieldID: 'Munition3D', fileType: 'image' },
+      { name: translations['2D Icon'], type: 'file', domID: 'MunitionIcon', valFieldID: 'MunitionIcon', fileType: 'image' },
+      { name: translations['Milspec Icon'], type: 'file', domID: 'Munition2525B', valFieldID: 'Munition2525B', fileType: 'image' },
       { name: translations['Datasheets'], type: 'file', domID: 'MunitionDatasheet', valFieldID: 'MunitionDatasheet', fileType: 'file'}
     ];
 
@@ -436,7 +436,8 @@ class GunModal extends React.Component {
                 {$imagePreview}
               </div>
               <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-                data={this.handleUploadFileData} initstate={this.props.oneMunition} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
+                data={this.handleUploadFileData} initstate={this.props.oneMunition} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} clearit={this.state.clear} stopset={this.stopset.bind(this)}
+                editFetched={this.state.editFetched} stopupd={this.stopupd}  ></UploadFileBlock>
             </div>
           </div>
           <div className="row personnel" >
