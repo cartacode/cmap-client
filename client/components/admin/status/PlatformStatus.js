@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
+import ContentFull from "../../reusable/ContentFull";
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
 
@@ -145,25 +146,21 @@ class PlatformStatus extends React.Component {
         <div className="payload-content">
           <div className="row personnel" >
 
-            <div className="header-line">
+            <div className="header-line modal-header-text">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
-              <div className="header-text">
-                Edit Platform Status
+              <div className="header-text status-header-modal">
+                Edit Platform
               </div>
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
           </div>
 
-          <div className="row personnel" >
-            
-               <div className="col-md-4"></div>
-              <ContentBlock fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <div className="col-md-4"></div>
+          <div className="col-md-12">
+              <ContentFull fields={generalFields} data={this.handlePlatformGeneralData} initstate={this.props.onePlatform} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
           </div>
           
-        </div>
-        <div className="row action-buttons">
+          <div className="row action-buttons">
           <div className="menu-button">
             <img className="line" src="/assets/img/admin/edit_up.png" alt="" />
             <button type="button" className='highlighted-button' onClick={this.resetForm.bind(this)}>
@@ -181,6 +178,9 @@ class PlatformStatus extends React.Component {
             <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt="" />
           </div>
         </div>
+
+        </div>
+       
 
       </form>
 

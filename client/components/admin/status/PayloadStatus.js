@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import { baseUrl } from 'dictionary/network';
 import axios from 'axios';
+import ContentFull from '../../reusable/ContentFull';
 
 
 
@@ -146,7 +147,7 @@ class PayloadStatus extends React.Component {
             <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
-                Edit Payload Status
+                Edit Payload
               </div>
 
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
@@ -156,7 +157,7 @@ class PayloadStatus extends React.Component {
           <div className="row personnel" >
             
                <div className="col-md-4 info-block"></div> 
-              <ContentBlock fields={generalFields} data={this.handlePayloadGeneralData} initstate={this.props.onePayload} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentFull fields={generalFields} data={this.handlePayloadGeneralData} initstate={this.props.onePayload} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
               <div className="col-md-4 info-block"></div>  
           </div>
           

@@ -420,15 +420,15 @@ class AdminStatusComponent extends React.Component {
         accessor: 'remark',
         Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, 
-      {
-        Header: translations['update'],
-        accessor: 'update',
-        filterable: false,
-        //Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
-        //Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
-        Cell: row => <div><a href="#" className="btn btn-primary"  ><span className="glyphicon glyphicon-edit"/></a></div>,
+      // {
+      //   Header: translations['update'],
+      //   accessor: 'update',
+      //   filterable: false,
+      //   //Cell: props => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="PED"/></span>// Custom cell components!
+      //   //Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+      //   Cell: row => <div><a href="#" className="btn btn-primary"  ><span className="glyphicon glyphicon-edit"/></a></div>,
 
-      }
+      // }
     ];
 
     const personnelHead = [ translations['Name'], translations['Rank'], translations['mos'], translations['duty pos.'], translations['arrive'], translations['depart'], translations['update'], ];
@@ -551,15 +551,11 @@ class AdminStatusComponent extends React.Component {
         </div>
 
         <div className="row status">
-        {this.state.platformStatusOpen ?
-        <PlatformStatus editId = {this.state.platformEditId} onClose={this.closePlatformForm} translations={translations} />
-        : null }
+        
         </div>
 
         <div className="row status">
-        {this.state.payloadStatusOpen ?
-        <PayloadStatus editId = {this.state.payloadEditId} onClose={this.closePayloadForm} translations={translations} />
-        : null }
+
         </div>
 
         <div className="row status">
@@ -605,9 +601,7 @@ class AdminStatusComponent extends React.Component {
           </div>
 
         <div className="row status">
-        {this.state.munitionStatusOpen ?
-        <MunitionsStatus editId = {this.state.munitionEditId} onClose={this.closeMunitionForm} translations={translations} />
-        : null }
+      
         </div>
 
           <div className="col-md-12">
@@ -650,9 +644,7 @@ class AdminStatusComponent extends React.Component {
           </div>
 
         <div className="row status">
-        {this.state.personnelStatusOpen ?
-        <PersonnelStatus editId = {this.state.personnelEditId} onClose={this.closePersonnelForm} translations={translations} />
-        : null }
+
         </div>
 
           <div className="col-md-12">
@@ -686,6 +678,35 @@ class AdminStatusComponent extends React.Component {
             </div>
           </div>
         </div>
+
+        {this.state.platformStatusOpen ?
+        <Modal show={this.state.platformStatusOpen}
+        onClose={this.closePlatformForm}>
+        <PlatformStatus editId = {this.state.platformEditId} onClose={this.closePlatformForm} translations={translations} />
+        </Modal>
+        : null }
+
+
+        {this.state.payloadStatusOpen ?
+        <Modal show={this.state.payloadStatusOpen}
+        onClose={this.closePayloadForm}>
+        <PayloadStatus editId = {this.state.payloadEditId} onClose={this.closePayloadForm} translations={translations} />
+        </Modal>
+        : null }
+
+        {this.state.munitionStatusOpen ?
+        <Modal show={this.closeMunitionForm}
+        onClose={this.closeMunitionForm}>
+        <MunitionsStatus editId = {this.state.munitionEditId} onClose={this.closeMunitionForm} translations={translations} />
+        </Modal>
+        : null }
+
+        {this.state.personnelStatusOpen ?
+        <Modal show={this.state.personnelStatusOpen}
+        onClose={this.closePersonnelForm}>
+        <PersonnelStatus editId = {this.state.personnelEditId} onClose={this.closePersonnelForm} translations={translations} />
+        </Modal>
+        : null }
 
         <Modal show={this.state.statusModalOpen}
           onClose={this.statusModal.bind(this)}>

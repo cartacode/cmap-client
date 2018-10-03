@@ -3964,7 +3964,7 @@ one-block {
   }
 
   .modal-content {
-    height: 350px !important;
+    height: max-content !important;
     padding: 20px;
 
     .close-button {
@@ -3974,15 +3974,33 @@ one-block {
 
       img {
         border: 1px;
-        height: 20px;
+        height: 12px;
       }
+
+    }
+
+    .form-control {
+      padding: 0 7px !important;
+      background: rgba(0, 0, 0, 0.01);
+      height: 25px;
+      width: 100%;
+      border-radius: 0px;
+      text-transform: uppercase;
+      color: #84a1e0 !important;
+      font-size: 12px !important;
     }
 
     .modal-header-text {
       width: 100%;
       padding-left: 30px;
-      padding-bottom: 20px;
+      padding-bottom: 0px;
+
     }
+
+    .personnel .header-line {
+      margin-bottom: 0px !important;
+      overflow: hidden;
+  }
 
     .status-change {
       width: 100%;
