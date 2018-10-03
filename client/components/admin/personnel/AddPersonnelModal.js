@@ -245,15 +245,66 @@ class AddPersonnelModal extends React.Component {
 
   document.getElementsByName('ConfirmPassword')[0].onkeyup = function(){
     if (document.getElementsByName('Password')[0].value !=
-    document.getElementsByName('ConfirmPassword')[0].value) {
-      document.getElementById('message').style.color = 'red';
-    document.getElementById('message').innerHTML = 'Password not matching';
-  } else {
-  
-
-    document.getElementById('message').style.color = 'green';
-    document.getElementById('message').innerHTML = 'Password matching';
+    document.getElementsByName('ConfirmPassword')[0].value) 
+    {
+      document.getElementsByName('ConfirmPassword')[0].style.borderColor = 'red';
+    } 
+    else {
+          document.getElementsByName('ConfirmPassword')[0].style.borderColor = 'green';
+      }
   }
+
+  //Password Validation 
+  let myInput = document.getElementsByName('Password')[0];
+
+  let lowercase = false; let uppercase = false; let length = false; let special=false;
+
+  myInput.onkeypress = function(e) {
+    if (e.which == 32)
+    return false;
+  }
+
+  document.getElementsByName('Password')[0].onkeyup = function() {
+    // Validate lowercase letters
+    var lowerCaseLetters = /[a-z]/g;
+    if(myInput.value.match(lowerCaseLetters)) { 
+     lowercase = true;
+    } else {
+      console.log("Invalid");
+    }
+  
+    // Validate capital letters
+    var upperCaseLetters = /[A-Z]/g;
+    if(myInput.value.match(upperCaseLetters)) { 
+      uppercase = true;
+    } else {
+      console.log("Invalid");
+    }
+  
+    // Validate numbers
+    var specialChars = /[!@#$%^&*]/g;
+    if(myInput.value.match(specialChars)) { 
+      special = true;
+    } else {
+      console.log("Invalid");
+    }
+  
+    // Validate length
+    if(myInput.value.length >= 6) {
+      length = true;
+    } else {
+      console.log("Invalid");
+    }
+
+    if (lowercase && uppercase && length && special)
+      { 
+        console.log("Validated"); 
+        myInput.style.borderColor = "green";
+      }
+      else {
+        myInput.style.borderColor = 'red';
+      }
+        
   }
 
 
