@@ -82,7 +82,6 @@ class RequestForm extends React.Component {
     this.setCCIRPIR = this.setCCIRPIR.bind(this);
     this.setOneLocation = this.setOneLocation.bind(this);
 
-
   }
 
   componentDidMount = () =>{
@@ -126,10 +125,10 @@ getHigherUnit = () => {
   return higherId;
 }
 
-  //  Creating dropdonws for:- 
-  //  CCIRPIR with ccirId as key and MissionName as value
-  //  CCIR only with column name as key and its vale as label
-  //  PIR Only with column name as key and its vale as label
+//  Creating dropdonws for:-
+//  CCIRPIR with ccirId as key and MissionName as value
+//  CCIR only with column name as key and its vale as label
+//  PIR Only with column name as key and its vale as label
 createCcirPirData = (editId) => {
 
   this.props.fetchCcirPirs().then(() =>{
@@ -428,7 +427,7 @@ renderCCIRPIR = () =>{
   }
 
   return pirlist.map((data, key) => {
-    if(data.label.trim() !== '') {
+    if(data.label && data.label.trim() !== '') {
       return (
         <li key={key}>{data.label}</li>
       );
@@ -476,9 +475,18 @@ render = () => {
     { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
   ];
 
-  const intelRequest4 = [
+  const isStatusDisabled = intelRequest.Abbreviation === 'APR' || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
+  let statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: isStatusDisabled, valFieldID: 'StatusId', required: true };
+  
+  // if(isStatusDisabled) {
+  //   const options = [{ label: intelRequest.Status, value: intelRequest.StatusId }];
+  //   statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', disabled: true, valFieldID: 'StatusId', options };
+  // } 
+  
 
-    { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId, valFieldID: 'StatusId', required: true },
+  const intelRequest4 = [
+    statusElem,
+    // { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId, valFieldID: 'StatusId', required: true },
     { name: translations.OrganicUnit, type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true },
     { name: translations.NextHigherUnit, type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' },
   ];
