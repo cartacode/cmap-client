@@ -14,8 +14,11 @@ class UploadFileBlock extends React.Component {
                 name: '',
                 originalFile: null
             },
+            editMode:false
         },
             this.handleSelectedFile = this.handleSelectedFile.bind(this);
+            // Array To hold file names whose link will be hidden
+            this.arrFilesNotShow = [];
     }
 
 
@@ -29,11 +32,12 @@ class UploadFileBlock extends React.Component {
      * This method is use for handle the selected file by browse.
      */
     handleSelectedFile = (event) => {
-       
         const name = event.target.name;
         const id = event.target.id;
         const file = event.target.files[0];
         const extension = event.target.getAttribute('data-extension');
+
+        this.arrFilesNotShow.push(name);
        
         // Size 5 Mb
         let fileSize = 5242880;
@@ -67,6 +71,26 @@ class UploadFileBlock extends React.Component {
          };
     }
 
+    componentDidUpdate() {
+        const { initstate, editFetched } = this.props;
+
+        if (editFetched) {
+            this.setState({
+                editMode: true
+            });
+            this.props.stopupd();
+            this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
+      
+          }
+
+          const { clearit } = this.props;
+          if (clearit) {
+            this.setState({ content: [] });
+            this.props.stopset();
+          }
+          
+    }
+
     /**
      * This method is use for update the content state.
      * @param {*} name 
@@ -93,18 +117,37 @@ class UploadFileBlock extends React.Component {
 
     renderFields() {
         const isEditRecord = this.props.isImagedRequired;
+        //const {  showFile } = this.props;
         return this.props.fields.map((item, i) => {
             let input;
+            let value = '';
+            let showFileDownload = true;
+            if (item.valFieldID !== undefined && this.state.content[item.valFieldID] !== undefined && this.state.content[item.valFieldID] !== null) {
+                value = this.state.content[item.valFieldID];
+              }
+
+              if(this.arrFilesNotShow.indexOf(item.valFieldID) > -1) {
+               showFileDownload = false;
+              }
+              
             switch (item.fileType) {
                 case 'image':
-                        input = (<input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />);
+                        input = (<div className="main-u">
+                        <input type="file" id={`uploadFile_${i}`} className="hidden_input pull-right" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} accept="image/*" />
+                        <br/>
+                        { value !== '' && showFileDownload ? <a className="name-link" href={value} target="_blank" >Show {item.name} </a> : ''}
+                        </div>);
                     break;
                 case 'file':
-                        input = (<input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"  name={item.valFieldID} data-extension={item.extension} onChange={this.handleSelectedFile.bind(this)}  />);
+                        input = (<div className="main-u">
+                            <input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"  name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />
+                            <br />
+                            {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link" >Download {item.name} </a> : ''}
+                        </div>);
                     break;
             }
             return (
-                <div className="upload-line" key={'elem' + i}>
+                <div key={'elem' + i}>
                     <div>
                         {item.name}
                     </div>

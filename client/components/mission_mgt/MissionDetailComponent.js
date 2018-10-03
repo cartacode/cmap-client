@@ -5,13 +5,15 @@ import UploadFileBlock from '../reusable/UploadFileBlock';
 import FormBlock from '../reusable/FormBlock';
 
 import Loader from '../reusable/Loader';
-
+import { Redirect } from 'react-router-dom'
+import { NotificationManager } from 'react-notifications';
 
 class MissionDetailComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      redirectToSummaryPage: false,
       missionDetail: {},
       missionReportUrl: '',
       editFetched: false,
@@ -46,7 +48,7 @@ class MissionDetailComponent extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
+    const {translations} = this.props;
     const { missionId, missionDetailFiles, missionDetail } = this.state;
     // adding Id field as missionId nede for put request of mission
     const data = {...missionDetail, 'Id': missionId };
@@ -60,13 +62,17 @@ class MissionDetailComponent extends React.Component {
     formData.append('missionFormData', JSON.stringify(data));
     this.setState({loading: true });
     this.props.uploadMissionReport(missionId, formData).then(() => {
-      this.setState({loading: false});
+      NotificationManager.success(translations['UpdatedSuccesfully'], translations['personnel'], 5000);
+      this.setState({
+        loading: false,
+        redirectToSummaryPage: true,
+      });    
     });
 
   }
 
   stopupd = () => {
-    this.setState({editFetched:false});
+    this.setState({ editFetched: false });
   }
 
   handleUploadFileData = (uploadFileData) => {
@@ -91,6 +97,9 @@ class MissionDetailComponent extends React.Component {
     reader.readAsDataURL(file);
   }
 
+  stopset () {
+    this.setState({ clear: false });
+  }
 
 
   render() {
@@ -98,6 +107,7 @@ class MissionDetailComponent extends React.Component {
     const {translations} = this.props;
 
     const {missionDetail} = this.state;
+
 
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
@@ -160,6 +170,9 @@ class MissionDetailComponent extends React.Component {
       { priority:'001', eei:'0000-01', name:'torani farmhouse', threat:'ied', locaton:'gardez, afg', grid:'42swc20821753', pois:'poi-06', limid:'us/noforn', view:'view', edit:'edit', del:'del'},
     ];
 
+    const redirectUrl = '/mission-mgt/mission-summary';
+
+
     return (
       <div>
         <div className="row mission-mgt">
@@ -192,10 +205,10 @@ class MissionDetailComponent extends React.Component {
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
-            <div className="col-md-12 text-center">
+            <div >
               <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
                 initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
-                isImagedRequired={true} />
+                isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
             </div>
           </div>
           <div className="row action-buttons">
@@ -209,8 +222,9 @@ class MissionDetailComponent extends React.Component {
             </div>
           </div>
         </form>
-
+        { this.state.redirectToSummaryPage ? <Redirect to={`${redirectUrl}`} /> : null }
       </div>
+
     );
   }
 }
