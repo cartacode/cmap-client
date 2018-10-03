@@ -760,5 +760,8 @@
   "specialization": "Specialization",
   "Contract Company": "Contract Company",
   "Payload Cap(lbs.)": "Payload Cap(lbs.)",
-  "Armament Cap(lbs.)" : "Armament Cap(lbs.)"
+  "Armament Cap(lbs.)" : "Armament Cap(lbs.)",
+	"DeleteConfirmation": "Confirm you wish to Delete Yes/No ?",
+	"Yes": "Yes",
+	"No": "No"
 }
