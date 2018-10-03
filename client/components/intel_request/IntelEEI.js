@@ -86,7 +86,8 @@ class IntelEEI extends React.Component {
   render() {
 
     const { translations, missionId } = this.props;
-    
+    console.log('mission id '+missionId);
+    console.log('form opened '+this.state.isFormOpened);
   
     // EEI columns
     const missionColumns = [
@@ -148,18 +149,30 @@ class IntelEEI extends React.Component {
         { this.state.isFormOpened ? <EeiForm nearestLocations={this.props.nearestNAIPOI} editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
-        <Loader loading={this.state.loading} />
+          <Loader loading={this.state.loading} />
           <div className="col-md-12">
-            <FullHeaderLine headerText={translations['mission eei\'s']} />
+            {/* <FullHeaderLine headerText={translations['mission eei\'s']} /> */}
+            <div className="header-line">
+              <img src="/assets/img/admin/personnel_1.png" alt=""/>
+              <div className="header-text">
+                {translations['mission eei\'s']} &nbsp;
+                { !this.state.isFormOpened && (missionId === null || missionId === undefined) ?
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  : null }
+              </div>
+              <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+            </div>
+            
           </div>
-          { !this.state.isFormOpened && missionId === null ?
+          
+          {/* { !this.state.isFormOpened && (missionId === null || missionId === undefined) ?
             <div className="col-md-2 filter-line pull-right">
               <div className="add-button">
                 <a href="#intelEEIContainer" className="btn btn-warning ccir-button" onClick={() => this.openEEI('0')}>Add EEI</a>
               </div>
             </div>
             : null
-          }
+          } */}
           <div className="col-md-12">
             <ReactTable
               data={this.state.missionEEI}

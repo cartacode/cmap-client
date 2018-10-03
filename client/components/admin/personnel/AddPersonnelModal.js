@@ -560,14 +560,6 @@ resetForm() {
 }
 
 render() {
-    
-
-  // const { show } = this.props;
-  // // Render nothing if the "show" prop is false
-  // if(!show) {
-  //     return null;
-  //   }
-
 
   let {imagePreviewUrl} = this.state;
   let $imagePreview = '';
@@ -679,14 +671,6 @@ render() {
       <div className="payload-content">
         <Loader loading={this.state.loading} />
         <div className="row personnel" >
-          { <div className="header-line">
-            <img src="/assets/img/admin/personnel_1.png" alt=""/>
-            <div className="header-text">
-              {translations["Personnel Administration"]}              
-
-            </div>
-            <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
-          </div> }
           <div className="personnel-content">
             <div className="col-md-4 image-block">
               {$imagePreview}

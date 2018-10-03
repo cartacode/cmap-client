@@ -41,7 +41,7 @@ class RequestForm extends React.Component {
       intelRequest: {
         IntelRequestID: '',
         MissionId: null,
-        locationcategory: 1,
+        locationcategory: '',
         // AreaOfOperations: '',
         SupportedCommand: session.COCOMID,
         // SupportedUnit: '',
@@ -468,7 +468,7 @@ render = () => {
   const intelRequest3 = [
     // { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
     { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true },
-    { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
+    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }] },
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations.originator, type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
