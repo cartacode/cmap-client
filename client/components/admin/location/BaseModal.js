@@ -434,13 +434,15 @@ class BaseModal extends React.Component {
                {$mpaImage}
              </div>
              <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations['Upload Imagery & Datasheets']} fields={uploadFileFields}
-               data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} />
+               data={this.handleUploadFileData} initstate={this.props.oneLocation} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}
+               clearit={this.state.clear} stopset={this.stopset.bind(this)}
+               editFetched={this.state.editFetched} stopupd={this.stopupd} />
            </div>
          </div>
          <div className = "row personnel">
-           <div className="col-md-12">
+           {/* <div className="col-md-12">
              <Map size="100" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-           </div>
+           </div> */}
          </div>
          <div className="row personnel" >
            <div className="under-location-content">
