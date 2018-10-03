@@ -212,13 +212,6 @@ class DashboardComponent extends React.Component {
       opsPayload = '0';
     }
 
-    console.log('********************************opsPlatform*************' + JSON.stringify(opsPlatform));
-    console.log('********************************opsPayload*************' + JSON.stringify(opsPayload));
-    console.log('********************************opsMission*************' + JSON.stringify(opsMissions));
-    console.log('********************************aisrOperation*************' + JSON.stringify(aisrOperation));
-    console.log('********************************allLatestIntelligence*************' + JSON.stringify(allLatestIntelligence));
-    console.log('********************************allUpcomingMissions*************' + JSON.stringify(allUpcomingMissions));
-
     const actionRequired = [
       { name: 'Intel request #8232-2 awating review', type: 'checkbox' },
       { name: 'Req. Overlap on #9232-2 / #8823-2', type: 'checkbox' },
