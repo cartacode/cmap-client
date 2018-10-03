@@ -40,7 +40,8 @@ body {
   .mission-mgt-save-btn-padding{
     padding-top: 26px !important;
   }
- 
+  
+
 a.submenu:hover {
   color:#ed7d31!important;
 }
@@ -1876,7 +1877,7 @@ button.ccir-button {
   .filter-line {
     padding: 0 17px;
     width: 100%;
-    text-align: right;
+    text-align: center;
 
     .filter-items {
       width: 88%;
@@ -1957,7 +1958,8 @@ button.ccir-button {
       }
 
       .dropdown-menu {
-        margin-left: 25px;
+        margin-left: -200px!important;
+        margin-top:-11px;
       }
     }
   }
@@ -3755,13 +3757,16 @@ one-block {
   maxheight: 400px !important;
   margin: 0px;
   padding: 30px;
-  padding: 0px;
   border: 2px solid;
 
   .close-button {
     text-align: right;
     padding: 20px;
     padding-bottom: 0px;
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    color: #fff;
 
     img {
       border: 1px;
@@ -5194,4 +5199,46 @@ select.form-control {
   border: 1px solid #ed7d31;
   border-right:none;
   overflow-x: hidden!important;
+}
+
+.row.route {
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
+.orders-assets .filter-line .add-button input {
+  height: 26px!important;
+  background-color: transparent!important;
+  padding: 7px;
+  text-align: center;
+  color: white;
+  cursor: default;
+  width: 58px!important;
+
+  position: absolute!important;
+  top: -16px!important;
+  right: 6px!important;
+  font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.orders-assets .header-line {
+overflow: unset!important;
+  margin-bottom: 46px;
+}
+.arrow-font {
+  position: absolute;
+  top: -12px;
+  right: 10px;
+
+}
+
+span.specification-dropdown {
+  position: absolute;
+  top: 20px;
+  right: 7px;
+}
+span.specifi-text {
+  margin-left: -9px;
 }

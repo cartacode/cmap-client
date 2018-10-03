@@ -314,17 +314,18 @@ moveLeft = (row, missionName) => {
                   />
                 </div>
               </div>
-              <div className="row intel-request-table-margin-top">
+           
+            </div>
+          </div>
+       
+        </div>
+        <div className="row route">
                 <div className="col-md-12 text-center">
                   <a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeATOGenerations()} >
                     Route
                   </a>
                 </div>
               </div>
-            </div>
-          </div>
-
-        </div>
     </div> ) : null
     );
   }

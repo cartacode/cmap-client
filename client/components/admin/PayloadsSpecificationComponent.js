@@ -13,6 +13,7 @@ import SargmtiModal from './payloads/SargmtiModal';
 import SigintModal from './payloads/SigintModal';
 import WamiModal from './payloads/WamiModal';
 import Loader from '../reusable/Loader';
+import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 
 class PayloadsSpecificationComponent extends React.Component {
   constructor(props) {
@@ -311,16 +312,23 @@ class PayloadsSpecificationComponent extends React.Component {
 	          <Loader loading={this.state.loading} />
 	          <img src="/assets/img/admin/personnel_1.png" alt=""/>
 	          <div className="header-text">
-	            {translations['Payloads Specifications']} &nbsp;
-	          </div>
+								<div className="col-md-12 filter-line text-center">
+									<span className="specifi-text">{translations.Specifications} &nbsp;</span>
+									{!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
+											<div className="add-button">
+												<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addPayloads} />
+											</div>
+										: null} 
+								</div>
+						</div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 	        </div>
-	       {!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
+	       {/* {!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
 	          <div className="col-md-12 filter-line">
 	            <div className="add-button">
-	              <DropDownButton key = "1" label={translations.Add} id="1" items={addPayloads} />
+	              <DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addPayloads} />
 	            </div>
-	          </div> : null} 
+	          </div> : null}  */}
 	        {this.state.eoirModalOpen ?
 	          <EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 	          : null }

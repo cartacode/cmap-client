@@ -14,6 +14,7 @@ import { NotificationManager, NotificationContainer } from 'react-notifications'
 import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
+import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 
 class MunitionsSpecificationComponent extends React.Component {
 
@@ -298,15 +299,23 @@ class MunitionsSpecificationComponent extends React.Component {
           <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
-              {translations['Munitions Specifications']}
-            </div>
+								<div className="col-md-12 filter-line text-center">
+									<span className="specifi-text">{translations.Specifications} &nbsp;</span>
+                  {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpe ?
+											<div className="add-button">
+												<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={munitions} />
+											</div>
+										: null} 
+								</div>
+						</div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen? <div className="col-md-12 filter-line">
+          
+          {/* {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen? <div className="col-md-12 filter-line">
             <div className="add-button">
-              <DropDownButton key='1' label={translations['Add']} id="1" items={munitions} />
+              <DropDownButtonSpec key='1' label={translations['Add']} id="1" items={munitions} />
             </div>
-          </div> : null}
+          </div> : null} */}
 
           {this.state.missileModalOpen ?
             <MissileModal editId={this.state.editId} munitionType={this.state.munitionType} show={this.state.missileModalOpen} onClose={this.closeMunitionSpecifiction} translations={translations} />
