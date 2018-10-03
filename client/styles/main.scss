@@ -1851,20 +1851,20 @@ a.btn.btn-warning {
 
     img {
       float: left;
-      width: 42%;
+      width: 40%;
       margin-top: 7px;
     }
 
     .header-text {
       float: left;
-      width: 16%;
+      width: 20%;
       text-align: center;
       text-transform: uppercase;
     }
   }
   .filter-line .add-button {
     margin-bottom: 20px;
-    padding: 0px 14px;
+    padding: 0px 5px;
 }
 .orders-assets button.ccir-button {
   margin-bottom: 0px!important;
@@ -1961,8 +1961,8 @@ button.ccir-button {
       }
 
       .dropdown-menu {
-        margin-left: -200px!important;
-        margin-top:-11px;
+        margin-left: -129px!important;
+        margin-top:3px;
       }
     }
   }
@@ -5218,11 +5218,9 @@ select.form-control {
   text-align: center;
   color: white;
   cursor: default;
-  width: 58px!important;
+  width: 70px!important;
 
-  position: absolute!important;
-  top: -16px!important;
-  right: 6px!important;
+  
   font-size: 12px;
     font-weight: normal;
     text-transform: uppercase;
@@ -5232,20 +5230,12 @@ overflow: unset!important;
   margin-bottom: 46px;
 }
 .arrow-font {
-  position: absolute;
-  top: -12px;
-  right: 10px;
-
+  position: relative;
+  top: 0px;
+  right: 12px;
 }
 
-span.specification-dropdown {
-  position: absolute;
-  top: 20px;
-  right: 7px;
-}
-span.specifi-text {
-  margin-left: -9px;
-}
+
 
 /************************ upload file name css ************************/
 a.name-link {
@@ -5260,3 +5250,7 @@ a.name-link {
   padding-bottom: 10px;
 }
 
+.orders-assets .filter-line .add-button {
+  display: inline-block!important;
+  text-align: center!important;
+}
