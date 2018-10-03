@@ -548,7 +548,8 @@ resetForm() {
   this.setState(this.baseState);
   
   if (confirm("Do you want to clear all data from this form?")) {
-    this.setState({clear:true,
+    this.setState({
+      clear:true,
       imagePreviewUrl:"/assets/img/admin/photo_1.png",
       imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png"
     });
@@ -659,7 +660,7 @@ render() {
 
 
   const uploadFileFields = [
-    { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image'},
+    { name: translations['Photo Image'], type: 'file', domID: 'PersonnelPhoto', valFieldID: 'PersonnelPhoto', fileType: 'image' },
     { name: translations['Organization Logo'], type: 'file', domID: 'OrganizationLogo', valFieldID: 'OrganizationLogo', fileType: 'image' },
     { name: translations['DataSheet'], type: 'file', domID: 'Datasheet', valFieldID: 'Datasheet', fileType: 'file' },
   ];
@@ -680,7 +681,7 @@ render() {
             </div>
 
             <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} editFetched = {this.state.editFetched} stopupd = {this.stopupd} ></UploadFileBlock>
+              data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd} ></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >

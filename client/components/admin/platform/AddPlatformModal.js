@@ -503,7 +503,7 @@ class AddPlatformModal extends React.Component {
               </div>
 
                <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
-              data={this.handleUploadFileData}  initstate={this.props.onePlatform} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired}></UploadFileBlock>
+              data={this.handleUploadFileData}  initstate={this.props.onePlatform} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} ></UploadFileBlock>
 
              {/*  <div className="col-md-4 upload-block">
                 <div className="upload-imagery">

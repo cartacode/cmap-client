@@ -62,7 +62,7 @@ class MissionDetailComponent extends React.Component {
     formData.append('missionFormData', JSON.stringify(data));
     this.setState({loading: true });
     this.props.uploadMissionReport(missionId, formData).then(() => {
-      NotificationManager.success(translations['UpdatedSuccesfully'], translations['personnel'], 5000);
+      NotificationManager.success(translations['UpdatedSuccesfully'], translations['MissionData'], 5000);
       this.setState({
         loading: false,
         redirectToSummaryPage: true,
