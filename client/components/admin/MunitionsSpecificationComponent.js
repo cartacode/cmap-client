@@ -40,7 +40,8 @@ class MunitionsSpecificationComponent extends React.Component {
         rocket: 2,
         gun: 3,
       },
-      loading: false
+      loading: false,
+      selectedSpecText: '',
 
     }
   }
@@ -50,32 +51,38 @@ class MunitionsSpecificationComponent extends React.Component {
   }
 
   missileModal = () => {
+    const { translations } = this.props;
     this.setState({
       editId: '0',
       munitionType: this.state.munitionTypes.missile,
       missileModalOpen: true,
       rocketModalOpen: false,
       gunModalOpen: false,
+      selectedSpecText: translations['Missile'],
     });
   }
 
   rocketModal = () => {
+    const { translations } = this.props;
     this.setState({
       editId: '0',
       munitionType: this.state.munitionTypes.rocket,
       missileModalOpen: false,
       rocketModalOpen: true,
       gunModalOpen: false,
+      selectedSpecText: translations['Rocket'],
     });
   }
 
   gunModal = () => {
+    const { translations } = this.props;
     this.setState({
       editId: '0',
       munitionType: this.state.munitionTypes.gun,
       missileModalOpen: false,
       rocketModalOpen: false,
       gunModalOpen: true,
+      selectedSpecText: translations['Guns'],
     });
   }
 
@@ -125,6 +132,7 @@ class MunitionsSpecificationComponent extends React.Component {
       missileModalOpen: false,
       rocketModalOpen: false,
       gunModalOpen: false,
+      selectedSpecText: '',
     });
 
   }
@@ -300,23 +308,19 @@ class MunitionsSpecificationComponent extends React.Component {
             <img src="/assets/img/admin/personnel_1.png" alt="" />
             <div className="header-text">
 								<div className="col-md-12 filter-line text-center">
-									<span className="specifi-text">{translations.Specifications} &nbsp;</span>
+									
                   {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpe ?
-											<div className="add-button">
-												<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={munitions} />
-											</div>
-										: null} 
+											<div>
+                          <span className="specifi-text">{translations.Specifications} &nbsp;</span>
+                          <div className="add-button">
+                            <DropDownButtonSpec key = "1" label={translations.Add} id="1" items={munitions} />
+                          </div>
+                      </div>
+										: <span className="specifi-text">{this.state.selectedSpecText !== '' ? (this.state.selectedSpecText + ' ' + translations.Specifications) : translations.Specifications} &nbsp;</span>} 
 								</div>
 						</div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
           </div>
-          
-          {/* {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen? <div className="col-md-12 filter-line">
-            <div className="add-button">
-              <DropDownButtonSpec key='1' label={translations['Add']} id="1" items={munitions} />
-            </div>
-          </div> : null} */}
-
           {this.state.missileModalOpen ?
             <MissileModal editId={this.state.editId} munitionType={this.state.munitionType} show={this.state.missileModalOpen} onClose={this.closeMunitionSpecifiction} translations={translations} />
             : null

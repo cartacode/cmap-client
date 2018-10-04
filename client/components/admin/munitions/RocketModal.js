@@ -413,13 +413,13 @@ class RocketModal extends React.Component {
         <div className="payload-content">
           <div className="row personnel" >
           <Loader loading={this.state.loading} />
-            <div className="header-line">
+            {/* <div className="header-line">
               <img src="/assets/img/admin/personnel_1.png" alt="" />
               <div className="header-text">
                 {translations["rocket administration"]}
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
-            </div>
+            </div> */}
             <div className="personnel-content">
               <div className="col-md-8 image-block">
                 {$imagePreview}
