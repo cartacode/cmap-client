@@ -55,10 +55,15 @@ class AtoComponent extends React.Component {
   }
 
   missionModalNameModal = (row) => {
-    this.state.row = row;
-    this.setState({
-      modalOpen: !this.state.modalOpen,
-    });
+    if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
+      this.state.row = row;
+      this.setState({
+        modalOpen: !this.state.modalOpen,
+      });
+    }else{
+      alert('Please Select a Platform');
+    }
+
   }
 
 moveLeft = (row, missionName) => {
