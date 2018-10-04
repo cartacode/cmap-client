@@ -94,9 +94,6 @@ class AdminComponent extends React.Component {
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
-    console.log(roles);
-    console.log(roles2);
-    console.log(adminUser);
     let access = roles2.some(v => adminUser.includes(v));
     console.log(access);
     

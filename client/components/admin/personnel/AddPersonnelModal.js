@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-// import UploadBlock from "../../reusable/UploadBlock";
-import ContentBlock from "../../reusable/ContentBlock";
-import { baseUrl } from 'dictionary/network';
-
-// import MissionMgtDropDown from '../../reusable/MissionMgtDropDown';
-// import CustomDatePicker from '../../reusable/CustomDatePicker';
-// import DropDownButton from '../../reusable/DropDownButton';
-// import StatusTable from '../../reusable/StatusTable';
-
+import { connect } from 'react-redux';
+import moment from 'moment';
+import ContentBlock from '../../reusable/ContentBlock';
+import { baseUrl, requestHeaders } from 'dictionary/network';
 import axios from 'axios';
-
 import { uploadFile } from 'actions/file';
 import { addPersonnel, updatePersonnel, fetchPersonnels, fetchPersonnelById } from 'actions/personnel';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
-import {NoticeType} from '../../../dictionary/constants';
+import { NoticeType, DateConsts } from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
-import { requestHeaders } from '../../../dictionary/network';
+
 
 class AddPersonnelModal extends React.Component {
 
   constructor(props) {
     super(props);
+    const currentDate = moment();
+    const start = currentDate.format(DateConsts.DB_DATETIME_FORMAT);
+    const end = currentDate.add(30, 'days').format(DateConsts.DB_DATETIME_FORMAT);
+
     this.state = {
       selectedBranch: '',
       selectedRank: '',
@@ -32,8 +29,8 @@ class AddPersonnelModal extends React.Component {
       editFetched: false,
       editSet: false,
       gPaygrade:'',
-      imagePreviewUrl:"/assets/img/admin/photo_1.png",
-      imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png",
+      imagePreviewUrl: '/assets/img/admin/photo_1.png',
+      imagePreviewUrl2: '/assets/img/admin/primoris_backgr.png',
       personnel: {
         //     PersonnelPhoto: '',
         //     FirstName: '',
@@ -58,8 +55,8 @@ class AddPersonnelModal extends React.Component {
         //     SpecialQuals1: '',
         //     SpecialQuals2: '',
         //     SpecialQuals3: '',
-        //     CurrentAssignmentStart: '',
-        //     CurrentAssignmentEnd: '',
+        CurrentAssignmentStart: start,
+        CurrentAssignmentEnd: end,
         //     DSN: '',
         //     EmailNIPR: '',
         //     EmailSIPR: '',
@@ -84,7 +81,7 @@ class AddPersonnelModal extends React.Component {
   componentDidMount = () => {
     
     let { editId } = this.props;
-    this.setState({ clear: true });
+    // this.setState({ clear: true });
     if(editId !== '0') {
       this.editComponent(editId);
     }
@@ -107,57 +104,57 @@ class AddPersonnelModal extends React.Component {
 
   checkValuedCheckboxes = (roleArray) => {
 
-    if (roleArray.includes("b63ca868-af4b-486f-9540-3d01eca089fe"))   
+    if (roleArray.includes('b63ca868-af4b-486f-9540-3d01eca089fe'))   
     {
       document.getElementById('checkbox0').checked = true;
     }
 
-    if (roleArray.includes("7554b13b-bb2b-4203-a334-5417f5b03650"))   
+    if (roleArray.includes('7554b13b-bb2b-4203-a334-5417f5b03650'))   
     {
       document.getElementById('checkbox1').checked = true;
     }
 
-    if (roleArray.includes("d669b1ed-5e2c-4c27-8d16-60388dffcc2a"))   
+    if (roleArray.includes('d669b1ed-5e2c-4c27-8d16-60388dffcc2a'))   
     {
       document.getElementById('checkbox2').checked = true;
     }
 
-    if (roleArray.includes("6dd5ba55-f445-4a30-8270-fdbc992434af"))   
+    if (roleArray.includes('6dd5ba55-f445-4a30-8270-fdbc992434af'))   
     {
       document.getElementById('checkbox3').checked = true;
     }
 
-    if (roleArray.includes("0425a61c-f00e-40d7-93d4-f811e1891ade"))   
+    if (roleArray.includes('0425a61c-f00e-40d7-93d4-f811e1891ade'))   
     {
       document.getElementById('checkbox4').checked = true;
     }
 
-    if (roleArray.includes("f09c4e3a-eebe-434e-a2a2-b0b44cbcca93"))   
+    if (roleArray.includes('f09c4e3a-eebe-434e-a2a2-b0b44cbcca93'))   
     {
       document.getElementById('checkbox5').checked = true;
     }
 
-    if (roleArray.includes("36c9952b-3f63-468d-9335-3294a91e9c97"))   
+    if (roleArray.includes('36c9952b-3f63-468d-9335-3294a91e9c97'))   
     {
       document.getElementById('checkbox6').checked = true;
     }
 
-    if (roleArray.includes("d3afa700-751d-4f08-b99e-f9a15361c7a1"))   
+    if (roleArray.includes('d3afa700-751d-4f08-b99e-f9a15361c7a1'))   
     {
       document.getElementById('checkbox7').checked = true;
     }
 
-    if (roleArray.includes("7637f5c8-aa0c-4447-b7a9-939aadd07c7a"))   
+    if (roleArray.includes('7637f5c8-aa0c-4447-b7a9-939aadd07c7a'))   
     {
       document.getElementById('checkbox8').checked = true;
     }
 
-    if (roleArray.includes("af036592-2598-4727-bc36-7f71c665f787"))   
+    if (roleArray.includes('af036592-2598-4727-bc36-7f71c665f787'))   
     {
       document.getElementById('checkbox9').checked = true;
     }
 
-    if (roleArray.includes("f5bfb78f-38c6-48f4-8773-59c2543e0805"))   
+    if (roleArray.includes('f5bfb78f-38c6-48f4-8773-59c2543e0805'))   
     {
       document.getElementById('checkbox10').checked = true;
     }
@@ -225,7 +222,7 @@ class AddPersonnelModal extends React.Component {
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
     }, () => {
-      console.log(this.state.personnel);
+      
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
@@ -270,7 +267,7 @@ class AddPersonnelModal extends React.Component {
     if(myInput.value.match(lowerCaseLetters)) { 
      lowercase = true;
     } else {
-      console.log("Invalid");
+      console.log('Invalid');
     }
   
     // Validate capital letters
@@ -278,7 +275,7 @@ class AddPersonnelModal extends React.Component {
     if(myInput.value.match(upperCaseLetters)) { 
       uppercase = true;
     } else {
-      console.log("Invalid");
+      console.log('Invalid');
     }
   
     // Validate numbers
@@ -286,20 +283,20 @@ class AddPersonnelModal extends React.Component {
     if(myInput.value.match(specialChars)) { 
       special = true;
     } else {
-      console.log("Invalid");
+      console.log('Invalid');
     }
   
     // Validate length
     if(myInput.value.length >= 6) {
       length = true;
     } else {
-      console.log("Invalid");
+      console.log('Invalid');
     }
 
     if (lowercase && uppercase && length && special)
       { 
-        console.log("Validated"); 
-        myInput.style.borderColor = "green";
+        console.log('Validated'); 
+        myInput.style.borderColor = 'green';
       }
       else {
         myInput.style.borderColor = 'red';
@@ -349,23 +346,25 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleRoleInformationData = (roleData) => {
+    debugger;
       let roleIDs = [];
       if(roleData.RoleIDs!=undefined) { 
         console.log(roleData.RoleIDs); 
         console.log(roleData); 
         roleData = roleData.RoleIDs;
         for (let i=0; i<roleData.length; i++) {
-          console.log("Value: " + roleData[i]);
+          console.log('Value: ' + roleData[i]);
           roleIDs.push(roleData[i]);
       }  
  
       } 
         else { console.log(roleData); 
           for (var key in roleData) {
-            console.log("Value: " + roleData[key]);
+            console.log('Value: ' + roleData[key]);
             roleIDs.push(roleData[key]);
         } 
         }
+        debugger;
       console.log(roleData);
        
 
@@ -376,7 +375,7 @@ class AddPersonnelModal extends React.Component {
         RoleIDs: roleIDs
       },
     }, () => {
-      console.log("New state in ASYNC callback:22222", this.state.personnel);
+      console.log('New state in ASYNC callback:22222', this.state.personnel);
     });
   }
   
@@ -598,11 +597,11 @@ stopset () {
 resetForm() {
   this.setState(this.baseState);
   
-  if (confirm("Do you want to clear all data from this form?")) {
+  if (confirm('Do you want to clear all data from this form?')) {
     this.setState({
       clear:true,
-      imagePreviewUrl:"/assets/img/admin/photo_1.png",
-      imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png"
+      imagePreviewUrl:'/assets/img/admin/photo_1.png',
+      imagePreviewUrl2:'/assets/img/admin/primoris_backgr.png'
     });
     document.getElementById('personnelform').reset();
   }
@@ -658,11 +657,11 @@ render() {
 
     {name: translations['Middle Initial'], type: 'input', domID: 'MiddleInitial', valFieldID: 'MiddleInitial'},
     {name: translations['Last Name'], type: 'input', domID: 'LastName', valFieldID: 'LastName', required: true },
-    {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: "BranchOfService", valFieldID: 'ServiceBranch'},
-    {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: "Ranks", valFieldID: 'Rank'},
-    {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: "PayGrades", valFieldID: 'PayGrade'},
-    {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: "Countries", valFieldID: 'Nationality', required:true},
-    {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: "Clearance", valFieldID: 'Clearance', required:true},
+    {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: 'BranchOfService', valFieldID: 'ServiceBranch'},
+    {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: 'Ranks', valFieldID: 'Rank'},
+    {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: 'PayGrades', valFieldID: 'PayGrade'},
+    {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: 'Countries', valFieldID: 'Nationality', required:true},
+    {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: 'Clearance', valFieldID: 'Clearance', required:true},
     {name: translations['CAC ID'], type: 'number', domID: 'CACid', valFieldID: 'CACid'},
     {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
     {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
@@ -671,17 +670,17 @@ render() {
   ];
 
   const organisationFields = [
-    {name: translations['Company'], type: 'dropdown', domID: 'dispCompany', ddID: "Companies", valFieldID: 'Company'},
-    {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: "Units/GetUnits", valFieldID: 'AssignedUnit'},
-    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units/GetUnits", valFieldID: 'DeployedUnit'},
-    {name: translations['Duty Position#1'], type: 'dropdown', domID: 'dispDutyPosition1', ddID: "DutyPosition", valFieldID: 'DutyPosition1'},
-    {name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: "MOS", valFieldID: 'MOS1'},
-    {name: translations['Duty Position#2'], type: 'dropdown', domID: 'dispDutyPosition2', ddID: "DutyPosition", valFieldID: 'DutyPosition2'},
-    {name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: "MOS", valFieldID: 'MOS2'},
-    {name: translations['Duty Position#3'], type: 'dropdown', domID: 'dispDutyPosition3', ddID: "DutyPosition", valFieldID: 'DutyPosition3'},
-    {name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: "MOS", valFieldID: 'MOS3'},
-    {name: translations['Special Qualifications']+' 1', type: 'dropdown', domID: 'dispSpecialQuals1', ddID: "SpecQuals", valFieldID: 'SpecialQuals1'},
-    {name: translations['Special Qualifications']+' 2', type: 'dropdown', domID: 'dispSpecialQuals2', ddID: "SpecQuals", valFieldID: 'SpecialQuals2' },
+    {name: translations['Company'], type: 'dropdown', domID: 'dispCompany', ddID: 'Companies', valFieldID: 'Company'},
+    {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: 'Units/GetUnits', valFieldID: 'AssignedUnit'},
+    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: 'Units/GetUnits', valFieldID: 'DeployedUnit'},
+    {name: translations['Duty Position#1'], type: 'dropdown', domID: 'dispDutyPosition1', ddID: 'DutyPosition', valFieldID: 'DutyPosition1'},
+    {name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: 'MOS', valFieldID: 'MOS1'},
+    {name: translations['Duty Position#2'], type: 'dropdown', domID: 'dispDutyPosition2', ddID: 'DutyPosition', valFieldID: 'DutyPosition2'},
+    {name: translations['MOS#2'], type: 'dropdown', domID: 'dispMOS2', ddID: 'MOS', valFieldID: 'MOS2'},
+    {name: translations['Duty Position#3'], type: 'dropdown', domID: 'dispDutyPosition3', ddID: 'DutyPosition', valFieldID: 'DutyPosition3'},
+    {name: translations['MOS#3'], type: 'dropdown', domID: 'dispMOS3', ddID: 'MOS', valFieldID: 'MOS3'},
+    {name: translations['Special Qualifications']+' 1', type: 'dropdown', domID: 'dispSpecialQuals1', ddID: 'SpecQuals', valFieldID: 'SpecialQuals1'},
+    {name: translations['Special Qualifications']+' 2', type: 'dropdown', domID: 'dispSpecialQuals2', ddID: 'SpecQuals', valFieldID: 'SpecialQuals2' },
     {name: translations['Dates of Current Assignment Start'], type: 'date', domID: 'CurrentAssignmentStart',  valFieldID: 'CurrentAssignmentStart'},
     {name: translations['Dates of Current Assignment End'], type: 'date', domID: 'CurrentAssignmentEnd', valFieldID: 'CurrentAssignmentEnd' }
 
@@ -731,13 +730,13 @@ render() {
               {$imagePreview2}
             </div>
 
-            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Upload Imagery & Datasheets"]} fields={uploadFileFields}
+            <UploadFileBlock headerLine="/assets/img/admin/upload_1.png" title={translations['Upload Imagery & Datasheets']} fields={uploadFileFields}
               data={this.handleUploadFileData}  initstate={this.props.onePersonnel} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd} ></UploadFileBlock>
           </div>
         </div>
         <div className="row personnel" >
           <div className="under-payload-content">
-            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]}
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations['General']}
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}  editSet = {this.state.editSet} stopupdset = {this.stopupdset}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title="Organization & Duty" fields={organisationFields}
@@ -746,7 +745,7 @@ render() {
               title="User Roles" fields={roleFields}
               data={this.handleRoleInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>  
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
-              title={translations["Contact Information"]} fields={contactFields}
+              title={translations['Contact Information']} fields={contactFields}
               data={this.handleContactInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           </div>
         </div>

@@ -288,7 +288,7 @@ class ContentBlock extends React.Component {
             } else {
               value = moment(value);
             }
-            // console.log('value date '+ moment(value));
+            
             input = (
               <div>
                 <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate} />
