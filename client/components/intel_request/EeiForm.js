@@ -11,7 +11,7 @@ class EeiForm extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('countyr'+props.ccirCountry);
+
     this.state = {
       editId: '0',
       clear: false,
@@ -43,7 +43,6 @@ class EeiForm extends React.Component {
   componentDidMount = () => {
 
     const { editId } = this.props;
-    this.setState({ clear: true });
     if(editId !== '0') {
       this.editComponent(editId);
     }
@@ -52,9 +51,9 @@ class EeiForm extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { editId, nearestLocations } = this.props;
 
-    // if(editId === '0' && prevProps.editId !== editId) {
-    //   this.setState({ clear: true });
-    // }
+    if(editId === '0' && prevProps.editId !== editId) {
+      this.setState({ clear: true });
+    }
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
     }
@@ -172,7 +171,6 @@ class EeiForm extends React.Component {
 
   render = () => {
 
-    console.log('country ==> '+this.state.intelReqEEI.district);
     const { translations } = this.props;
 
     // FORM fields Array
@@ -209,7 +207,6 @@ class EeiForm extends React.Component {
               <ModalFormBlock fields={eeiFiled1} data={this.handleIntelEei1} initstate ={this.state.intelReqEEI} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.eeiFetched} stopupd = {this.stopUpdate} />
             </div>
             <div className="col-md-4">
-            {this.state.intelReqEEI.district}
               <ModalFormBlock fields={eeiFiled2} data={this.handleIntelEei2} initstate ={this.state.intelReqEEI} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.eeiFetched} stopupd = {this.stopUpdate} />
             </div>
             <div className="col-md-4">
