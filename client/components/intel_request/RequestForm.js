@@ -23,7 +23,7 @@ import { fetchNextHigherUnit } from 'actions/organicorg';
 import { fetchLocations } from 'actions/location';
 
 import uuid from 'uuid/v4';
-
+import { collectionManagerUser } from '../../dictionary/auth';
 
 class RequestForm extends React.Component {
 
@@ -457,6 +457,11 @@ render = () => {
 
   const { intelRequest } = this.state;
 
+  let ses = JSON.parse(localStorage.getItem('session'));
+  let roles = ses.UserRoles;
+  let roles2 = JSON.parse(roles);
+  let access = roles2.some(v => collectionManagerUser.includes(v));
+
   const intelRequest1 = [
     { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
     { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }] },
@@ -561,7 +566,8 @@ render = () => {
 
         {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
-            <div className="col-md-12">
+          { access ?  
+            (<div><div className="col-md-12">
               <FullHeaderLine headerText={translations.collectionValidation} />
             </div>
             <div className="col-md-6">
@@ -569,8 +575,8 @@ render = () => {
             </div>
             <div className="col-md-6">
               <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div>
-
+            </div></div>) : null
+          }
           </div>
           : null
         }
