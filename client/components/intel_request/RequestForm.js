@@ -457,34 +457,32 @@ render = () => {
 
   const { intelRequest } = this.state;
 
-  let ses = JSON.parse(localStorage.getItem('session'));
-  let roles = ses.UserRoles;
-  let roles2 = JSON.parse(roles);
-  let access = roles2.some(v => collectionManagerUser.includes(v));
+  const ses = JSON.parse(localStorage.getItem('session'));
+  const roles = JSON.parse(ses.UserRoles);
+  const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
 
   const intelRequest1 = [
-    { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true },
-    { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }] },
-    { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true },
-    { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true },
-    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }] },
+    { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true, disabled: isCollectionMgr },
+    { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isCollectionMgr },
+    { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true, disabled: isCollectionMgr },
+    { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true, disabled: isCollectionMgr },
+    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }], readOnly: isCollectionMgr },
   ];
 
   const intelRequest2 = [
 
-    { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true },
-    { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true },
-    { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions },
-    { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true },
-    { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true },
+    { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true, disabled: isCollectionMgr },
+    { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true, disabled: isCollectionMgr },
+    { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions, disabled: isCollectionMgr },
+    { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isCollectionMgr },
+    { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isCollectionMgr },
   ];
 
   // Following fields is visible only to Collection manager and also only in case of edit
   const intelRequest3 = [
-    // { name: translations['Asset'], type: 'dropdown', domID: 'AssetId', ddID: 'AssetTypes/GetAssetTypes', valFieldID: 'AssetId', required: true, required: true },
-    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true },
-    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }] },
-    { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true },
+    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true, disabled: isCollectionMgr },
+    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }], disabled: isCollectionMgr },
+    { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true, disabled: isCollectionMgr },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations.originator, type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
     { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
@@ -498,8 +496,7 @@ render = () => {
     const options = [{ label: intelRequest.Status, value: intelRequest.StatusId }];
     // statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', disabled: true, valFieldID: 'StatusId', options };
     statusElem = { name: translations.DispositionStaus, type: 'input', domID: 'dispDispositionStatus', readOnly: true, valFieldID: 'Status' };
-  } 
-  
+  }
 
   const intelRequest4 = [
     statusElem,
@@ -566,17 +563,17 @@ render = () => {
 
         {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
-          { access ?  
-            (<div><div className="col-md-12">
-              <FullHeaderLine headerText={translations.collectionValidation} />
-            </div>
-            <div className="col-md-6">
-              <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div>
-            <div className="col-md-6">
-              <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
-            </div></div>) : null
-          }
+            { isCollectionMgr ?
+              (<div><div className="col-md-12">
+                <FullHeaderLine headerText={translations.collectionValidation} />
+              </div>
+              <div className="col-md-6">
+                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+              </div>
+              <div className="col-md-6">
+                <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+              </div></div>) : null
+            }
           </div>
           : null
         }
