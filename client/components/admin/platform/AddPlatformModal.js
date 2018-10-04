@@ -6,9 +6,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
-import {NoticeType} from '../../../dictionary/constants';
+import {NoticeType, DateConsts} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
-
+import moment from 'moment';
 
 
 
@@ -16,6 +16,7 @@ class AddPlatformModal extends React.Component {
 
   constructor(props) {
     super(props);
+    const current = moment().format(DateConsts.DB_DATETIME_FORMAT);
     this.state = {
       file: '',
       clear:false,
@@ -41,7 +42,7 @@ class AddPlatformModal extends React.Component {
         //  PlatformContractProgram: '',
         //  PlatformCost: '',
         //  PlatformCostNotes: '',
-        //  PlatformIOCDate: '',
+        PlatformIOCDate: current,
         //  // PlatformGroundStation: '',
         //  PlatformLength: '',
         //  PlatformWingspan: '',
