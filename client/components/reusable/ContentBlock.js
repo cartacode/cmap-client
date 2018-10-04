@@ -11,8 +11,12 @@ class ContentBlock extends React.Component {
     super(props);
     this.state = {
       content: [],
+      editMode: false,
+
     };
     this.handleChange = this.handleChange.bind(this);
+    // Array To hold file names whose link will be hidden
+    this.arrFilesNotShow = [];
   }
 
   componentWillMount() {
@@ -135,6 +139,8 @@ class ContentBlock extends React.Component {
       const extension = event.target.getAttribute('data-extension');
       let fileSize = 5242880;   // 5Mb
       let fileSizeToDisplay = '5 MB';
+      this.arrFilesNotShow.push(name);
+
 
       // check for extension of file if extension mentioned
       if(extension !== undefined && extension !== '' && extension !== null) {
@@ -187,6 +193,10 @@ class ContentBlock extends React.Component {
         // if(item.valFieldID !== undefined && this.props.initstate[item.valFieldID] !== undefined && this.props.initstate[item.valFieldID] !== null){
         //   value = this.props.initstate[item.valFieldID];
         // }
+        let showFileDownload = true;
+        if(this.arrFilesNotShow.indexOf(item.valFieldID) > -1) {
+          showFileDownload = false;
+        }
 
         if (item.valFieldID !== undefined && this.state.content[item.valFieldID] !== undefined && this.state.content[item.valFieldID] !== null) {
           value = this.state.content[item.valFieldID];
@@ -315,11 +325,19 @@ class ContentBlock extends React.Component {
               );
               break;  
           case 'file':
-          if(item.required)
-          {
-            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} required/>);
-          }else
-            input = (<input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} />);
+            if(item.required) {
+              input = (<div>
+                <input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} required/>
+                <br />
+                {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link-content-block" >Download {item.name} </a> : ''}
+              </div>);
+            } else {
+              input = (<div >
+                <input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} />
+                <br />
+                {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link-content-block" >Download {item.name} </a> : ''}
+              </div>);
+            }
             break;
 
         }
