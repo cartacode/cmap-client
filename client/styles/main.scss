@@ -48,7 +48,7 @@ a.submenu:hover {
 .sub-list a:hover {
  color:#ed7d31!important;
 }
-button:hover {
+.navbar button:hover {
   color: #ed7d31!important;
 }
 
@@ -5284,8 +5284,26 @@ a.name-link-content-block{
 
 /****************************************************************************************/
 
-
 .orders-assets .filter-line .add-button {
   display: inline-block!important;
   text-align: center!important;
+}
+
+/*********************************************************** USER ROLES personal checkbox ***************************/
+#personnelform label {
+  position: absolute;
+  right: 0px;
+  top: -18px;
+}
+
+.btn-warning.active, .btn-warning:active, .open > .dropdown-toggle.btn-warning {
+  color: #fff;
+   background-color: transparent!important;
+   border: 1px solid #687882!important; 
+}
+btn-warning.focus, .btn-warning:focus {
+  color: #fff;
+  background-color:  transparent!important;
+  border: 1px solid #687882!important; 
+  outline: 0px auto -webkit-focus-ring-color!important; 
 }
