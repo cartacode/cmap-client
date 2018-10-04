@@ -155,7 +155,8 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => ( 
           <div>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp;
-          <span><a href="Javascript: void('0');" className="hand-cursor"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
+          {/* <span><a href="Javascript: void('0');" className="hand-cursor"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span> */}
           </div>
           ),
       },
@@ -207,16 +208,16 @@ class CollectionManagerComponent extends React.Component {
         maxWidth: 100,
         Cell: row => <div className = 'tooltip-custom'>
           <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
-          <span><a href="Javascript: void('0');" className="hand-cursor" title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
         </div>,
       },
-      {
-        Header: 'Asset',
-        accessor: 'Asset',
-      },
+      // {
+      //   Header: 'Asset',
+      //   accessor: 'Asset',
+      // },
       {
         Header: 'Priority',
-        accessor: 'PriorityIntelRequirement',
+        accessor: 'Priority',
       },
      /*  {
         Header: "Status",

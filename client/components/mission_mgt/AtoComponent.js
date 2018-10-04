@@ -4,7 +4,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, NoticeType, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
@@ -22,7 +22,7 @@ class AtoComponent extends React.Component {
       tab: MissionConsts.TABS.ATO,
       radioUnitId: '',
       modalOpen: false,
-      row: '',
+      row: {},
     };
   }
 
@@ -61,7 +61,8 @@ class AtoComponent extends React.Component {
         modalOpen: !this.state.modalOpen,
       });
     }else{
-      alert('Please Select a Platform');
+      showAlert('Please Select a Platform');
+      // alert('Please Select a Platform');
     }
 
   }
@@ -83,7 +84,8 @@ moveLeft = (row, missionName) => {
     });
 
   } else {
-    alert('Please Select a Platform');
+    showAlert('Please Select a Platform');
+    // alert('Please Select a Platform');
   }
 }
 
@@ -150,7 +152,7 @@ moveLeft = (row, missionName) => {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div className="tooltip-custom">
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span Style={'cursor: pointer;'} >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {

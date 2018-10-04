@@ -164,7 +164,7 @@ class ModalFormBlock extends React.Component {
 
         case 'date':
           if(value === '') {
-            value = new Date();
+            value = moment();
           }else {
             value = moment(value);
           }

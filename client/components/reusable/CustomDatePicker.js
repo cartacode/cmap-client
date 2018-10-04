@@ -80,6 +80,10 @@ class CustomDatePicker extends React.Component {
       };
     }
 
+    componentWillMount = () => {
+      this.onChange(moment(this.props.defaultValue, DBFormat));
+    }
+
     componentDidUpdate = () => {
       const defaultValue = moment(this.props.defaultValue, DBFormat);
       const { value } = this.state;

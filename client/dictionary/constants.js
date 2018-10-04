@@ -9,8 +9,8 @@ export const NoticeType = {
 
 export const DateConsts = {
   DATE_FORMAT: 'M-D-YY',
-  TIME_FORMAT: 'H:m A',
-  DATETIME_FORMAT: 'M-D-YY H:m A',
+  TIME_FORMAT: 'h:mm A',
+  DATETIME_FORMAT: 'M-D-YY h:mm A',
   DB_DATETIME_FORMAT: 'YYYY-MM-DDTHH:mm:ss',
   DB_DATE_FORMAT: 'YYYY-MM-DD',
   DB_TIME_FORMAT: 'HH:mm:ss',

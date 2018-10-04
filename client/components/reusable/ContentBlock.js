@@ -4,6 +4,7 @@ import Dropdown from '../reusable/Dropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import { InputAttributes } from '../../dictionary/constants';
 import moment from 'moment';
+import { showAlert } from '../../util/helpers';
 
 class ContentBlock extends React.Component {
 
@@ -43,14 +44,14 @@ class ContentBlock extends React.Component {
     if (editFetched) {
       this.props.stopupd();
       console.log(this.state.content);
-     // console.log('inint state '+ JSON.stringify(initstate));
+      // console.log('inint state '+ JSON.stringify(initstate));
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
     }
 
     if (editSet) {
       this.props.stopupdset();
-     // console.log('inint state '+ JSON.stringify(initstate));
+      // console.log('inint state '+ JSON.stringify(initstate));
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
     }
@@ -63,25 +64,25 @@ class ContentBlock extends React.Component {
   }
 
   handleChange = (e) => {
-    
+
     let { name, value, id } = e.target;
-    
-    let regex = e.target.getAttribute('data-regex');
-    let regexType = e.target.getAttribute('data-regex-type')
+
+    const regex = e.target.getAttribute('data-regex');
+    const regexType = e.target.getAttribute('data-regex-type');
     let bool = true;
-    
-    if(regex !== undefined && regex !== '' && regex !== null){
+
+    if(regex !== undefined && regex !== '' && regex !== null) {
       // Regular expression for field
-      let regexValue = new RegExp(regex);
-      
+      const regexValue = new RegExp(regex);
+
       bool = regexValue.test(value);
-      if(!bool){
+      if(!bool) {
         document.getElementById(id).value = '';
-        document.getElementById(id).placeholder = 'Please Select Only '+regexType+' Value';
+        document.getElementById(id).placeholder = 'Please Select Only ' + regexType + ' Value';
         value = '';
       }
     }
-    
+
     this.updateContent(name, value);
 
   }
@@ -102,7 +103,7 @@ class ContentBlock extends React.Component {
     // }
     // this.updateContent(name, parameterValue);
     this.updateContent(name, checked);
-    
+
   }
 
   handleChangedCheck = (e) => {
@@ -116,7 +117,7 @@ class ContentBlock extends React.Component {
     // }
     // this.updateContent(name, parameterValue);
     this.updateContent(name, value);
-    
+
   }
 
   handleDropdownSelectedData = (dropdownData, name) => {
@@ -124,9 +125,8 @@ class ContentBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
-    
-    if(changeDate !== null)
-      this.updateContent(name, changeDate);
+
+    if(changeDate !== null) {this.updateContent(name, changeDate);}
   }
 
   /**
@@ -137,31 +137,27 @@ class ContentBlock extends React.Component {
       const id = event.target.id;
       const file = event.target.files[0];
       const extension = event.target.getAttribute('data-extension');
-      let fileSize = 5242880;   // 5Mb
+      let fileSize = 5242880; // 5Mb
       let fileSizeToDisplay = '5 MB';
       this.arrFilesNotShow.push(name);
 
-
       // check for extension of file if extension mentioned
       if(extension !== undefined && extension !== '' && extension !== null) {
-        if(file.name.split('.').pop() !== extension){
-            alert('Select a valid '+ extension+ ' File ');
-            document.getElementById(id).value= null;
-            return;
-        }else{
-          if(extension === 'kml')
-            {
-              // Set Size 2Mb
-              fileSize = 2097152;
-              fileSizeToDisplay = '2 MB';
-            }
-
+        if(file.name.split('.').pop() !== extension) {
+          showAlert('Select a valid ' + extension + ' File ');
+          document.getElementById(id).value = null;
+          return;
         }
-    }
+        if(extension === 'kml') {
+          // Set Size 2Mb
+          fileSize = 2097152;
+          fileSizeToDisplay = '2 MB';
+        }
 
+      }
 
       if(file.size > fileSize) {
-        alert('File size should be less than '+ fileSizeToDisplay);
+        showAlert('File size should be less than ' + fileSizeToDisplay);
         document.getElementById(id).value = null;
         this.updateContent(name, new File([''], ''));
       }else {
@@ -210,7 +206,7 @@ class ContentBlock extends React.Component {
         switch (item.type) {
           case 'input':
             let maxlength = InputAttributes.MAX_LENGTH;
-           
+
             if(item.maxlength) {
               maxlength = item.maxlength;
             }
@@ -218,12 +214,12 @@ class ContentBlock extends React.Component {
               if (item.validationIcon) {
                 input = (<div className="input-group"><input type="text" className="form-control" value={value} data-regex={item.regex} data-regex-type={item.regexType} id={item.domID} name={item.valFieldID} onChange={this.handleChange} required maxLength={maxlength}/><span className="input-group-addon-validation-icon"> <img id="validationIcon" src="" /></span> </div>);
               } else {
-                input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType}  id={item.domID} onChange={this.handleChange} maxLength={maxlength} required />);
+                input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType} id={item.domID} onChange={this.handleChange} maxLength={maxlength} required />);
               }
             } else {
-              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType}  id={item.domID} onChange={this.handleChange} maxLength={maxlength} />);
+              input = (<input type="text" className="form-control" value={value} name={item.valFieldID} data-regex={item.regex} data-regex-type={item.regexType} id={item.domID} onChange={this.handleChange} maxLength={maxlength} />);
             }
-           
+
             break;
 
           case 'textarea':
@@ -252,7 +248,7 @@ class ContentBlock extends React.Component {
             } else {
               input = (<input type="password" className="form-control" value={value} name={item.valFieldID} onChange={this.handleChange} />);
             }
-            break;  
+            break;
 
           case 'number':
             let minValue = 0;
@@ -288,7 +284,7 @@ class ContentBlock extends React.Component {
 
           case 'date':
             if (value === '') {
-              value = new Date();
+              value = moment();
             } else {
               value = moment(value);
             }
@@ -300,30 +296,29 @@ class ContentBlock extends React.Component {
             );
             break;
           case 'checkbox':
-          let checkBoxValue = value;
-          // value of checkBoxes comes as String for few checkBox Variables AND Boolean for some checkBox variables
-          if(value !== undefined && value !== '' && value !== null && (value === "True" || value === "true" || value === true)){
-            checkBoxValue = true;
-          }
-          else{
-            checkBoxValue = false;
-          }
-            input = (      
+            let checkBoxValue = value;
+            // value of checkBoxes comes as String for few checkBox Variables AND Boolean for some checkBox variables
+            if(value !== undefined && value !== '' && value !== null && (value === 'True' || value === 'true' || value === true)) {
+              checkBoxValue = true;
+            } else{
+              checkBoxValue = false;
+            }
+            input = (
               <div>
-                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck}   checked={checkBoxValue}/>
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangeCheck} checked={checkBoxValue}/>
                 <label htmlFor={`checkbox${i}`}><span /></label>
               </div>
             );
             break;
-            case 'check':
-            
-              input = (      
-                <div>
-                  <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangedCheck}   value={item.domValue}/>
-                  <label htmlFor={`checkbox${i}`}><span /></label>
-                </div>
-              );
-              break;  
+          case 'check':
+
+            input = (
+              <div>
+                <input type="checkbox" id={`checkbox${i}`} name={item.valFieldID} onChange={this.handleChangedCheck} value={item.domValue}/>
+                <label htmlFor={`checkbox${i}`}><span /></label>
+              </div>
+            );
+            break;
           case 'file':
             if(item.required) {
               input = (<div>

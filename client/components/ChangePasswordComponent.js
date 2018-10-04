@@ -6,6 +6,7 @@ import FullHeaderLine from './reusable/FullHeaderLine';
 import ContentBlock from './reusable/ContentBlock';
 import ContentFull from './reusable/ContentFull';
 import { changePassword } from 'actions/auth';
+import { showAlert } from '../util/helpers';
 
 class ChangePasswordComponent extends React.Component {
 
@@ -50,7 +51,7 @@ class ChangePasswordComponent extends React.Component {
         // Stop Loader
         // this.setState({loading:false});
         // this.props.onClose(NoticeType.ADD);
-        alert("Password Changed");
+        showAlert("Password Changed");
       });
 
   }

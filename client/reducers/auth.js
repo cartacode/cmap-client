@@ -2,6 +2,7 @@ import { ACCOUNT__LOGIN, ACCOUNT__LOGOUT } from 'dictionary/action';
 import React from 'react';
 import initialState from 'store/initialState';
 import { Redirect } from 'react-router-dom';
+import { showAlert } from '../util/helpers';
 
 export default function auth(state = initialState.auth, { payload, type }) {
   switch (type) {
@@ -19,7 +20,7 @@ export default function auth(state = initialState.auth, { payload, type }) {
         userRoles: payload.data.UserRoles
       };
       case ACCOUNT__LOGIN.FAILURE:
-      alert('Incorrect Password')
+      showAlert('Incorrect Password')
       return {
         ...state,
         authenticated:false,

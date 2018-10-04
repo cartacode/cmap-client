@@ -4,7 +4,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, formatDateTime, getIntelStatusColor } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelStatusColor, showAlert } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
@@ -45,7 +45,7 @@ class PedTaskingComponent extends React.Component {
        this.timeLine.onFind();
      });
    } else {
-     alert('Please Select Ped Team.');
+     showAlert('Please Select Ped Team.');
    }
  }
   
@@ -65,7 +65,7 @@ class PedTaskingComponent extends React.Component {
         this.timeLine.onFind();
       });
     } else {
-      alert('Please Select Ped Team.');
+      showAlert('Please Select Ped Team.');
     }
   };
 

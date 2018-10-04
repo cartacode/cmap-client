@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Dropdown from "../reusable/Dropdown";
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import {InputAttributes} from '../../dictionary/constants';
+import { showAlert } from '../../util/helpers';
 
 
 class ContentFull extends React.Component {
@@ -92,7 +93,7 @@ class ContentFull extends React.Component {
       const id = event.target.id;
       const file = event.target.files[0];
       if(file.size > 5242880){
-        alert("File size should be less than 5 MB.");
+        showAlert("File size should be less than 5 MB.");
         document.getElementById(id).value= null;
         this.updateContent(name, new File([""], ""));
       }else {

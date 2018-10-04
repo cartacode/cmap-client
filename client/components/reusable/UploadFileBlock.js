@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { showAlert } from '../../util/helpers';
 
 /**
  * This is common reusable component for "Upload Imagery & Datasheets" section.
@@ -46,7 +47,7 @@ class UploadFileBlock extends React.Component {
         // check extension of file if extension mentioned
         if(extension !== undefined && extension !== '' && extension !== null) {
             if(file.name.split('.').pop() !== extension){
-                alert('Select a valid '+ extension+ ' File ');
+                showAlert('Select a valid '+ extension+ ' File ');
                 document.getElementById(id).value= null;
                 return;
             }else{
@@ -61,7 +62,7 @@ class UploadFileBlock extends React.Component {
 
         }
         if(file.size > fileSize){
-            alert('File size should be less than '+fileSizeToDisplay);
+            showAlert('File size should be less than '+fileSizeToDisplay);
             document.getElementById(id).value= null;
             if(this.props.isImagedRequired){
                 this.updateContent(name, new File([""], ""));

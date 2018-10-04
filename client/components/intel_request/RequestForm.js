@@ -11,7 +11,7 @@ import { viewerIdentifiers } from 'map/viewer';
 
 import 'react-table/react-table.css';
 import { NotificationManager } from 'react-notifications';
-import { NoticeType } from 'dictionary/constants';
+import { NoticeType, IntelConstants } from 'dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
@@ -23,6 +23,7 @@ import { fetchNextHigherUnit } from 'actions/organicorg';
 import { fetchLocations } from 'actions/location';
 
 import uuid from 'uuid/v4';
+
 
 class RequestForm extends React.Component {
 
@@ -50,10 +51,10 @@ class RequestForm extends React.Component {
         // NamedOperation: '',
         // MissionType: '',
         // SubMissionType: '',
-        ActiveDateTimeStart: new Date(),
+        // ActiveDateTimeStart: new Date(),
         // ActiveDateTimeEnd: '',
-        BestCollectionTime: new Date(),
-        LatestTimeIntelValue: new Date(),
+        // BestCollectionTime: new Date(),
+        // LatestTimeIntelValue: new Date(),
         // PriorityIntelRequirement: '',
         // SpecialInstructions: '',
         // PrimaryPayload: '',
@@ -485,7 +486,7 @@ render = () => {
     { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
   ];
 
-  const isStatusDisabled = intelRequest.Abbreviation === 'APR' || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
+  const isStatusDisabled = intelRequest.Abbreviation === IntelConstants.STATUS.APR.abbreviation || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
   let statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: isStatusDisabled, valFieldID: 'StatusId', required: true };
   
   if(isStatusDisabled) {

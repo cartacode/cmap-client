@@ -9,6 +9,7 @@ import { fetchUnitById } from 'actions/organicorg.js'
 import { addOraganicOrg, updateUnit } from 'actions/organicorg';
 import { addOraganicPersonnel } from 'actions/organicpersonnel';
 import ContentFull from './ContentFull';
+import { showAlert } from '../../util/helpers';
 
 class Accordion extends React.Component {
 
@@ -415,12 +416,12 @@ class Accordion extends React.Component {
     if (editId !== undefined && editId !== '0') {
         addUnit.id = editId;
         this.props.updateUnit(editId, addUnit);
-        alert("Org Added");
+        showAlert("Org Added");
     }
     else {
       addUnit.CommandRelationship = '1';
     this.props.addOraganicOrg(addUnit).then( () => {
-     alert("Org Added");
+      showAlert("Org Added");
      this.setState({clear:true});
     });
   }

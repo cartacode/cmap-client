@@ -18,6 +18,7 @@ import { addRegister } from 'actions/auth';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import {NoticeType} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
+import { showAlert } from '../../../util/helpers';
 
 class Register extends React.Component {
 
@@ -364,7 +365,7 @@ class Register extends React.Component {
         // Stop Loader
         this.setState({loading:false});
         // this.props.onClose(NoticeType.ADD);
-        alert("User Registered");
+        showAlert("User Registered");
       });
 
   }

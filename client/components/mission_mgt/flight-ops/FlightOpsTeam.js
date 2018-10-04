@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
 import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -46,7 +46,7 @@ class FlightOpsTeam extends React.Component {
         this.timeLine.onFind();
       });
     } else {
-      alert('Please Select Team');
+      showAlert('Please Select Team');
     }
   }
 
@@ -58,7 +58,7 @@ class FlightOpsTeam extends React.Component {
     if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
       const data = {
         'Id': missionId,
-        'IntelReqID': IntelReqID,
+        IntelReqID,
         'CrewTeamID': null,
         'Type': 'Crew',
       };
@@ -67,7 +67,7 @@ class FlightOpsTeam extends React.Component {
         this.timeLine.onFind();
       });
     } else {
-      alert('Please Select Team');
+      showAlert('Please Select Team');
     }
   }
 

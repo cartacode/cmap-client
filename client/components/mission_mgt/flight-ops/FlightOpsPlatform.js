@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
 import { flightOpsAtoPlatform, flightOpsPlatforms, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -47,7 +47,7 @@ class FlightOpsPlatform extends React.Component {
         this.timeLine.onFind();
       });
     } else {
-      alert('Please Select Platform');
+      showAlert('Please Select Platform');
     }
   }
 
@@ -60,7 +60,7 @@ class FlightOpsPlatform extends React.Component {
     if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
       const data = {
         'Id': missionId,
-        'IntelReqID': IntelReqID,
+        IntelReqID,
         'PlatformInventoryID': null,
         'OwningUnit': unitId,
         'Type': 'Platform',
@@ -70,7 +70,7 @@ class FlightOpsPlatform extends React.Component {
         this.timeLine.onFind();
       });
     } else {
-      alert('Please Select Platform');
+      showAlert('Please Select Platform');
     }
   
   }
