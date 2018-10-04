@@ -563,9 +563,6 @@ render = () => {
             <div className="col-md-12">
               <FullHeaderLine headerText={translations.collectionValidation} />
             </div>
-            {/* <div className="col-md-4">
-                <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} stopupd={this.stopUpdate} /> }
-              </div> */}
             <div className="col-md-6">
               <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
             </div>
@@ -577,7 +574,7 @@ render = () => {
           : null
         }
 
-        {this.state.intelRequest.MissionId === null ?
+        { !isStatusDisabled ?
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
