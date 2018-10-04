@@ -23,10 +23,9 @@ class ModalFormBlock extends React.Component {
   }
     
   componentDidUpdate() {
-        
-    const { content } = this.state;
-    const { initstate, editId } = this.props;
-    const { editFetched } = this.props;
+    
+    const { initstate, editFetched } = this.props;
+    
         
     if (editFetched)
     {
@@ -103,7 +102,7 @@ class ModalFormBlock extends React.Component {
               value = this.state.content[item.valFieldID];
             }
             // console.log('value of ' +item.valFieldID+ ' is => ' + this.props.initstate[item.valFieldID]+' final  ' + value);
-            //  console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
+             console.log('value of ' +item.valFieldID+ ' is => ' + this.state.content[item.valFieldID]+' final  '+ value);
             // if(value === null || value === 'undefined') {
             //     value = 'NA';
             // }
@@ -158,17 +157,16 @@ class ModalFormBlock extends React.Component {
                   req = true;
                 }
 
-                if(item.disabled){
+                if(item.disabled) {
                   disabled = true;
                 }
                 
                 // if(value === '') {
                 //   value = 11;
                 // }
-                 input = ( 
-                    <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
-                
-                 );
+                input = (
+                  <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
+                );
                 break;
     
               case 'date':
@@ -220,6 +218,8 @@ class ModalFormBlock extends React.Component {
 
 ModalFormBlock.propTypes = {
   children: PropTypes.element,
+  editFetched: PropTypes.bool,
+  initstate: PropTypes.any,
 
 };
 

@@ -144,7 +144,7 @@ class IntelEEI extends React.Component {
     return (
       <div id="intelEEIContainer">
 
-        { this.state.isFormOpened ? <EeiForm nearestLocations={this.props.nearestNAIPOI} editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
+        { this.state.isFormOpened ? <EeiForm nearestLocations={this.props.nearestNAIPOI} ccirCountry={this.props.ccirCountry} editId={this.state.editId} intelId={this.props.intelId} onClose={this.closeEEI} /> : null }
 
         <div className="row intel-request">
           <Loader loading={this.state.loading} />
@@ -155,7 +155,7 @@ class IntelEEI extends React.Component {
               <div className="header-text">
                 {translations['mission eei\'s']} &nbsp;
                 { !this.state.isFormOpened && (missionId === null || missionId === undefined) ?
-                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openEEI('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                   : null }
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -189,6 +189,7 @@ class IntelEEI extends React.Component {
 }
 
 IntelEEI.propTypes = {
+  ccirCountry: PropTypes.string,
   editId: PropTypes.string,
   eeis: PropTypes.array,
   intelId: PropTypes.string,

@@ -33,6 +33,8 @@ class RequestForm extends React.Component {
 
     this.state = {
       firstCcir: '',
+      ccirCountry: '',
+      ccirPirMap: {},
       updatedLocation: '',
       toRedirect: false,
       editFetched: false,
@@ -134,6 +136,7 @@ createCcirPirData = (editId) => {
   this.props.fetchCcirPirs().then(() =>{
     const { allCcirPirs } = this.props;
     localStorage.setItem('KMLdata', JSON.stringify(allCcirPirs));
+    
     // array for ccirpir drodponow
     const ccirPirOptions = [{ 'label': '--Select Item--', 'value': '' }];
 
@@ -142,12 +145,17 @@ createCcirPirData = (editId) => {
 
     // map for ccir dropdonw only, to fetch ccir by ccirpirId
     const ccirsOpts = {};
+
+    // map contains all ccirPirObjects by ccirpirid
+    const ccirPirMap = {};
     allCcirPirs.map(item => {
       let val = item.CCIRPIRId;
       if(typeof val === 'string') {
         val = val.trim();
       }
       ccirPirOptions.push({ 'label': item.MissionName, 'value': val });
+
+      ccirPirMap[item.CCIRPIRId] = item;
 
       // pir options for drodown for given ccirid
       const pirOptions = [
@@ -173,6 +181,7 @@ createCcirPirData = (editId) => {
       ccirPirOptions,
       pirs,
       ccirsOpts,
+      ccirPirMap,
     }, () => {
       // Populate ciirpir dropodnw with options
       this.updateCCIROptions(ccirPirOptions, '');
@@ -187,6 +196,7 @@ editComponent = (editId) => {
   if(editId !== undefined && editId !== '') {
     this.props.fetchIntelRequestById(editId).then(()=> {
       const { oneIntelRequest } = this.props;
+      const selectedCCIR = this.state.ccirPirMap[oneIntelRequest.NamedOperation];
       this.setState(
         {
           intelRequest: {
@@ -194,7 +204,9 @@ editComponent = (editId) => {
             NextHigherUnitId: oneIntelRequest.NextHigherUnitId === null ? this.getHigherUnit() : oneIntelRequest.NextHigherUnitId,
           },
           editFetched: true,
-          firstCcir: this.state.ccirsOpts[oneIntelRequest.NamedOperation][0].label,
+          // firstCcir: this.state.ccirsOpts[oneIntelRequest.NamedOperation][0].label,
+          firstCcir: selectedCCIR.Description1,
+          ccirCountry: selectedCCIR.CountryId,
         });
       this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
       this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
@@ -351,8 +363,6 @@ setOneLocation = (location, currentLatLong) =>{
 }
 
 resetForm() {
-  // this.setState(this.baseState);
-
   if (confirm('Do you want to clear all data from this form?')) {
     this.setState({ clear: true });
     document.getElementById('personnelform').reset();
@@ -478,10 +488,11 @@ render = () => {
   const isStatusDisabled = intelRequest.Abbreviation === 'APR' || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
   let statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: isStatusDisabled, valFieldID: 'StatusId', required: true };
   
-  // if(isStatusDisabled) {
-  //   const options = [{ label: intelRequest.Status, value: intelRequest.StatusId }];
-  //   statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', disabled: true, valFieldID: 'StatusId', options };
-  // } 
+  if(isStatusDisabled) {
+    const options = [{ label: intelRequest.Status, value: intelRequest.StatusId }];
+    // statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', disabled: true, valFieldID: 'StatusId', options };
+    statusElem = { name: translations.DispositionStaus, type: 'input', domID: 'dispDispositionStatus', readOnly: true, valFieldID: 'Status' };
+  } 
   
 
   const intelRequest4 = [
@@ -589,7 +600,7 @@ render = () => {
       </form>
 
       { (this.state.intelRequest.IntelRequestID !== '') ?
-        <IntelEEI nearestNAIPOI={this.state.updatedLocation} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        <IntelEEI nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
 
       {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null }

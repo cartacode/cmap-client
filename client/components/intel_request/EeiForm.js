@@ -11,7 +11,7 @@ class EeiForm extends React.Component {
 
   constructor(props) {
     super(props);
-
+    console.log('countyr'+props.ccirCountry);
     this.state = {
       editId: '0',
       clear: false,
@@ -23,7 +23,7 @@ class EeiForm extends React.Component {
         // targetNum: '',
         // threatGroupID: '',
         // location: '',
-        // district: '',
+        district: props.ccirCountry,
         // gridCoordinates: '',
         // LIMIDS_Req: '',
         // POI1_ID: '',
@@ -44,31 +44,23 @@ class EeiForm extends React.Component {
 
     const { editId } = this.props;
     this.setState({ clear: true });
-    console.log('editId of eei did mount' + editId);
     if(editId !== '0') {
       this.editComponent(editId);
     }
-    // this.setNAIPOI(this.props.nearestNAIPOI);
-
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { editId, nearestLocations } = this.props;
 
-    console.log('editId of eei did update' + editId);
+    // if(editId === '0' && prevProps.editId !== editId) {
+    //   this.setState({ clear: true });
+    // }
     if(editId !== '0' && prevProps.editId !== editId) {
       this.editComponent(editId);
-      //
-    }
-
-    if(editId === '0' && prevProps.editId !== editId) {
-      this.setState({ clear: true });
-
     }
     if(nearestLocations.uid !== prevProps.nearestLocations.uid) {
       this.setNAIPOI(nearestLocations);
     }
-    // this.setNAIPOI(this.props.nearestLocations);
   }
 
   setNAIPOI = (locationsData) => {
@@ -86,11 +78,7 @@ class EeiForm extends React.Component {
   }
 
   editComponent = (editId) => {
-
-    console.log('editId of eei' + editId);
-
     this.props.fetchIntelEeiById(editId).then(() => {
-      console.log('edit eei' + JSON.stringify(this.props.oneEEI));
       this.setState(
         {
           eeiFetched: true,
@@ -176,8 +164,6 @@ class EeiForm extends React.Component {
   }
 
   resetForm() {
-    // this.setState(this.baseState);
-    console.log('FORM RESET DONE');
     if (confirm('Do you want to clear all data from this form?')) {
       this.setState({ clear: true });
       document.getElementById('EeiForm').reset();
@@ -186,6 +172,7 @@ class EeiForm extends React.Component {
 
   render = () => {
 
+    console.log('country ==> '+this.state.intelReqEEI.district);
     const { translations } = this.props;
 
     // FORM fields Array
@@ -222,6 +209,7 @@ class EeiForm extends React.Component {
               <ModalFormBlock fields={eeiFiled1} data={this.handleIntelEei1} initstate ={this.state.intelReqEEI} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.eeiFetched} stopupd = {this.stopUpdate} />
             </div>
             <div className="col-md-4">
+            {this.state.intelReqEEI.district}
               <ModalFormBlock fields={eeiFiled2} data={this.handleIntelEei2} initstate ={this.state.intelReqEEI} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.eeiFetched} stopupd = {this.stopUpdate} />
             </div>
             <div className="col-md-4">
@@ -252,8 +240,10 @@ class EeiForm extends React.Component {
 }
 
 EeiForm.propTypes = {
+  ccirCountry: PropTypes.string,
   editId: PropTypes.string,
   intelId: PropTypes.string,
+  nearestLocations: PropTypes.any,
   onClose: PropTypes.func,
 };
 

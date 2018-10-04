@@ -39,7 +39,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, liveViewToo
     fullscreenButton: false,
     baseLayerPicker: false,
     fullscreenButton: false,
-    geocoder: true,
+    geocoder: false,
     homeButton: true,
     infoBox: false,
     sceneModePicker: false,
