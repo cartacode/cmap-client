@@ -20,6 +20,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 
 import { dashboardUser } from '../dictionary/auth';
+import { getTime, getMissionProgressPercentage } from '../util/helpers';
 
 class DashboardComponent extends React.Component {
 
@@ -39,7 +40,7 @@ class DashboardComponent extends React.Component {
     this.props.fetchOPSUtilizationPlatform();
     this.props.fetchOPSUtilizationMission();
     this.props.fetchAISROpreationStatus();
-
+    
     /* Latest Intelligence:- List of Missions with status Mission Pending.
     "Statusid": 35, "StatusAbbrev": "MPNDG", */
     this.props.fetchLatestIntelligence(35, unitId);
@@ -47,6 +48,10 @@ class DashboardComponent extends React.Component {
     /* Upcoming Mission:- List of Missions with status Intel Posted.
     "Statusid": 38,"StatusAbbrev": "IPOST", */
     this.props.fetchUpcomingMission(38, unitId);
+
+    //Live Operation Only those Missions which status is active and except videos.
+    //"Active" Status-36
+    this.props.fetchLiveOperation(38, unitId);
   };
 
   getAISROperationStatuses(statusText) {
@@ -77,6 +82,15 @@ class DashboardComponent extends React.Component {
       }
     }
     return percent + '%';
+  }
+
+  getOperationVideoBlock() {
+    const { translations } = this.props;
+    const currentDate  = new Date();
+    return this.props.allLiveOperations.map((item, i) => (
+      <OperationVideoBlock blockHeader={item.MissionName} percent={getMissionProgressPercentage(item.StartDate, currentDate)} remainTime={getTime(item.StartDate, currentDate)}/>
+    )
+    );
   }
 
   getCountdown(row) {
@@ -137,7 +151,7 @@ class DashboardComponent extends React.Component {
     ];
   }
 
-  getMissionColumns(){
+  getMissionColumns() {
     const { translations } = this.props;
     return [
       {
@@ -203,6 +217,10 @@ class DashboardComponent extends React.Component {
 
     // For right table
     const { allUpcomingMissions } = this.props;
+
+    const { allLiveOperations } = this.props;
+
+    //console.log("*****************Fetch all live operations********\t "+JSON.stringify(allLiveOperations));
 
     if(opsPlatform instanceof Object) {
       opsPlatform = '0';
@@ -315,10 +333,11 @@ class DashboardComponent extends React.Component {
           </div>
           <div className="col-md-12">
             <div className="operating-content">
-              <OperationVideoBlock blockHeader={translations['blue devil']} percent="90%" remainTime="05:21:33"/>
+              { this.getOperationVideoBlock() }
+              {/* <OperationVideoBlock blockHeader={translations['blue devil']} percent="10%" remainTime="05:21:33"/>
               <OperationVideoBlock blockHeader={translations['valient angel']} percent="80%" remainTime="06:21:33"/>
               <OperationVideoBlock blockHeader={translations['rolling thunder']} percent="50%" remainTime="01:25:18"/>
-              <OperationVideoBlock blockHeader={translations['she devil']} percent="50%" remainTime="02:30:03"/>
+              <OperationVideoBlock blockHeader={translations['she devil']} percent="50%" remainTime="02:30:03"/> */}
             </div>
           </div>
         </div>

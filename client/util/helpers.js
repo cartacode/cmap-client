@@ -83,3 +83,33 @@ export const showAlert = (message, buttonLabel = 'OK') => {
     ],
   });
 };
+
+export const getTime = (date, currentDate) => {
+  //const oneDay = 1000 * 60 * 60 * 24;
+  let startDate = date;
+  startDate = new Date(startDate);
+  // get total seconds between the times
+  let differenceMS = Math.abs(startDate - currentDate) / 1000;
+  // calculate (and subtract) whole days
+  let days =  Math.floor(differenceMS / 86400);
+  differenceMS -= days * 86400;
+  // calculate (and subtract) whole hours
+  let hours = Math.floor(differenceMS / 3600) % 24;
+  differenceMS -= hours * 3600;
+  // calculate (and subtract) whole minutes
+  let minutes = Math.floor(differenceMS / 60) % 60;
+  differenceMS -= minutes * 60;
+  // what's left is seconds
+  let seconds = Math.floor(differenceMS) % 60;
+  return hours + ':' + minutes + ':' + seconds ;
+}
+
+export const getMissionProgressPercentage = (date, currentDate) => {
+  const startDate = new Date(date);
+  const numinator = startDate.getHours() - currentDate.getHours();
+  const denominator = currentDate.getHours() - startDate.getHours();
+  const pct = (numinator / denominator) * 100;
+  console.log("Percentage ***** \t "+pct);
+  return pct + '%';
+}
+

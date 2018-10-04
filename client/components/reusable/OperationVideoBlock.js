@@ -45,6 +45,13 @@ class OperationVideoBlock extends React.Component {
           progressbar = "/assets/img/dashboard/green_progressbar.png";
           video = "/assets/img/dashboard/video3.png";
           break;
+          
+        default:
+          borderBottom = '2px solid #00a651';
+          width = this.props.percent;
+          progressbar = "/assets/img/dashboard/green_progressbar.png";
+          video = "/assets/img/dashboard/video3.png";
+          break;  
       }
 
     return (
