@@ -36,7 +36,8 @@ class PayloadsSpecificationComponent extends React.Component {
       editId: '0',
       payloadSpecType: '',
       payloadTypeId: 0,
-      loading: false,
+			loading: false,
+			selectedSpecText: '',
 
     };
   }
@@ -49,6 +50,7 @@ class PayloadsSpecificationComponent extends React.Component {
   }
 
 	openEoirModal = () => {
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 1,
@@ -57,12 +59,14 @@ class PayloadsSpecificationComponent extends React.Component {
 	    wamiModalOpen: false,
 	    sigintModalOpen: false,
 	    equipmentModalOpen: false,
-	    type: 'EO/IR',
+			type: 'EO/IR',
+			selectedSpecText: translations['eo/ir'],
 
 	  });
 	}
 
 	openSargmtiModal = () => {
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 2,
@@ -70,11 +74,13 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: true,
 	    wamiModalOpen: false,
 	    sigintModalOpen: false,
-	    equipmentModalOpen: false,
+			equipmentModalOpen: false,
+			selectedSpecText: translations.sar,
 	  });
 	}
 
 	openGmtiModal = () => {
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 5,
@@ -82,11 +88,13 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: true,
 	    wamiModalOpen: false,
 	    sigintModalOpen: false,
-	    equipmentModalOpen: false,
+			equipmentModalOpen: false,
+			selectedSpecText: translations.gmti,
 	  });
 	}
 
 	openWamiModal = () => {
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 3,
@@ -94,11 +102,13 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: false,
 	    wamiModalOpen: true,
 	    sigintModalOpen: false,
-	    equipmentModalOpen: false,
+			equipmentModalOpen: false,
+			selectedSpecText: translations.wami,
 	  });
 	}
 
 	openSigintModal = () =>{
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 4,
@@ -106,11 +116,13 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: false,
 	    wamiModalOpen: false,
 	    sigintModalOpen: true,
-	    equipmentModalOpen: false,
+			equipmentModalOpen: false,
+			selectedSpecText: translations.sigint,
 	  });
 	}
 
 	openEquipmentModal = () => {
+		const { translations } = this.props;
 	  this.setState({
 	    editId: '0',
 	    payloadTypeId: 18,
@@ -118,7 +130,8 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: false,
 	    wamiModalOpen: false,
 	    sigintModalOpen: false,
-	    equipmentModalOpen: true,
+			equipmentModalOpen: true,
+			selectedSpecText: translations.equipment,
 	  });
 	}
 
@@ -132,7 +145,8 @@ class PayloadsSpecificationComponent extends React.Component {
 	    sargmtiModalOpen: false,
 	    wamiModalOpen: false,
 	    sigintModalOpen: false,
-	    equipmentModalOpen: false,
+			equipmentModalOpen: false,
+			selectedSpecText: '',
 	  });
 
 	}
@@ -313,22 +327,19 @@ class PayloadsSpecificationComponent extends React.Component {
 	          <img src="/assets/img/admin/personnel_1.png" alt=""/>
 	          <div className="header-text">
 								<div className="col-md-12 filter-line text-center">
-									<span className="specifi-text">{translations.Specifications} &nbsp;</span>
 									{!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
-											<div className="add-button">
-												<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addPayloads} />
+											<div>
+												<span className="specifi-text">{translations.Specifications} &nbsp;</span>
+												<div className="add-button">
+													<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addPayloads} />
+												</div>
 											</div>
-										: null} 
+										: <span className="specifi-text">{this.state.selectedSpecText !== '' ? (this.state.selectedSpecText + ' ' + translations.Specifications) : translations.Specifications} &nbsp;</span>
+									} 
 								</div>
 						</div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 	        </div>
-	       {/* {!this.state.eoirModalOpen && !this.state.sargmtiModalOpen && !this.state.wamiModalOpen && !this.state.sigintModalOpen && !this.state.equipmentModalOpen ?
-	          <div className="col-md-12 filter-line">
-	            <div className="add-button">
-	              <DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addPayloads} />
-	            </div>
-	          </div> : null}  */}
 	        {this.state.eoirModalOpen ?
 	          <EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
 	          : null }
