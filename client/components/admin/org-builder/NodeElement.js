@@ -20,13 +20,18 @@ class NodeElement extends React.PureComponent {
         nodeData.unitLogo = nodeData.PhotoPath;
     }
 
-    if(nodeData.Rank || nodeData.Rank != undefined)
+    if(nodeData.PersonnelID != undefined)
     {
       nodeData.type = "Personnel";
       // if(nodeData.Rank == undefined) {
       //   nodeData.type = "Personnel";
       // }
     }
+    // if(nodeData.type === "Personnel")
+    // {
+    //     let obj = {"FMCPlatformCount": 5, "PMCPlatformCount": 0, "NMCPlatformCount": 0}
+    //     // nodeData.PlatformStatuses = new
+    // }
 
     return (
       <div className={className}>
@@ -37,7 +42,7 @@ class NodeElement extends React.PureComponent {
        {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.Rank}</span> <br/>
        <span className="unit-text"> {nodeData.DutyPosition}</span></span>) : (<span> 
        <span className="unit-text"> {nodeData.Location}Personnel Count: <b>{nodeData.PersonnelCount}</b> 
-       {/* <br/> FMC Platform Count: <b>{nodeData.PlatformStatuses.FMCPlatformCount}</b> <br/> PMC Platform Count: <b>{nodeData.PlatformStatuses.PMCPlatformCount}</b> <br/> NMC Platform Count: <b>{nodeData.PlatformStatuses.NMCPlatformCount}</b>  */}
+       <br/> FMC: <b>{nodeData.PlatformStatuses.FMCPlatformCount}</b> PMC: <b>{nodeData.PlatformStatuses.PMCPlatformCount}</b> NMC: <b>{nodeData.PlatformStatuses.NMCPlatformCount}</b> 
        </span> <br/> </span>) }
           
           </div>
