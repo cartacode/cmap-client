@@ -428,6 +428,9 @@ class AddPersonnelModal extends React.Component {
     let {  selectedRank } = this.state;
     personnel.Rank = selectedRank;
     const { personnelFiles } = this.state;
+
+    if (this.state.personnel.RoleIDs!=undefined)
+    {
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     if (personnelFiles.PersonnelPhoto) {
@@ -462,7 +465,10 @@ class AddPersonnelModal extends React.Component {
         this.props.onClose(NoticeType.ADD);
       });
     }
-
+  }
+  else {
+    alert("Select atleast one user-role check-box");
+  }
   }
 
 updateRanks= (branch, rank) => {
