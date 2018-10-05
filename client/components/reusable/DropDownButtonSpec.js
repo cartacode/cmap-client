@@ -13,7 +13,7 @@ class DropDownButtonSpec extends React.Component {
   }
 
   changeValue = (key, value) => {
-    console.log(key);
+    
     document.getElementById(`dropdown${key}`).value = value;
   };
 
