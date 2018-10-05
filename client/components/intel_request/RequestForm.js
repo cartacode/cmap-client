@@ -35,10 +35,10 @@ class RequestForm extends React.Component {
     const active = dt.startOf('day').format(DateConsts.DB_DATETIME_FORMAT);
     const bct = dt.add(3, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
     const ltiv = dt.add(6, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
-
+    const unitId = session.AssignedUnit;
     this.state = {
       firstCcir: '',
-      ccirCountry: '',
+      ccirCountry: 'US',
       ccirPirMap: {},
       updatedLocation: '',
       toRedirect: false,
@@ -74,8 +74,8 @@ class RequestForm extends React.Component {
         // MissionType1: '',
         // MissionType2: '',
         // Payload: '',
-        // Payload1: '',
-        // Unit: '',
+        StatusId: IntelConstants.STATUS.OP.id,
+        UnitID: unitId,
       },
       loading: false,
       ccirPirOptions: [],
@@ -99,11 +99,12 @@ class RequestForm extends React.Component {
     const unitId = session.AssignedUnit;
     const { intelRequest } = this.state;
 
-    // setting next higher unit
+    // // setting next higher unit
+    // this.props.fetchNextHigherUnit(unitId);
     this.props.fetchNextHigherUnit(unitId).then(() => {
       this.setState({
         intelRequest: {
-          ...intelRequest,
+          ...intelRequest,          
           NextHigherUnitId: this.getHigherUnit(),
         },
       });
@@ -198,9 +199,11 @@ createCcirPirData = (editId) => {
 }
 
 editComponent = (editId) => {
+  
   if(editId !== undefined && editId !== '') {
     this.props.fetchIntelRequestById(editId).then(()=> {
       const { oneIntelRequest } = this.props;
+      console.log('onentelRequest'+JSON.stringify(oneIntelRequest));
       const selectedCCIR = this.state.ccirPirMap[oneIntelRequest.NamedOperation];
       this.setState(
         {
@@ -221,6 +224,7 @@ editComponent = (editId) => {
 
   handleIntelRequest1 = (ir) => {
     const { intelRequest } = this.state;
+    const selectedCCIR = this.state.ccirPirMap[ir.NamedOperation];
     this.setState({
       intelRequest: {
         ...intelRequest,
@@ -230,7 +234,10 @@ editComponent = (editId) => {
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
       },
+      ccirCountry: selectedCCIR.CountryId,
+      firstCcir: selectedCCIR.Description1,
     });
+
     this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
   }
 
@@ -300,26 +307,29 @@ editComponent = (editId) => {
     const editId = params.editId;
     const session = JSON.parse(localStorage.getItem('session'));
     intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
+    intelRequest.UnitId = session.AssignedUnit;
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
     this.setState({ loading: true });
+    const redirectUrl = '/intel-request/detail/';
 
     if(editId !== undefined && editId !== '0') {
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
-
+        this.props.history.push(redirectUrl + editId);
         this.notify(NoticeType.UPDATE);
         this.setState({
-          // toRedirect: true,
           loading: false,
         });
       });
     } else {
+      debugger;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
+        this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
+        console.log('push in hs=istr it should now redirect');
         this.setState({
           intelRequest: this.props.oneIntelRequest,
           loading: false,
-          toRedirect: true,
         });
       });
     }
@@ -354,6 +364,7 @@ setCCIRPIR = (ccirpirObj) =>{
 
     editFetched: true,
     firstCcir: ccirpirObj.CCIRPIR,
+    ccirCountry: ccirpirObj.CountryId,
   });
 }
 setOneLocation = (location, currentLatLong) =>{
@@ -611,7 +622,7 @@ render = () => {
         <IntelEEI nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
 
-      {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null }
+      {/* {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null } */}
 
     </div>
   );

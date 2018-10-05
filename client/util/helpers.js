@@ -44,6 +44,25 @@ export const getIntelStatusColor = (abbreviation) => {
   return colorCode;
 };
 
+export const getMissionStatusColor = (statusId) => {
+  let status = {};
+  const aoStatus = IntelConstants.STATUS;
+  for (const key in aoStatus) {
+    if (aoStatus.hasOwnProperty(key)) {
+      status = aoStatus[key];
+      if(status.id === statusId) {
+        break;
+      }
+    }
+  }
+
+  let colorCode;
+  if(status !== undefined) {
+    colorCode = { 'color': status.color };
+  }
+  return colorCode;
+};
+
 // Will call when user click on some icon like Add/Delete/Update and we want to confirm from user as yes/no/ok/cancel etc.
 // @param :
 // confirmationMessage: Message to Display in Pop Up example Confirm you wish to Delete Yes/No
@@ -109,7 +128,32 @@ export const getMissionProgressPercentage = (date, currentDate) => {
   const numinator = startDate.getHours() - currentDate.getHours();
   const denominator = currentDate.getHours() - startDate.getHours();
   const pct = (numinator / denominator) * 100;
-  console.log("Percentage ***** \t "+pct);
   return pct + '%';
-}
+};
 
+export const getDiffInDays = (startDate, endDate) => {
+  return moment(endDate).diff(moment(startDate), 'days');
+};
+
+export const getDiffInHours = (startDate, endDate) => {
+  return moment(endDate).diff(moment(startDate), 'hours');
+};
+
+export const getDiffInMin = (startDate, endDate) => {
+  return moment(endDate).diff(moment(startDate), ' minutes');
+};
+
+export const getDiffInSec = (startDate, endDate) => {
+  return moment(endDate).diff(moment(startDate), 'seconds');
+};
+
+function pad(num) {
+  return ('0' + num).slice(-2);
+}
+export const getHHMMSSFromSec = (secs) => {
+  let minutes = Math.floor(secs / 60);
+  secs %= 60;
+  const hours = Math.floor(minutes / 60)
+  minutes %= 60;
+  return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
+};

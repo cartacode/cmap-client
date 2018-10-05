@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-import { FETCH_DASHBOARD_OPS_PAYLOAD, FETCH_DASHBOARD_OPS_PLATFORM, FETCH_DASHBOARD_OPS_MISSION, FETCH_A_ISR_OPERATION_MISSION, FETCH_LATEST_INTELLIGENCE, FETCH_UPCOMING_MISSION, FETCH_LIVE_OPERATION } from 'dictionary/action';
+import {
+  FETCH_DASHBOARD_OPS_PAYLOAD,
+  FETCH_DASHBOARD_OPS_PLATFORM,
+  FETCH_DASHBOARD_OPS_MISSION,
+  FETCH_A_ISR_OPERATION_MISSION,
+  FETCH_LATEST_INTELLIGENCE,
+  FETCH_UPCOMING_MISSION,
+  FETCH_LIVE_OPERATION,
+} from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -16,7 +24,7 @@ export function fetchOPSUtilizationPayload() {
 // API is uses to fetch OPS UTILIZATION Platform
 export function fetchOPSUtilizationPlatform() {
   return createAction({
-    FETCH_DASHBOARD_OPS_PLATFORM,
+    type: FETCH_DASHBOARD_OPS_PLATFORM,
     action: () => axios.get(`${baseUrl}/Mission/GetAssignedPlatformstoMission`, { headers: requestHeaders }),
   });
 }
@@ -29,7 +37,7 @@ export function fetchOPSUtilizationMission() {
   });
 }
 
-//A-ISR OPERATION STATUS
+// A-ISR OPERATION STATUS
 export function fetchAISROpreationStatus() {
   return createAction({
     type: FETCH_A_ISR_OPERATION_MISSION,

@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import {connect} from 'react-redux';
-import { Link,  NavLink} from 'react-router-dom';
 import FullHeaderLine from './reusable/FullHeaderLine';
 import ContentBlock from './reusable/ContentBlock';
-import ContentFull from './reusable/ContentFull';
-import PersonnelComponent from '../components/admin/PersonnelComponent.js';
 import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
 import Loader from './reusable/Loader';
 
@@ -35,13 +30,6 @@ class LoginComponent extends React.Component {
     }
   }
 
-  onClear(){
-    console.log("Cleared");
-  }
-
-  onEnter(){
-    console.log("enter");
-  }
 
   handleGeneralPersonnelData = (generalData) => {
     const { login } = this.state;

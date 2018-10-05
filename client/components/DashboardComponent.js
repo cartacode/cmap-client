@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ConfigBlock from './reusable/ConfigBlock';
 import FullHeaderLine from './reusable/FullHeaderLine';
 import Dropdown from './reusable/Dropdown';
-
+import moment from 'moment';
 import HalfHeaderLine from './reusable/HalfHeaderLine';
 import DashboardCircleStatus from './reusable/DashboardCircleStatus';
 import NumBlock from './reusable/NumBlock';
@@ -13,7 +13,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 
 import { dashboardUser } from '../dictionary/auth';
-import { getTime, getMissionProgressPercentage } from '../util/helpers';
+import { getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec } from '../util/helpers';
 
 class DashboardComponent extends React.Component {
 
@@ -44,7 +44,7 @@ class DashboardComponent extends React.Component {
 
     //Live Operation Only those Missions which status is active and except videos.
     //"Active" Status-36
-    this.props.fetchLiveOperation(38, unitId);
+    this.props.fetchLiveOperation(36, unitId);
   };
 
   getAISROperationStatuses(statusText) {
@@ -81,7 +81,7 @@ class DashboardComponent extends React.Component {
     const { translations } = this.props;
     const currentDate  = new Date();
     return this.props.allLiveOperations.map((item, i) => (
-      <OperationVideoBlock key={'op' + i} blockHeader={item.MissionName} percent={getMissionProgressPercentage(item.StartDate, currentDate)} remainTime={getTime(item.StartDate, currentDate)}/>
+      <OperationVideoBlock key={'op'+ i} blockHeader={item.MissionName} percent={this.getMissionProgress(item.StartDate, item.EndDate)} remainTime={this.getRTB(item.StartDate, item.EndDate)}/>
     )
     );
   }
@@ -181,8 +181,39 @@ class DashboardComponent extends React.Component {
         Header: translations.classification,
         accessor: 'Classification',
       },
-    ]
+    ];
   }
+
+    getMissionProgress = (startDate, endDate) => {
+      const currentDate = new Date();
+      // const start = moment(startDate);
+      // const end = moment(endDate);
+      const num = getDiffInMin(startDate, currentDate);
+      const denom = getDiffInMin(startDate, endDate);
+      let progress = Math.floor((num / denom) * 100);
+      if(progress < 0 || progress > 100) {
+        progress = 1;
+      }
+  
+      return progress + '%';
+    }
+
+    // Time elapsed for mission
+getRTB = (startDate, endDate) => {
+  
+  
+  const currentDate = new Date();
+  // const start = moment(startDate);
+  let secondsElapsed = getDiffInSec(startDate, currentDate);
+  if(secondsElapsed < 0) {
+    secondsElapsed = 1;
+  }
+  // const formattedTime = moment.duration(secondsElapsed, 'seconds').format('hh:mm:ss');
+  const formattedTime = getHHMMSSFromSec(secondsElapsed);
+  
+  return formattedTime;
+
+}
 
   render() {
 
@@ -213,7 +244,7 @@ class DashboardComponent extends React.Component {
 
     const { allLiveOperations } = this.props;
 
-    //console.log("*****************Fetch all live operations********\t "+JSON.stringify(allLiveOperations));
+    
 
     if(opsPlatform instanceof Object) {
       opsPlatform = '0';
@@ -326,7 +357,8 @@ class DashboardComponent extends React.Component {
           </div>
           <div className="col-md-12">
             <div className="operating-content">
-              { this.getOperationVideoBlock() }
+            {this.getOperationVideoBlock()}
+              {/* { (allLiveOperations.length > 0) ? this.getOperationVideoBlock() : 'No Live Operations' } */}
               {/* <OperationVideoBlock blockHeader={translations['blue devil']} percent="10%" remainTime="05:21:33"/>
               <OperationVideoBlock blockHeader={translations['valient angel']} percent="80%" remainTime="06:21:33"/>
               <OperationVideoBlock blockHeader={translations['rolling thunder']} percent="50%" remainTime="01:25:18"/>

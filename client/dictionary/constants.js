@@ -137,7 +137,7 @@ export const IntelConstants = {
       abbreviation: 'AAG',
       color: 'darkkhaki',
     },
-    MP: {
+    MPNDG: {
       id: 35,
       description: 'Mission Pending',
       abbreviation: 'MP',
@@ -147,13 +147,19 @@ export const IntelConstants = {
       id: 36,
       description: 'Mission Active',
       abbreviation: 'MA',
-      color: 'Orange',
+      color: 'lightgreen',
     },
-    MG: {
+    MPLAN: {
       id: 37,
-      description: 'Mission Generated',
+      description: 'Mission Planning',
       abbreviation: 'MG',
-      color: 'Blue',
+      color: 'cyan',
+    },
+    MC: {
+      id: 40,
+      description: 'Mission Completed',
+      abbreviation: 'MC',
+      color: 'Gray',
     },
   },
 };
@@ -162,13 +168,6 @@ export const InputAttributes = {
   MAX_LENGTH: 50,
   TEXTAREA_LEN: 500,
 };
-
-export const TimelineStatus = [
-  {
-
-  }
-
-];
 
 /* Pending - Gray  
 Available - White

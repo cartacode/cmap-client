@@ -1,5 +1,13 @@
-import { FETCH_DASHBOARD_OPS_PAYLOAD, FETCH_DASHBOARD_OPS_PLATFORM, FETCH_DASHBOARD_OPS_MISSION, FETCH_A_ISR_OPERATION_MISSION, FETCH_LATEST_INTELLIGENCE, FETCH_UPCOMING_MISSION, FETCH_LIVE_OPERATION } from "dictionary/action";
-import initialState from "store/initialState";
+import {
+  FETCH_DASHBOARD_OPS_PAYLOAD,
+  FETCH_DASHBOARD_OPS_PLATFORM,
+  FETCH_DASHBOARD_OPS_MISSION,
+  FETCH_A_ISR_OPERATION_MISSION,
+  FETCH_LATEST_INTELLIGENCE,
+  FETCH_UPCOMING_MISSION,
+  FETCH_LIVE_OPERATION,
+} from 'dictionary/action';
+import initialState from 'store/initialState';
 
 export default function collections(
   state = initialState.dashboards, { payload, type }) {

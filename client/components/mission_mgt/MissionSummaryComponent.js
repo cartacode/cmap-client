@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import {NoticeType, TableDefaults} from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime } from '../../util/helpers';
+import { defaultFilter, getMissionStatusColor, formatDateTime } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import MissionDetailModel from '../mission/MissionDetailModel';
 import { NotificationManager } from 'react-notifications';
@@ -29,7 +29,7 @@ class MissionSummaryComponent extends React.Component {
   }
   
   getColor= (row)=> {
-    return getIntelStatusColor(row.original.Status);
+    return getMissionStatusColor(row.original.StatusId);
   }
 
   render() {
