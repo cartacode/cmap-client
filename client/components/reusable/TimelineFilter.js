@@ -10,7 +10,7 @@ import MissionMgtDropDown from './MissionMgtDropDown';
 import StatusTable from './StatusTable';
 import { connect } from 'react-redux';
 import { teamFilter, platformFilter } from '../../actions/mssionmgt';
-import { MissionConsts, UnitConsts, DateConsts } from '../../dictionary/constants';
+import { MissionConsts, UnitConsts, DateConsts, TableDefaults } from '../../dictionary/constants';
 import { defaultFilter } from '../../util/helpers';
 import ReactTable from 'react-table';
 
@@ -464,7 +464,7 @@ class TimelineFilter extends React.Component {
                   columns={columns}
                   loading={this.props.isLoading}
                   //defaultPageSize={pageSize}
-                  minRows={pageSize}
+                  minRows={TableDefaults.MIN_ROWS}
                   className="-striped -highlight"
                   filterable={false}
                   showPageSizeOptions={false}
