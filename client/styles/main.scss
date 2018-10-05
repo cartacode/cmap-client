@@ -5250,6 +5250,11 @@ select.form-control {
     font-weight: normal;
     text-transform: uppercase;
 }
+
+
+.orders-assets .filter-line .add-button input:hover {
+  background: #ed7d31!important;
+}
 .orders-assets .header-line {
 overflow: unset!important;
   margin-bottom: 46px;
