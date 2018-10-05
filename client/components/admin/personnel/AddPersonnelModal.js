@@ -660,13 +660,13 @@ render() {
     {name: translations['Branch'], type: 'dropdown', domID: 'dispServiceBranch', ddID: 'BranchOfService', valFieldID: 'ServiceBranch'},
     {name: translations['Rank'], type: 'dropdown', domID: 'dispRank', ddID: 'Ranks', valFieldID: 'Rank'},
     {name: translations['Pay Grade'], type: 'dropdown', domID: 'dispPayGrade', ddID: 'PayGrades', valFieldID: 'PayGrade'},
-    {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: 'Countries', valFieldID: 'Nationality', required:true},
-    {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: 'Clearance', valFieldID: 'Clearance', required:true},
-    {name: translations['CAC ID'], type: 'number', domID: 'CACid', valFieldID: 'CACid'},
-    {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID:'CallSign'},
+    {name: translations['Nationality'], type: 'dropdown', domID: 'dispNationality', ddID: 'Countries', valFieldID: 'Nationality', required: true },
+    {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: 'Clearance', valFieldID: 'Clearance', required: true },
+    {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid', regexType: 'AlphaNumberic & Special Char @#-_*$&', regex: '^[0-9a-zA-Z_*@#$&-]+$' },
+    {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID: 'CallSign' },
     {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
     {name: 'Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
-    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
+    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true },
   ];
 
   const organisationFields = [
@@ -701,10 +701,10 @@ render() {
   ];
 
   const contactFields = [
-    {name: translations['DSN'], type: 'number', domID: 'DSN', valFieldID: 'DSN', required:true},
+    {name: translations['DSN'], type: 'input', domID: 'DSN', valFieldID: 'DSN', required: true, regexType: 'Alphanumeric', regex: '^[a-zA-Z0-9]+$' },
     {name: translations['Email-NIPR'], type: 'email', domID: 'EmailNIPR', valFieldID: 'EmailNIPR', required: true },
     {name: translations['Email-SIPR'], type: 'email', domID: 'EmailSIPR', valFieldID: 'EmailSIPR', required: true },
-    {name: translations['Chat ID'], type: 'number', domID: 'ChatID', valFieldID: 'ChatID'},
+    {name: translations['Chat ID'], type: 'input', domID: 'ChatID', valFieldID: 'ChatID', regexType: 'AlphaNumberic & Special Char @#-_*$&', regex: '^[0-9a-zA-Z_*@#$&-]+$' },
 
   ];
 

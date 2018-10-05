@@ -88,10 +88,10 @@ class FormBlock extends React.Component {
 
       return (
         <div className="info-line" key={'elem' + i}>
-          <div>
+          <div className = "col-md-12 mission-label">
             {item.name}
           </div>
-          <div className="info-field pull-right">
+          <div className="col-md-12 mission-detail-view info-field">
             {input}
           </div>
         </div>
