@@ -309,7 +309,7 @@ class MunitionsSpecificationComponent extends React.Component {
             <div className="header-text">
 								<div className="col-md-12 filter-line text-center">
 									
-                  {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpe ?
+                  {!this.state.missileModalOpen && !this.state.rocketModalOpen && !this.state.gunModalOpen ?
 											<div>
                           <span className="specifi-text">{translations.Specifications} &nbsp;</span>
                           <div className="add-button">
