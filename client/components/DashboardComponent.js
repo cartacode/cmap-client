@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-import CustomDatePicker from './reusable/CustomDatePicker';
 import ConfigBlock from './reusable/ConfigBlock';
 import FullHeaderLine from './reusable/FullHeaderLine';
 import Dropdown from './reusable/Dropdown';
-import FormBlock from './reusable/FormBlock';
-import StatusTable from './reusable/StatusTable';
+
 import HalfHeaderLine from './reusable/HalfHeaderLine';
 import DashboardCircleStatus from './reusable/DashboardCircleStatus';
 import NumBlock from './reusable/NumBlock';
 import OperationVideoBlock from './reusable/OperationVideoBlock';
-
-import FilterDropdown from './reusable/FilterDropdown';
-import FilterDatePicker from './reusable/FilterDatePicker';
 
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
@@ -88,7 +81,7 @@ class DashboardComponent extends React.Component {
     const { translations } = this.props;
     const currentDate  = new Date();
     return this.props.allLiveOperations.map((item, i) => (
-      <OperationVideoBlock blockHeader={item.MissionName} percent={getMissionProgressPercentage(item.StartDate, currentDate)} remainTime={getTime(item.StartDate, currentDate)}/>
+      <OperationVideoBlock key={'op' + i} blockHeader={item.MissionName} percent={getMissionProgressPercentage(item.StartDate, currentDate)} remainTime={getTime(item.StartDate, currentDate)}/>
     )
     );
   }

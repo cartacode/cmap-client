@@ -11,19 +11,19 @@ import { viewerIdentifiers } from 'map/viewer';
 
 import 'react-table/react-table.css';
 import { NotificationManager } from 'react-notifications';
-import { NoticeType, IntelConstants } from 'dictionary/constants';
+import { NoticeType, IntelConstants, DateConsts } from 'dictionary/constants';
 import IntelEEI from './IntelEEI';
 import { fetchIntelRequestById, addIntelRequest, updateIntelRequest } from 'actions/intel';
 import { Redirect } from 'react-router-dom';
 import Loader from '../reusable/Loader';
 import { requestHeaders, baseUrl } from '../../dictionary/network';
+import moment from 'moment';
+import uuid from 'uuid/v4';
+
+import { collectionManagerUser, adminUser } from '../../dictionary/auth';
 import { fetchCcirPirs } from 'actions/ccirpir';
 import { fetchNextHigherUnit } from 'actions/organicorg';
-
 import { fetchLocations } from 'actions/location';
-
-import uuid from 'uuid/v4';
-import { collectionManagerUser } from '../../dictionary/auth';
 
 class RequestForm extends React.Component {
 
@@ -31,6 +31,10 @@ class RequestForm extends React.Component {
     super(props);
 
     const session = JSON.parse(localStorage.getItem('session'));
+    const dt  = moment().add(5, 'days');
+    const active = dt.startOf('day').format(DateConsts.DB_DATETIME_FORMAT);
+    const bct = dt.add(3, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
+    const ltiv = dt.add(6, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
 
     this.state = {
       firstCcir: '',
@@ -51,10 +55,10 @@ class RequestForm extends React.Component {
         // NamedOperation: '',
         // MissionType: '',
         // SubMissionType: '',
-        // ActiveDateTimeStart: new Date(),
+        ActiveDateTimeStart: active,
         // ActiveDateTimeEnd: '',
-        // BestCollectionTime: new Date(),
-        // LatestTimeIntelValue: new Date(),
+        BestCollectionTime: bct,
+        LatestTimeIntelValue: ltiv,
         // PriorityIntelRequirement: '',
         // SpecialInstructions: '',
         // PrimaryPayload: '',
@@ -459,30 +463,33 @@ render = () => {
 
   const ses = JSON.parse(localStorage.getItem('session'));
   const roles = JSON.parse(ses.UserRoles);
+  // admin have all access as admin also contains collection mgr and collection mgr can't add new intel req so admin should be excluded from this check
   const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
+  const isAdmin = roles.some(v => adminUser.includes(v));
+  const isDisabled = isCollectionMgr && !isAdmin;
 
   const intelRequest1 = [
-    { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true, disabled: isCollectionMgr },
-    { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isCollectionMgr },
-    { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true, disabled: isCollectionMgr },
-    { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true, disabled: isCollectionMgr },
-    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }], readOnly: isCollectionMgr },
+    { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true, disabled: isDisabled },
+    { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isDisabled },
+    { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true, disabled: isDisabled },
+    { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true, disabled: isDisabled },
+    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }], readOnly: isDisabled },
   ];
 
   const intelRequest2 = [
 
-    { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true, disabled: isCollectionMgr },
-    { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true, disabled: isCollectionMgr },
-    { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions, disabled: isCollectionMgr },
-    { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isCollectionMgr },
-    { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isCollectionMgr },
+    { name: translations['Primary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispPriSensor', valFieldID: 'PrimaryPayload', required: true, disabled: isDisabled },
+    { name: translations['Secondary Sensor'], type: 'dropdown', ddID: 'PayloadType/GetPayloadTypes', domID: 'dispSecSensor', valFieldID: 'SecondaryPayload', required: true, disabled: isDisabled },
+    { name: translations.Armed, type: 'dropdown', ddID: '', domID: 'dispArmed', valFieldID: 'Armed', options: armedOptions, disabled: isDisabled },
+    { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isDisabled },
+    { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isDisabled },
   ];
 
   // Following fields is visible only to Collection manager and also only in case of edit
   const intelRequest3 = [
-    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true, disabled: isCollectionMgr },
-    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }], disabled: isCollectionMgr },
-    { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true, disabled: isCollectionMgr },
+    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true, disabled: isDisabled },
+    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }], disabled: isDisabled },
+    { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true, disabled: isDisabled },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations.originator, type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
     { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
