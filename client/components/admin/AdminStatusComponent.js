@@ -24,6 +24,7 @@ import PersonnelStatus from './status/PersonnelStatus';
 import MunitionsStatus from './status/MunitionsStatus';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
+import ContentBlock from '../reusable/ContentBlock';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -551,7 +552,9 @@ class AdminStatusComponent extends React.Component {
         </div>
 
         <div className="row status">
-        
+              <div className="col-md-4"></div> 
+              {/* <div className="col-md-4"><ContentBlock/>  </div>  */}
+              <div className="col-md-4"></div>
         </div>
 
         <div className="row status">
