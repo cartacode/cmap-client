@@ -2365,7 +2365,7 @@ input {
   padding: 15px 15px 15px;
 
   .info-line {
-    height: 54px;
+    height: 60px;
 
     > div {
       float: left;
@@ -5315,4 +5315,9 @@ btn-warning.focus, .btn-warning:focus {
   background-color:  transparent!important;
   border: 1px solid #687882!important; 
   outline: 0px auto -webkit-focus-ring-color!important; 
+}
+
+/**************** mission -summary-detail ***********************/
+.mission-detail-view.info-field input {
+  width: 100%!important;
 }
