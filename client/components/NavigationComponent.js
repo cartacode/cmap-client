@@ -53,7 +53,7 @@ class NavigationComponent extends React.Component {
             return route.location.pathname==='/login' ? null : <HeaderContainer/>;
         }} />
         <Switch>
-          <PrivateRoute exact path="/" component={DashboardContainer} />
+          <PrivateRoute exact path="/" component={DashboardContainer} > <Redirect to='/dashboard' /> </PrivateRoute>
           <PrivateRoute exact path="/dashboard" component={DashboardContainer} />
           <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
           <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
