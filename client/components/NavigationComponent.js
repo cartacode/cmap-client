@@ -39,6 +39,7 @@ class NavigationComponent extends React.Component {
     { localStorage.removeItem('session');
      console.log("Logged Out");
      this.props.history.push('/'); 
+     alert("Session Expired - Please Login");
      condition = false;
     }
   }
