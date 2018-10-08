@@ -7,7 +7,7 @@
  * @returns {Function}
  */
 
-let token = sessionStorage.getItem('jwtToken');
+import { refreshToken } from './auth';
 
 export function createAction({ action, headers = {}, type }) {
   return async(dispatch) => {
@@ -19,7 +19,10 @@ export function createAction({ action, headers = {}, type }) {
     } catch (error) {
       
       dispatch({ type: type.FAILURE, headers, error});
-      
+      // if(error.response.status === 401)
+      // { console.log("Unauthorized-call"); 
+      // refreshToken();
+      // }
       //alert('API ERROR:'+JSON.stringify(error));
       console.log('API ERROR:'+JSON.stringify(error));
     }

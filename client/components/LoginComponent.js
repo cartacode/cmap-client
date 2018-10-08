@@ -176,7 +176,7 @@ class LoginComponent extends React.Component {
         </div>
         <div className="col-md-12 logo-text">
           <div className="text-header">
-            Use of this or any other DoD interest computer system constitutes comsent to monitoring at all times.
+            Use of this or any other DoD interest computer system constitutes consent to monitoring at all times.
           </div>
           <div className="text-body">
             This is a DoD interest computer system. All DoD interest computer systems and related equipment are intended for the communication, transmission, processing, and storage of official U.S. Government or other authorized information only. All DoD interest 

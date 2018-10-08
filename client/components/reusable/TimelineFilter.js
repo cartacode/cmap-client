@@ -322,28 +322,22 @@ class TimelineFilter extends React.Component {
     if(typeof endDate === 'string') {
       endDate = moment(endDate).toDate();
     }
-
-    // let { filterResults } = this.props;
+    
     let { results } = this.state;
-
     const resourceFilter = [
       { id: MissionConsts.RESOURCE.PLATFORM, description: translations.platform },
       { id: MissionConsts.RESOURCE.TEAM, description: translations.teams },
     ];
 
     const columns = this.getColumns(selectedResource);
-
     const groups = [];
-    // let content = [];
-    const newItems = [];
-
-    let itemCount = 0;
+    const items = [];
 
     let titleField = 'Name';
     // const rootUnitId = 15;
     const session = JSON.parse(localStorage.getItem('session'));
     const rootUnitId = session.AssignedUnit;
-    // unist api will be diff for FlighOps and Ped Screens
+    // units api will be diff for FlighOps and Ped Screens
     let unitsUrl = 'CommandStructure/GetUserUnitAndSubordinateUnits?rootUnitID=' + rootUnitId;
     if(selectedResource === MissionConsts.RESOURCE.TEAM) {
       titleField = 'TeamName';
@@ -359,27 +353,24 @@ class TimelineFilter extends React.Component {
         // creating groups
         const group = { id: row.id, title: row[titleField] };
         groups.push(group);
+        // creating items for timeline
         const timeLine = row.TimeLine;
-        for(let i = 0; i < timeLine.length; i++) {
-          itemCount++;
-          const newItem = {
-            id: itemCount,
+        const length = timeLine.length;
+        for(let i = 0; i < length; i++) {
+          const id = 'idx-' + index + '-' + i;
+          const obj = timeLine[i];
+          const item = {
+            id,
             group: group.id,
-            title: timeLine[i].statusId,
-            start_time: moment(timeLine[i].startDate),
-            end_time: moment(timeLine[i].endDate),
+            title: obj.statusId,
+            start_time: moment(obj.startDate),
+            end_time: moment(obj.endDate),
             style: {
-              backgroundColor: 'ORANGE',
+              backgroundColor: '#FFC107',
               // color: 'yellow',
             },
-            itemProps: {
-              // these optional attributes are passed to the root <div /> of each item as <div {...itemProps} />
-              'data-custom-attribute': 'Random content',
-              'aria-hidden': true,
-              onDoubleClick: () => { console.log('You clicked double!') }
-            },
           };
-          newItems.push(newItem);
+          items.push(item);
         }
 
         /*    timeLine.map((timeRow, timeIndex) => {
@@ -396,8 +387,9 @@ class TimelineFilter extends React.Component {
     if(tab === MissionConsts.TABS.ATO || tab === MissionConsts.TABS.PED) {
       resourceDisabled = true;
     }
+    console.log('resulst '+ results.length + " groups "+ groups.length);
     const pageSize = results.length === 0 ? 1 : results.length;
-
+    
     return(
       <div>
         <div className="row mission-mgt">
@@ -463,15 +455,15 @@ class TimelineFilter extends React.Component {
                   data={results}
                   columns={columns}
                   loading={this.props.isLoading}
-                  //defaultPageSize={pageSize}
+                  defaultPageSize={pageSize}
                   minRows={TableDefaults.MIN_ROWS}
                   className="-striped -highlight"
                   filterable={false}
                   showPageSizeOptions={false}
                   showPagination={false}
-                  previousText="&#8678;"
-                  nextText="&#8680;"
-                  defaultFilterMethod={defaultFilter}
+                  // previousText="&#8678;"
+                  // nextText="&#8680;"
+                  // defaultFilterMethod={defaultFilter}
                 />
 
               </div>
@@ -482,7 +474,7 @@ class TimelineFilter extends React.Component {
                   groups={groups}
                   lineHeight={51}
                   // rightSidebarWidth={100}
-                  items={newItems}
+                  items={items}
                   defaultTimeStart={startDate}
                   defaultTimeEnd={endDate}
                   visibleTimeStart={startDate.getTime()}

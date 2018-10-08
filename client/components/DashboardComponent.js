@@ -22,7 +22,11 @@ class DashboardComponent extends React.Component {
   }
 
   componentDidMount() {
+    const session = JSON.parse(localStorage.getItem('session'));
+    if (session){
     this.loadData();
+    }
+    else { <Redirect to="/login"/> }
   }
 
   loadData = () => {

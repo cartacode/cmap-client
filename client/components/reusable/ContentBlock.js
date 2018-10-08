@@ -13,6 +13,7 @@ class ContentBlock extends React.Component {
     this.state = {
       content: [],
       editMode: false,
+      RoleIDs:[],
 
     };
     this.handleChange = this.handleChange.bind(this);
@@ -116,7 +117,7 @@ class ContentBlock extends React.Component {
     //   parameterValue = false;
     // }
     // this.updateContent(name, parameterValue);
-    this.updateContent(name, value);
+    this.updatedContent(name, value);
 
   }
 
@@ -174,6 +175,19 @@ class ContentBlock extends React.Component {
         },
       }, () => {
         this.props.data(this.state.content);
+      });
+    // this.props.initstate[name] = value;
+    // const { initstate } = this.props;
+    // this.props.data(initstate);
+    }
+
+    updatedContent(name, value) {
+      const { content } = this.state;
+      this.setState({
+          RoleIDs: [...this.state.RoleIDs, value],        
+      }, () => {
+        console.log(this.state.RoleIDs);
+        this.props.data(this.state.RoleIDs);
       });
     // this.props.initstate[name] = value;
     // const { initstate } = this.props;

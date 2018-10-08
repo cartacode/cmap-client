@@ -29,6 +29,7 @@ class AddPersonnelModal extends React.Component {
       editFetched: false,
       editSet: false,
       gPaygrade:'',
+      userRoles:[],
       imagePreviewUrl: '/assets/img/admin/photo_1.png',
       imagePreviewUrl2: '/assets/img/admin/primoris_backgr.png',
       personnel: {
@@ -103,7 +104,17 @@ class AddPersonnelModal extends React.Component {
   }
 
   checkValuedCheckboxes = (roleArray) => {
-
+    document.getElementById('checkbox0').checked = false;
+    document.getElementById('checkbox1').checked = false;
+    document.getElementById('checkbox2').checked = false;
+    document.getElementById('checkbox3').checked = false;
+    document.getElementById('checkbox4').checked = false;
+    document.getElementById('checkbox5').checked = false;
+    document.getElementById('checkbox6').checked = false;
+    document.getElementById('checkbox7').checked = false;
+    document.getElementById('checkbox8').checked = false;
+    document.getElementById('checkbox9').checked = false;
+    document.getElementById('checkbox10').checked = false;
     if (roleArray.includes('b63ca868-af4b-486f-9540-3d01eca089fe'))   
     {
       document.getElementById('checkbox0').checked = true;
@@ -158,6 +169,10 @@ class AddPersonnelModal extends React.Component {
     {
       document.getElementById('checkbox10').checked = true;
     }
+    const {personnel} = this.state;
+    this.setState({
+      userRoles:roleArray
+    });
 
   }
 
@@ -346,25 +361,32 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleRoleInformationData = (roleData) => {
-    debugger;
+
       let roleIDs = [];
+      let { userRoles } = this.state;
+      let n = userRoles.length;
       if(roleData.RoleIDs!=undefined) { 
-        console.log(roleData.RoleIDs); 
-        console.log(roleData); 
+        // console.log(roleData.RoleIDs); 
+        // console.log(roleData); 
+        for (let j=0; j<n; j++)
+        {  roleIDs.push(userRoles[j]); }
         roleData = roleData.RoleIDs;
         for (let i=0; i<roleData.length; i++) {
-          console.log('Value: ' + roleData[i]);
+          // console.log('Value: ' + roleData[i]);
           roleIDs.push(roleData[i]);
       }  
  
       } 
-        else { console.log(roleData); 
+        else { 
+          // console.log(roleData); 
+          for (let j=0; j<n; j++)
+          {  roleIDs.push(userRoles[j]); }
           for (var key in roleData) {
-            console.log('Value: ' + roleData[key]);
+            // console.log('Value: ' + roleData[key]);
             roleIDs.push(roleData[key]);
         } 
         }
-        debugger;
+        
       console.log(roleData);
        
 
@@ -429,7 +451,7 @@ class AddPersonnelModal extends React.Component {
     personnel.Rank = selectedRank;
     const { personnelFiles } = this.state;
 
-    if (this.state.personnel.RoleIDs!=undefined)
+    if (this.state.personnel.RoleIDs!=undefined && this.state.personnel.RoleIDs.length!=0)
     {
     //We are going to upload files with JSON request body.
     const formData = new FormData();

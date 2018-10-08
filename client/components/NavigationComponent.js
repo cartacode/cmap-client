@@ -18,6 +18,9 @@ import SchedulesContainer from '../containers/SchedulesContainer';
 import StatusContainer from '../containers/StatusContainer';
 import SearchContainer from '../containers/SearchContainer';
 import initialState from '../store/initialState';
+import { connect } from 'react-redux';
+import { refresh } from '../actions/auth';
+import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
 
 let condition = true;
 class NavigationComponent extends React.Component {
@@ -32,14 +35,35 @@ class NavigationComponent extends React.Component {
     if(ses) {
     let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
-    // console.log(exp);
+    console.log(exp);
     // console.log(new Date().toISOString());
     let current = new Date().toISOString();
-    if (exp < current && condition == true)           
-    { localStorage.removeItem('session');
-     console.log("Logged Out");
-     this.props.history.push('/'); 
-     condition = false;
+    if (exp < current)           
+    { 
+        //   localStorage.removeItem('session');
+        //  console.log("Logged Out");
+        //  this.props.history.push('/'); 
+        //  alert("Session Expired - Please Login");
+        //  condition = false;
+        console.log("Unauthorized");
+        let refresh_token = ses.refresh_token;
+        console.log(refresh_token);
+        let obj = {'grant_type':'refresh_token', 'refresh_token':refresh_token}
+        this.props.refresh(obj).then(() => {
+
+          let { loginData } = this.props;
+          let mySession = JSON.stringify(loginData);
+          const { authenticated } = this.props;
+          localStorage.setItem('session',mySession);
+          if (authenticated)
+          { 
+            requestHeaders['Authorization']='Bearer '+ loginData.access_token;
+            formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
+            window.location.reload();
+          }
+
+        });
+            condition = false;
     }
   }
   }
@@ -53,7 +77,7 @@ class NavigationComponent extends React.Component {
             return route.location.pathname==='/login' ? null : <HeaderContainer/>;
         }} />
         <Switch>
-          <PrivateRoute exact path="/" component={DashboardContainer} />
+          <PrivateRoute exact path="/" component={DashboardContainer} > <Redirect to='/dashboard' /> </PrivateRoute>
           <PrivateRoute exact path="/dashboard" component={DashboardContainer} />
           <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
           <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
@@ -77,4 +101,16 @@ NavigationComponent.propTypes = {
   children: PropTypes.element
 };
 
-export default NavigationComponent;
+const mapStateToProps = state => {
+  return {
+    isLoading: state.auth.isFetching,
+    loginData: state.auth.loginData,
+    authenticated: state.auth.authenticated,
+  };
+};
+
+const mapDispatchToProps = {
+  refresh,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(NavigationComponent);

@@ -225,6 +225,17 @@ editComponent = (editId) => {
   handleIntelRequest1 = (ir) => {
     const { intelRequest } = this.state;
     const selectedCCIR = this.state.ccirPirMap[ir.NamedOperation];
+    let CountryId = 'US';
+    let firstCcir = '';
+    
+    if(selectedCCIR) {
+      // if(selectedCCIR.CountryId) {
+        CountryId = selectedCCIR.CountryId;
+      // }
+      // if(selectedCCIR.Description1) {
+        firstCcir = selectedCCIR.Description1;
+      // }
+    }
     this.setState({
       intelRequest: {
         ...intelRequest,
@@ -234,8 +245,10 @@ editComponent = (editId) => {
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
       },
-      ccirCountry: selectedCCIR.CountryId,
-      firstCcir: selectedCCIR.Description1,
+      ccirCountry: CountryId,
+      firstCcir,
+      // ccirCountry: (selectedCCIR !== undefined && selectedCCIR.CountryId !== undefined) ? selectedCCIR.CountryId : '',
+      // firstCcir: (selectedCCIR !== undefined && selectedCCIR.Description1 !== undefined) ? selectedCCIR.Description1 : '' ,
     });
 
     this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
@@ -322,7 +335,6 @@ editComponent = (editId) => {
         });
       });
     } else {
-      debugger;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
         this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
@@ -554,7 +566,7 @@ render = () => {
           <div className="ccir-content">
 
             <ul>
-              <div className="fw-800">{this.state.firstCcir}: {this.state.intelRequest.StatusId}</div>
+              <div className="fw-800">{this.state.firstCcir}</div>
               { this.renderCCIRPIR() }
             </ul>
 

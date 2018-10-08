@@ -3702,7 +3702,12 @@ one-block {
   }
 }
 
+/***************************  react-calendar-timeline  ****************************/
+
 .react-calendar-timeline {
+  
+  border: 1px solid #ed7d31;
+
   .rct-label-group {
     position: absolute;
     top: 0;
@@ -3743,6 +3748,18 @@ one-block {
     border-left: 0.5px solid #001c2e !important;
   }
 }
+
+// .react-calendar-timeline .rct-scroll {
+//   // overflow-x: hidden!important;
+//   // height: 754px!important;
+// }
+// .react-calendar-timeline {
+//   border: 1px solid #ed7d31;
+// }
+// .react-calendar-timeline .rct-outer {
+//   // height: 753px!important;
+//   // border: 1px solid #ed7d31;
+// }
 
 .modal-overlay {
   position: absolute;
@@ -5213,17 +5230,7 @@ select.form-control {
 
   background: #ed7d31; 
 }
-/***************************  react-calendar-timeline  ****************************/
-.react-calendar-timeline .rct-scroll {
-  overflow-x: hidden!important;
-  height: 754px!important;
-}
-.react-calendar-timeline {
-  border: 1px solid #ed7d31;
-}
-.react-calendar-timeline .rct-outer {
-  height: 753px!important;
-}
+
 .mission-mgt .ReactTable.-striped.-highlight {
   border: 1px solid #ed7d31;
 

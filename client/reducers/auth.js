@@ -1,4 +1,4 @@
-import { ACCOUNT__LOGIN, ACCOUNT__LOGOUT } from 'dictionary/action';
+import { ACCOUNT__LOGIN, ACCOUNT__LOGOUT, REFRESH__TOKEN } from 'dictionary/action';
 import React from 'react';
 import initialState from 'store/initialState';
 import { Redirect } from 'react-router-dom';
@@ -36,6 +36,19 @@ export default function auth(state = initialState.auth, { payload, type }) {
         ...state,
         loginData: {},
         authenticated:false,
+      };
+      case REFRESH__TOKEN.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case REFRESH__TOKEN.SUCCESS:
+      return {
+        ...state,
+        loginData: payload.data,
+        authenticated:true,
+        isFetching: false,
+        userRoles: payload.data.UserRoles
       };
     default:
       return state;
