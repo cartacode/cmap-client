@@ -52,7 +52,7 @@ function disabledTime(date) {
 }
 
 function disabledDate(current) {
-  /* if (!current) {
+  if (!current) {
     // allow empty select
     return false;
   }
@@ -60,7 +60,7 @@ function disabledDate(current) {
   date.hour(0);
   date.minute(0);
   date.second(0);
-  return current.valueOf() < date.valueOf();  // can not select days before today */
+  return current.valueOf() < date.valueOf(); // can not select days before today */
 }
 
 class CustomDatePicker extends React.Component {
