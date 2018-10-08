@@ -48,7 +48,8 @@ class AdminStatusComponent extends React.Component {
       platformStatusOpen:false,
       payloadStatusOpen:false,
       personnelStatusOpen:false,
-      munitionStatusOpen:false
+      munitionStatusOpen:false,
+      unit:''
     }
   }
 
@@ -56,7 +57,9 @@ class AdminStatusComponent extends React.Component {
     this.props.fetchPlatformsStatus();
     this.props.fetchPayloadsStatus();
     this.props.fetchMunitionsStatus();
-    this.props.fetchPersonnelsStatus();
+    this.props.fetchPersonnelsStatus().then( () => {  this.updateUnit(); } );
+   
+   
   }
 
   openPlatformForm = (row) => {
@@ -172,6 +175,34 @@ class AdminStatusComponent extends React.Component {
 
   }
 
+  handleOrganizationAndDutyData = (organizationAndDutyData) => {
+    const { unit } = this.state;
+    this.setState({       
+        unit: organizationAndDutyData.unit,
+    });
+  
+  console.log("Is this called");
+  }
+
+  updateUnit = () =>
+  {
+    let ses = JSON.parse(localStorage.getItem('session'));
+    console.log(ses);
+    let depUnit = ses.DeployedUnit;
+    let assignedUnit = ses.AssignedUnit;
+    let unitDrop = document.getElementsByName('Unit')[0];
+     if (depUnit != null)
+    { this.setState({unit:depUnit}); 
+    console.log(depUnit);
+    let unitDrop = document.getElementsByName('Unit')[0];
+     unitDrop.selectedIndex = depUnit;
+  }
+    else { this.setState({unit:assignedUnit}); 
+    let unitDrop = document.getElementsByName('Unit')[0];
+     unitDrop.selectedIndex = assignedUnit;
+  }
+  }
+
   render() {
 
     const { statusplatform } = this.props;
@@ -180,6 +211,10 @@ class AdminStatusComponent extends React.Component {
     const { statusmunition } = this.props;
 
     let langs = ['val 1', 'val 2'];
+    
+  const generalFields = [
+    {name: 'Unit', type: 'dropdown', domID: 'dispAssignedUnit', ddID: 'Units/GetUnits', valFieldID: 'Unit'},
+  ];
 
     let {whichModal} = this.state;
     let $what=''; 
@@ -552,9 +587,13 @@ class AdminStatusComponent extends React.Component {
         </div>
 
         <div className="row status">
-              <div className="col-md-4"></div> 
-              {/* <div className="col-md-4"><ContentBlock/>  </div>  */}
+              
+              <div className="col-md-12">
               <div className="col-md-4"></div>
+              <ContentBlock
+              fields={generalFields} data={this.handleOrganizationAndDutyData} initstate ={this.state.unit} editId = {0} /> 
+              </div> 
+              
         </div>
 
         <div className="row status">
