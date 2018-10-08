@@ -14,6 +14,8 @@ import FilterDatePicker from './reusable/FilterDatePicker';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
+import { intelLibraryUser } from '../dictionary/auth';
+
 
 class IntelLibraryComponent extends React.Component {
 
@@ -24,6 +26,12 @@ class IntelLibraryComponent extends React.Component {
   render() {
 
     const {translations} = this.props;
+
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = ses.UserRoles;
+    const roles2 = JSON.parse(roles);
+    const access = roles2.some(v => intelLibraryUser.includes(v));
+    console.log(access);
 
     const searchResult = [
       { date:'07//11/17', mission:'firechief', type:'strike', start:'12:45', end:'18:45', classification:'unclass', air_track:'check', video:'check', images:'check', sigacts:'check', email:'email', export:'export', detail:'detail' },
@@ -140,7 +148,7 @@ class IntelLibraryComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    return (
+    return ( access ? (
       <div>
         <div className="row intel-request">
           <div className="col-md-12">
@@ -166,7 +174,7 @@ class IntelLibraryComponent extends React.Component {
             <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
           </div>
         </div>
-      </div>
+                </div> ) : null
     );
   }
 }
