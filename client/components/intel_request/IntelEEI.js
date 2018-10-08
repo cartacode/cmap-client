@@ -134,7 +134,7 @@ class IntelEEI extends React.Component {
         Header: translations.edit,
         accessor: 'id',
         filterable: false,
-        Cell: row => <div> { missionId === null ? <div>
+        Cell: row => <div> { (missionId === null || missionId === undefined) ? <div>
           <a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value);}}><span className="glyphicon glyphicon-edit"/></a>&nbsp;
           <a href="javaScript:void('0');" onClick={()=>{this.deleteEEI(row.value);}} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a>
         </div> : '' } </div>,
@@ -162,15 +162,6 @@ class IntelEEI extends React.Component {
             </div>
             
           </div>
-          
-          {/* { !this.state.isFormOpened && (missionId === null || missionId === undefined) ?
-            <div className="col-md-2 filter-line pull-right">
-              <div className="add-button">
-                <a href="#intelEEIContainer" className="btn btn-warning ccir-button" onClick={() => this.openEEI('0')}>Add EEI</a>
-              </div>
-            </div>
-            : null
-          } */}
           <div className="col-md-12">
             <ReactTable
               data={this.state.missionEEI}

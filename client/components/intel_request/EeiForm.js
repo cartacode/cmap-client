@@ -49,7 +49,7 @@ class EeiForm extends React.Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { editId, nearestLocations } = this.props;
+    const { editId, nearestLocations, ccirCountry } = this.props;
 
     if(editId === '0' && prevProps.editId !== editId) {
       this.setState({ clear: true });
@@ -59,6 +59,10 @@ class EeiForm extends React.Component {
     }
     if(nearestLocations.uid !== prevProps.nearestLocations.uid) {
       this.setNAIPOI(nearestLocations);
+    }
+
+    if(ccirCountry !== prevProps.ccirCountry) {
+      this.updateCountry();
     }
   }
 
@@ -76,12 +80,28 @@ class EeiForm extends React.Component {
     });
   }
 
+updateCountry = () => {
+  // const districtSelect = document.getElementsByName('district')[0];
+  const { intelReqEEI } = this.state;
+  this.setState(
+    {
+      intelReqEEI:
+        { ...intelReqEEI,
+          district: this.props.ccirCountry,
+        },
+      eeiFetched: true, // to update data in chil components
+    });
+}
+
   editComponent = (editId) => {
     this.props.fetchIntelEeiById(editId).then(() => {
       this.setState(
         {
           eeiFetched: true,
-          intelReqEEI: this.props.oneEEI,
+          intelReqEEI: {
+            ...this.props.oneEEI,
+            district: this.props.ccirCountry,
+          },
         });
     });
 
@@ -92,7 +112,6 @@ class EeiForm extends React.Component {
     this.setState({
       intelReqEEI: {
         ...intelReqEEI,
-
         targetID: intelEei1.targetID,
         objectiveID: intelEei1.objectiveID,
         threatGroupID: intelEei1.threatGroupID,
