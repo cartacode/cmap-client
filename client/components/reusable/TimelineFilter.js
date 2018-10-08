@@ -387,7 +387,8 @@ class TimelineFilter extends React.Component {
     if(tab === MissionConsts.TABS.ATO || tab === MissionConsts.TABS.PED) {
       resourceDisabled = true;
     }
-    // const pageSize = results.length === 0 ? 1 : results.length;
+    console.log('resulst '+ results.length + " groups "+ groups.length);
+    const pageSize = results.length === 0 ? 1 : results.length;
     
     return(
       <div>
@@ -454,7 +455,7 @@ class TimelineFilter extends React.Component {
                   data={results}
                   columns={columns}
                   loading={this.props.isLoading}
-                  // defaultPageSize={pageSize}
+                  defaultPageSize={pageSize}
                   minRows={TableDefaults.MIN_ROWS}
                   className="-striped -highlight"
                   filterable={false}
