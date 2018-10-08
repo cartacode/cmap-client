@@ -234,8 +234,8 @@ editComponent = (editId) => {
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
       },
-      ccirCountry: selectedCCIR.CountryId,
-      firstCcir: selectedCCIR.Description1,
+      ccirCountry: (selectedCCIR !== undefined && selectedCCIR.CountryId !== undefined) ? selectedCCIR.CountryId : '',
+      firstCcir: (selectedCCIR !== undefined && selectedCCIR.Description1 !== undefined) ? selectedCCIR.Description1 : '' ,
     });
 
     this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
