@@ -5,9 +5,10 @@ export const baseUrl = 'http://18.222.48.211:8081/api';
 // export const baseUrl = 'http://ec2-18-220-128-32.us-east-2.compute.amazonaws.com:8082/api';
 
 let ses = JSON.parse(localStorage.getItem('session'));
-let token = ''
+let token = '';
 if(ses)
-{token = ses.access_token;}
+{token = ses.access_token;
+}
 
 
 export const requestHeaders = {

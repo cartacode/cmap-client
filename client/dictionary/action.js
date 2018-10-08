@@ -150,6 +150,7 @@ export const ACCOUNT__REGISTER = createActionType('ACCOUNT__REGISTER');
 export const ACCOUNT__CHANGE_PASSWORD = createActionType('ACCOUNT__CHANGE_PASSWORD');
 export const ACCOUNT__LOGIN = createActionType('ACCOUNT__LOGIN');
 export const ACCOUNT__LOGOUT = createActionType('ACCOUNT__LOGOUT');
+export const REFRESH__TOKEN = createActionType('REFRESH__TOKEN');
 
 export const FETCH_DASHBOARD_OPS_PAYLOAD = createActionType('FETCH_DASHBOARD_OPS_PAYLOAD');
 export const FETCH_DASHBOARD_OPS_PLATFORM = createActionType('FETCH_DASHBOARD_OPS_PLATFORM');
