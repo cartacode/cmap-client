@@ -281,7 +281,7 @@ class TimelineFilter extends React.Component {
     const { filter } = this.state;
     const { tab } = this.props;
     const session = JSON.parse(localStorage.getItem('session'));
-    let unitType = '';
+    let unitType = filter.UnitType;
     if(tab === MissionConsts.TABS.FOP) {
       unitType = UnitConsts.TYPE.CREW;
     }
