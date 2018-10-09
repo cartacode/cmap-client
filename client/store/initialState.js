@@ -162,6 +162,10 @@ export default {
     upcomingMissions: [],
     liveOperations: [],
     isFetching: false,
-  }
+  },
+  intellibraries: {
+    allIntelLibraries: [],
+    isFetching: false,
+  },
 
 };
