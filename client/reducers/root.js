@@ -22,6 +22,7 @@ import organicpersonnels from 'reducers/organicpersonnel';
 import mssionmgts from 'reducers/mssionmgts';
 import dashboards from 'reducers/dashboards';
 import auth from 'reducers/auth';
+import intellibraries from 'reducers/intellibrarys';
 
 export default function createReducer() {
   return combineReducers({
@@ -47,5 +48,6 @@ export default function createReducer() {
     mssionmgts,
     auth,
     dashboards,
+    intellibraries,
   });
 }
