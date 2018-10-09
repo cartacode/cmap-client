@@ -763,5 +763,6 @@
   "Armament Cap(lbs.)" : "Armament Cap(lbs.)",
 	"DeleteConfirmation": "Confirm you wish to Delete Yes/No ?",
 	"Yes": "Yes",
-	"No": "No"
+  "No": "No",
+  "Send": "Send"
 }

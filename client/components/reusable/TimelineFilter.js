@@ -67,7 +67,7 @@ class TimelineFilter extends React.Component {
   }
 
   handleFilterData = (name, value) => {
-    console.log('filetr value ' + value);
+    
     if( value === '0' )
       return;
 
@@ -170,7 +170,7 @@ class TimelineFilter extends React.Component {
       {
         Header: translations.select,
         accessor: id,
-        Cell: row => <div>
+        Cell: row => <div> {row.index} - {row.viewIndex} 
           <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
@@ -201,7 +201,7 @@ class TimelineFilter extends React.Component {
 
     // remove radio button column if tab is ISR
     if(tab === MissionConsts.TABS.ISR) {
-      sidebarHeader[0].columns.splice(0, 1);
+      // sidebarHeader[0].columns.splice(0, 1);
     } else{
       sidebarHeader[0].columns.splice(4, 1);
     }
@@ -246,7 +246,7 @@ class TimelineFilter extends React.Component {
     // event.preventDefault();
     
     const { selectedResource } = this.state.filter;
-    console.log('selectedReource'+selectedResource);
+    
     if(selectedResource === MissionConsts.RESOURCE.PLATFORM) {
       this.findPlatformBased();
     } else if(selectedResource === MissionConsts.RESOURCE.TEAM) {
@@ -281,7 +281,7 @@ class TimelineFilter extends React.Component {
     const { filter } = this.state;
     const { tab } = this.props;
     const session = JSON.parse(localStorage.getItem('session'));
-    let unitType = '';
+    let unitType = filter.UnitType;
     if(tab === MissionConsts.TABS.FOP) {
       unitType = UnitConsts.TYPE.CREW;
     }
@@ -387,7 +387,7 @@ class TimelineFilter extends React.Component {
     if(tab === MissionConsts.TABS.ATO || tab === MissionConsts.TABS.PED) {
       resourceDisabled = true;
     }
-    console.log('resulst '+ results.length + " groups "+ groups.length);
+    
     const pageSize = results.length === 0 ? 1 : results.length;
     
     return(
@@ -455,7 +455,7 @@ class TimelineFilter extends React.Component {
                   data={results}
                   columns={columns}
                   loading={this.props.isLoading}
-                  defaultPageSize={pageSize}
+                  pageSize={pageSize}
                   minRows={TableDefaults.MIN_ROWS}
                   className="-striped -highlight"
                   filterable={false}
