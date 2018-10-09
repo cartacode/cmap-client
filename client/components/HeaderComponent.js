@@ -97,10 +97,13 @@ class HeaderComponent extends React.Component {
       menuItems.push({title: translations['mission mgt'], url: '/mission-mgt/isr-sync'});
     }
 
+    menuItems.push({title: translations['intel library'], url: '/intel-library'});
+    
     if(adminAccess) { 
       menuItems.push({title: translations['admin'], url: '/admin/personnel'});
     }
 
+    
     // menuItems = [
     //   {title: translations['dashboard'], url: '/dashboard'},
     //   {title: translations['liveview'], url: '/liveview'},
@@ -215,7 +218,7 @@ class HeaderComponent extends React.Component {
                 Local:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{moment().local().format('HH:mm:ss')}
               </div>
               <div className="">
-                Zulu:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {moment().utc().format('HH:mm:ss')}
+                UTC:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {moment().utc().format('HH:mm:ss')}
               </div>
             </div>
             <div className="header-line">
