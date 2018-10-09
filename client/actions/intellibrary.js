@@ -8,16 +8,13 @@ import { createAction } from 'util/action';
 export function fetchIntelLibraryRequestById(id) {
   return createAction({
     type: INTEL_LIBRARY_REQUEST__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequest/${id}`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequest/${id}`, { headers: requestHeaders }),
   });
 }
 
-export function fetchIntelLibraryRequests() {
+export function fetchIntelLibraryRequests(unitId) {
   return createAction({
     type: INTEL_LIBRARY_REQUEST__FETCH,
-    action: () => axios.get(`${baseUrl}/IntelRequest/GetIntelRequestData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/Mission/GetIntelLibraryMissions?unitId=${unitId}`, { headers: requestHeaders }),
   });
 }
-
-
-
