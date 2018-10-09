@@ -43,19 +43,19 @@ class IntelLibraryComponent extends React.Component {
     ];
 
     const searchResultColumns = [
-      {
-        Header: translations["date"],
-        accessor: 'date', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
+      // {
+      //   Header: translations["date"],
+      //   accessor: 'date', 
+      //   filterMethod: (filter, row) =>
+      //               row[filter.id].startsWith(filter.value),
         
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
-      },
+      //   sortMethod: (a, b) => {
+      //                 if (a.length === b.length) {
+      //                   return a > b ? 1 : -1;
+      //                 }
+      //                 return a.length > b.length ? 1 : -1;
+      //               }// String-based value accessors!
+      // },
       {
         Header: translations['mission'],
         accessor: 'mission',
@@ -123,12 +123,12 @@ class IntelLibraryComponent extends React.Component {
         Cell: props => <span className='number'><img src="/assets/img/general/export_icon.png"  /></span> // Custom cell components!
       }, 
 
-      {
-        Header: translations['detail'],
-        accessor: 'detail',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
-      }
+      // {
+      //   Header: translations['detail'],
+      //   accessor: 'detail',
+      //   filterable: false,
+      //   Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
+      // }
     ];
 
     const dateTime = [
@@ -166,14 +166,14 @@ class IntelLibraryComponent extends React.Component {
               />
           </div>
         </div>
-        <div className="row intel-request">
+        {/* <div className="row intel-request">
           <div className="col-md-12">
             <FullHeaderLine headerText={translations["search criteria"]} />
           </div>
           <div className="col-md-12">
             <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
-          </div>
-        </div>
+          </div> 
+        </div> */}
                 </div> ) : null
     );
   }

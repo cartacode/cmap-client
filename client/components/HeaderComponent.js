@@ -96,10 +96,13 @@ class HeaderComponent extends React.Component {
     if(missionManageAccess) {
       menuItems.push({title: translations['mission mgt'], url: '/mission-mgt/isr-sync'});
     }
+    // TO DO: have to add role base access if any
+    menuItems.push({title: translations['intel library'], url: '/intel-library'});
 
     if(adminAccess) { 
       menuItems.push({title: translations['admin'], url: '/admin/personnel'});
     }
+
 
     // menuItems = [
     //   {title: translations['dashboard'], url: '/dashboard'},
