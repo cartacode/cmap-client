@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { ACCOUNT__REGISTER, ACCOUNT__LOGIN, ACCOUNT__CHANGE_PASSWORD, ACCOUNT__LOGOUT } from 'dictionary/action';
+import { ACCOUNT__REGISTER, ACCOUNT__LOGIN, ACCOUNT__CHANGE_PASSWORD, ACCOUNT__LOGOUT, REFRESH__TOKEN } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -24,6 +24,13 @@ export function login(login) {
   return createAction({
     type: ACCOUNT__LOGIN,
     action: () => axios.post(`${baseUrl}/Token`, qs.stringify(login), requestHeaders),
+  });
+}
+
+export function refresh(refresh) {
+  return createAction({
+    type: REFRESH__TOKEN,
+    action: () => axios.post(`${baseUrl}/Token`, qs.stringify(refresh), requestHeaders),
   });
 }
 

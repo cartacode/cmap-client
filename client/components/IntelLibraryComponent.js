@@ -14,6 +14,8 @@ import FilterDatePicker from './reusable/FilterDatePicker';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 
+import { intelLibraryUser } from '../dictionary/auth';
+
 
 class IntelLibraryComponent extends React.Component {
 
@@ -25,6 +27,12 @@ class IntelLibraryComponent extends React.Component {
 
     const {translations} = this.props;
 
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = ses.UserRoles;
+    const roles2 = JSON.parse(roles);
+    const access = roles2.some(v => intelLibraryUser.includes(v));
+    console.log(access);
+
     const searchResult = [
       { date:'07//11/17', mission:'firechief', type:'strike', start:'12:45', end:'18:45', classification:'unclass', air_track:'check', video:'check', images:'check', sigacts:'check', email:'email', export:'export', detail:'detail' },
       { date:'07//11/17', mission:'firechief', type:'strike', start:'12:45', end:'18:45', classification:'unclass', air_track:'check', video:'check', images:'check', sigacts:'check', email:'email', export:'export', detail:'detail' },
@@ -35,19 +43,19 @@ class IntelLibraryComponent extends React.Component {
     ];
 
     const searchResultColumns = [
-      {
-        Header: translations["date"],
-        accessor: 'date', 
-        filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value),
+      // {
+      //   Header: translations["date"],
+      //   accessor: 'date', 
+      //   filterMethod: (filter, row) =>
+      //               row[filter.id].startsWith(filter.value),
         
-        sortMethod: (a, b) => {
-                      if (a.length === b.length) {
-                        return a > b ? 1 : -1;
-                      }
-                      return a.length > b.length ? 1 : -1;
-                    }// String-based value accessors!
-      },
+      //   sortMethod: (a, b) => {
+      //                 if (a.length === b.length) {
+      //                   return a > b ? 1 : -1;
+      //                 }
+      //                 return a.length > b.length ? 1 : -1;
+      //               }// String-based value accessors!
+      // },
       {
         Header: translations['mission'],
         accessor: 'mission',
@@ -115,12 +123,12 @@ class IntelLibraryComponent extends React.Component {
         Cell: props => <span className='number'><img src="/assets/img/general/export_icon.png"  /></span> // Custom cell components!
       }, 
 
-      {
-        Header: translations['detail'],
-        accessor: 'detail',
-        filterable: false,
-        Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
-      }
+      // {
+      //   Header: translations['detail'],
+      //   accessor: 'detail',
+      //   filterable: false,
+      //   Cell: props => <span className='number'><img src="/assets/img/general/detail_icon.png"  /></span> // Custom cell components!
+      // }
     ];
 
     const dateTime = [
@@ -140,7 +148,7 @@ class IntelLibraryComponent extends React.Component {
 
     let langs = ['val 1', 'val 2'];
 
-    return (
+    return ( access ? (
       <div>
         <div className="row intel-request">
           <div className="col-md-12">
@@ -158,15 +166,15 @@ class IntelLibraryComponent extends React.Component {
               />
           </div>
         </div>
-        <div className="row intel-request">
+        {/* <div className="row intel-request">
           <div className="col-md-12">
             <FullHeaderLine headerText={translations["search criteria"]} />
           </div>
           <div className="col-md-12">
             <img className="large-map" src="/assets/img/intel_request/operating_picture/large_map.png" alt="" />
-          </div>
-        </div>
-      </div>
+          </div> 
+        </div> */}
+                </div> ) : null
     );
   }
 }
