@@ -51,7 +51,7 @@ class RequestForm extends React.Component {
         locationcategory: '',
         // AreaOfOperations: '',
         SupportedCommand: session.COCOMID,
-        // SupportedUnit: '',
+        SupportedUnit: unitId,
         // NamedOperation: '',
         // MissionType: '',
         // SubMissionType: '',
@@ -75,7 +75,7 @@ class RequestForm extends React.Component {
         // MissionType2: '',
         // Payload: '',
         StatusId: IntelConstants.STATUS.OP.id,
-        UnitID: unitId,
+        UnitId: unitId,
       },
       loading: false,
       ccirPirOptions: [],
@@ -203,7 +203,7 @@ editComponent = (editId) => {
   if(editId !== undefined && editId !== '') {
     this.props.fetchIntelRequestById(editId).then(()=> {
       const { oneIntelRequest } = this.props;
-      console.log('onentelRequest'+JSON.stringify(oneIntelRequest));
+      
       const selectedCCIR = this.state.ccirPirMap[oneIntelRequest.NamedOperation];
       this.setState(
         {
@@ -319,8 +319,8 @@ editComponent = (editId) => {
     const { match: { params } } = this.props;
     const editId = params.editId;
     const session = JSON.parse(localStorage.getItem('session'));
-    intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
-    intelRequest.UnitId = session.AssignedUnit;
+    
+    
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
     this.setState({ loading: true });
     const redirectUrl = '/intel-request/detail/';
@@ -335,10 +335,13 @@ editComponent = (editId) => {
         });
       });
     } else {
+      intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
+      intelRequest.UnitId = session.AssignedUnit;
+      intelRequest.SupportedUnit = session.AssignedUnit;
+      debugger;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
         this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
-        console.log('push in hs=istr it should now redirect');
         this.setState({
           intelRequest: this.props.oneIntelRequest,
           loading: false,
