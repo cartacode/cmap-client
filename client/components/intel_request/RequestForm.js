@@ -338,7 +338,6 @@ editComponent = (editId) => {
       intelRequest.OrginatorPersonnelID = session.PersonnelID; // id of user from session
       intelRequest.UnitId = session.AssignedUnit;
       intelRequest.SupportedUnit = session.AssignedUnit;
-      debugger;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
         this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
