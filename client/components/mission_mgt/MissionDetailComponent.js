@@ -7,6 +7,7 @@ import FormBlock from '../reusable/FormBlock';
 import Loader from '../reusable/Loader';
 import { Redirect } from 'react-router-dom'
 import { NotificationManager } from 'react-notifications';
+import { IntelConstants } from '../../dictionary/constants';
 
 class MissionDetailComponent extends React.Component {
 
@@ -108,7 +109,6 @@ class MissionDetailComponent extends React.Component {
 
     const {missionDetail} = this.state;
 
-
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
       {name: translations['Mission#'], type: 'input', readonly:true,  valueField:"Mission"},
@@ -192,7 +192,8 @@ class MissionDetailComponent extends React.Component {
 
         </div>
 
-
+        { IntelConstants.STATUS.IPNDG.id === missionDetail.StatusId || IntelConstants.STATUS.IPOST.id === missionDetail.StatusId ?
+        
         <form action="" onSubmit={this.handleSubmit} id="platform">
           <div className="row mission-mgt">
             <Loader loading={this.state.loading} />
@@ -221,7 +222,9 @@ class MissionDetailComponent extends React.Component {
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
           </div>
+          
         </form>
+      :''}
         { this.state.redirectToSummaryPage ? <Redirect to={`${redirectUrl}`} /> : null }
       </div>
 
