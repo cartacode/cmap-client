@@ -155,6 +155,12 @@ export const IntelConstants = {
       abbreviation: 'MPLAN',
       color: 'cyan',
     },
+    IPOST: {
+      id: 38,
+      description: 'Intel Posted',
+      abbreviation: 'IPOST',
+      color: 'orange',
+    },
     IPNDG: {
       id: 39,
       description: 'Intel Pending',
