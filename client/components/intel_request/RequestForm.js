@@ -533,7 +533,7 @@ render = () => {
   const intelRequest4 = [
     statusElem,
     // { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: intelRequest.MissionId, valFieldID: 'StatusId', required: true },
-    { name: translations.OrganicUnit, type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'UnitId', disabled: true },
+    { name: translations.OrganicUnit, type: 'dropdown', domID: 'organicUnt', ddID: 'Units/GetUnits', valFieldID: 'SupportedUnit', disabled: true },
     { name: translations.NextHigherUnit, type: 'dropdown', domID: 'nextHigherUnit', ddID: 'Units/GetUnits', valFieldID: 'NextHigherUnitId' },
   ];
 
