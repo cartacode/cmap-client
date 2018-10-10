@@ -51,12 +51,9 @@ export default function auth(state = initialState.auth, { payload, type }) {
         userRoles: payload.data.UserRoles
       };
     case REFRESH__TOKEN.FAILURE:
-      localStorage.removeItem('session');
-      if(localStorage.getItem('session')===null)
-      {
-        showAlert('Session Expired - Login Again');
-      window.location.reload(); 
-      }   
+      localStorage.clear();
+      showAlert('Session Expired - Please Login');
+      window.location.href='/login';  
       return {
         ...state,
         authenticated:false,
