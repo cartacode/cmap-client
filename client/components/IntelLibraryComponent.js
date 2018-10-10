@@ -5,6 +5,10 @@ import 'react-table/react-table.css';
 import { intelLibraryUser } from '../dictionary/auth';
 import FullHeaderLine from './reusable/FullHeaderLine';
 import Redirect from 'react-router-dom/Redirect';
+import { TableDefaults } from '../dictionary/constants';
+import { defaultFilter, formatDateTime } from '../util/helpers';
+
+
 
 class IntelLibraryComponent extends React.Component {
 
@@ -44,8 +48,6 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.mission,
         accessor: 'MissionName',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
       },
       {
         Header: translations.type,
@@ -53,11 +55,31 @@ class IntelLibraryComponent extends React.Component {
       },
       {
         Header: translations.start,
-        accessor: 'StartDate',
+        id: 'StartDate',
+        maxWidth: 150,
+        accessor: d => {
+          return formatDateTime(d.StartDate);
+        },
       },
       {
         Header: translations.end,
-        accessor: 'EndDate',
+        id: 'EndDate',
+        maxWidth: 150,
+        accessor: d => {
+          return formatDateTime(d.EndDate);
+        },
+      },
+      {
+        Header: translations.COCOM,
+        accessor: 'COCOM',
+      },
+      {
+        Header: translations.Country,
+        accessor: 'Country',
+      },
+      {
+        Header: translations.Unit,
+        accessor: 'Unit',
       },
 
       {
@@ -103,12 +125,13 @@ class IntelLibraryComponent extends React.Component {
 
       {
         Header: translations.export,
-        accessor: 'export',
+        accessor: 'Report',
         filterable: false,
         maxWidth: 70,
         Cell: row => (
+         
           <div>
-            <a href="Javascript: void('0');" className="btn btn-primary" title="Export and Download" > <span className="glyphicon glyphicon-download" /></a>
+            <a href={row.value} target="_blank" className="btn btn-primary" title="Export and Download" > <span className="glyphicon glyphicon-download" /></a>
             &nbsp;
             {/* <a href="JavaScript: void('0');" className="btn btn-danger" title="Export and Download" ><span className="glyphicon glyphicon-export" /> </a> */}
           </div>
@@ -179,11 +202,14 @@ class IntelLibraryComponent extends React.Component {
             <ReactTable
               data={searchResult}
               columns={searchResultColumns}
-              defaultPageSize={5}
+              defaultPageSize={TableDefaults.PAGE_SIZE}
               className="-striped -highlight"
-              filterable
-              defaultFilterMethod={(filter, row) =>
-                String(row[filter.id]) === filter.value}
+              filterable={true}
+              minRows={TableDefaults.MIN_ROWS}
+              loading={this.props.isLoading}
+              // defaultFilterMethod={(filter, row) =>
+              //   String(row[filter.id]) === filter.value}
+              defaultFilterMethod={defaultFilter}
             />
           </div>
         </div>
