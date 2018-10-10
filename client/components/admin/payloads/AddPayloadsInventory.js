@@ -64,19 +64,6 @@ class AddPayloadsInventory extends React.Component {
     });
   }
 
-  // componentDidUpdate = () => {
-    
-  //   let {editForm} = this.props;
-  //   let { editId } = this.props;
-    
-  //   if(editForm) {
-        
-  //       this.props.stopupdate();
-  //       this.props.fetchPayloadInventoryById(editId).then(() => {this.setState({editFetched:true}); this.state.payloads = this.props.onePayloadInventory;});
-        
-  //   }
-  // }
-
   stopUpdate = () => {
     this.setState({editFetched:false});
   }
@@ -99,17 +86,13 @@ class AddPayloadsInventory extends React.Component {
       },
       selectedBranch: generalData.branch,
 
-    }, () => {
-      console.log('New state in ASYNC callback:22222', this.state.payloads);
     });
 
-    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) 
-    {
-      
-      console.log("Category Selected");
+    if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) {
       this.updatelocationid(generalData);
     }
-    if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
+
+    if(generalData.branch && generalData.branch !== this.state.selectedBranch) {
       this.updateOwningUnit(generalData);
     }
   }

@@ -50,6 +50,14 @@ export default function auth(state = initialState.auth, { payload, type }) {
         isFetching: false,
         userRoles: payload.data.UserRoles
       };
+    case REFRESH__TOKEN.FAILURE:
+      localStorage.removeItem('session');
+      showAlert('Session Expired - Login Again');
+      window.location.reload();
+      return {
+        ...state,
+        authenticated:false,
+      };
     default:
       return state;
   }

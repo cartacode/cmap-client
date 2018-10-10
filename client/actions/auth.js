@@ -20,17 +20,17 @@ export function changePassword(register) {
   });
 }
 
-export function login(login) {
+export function login(data) {
   return createAction({
     type: ACCOUNT__LOGIN,
-    action: () => axios.post(`${baseUrl}/Token`, qs.stringify(login), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Token`, qs.stringify(data), requestHeaders),
   });
 }
 
-export function refresh(refresh) {
+export function refresh(data) {
   return createAction({
     type: REFRESH__TOKEN,
-    action: () => axios.post(`${baseUrl}/Token`, qs.stringify(refresh), requestHeaders),
+    action: () => axios.post(`${baseUrl}/Token`, qs.stringify(data), requestHeaders),
   });
 }
 
@@ -42,6 +42,6 @@ export function logout() {
 }
 
 function callLogout () {
-  console.log("Logged Out");
+  console.log('Logged Out');
 }
 
