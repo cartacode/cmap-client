@@ -71,8 +71,8 @@ export const IntelConstants = {
       color: '#FFFF00',
     },
     DUR: {
-      id: 4,
-      description: 'Denied - Insufficient Priority',
+      id: 5,
+      description: 'Denied - Unavailable Resources',
       abbreviation: 'DIP',
       color: '#FFFF00',
     },
@@ -152,14 +152,14 @@ export const IntelConstants = {
     MPLAN: {
       id: 37,
       description: 'Mission Planning',
-      abbreviation: 'MG',
+      abbreviation: 'MPLAN',
       color: 'cyan',
     },
-    MC: {
-      id: 40,
-      description: 'Mission Completed',
-      abbreviation: 'MC',
-      color: 'Gray',
+    IPNDG: {
+      id: 39,
+      description: 'Intel Pending',
+      abbreviation: 'IPNDG',
+      color: 'PURPLE',
     },
   },
 };

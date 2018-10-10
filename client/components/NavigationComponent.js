@@ -25,14 +25,11 @@ import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
 let condition = true;
 class NavigationComponent extends React.Component {
 
-  componentWillMount () {
   
 
-  }
-
   componentDidUpdate () {
-    let ses = JSON.parse(localStorage.getItem('session'));
-    if(ses) {
+    const ses = JSON.parse(localStorage.getItem('session'));
+    if(ses && !Object.keys(ses).length === 0 && !ses.constructor === Object) {
     let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
     console.log(exp);
@@ -48,7 +45,7 @@ class NavigationComponent extends React.Component {
         console.log("Unauthorized");
         let refresh_token = ses.refresh_token;
         console.log(refresh_token);
-        let obj = {'grant_type':'refresh_token', 'refresh_token':refresh_token}
+        let obj = {'grant_type':'refresh_token', 'refresh_token': refresh_token}
         this.props.refresh(obj).then(() => {
 
           let { loginData } = this.props;
