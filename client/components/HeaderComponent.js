@@ -37,7 +37,11 @@ class HeaderComponent extends React.Component {
 
   logoutCall = () => {
     
+    // localStorage.removeItem('session');
     localStorage.removeItem('session');
+      if(localStorage.getItem('session')===null)
+        { console.log("Removed"); }
+  
   }
 
   //render dropdown list of lang switcher

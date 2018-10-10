@@ -43,7 +43,7 @@ class LoginComponent extends React.Component {
       // selectedBranch: generalData.ServiceBranch,
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
-    });
+    }, () => { console.log(this.state.login); });
 
   }
 
