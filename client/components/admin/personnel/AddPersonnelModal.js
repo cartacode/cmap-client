@@ -241,7 +241,7 @@ class AddPersonnelModal extends React.Component {
       if (generalData.ServiceBranch && generalData.ServiceBranch !== selectedBranch) {
         this.updateRanks(generalData.ServiceBranch, generalData.Rank);
         this.updateAssignedUnits(generalData.ServiceBranch, personnel.AssignedUnit);
-        this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
+        // this.updateDeployedUnits(generalData.ServiceBranch, personnel.DeployedUnit);
       }
       
       if (generalData.Rank && generalData.Rank !== selectedRank) {
@@ -558,34 +558,34 @@ updateAssignedUnits= (branch,unit) => {
 
 
 
-updateDeployedUnits= (branch,unit) => {
-  let UnitSelect = document.getElementsByName('DeployedUnit')[0];
-  let items = [{'label': '--Select Item--', 'value': 0}];
-  const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
-  axios.get(apiUrl,{headers:requestHeaders})
-    .then(response => {
+// updateDeployedUnits= (branch,unit) => {
+//   let UnitSelect = document.getElementsByName('DeployedUnit')[0];
+//   let items = [{'label': '--Select Item--', 'value': 0}];
+//   const apiUrl = `${baseUrl}/Units/GetUnits?branchID=${branch}`;
+//   axios.get(apiUrl,{headers:requestHeaders})
+//     .then(response => {
      
-      if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
-      response.data.map(item => {
-        items.push({ 'label': item['description'], 'value': item['id'].trim() });
-      });
-      if (UnitSelect.length > 0) {
-        UnitSelect.length = 0;
-      }
-      for(let i in items) {
-        let selected = false;
-        if(unit && items[i].value === unit.toString()) {
-          selected = true;
-        }
-        UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
-      }
+//       if(items.length > 1) {items.length = 0; items = [{'label': '--Select Item--', 'value': 0}];}
+//       response.data.map(item => {
+//         items.push({ 'label': item['description'], 'value': item['id'].trim() });
+//       });
+//       if (UnitSelect.length > 0) {
+//         UnitSelect.length = 0;
+//       }
+//       for(let i in items) {
+//         let selected = false;
+//         if(unit && items[i].value === unit.toString()) {
+//           selected = true;
+//         }
+//         UnitSelect.add(new Option(items[i].label, items[i].value, selected, selected));
+//       }
            
-    })
-    .catch((error) => {
-      console.log('Exception comes:' + error);
-    });
+//     })
+//     .catch((error) => {
+//       console.log('Exception comes:' + error);
+//     });
 
-}
+// }
 
 updatePaygrade= (rank) => {
 
@@ -700,7 +700,7 @@ render() {
   const organisationFields = [
     {name: translations['Company'], type: 'dropdown', domID: 'dispCompany', ddID: 'Companies', valFieldID: 'Company'},
     {name: translations['Assigned Unit'], type: 'dropdown', domID: 'dispAssignedUnit', ddID: 'Units/GetUnits', valFieldID: 'AssignedUnit'},
-    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: 'Units/GetUnits', valFieldID: 'DeployedUnit'},
+    {name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: 'Units/GetUnits?onlyUsersDeployedUnits=true', valFieldID: 'DeployedUnit'},
     {name: translations['Duty Position#1'], type: 'dropdown', domID: 'dispDutyPosition1', ddID: 'DutyPosition', valFieldID: 'DutyPosition1'},
     {name: translations['MOS#1'], type: 'dropdown', domID: 'dispMOS1', ddID: 'MOS', valFieldID: 'MOS1'},
     {name: translations['Duty Position#2'], type: 'dropdown', domID: 'dispDutyPosition2', ddID: 'DutyPosition', valFieldID: 'DutyPosition2'},
