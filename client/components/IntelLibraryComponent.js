@@ -8,6 +8,7 @@ import Redirect from 'react-router-dom/Redirect';
 import { TableDefaults } from '../dictionary/constants';
 import { defaultFilter, formatDateTime } from '../util/helpers';
 import EmailSendModal from './reusable/EmailSendModal';
+import { NotificationManager } from 'react-notifications';
 
 
 
@@ -15,9 +16,9 @@ class IntelLibraryComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.setState = {
+    this.state = {
       modalOpen: false,
-      row: null,
+      row: {},
     };
   }
 
@@ -34,11 +35,31 @@ class IntelLibraryComponent extends React.Component {
     this.props.fetchIntelLibraryRequests(unitId);
   };
 
-
   openSendEmailModal = (rowValue) => {
     this.setState({
       modalOpen: true,
       row: rowValue,
+    });
+  }
+
+  sendEmail = (row, content) => {
+    content.MissionId = row.original.MissionId;
+    this.props.sendEmails(content).then(() => {
+      this.closeEmailModal();
+      this.notify();
+    });
+  }
+
+  notify = () => {
+    const { translations } = this.props;
+    NotificationManager.success('Email', 'Email is successfully sent.', 5000);
+  
+  };
+
+  closeEmailModal = () => {
+    this.setState({
+      modalOpen: false,
+      row: null,
     });
   }
 
@@ -209,8 +230,8 @@ class IntelLibraryComponent extends React.Component {
 
     return (access ? (
       <div>
-        {/* <EmailSendModal show={this.state.modalOpen} onClose={this.closeEmailModal} row = {this.state.row} moveLeft = {this.moveLeft} translations = {translations}  /> */}
         <div className="row intel-request">
+          <EmailSendModal show = {this.state.modalOpen} onClose={this.closeEmailModal} sendEmail = {this.sendEmail} row = {this.state.row} translations = {translations}/>
           <div className="col-md-12">
             <FullHeaderLine headerText={translations['intelligence reports']} />
           </div>

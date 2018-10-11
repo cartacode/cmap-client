@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchIntelLibraryRequests  } from 'actions/intellibrary';
+import { fetchIntelLibraryRequests, sendEmails  } from 'actions/intellibrary';
 import IntelLibraryComponent from '../components/IntelLibraryComponent';
 
 const mapStateToProps = state => {
@@ -11,5 +11,6 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = {
   fetchIntelLibraryRequests,
+  sendEmails,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(IntelLibraryComponent);

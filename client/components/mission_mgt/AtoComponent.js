@@ -77,7 +77,7 @@ moveLeft = (row) => {
 
     // Inserts new values in mission table
     this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
-      this.missionModalNameModal(null);
+      //this.missionModalNameModal(null);
       this.loadData();
       this.timeLine.onFind();
     });
