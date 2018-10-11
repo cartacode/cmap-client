@@ -136,25 +136,19 @@ function getPlugins(isDev) {
       inject: 'body',
       template: path.join(__dirname, 'client/index.html'),
     }),
-    
-    // new webpack.DefinePlugin({
-    //   CESIUM_BASE_URL: JSON.stringify('/Cesium'),
-    // }),
-    // new CopyWebpackPlugin([
-    //   { from: path.join(__dirname, 'node_modules/cesium/Build/Cesium/Workers'), to: 'Cesium/Workers' },
-    // ]),
-    // new CopyWebpackPlugin([
-    //   { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
-    // ]),
-
-    // new webpack.ProvidePlugin({
-    //   jQuery: 'jquery',
-    //   $: 'jquery'
-    // }),
-    // new webpack.ProvidePlugin({
-    //   jQuery: 'jquery-ui',
-    //   $: 'jquery-ui'
-    // }),
+    new webpack.DefinePlugin({
+      CESIUM_BASE_URL: JSON.stringify('/Cesium'),
+    }),
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'node_modules/cesium/Build/Cesium/Workers'), to: 'Cesium/Workers' },
+    ]),
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'node_modules/cesium/Source/Assets'), to: 'Cesium/Assets' },
+    ]),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
   ];
 
   if (isDev) {
