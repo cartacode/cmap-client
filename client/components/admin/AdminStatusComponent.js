@@ -24,6 +24,7 @@ import PersonnelStatus from './status/PersonnelStatus';
 import MunitionsStatus from './status/MunitionsStatus';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
+import ContentBlock from '../reusable/ContentBlock';
 
 let rn = 0;
 class AdminStatusComponent extends React.Component {
@@ -47,16 +48,34 @@ class AdminStatusComponent extends React.Component {
       platformStatusOpen:false,
       payloadStatusOpen:false,
       personnelStatusOpen:false,
-      munitionStatusOpen:false
+      munitionStatusOpen:false,
+      unit:''
     }
   }
 
   componentDidMount() {
-    this.props.fetchPlatformsStatus();
-    this.props.fetchPayloadsStatus();
-    this.props.fetchMunitionsStatus();
-    this.props.fetchPersonnelsStatus();
+    let ses = JSON.parse(localStorage.getItem('session'));
+    console.log(ses);
+    let depUnit = ses.DeployedUnit;
+    let assignedUnit = ses.AssignedUnit;
+    let specificUnit = 0;
+    if(depUnit==null)
+    { specificUnit = assignedUnit; }
+    else { specificUnit = assignedUnit; }
+
+    this.props.fetchPlatformsStatus(specificUnit);
+    this.props.fetchPayloadsStatus(specificUnit);
+    this.props.fetchMunitionsStatus(specificUnit);
+    this.props.fetchPersonnelsStatus(specificUnit).then( () => {  this.updateUnit(); } );
+   
+   
   }
+
+  // componentDidUpdate () {
+  // let unitDrop = document.getElementsByName('dispAssignedUnit')[0];
+  // unitDrop.selectedIndex = this.state.unit;
+  // console.log(this.state.unit);
+  // }
 
   openPlatformForm = (row) => {
     this.setState({
@@ -171,6 +190,44 @@ class AdminStatusComponent extends React.Component {
 
   }
 
+  handleOrganizationAndDutyData = (organizationAndDutyData) => {
+    const { unit } = this.state;
+    this.setState({       
+        unit: organizationAndDutyData.dispAssignedUnit,
+    }, () => { 
+      console.log(this.state.unit);
+    this.props.fetchPlatformsStatus(this.state.unit);
+    this.props.fetchPayloadsStatus(this.state.unit);
+    this.props.fetchMunitionsStatus(this.state.unit);
+    this.props.fetchPersonnelsStatus(this.state.unit)
+
+     });
+  
+  console.log("Is this called");
+  }
+
+  updateUnit = () =>
+  {
+    let ses = JSON.parse(localStorage.getItem('session'));
+    console.log(ses);
+    let depUnit = ses.DeployedUnit;
+    let assignedUnit = ses.AssignedUnit;
+  
+    
+     if (depUnit == null)
+    { this.setState({unit:assignedUnit}); 
+    console.log(assignedUnit);
+    let unitDrop = document.getElementsByName('dispAssignedUnit')[0];
+     unitDrop.selectedIndex = assignedUnit;
+  }
+    else { this.setState({unit:depUnit}); 
+    console.log(depUnit);
+    let unitDrop = document.getElementsByName('dispAssignedUnit')[0];
+     unitDrop.selectedIndex = depUnit;
+     console.log(unitDrop);
+  }
+  }
+
   render() {
 
     const { statusplatform } = this.props;
@@ -179,6 +236,12 @@ class AdminStatusComponent extends React.Component {
     const { statusmunition } = this.props;
 
     let langs = ['val 1', 'val 2'];
+    
+  const generalFields = [
+    {name: 'Unit', type: 'dropdown', domID: 'dispAssignedUnit', ddID: 'Units/GetUnits', valFieldID: 'dispAssignedUnit'},
+  ];
+
+  
 
     let {whichModal} = this.state;
     let $what=''; 
@@ -551,7 +614,13 @@ class AdminStatusComponent extends React.Component {
         </div>
 
         <div className="row status">
-        
+              
+              <div className="col-md-12">
+              <div className="col-md-4"></div>
+              <ContentBlock
+              fields={generalFields} data={this.handleOrganizationAndDutyData} initstate ={this.state.unit} editId = {0} /> 
+              </div> 
+              
         </div>
 
         <div className="row status">

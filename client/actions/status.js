@@ -7,10 +7,10 @@ import { createAction } from 'util/action';
 
 
 
-export function fetchPlatformsStatus() {
+export function fetchPlatformsStatus(unit) {
   return createAction({
     type: STATUS_PLATFORM__FETCH,
-    action: () => axios.get(`${baseUrl}/PlatformStatus/GetPlatformStatusData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/PlatformStatus/GetPlatformStatusData?specificUnit=${unit}&onlyUsersDeployedUnits=false`, {headers:requestHeaders}),
   });
 }
 
@@ -28,10 +28,10 @@ export function updatePlatformStatus(id, platform) {
   });
 }
 
-export function fetchPayloadsStatus() {
+export function fetchPayloadsStatus(unit) {
   return createAction({
     type: STATUS_PAYLOAD__FETCH,
-    action: () => axios.get(`${baseUrl}/PayloadStatus/GetPayloadStatusData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/PayloadStatus/GetPayloadStatusData?specificUnit=${unit}&onlyUsersDeployedUnits=false`, {headers:requestHeaders}),
   });
 }
 
@@ -49,10 +49,10 @@ export function updatePayloadStatus(id, payload) {
   });
 }
 
-export function fetchPersonnelsStatus() {
+export function fetchPersonnelsStatus(unit) {
   return createAction({
     type: STATUS_PERSONNEL__FETCH,
-    action: () => axios.get(`${baseUrl}/PersonnelStatus/GetPersonnelStatusData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/PersonnelStatus/GetPersonnelStatusData?specificUnit=${unit}&onlyUsersDeployedUnits=false`, {headers:requestHeaders}),
   });
 }
 
@@ -70,10 +70,10 @@ export function updatePersonnelStatus(id, personnel) {
   });
 }
 
-export function fetchMunitionsStatus() {
+export function fetchMunitionsStatus(unit) {
   return createAction({
     type: STATUS_MUNITION__FETCH,
-    action: () => axios.get(`${baseUrl}/MunitionStatus/GetMunitionsStatusData`, {headers:requestHeaders}),
+    action: () => axios.get(`${baseUrl}/MunitionStatus/GetMunitionsStatusData?specificUnit=${unit}&onlyUsersDeployedUnits=false`, {headers:requestHeaders}),
   });
 }
 
