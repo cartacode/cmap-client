@@ -40,6 +40,10 @@ class MissionDetailComponent extends React.Component {
             missionDetail: this.props.oneMissionDetail,
             missionId: editId,
             editFetched: true,
+            missionDetailFiles: {
+              missionReport: this.props.oneMissionDetail.MissionReport,
+              FlightPlan: this.props.oneMissionDetail.FlightPlan,
+            }
 
           });
       });
@@ -54,10 +58,11 @@ class MissionDetailComponent extends React.Component {
     // adding Id field as missionId nede for put request of mission
     const data = {...missionDetail, 'Id': missionId };
     const formData = new FormData();
-    if (missionDetailFiles.missionReport) {
+    // if new file selected
+    if (typeof missionDetailFiles.missionReport === 'object') {
       formData.append('MissionReport', missionDetailFiles.missionReport, missionDetailFiles.missionReport.name);
     }
-    if(missionDetailFiles.FlightPlan){
+    if(typeof missionDetailFiles.FlightPlan === 'object') {
       formData.append('FlightPlan', missionDetailFiles.FlightPlan, missionDetailFiles.FlightPlan.name);
     }
     formData.append('missionFormData', JSON.stringify(data));
@@ -108,6 +113,11 @@ class MissionDetailComponent extends React.Component {
     const {translations} = this.props;
 
     const {missionDetail} = this.state;
+    let MissionReportRequired = true;
+    if(missionDetail.MissionReport !== undefined && missionDetail.MissionReport !== null && missionDetail.MissionReport !== '') {
+      MissionReportRequired = false;
+    }
+
 
     const missionBlock1= [
       {name: translations['Mission Name'], type: 'input',  valueField:"MissionName",readonly:true},
@@ -156,7 +166,7 @@ class MissionDetailComponent extends React.Component {
     ];
 
     const missionBlock4 = [  
-      { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file', required: true },
+      { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file', required: MissionReportRequired },
       { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
 
     ];
