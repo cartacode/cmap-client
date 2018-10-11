@@ -809,7 +809,18 @@
 "Unassign": "Unassign",
 "Remove": "Remove",
 "Add": "Add",
-"Actions": "Actions"
+"Actions": "Actions",
+
+"Request":"Request#",
+"Select Item":"--Select Item--",
+"Select Location Category":"--Select Location Category First--",
+"Select Named Operation First":"--Select Named Operation First--",
+"Move To Intel Request":"Move To Intel Request",
+"Move To Collection Plan":"Move To Collection Plan",
+"Route":"Route",
+"Payload":"Payload",
+"YES":"YES",
+"NO":"NO"
 
 
 }

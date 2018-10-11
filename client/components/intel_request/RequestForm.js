@@ -140,11 +140,12 @@ getHigherUnit = () => {
 createCcirPirData = (editId) => {
 
   this.props.fetchCcirPirs().then(() =>{
+    const {translations}=this.props;
     const { allCcirPirs } = this.props;
     localStorage.setItem('KMLdata', JSON.stringify(allCcirPirs));
     
     // array for ccirpir drodponow
-    const ccirPirOptions = [{ 'label': '--Select Item--', 'value': '' }];
+    const ccirPirOptions = [{ 'label': translations['Select Item'], 'value': '' }];
 
     // map for pir dropdonw only, to fetch pir by ccirpirId
     const pirs = {};
@@ -393,7 +394,8 @@ setOneLocation = (location, currentLatLong) =>{
 }
 
 resetForm() {
-  if (confirm('Do you want to clear all data from this form?')) {
+  const {translations}=this.props;
+  if (confirm(translations['ClearConfirmation'])) {
     this.setState({ clear: true });
     document.getElementById('personnelform').reset();
   }
@@ -477,9 +479,9 @@ renderCCIRPIR = () =>{
 }
 
 render = () => {
-
-  const armedOptions = [{ value: true, label: 'Yes' }, { value: false, label: 'No' }];
   const { translations } = this.props;
+  const armedOptions = [{ value: true, label: translations['Yes'] }, { value: false, label: translations['No'] }];
+ 
 
   const { match: { params } } = this.props;
   const editId = params.editId;
@@ -498,7 +500,7 @@ render = () => {
     { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isDisabled },
     { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true, disabled: isDisabled },
     { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true, disabled: isDisabled },
-    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: '--Select Named Operation First--', value: '' }], readOnly: isDisabled },
+    { name: translations['Priority Intel Req'], type: 'dropdown', domID: 'PriorityIntelRequirement', valFieldID: 'PriorityIntelRequirement', required: true, options: [{ label: translations['Select Named Operation First'], value: '' }], readOnly: isDisabled },
   ];
 
   const intelRequest2 = [
@@ -512,8 +514,8 @@ render = () => {
 
   // Following fields is visible only to Collection manager and also only in case of edit
   const intelRequest3 = [
-    { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true, disabled: isDisabled },
-    { name: 'Location ID', type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: '--Select Location Category First--', value: '' }], disabled: isDisabled },
+    { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true, disabled: isDisabled },
+    { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', valFieldID: 'locationID', required: true, options: [{ label: translations['Select Location Category'], value: '' }], disabled: isDisabled },
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true, disabled: isDisabled },
     // {name: translations['LIMIDS Request'], type: 'input', domID: 'LIMIDSRequest', valFieldID: 'LIMIDSRequest'},
     { name: translations.originator, type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
@@ -560,8 +562,8 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
-          </div>
+{            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
+ }          </div>
         </div>
         <div className="col-md-4 one-block">
           <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />

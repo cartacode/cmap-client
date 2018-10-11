@@ -182,7 +182,8 @@ updateCountry = () => {
   }
 
   resetForm() {
-    if (confirm('Do you want to clear all data from this form?')) {
+    const {translations}=this.props;
+    if (confirm(translations['ClearConfirmation'])) {
       this.setState({ clear: true });
       document.getElementById('EeiForm').reset();
     }

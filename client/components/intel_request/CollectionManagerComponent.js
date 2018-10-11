@@ -145,7 +145,7 @@ class CollectionManagerComponent extends React.Component {
 
     const intelRequestColumns = [
       {
-        Header: 'Request#',
+        Header: translations['Request'],
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         // Cell: row => <div>
@@ -161,7 +161,7 @@ class CollectionManagerComponent extends React.Component {
           ),
       },
       {
-        Header: 'Command',
+        Header: translations['Command'],
         accessor: 'COCOMText',
         maxWidth: 150,
       },
@@ -170,19 +170,19 @@ class CollectionManagerComponent extends React.Component {
         accessor: "Status"
       }, */
       {
-        Header: 'Mission Type',
+        Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
       {
-        Header: 'Payload',
+        Header: translations['Payload'],
         accessor: 'PrimaryPayloadName',
       },
       {
-        Header: 'Armed',
+        Header: translations['Armed'],
         accessor: 'Armed',
         maxWidth: 80,
         Cell: row => <div>
-          <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+          <span>{row.original.Armed ? translations['YES'] :translations['NO']}</span>
         </div>,
       },
       {
@@ -193,9 +193,9 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
-            <a href="Javascript: void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="Javascript: void('0');" className="btn btn-primary" title={translations["Move To Collection Plan"]} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
-            <a href="JavaScript: void('0');" className="btn btn-danger" title="Delete" onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
+            <a href="JavaScript: void('0');" className="btn btn-danger" title={translations["Delete"]} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
         ),
       },
@@ -203,7 +203,7 @@ class CollectionManagerComponent extends React.Component {
 
     const collectionPlanColumns = [
       {
-        Header: 'Request# ',
+        Header: translations['Request'],
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div className = 'tooltip-custom'>
@@ -216,7 +216,7 @@ class CollectionManagerComponent extends React.Component {
       //   accessor: 'Asset',
       // },
       {
-        Header: 'Priority',
+        Header: translations['Priority'],
         accessor: 'Priority',
       },
      /*  {
@@ -224,19 +224,19 @@ class CollectionManagerComponent extends React.Component {
         accessor: "Status"
       }, */
       {
-        Header: 'Mission Type',
+        Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
       {
-        Header: 'Payload',
+        Header: translations['Payload'],
         accessor: 'PrimaryPayloadName',
       },
       {
-        Header: 'Armed',
+        Header: translations['Armed'],
         accessor: 'Armed',
         maxWidth: 80,
         Cell: row => <div>
-          <span>{row.original.Armed ? 'YES' : 'NO'}</span>
+          <span>{row.original.Armed ? translations['YES'] : translations['NO']}</span>
         </div>,
       },
       /*   {
@@ -250,7 +250,7 @@ class CollectionManagerComponent extends React.Component {
         maxWidth: 100,
         Cell: row => (
           <div>
-            <a href="Javascript:void('0');" className="btn btn-primary" title="Move To Intel Request" onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
+            <a href="Javascript:void('0');" className="btn btn-primary" title={translations["Move To Intel Request"]} onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
             &nbsp;
           </div>
         ),
@@ -321,7 +321,7 @@ class CollectionManagerComponent extends React.Component {
                 {/* <img className="line" src="/assets/img/admin/edit_up.png" alt=""/> */}
                 { access ? 
                 (<a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
-                    Route
+                    {translations["Route"]}
                 </a>) : null
                 }
                 {/* <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/> */}

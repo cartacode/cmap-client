@@ -807,5 +807,22 @@
  "Arrival Date":"Arrival Date",
  "Departure Date":"Departure Date",
  "Munition":"Munition",
- "Effective Area KML":"Effective Area KML"
+ "Effective Area KML":"Effective Area KML",
+
+ "Request":"Request#",
+ "Select Item":"--Select Item--",
+ "Select Location Category":"--Select Location Category First--",
+ "Select Named Operation First":"--Select Named Operation First--",
+ "Move To Intel Request":"Move To Intel Request",
+ "Move To Collection Plan":"Move To Collection Plan",
+ "Route":"Route",
+ "Payload":"Payload",
+ "YES":"YES",
+ "NO":"NO"
+ 
+ 
+
+
+
+
 }

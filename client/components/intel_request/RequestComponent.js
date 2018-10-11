@@ -85,7 +85,7 @@ class RequestComponent extends React.Component {
     const editurl = match.url.replace('/request', '/detail/');
     const columns = [
       {
-        Header: 'IR#',
+        Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div>
