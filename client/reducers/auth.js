@@ -52,6 +52,7 @@ export default function auth(state = initialState.auth, { payload, type }) {
       };
     case REFRESH__TOKEN.FAILURE:
       localStorage.clear();
+      state.authenticated = false;
       showAlert('Session Expired - Please Login');
       window.location.href='/login';  
       return {

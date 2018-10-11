@@ -47,7 +47,6 @@ class LoginComponent extends React.Component {
   }
 
   setSession = () => {
-    debugger;
     const { loginData } = this.props;
     const { authenticated } = this.props;
 
@@ -63,13 +62,11 @@ class LoginComponent extends React.Component {
   }
 
   handleSubmit = event => {
-    debugger;
     event.preventDefault();
     const { login } = this.state;
     // console.log(login);
     this.setState({ loading: true });
     this.props.login(login).then(() => {
-      debugger;
       // Stop Loader
       this.setState({ loading: false });
       // this.props.onClose(NoticeType.ADD);

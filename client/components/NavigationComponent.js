@@ -28,7 +28,7 @@ class NavigationComponent extends React.Component {
   
 
   componentDidUpdate () {
-    const ses = JSON.parse(localStorage.getItem('session'));
+    let ses = JSON.parse(localStorage.getItem('session'));
     console.log("Here-Pre");
     if (ses === null)
     { console.log("Empty Session"); }
@@ -39,25 +39,27 @@ class NavigationComponent extends React.Component {
     { console.log('Empty Session'); }
     else
     {
-    let expired = ses['.expires'];
+    let session = JSON.parse(localStorage.getItem('session'));
+    let expired = session['.expires'];
     let exp = new Date(expired).toISOString();
     console.log(exp);
     // console.log(new Date().toISOString());
     let current = new Date().toISOString();
     console.log(current);
     if (exp < current)           
-    { 
+    {       
         //   localStorage.removeItem('session');
         //  console.log("Logged Out");
         //  this.props.history.push('/'); 
         //  alert("Session Expired - Please Login");
         //  condition = false;
         console.log("Unauthorized");
-        let refresh_token = ses.refresh_token;
+        let refresh_token = session.refresh_token;
         console.log(refresh_token);
-        let obj = {'grant_type':'refresh_token', 'refresh_token': refresh_token}
-        this.props.refresh(obj).then(() => {
-
+        // alert(exp);
+        let obj = {'grant_type':'refresh_token', 'refresh_token': refresh_token}       
+        // alert(exp);
+        this.props.refresh(obj).then(() => {        
           let { loginData } = this.props;
           let mySession = JSON.stringify(loginData);
           const { authenticated } = this.props;
@@ -70,8 +72,8 @@ class NavigationComponent extends React.Component {
           }
 
         });
+      }
             condition = false;
-    }
   }
   }
   }
