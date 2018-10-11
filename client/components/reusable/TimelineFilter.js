@@ -422,13 +422,13 @@ class TimelineFilter extends React.Component {
             <div className="each-select text-left">
               <div className="date-pic">
                 <label>Start Date</label>
-                <CustomDatePicker name="startDate" defaultValue={startDate} changeDate={this.handleChangeDate}/>
+                <CustomDatePicker name="startDate" defaultValue={startDate} changeDate={this.handleChangeDate} disablePreviousDate = {false}/>
               </div>
             </div>
             <div className="each-select text-left">
               <div className="date-pic">
                 <label>End Date</label>
-                <CustomDatePicker name="endDate" defaultValue={endDate} changeDate={this.handleChangeDate}/>
+                <CustomDatePicker name="endDate" defaultValue={endDate} changeDate={this.handleChangeDate} disablePreviousDate = {false}/>
               </div>
             </div>
             <div className="filter-button">

@@ -115,9 +115,10 @@ class PlatformStatus extends React.Component {
 
 
   resetForm() {
+    const {translations}= this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({clear:true});
     }
     else {
@@ -134,9 +135,9 @@ class PlatformStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetAssetStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
-      {name: "ETIC", type: 'number', domID: 'ETIC',valFieldID: 'ETIC',required:true},
-      {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
+      {name: translations["Status"], type: 'dropdown', ddID: 'StatusCodes/GetAssetStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: translations["ETIC"], type: 'number', domID: 'ETIC',valFieldID: 'ETIC',required:true},
+      {name: translations["Remark"], type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
 

@@ -358,7 +358,7 @@ class AdminStatusComponent extends React.Component {
 
     const equipmentColumns = [
       {
-        Header: "Munition",
+        Header: translations["Munition"],
         accessor: 'name', 
       },
       {

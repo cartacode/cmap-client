@@ -322,9 +322,10 @@ class RocketModal extends React.Component {
   }
 
   resetForm() {
+    const {translations}=this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm("ClearConfirmation")) {
       this.setState({
         clear: true,
         rocketPhotoPreviewUrl: '/assets/img/admin/rockets.png',

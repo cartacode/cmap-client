@@ -133,7 +133,7 @@ class PoiModal extends React.Component {
   resetForm(){
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm("ClearConfirmation")) {
       let inputs = document.body.getElementsByTagName('input');
       let drops = document.body.getElementsByTagName('select');
       for (let item of inputs) {

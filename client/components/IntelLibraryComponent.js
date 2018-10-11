@@ -7,6 +7,7 @@ import FullHeaderLine from './reusable/FullHeaderLine';
 import Redirect from 'react-router-dom/Redirect';
 import { TableDefaults } from '../dictionary/constants';
 import { defaultFilter, formatDateTime } from '../util/helpers';
+import EmailSendModal from './reusable/EmailSendModal';
 
 
 
@@ -14,6 +15,10 @@ class IntelLibraryComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.setState = {
+      modalOpen: false,
+      row: null,
+    };
   }
 
   componentDidMount() {
@@ -28,6 +33,14 @@ class IntelLibraryComponent extends React.Component {
     const unitId = session.AssignedUnit;
     this.props.fetchIntelLibraryRequests(unitId);
   };
+
+
+  openSendEmailModal = (rowValue) => {
+    this.setState({
+      modalOpen: true,
+      row: rowValue,
+    });
+  }
 
   getTableheaderColumns = () => {
     const { translations } = this.props;
@@ -72,10 +85,12 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.COCOM,
         accessor: 'COCOM',
+        maxWidth: 150,
       },
       {
         Header: translations.Country,
         accessor: 'Country',
+        maxWidth: 150,
       },
       {
         Header: translations.Unit,
@@ -144,7 +159,7 @@ class IntelLibraryComponent extends React.Component {
         maxWidth: 70,
         Cell: row => (
           <div>
-            <a href="Javascript: void('0');" className="btn btn-primary" title="Send" onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-send" /></a>
+            <a href="Javascript: void('0');" className="btn btn-primary" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
           </div>
         ),
       },
@@ -194,6 +209,7 @@ class IntelLibraryComponent extends React.Component {
 
     return (access ? (
       <div>
+        {/* <EmailSendModal show={this.state.modalOpen} onClose={this.closeEmailModal} row = {this.state.row} moveLeft = {this.moveLeft} translations = {translations}  /> */}
         <div className="row intel-request">
           <div className="col-md-12">
             <FullHeaderLine headerText={translations['intelligence reports']} />

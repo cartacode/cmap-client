@@ -488,7 +488,9 @@ class AddPersonnelModal extends React.Component {
       });
     }
   }
+  
   else {
+   
     alert("Select atleast one user-role check-box");
   }
   }
@@ -625,7 +627,7 @@ stopset () {
 resetForm() {
   this.setState(this.baseState);
   
-  if (confirm('Do you want to clear all data from this form?')) {
+  if (confirm(translations['ClearConfirmation'])) {
     this.setState({
       clear:true,
       imagePreviewUrl:'/assets/img/admin/photo_1.png',
@@ -692,9 +694,9 @@ render() {
     {name: translations['Clearance Level'], type: 'dropdown', domID: 'dispClearance', ddID: 'Clearance', valFieldID: 'Clearance', required: true },
     {name: translations['CAC ID'], type: 'input', domID: 'CACid', valFieldID: 'CACid', regexType: 'AlphaNumberic & Special Char @#-_*$&', regex: '^[0-9a-zA-Z_*@#$&-]+$' },
     {name: translations['Call Sign'], type: 'input', domID: 'CallSign', valFieldID: 'CallSign' },
-    {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
-    {name: 'Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
-    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true },
+    {name: translations['User Name'], type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
+    {name: translations['Password'], type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
+    {name: translations['Confirm Password'], type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true },
   ];
 
   const organisationFields = [
@@ -715,17 +717,17 @@ render() {
   ];
 
   const roleFields = [
-    { name: 'CollectionManager:', type: 'check', domID: 'CollectionManager', valFieldID: 'CollectionManager', domValue:'b63ca868-af4b-486f-9540-3d01eca089fe'},
-    { name: 'Flight Ops Lead:', type: 'check', domID: 'FlightOpsLead', valFieldID: 'FlightOpsLead', domValue:'7554b13b-bb2b-4203-a334-5417f5b03650' },
-    { name: 'Flight Ops Personnel:', type: 'check', domID: 'FlightOpsPersonnel', valFieldID: 'FlightOpsPersonnel', domValue:'d669b1ed-5e2c-4c27-8d16-60388dffcc2a' },
-    { name: 'Group Admin:', type: 'check', domID: 'GroupAdmin', valFieldID: 'GroupAdmin', domValue:'6dd5ba55-f445-4a30-8270-fdbc992434af' },
-    { name: 'Intel Customer:', type: 'check', domID: 'IntelCustomer', valFieldID: 'IntelCustomer', domValue:'0425a61c-f00e-40d7-93d4-f811e1891ade' },
-    { name: 'Leadership:', type: 'check', domID: 'Leadership', valFieldID: 'Leadership', domValue:'f09c4e3a-eebe-434e-a2a2-b0b44cbcca93' },
-    { name: 'Mission Manager:', type: 'check', domID: 'MissionManager', valFieldID: 'MissionManager', domValue:'36c9952b-3f63-468d-9335-3294a91e9c97' },
-    { name: 'Operations Officer:', type: 'check', domID: 'OperationsOfficer', valFieldID: 'OperationsOfficer', domValue:'d3afa700-751d-4f08-b99e-f9a15361c7a1' },
-    { name: 'PED Personnel:', type: 'check', domID: 'PEDPersonnel', valFieldID: 'PEDPersonnel', domValue:'7637f5c8-aa0c-4447-b7a9-939aadd07c7a' },
-    { name: 'PED Team Lead:', type: 'check', domID: 'PEDTeamLead', valFieldID: 'PEDTeamLead', domValue:'af036592-2598-4727-bc36-7f71c665f787' },
-    { name: 'Super Admin:', type: 'check', domID: 'SuperAdmin', valFieldID: 'SuperAdmin', domValue:'f5bfb78f-38c6-48f4-8773-59c2543e0805' },
+    { name: translations ['CollectionManager'], type: 'check', domID: 'CollectionManager', valFieldID: 'CollectionManager', domValue:'b63ca868-af4b-486f-9540-3d01eca089fe'},
+    { name: translations['Flight Ops Lead'], type: 'check', domID: 'FlightOpsLead', valFieldID: 'FlightOpsLead', domValue:'7554b13b-bb2b-4203-a334-5417f5b03650' },
+    { name: translations ['Flight Ops Personnel'], type: 'check', domID: 'FlightOpsPersonnel', valFieldID: 'FlightOpsPersonnel', domValue:'d669b1ed-5e2c-4c27-8d16-60388dffcc2a' },
+    { name: translations['Group Admin'], type: 'check', domID: 'GroupAdmin', valFieldID: 'GroupAdmin', domValue:'6dd5ba55-f445-4a30-8270-fdbc992434af' },
+    { name: translations['Intel Customer'], type: 'check', domID: 'IntelCustomer', valFieldID: 'IntelCustomer', domValue:'0425a61c-f00e-40d7-93d4-f811e1891ade' },
+    { name: translations['Leadership'], type: 'check', domID: 'Leadership', valFieldID: 'Leadership', domValue:'f09c4e3a-eebe-434e-a2a2-b0b44cbcca93' },
+    { name: translations['Mission Manager'], type: 'check', domID: 'MissionManager', valFieldID: 'MissionManager', domValue:'36c9952b-3f63-468d-9335-3294a91e9c97' },
+    { name: translations['Operations Officer'], type: 'check', domID: 'OperationsOfficer', valFieldID: 'OperationsOfficer', domValue:'d3afa700-751d-4f08-b99e-f9a15361c7a1' },
+    { name: translations['PED Personnel'], type: 'check', domID: 'PEDPersonnel', valFieldID: 'PEDPersonnel', domValue:'7637f5c8-aa0c-4447-b7a9-939aadd07c7a' },
+    { name: translations['PED Team Lead'], type: 'check', domID: 'PEDTeamLead', valFieldID: 'PEDTeamLead', domValue:'af036592-2598-4727-bc36-7f71c665f787' },
+    { name: translations['Super Admin'], type: 'check', domID: 'SuperAdmin', valFieldID: 'SuperAdmin', domValue:'f5bfb78f-38c6-48f4-8773-59c2543e0805' },
   ];
 
   const contactFields = [
@@ -767,10 +769,10 @@ render() {
             <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations['General']}
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}  editSet = {this.state.editSet} stopupdset = {this.stopupdset}/>
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
-              title="Organization & Duty" fields={organisationFields}
+              title={translations["Organization & Duty"]} fields={organisationFields}
               data={this.handleOrganizationAndDutyData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
             <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png"
-              title="User Roles" fields={roleFields}
+              title={translations["User Roles"]} fields={roleFields}
               data={this.handleRoleInformationData} initstate ={this.state.personnel} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>  
             <ContentBlock headerLine="/assets/img/admin/upload_1.png"
               title={translations['Contact Information']} fields={contactFields}

@@ -242,8 +242,9 @@ class AddPlatformInventory extends React.Component {
 
   resetForm = () => {
     this.setState(this.baseState);
+    const { translations } = this.props;
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({clear:true});
     }
     else {
@@ -260,16 +261,17 @@ class AddPlatformInventory extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      { name: "Platform Specifications", type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name:translations["Platform Specifications"], type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       //{ name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true, regexType:'Alphanumeric', regex: '^[a-zA-Z0-9]+$' },
       { name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true },
       { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'COCOM'},
       { name: translations['Contract Company'], type: 'input', domID: 'Company', valFieldID: 'Company', required: true },
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit'  , required: true},
-      { name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: 'Units/GetUnits?onlyUsersDeployedUnits=true', valFieldID: 'deployedUnit'},
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' , required: true}
+
+      { name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: "Units/GetUnits", valFieldID: 'deployedUnit'},
+      { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
+      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' , required: true}
     ];
 
     const payloadFields = [

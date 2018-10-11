@@ -120,7 +120,8 @@ class MissionDetailComponent extends React.Component {
       {name: translations['Named Operation'], type: 'input', readonly:true, valueField: "NamedOperation"},
       {name: translations['Mission Type'], type: 'input', readonly:true,  valueField:"MissionType"},
       {name: translations['Sub-Mission Type'], type: 'input', readonly:true,  valueField:"SubMissionType"},
-      {name: translations['Active Dates'], type: 'input', readonly:true,  valueField:"ActiveDateTimeStart" }
+      {name: translations['Active Dates'], type: 'input', readonly:true,  valueField:"ActiveDateTimeStart" },
+      {name: translations['Country'], type: 'input', readonly:true,  valueField:"Country" }
     ];
 
     const missionBlock2= [

@@ -348,9 +348,10 @@ class EoirModal extends React.Component {
 
 
   resetForm() {
+    const { translations } = this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({ 
         clear: true,
         payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
@@ -442,8 +443,7 @@ class EoirModal extends React.Component {
     return (
 
       <form action="" onSubmit={this.handleSubmit} id="payloadform">
-
-        <div className="payload-content">
+      <div className="payload-content">
           <div className="row personnel" >
             <Loader loading={this.state.loading} />
             {/* <div className="header-line">
@@ -477,7 +477,7 @@ class EoirModal extends React.Component {
                 data={this.handlePayloadTechnicalData} initstate={this.props.onePayload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
               <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["payload features"]} fields={payloadFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadFeatureData} initstate={this.props.onePayload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Crew Requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["crew requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadCrewData} initstate={this.props.onePayload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>

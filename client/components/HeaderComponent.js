@@ -37,7 +37,11 @@ class HeaderComponent extends React.Component {
 
   logoutCall = () => {
     
+    // localStorage.removeItem('session');
     localStorage.removeItem('session');
+      if(localStorage.getItem('session')===null)
+        { console.log("Removed"); }
+  
   }
 
   //render dropdown list of lang switcher
@@ -60,7 +64,7 @@ class HeaderComponent extends React.Component {
 
     
     let ses = JSON.parse(localStorage.getItem('session'));
-    if (ses) 
+    if (ses != undefined && ses.UserRoles != undefined) 
     {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);

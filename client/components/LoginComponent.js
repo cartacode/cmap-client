@@ -42,7 +42,7 @@ class LoginComponent extends React.Component {
       // selectedBranch: generalData.ServiceBranch,
       // selectedRank: generalData.Rank,
       // selectedPaygrade: paygrade,
-    });
+    }, () => {  });
 
   }
 

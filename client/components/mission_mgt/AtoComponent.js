@@ -67,11 +67,10 @@ class AtoComponent extends React.Component {
 
   }
 
-moveLeft = (row, missionName) => {
+moveLeft = (row) => {
   const intelRequestID = row.original.IntelRequestID;
   if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
     const data = {
-      'MissionName': missionName,
       'IntelReqID': intelRequestID,
       'OwningUnit': this.state.radioUnitId,
     };
@@ -197,7 +196,7 @@ moveLeft = (row, missionName) => {
         maxWidth: 100,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.missionModalNameModal(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
@@ -288,7 +287,7 @@ moveLeft = (row, missionName) => {
           radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
         <div className="row mission-mgt">
           <div className="col-md-12">
-            <MissionNameModal show={this.state.modalOpen} onClose={this.missionModalNameModal} row = {this.state.row} moveLeft = {this.moveLeft} translations = {translations}  />
+            {/* <MissionNameModal show={this.state.modalOpen} onClose={this.missionModalNameModal} row = {this.state.row} moveLeft = {this.moveLeft} translations = {translations}  /> */}
             <div className="row collection-plan-table-margin-top">
               <div className="col-md-6">
                 <FullHeaderLine headerText={translations.CollectionPlan} />

@@ -134,13 +134,14 @@ class AddMunitionsInventory extends React.Component {
   }
 
   updatelocationid(generalData) {
+    const {translations}=this.props;
     let locationselect = document.getElementsByName('locationID')[0];
-    let items = [{ 'label': '--Select Item--', 'value': '' }];
+    let items = [{ 'label': translations['SelectItem'], 'value': '' }];
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationCatg;
     axios.get(apiUrl, {headers: requestHeaders})
       .then(response => {
         console.log(response.data);
-        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }
+        if (items.length > 1) { items.length = 0; items = [{ 'label': translations.SelectItem, 'value': '' }]; }
         response.data.map(item => {
           items.push({ 'label': item['description'], 'value': item['id'].trim() });
         });
@@ -162,13 +163,14 @@ class AddMunitionsInventory extends React.Component {
 
 
   updateOwningUnit(generalData) {    
+    const {translations} =this.props;
     let unitselect = document.getElementsByName('owningUnit')[0];
-    let items = [{ 'label': '--Select Item--', 'value': '' }];
+    let items = [{ 'label':translations.SelectItem, 'value': '' }];
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
     axios.get(apiUrl, {headers: requestHeaders})
       .then(response => {
         console.log(response.data);
-        if (items.length > 1) { items.length = 0; items = [{ 'label': '--Select Item--', 'value': '' }]; }
+        if (items.length > 1) { items.length = 0; items = [{ 'label': translations.SelectItem, 'value': '' }]; }
         response.data.map(item => {
           items.push({ 'label': item['description'], 'value': item['id'].trim() });
         });
@@ -193,9 +195,10 @@ class AddMunitionsInventory extends React.Component {
   }
 
   resetForm() {
+    const {translations}=this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({ clear: true });
     }
     else {
@@ -208,13 +211,13 @@ class AddMunitionsInventory extends React.Component {
     const { translations } = this.props;
 
     let generalFields = [
-      { name: "Munitions Specifications", type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
-      { name: "Serial #", type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
-      { name: "COCOM", type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
+      { name: translations["Munitions Specifications"], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name: translations["Serial#"], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
+      { name: translations["COCOM"], type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
       { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch',  required: true },
-      { name: "Owning Unit", type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit' , required: true },
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg', required: true },
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
+      { name: translations["Owning Unit"], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit' , required: true },
+      { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg', required: true },
+      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
       /*       {name: "Location Category", type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory'},
     
       {name: "Type", type: 'dropdown', domID: 'typeId', ddID: 'MunitionRoles/GetMunitionRoles', valFieldID: 'type'}, */

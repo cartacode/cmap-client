@@ -112,6 +112,11 @@ class CustomDatePicker extends React.Component {
     render() {
 
       const state = this.state;
+      let disabledDateLogic = disabledDate;
+      if((this.props.disablePreviousDate !== undefined && this.props.disablePreviousDate !== null && this.props.disablePreviousDate !== '' && !(this.props.disablePreviousDate))) {
+        disabledDateLogic = '';
+      }
+      
       const calendar = (<Calendar
         className="custom-calendar"
         locale={enUS}
@@ -122,7 +127,7 @@ class CustomDatePicker extends React.Component {
         timePicker={state.showTime ? timePickerElement : null}
         defaultValue={this.props.defaultValue}
         showDateInput={state.showDateInput}
-        disabledDate={disabledDate}
+        disabledDate={disabledDateLogic}
       />);
 
       return (
