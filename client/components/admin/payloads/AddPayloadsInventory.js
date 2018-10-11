@@ -118,15 +118,16 @@ class AddPayloadsInventory extends React.Component {
   }
 
   updatelocationid (generalData) {
+    const { translations } = this.props;
     let locationselect = document.getElementsByName('locationID')[0];
     locationselect.length = 0;
-    locationselect.add(new Option('--Fetching Locations--', ''));
+    locationselect.add(new Option(translations['Fetching Locations'], ''));
     const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
     axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         locationselect.length = 0;
         if(response.data) {
-          locationselect.add(new Option('--Select Location--', ''));
+          locationselect.add(new Option(translations['Select Location'], ''));
           response.data.map(item => {
             let selected = false;
             if(item.id === generalData.locationID) {
@@ -135,12 +136,12 @@ class AddPayloadsInventory extends React.Component {
             locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
-          locationselect.add(new Option('No Location Found', ''));
+          locationselect.add(new Option(translations['No Location Found'], ''));
         }
       })
       .catch((error) => {
         locationselect.length = 0;
-        locationselect.add(new Option('Error Fetching Locations', ''));
+        locationselect.add(new Option(translations['Error Fetching Locations'], ''));
         console.log('Exception comes:' + error);
       });
   }
@@ -148,15 +149,16 @@ class AddPayloadsInventory extends React.Component {
 
 
   updateOwningUnit (generalData) {
+    const { translations } = this.props;
     let unitselect = document.getElementsByName('owningUnit')[0];
     unitselect.length = 0;
-    unitselect.add(new Option('--Fetching Units--', ''));
+    unitselect.add(new Option(translations['Fetching Units'], ''));
     const apiUrl = `${baseUrl}/Units/GetUnits?branchID=` + generalData.branch;
     axios.get(apiUrl,{headers:requestHeaders})
       .then(response => {
         unitselect.length = 0;
         if(response.data) {
-          unitselect.add(new Option('--Select Unit--', ''));
+          unitselect.add(new Option(translations['Select Unit'], ''));
           response.data.map(item => {
             let selected = false;
             if(item.id == generalData.owningUnit) {
@@ -165,12 +167,14 @@ class AddPayloadsInventory extends React.Component {
             unitselect.add(new Option(item.description, item.id.trim(), selected, selected));
           });
         }else{
-          unitselect.add(new Option('No Unit Found', ''));
+          const { translations } = this.props;
+          unitselect.add(new Option(translations['No Unit Found'], ''));
         }
       })
       .catch((error) => {
+        const { translations } = this.props;
         unitselect.length = 0;
-        unitselect.add(new Option('Error Fetching Units', ''));
+        unitselect.add(new Option(translations['Error Fetching Units'], ''));
         console.log('Exception comes:' + error);
       });
   }
@@ -180,9 +184,10 @@ class AddPayloadsInventory extends React.Component {
   }
 
   resetForm() {
+    const { translations } = this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({clear:true});
     }
     else {
@@ -203,13 +208,13 @@ class AddPayloadsInventory extends React.Component {
     // }
 
     const generalFields = [
-      { name: 'Payload Specifications', type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
+      { name: translations['Payload Specifications'], type: 'dropdown', ddID: 'Payload/GetPayloads', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: translations['Serial#'], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
       { name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
       { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit' , required: true},
-      { name: 'Location Category', type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
-      { name: 'Location ID', type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
+      { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
+      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
     ];
 
     return (

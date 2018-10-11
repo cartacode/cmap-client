@@ -298,8 +298,9 @@ class AddPlatformModal extends React.Component {
 
   resetForm() {
     this.setState(this.baseState);
+    const { translations } = this.props;
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({ 
         clear: true,
         imagePreviewUrl: '/assets/img/admin/aircraft.png',
@@ -407,7 +408,7 @@ class AddPlatformModal extends React.Component {
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'PlatformRoles', valFieldID: 'PlatformRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'dispPlatformManufacture', ddID: 'Companies/GetCompanies', valFieldID: 'PlatformManufacturer', required: true },
       { name: translations['Service Executive Agent'], type: 'input', domID: 'PlatformExecutiveAgent', valFieldID: 'PlatformExecutiveAgent' },
-      { name: 'Contract Program', type: 'input', domID: 'PlatformContractProgram', valFieldID: 'PlatformContractProgram' },
+      { name: translations['Contract Program'], type: 'input', domID: 'PlatformContractProgram', valFieldID: 'PlatformContractProgram' },
       { name: translations['Cost'], type: 'number', domID: 'PlatformCost', valFieldID: 'PlatformCost' },
       { name: translations['Cost notes'], type: 'input', domID: 'PlatformCostNotes', valFieldID: 'PlatformCostNotes' },
       { name: translations['Initial Op Capability'], type: 'date', domID: 'PlatformIOCDate', valFieldID: 'PlatformIOCDate' },

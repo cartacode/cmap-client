@@ -324,9 +324,10 @@ class EquipmentModal extends React.Component {
 
 
   resetForm() {
+    const {translations}=this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({ 
         clear: true,
         payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
@@ -389,7 +390,7 @@ class EquipmentModal extends React.Component {
     ];
 
     const itemDescription = [
-      { name: 'Lens Count:', type: 'number', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount' },
+      { name:translations['Lens Count'], type: 'number', domID: 'PayloadLensCount', valFieldID: 'PayloadLensCount' },
     ];
 
     const uploadFileFields = [
@@ -430,11 +431,11 @@ class EquipmentModal extends React.Component {
           </div>
           <div className="row personnel" >
             <div className="under-payload-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadGeneralData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadTechnicalData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="Item Description" fields={itemDescription} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["Item Description"]} fields={itemDescription} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadFeatureData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>

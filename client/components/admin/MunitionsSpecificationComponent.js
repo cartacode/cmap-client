@@ -225,7 +225,7 @@ class MunitionsSpecificationComponent extends React.Component {
     const columns = [
       
       {
-        Header: "Type",
+        Header: translations["Type"],
         accessor: 'munitionType',        
         maxWidth: 150,
         // Cell: row => <div>{
@@ -260,20 +260,21 @@ class MunitionsSpecificationComponent extends React.Component {
       },
       
       {
-        Header: "Manufacturer",
+        
+        Header:translations["Manufacturer"],
         accessor: 'company',
       },
       {
-        Header: "Munition Name",
+        Header:translations["Munition Name"],
         accessor: 'name',
       
       },
       {
-        Header: "Mission Role",
+        Header:translations["Mission Role"],
         accessor: 'role',
       },
       {
-        Header: "Ops range",
+        Header: translations["Ops range"],
         accessor: 'opsRange',
         maxWidth: 110,
         filterMethod: (filter, row) => {
@@ -281,7 +282,7 @@ class MunitionsSpecificationComponent extends React.Component {
         }
       },
       {
-        Header: "Weight",
+        Header:translations ["Weight"],
         accessor: 'weight',
         maxWidth: 70,
         filterMethod: (filter, row) => {
@@ -293,9 +294,9 @@ class MunitionsSpecificationComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         maxWidth: 160,
-        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title="Edit" ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a> :
+                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/></a>}
                     </div>,
       }
     ];

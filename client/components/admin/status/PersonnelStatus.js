@@ -110,9 +110,10 @@ class PersonnelStatus extends React.Component {
 
 
   resetForm() {
+    const {translations}= this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({clear:true});
     }
     else {
@@ -129,10 +130,10 @@ class PersonnelStatus extends React.Component {
     const { translations } = this.props;
 
     const generalFields = [
-      {name: "Status", type: 'dropdown', ddID: 'StatusCodes/GetPersonnelStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
-      {name: "Arrival Date", type: 'date', domID: 'ArrivalDate',  valFieldID: 'ArrivalDate'},
-      {name: "Departure Date", type: 'date', domID: 'DepartureDate', valFieldID: 'DepartureDate' },
-      {name: "Remark", type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
+      {name: translations["Status"], type: 'dropdown', ddID: 'StatusCodes/GetPersonnelStatusCodes', domID: 'StatusCode', valFieldID: 'StatusCode', required: true },
+      {name: translations["Arrival Date"], type: 'date', domID: 'ArrivalDate',  valFieldID: 'ArrivalDate'},
+      {name: translations["Departure Date"], type: 'date', domID: 'DepartureDate', valFieldID: 'DepartureDate' },
+      {name: translations["Remark"], type: 'textarea', domID: 'Remark',valFieldID: 'Remark',required:true}
     ];
 
 

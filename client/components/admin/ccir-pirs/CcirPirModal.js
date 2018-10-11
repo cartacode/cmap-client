@@ -179,9 +179,10 @@ updateUnit(generalData) {
 }
 
 resetForm = () => {
+  const {translations} = this.props;
   this.setState(this.baseState);
   console.log('FORM RESET DONE');
-  if (confirm('Do you want to clear all data from this form?')) {
+  if (confirm(translations["ClearConfirmation"])) {
     this.setState({ clear: true });
     document.getElementById('personnelform').reset();
   }
@@ -258,14 +259,14 @@ resetForm = () => {
       kmlRequired = false;
     }
     generalFields = [
-      { name: 'COCOM', type: 'dropdown', ddID: 'COCOM', valFieldID: 'COCOMId', domID: 'COCOM' },
-      { name: 'Branch', type: 'dropdown', ddID: 'BranchOfService', valFieldID: 'BranchId', domID: 'Branch', required: true },
-      { name: 'Country', type: 'dropdown', ddID: 'Countries', valFieldID: 'CountryId', domID: 'Country', required: true },
-      { name: 'Region', type: 'dropdown', ddID: 'Regions', valFieldID: 'RegionId', domID: 'Region', required: true },
-      { name: 'Unit', type: 'dropdown', ddID: 'Units/GetUnits', valFieldID: 'UnitId', domID: 'Unit', required: true },
+      { name: translations['COCOM'], type: 'dropdown', ddID: 'COCOM', valFieldID: 'COCOMId', domID: 'COCOM' },
+      { name: translations['Branch'], type: 'dropdown', ddID: 'BranchOfService', valFieldID: 'BranchId', domID: 'Branch', required: true },
+      { name: translations['Country'], type: 'dropdown', ddID: 'Countries', valFieldID: 'CountryId', domID: 'Country', required: true },
+      { name: translations['Region'], type: 'dropdown', ddID: 'Regions', valFieldID: 'RegionId', domID: 'Region', required: true },
+      { name: translations['Unit'], type: 'dropdown', ddID: 'Units/GetUnits', valFieldID: 'UnitId', domID: 'Unit', required: true },
       // { name: 'Commander', type: 'dropdown', ddID: 'Personnel/GetCommanderList', valFieldID: 'CommanderId', domID: 'Commander', required: true },
       { name: translations['Named Operation'], type: 'input', valFieldID: 'MissionName', domID: 'Opname', required: true },
-      { name: 'Effective Area KML', type: 'file', valFieldID: 'EffectiveAreaKML', domID: 'KML', extension: 'kml', required: kmlRequired },
+      { name: translations['Effective Area KML'], type: 'file', valFieldID: 'EffectiveAreaKML', domID: 'KML', extension: 'kml', required: kmlRequired },
     ];
 
     const ccirFields = [

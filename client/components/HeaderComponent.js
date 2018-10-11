@@ -64,7 +64,7 @@ class HeaderComponent extends React.Component {
 
     
     let ses = JSON.parse(localStorage.getItem('session'));
-    if (ses) 
+    if (ses != undefined && ses.UserRoles != undefined) 
     {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);

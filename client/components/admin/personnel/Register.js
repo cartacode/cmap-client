@@ -500,7 +500,7 @@ stopset () {
 resetForm() {
   this.setState(this.baseState);
   console.log("FORM RESET DONE");
-  if (confirm("Do you want to clear all data from this form?")) {
+  if (confirm(translations["ClearConfirmation"])) {
     this.setState({clear:true,
       imagePreviewUrl:"/assets/img/admin/photo_1.png",
       imagePreviewUrl2:"/assets/img/admin/primoris_backgr.png"
@@ -561,10 +561,10 @@ render() {
   let { personnel } = this.state;
 
   const generalFields = [
-    {name: 'User Name', type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
-    {name: 'Personnel ID', type: 'input', domID: 'PersonnelID', valFieldID: 'PersonnelID', required: true},
-    {name: 'Password', type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
-    {name: 'Confirm Password', type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
+    {name:translations['User Name'], type: 'input', domID: 'UserName', valFieldID: 'UserName', required: true },
+    {name:translations['Personnel ID'], type: 'input', domID: 'PersonnelID', valFieldID: 'PersonnelID', required: true},
+    {name:translations['Password'], type: 'password', domID: 'Password', valFieldID: 'Password', required: true },
+    {name:translations['Confirm Password'], type: 'password', domID: 'ConfirmPassword', valFieldID: 'ConfirmPassword', required: true},
   ];
 
   const organisationFields = [
@@ -650,7 +650,7 @@ render() {
         <div className="row personnel" >
           <div className="under-payload-content">
           <div className="col-md-4 upload-block"></div>
-            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="Register"
+            <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["Register"]}
               fields={generalFields} data={this.handleGeneralPersonnelData} initstate ={this.state.register} editId = {this.props.editId} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
           <div className="col-md-4 upload-block"></div>    
           </div>

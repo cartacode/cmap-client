@@ -333,9 +333,10 @@ class WamiModal extends React.Component {
   }
 
   resetForm() {
+    const {translations}=this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("Do you want to clear all data from this form?")) {
+    if (confirm(translations["ClearConfirmation"])) {
       this.setState({ 
         clear: true,
         payloadPhotoPreviewUrl: '/assets/img/admin/aircraft.png',
@@ -426,6 +427,7 @@ class WamiModal extends React.Component {
     ];
 
     return (
+      
 
       <form action="" onSubmit={this.handleSubmit} id="payloadform">
         {/* <div className="close-button" >
@@ -452,15 +454,16 @@ class WamiModal extends React.Component {
                 data={this.handleUploadFileData} initstate={this.props.onePayload} previewFile={this.handlePhotoPreviewURL} isImagedRequired={this.state.isImagedRequired} stopupd={this.stopUpdate} editFetched={this.state.editFetched} clearit={this.state.clear} stopset={this.stopset.bind(this)} ></UploadFileBlock>
             </div>
           </div>
+          
           <div className="row personnel" >
             <div className="under-payload-content">
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="general" fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["General"]} fields={generalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadGeneralData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="size, weight, power, connect" fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["size, weight, power, connect"]} fields={technicalFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadTechnicalData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title="capabilities" fields={payloadFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock bigBackground={true} headerLine="/assets/img/admin/upload_1.png" title={translations["capabilities"]} fields={payloadFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadFeatureData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
-              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title="crew requirements" fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
+              <ContentBlock headerLine="/assets/img/admin/upload_1.png" title={translations["crew requirements"]} fields={crewFields} stopupd={this.stopUpdate} editFetched={this.state.editFetched}
                 data={this.handlePayloadCrewData} initstate={this.state.payload} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
