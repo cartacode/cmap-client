@@ -156,7 +156,7 @@ class MissionDetailComponent extends React.Component {
     ];
 
     const missionBlock4 = [  
-      { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file' },
+      { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file', required: true },
       { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
 
     ];

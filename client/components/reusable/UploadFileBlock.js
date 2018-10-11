@@ -140,11 +140,20 @@ class UploadFileBlock extends React.Component {
                         </div>);
                     break;
                 case 'file':
+                if(item.required){
                         input = (<div className="main-u">
+                            <input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"  name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} required />
+                            <br />
+                            {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link" >Download {item.name} </a> : ''}
+                        </div>);
+                }
+                else{
+                    input = (<div className="main-u">
                             <input type="file" id={`uploadFile${i}`} className="hidden_input pull-right"  name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} />
                             <br />
                             {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link" >Download {item.name} </a> : ''}
                         </div>);
+                }
                     break;
             }
             return (
