@@ -170,7 +170,7 @@ class TimelineFilter extends React.Component {
       {
         Header: translations.select,
         accessor: id,
-        Cell: row => <div> {row.index} - {row.viewIndex} 
+        Cell: row => <div>
           <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
@@ -201,7 +201,7 @@ class TimelineFilter extends React.Component {
 
     // remove radio button column if tab is ISR
     if(tab === MissionConsts.TABS.ISR) {
-      // sidebarHeader[0].columns.splice(0, 1);
+      sidebarHeader[0].columns.splice(0, 1);
     } else{
       sidebarHeader[0].columns.splice(4, 1);
     }
