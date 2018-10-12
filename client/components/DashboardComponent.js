@@ -310,7 +310,7 @@ getRTB = (startDate, endDate) => {
           </div>
 
           <div className="col-md-12 operating-status">
-            <NumBlock headerText="Requests" blockValue={this.getAISROperationStatuses('REQUEST')} />
+            <NumBlock headerText={translations["Requests"]} blockValue={this.getAISROperationStatuses('REQUEST')} />
             <img src= "/assets/img/dashboard/status_divider.png" />
 
             <NumBlock headerText={translations.pending} blockValue={this.getAISROperationStatuses('PENDING')} />
