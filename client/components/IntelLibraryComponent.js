@@ -52,7 +52,7 @@ class IntelLibraryComponent extends React.Component {
 
   notify = () => {
     const { translations } = this.props;
-    NotificationManager.success('Email', 'Email is successfully sent.', 5000);
+    NotificationManager.success('', 'Email is successfully sent.', 5000);
   
   };
 
