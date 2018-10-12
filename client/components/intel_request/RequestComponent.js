@@ -141,10 +141,10 @@ class RequestComponent extends React.Component {
         accessor: 'IntelRequestID',
         filterable: false,
         maxWidth: 150,
-        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
+        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
         
       {   (row.original.MissionId !== null) ? '' :
-          <a href="javaScript:void('0');" className="btn btn-danger" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
+          <a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
       }
       
       </div>,

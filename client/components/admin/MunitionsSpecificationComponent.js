@@ -294,9 +294,9 @@ class MunitionsSpecificationComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         maxWidth: 160,
-        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openMunitionsSpecificationForm(row)} title={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a> :
-                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger" title={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/></a>}
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openMunitionsSpecificationForm(row)} title={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow btn-sm" title={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a> :
+                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger btn-sm" title={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/></a>}
                     </div>,
       }
     ];

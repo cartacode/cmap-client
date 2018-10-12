@@ -205,9 +205,9 @@ render() {
       Header: translations['view'],
       accessor: 'ID',
       filterable: false,
-      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
+      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openPersonnelForm(row.value)} title="Edit"><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
                         {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow" title="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a> :
-                     <a href="javaScript:void('0');" onClick={() => this.deletePersonnel(row.value)} className="btn btn-danger" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
+                     <a href="javaScript:void('0');" onClick={() => this.deletePersonnel(row.value)} className="btn btn-danger btn-sm" title="Delete"> <span className="glyphicon glyphicon-trash"/></a>}
                     </div>,
     },
   ];

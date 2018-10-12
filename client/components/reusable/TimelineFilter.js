@@ -472,7 +472,7 @@ class TimelineFilter extends React.Component {
                   className="react-calendar-timeline"
                   sidebarWidth={0}
                   groups={groups}
-                  lineHeight={51}
+                  lineHeight={46}
                   // rightSidebarWidth={100}
                   items={items}
                   defaultTimeStart={startDate}
