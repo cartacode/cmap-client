@@ -3710,7 +3710,11 @@ one-block {
 
 .react-calendar-timeline {
   
-  border: 1px solid #ed7d31;
+  border: 0.5px solid #ed7d31;
+
+.rct-header {
+  border-bottom: 0.1px solid #ed7d31;
+}
 
   .rct-label-group {
     position: absolute;
@@ -3718,9 +3722,9 @@ one-block {
     font-size: 14px;
     overflow: hidden;
     text-align: center;
-    border-left: 0.5px solid #ed7d31 !important;
-    border-top: 0.5px solid #001c2e !important;
-    border-bottom: 0.5px solid #ed7d31 !important;
+    border-left: 0.1px solid #ed7d31 !important;
+    border-top: 0.1px solid #001c2e !important;
+    border-bottom: 0.1px solid #ed7d31 !important;
     color: #ed7d31 !important;
     background: #0f2b3d !important;
     cursor: pointer;
@@ -3732,8 +3736,8 @@ one-block {
     text-align: center;
     color: #ed7d31 !important;
     background: #0f2b3d !important;
-    border-left: 0.5px solid #001c2e !important;
-    border-bottom: 0.5px solid #ed7d31 !important;
+    border-left: 0.1px solid #001c2e !important;
+    border-bottom: 0.1px solid #ed7d31 !important;
     cursor: pointer;
   }
   .rct-hl-even {
@@ -3749,7 +3753,7 @@ one-block {
     // border: 0 !important;
     background: transparent !important;
     // background: #153448 !important;
-    border-left: 0.5px solid #001c2e !important;
+    border-left: 0.1px solid #001c2e !important;
   }
 }
 
