@@ -473,6 +473,9 @@ class TimelineFilter extends React.Component {
                   sidebarWidth={0}
                   groups={groups}
                   lineHeight={46}
+                  headerLabelGroupHeight={30}
+                  headerLabelHeight={33}
+                  // itemHeightRatio={0.80}
                   // rightSidebarWidth={100}
                   items={items}
                   defaultTimeStart={startDate}

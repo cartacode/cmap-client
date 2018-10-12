@@ -3732,18 +3732,18 @@ one-block {
     text-align: center;
     color: #ed7d31 !important;
     background: #0f2b3d !important;
-    border-left: 1px solid #001c2e !important;
+    border-left: 0.5px solid #001c2e !important;
     border-bottom: 0.5px solid #ed7d31 !important;
     cursor: pointer;
   }
   .rct-hl-even {
     background: #153448 !important;
-    border-bottom: 0.5px solid #001c2e !important;
+    border-bottom: 0 solid #001c2e !important;
   }
   .rct-hl-odd {
     background: #06253a !important;
     border: 0 !important;
-    border-bottom: 0.5px solid #001c2e !important;
+    border-bottom: 0 solid #001c2e !important;
   }
   .rct-vl {
     // border: 0 !important;
