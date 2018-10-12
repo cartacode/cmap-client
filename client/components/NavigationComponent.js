@@ -53,6 +53,7 @@ class NavigationComponent extends React.Component {
         //  this.props.history.push('/'); 
         //  alert("Session Expired - Please Login");
         //  condition = false;
+        alert("Here");
         console.log("Unauthorized");
         let refresh_token = session.refresh_token;
         console.log(refresh_token);
