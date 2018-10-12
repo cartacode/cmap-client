@@ -20,7 +20,7 @@ export const DateConsts = {
 };
 
 export const TableDefaults = {
-  PAGE_SIZE: 5,
+  PAGE_SIZE: 20,
   MIN_ROWS: 1,
 };
 

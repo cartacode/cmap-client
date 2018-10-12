@@ -82,6 +82,7 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.mission,
         accessor: 'MissionName',
+        maxWidth: 135,
       },
       {
         Header: translations.type,
@@ -90,7 +91,7 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.start,
         id: 'StartDate',
-        maxWidth: 150,
+        maxWidth: 135,
         accessor: d => {
           return formatDateTime(d.StartDate);
         },
@@ -98,7 +99,7 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.end,
         id: 'EndDate',
-        maxWidth: 150,
+        maxWidth: 135,
         accessor: d => {
           return formatDateTime(d.EndDate);
         },
@@ -106,12 +107,12 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.COCOM,
         accessor: 'COCOM',
-        maxWidth: 150,
+        maxWidth: 135,
       },
       {
         Header: translations.Country,
         accessor: 'Country',
-        maxWidth: 150,
+        maxWidth: 135,
       },
       {
         Header: translations.Unit,
@@ -121,6 +122,7 @@ class IntelLibraryComponent extends React.Component {
       {
         Header: translations.classification,
         accessor: 'Classification',
+        maxWidth: 135,
       },
 
       // {
@@ -167,7 +169,7 @@ class IntelLibraryComponent extends React.Component {
         Cell: row => (
          
           <div>
-            <a href={row.value} target="_blank" className="btn btn-primary" title="Export and Download" > <span className="glyphicon glyphicon-download" /></a>
+            <a href={row.value} target="_blank" className="btn btn-success btn-xs" title="Export and Download" > <span className="glyphicon glyphicon-export" /></a>
             &nbsp;
             {/* <a href="JavaScript: void('0');" className="btn btn-danger" title="Export and Download" ><span className="glyphicon glyphicon-export" /> </a> */}
           </div>
@@ -177,10 +179,10 @@ class IntelLibraryComponent extends React.Component {
         Header: translations.Send,
         accessor: '',
         filterable: false,
-        maxWidth: 70,
+        maxWidth: 50,
         Cell: row => (
           <div>
-            <a href="Javascript: void('0');" className="btn btn-primary" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
+            <a href="Javascript: void('0');" className="btn btn-info btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
           </div>
         ),
       },
@@ -197,36 +199,24 @@ class IntelLibraryComponent extends React.Component {
     const roles = ses.UserRoles;
     const roles2 = JSON.parse(roles);
     const access = roles2.some(v => intelLibraryUser.includes(v));
-    console.log(access);
-
-    /* const searchResult = [
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-      { date: '07//11/17', mission: 'firechief', type: 'strike', start: '12:45', end: '18:45', classification: 'unclass', air_track: 'check', video: 'check', images: 'check', sigacts: 'check', email: 'email', export: 'export', detail: 'detail' },
-    ]; */
-
+    
     const searchResult = allIntelLibraries;
     const searchResultColumns = this.getTableheaderColumns();
 
-    const dateTime = [
-      { name: '', type: 'calendar' },
-      { name: '', type: 'calendar' },
-    ];
+    // const dateTime = [
+    //   { name: '', type: 'calendar' },
+    //   { name: '', type: 'calendar' },
+    // ];
 
-    const dataType = [
-      { name: '', type: 'dropdown' },
-      { name: '', type: 'dropdown' },
-    ];
+    // const dataType = [
+    //   { name: '', type: 'dropdown' },
+    //   { name: '', type: 'dropdown' },
+    // ];
 
-    const keyWord = [
-      { name: '', type: 'input' },
-      { name: '', type: 'dropdown' },
-    ];
-
-    const langs = ['val 1', 'val 2'];
+    // const keyWord = [
+    //   { name: '', type: 'input' },
+    //   { name: '', type: 'dropdown' },
+    // ];
 
     return (access ? (
       <div>

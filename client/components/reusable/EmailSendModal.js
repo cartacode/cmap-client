@@ -11,7 +11,8 @@ class EmailSendModal extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  sendEmail = () =>{
+  sendEmail = (event) => {
+    event.preventDefault();
     const { content } = this.state;
     content.recipiants = this.convertToArray(content.recipiants);
     this.props.sendEmail(this.props.row, content);
