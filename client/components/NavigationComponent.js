@@ -39,8 +39,7 @@ class NavigationComponent extends React.Component {
     { console.log('Empty Session'); }
     else
     {
-    let session = JSON.parse(localStorage.getItem('session'));
-    let expired = session['.expires'];
+    let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
     console.log(exp);
     // console.log(new Date().toISOString());
@@ -53,9 +52,11 @@ class NavigationComponent extends React.Component {
         //  this.props.history.push('/'); 
         //  alert("Session Expired - Please Login");
         //  condition = false;
-        alert("Here");
+       if(window.location.pathname!='/login')
+       { 
+        // alert("Here");
         console.log("Unauthorized");
-        let refresh_token = session.refresh_token;
+        let refresh_token = ses.refresh_token;
         console.log(refresh_token);
         // alert(exp);
         let obj = {'grant_type':'refresh_token', 'refresh_token': refresh_token}       
@@ -74,6 +75,7 @@ class NavigationComponent extends React.Component {
 
         });
       }
+    }
             condition = false;
   }
   }

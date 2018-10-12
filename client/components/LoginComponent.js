@@ -64,7 +64,7 @@ class LoginComponent extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { login } = this.state;
-    // console.log(login);
+    console.log(login);
     this.setState({ loading: true });
     this.props.login(login).then(() => {
       // Stop Loader
