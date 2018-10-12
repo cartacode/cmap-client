@@ -595,7 +595,7 @@ render = () => {
           </div>
         </div>
 
-        {/* {editId != undefined && editId !== '0' ?
+         {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
             { isCollectionMgr ?
               (<div><div className="col-md-12">
@@ -610,7 +610,7 @@ render = () => {
             }
           </div>
           : null
-        } */}
+        } 
 
         { !isStatusDisabled ?
           <div className="row action-buttons">
