@@ -43,8 +43,7 @@ class IntelLibraryComponent extends React.Component {
   }
 
   sendEmail = (row, content) => {
-    content.MissionId = row.original.MissionId;
-    this.props.sendEmails(content).then(() => {
+    this.props.sendEmails(content, row.original.MissionId).then(() => {
       this.closeEmailModal();
       this.notify();
     });

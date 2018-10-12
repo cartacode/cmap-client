@@ -14,7 +14,7 @@ class EmailSendModal extends React.Component {
   sendEmail = (event) => {
     event.preventDefault();
     const { content } = this.state;
-    content.recipiants = this.convertToArray(content.recipiants);
+    content.Recipiants = this.convertToArray(content.Recipiants);
     this.props.sendEmail(this.props.row, content);
   }
 
@@ -57,15 +57,15 @@ class EmailSendModal extends React.Component {
               </div>
               <div className="col-md-12 text-left mission-mgt-txt-padding">
                 <label>Subject</label>
-                <input type="text" className="form-control" name="subject" onChange={this.handleChange} required />
+                <input type="text" className="form-control" name="Subject" onChange={this.handleChange} required />
               </div>
               <div className="col-md-12 text-left mission-mgt-txt-padding">
                 <label>To</label>
-                <input type="email" className="form-control" name="recipiants" multiple pattern="^([\w+-.%]+@[A-Za-z0-9_\-\.]+\.[A-Za-z]{2,4},*[\W]*)+$" required onChange={this.handleChange} />
+                <input type="email" className="form-control" name="Recipiants" multiple pattern="^([\w+-.%]+@[A-Za-z0-9_\-\.]+\.[A-Za-z]{2,4},*[\W]*)+$" required onChange={this.handleChange} />
               </div>
               <div className="col-md-12 text-left mission-mgt-txt-padding">
                 <label>Message</label>
-                <textarea className="form-control teaxtarea-width-height" name="message" onChange={this.handleChange} />
+                <textarea className="form-control teaxtarea-width-height" name="Message" onChange={this.handleChange} />
               </div>
               <div className="col-md-12 text-center mission-mgt-save-btn-padding" >
                 <button type="submit" className="highlighted-button" >

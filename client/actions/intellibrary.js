@@ -19,9 +19,9 @@ export function fetchIntelLibraryRequests(unitId) {
   });
 }
 
-export function sendEmails(data) {
+export function sendEmails(data, id) {
   return createAction({
     type: INTEL_LIBRARY_SEND__EMAIL,
-    action: () => axios.post(`${baseUrl}/Email/SendEmailForIntelReport`, data, { headers: requestHeaders }),
+    action: () => axios.post(`${baseUrl}/Email/SendEmailForMission/${id}`, data, { headers: requestHeaders }),
   });
 }
