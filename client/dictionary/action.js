@@ -96,6 +96,7 @@ export const STATUS_PLATFORM__UPDATE = createActionType('STATUS_PLATFORM__UPDATE
 export const STATUS_PAYLOAD__UPDATE = createActionType('STATUS_PAYLOAD__UPDATE');
 export const STATUS_PERSONNEL__UPDATE = createActionType('STATUS_PERSONNEL__UPDATE');
 export const STATUS_MUNITION__UPDATE = createActionType('STATUS_MUNITION__UPDATE');
+export const UNIT_LOGO__FETCH = createActionType('UNIT_LOGO__FETCH');
 
 export const COLLECTION_PLAN__FETCH = createActionType('COLLECTION_PLAN__FETCH');
 export const MOVE_TO_COLLECTION__PLAN = createActionType('MOVE_TO_COLLECTION__PLAN');

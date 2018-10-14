@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE, STATUS_MUNITION__FETCH_ONE, STATUS_MUNITION__UPDATE} from 'dictionary/action';
+import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE, STATUS_MUNITION__FETCH_ONE, STATUS_MUNITION__UPDATE, UNIT_LOGO__FETCH} from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -88,5 +88,12 @@ export function updateMunitionStatus(id, munition) {
   return createAction({
     type: STATUS_MUNITION__UPDATE,
     action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatusUpdate/${id}`, JSON.stringify(munition), {headers:requestHeaders}),
+  });
+}
+
+export function fetchUnitLogo(unit) {
+  return createAction({
+    type: UNIT_LOGO__FETCH,
+    action: () => axios.get(`${baseUrl}/Units/GetUnitLogo?UnitID=${unit}`, {headers:requestHeaders}),
   });
 }

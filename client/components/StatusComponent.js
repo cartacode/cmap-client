@@ -40,7 +40,8 @@ class StatusComponent extends React.Component {
       payloaddenom:'',
       platformnum:'',
       platformdenom:'',
-      unit:''
+      unit:'',
+      logo:'/assets/img/status/status_logo.png'
     }
   }
 
@@ -63,6 +64,13 @@ class StatusComponent extends React.Component {
     this.props.fetchPayloadsStatus(specificUnit);
     this.props.fetchMunitionsStatus(specificUnit);
     this.props.fetchPersonnelsStatus(specificUnit).then( () => {  this.updateUnit(); } );
+    this.props.fetchUnitLogo(specificUnit).then(() => { let logo = this.props.logo; 
+    
+      this.setState({
+          logo:logo
+      });
+    
+    });
   }
 
   statusModal = () => {
@@ -127,7 +135,14 @@ class StatusComponent extends React.Component {
     this.props.fetchPlatformsStatus(this.state.unit);
     this.props.fetchPayloadsStatus(this.state.unit);
     this.props.fetchMunitionsStatus(this.state.unit);
-    this.props.fetchPersonnelsStatus(this.state.unit)
+    this.props.fetchPersonnelsStatus(this.state.unit);
+    this.props.fetchUnitLogo(this.state.unit).then(() => { let logo = this.props.logo; 
+    
+      this.setState({
+          logo:logo
+      });
+    
+    });
 
      });
   
@@ -336,13 +351,15 @@ class StatusComponent extends React.Component {
       'Currently coordinating with U.S. units and anto patners on joint mission training to begin on 05 januar...'
     ];
 
+    let { logo } = this.state;
+
     return ( access ? (
       <div>
           <div className="row status" >
             <FullHeaderLine headerText={translations["unit status report"]} />
             <div className="status-content">
               <div className="col-md-4 image-block">
-                <img src="/assets/img/status/status_logo.png" className="photo" alt="" />
+                <img src={logo} className="photo" alt="" />
               </div>
               <div className="col-md-8 status-block">
                 <CircleStatus statusHeader={translations["platform"]} statusPercent={this.state.platformpct} statusNumber={this.state.platformnum + "/" + this.state.platformdenom} />
@@ -366,15 +383,15 @@ class StatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
-              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5}
+              minRows={5} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
-              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5}
+              minRows={5} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>
@@ -382,15 +399,15 @@ class StatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText="Munition" />
-              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
-              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={5}
+               minRows={5} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>
@@ -398,8 +415,8 @@ class StatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
-              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable
+              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
                 defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
               />
             </div>

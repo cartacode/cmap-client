@@ -112,6 +112,7 @@ export default {
     onePayload: {},
     onePersonnel: {},
     oneMunition: {},
+    logo: {},
     isFetching: false,
   },
 
