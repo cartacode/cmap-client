@@ -393,7 +393,7 @@ class TimelineFilter extends React.Component {
     return(
       <div>
         <div className="row mission-mgt">
-          <div className="col-md-12">
+          <div className="col-md-12 ">
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line text-center">
@@ -447,7 +447,7 @@ class TimelineFilter extends React.Component {
 
         <div className="row mission-mgt">
           { (results !== undefined && results.length > 0) ?
-            <div className="col-md-12">
+            <div className="col-md-12 timeline-border">
               <div className="col-md-4" style={{ padding: 0 }}>
                 {/* <StatusTable thead={columns} lines={filterResults} translations={translations} /> */}
 
