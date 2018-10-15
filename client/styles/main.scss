@@ -673,10 +673,10 @@ body .login {
 //start dashboard
 .dashboard {
   margin: 15px;
-  margin-bottom: 37px;
+  margin-bottom: 10px;
 
   .header-line {
-    margin-bottom: 27px;
+    margin-bottom: 10px;
     overflow: hidden;
 
     img {
@@ -715,7 +715,7 @@ body .login {
       margin-bottom: 50px;
     }
     .num-block {
-      width: 8%;
+      width: 7%;
     }
   }
   .navbar-toggle {
@@ -848,9 +848,8 @@ body .login {
 
   .status-block-header {
     text-align: center;
-    padding: 40px 40px;
-    margin-bottom: -70px;
-    // margin-left: 10%;
+    padding: 10px 40px;
+    margin-bottom: -25px;
     color: #ed7d31;
     text-transform: uppercase;
   }
@@ -904,18 +903,18 @@ body .login {
   }
 
   .check-status {
-    padding: 20px 5px;
+    padding: 10px 5px;
     margin-bottom: 0px;
     background-color: rgba(19, 38, 56, 0.5);
 
     .check-list {
       .check-box {
         display: inline-block;
-        line-height: 40px;
+        line-height:20px;
       }
       .check-label {
         display: inline-block;
-        line-height: 40px;
+        line-height: 20px;
       }
     }
   }
@@ -945,12 +944,8 @@ body .login {
   }
 }
 
-.collection-plan-table-margin-top {
-  margin-top: 10px !important;
-}
-.intel-request-table-margin-top {
-  margin-top:10px !important;
-}
+
+
 
 //end live-review
 
@@ -960,8 +955,8 @@ body .login {
   margin: 0px 15px;
 
   .header-line {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     overflow: hidden;
 
     img {
@@ -1537,7 +1532,7 @@ body .login {
 
   .header-line {
     overflow: hidden;
-    margin-bottom: 17px;
+    margin-bottom: 0px;
 
     img {
       float: left;
@@ -2390,7 +2385,7 @@ input {
   margin: 0px 15px;
 
   .header-line {
-    margin-bottom: 27px;
+    margin-bottom: 5px;
     overflow: hidden;
 
     img {
@@ -3629,12 +3624,13 @@ one-block {
   background-size: contain;
 
   .block-header {
-    padding: 15px 10px 0px;
+    padding: 22px 10px 0px;
     text-transform: uppercase;
     text-align: center;
+    font-size:12px;
   }
   .block-value {
-    font-size: 40px;
+    font-size: 25px;
     text-align: center;
   }
 }
@@ -4013,6 +4009,8 @@ one-block {
       text-transform: uppercase;
       color: #84a1e0 !important;
       font-size: 12px !important;
+
+
     }
 
     .modal-header-text {
@@ -4023,7 +4021,7 @@ one-block {
     }
 
     .personnel .header-line {
-      margin-bottom: 0px !important;
+      margin-bottom:0px!important;
       overflow: hidden;
   }
 
@@ -4103,7 +4101,7 @@ one-block {
         margin: 15px;
 
         .header-line {
-          margin-bottom: 27px;
+          margin-bottom: 10px;
           overflow: hidden;
 
           img {
@@ -4808,6 +4806,14 @@ select.form-control {
     transform: translateX(-50%);
     width: 100%;
   }
+  .check-block .check-status .check-list .check-label {
+    display: inline-block;
+    line-height: 40px!important;
+}
+.check-block .check-status .check-list .check-box {
+  display: inline-block;
+  line-height: 40px!important;
+}
   .login .login-part .login-win .login-info .col-md-4 {
     width: 100%!important;
 }
@@ -4940,7 +4946,7 @@ select.form-control {
   }
   .check-block .check-status .check-list .check-label {
     display: inline-block;
-    line-height: 40px;
+    line-height: 20px;
   }
   .ReactTable {
     background-color: #06253a !important;
@@ -5028,6 +5034,7 @@ select.form-control {
     top: -26px;
   }
 }
+
 @media (max-width: 320px) {
   .-center {
     font-size: 11px;
@@ -5037,6 +5044,7 @@ select.form-control {
   .check-block .check-status .check-list .check-label {
     display: inline-block;
     padding-left: 0px;
+    font-size: 13px;
   }
 
   .dashboard .status-block .each-status .status-header {
@@ -5330,6 +5338,7 @@ btn-warning.focus, .btn-warning:focus {
   background-color:  transparent!important;
   border: 1px solid #687882!important; 
   outline: 0px auto -webkit-focus-ring-color!important; 
+
 }
 
 /**************** mission -summary-detail ***********************/

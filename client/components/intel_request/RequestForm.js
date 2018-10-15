@@ -532,6 +532,8 @@ render = () => {
   const isAdmin = roles.some(v => adminUser.includes(v));
   const isDisabled = isCollectionMgr && !isAdmin;
 
+  
+
   const intelRequest1 = [
     { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true, disabled: isDisabled },
     { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isDisabled },
@@ -603,7 +605,7 @@ render = () => {
  }          </div>
         </div>
         <div className="col-md-4 one-block">
-          <ShortHeaderLine headerText={translations['ccir/priorities intelligence requirements']} />
+          <ShortHeaderLine headerText={translations['ccir / Priority intelligence requirements']} />
           <div className="ccir-content">
 
             <ul>
@@ -612,7 +614,7 @@ render = () => {
             </ul>
 
           </div>
-          <ShortHeaderLine headerText={translations['associate intelligence report']} />
+          <ShortHeaderLine headerText={translations['associated intelligence reports']} />
           <div className="associate-content" />
         </div>
       </div>
