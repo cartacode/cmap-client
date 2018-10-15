@@ -134,7 +134,7 @@ class IntelEEI extends React.Component {
         Header: translations.edit,
         accessor: 'id',
         filterable: false,
-        Cell: row => <div> { (missionId === null || missionId === undefined) ? <div>
+        Cell: row => <div> { (missionId === null || missionId === undefined) && (irAbbrebation !== IntelConstants.STATUS.AV.abbreviation) ? <div>
           <a href="#intelEEIContainer" className="btn btn-primary" onClick={()=> {this.openEEI(row.value);}}><span className="glyphicon glyphicon-edit"/></a>&nbsp;
           <a href="javaScript:void('0');" onClick={()=>{this.deleteEEI(row.value);}} className="btn btn-danger" > <span className="glyphicon glyphicon-trash"/></a>
         </div> : '' } </div>,
