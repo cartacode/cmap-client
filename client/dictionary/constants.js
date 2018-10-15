@@ -5,6 +5,7 @@ export const NoticeType = {
   MOVE_TO_COLLECTION: 'MOVE_TO_COLLECTION',
   MOVE_TO_INTEL_REQUEST: 'MOVE_TO_INTEL_REQUEST',
   NOT_DELETE: 'NOT_DELETE',
+  ERROR: 'ERROR',
 };
 
 export const DateConsts = {

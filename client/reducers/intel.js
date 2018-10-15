@@ -5,6 +5,7 @@ import {
   INTEL_REQUEST__ADD,
   INTEL_REQUEST__UPDATE,
   INTEL_REQUEST__DELETE,
+  INTEL_APPROVED_VALIDATED__STATUS_UPDATE,
 } from 'dictionary/action';
 import initialState from 'store/initialState';
 
@@ -72,6 +73,24 @@ export default function intel(state = initialState.intelrequest, {
         ...state,
         isDeleted: false,
       };
+    case INTEL_APPROVED_VALIDATED__STATUS_UPDATE.REQUEST:
+      return {
+        ...state,
+        isStatusUpdated: false,
+      };
+    case INTEL_APPROVED_VALIDATED__STATUS_UPDATE.SUCCESS:
+      return {
+        ...state,
+        isStatusUpdated: true,
+      };
+    case INTEL_APPROVED_VALIDATED__STATUS_UPDATE.FAILURE:
+      return {
+        ...state,
+        isStatusUpdated: false,
+      };
+
+
+
     default:
       return state;
   }

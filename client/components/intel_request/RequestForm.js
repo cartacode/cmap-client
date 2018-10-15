@@ -359,6 +359,8 @@ notify = (type) => {
     NotificationManager.success(translations.UpdatedSuccesfully, translations['intel request'], 5000);
   } else if(type === NoticeType.DELETE) {
     NotificationManager.success(translations.DeletedSuccesfully, translations['intel request'], 5000);
+  } else if(type === NoticeType.ERROR) {
+    NotificationManager.error(translations.ERROR, translations['intel request'], 5000);
   }
 }
 
@@ -399,6 +401,41 @@ resetForm() {
     this.setState({ clear: true });
     document.getElementById('personnelform').reset();
   }
+}
+
+// will call to change the Status to Approved Validated on click of Route Button.
+routeStatus(e) {
+  e.preventDefault();
+  const {IntelRequestID} = this.state.intelRequest;
+  // start loader
+  this.setState({
+    loading: true,
+  });
+  this.props.updateIntelStatus(IntelRequestID, IntelConstants.STATUS.AV.id).then((response) => {
+    console.log(response);
+    if(this.props.isStatusUpdated) {
+      const { intelRequest } = this.state;
+      this.setState({
+        intelRequest: {
+          ...intelRequest,
+          Abbreviation: IntelConstants.STATUS.AV.abbreviation,
+        },
+      });
+      // stop Loader
+      this.setState({
+        loading: false,
+      });
+      // Update Notification
+      this.notify(NoticeType.UPDATE);
+    }else {
+      // stop Loader
+      this.setState({
+        loading: false,
+      });
+      // Error Notification
+      this.notify(NoticeType.ERROR);
+    }
+  });
 }
 
 updateCCIROptions = (items, ccirid) => {
@@ -523,7 +560,7 @@ render = () => {
     { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
   ];
 
-  const isStatusDisabled = intelRequest.Abbreviation === IntelConstants.STATUS.APR.abbreviation || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
+  const isStatusDisabled = intelRequest.Abbreviation === IntelConstants.STATUS.APR.abbreviation || intelRequest.Abbreviation === IntelConstants.STATUS.AV.abbreviation || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
   let statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: isStatusDisabled, valFieldID: 'StatusId', required: true };
   
   if(isStatusDisabled) {
@@ -595,7 +632,7 @@ render = () => {
           </div>
         </div>
 
-         {editId != undefined && editId !== '0' ?
+         {/* {editId != undefined && editId !== '0' ?
           <div className="row intel-request">
             { isCollectionMgr ?
               (<div><div className="col-md-12">
@@ -610,15 +647,20 @@ render = () => {
             }
           </div>
           : null
-        } 
+        }  */}
 
         { !isStatusDisabled ?
           <div className="row action-buttons">
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-              <button className="btn btn-warning" onClick={this.resetForm.bind(this)}>
-                {translations.clear}
-              </button>
+              {// Initially Clear and GenrateEEI button will show, after click GenrateEEI, Route button and Submit button will show
+                (this.state.intelRequest.IntelRequestID !== '') ? <button className="btn btn-warning" onClick={this.routeStatus.bind(this)}>
+                  {translations.route}
+                </button> :
+                  <button className="btn btn-warning" onClick={this.resetForm.bind(this)}>
+                    {translations.clear}
+                  </button>
+              } 
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
             <div className="menu-button">
@@ -635,7 +677,7 @@ render = () => {
       </form>
 
       { (this.state.intelRequest.IntelRequestID !== '') ?
-        <IntelEEI nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
+        <IntelEEI irAbbrebation={this.state.intelRequest.Abbreviation} nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null }
 
       {/* {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null } */}

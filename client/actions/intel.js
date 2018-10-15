@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { INTEL_EEI__ADD, INTEL_REQUEST__ADD, INTEL_EEI__FETCH, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE, INTEL_REQUEST__UPDATE, INTEL_REQUEST__DELETE } from 'dictionary/action';
+import { INTEL_EEI__ADD, INTEL_REQUEST__ADD, INTEL_EEI__FETCH, INTEL_REQUEST__FETCH, INTEL_REQUEST__FETCH_ONE, INTEL_REQUEST__UPDATE, INTEL_REQUEST__DELETE, INTEL_APPROVED_VALIDATED__STATUS_UPDATE } from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -23,6 +23,13 @@ export function updateIntelRequest(id,intelRequest) {
   return createAction({
     type: INTEL_REQUEST__UPDATE,
     action: () => axios.put(`${baseUrl}/IntelRequest/PutIntelRequest/${id}`, JSON.stringify(intelRequest), {headers:requestHeaders}),
+  });
+}
+
+export function updateIntelStatus(intelRequestId, statusId) {
+  return createAction({
+    type: INTEL_APPROVED_VALIDATED__STATUS_UPDATE,
+    action: () => axios.put(`${baseUrl}/IntelRequest/ChangeIntelRequestStatus?intelRequestId=${intelRequestId}&statusId=${statusId}`, { },{headers:requestHeaders}),
   });
 }
 

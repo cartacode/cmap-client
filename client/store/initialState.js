@@ -122,6 +122,7 @@ export default {
     isFetching: false,
     isFetchingOne: false,
     isDeleted: false,
+    isStatusUpdated: false,
   },
 
   inteleei: {

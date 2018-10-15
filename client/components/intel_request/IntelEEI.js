@@ -10,7 +10,7 @@ import ReactTable from 'react-table';
 import { addIntelEei, fetchIntelEeisByIntelId, updateIntelEei, deleteIntelEEIById } from '../../actions/inteleei';
 import { defaultFilter } from '../../util/helpers';
 import { NotificationManager } from 'react-notifications';
-import { NoticeType, TableDefaults } from '../../dictionary/constants';
+import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 
 class IntelEEI extends React.Component {
@@ -85,7 +85,7 @@ class IntelEEI extends React.Component {
 
   render() {
 
-    const { translations, missionId } = this.props;
+    const { translations, missionId, irAbbrebation } = this.props;
   
     // EEI columns
     const missionColumns = [
@@ -154,7 +154,7 @@ class IntelEEI extends React.Component {
               <img src="/assets/img/admin/personnel_1.png" alt=""/>
               <div className="header-text">
                 {translations['mission eei\'s']} &nbsp;
-                { !this.state.isFormOpened && (missionId === null || missionId === undefined) ?
+                { !this.state.isFormOpened && (missionId === null || missionId === undefined) && (irAbbrebation !== IntelConstants.STATUS.AV.abbreviation) ?
                   <a className="btn btn-info btn-xs add-data" onClick={() => this.openEEI('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
                   : null }
               </div>
