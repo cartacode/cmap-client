@@ -181,7 +181,7 @@ class RequestComponent extends React.Component {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 150,
+        maxWidth: 200,
         Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-edit"/></Link> &nbsp;
 
           { (row.original.MissionId !== null) ? '' :
