@@ -631,6 +631,7 @@
  "Payload":"Payload",
  "YES":"YES",
  "NO":"NO",
- "Requests":"Requests"
+ "Requests":"Requests",
+ "ERROR": "Some Error Has Occured"
  
 }
