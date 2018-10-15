@@ -1,73 +1,107 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { defaultFilter, formatDateTime, getIntelStatusColor, getConfirmation } from '../../util/helpers';
-import { TableDefaults } from '../../dictionary/constants';
+import { TableDefaults, IntelConstants } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
 import Loader from '../reusable/Loader';
+import AddCollectionValidationModal from '../reusable/AddCollectionValidationModal';
+import { collectionManagerUser, adminUser, superAdmin } from '../../dictionary/auth';
 
 class RequestComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       filterValue: '',
       filter: [],
-      missileModalOpen:false,
+      missileModalOpen: false,
       rocketModalOpen: false,
       gunModalOpen: false,
       tableRowDetailModalOpen: false,
-      serialVal:'',
-      nameVal:'',
-      form : {
-        type: 'Test'
+      serialVal: '',
+      nameVal: '',
+      form: {
+        type: 'Test',
       },
-      loading:false
+      loading: false,
+      modalOpen: false,
+      IntelRequestID: null,
 
-    }
+    };
 
     moment.locale('en');
   }
 
-
-
   componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
     this.props.fetchIntelRequests();
   }
 
+  openAddCollectionValidationModal = (row) => {
+    const IntelRequestID = row.original.IntelRequestID;
+    this.setState({
+      modalOpen: true,
+      IntelRequestID,
+    });
+  }
 
-// This will get call when user click on Yes to Delete a Record
-  deleteLogic(value){
+  saveCollectionValidationModal = (intelRequest) => {
+    this.closeCollectionValidationModal();
+    this.notify();
+    this.loadData();
+    // this.props.sendEmails(content, row.original.MissionId).then(() => {
+    //   this.closeEmailModal();
+    //   this.notify();
+    // });
+  }
+
+  notify = () => {
     const { translations } = this.props;
-    this.setState({loading: true});
+    NotificationManager.success('', 'Collection Validation is  added successfully.', 5000);
+
+  };
+
+  closeCollectionValidationModal = () => {
+    this.setState({
+      modalOpen: false,
+      IntelRequestID: null,
+    });
+  }
+
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value) {
+    const { translations } = this.props;
+    this.setState({ loading: true });
 
     this.props.deleteIntelRequestById(value).then(() => {
-      this.setState({loading: false});
-      if(this.props.isDeleted){
+      this.setState({ loading: false });
+      if(this.props.isDeleted) {
         NotificationManager.success(translations.DeletedSuccesfully, translations['Intel Request Title'], 5000);
         this.props.fetchIntelRequests();
-      }
-      else{
+      } else{
         NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
       }
     });
   }
 
-    // will call when user click on Delete Button
+  // will call when user click on Delete Button
   deleteIntelRequestById =(value)=>{
-      const { translations } = this.props;
-    // Get Confirm user wish to Delete Yes/No 
-    getConfirmation(translations['DeleteConfirmation'],
-                    translations['Yes'],
-                    translations['No'],
-                    () => this.deleteLogic(value)
-                    );
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No
+    getConfirmation(translations.DeleteConfirmation,
+      translations.Yes,
+      translations.No,
+      () => this.deleteLogic(value)
+    );
   }
-
 
   getColor= (row)=> {
     return getIntelStatusColor(row.original.Abbreviation);
@@ -78,11 +112,18 @@ class RequestComponent extends React.Component {
 
     const { allRequests } = this.props;
 
- 
     const { match } = this.props;
 
     const addurl = match.url.replace('/request', '/request-form');
     const editurl = match.url.replace('/request', '/detail/');
+
+
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = JSON.parse(ses.UserRoles);
+    const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
+    const isSuperAdmin = roles.some(v => superAdmin.includes(v));
+    const isVisibleCollectionManager = isCollectionMgr && isSuperAdmin;
+
     const columns = [
       {
         Header: translations['IR#'],
@@ -137,30 +178,35 @@ class RequestComponent extends React.Component {
         },
       },
       {
-        Header: translations['view'],
+        Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
         maxWidth: 150,
-        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-edit"/></Link> &nbsp; 
-        
-      {   (row.original.MissionId !== null) ? '' :
-          <a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
-      }
-      
-      </div>,
+        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-edit"/></Link> &nbsp;
+
+          { (row.original.MissionId !== null) ? '' :
+            <span><a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a> &nbsp;
+              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-plus" title="Add Collection Validation" onClick={() => this.openAddCollectionValidationModal(row)}/></a> : '' }
+            </span>
+          }
+
+        </div>,
       },
     ];
 
     return (
       <div>
+          <AddCollectionValidationModal show = {this.state.modalOpen} onClose={this.closeCollectionValidationModal} 
+          IntelRequestID = { this.state.IntelRequestID }
+          save = {this.saveCollectionValidationModal} translations = {translations}/>
         <div className="row orders-assets">
           <div className="header-line">
-          <Loader loading={this.state.loading} />
+            <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations.summary} &nbsp;
               <Link to={ addurl } className="btn btn-info btn-xs add-data"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
-          
+
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
@@ -169,7 +215,7 @@ class RequestComponent extends React.Component {
             {/* <Link to={ itemurl } activeClassName="btn btn-warning">{translations['New request'}</Link> */}
             {/* <Link to={ addurl } className="btn btn-warning">New Request</Link> */}
 
-{/*             <NavLink to={itemurl} className="submenu" activeClassName="active-submenu-item">
+            {/*             <NavLink to={itemurl} className="submenu" activeClassName="active-submenu-item">
               <div className="add-button">
                 <button className="bt btn-warning">New Request</button>
               </div>
@@ -177,7 +223,7 @@ class RequestComponent extends React.Component {
  */}
           </div>
           <div className="col-md-12" id="intel-request" >
-            <ReactTable 
+            <ReactTable
               data={allRequests}
               loading={this.props.isLoading}
               columns={columns}
