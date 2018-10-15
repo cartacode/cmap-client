@@ -325,13 +325,16 @@ moveLeft = (row) => {
           </div>
        
         </div>
-        <div className="row route">
-                <div className="col-md-12 text-center">
-                  <a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeATOGenerations()} >
-                    Route
-                  </a>
+        <div className="row route action-buttons">
+                <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                  <button className='highlighted-button' onClick={() => this.routeATOGenerations()} >
+                  Route
+                  </button>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
-              </div>
+                </div>
+
     </div> ) : null
     );
   }

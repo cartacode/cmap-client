@@ -41,10 +41,7 @@ body {
     padding-top: 26px !important;
   }
   
-.teaxtarea-width-height{
-  height: 117px !important;
-  resize: false !important;
-}
+
 a.submenu:hover {
   color:#ed7d31!important;
 }
@@ -950,8 +947,9 @@ body .login {
   margin-top: 10px !important;
 }
 .intel-request-table-margin-top {
-  margin-top: 37px !important;
+  margin-top:10px !important;
 }
+
 //end live-review
 
 // start status
@@ -3710,7 +3708,7 @@ one-block {
 
 .react-calendar-timeline {
   
-  border: 0.5px solid #ed7d31;
+ border-left:1px solid #ed7d31; 
 
 .rct-header {
   border-bottom: 0.1px solid #ed7d31;
@@ -4487,7 +4485,7 @@ textarea.instruction {
 
 .ReactTable .rt-tbody .rt-tr-group {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  height: 45px;
+height: 51px;
   vertical-align: middle;
   text-align: center;
 }
@@ -4499,7 +4497,8 @@ textarea.instruction {
 }
 
 .ReactTable .rt-thead .rt-th.-cursor-pointer {
-  padding-top: 15px !important;
+
+  padding:7px 3px 7px 3px;
 }
 
 .ReactTable .rt-thead .rt-th.-cursor-pointer:focus {
@@ -5240,7 +5239,6 @@ select.form-control {
 }
 
 .mission-mgt .ReactTable.-striped.-highlight {
-  border: 1px solid #ed7d31;
 
   overflow-x: hidden!important;
 }
@@ -5335,4 +5333,21 @@ btn-warning.focus, .btn-warning:focus {
 /**************** mission -summary-detail ***********************/
 .mission-detail-view.info-field input {
   width: 100%!important;
+}
+/*********************** TIMELINE BORDER ********************************/
+.timeline-border {
+  border: 1px solid #ed7d31;
+  padding: 0PX;
+}
+
+
+
+
+.timeline-border .rt-thead.-header {
+  border-top: 1px solid #ed7d31;
+  border-bottom: 1px solid #ed7d31;
+
+}
+.rt-tr.-odd {
+  height: 50px;
 }

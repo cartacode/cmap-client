@@ -320,9 +320,15 @@ class CollectionManagerComponent extends React.Component {
               <div className="col-md-12 text-center">
                 {/* <img className="line" src="/assets/img/admin/edit_up.png" alt=""/> */}
                 { access ? 
-                (<a href= "Javascript:void(0)" className="btn btn-warning btn-lg" onClick={() => this.routeCollectionIntelRequest()} >
-                    {translations["Route"]}
-                </a>) : null
+                ( <div className="row action-buttons">
+                <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                  <button className='highlighted-button' onClick={() => this.routeCollectionIntelRequest()} >
+                  {translations["Route"]}
+                  </button>
+                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                </div>
+                </div>) : null
                 }
                 {/* <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/> */}
               </div>
