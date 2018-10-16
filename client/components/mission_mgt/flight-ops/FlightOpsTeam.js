@@ -130,6 +130,11 @@ class FlightOpsTeam extends React.Component {
         },
       },
       {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
+      },
+      {
         Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
@@ -155,7 +160,7 @@ class FlightOpsTeam extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div>
-          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          {/* <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
@@ -178,6 +183,11 @@ class FlightOpsTeam extends React.Component {
         accessor: d => {
           return formatDateTime(d.BestCollectionTime);
         },
+      },
+      {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
       },
       {
         Header: translations.Unassign,

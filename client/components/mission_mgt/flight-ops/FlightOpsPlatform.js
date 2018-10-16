@@ -134,6 +134,11 @@ class FlightOpsPlatform extends React.Component {
         },
       },
       {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
+      },
+      {
         Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
@@ -160,7 +165,7 @@ class FlightOpsPlatform extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row =>  <div className = 'tooltip-custom'>
-          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
@@ -187,6 +192,11 @@ class FlightOpsPlatform extends React.Component {
         accessor: d => {
           return formatDateTime(d.BestCollectionTime);
         },
+      },
+      {
+        Header: translations.status,
+        accessor: 'Status',
+        minWidth: 150,
       },
       {
         Header: translations.Unassign,

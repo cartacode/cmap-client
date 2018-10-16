@@ -190,6 +190,11 @@ moveLeft = (row) => {
       //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
       // },
       {
+        Header: translations.status,
+        accessor: 'Status',
+        minWidth: 150,
+      },
+      {
         Header: translations.Add,
         accessor: 'IntelRequestID',
         filterable: false,
@@ -214,7 +219,7 @@ moveLeft = (row) => {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div className="tooltip-custom">
-          <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
@@ -253,6 +258,11 @@ moveLeft = (row) => {
       //   accessor: 'Asset',
       //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
       // },
+      {
+        Header: translations.status,
+        accessor: 'Status',
+        minWidth: 150,
+      },
       {
         Header: translations.Remove,
         accessor: 'IntelRequestID',

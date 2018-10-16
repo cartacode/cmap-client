@@ -128,7 +128,7 @@ class RequestComponent extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div>
-          <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp;
+          {/* <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}> <span>{row.value}</span></Link>
         </div>,
       },

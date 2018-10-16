@@ -46,7 +46,7 @@ class MissionSummaryComponent extends React.Component {
         Header: translations["Tail#"],
         accessor: 'TailNumber',
         Cell: row => <div className = 'tooltip-custom'>
-          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>
+          {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <span> {row.value}</span>
         </div>,
       },

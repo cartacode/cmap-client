@@ -154,12 +154,13 @@ class CollectionManagerComponent extends React.Component {
         // </div>,
         Cell: row => ( 
           <div>
-          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp;
-          <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
-          {/* <span><a href="Javascript: void('0');" className="hand-cursor"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span> */}
+            {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a>&nbsp; */}
+            <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
+            {/* <span><a href="Javascript: void('0');" className="hand-cursor"  title="Edit"><Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link></a></span> */}
           </div>
-          ),
+        ),
       },
+     
       {
         Header:translations['Supported unit'],
         accessor: 'COCOMText',
@@ -169,6 +170,11 @@ class CollectionManagerComponent extends React.Component {
         Header: "Status",
         accessor: "Status"
       }, */
+      {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
+      },
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
@@ -207,7 +213,7 @@ class CollectionManagerComponent extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         Cell: row => <div className = 'tooltip-custom'>
-          <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp;
+          {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
         </div>,
       },
@@ -223,6 +229,11 @@ class CollectionManagerComponent extends React.Component {
         Header: "Status",
         accessor: "Status"
       }, */
+      {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
+      },
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
@@ -259,7 +270,6 @@ class CollectionManagerComponent extends React.Component {
     
     return (
       <div>
-        
         <div className="row personnel">
           <div className="col-md-12">
 
@@ -320,7 +330,7 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
           <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-            {/* <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> */}
+             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
