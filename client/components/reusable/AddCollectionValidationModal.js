@@ -116,11 +116,11 @@ getHigherUnit = () => {
                 </div>
               </div>
               <div className="row action-buttons">
-                <div className="menu-button">
+                {/* <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button className="btn btn-warning" onClick={this.props.onClose}>{translations.close}</button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                </div>
+                </div> */}
                 <div className="menu-button">
                   <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
                   <button type="submit" className="btn btn-warning">{translations.submit}</button>

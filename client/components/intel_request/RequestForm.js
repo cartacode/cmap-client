@@ -91,6 +91,16 @@ class RequestForm extends React.Component {
 
   }
 
+  componentWillMount = () =>{
+    const { match: { params } } = this.props;
+    const editId = params.editId;
+    if(editId !== undefined && editId !== '') {
+      this.setState({
+        loading: true,
+      });
+    }
+  }
+
   componentDidMount = () =>{
 
     const { match: { params } } = this.props;
@@ -219,6 +229,10 @@ editComponent = (editId) => {
         });
       this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
       this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
+
+      this.setState({
+        loading: false,
+      });
     });
   }
 }
