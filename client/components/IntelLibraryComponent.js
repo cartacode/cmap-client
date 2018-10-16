@@ -161,30 +161,31 @@ class IntelLibraryComponent extends React.Component {
       // },
 
       {
-        Header: translations.export,
+        Header: translations.Actions,
         accessor: 'Report',
         filterable: false,
-        maxWidth: 70,
+        maxWidth: 80,
         Cell: row => (
          
           <div>
             <a href={row.value} target="_blank" className="btn btn-success btn-xs" title="Export and Download" > <span className="glyphicon glyphicon-export" /></a>
             &nbsp;
             {/* <a href="JavaScript: void('0');" className="btn btn-danger" title="Export and Download" ><span className="glyphicon glyphicon-export" /> </a> */}
+            <a href="Javascript: void('0');" className="btn btn-info btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
           </div>
         )
       },
-      {
-        Header: translations.Send,
-        accessor: '',
-        filterable: false,
-        maxWidth: 50,
-        Cell: row => (
-          <div>
-            <a href="Javascript: void('0');" className="btn btn-info btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
-          </div>
-        ),
-      },
+      // {
+      //   Header: translations.Send,
+      //   accessor: '',
+      //   filterable: false,
+      //   maxWidth: 50,
+      //   Cell: row => (
+      //     <div>
+      //       <a href="Javascript: void('0');" className="btn btn-info btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
+      //     </div>
+      //   ),
+      // },
     ]
   }
 
