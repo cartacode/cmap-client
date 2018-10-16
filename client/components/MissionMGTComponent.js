@@ -41,7 +41,7 @@ class MissionMGTComponent extends React.Component {
 
      menuItems = [
       {title: translations['isr sync'], url: `${match.url}/isr-sync`},
-      {title: translations['mission summary'], url: `${match.url}/mission-summary`},
+      
     ];
 
     if(missionATOAccess) {
@@ -55,7 +55,7 @@ class MissionMGTComponent extends React.Component {
     if(missionPEDAccess){
       menuItems.push({title: translations['ped tasking'], url: `${match.url}/ped-tasking`});
     }
-
+    menuItems.push({title: translations['mission summary'], url: `${match.url}/mission-summary`});
     
     return menuItems.map((item, i) => {
       let image = '/assets/img/menu/button-line-highlight.png';
