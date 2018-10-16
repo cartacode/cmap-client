@@ -9,6 +9,7 @@ import { TableDefaults } from '../dictionary/constants';
 import { defaultFilter, formatDateTime } from '../util/helpers';
 import EmailSendModal from './reusable/EmailSendModal';
 import { NotificationManager } from 'react-notifications';
+import Loader from './reusable/Loader';
 
 
 
@@ -18,6 +19,7 @@ class IntelLibraryComponent extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
+      loading: false,
       row: {},
     };
   }
@@ -43,8 +45,10 @@ class IntelLibraryComponent extends React.Component {
   }
 
   sendEmail = (row, content) => {
+    this.setState({ loading: true });
     this.props.sendEmails(content, row.original.MissionId).then(() => {
       this.closeEmailModal();
+      this.setState({ loading: false });
       this.notify();
     });
   }
@@ -221,6 +225,7 @@ class IntelLibraryComponent extends React.Component {
     return (access ? (
       <div>
         <div className="row intel-request">
+        <Loader loading={this.state.loading} />
           <EmailSendModal show = {this.state.modalOpen} onClose={this.closeEmailModal} sendEmail = {this.sendEmail} row = {this.state.row} translations = {translations}/>
           <div className="col-md-12">
             <FullHeaderLine headerText={translations['intelligence reports']} />
