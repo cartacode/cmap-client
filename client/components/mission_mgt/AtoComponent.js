@@ -293,8 +293,7 @@ moveLeft = (row) => {
 
     return ( access ? (
       <div>
-        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab}
-          radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
+        
         <div className="row mission-mgt">
           <div className="col-md-12">
             {/* <MissionNameModal show={this.state.modalOpen} onClose={this.missionModalNameModal} row = {this.state.row} moveLeft = {this.moveLeft} translations = {translations}  /> */}
@@ -343,7 +342,11 @@ moveLeft = (row) => {
                   </button>
                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
                 </div>
+               
+           
                 </div>
+                <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.ato} defaultResource={this.state.defaultResource} tab={this.state.tab}
+          radioFilterSelect={this.radioFilterSelect} showUnitType={this.state.showUnitType} />
 
     </div> ) : null
     );

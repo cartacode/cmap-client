@@ -223,7 +223,7 @@ class FlightOpsPlatform extends React.Component {
 
     return (
       <div>
-        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
+        
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
@@ -262,6 +262,10 @@ class FlightOpsPlatform extends React.Component {
           </div>
 
         </div>
+        <div className="row mission-mgt">
+
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource} />
+      </div>
       </div>
     );
   }
