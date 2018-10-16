@@ -171,11 +171,6 @@ class CollectionManagerComponent extends React.Component {
         accessor: "Status"
       }, */
       {
-        Header: translations['status'],
-        accessor: 'Status',
-        minWidth: 150,
-      },
-      {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
@@ -190,6 +185,11 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => <div>
           <span>{row.original.Armed ? translations['YES'] :translations['NO']}</span>
         </div>,
+      },
+      {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
       },
       {
         Header: translations.Actions,
@@ -230,11 +230,6 @@ class CollectionManagerComponent extends React.Component {
         accessor: "Status"
       }, */
       {
-        Header: translations['status'],
-        accessor: 'Status',
-        minWidth: 150,
-      },
-      {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
@@ -249,6 +244,11 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => <div>
           <span>{row.original.Armed ? translations['YES'] : translations['NO']}</span>
         </div>,
+      },
+      {
+        Header: translations['status'],
+        accessor: 'Status',
+        minWidth: 150,
       },
       /*   {
         Header: 'Command',
@@ -330,7 +330,7 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
           <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
+             {/* <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />  */}
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
