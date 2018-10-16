@@ -259,26 +259,7 @@ class CollectionManagerComponent extends React.Component {
     
     return (
       <div>
-        <div className="row personnel">
-          <div className="two-block">
-          <Loader loading={this.state.loading} />
-            <FullHeaderLine headerText={translations.CollectionMap} />
-            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />
-            {/* <img
-              className="photo"
-              src="/assets/img/intel_request/request/request_pic.png"
-              alt=""
-            /> */}
-          </div>
-
-          {/* <div className="col-md-6 two-block">
-
-          </div> */}
-
-          {/* <div className="col-md-6">
-
-          </div> */}
-        </div>
+        
         <div className="row personnel">
           <div className="col-md-12">
 
@@ -334,6 +315,26 @@ class CollectionManagerComponent extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="row personnel">
+          <div className="two-block">
+          <Loader loading={this.state.loading} />
+            <FullHeaderLine headerText={translations.CollectionMap} />
+            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />
+            {/* <img
+              className="photo"
+              src="/assets/img/intel_request/request/request_pic.png"
+              alt=""
+            /> */}
+          </div>
+
+          {/* <div className="col-md-6 two-block">
+
+          </div> */}
+
+          {/* <div className="col-md-6">
+
+          </div> */}
         </div>
       </div>
     );
