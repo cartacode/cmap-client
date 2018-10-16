@@ -15,9 +15,7 @@ class AddCollectionValidationModal extends React.Component {
     this.state = {
       content: [],
       intelRequest: {
-        IntelRequestID: '',
         SupportedUnit: unitId,
-        UnitId: unitId,
       },
     };
   }
@@ -27,8 +25,7 @@ class AddCollectionValidationModal extends React.Component {
     const unitId = session.AssignedUnit;
     const { intelRequest } = this.state;
 
-    // // setting next higher unit
-    // this.props.fetchNextHigherUnit(unitId);
+    // setting next higher unit
     this.props.fetchNextHigherUnit(unitId).then(() => {
       this.setState({
         intelRequest: {
@@ -49,7 +46,7 @@ getHigherUnit = () => {
     event.preventDefault();
     const { intelRequest } = this.state;
     intelRequest.IntelRequestID = this.props.IntelRequestID;
-    this.props.save(intelRequest);
+    this.props.save(this.props.IntelRequestID, intelRequest);
   }
 
   handleIntelRequest4 = (ir) => {

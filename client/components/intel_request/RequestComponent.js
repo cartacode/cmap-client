@@ -53,14 +53,12 @@ class RequestComponent extends React.Component {
     });
   }
 
-  saveCollectionValidationModal = (intelRequest) => {
-    this.closeCollectionValidationModal();
-    this.notify();
-    this.loadData();
-    // this.props.sendEmails(content, row.original.MissionId).then(() => {
-    //   this.closeEmailModal();
-    //   this.notify();
-    // });
+  saveCollectionValidationModal = (intelRequestId, intelRequest) => {
+    this.props.updateIntelRequest(intelRequestId, intelRequest).then(() => {
+      this.closeCollectionValidationModal();
+      this.notify();
+      this.loadData();
+    });
   }
 
   notify = () => {

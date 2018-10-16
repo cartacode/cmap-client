@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import RequestComponent from '../../components/intel_request/RequestComponent';
-import { fetchIntelRequests, deleteIntelRequestById } from 'actions/intel';
+import { fetchIntelRequests, deleteIntelRequestById, updateIntelRequest } from 'actions/intel';
 
 const mapStateToProps = state => {
   return {
@@ -15,6 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchIntelRequests,
   deleteIntelRequestById,
+  updateIntelRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestComponent);
