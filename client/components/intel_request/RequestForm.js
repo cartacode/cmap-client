@@ -589,35 +589,7 @@ render = () => {
 
   return (
     <div>
-
-      <div className="row intel-request" >
-        <div className="col-md-8 two-block" >
-          <Loader loading={this.state.loading} />
-          <div className="img-header-line">
-            <img src="/assets/img/status/theader_line.png" alt=""/>
-            <div className="header-text">
-              {translations['real-time intelligence/threat picture']}
-            </div>
-            <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
-          </div>
-          <div className="two-block">
-{            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
- }          </div>
-        </div>
-        <div className="col-md-4 one-block">
-          <ShortHeaderLine headerText={translations['ccir / Priority intelligence requirements']} />
-          <div className="ccir-content">
-
-            <ul>
-              <div className="fw-800">{this.state.firstCcir}</div>
-              { this.renderCCIRPIR() }
-            </ul>
-
-          </div>
-          <ShortHeaderLine headerText={translations['associated intelligence reports']} />
-          <div className="associate-content" />
-        </div>
-      </div>
+      
       <form action="" onSubmit={this.handleSubmit} id="personnelform">
         <div className="row intel-request">
           <div className="col-md-12">
@@ -683,7 +655,32 @@ render = () => {
         : null }
 
       {/* {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null } */}
-
+      <div className="row intel-request" >
+        <div className="col-md-8 two-block" >
+          <Loader loading={this.state.loading} />
+          <div className="img-header-line">
+            <img src="/assets/img/status/theader_line.png" alt=""/>
+            <div className="header-text">
+              {translations['real-time intelligence/threat picture']}
+            </div>
+            <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
+          </div>
+          <div className="two-block">
+          {/*  <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} /> */}
+           </div>
+        </div>
+        <div className="col-md-4 one-block">
+          <ShortHeaderLine headerText={translations['ccir / Priority intelligence requirements']} />
+          <div className="ccir-content">
+            <ul>
+              <div className="fw-800">{this.state.firstCcir}</div>
+              { this.renderCCIRPIR() }
+            </ul>
+          </div>
+          <ShortHeaderLine headerText={translations['associated intelligence reports']} />
+          <div className="associate-content" />
+        </div>
+      </div>
     </div>
   );
 }
