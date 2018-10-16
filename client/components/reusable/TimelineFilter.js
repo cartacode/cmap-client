@@ -359,10 +359,11 @@ class TimelineFilter extends React.Component {
         for(let i = 0; i < length; i++) {
           const id = 'idx-' + index + '-' + i;
           const obj = timeLine[i];
+          const missionName = (obj.missionName !== null && obj.missionName !== '') ? obj.missionName : translations.mission + ' - ' + obj.missionID;
           const item = {
             id,
             group: group.id,
-            title: obj.statusId,
+            title: missionName,
             start_time: moment(obj.startDate),
             end_time: moment(obj.endDate),
             style: {
