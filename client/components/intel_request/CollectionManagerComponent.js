@@ -328,9 +328,9 @@ class CollectionManagerComponent extends React.Component {
         </div>
         <div className="row personnel">
           <div className="two-block">
-          <Loader loading={this.state.loading} />
+            <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-             {/* <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />  */}
+            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
