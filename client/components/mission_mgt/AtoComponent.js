@@ -149,7 +149,7 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
@@ -157,6 +157,7 @@ moveLeft = (row) => {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -198,7 +199,7 @@ moveLeft = (row) => {
         Header: translations.Add,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
@@ -217,7 +218,7 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
@@ -226,6 +227,7 @@ moveLeft = (row) => {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -264,10 +266,15 @@ moveLeft = (row) => {
         minWidth: 150,
       },
       {
+        Header: translations.missionUnit,
+        accessor: 'MissionUnit',
+        minWidth: 150,
+      },
+      {
         Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 80,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>

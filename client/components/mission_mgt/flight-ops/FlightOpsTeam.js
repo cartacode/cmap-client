@@ -94,7 +94,7 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div>
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
@@ -102,6 +102,8 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
+
       },
       {
         Header: translations.Command,
@@ -138,7 +140,7 @@ class FlightOpsTeam extends React.Component {
         Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
@@ -158,7 +160,7 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div>
           {/* <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
@@ -167,6 +169,7 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -190,10 +193,14 @@ class FlightOpsTeam extends React.Component {
         minWidth: 150,
       },
       {
+        Header: translations['CrewTeam'],
+        accessor: 'CrewTeam',
+      },
+      {
         Header: translations.Unassign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 80,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
