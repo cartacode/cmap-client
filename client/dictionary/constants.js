@@ -23,6 +23,8 @@ export const DateConsts = {
 export const TableDefaults = {
   PAGE_SIZE: 20,
   MIN_ROWS: 1,
+  PAGE_SIZE_7: 7,
+  MIN_ROWS_7: 7,
 };
 
 export const UnitConsts = {

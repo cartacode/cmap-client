@@ -137,7 +137,18 @@ class CollectionManagerComponent extends React.Component {
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
     const editurl = '/intel-request/detail/';
+    let minRowsForTable = TableDefaults.MIN_ROWS;
 
+    if(allCollectionsPlan.length > TableDefaults.PAGE_SIZE_7 || allApprovedIntelRequests.length > TableDefaults.PAGE_SIZE_7 ) {
+      minRowsForTable = TableDefaults.MIN_ROWS_7;
+    } else if(allCollectionsPlan.length > allApprovedIntelRequests.length) {
+      minRowsForTable = allCollectionsPlan.length;
+    } else {
+      minRowsForTable = allApprovedIntelRequests.length;
+    }
+
+   
+    
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
@@ -280,8 +291,8 @@ class CollectionManagerComponent extends React.Component {
                   <ReactTable
                     data={allApprovedIntelRequests}
                     columns={intelRequestColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={5}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     
                     className="-striped -highlight"
                     filterable={false}
@@ -297,8 +308,8 @@ class CollectionManagerComponent extends React.Component {
                   <ReactTable
                     data={allCollectionsPlan}
                     columns={collectionPlanColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={5}                    
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}                    
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
@@ -330,7 +341,7 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
             <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
+             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"

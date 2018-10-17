@@ -225,7 +225,7 @@ class RequestComponent extends React.Component {
               data={allRequests}
               loading={this.props.isLoading}
               columns={columns}
-              defaultPageSize={TableDefaults.PAGE_SIZE}
+              defaultPageSize={TableDefaults.PAGE_SIZE_7}
 						  minRows={TableDefaults.MIN_ROWS}
               className="-striped -highlight"
               filterable={true}
