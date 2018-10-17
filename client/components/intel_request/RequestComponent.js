@@ -143,7 +143,7 @@ class RequestComponent extends React.Component {
         accessor: 'CCIRPIRName',
       },
       {
-        Header: translations.Command,
+        Header: translations['Supported unit'],
         accessor: 'COCOMText',
         maxWidth: 150,
       },
