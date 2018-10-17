@@ -59,10 +59,16 @@ class MissionDetailComponent extends React.Component {
     const data = {...missionDetail, 'Id': missionId };
     const formData = new FormData();
     // if new file selected
-    if (typeof missionDetailFiles.missionReport === 'object') {
+    if (missionDetailFiles.missionReport !== null
+       && missionDetailFiles.missionReport !== undefined
+       && missionDetailFiles.missionReport !== ''
+       && typeof missionDetailFiles.missionReport === 'object') {
       formData.append('MissionReport', missionDetailFiles.missionReport, missionDetailFiles.missionReport.name);
     }
-    if(typeof missionDetailFiles.FlightPlan === 'object') {
+    if(missionDetailFiles.FlightPlan !== null
+       && missionDetailFiles.FlightPlan !== undefined
+       && missionDetailFiles.FlightPlan !== '' &&
+       typeof missionDetailFiles.FlightPlan === 'object') {
       formData.append('FlightPlan', missionDetailFiles.FlightPlan, missionDetailFiles.FlightPlan.name);
     }
     formData.append('missionFormData', JSON.stringify(data));
@@ -82,13 +88,23 @@ class MissionDetailComponent extends React.Component {
   }
 
   handleUploadFileData = (uploadFileData) => {
-     const { missionDetailFiles } = this.state;
+    const { missionDetailFiles } = this.state;
     this.setState({
       missionDetailFiles:{
         ...missionDetailFiles,
-      missionReport: uploadFileData.MissionReport,
-      FlightPlan: uploadFileData.FlightPlan
-    }
+        missionReport: uploadFileData.MissionReport,
+      },
+    });
+  }
+
+  handleUploadFileDataWithoutCondition = (uploadFileData) => {
+    debugger;
+    const { missionDetailFiles } = this.state;
+    this.setState({
+      missionDetailFiles: {
+        ...missionDetailFiles,
+        FlightPlan: uploadFileData.FlightPlan,
+      },
     });
   }
 
@@ -167,8 +183,10 @@ class MissionDetailComponent extends React.Component {
 
     const missionBlock4 = [  
       { name: translations.IntelReport, type: 'file', domID: 'MissionReport', valFieldID: 'MissionReport', fileType: 'file', required: MissionReportRequired },
-      { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
+    ];
 
+    const missionBlock5 = [  
+      { name: translations.FlightPlan, type: 'file', domID: 'FlightPlan', valFieldID: 'FlightPlan', fileType: 'file' },
     ];
 
     const requirementsHeader = [translations['Priority#'], translations['eei#'], translations['Name'], translations['threat'], translations['Location'], translations['grid'], translations['POIs'], translations['LIMIDS Request'], translations['view'], translations['edit'], translations['del'],];
@@ -203,7 +221,6 @@ class MissionDetailComponent extends React.Component {
 
         </div>
 
-        { IntelConstants.STATUS.IPNDG.id === missionDetail.StatusId || IntelConstants.STATUS.IPOST.id === missionDetail.StatusId ?
         
         <form action="" onSubmit={this.handleSubmit} id="platform">
           <div className="row mission-mgt">
@@ -217,11 +234,20 @@ class MissionDetailComponent extends React.Component {
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
+           
             <div >
-              <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
+              <UploadFileBlock fields={missionBlock5} data={this.handleUploadFileDataWithoutCondition} 
                 initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
                 isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
             </div>
+            { IntelConstants.STATUS.IPNDG.id === missionDetail.StatusId || IntelConstants.STATUS.IPOST.id === missionDetail.StatusId ?
+
+              <div >
+                <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
+                  initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
+                  isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
+              </div>
+              : ''}
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
@@ -235,7 +261,7 @@ class MissionDetailComponent extends React.Component {
           </div>
           
         </form>
-      :''}
+     
         { this.state.redirectToSummaryPage ? <Redirect to={`${redirectUrl}`} /> : null }
       </div>
 
