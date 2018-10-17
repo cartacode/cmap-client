@@ -5377,3 +5377,33 @@ btn-warning.focus, .btn-warning:focus {
 .rt-tr.-odd {
   height: 50px;
 }
+/*************************************** actions-btn-csss *********************************************/
+a.edit-btn {
+  background: #2e6da4;
+  color: #fff;
+  padding: 7px 7px 5px 7px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-right: 4px;
+}
+a.delete-btn {
+  background:#d9534f;
+  color: #fff;
+  padding: 8px 9px 5px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-right: 4px;
+}
+a.coll-valid-btn {
+  background: #d9534f;
+  color: #fff;
+  padding: 7px 7px 5px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+.actions-btn {
+  text-align: left;
+  margin-left: 20px;
+}
