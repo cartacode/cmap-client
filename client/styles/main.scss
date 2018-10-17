@@ -991,8 +991,12 @@ body .login {
         width: 6px;
       }
       .photo {
-        width: 95%;
-        height: 95%;
+        max-width: 95% !important;
+        max-height: 95% !important;
+        height: auto !important;
+        width: auto !important;
+        margin-left: 12px;
+        margin-right: 12px;
       }
 
     }
