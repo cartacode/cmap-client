@@ -40,6 +40,7 @@ class StatusComponent extends React.Component {
       payloaddenom:'',
       platformnum:'',
       platformdenom:'',
+      comment:'',
       unit:'',
       logo:'/assets/img/status/status_logo.png'
     }
@@ -99,6 +100,7 @@ class StatusComponent extends React.Component {
           payloadnum:response.data.PayloadReadyCount,
           platformdenom:response.data.PlatformCount,
           payloaddenom:response.data.PayloadCount,
+          comment:response.data.UnitStatusComments
         });
       })
       .catch((error) => {
@@ -435,7 +437,7 @@ class StatusComponent extends React.Component {
                 <tbody className="tbody">
                   <tr >
                     <div className="comment-body">
-                      {comment}
+                      {this.state.comment}
                     </div>
                   </tr>
                 </tbody>
