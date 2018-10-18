@@ -4,7 +4,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, NoticeType, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
@@ -297,6 +297,7 @@ moveLeft = (row) => {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let access = roles2.some(v => missionATOUser.includes(v));
+    let minRowsForTable = getMinRowsForTable(atoCollectionPlans.length,atoGenerations.length);
 
     return ( access ? (
       <div>
@@ -311,11 +312,12 @@ moveLeft = (row) => {
                   <ReactTable
                     data={atoCollectionPlans}
                     columns={columnsATOCollectionPlans}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
+                    showPagination={true}
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -327,8 +329,8 @@ moveLeft = (row) => {
                   <ReactTable
                     data={atoGenerations}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

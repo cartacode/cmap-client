@@ -824,7 +824,8 @@
  "Supported unit":"Supported unit",
  "missionUnit": "Mission Unit",
  "CrewTeam": "Crew Team",
- "PedTeam": "Ped Team"
+ "PedTeam": "Ped Team",
+ "PedTaskHeader": "Ped  Task (TEAM)"
 
 
 

@@ -169,5 +169,9 @@ export const getMinRowsForTable = (noOfRecordsTable1, noOfRecordsTable2) => {
   } else {
     minRowsForTable = noOfRecordsTable2;
   }
+  if(minRowsForTable === 0)
+  {
+    minRowsForTable = TableDefaults.MIN_ROWS;
+  }
   return minRowsForTable;
 }

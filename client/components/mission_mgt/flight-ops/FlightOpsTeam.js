@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../../util/helpers';
 import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -215,6 +215,10 @@ class FlightOpsTeam extends React.Component {
     const { translations, fopCrews, fopCrewAto } = this.props;
     const columnsATOGenerations = this.getLeftColumns();
     const columnsFlightOps = this.getRightColumns();
+    let minRowsForTable = getMinRowsForTable(fopCrews.length,fopCrewAto.length);
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
 
     return (
       <div>
@@ -228,8 +232,8 @@ class FlightOpsTeam extends React.Component {
                   <ReactTable
                     data={fopCrewAto}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
@@ -244,8 +248,8 @@ class FlightOpsTeam extends React.Component {
                   <ReactTable
                     data={fopCrews}
                     columns={columnsFlightOps}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

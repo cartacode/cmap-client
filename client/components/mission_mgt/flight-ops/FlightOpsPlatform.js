@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../../util/helpers';
 import { flightOpsAtoPlatform, flightOpsPlatforms, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -223,6 +223,11 @@ class FlightOpsPlatform extends React.Component {
     const { translations, fopPlatforms, fopPlatformAto } = this.props;
     const columnsATOGenerations = this.getLeftColumns();
     const columnsFlightOps = this.getRightColumns();
+    let minRowsForTable = getMinRowsForTable(fopPlatforms.length,fopPlatformAto.length);
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    
 
     return (
       <div>
@@ -236,11 +241,12 @@ class FlightOpsPlatform extends React.Component {
                   <ReactTable
                     data={fopPlatformAto}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
+                    showPagination={true}
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -252,8 +258,8 @@ class FlightOpsPlatform extends React.Component {
                   <ReactTable
                     data={fopPlatforms}
                     columns={columnsFlightOps}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

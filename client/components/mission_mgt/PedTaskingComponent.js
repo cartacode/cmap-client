@@ -4,7 +4,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, formatDateTime, getIntelStatusColor, showAlert } from '../../util/helpers';
+import { defaultFilter, formatDateTime, getIntelStatusColor, showAlert, getMinRowsForTable } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
@@ -225,6 +225,9 @@ class PedTaskingComponent extends React.Component {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let access = roles2.some(v => missionPEDUser.includes(v));
+    let minRowsForTable = getMinRowsForTable(pedTasksAtoGenerations.length,pedTasks.length);
+  
+   
     
     return ( access ? (
       <div>
@@ -238,8 +241,8 @@ class PedTaskingComponent extends React.Component {
                   <ReactTable
                     data={pedTasksAtoGenerations}
                     columns={pedTasksAtoGenerationsColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
@@ -249,13 +252,13 @@ class PedTaskingComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations.PedTask} />
+                <FullHeaderLine headerText={translations['PedTaskHeader']} />
                 <div >
                   <ReactTable
                     data={pedTasks}
                     columns={pedTasksColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
