@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { IntelConstants, DateConsts } from '../dictionary/constants';
+import { IntelConstants, DateConsts, TableDefaults } from '../dictionary/constants';
 import { confirmAlert } from 'react-confirm-alert';
 import React from 'react';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -157,3 +157,17 @@ export const getHHMMSSFromSec = (secs) => {
   minutes %= 60;
   return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
 };
+
+// function to compare two tables to keep there no. of rows equal
+// Maximum Rows can be 7
+export const getMinRowsForTable = (noOfRecordsTable1, noOfRecordsTable2) => {
+  let minRowsForTable = TableDefaults.MIN_ROWS;
+  if(noOfRecordsTable1 > TableDefaults.PAGE_SIZE_7 || noOfRecordsTable2 > TableDefaults.PAGE_SIZE_7 ) {
+    minRowsForTable = TableDefaults.MIN_ROWS_7;
+  } else if(noOfRecordsTable1 > noOfRecordsTable2) {
+    minRowsForTable = noOfRecordsTable1;
+  } else {
+    minRowsForTable = noOfRecordsTable2;
+  }
+  return minRowsForTable;
+}

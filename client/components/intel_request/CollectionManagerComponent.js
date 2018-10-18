@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, getConfirmation } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, getConfirmation, getMinRowsForTable } from '../../util/helpers';
 import { viewerIdentifiers } from '../../map/viewer';
 import { Link } from 'react-router-dom';
 import Loader from '../reusable/Loader';
@@ -137,18 +137,18 @@ class CollectionManagerComponent extends React.Component {
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
     const editurl = '/intel-request/detail/';
-    let minRowsForTable = TableDefaults.MIN_ROWS;
+    // let minRowsForTable = TableDefaults.MIN_ROWS;
 
-    if(allCollectionsPlan.length > TableDefaults.PAGE_SIZE_7 || allApprovedIntelRequests.length > TableDefaults.PAGE_SIZE_7 ) {
-      minRowsForTable = TableDefaults.MIN_ROWS_7;
-    } else if(allCollectionsPlan.length > allApprovedIntelRequests.length) {
-      minRowsForTable = allCollectionsPlan.length;
-    } else {
-      minRowsForTable = allApprovedIntelRequests.length;
-    }
+    // if(allCollectionsPlan.length > TableDefaults.PAGE_SIZE_7 || allApprovedIntelRequests.length > TableDefaults.PAGE_SIZE_7 ) {
+    //   minRowsForTable = TableDefaults.MIN_ROWS_7;
+    // } else if(allCollectionsPlan.length > allApprovedIntelRequests.length) {
+    //   minRowsForTable = allCollectionsPlan.length;
+    // } else {
+    //   minRowsForTable = allApprovedIntelRequests.length;
+    // }
 
    
-    
+    let minRowsForTable = getMinRowsForTable(allCollectionsPlan.length, allApprovedIntelRequests.length);
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
@@ -341,7 +341,7 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
             <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
+            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} />
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
