@@ -194,9 +194,11 @@ class RequestComponent extends React.Component {
 
     return (
       <div>
+        {this.state.modalOpen ?
           <AddCollectionValidationModal show = {this.state.modalOpen} onClose={this.closeCollectionValidationModal} 
-          IntelRequestID = { this.state.IntelRequestID }
-          save = {this.saveCollectionValidationModal} translations = {translations}/>
+            IntelRequestID = { this.state.IntelRequestID }
+            save = {this.saveCollectionValidationModal} translations = {translations}/>
+          : ''}
         <div className="row orders-assets">
           <div className="header-line">
             <Loader loading={this.state.loading} />
