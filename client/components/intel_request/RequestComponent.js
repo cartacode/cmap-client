@@ -181,7 +181,7 @@ class RequestComponent extends React.Component {
         accessor: 'IntelRequestID',
         filterable: false,
         maxWidth: 260,
-        Cell: row => <div className="actions-btn">  <a href={`${editurl}${row.value}`} className="edit-btn"><span className="glyphicon glyphicon-edit"/></a> 
+        Cell: row => <div className="actions-btn">  <Link to={`${editurl}${row.value}`} className="edit-btn"><span className="glyphicon glyphicon-edit"/></Link>
           { (row.original.MissionId !== null) ? '' :
             <span><a href="javaScript:void('0');" className="delete-btn" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
               { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" title="Add Collection Validation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-plus"/></a> : '' }
