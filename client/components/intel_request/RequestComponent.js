@@ -11,6 +11,7 @@ import { NotificationManager } from 'react-notifications';
 import Loader from '../reusable/Loader';
 import AddCollectionValidationModal from '../reusable/AddCollectionValidationModal';
 import { collectionManagerUser, adminUser, superAdmin } from '../../dictionary/auth';
+import ReactTooltip from 'react-tooltip';
 
 class RequestComponent extends React.Component {
 
@@ -181,11 +182,23 @@ class RequestComponent extends React.Component {
         accessor: 'IntelRequestID',
         filterable: false,
         maxWidth: 260,
-        Cell: row => <div className="actions-btn">  <Link to={`${editurl}${row.value}`} className="edit-btn"><span className="glyphicon glyphicon-edit"/></Link>
+        Cell: row => <div className="actions-btn">  <Link to={`${editurl}${row.value}`} className="edit-btn" data-tip data-for="edit-btn"><span className="glyphicon glyphicon-edit"/></Link>
+        <ReactTooltip id='edit-btn'  type='warning'>
+                     <span>Edit</span>
+              </ReactTooltip>
           { (row.original.MissionId !== null) ? '' :
-            <span><a href="javaScript:void('0');" className="delete-btn" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
-              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" title="Add Collection Validation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-transfer"/></a> : '' }
+          
+            <span><a href="javaScript:void('0');" className="delete-btn" data-tip data-for="delete-btn" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
+                 <ReactTooltip id='delete-btn'  type='warning'>
+                     <span>Delete</span>
+                  </ReactTooltip>
+                     
+              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" data-tip data-for="CollectionValidation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-transfer"/></a> : '' }
+              <ReactTooltip id='CollectionValidation'  type='warning'>
+                     <span>Add Collection Validation</span>
+              </ReactTooltip>
             </span>
+          
           }
 
         </div>,
@@ -194,18 +207,18 @@ class RequestComponent extends React.Component {
 
     return (
       <div>
-        {this.state.modalOpen ?
           <AddCollectionValidationModal show = {this.state.modalOpen} onClose={this.closeCollectionValidationModal} 
-            IntelRequestID = { this.state.IntelRequestID }
-            save = {this.saveCollectionValidationModal} translations = {translations}/>
-          : ''}
+          IntelRequestID = { this.state.IntelRequestID }
+          save = {this.saveCollectionValidationModal} translations = {translations}/>
         <div className="row orders-assets">
           <div className="header-line">
             <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations.summary} &nbsp;
-              <Link to={ addurl } className="btn btn-info btn-xs add-data"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+              <Link to={ addurl } className="btn btn-info btn-xs add-data" ><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+                  
+
 
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
