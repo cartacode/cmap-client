@@ -167,6 +167,11 @@ class PedTaskingComponent extends React.Component {
       </div>,
       },
       {
+        Header: translations['PedTeam'],
+        accessor: 'PedTeam',
+        minWidth: 150,
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
         maxWidth: 80,
@@ -193,11 +198,7 @@ class PedTaskingComponent extends React.Component {
         accessor: 'Status',
         minWidth: 150,
       },
-      {
-        Header: translations['PedTeam'],
-        accessor: 'PedTeam',
-        minWidth: 150,
-      },
+      
       {
         Header: translations.Unassign,
         accessor: 'missionId',

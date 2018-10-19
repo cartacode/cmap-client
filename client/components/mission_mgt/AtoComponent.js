@@ -225,6 +225,11 @@ moveLeft = (row) => {
         </div>,
       },
       {
+        Header: translations.missionUnit,
+        accessor: 'MissionUnit',
+        minWidth: 150,
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
         maxWidth: 80,
@@ -263,11 +268,6 @@ moveLeft = (row) => {
       {
         Header: translations.status,
         accessor: 'Status',
-        minWidth: 150,
-      },
-      {
-        Header: translations.missionUnit,
-        accessor: 'MissionUnit',
         minWidth: 150,
       },
       {

@@ -167,6 +167,10 @@ class FlightOpsTeam extends React.Component {
         </div>,
       },
       {
+        Header: translations['CrewTeam'],
+        accessor: 'CrewTeam',
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
         maxWidth: 80,
@@ -191,10 +195,6 @@ class FlightOpsTeam extends React.Component {
         Header: translations['status'],
         accessor: 'Status',
         minWidth: 150,
-      },
-      {
-        Header: translations['CrewTeam'],
-        accessor: 'CrewTeam',
       },
       {
         Header: translations.Unassign,

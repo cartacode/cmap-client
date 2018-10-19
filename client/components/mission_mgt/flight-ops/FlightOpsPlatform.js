@@ -171,6 +171,10 @@ class FlightOpsPlatform extends React.Component {
         </div>,
       },
       {
+        Header: translations.tail,
+        accessor: 'TailNumber',
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
         maxWidth: 80,
@@ -184,10 +188,6 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
-      },
-      {
-        Header: translations.tail,
-        accessor: 'TailNumber',
       },
       {
         Header: translations['Date/Time'],
