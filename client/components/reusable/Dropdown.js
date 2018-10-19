@@ -96,6 +96,7 @@ class Table extends React.Component {
 
     render() {
       const key = this.props.id || 0;
+      const multiSelect = this.props.multiSelect;
       return (
         <div>
           
@@ -141,6 +142,7 @@ Table.propTypes = {
   dropdownData: PropTypes.func,
   id: PropTypes.string,
   initValue: PropTypes.any,
+  multiSelect: PropTypes.string,
   required: PropTypes.bool,
 };
 

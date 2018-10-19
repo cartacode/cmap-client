@@ -70,6 +70,7 @@ class AtoComponent extends React.Component {
 moveLeft = (row) => {
   const intelRequestID = row.original.IntelRequestID;
   if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
+    //Need to add one more property SuggestedPlatformInventoryID
     const data = {
       'IntelReqID': intelRequestID,
       'OwningUnit': this.state.radioUnitId,

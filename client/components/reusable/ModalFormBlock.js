@@ -154,11 +154,13 @@ class ModalFormBlock extends React.Component {
             disabled = true;
           }
 
+          let multiSelect = item.multiSelect;
+
           // if(value === '') {
           //   value = 11;
           // }
           input = (
-            <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
+            <Dropdown id={item.valFieldID} multiSelect = {multiSelect} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
           );
           break;
 
