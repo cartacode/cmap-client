@@ -202,8 +202,11 @@ moveLeft = (row) => {
         maxWidth: 70,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary"  data-tip data-for="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
+            <ReactTooltip id='Move To ATO Generation' type='warning'>
+                      <span>Move To ATO Generation</span>
+                 </ReactTooltip>
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
@@ -223,6 +226,11 @@ moveLeft = (row) => {
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
+      },
+      {
+        Header: translations.missionUnit,
+        accessor: 'MissionUnit',
+        minWidth: 150,
       },
       {
         Header: translations.Priority,
@@ -266,18 +274,17 @@ moveLeft = (row) => {
         minWidth: 150,
       },
       {
-        Header: translations.missionUnit,
-        accessor: 'MissionUnit',
-        minWidth: 150,
-      },
-      {
         Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
         maxWidth: 80,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary" data-tip data-for="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+            <ReactTooltip id='Move To Collection Plan' type='warning'>
+                      <span>Move To Collection Plan</span>
+                 </ReactTooltip>
+           
             &nbsp;
           </div>
         ),

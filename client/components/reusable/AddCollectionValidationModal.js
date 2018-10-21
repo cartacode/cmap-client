@@ -35,23 +35,24 @@ class AddCollectionValidationModal extends React.Component {
           StatusId: this.props.intelData.StatusId,
           PriorityId: this.props.intelData.PriorityId,
           SpecialInstructions: this.props.intelData.SpecialInstructions,
+          NextHigherUnitId: this.props.intelData.NextHigherUnitId,
         },
         editFetched: true,
       });
 
     });
 
-    // setting next higher unit
-    this.props.fetchNextHigherUnit(unitId).then(() => {
-      let { intelRequest } = this.state;
-      this.setState({
-        intelRequest: {
-          ...intelRequest,
-          NextHigherUnitId: this.getHigherUnit(),
-        },
-        editFetched: true,
-      });
-    });
+    // // setting next higher unit
+    // this.props.fetchNextHigherUnit(unitId).then(() => {
+    //   let { intelRequest } = this.state;
+    //   this.setState({
+    //     intelRequest: {
+    //       ...intelRequest,
+    //       NextHigherUnitId: this.getHigherUnit(),
+    //     },
+    //     editFetched: true,
+    //   });
+    // });
 
    
   }
