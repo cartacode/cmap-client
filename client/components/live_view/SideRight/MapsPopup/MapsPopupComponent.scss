@@ -1,0 +1,44 @@
+/* Maps Popup */
+.maps-popup-block.right-popup-block {
+  width: 161px;
+  border-left: 1px solid #214859;
+  box-sizing: border-box;
+}
+
+.maps-popup-block.right-popup-block.opened {
+  right: 63px;
+}
+
+.maps-popup-block.right-popup-block .title-block {
+  background: none;
+}
+.maps-popup-block.right-popup-block .btn-control {
+  position: absolute;
+  top: 6px;
+  right: 5px;
+  height: 24px;
+  width: 80px;
+}
+.maps-popup-block.right-popup-block .btn-control div {
+  width: 24px;
+  height: 24px;
+  position: static;
+  float: left;
+  cursor: pointer;
+}
+.maps-popup-block.right-popup-block .btn-control .btn-close {
+  background: url(/assets/img/live_view//btn_close.svg) no-repeat;
+  background-size: cover;
+}
+.maps-popup-block.right-popup-block .btn-control .btn-close:before {
+  display: none;
+}
+.maps-popup-block.right-popup-block .btn-control .btn-expand {
+  background: url(/assets/img/live_view/btn_expand.svg) no-repeat;
+  background-size: cover;
+  margin: 0 4px;
+}
+.maps-popup-block.right-popup-block .btn-control .btn-curtail {
+  background: url(/assets/img/live_view/btn_curtail.svg) no-repeat;
+  background-size: cover;
+}

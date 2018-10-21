@@ -7,8 +7,8 @@ import {UTILS} from 'map/Utils';
 import {addKML} from 'map/kml';
 import {addPoint,} from 'map/viewer';
 
-import SideBarLeftComponent from '../live_view/SideBarLeftComponent';
-import SideBarRightComponent from '../live_view/SideBarRightComponent';
+import SideBarLeftComponent from '../live_view/SideLeft';
+import SideBarRightComponent from '../live_view/SideRight';
 
 
 /**
