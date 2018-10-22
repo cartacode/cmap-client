@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from '../reusable/Dropdown';
+import MultiSelectDropdown from '../reusable/MultiSelectDropdown';
 import CustomDatePicker from '../reusable/CustomDatePicker';
 import { InputAttributes } from '../../dictionary/constants';
 import moment from 'moment';
@@ -64,9 +65,26 @@ class ModalFormBlock extends React.Component {
     this.updateContent(name, dropdownData.trim());
   }
 
+  handleDropdownMultipleSelectedData = (dropdownData, name) => {
+    this.updateMultiSelectDropdownContent(name, dropdownData);
+  }
+
   handleChangeDate = (changeDate, name) => {
     this.updateContent(name, changeDate);
   }
+
+  updateMultiSelectDropdownContent(name, value) {
+    const { content } = this.state;
+    this.setState({
+      content: {
+        ...content,
+        [name]: value,
+      },
+    }, () => {
+      this.props.multiSelectData(this.state.content);
+    });
+  }
+
 
   updateContent(name, value) {
     const { content } = this.state;
@@ -154,14 +172,13 @@ class ModalFormBlock extends React.Component {
             disabled = true;
           }
 
-          let multiSelect = item.multiSelect;
-
+          let multiple = item.multiple;
           // if(value === '') {
           //   value = 11;
           // }
-          input = (
-            <Dropdown id={item.valFieldID} multiSelect = {multiSelect} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
-          );
+          input = (!multiple ?
+            <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} disabled={disabled}/>
+            : <MultiSelectDropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownMultipleSelectedData} required={req} disabled={disabled}/>);
           break;
 
         case 'date':

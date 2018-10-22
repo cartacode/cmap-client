@@ -76,6 +76,8 @@ class RequestForm extends React.Component {
         // Payload: '',
         StatusId: IntelConstants.STATUS.OP.id,
         UnitId: unitId,
+        EEIs: {},
+        IntelEEIOtions: [],
       },
       loading: false,
       ccirPirOptions: [],
@@ -257,6 +259,8 @@ editComponent = (editId) => {
         MissionType: ir.MissionType,
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
+        targetID: ir.targetID,
+        objectiveID: ir.objectiveID,
       },
       ccirCountry: CountryId,
       firstCcir,
@@ -265,6 +269,17 @@ editComponent = (editId) => {
     });
 
     this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
+  }
+
+  multiSelectChanges = (ir) =>{
+    const { intelRequest } = this.state;
+    this.setState({
+      intelRequest: {
+        ...intelRequest,
+        IntelEEIOtions: ir.IntelEEIOtions,
+      },
+    });
+   
   }
 
   handleIntelRequest2 = (ir) => {
@@ -277,6 +292,8 @@ editComponent = (editId) => {
         Armed: (ir.Armed == undefined || ir.Armed == '' || ir.Armed == null) ? true : ir.Armed,
         BestCollectionTime: ir.BestCollectionTime,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
+        threatGroupID: ir.threatGroupID,
+        LIMIDS_ReqID: ir.LIMIDS_ReqID,
       },
     });
   }
@@ -289,6 +306,11 @@ editComponent = (editId) => {
         ReportClassification: ir.ReportClassification,
         locationID: ir.locationID,
         locationcategory: ir.locationcategory,
+        district: ir.district,
+        location: ir.location,
+        gridCoordinates: ir.gridCoordinates,
+        POI1_ID: ir.POI1_ID,
+        POI2_ID: ir.POI2_ID,
         // AssetId: ir.AssetId,
         // PointofContact: intelRequest3.PointofContact,
         // DSN: intelRequest3.DSN,
@@ -327,13 +349,12 @@ editComponent = (editId) => {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.createEEIInstance();
     const { intelRequest } = this.state;
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
     const session = JSON.parse(localStorage.getItem('session'));
-    
-    
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
     this.setState({ loading: true });
     const redirectUrl = '/intel-request/detail/';
@@ -360,6 +381,28 @@ editComponent = (editId) => {
         });
       });
     }
+  }
+
+  createEEIInstance(){
+    const { intelRequest } = this.state;
+      const EEIs = {
+      targetID: intelRequest.targetID,
+      objectiveID: intelRequest.objectiveID,
+      threatGroupID: intelRequest.threatGroupID,
+      district: intelRequest.district,
+      location: intelRequest.location,
+      gridCoordinates: intelRequest.gridCoordinates,
+      LIMIDS_ReqID: intelRequest.LIMIDS_ReqID,
+      POI1_ID: intelRequest.POI1_ID,
+      POI2_ID: intelRequest.POI2_ID,
+      }
+
+      this.setState({
+        intelRequest: {
+          ...intelRequest,
+          EEIs: EEIs,
+        },
+      });
   }
 
 notify = (type) => {
@@ -605,7 +648,7 @@ render = () => {
     { name: 'End Date', type: 'date', domID: 'endDate', valFieldID: 'EndDate', required: true, disabled: isDisabled },
     { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isDisabled },
     { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isDisabled },
-    { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'EEIs', multiSelect: true },
+    { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'IntelEEIOtions', multiple: true },
   ];
 
   const eeiFiled2 = [
@@ -675,7 +718,7 @@ render = () => {
             <FullHeaderLine headerText={translations['intelligence request']} />
           </div> */}
           <div className="col-md-4">
-            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1} multiSelectData ={this.multiSelectChanges} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
           <div className="col-md-4">
             <ModalFormBlock fields={eeiFiled2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
