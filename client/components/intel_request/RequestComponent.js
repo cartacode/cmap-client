@@ -59,6 +59,7 @@ class RequestComponent extends React.Component {
     this.props.updateIntelRequestWithCollectionManager(intelRequestId, intelRequest).then(() => {
       this.closeCollectionValidationModal();
       this.setState({ loading: false });
+      this.loadData();
       this.notify();
     });               
   }
