@@ -136,8 +136,30 @@ class RequestForm extends React.Component {
 
     // creating different dropdonws
     this.createCcirPirData(editId);
-
+    this.updateNAIAndCountry();
   }
+
+  updateNAIAndCountry = () => {
+    const {updatedLocation, ccirCountry } = this.state;
+    const { match: { params } } = this.props;
+    const editId = params.editId;
+    if(editId !== undefined && editId === '0' ) {
+      this.setState({ clear: true });
+    }
+ 
+    if(editId !== undefined && editId !== '0' ) {
+      this.editComponent(editId);
+    }
+    if(updatedLocation !== undefined && updatedLocation !== "" ) {
+      this.setNAIPOI(updatedLocation);
+    }
+
+    if(ccirCountry !== undefined) {
+      this.updateCountry();
+    }
+  }
+
+  
 
 getHigherUnit = () => {
   const { higherUnit } = this.props;
@@ -267,7 +289,6 @@ editComponent = (editId) => {
       // ccirCountry: (selectedCCIR !== undefined && selectedCCIR.CountryId !== undefined) ? selectedCCIR.CountryId : '',
       // firstCcir: (selectedCCIR !== undefined && selectedCCIR.Description1 !== undefined) ? selectedCCIR.Description1 : '' ,
     });
-
     this.updatePirOptions(this.state.pirs[ir.NamedOperation], 'Description5');
   }
 
@@ -291,8 +312,17 @@ editComponent = (editId) => {
         SecondaryPayload: ir.SecondaryPayload,
         Armed: (ir.Armed == undefined || ir.Armed == '' || ir.Armed == null) ? true : ir.Armed,
         BestCollectionTime: ir.BestCollectionTime,
-        LatestTimeIntelValue: ir.LatestTimeIntelValue,
         threatGroupID: ir.threatGroupID,
+      },
+    });
+  }
+
+  handleIntelRequest7 = (ir) => {
+    const { intelRequest } = this.state;
+    this.setState({
+      intelRequest: {
+        ...intelRequest,
+        LatestTimeIntelValue: ir.LatestTimeIntelValue,
         LIMIDS_ReqID: ir.LIMIDS_ReqID,
       },
     });
@@ -349,8 +379,19 @@ editComponent = (editId) => {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.createEEIInstance();
-    const { intelRequest } = this.state;
+    let { intelRequest } = this.state;
+    const EEIs = {
+      targetID: intelRequest.targetID,
+      objectiveID: intelRequest.objectiveID,
+      threatGroupID: intelRequest.threatGroupID,
+      district: intelRequest.district,
+      location: intelRequest.location,
+      gridCoordinates: intelRequest.gridCoordinates,
+      LIMIDS_Req: intelRequest.LIMIDS_ReqID,
+      POI1_ID: intelRequest.POI1_ID,
+      POI2_ID: intelRequest.POI2_ID,
+      }
+    intelRequest.EEIs = EEIs;
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
@@ -382,28 +423,33 @@ editComponent = (editId) => {
       });
     }
   }
-
-  createEEIInstance(){
-    const { intelRequest } = this.state;
-      const EEIs = {
-      targetID: intelRequest.targetID,
-      objectiveID: intelRequest.objectiveID,
-      threatGroupID: intelRequest.threatGroupID,
-      district: intelRequest.district,
-      location: intelRequest.location,
-      gridCoordinates: intelRequest.gridCoordinates,
-      LIMIDS_ReqID: intelRequest.LIMIDS_ReqID,
-      POI1_ID: intelRequest.POI1_ID,
-      POI2_ID: intelRequest.POI2_ID,
-      }
-
-      this.setState({
-        intelRequest: {
-          ...intelRequest,
-          EEIs: EEIs,
-        },
-      });
+ 
+  setNAIPOI = (locationsData) => {
+    const { intelReqEEI } = this.state;
+    this.setState({
+      intelReqEEI: {
+        ...intelReqEEI,
+        gridCoordinates: locationsData.currentLatLong.latitude + ', ' + locationsData.currentLatLong.longitude,
+        POI1_ID: locationsData.location[0].id || 'no value',
+        POI2_ID: locationsData.location[1].id || 'no value',
+      },
+      eeiFetched: true,
+      clear: false,
+    });
   }
+
+updateCountry = () => {
+  // const districtSelect = document.getElementsByName('district')[0];
+  const { intelReqEEI } = this.state;
+  this.setState(
+    {
+      intelReqEEI:
+        { ...intelReqEEI,
+          district: this.props.ccirCountry,
+        },
+      eeiFetched: true, // to update data in chil components
+    });
+}
 
 notify = (type) => {
   const { translations } = this.props;
@@ -682,7 +728,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-           {/* <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />  */}
+            {/* <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} /> */}
            </div>
         </div>
         <div className="col-md-4 one-block">
@@ -721,7 +767,7 @@ render = () => {
             <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1} multiSelectData ={this.multiSelectChanges} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
           <div className="col-md-4">
-            <ModalFormBlock fields={eeiFiled2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={eeiFiled2} data={this.handleIntelRequest7} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
           {/* <div className="col-md-4">
             <ModalFormBlock fields={eeiFiled3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
