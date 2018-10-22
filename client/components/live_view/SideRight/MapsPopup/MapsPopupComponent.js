@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'rc-slider/assets/index.css';
 
 import LvSlider from '../../../reusable/Slider';
 
@@ -13,6 +12,18 @@ class MapsPopupComponent extends React.Component {
     this.state = {
       fusePopupOpen: false,
       sliderPercent: 50,
+      menuClicked: [
+        false, //
+        false, //
+        false, //
+        false, //
+        false, //
+        false, //
+      ],
+      fuseItemClicked: [
+        false, // base
+        false, // top
+      ]
     };
   }
 
@@ -20,8 +31,7 @@ class MapsPopupComponent extends React.Component {
     e.preventDefault();
   }
 
-  showFusePopup = (e) => {
-    this.preventEvent(e);
+  showFusePopup = () => {
     this.setState({
       fusePopupOpen: !this.state.fusePopupOpen,
     });
@@ -31,6 +41,7 @@ class MapsPopupComponent extends React.Component {
     this.preventEvent(e);
     this.setState({
       sliderPercent: 100,
+      fuseItemClicked: [true, false]
     });
   }
 
@@ -38,12 +49,30 @@ class MapsPopupComponent extends React.Component {
     this.preventEvent(e);
     this.setState({
       sliderPercent: 50,
+      fuseItemClicked: [false, true]
     });
   }
 
+  onClickMenuItem = (index, e) => {
+    this.preventEvent(e);
+    this.setState({
+      menuClicked: this.state.menuClicked.map((item, i) => {
+        if (i === index) {
+          return true;
+        }
+        return false;
+      }),
+    });
+
+    if ( index === 5) {
+      this.showFusePopup();
+    }
+  }
+
   render() {
+    const { menuClicked, fuseItemClicked } = this.state;
     return (
-      <div className={'maps-popup-block right-popup-block scroll-pane' + (this.props.mapsPopupOpen ? ' opened' : '')}>
+      <div className={'maps-popup-block right-popup-block' + (this.props.mapsPopupOpen ? ' opened' : '')}>
         <div className="title-block">
           MAPS
           <div className="btn-control clearfix">
@@ -56,22 +85,22 @@ class MapsPopupComponent extends React.Component {
           </div>
         </div>
         <div className="sidebar-maps-menu clearfix">
-          <a href="#" className="satellite-link" onClick={this.preventEvent}>
+          <a href="#" className={'satellite-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
             <span>Satellite</span>
           </a>
-          <a href="#" className="street-link" onClick={this.preventEvent}>
+          <a href="#" className={'street-link' + (menuClicked[1] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(1, e)}>
             <span>Street</span>
           </a>
-          <a href="#" className="sea-link" onClick={this.preventEvent}>
+          <a href="#" className={'sea-link' + (menuClicked[2] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(2, e)}>
             <span>Sea</span>
           </a>
-          <a href="#" className="air-link" onClick={this.preventEvent}>
+          <a href="#" className={'air-link' + (menuClicked[3] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(3, e)}>
             <span>Air</span>
           </a>
-          <a href="#" className="columbus-link" onClick={this.preventEvent}>
+          <a href="#" className={'columbus-link' + (menuClicked[4] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(4, e)}>
             <span>Columbus</span>
           </a>
-          <a href="#" className="fuse-link" onClick={this.showFusePopup}>
+          <a href="#" className={'fuse-link' + (menuClicked[5] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(5, e)}>
             <span>Fuse</span>
           </a>
         </div>
@@ -79,8 +108,8 @@ class MapsPopupComponent extends React.Component {
         <div className={'fuse-popup-menu sidebar-maps-block' + (this.state.fusePopupOpen ? ' opened' : '')}>
           <div className="title">Maps</div>
           <div className="select-map-block clearfix">
-            <a href="#" id="base_layer" onClick={this.onClickBase}>Base</a>
-            <a href="#" id="top_layer" onClick={this.onClickTop}>Top</a>
+            <a href="#" className={(fuseItemClicked[0] ? 'active' : '')} id="base_layer" onClick={this.onClickBase}>Base</a>
+            <a href="#" className={(fuseItemClicked[1] ? 'active' : '')} id="top_layer" onClick={this.onClickTop}>Top</a>
           </div>
           <div className="opacity-block">
             <div className="title">Opacity</div>

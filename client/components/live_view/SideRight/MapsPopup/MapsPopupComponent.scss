@@ -1,7 +1,7 @@
 /* Maps Popup */
 .maps-popup-block.right-popup-block {
   width: 161px;
-  border-left: 1px solid #214859;
+  /*border-left: 1px solid #214859;*/
   box-sizing: border-box;
 }
 
@@ -37,8 +37,10 @@
   background: url(/assets/img/live_view/btn_expand.svg) no-repeat;
   background-size: cover;
   margin: 0 4px;
+  visibility: hidden;
 }
 .maps-popup-block.right-popup-block .btn-control .btn-curtail {
   background: url(/assets/img/live_view/btn_curtail.svg) no-repeat;
   background-size: cover;
+  visibility: hidden;
 }

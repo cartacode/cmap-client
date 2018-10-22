@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DrawingPopupAddMarkerComponent from '../DrawingPopupAddMarker';
+import DrawingPopupAddPolygonComponent from '../DrawingPopupAddPolygon';
+import DrawingPopupAddCircleComponent from '../DrawingPopupAddCircle';
+import DrawingPopupAddPathComponent from '../DrawingPopupAddPath';
 
 import './DrawingPopupComponent.scss';
 
@@ -10,7 +13,13 @@ class DrawingPopupComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addMarkerOpen: false,
+      addPopOpens: [
+        false, // addMarkerOpen
+        false, // addPolygonOpen
+        false, // addCircleOpen
+        false, // addPathOpen
+        false, // addDropOpen
+      ]
     };
   }
 
@@ -18,14 +27,20 @@ class DrawingPopupComponent extends React.Component {
     e.preventDefault();
   }
 
-  onShowAddPanel = (addState, event) => {
+  onShowAddPanel = (addStateIndex, event) => {
     this.preventEvent(event);
     this.setState({
-      [addState]: true,
+      addPopOpens: this.state.addPopOpens.map((item, i) => {
+        if (i === addStateIndex) {
+          return true;
+        }
+        return false;
+      }),
     });
   }
 
   render() {
+    const { addPopOpens } = this.state;
     return (
       <div className={'drawing-popup-block right-popup-block' + (this.props.drawingPopupOpen ? ' opened' : '')}>
         <div className="scroll-pane">
@@ -40,38 +55,41 @@ class DrawingPopupComponent extends React.Component {
               />
             </div>
           </div>
-          
+
           <div className="primary-tools-menu">
             <div className="figures-block primary-list-block clearfix">
-              <div className="rectangle-link">
-                <a href="#" onClick={(e) => this.onShowAddPanel('addMarkerOpen', e)}>Rectangle</a>
+              <div className={'drop-poi-link' + (addPopOpens[4] ? ' active' : '')}>
+                <a href="#" onClick={(e) => this.onShowAddPanel(4, e)}>Drop</a>
               </div>
-              <div className="polygon-link">
-                <a href="#">Polygon</a>
+              <div className={'rectangle-link' + (addPopOpens[0] ? ' active' : '')}>
+                <a href="#" onClick={(e) => this.onShowAddPanel(0, e)}>Rectangle</a>
               </div>
-              <div className="circle-link">
-                <a href="#">Circle</a>
+              <div className={'polygon-link' + (addPopOpens[1] ? ' active' : '')}>
+                <a href="#" onClick={(e) => this.onShowAddPanel(1, e)}>Polygon</a>
               </div>
-              <div className="line-link">
-                <a href="#">Line</a>
+              <div className={'circle-link' + (addPopOpens[2] ? ' active' : '')}>
+                <a href="#" onClick={(e) => this.onShowAddPanel(2, e)}>Circle</a>
               </div>
-              <div className="path-link">
-                <a href="#">Path</a>
+              <div className={'path-link' + (addPopOpens[3] ? ' active' : '')}>
+                <a href="#" onClick={(e) => this.onShowAddPanel(3, e)}>Path</a>
               </div>
             </div>
           </div>
 
           <div>
             <DrawingPopupAddMarkerComponent
-              addMarkerOpen={this.state.addMarkerOpen}
+              showOpen={addPopOpens[0]}
+            />
+            <DrawingPopupAddPolygonComponent
+              showOpen={addPopOpens[1]}
+            />
+            <DrawingPopupAddCircleComponent
+              showOpen={addPopOpens[2]}
+            />
+            <DrawingPopupAddPathComponent
+              showOpen={addPopOpens[3]}
             />
           </div>
-        </div>
-
-        <div className="buttons-control buttons-block clearfix">
-          <button className="btn-clear">Clear</button>
-          <button className="btn-delete">Delete</button>
-          <button className="btn-save">Save</button>
         </div>
       </div>
     );

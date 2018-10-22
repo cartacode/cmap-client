@@ -21,9 +21,9 @@ class DrawingPopupAddMarkerComponent extends React.Component {
 
   render() {
     return (
-      <div className={'maps-popup-block-add-marker' + (this.props.addMarkerOpen ? ' opened' : '')}>
+      <div className={'drawing-popup-block-add-marker' + (this.props.showOpen ? ' opened' : '')}>
         <div className={'m-2 border-bottom-1'}>Add Marker</div>
-        <div className={'p-3'}>
+        <div className={'p-3'} style={{background: '#022033'}}>
 
           <div className={'d-flex align-items-center'}>
             <div className={'w-75px'}>Name:</div>
@@ -142,6 +142,10 @@ class DrawingPopupAddMarkerComponent extends React.Component {
             </div>
           </div>
 
+          <div className="buttons-control buttons-block mt-5 text-right">
+            <button className="btn-save">Ok</button>
+            <button className="btn-clear">Cancel</button>
+          </div>
         </div>
       </div>
     );
@@ -149,7 +153,7 @@ class DrawingPopupAddMarkerComponent extends React.Component {
 }
 
 DrawingPopupAddMarkerComponent.propTypes = {
-  addMarkerOpen: PropTypes.bool,
+  showOpen: PropTypes.bool,
   onPopup: PropTypes.func,
 };
 

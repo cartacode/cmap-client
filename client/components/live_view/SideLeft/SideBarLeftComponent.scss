@@ -1,6 +1,7 @@
 /* Sidebar Left */
 .sidebar-left-block {
   position: absolute;
+  /*position: relative;*/
   z-index: 3;
   top: 0;
   bottom: 0;
@@ -8,6 +9,7 @@
   box-sizing: border-box;
   width: 50px;
   padding-top: 5px;
+  /*background: rgba(40, 72, 98, .7);*/
 }
 .sidebar-left-block:before {
   position: absolute;
@@ -18,6 +20,7 @@
   height: 100%;
   content: '';
   background: rgba(40, 72, 98, .7);
+  /*background: rgba(40, 72, 98, 1);*/
 }
 .sidebar-left-block a.logo {
   line-height: 56px;

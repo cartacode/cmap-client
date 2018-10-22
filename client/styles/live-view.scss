@@ -561,7 +561,7 @@ ul, li {
   z-index: 1;
   top: 40px;
   right: -263px;
-  bottom: 39px;
+  /*bottom: 39px;*/
   box-sizing: border-box;
   width: 262px;
   outline: none;
@@ -575,7 +575,7 @@ ul, li {
   padding: 10px 16px;
   text-transform: uppercase;
   color: #b4fafe;
-  background: #012742;
+  background: #012742 !important;
 }
 .right-popup-block .title-block .btn-close {
   position: absolute;
@@ -902,6 +902,9 @@ ul, li {
   
 }
 
+.css-1hwfws3, .css-vj8t7z {
+  /*height: 30px !important;*/
+}
 .css-vj8t7z, .css-2o5izw {
   border-radius: 0px !important;
   border: 1px solid #6ca6b5 !important;
@@ -909,6 +912,9 @@ ul, li {
   outline: 0 !important;
   box-shadow: 0 0 0 0px !important;
   cursor: pointer !important;
+
+  // min-height: 30px !important;
+  
 }
 
 .css-xp4uvy {
@@ -1078,4 +1084,28 @@ body .ui-slider .ui-slider-range {
     border-left: 10px solid white;
     margin-left: 3px;
   }
+}
+
+/* Button */
+.buttons-control.buttons-block button {
+  width: 73px;
+  height: 32px;
+  display: inline-block;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'benderregular', sans-serif;
+}
+
+button.btn-clear {
+  background: #39586C !important;
+}
+button.btn-delete {
+  background: #6CA6B5 !important;
+  margin: 0 3px;
+}
+button.btn-save {
+  background: #FF7C16 !important;
 }

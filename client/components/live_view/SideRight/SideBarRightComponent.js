@@ -2,6 +2,8 @@ import React from 'react';
 
 import MapsPopupComponent from './MapsPopup';
 import DrawingPopupComponent from './DrawingPopup';
+import RulerPopupComponent from './RulerPopup';
+import SearchPopupComponent from './SearchPopup';
 
 import './SideBarRightComponent.scss';
 
@@ -12,6 +14,8 @@ class SideBarRightComponent extends React.Component {
     this.state = {
       mapsPopupOpen: false,
       drawingPopupOpen: false,
+      rulerPopupOpen: false,
+      searchPopupOpen: false,
     };
   }
 
@@ -20,7 +24,16 @@ class SideBarRightComponent extends React.Component {
       this.preventEvent(event);
     }
     this.setState({
-      [popupType]: opened,
+      mapsPopupOpen: false,
+      drawingPopupOpen: false,
+      rulerPopupOpen: false,
+      searchPopupOpen: false,
+    }, () => {
+      setTimeout(()=>{
+        this.setState({
+          [popupType]: opened,
+        });
+      }, 300);
     });
   }
 
@@ -36,9 +49,6 @@ class SideBarRightComponent extends React.Component {
             <li className="maps-link">
               <a href="#" onClick={(e)=>this.onPopup(true, 'mapsPopupOpen', e)}><span>Maps</span></a>
             </li>
-            <li className="geo-admin">
-              <a target="_blank" href="http://localhost/geoserver/web"><span>GeoAdmin</span></a>
-            </li>
             <li className="layers-link">
               <a href="#" onClick={this.preventEvent}><span>Layers</span></a>
             </li>
@@ -46,22 +56,10 @@ class SideBarRightComponent extends React.Component {
               <a href="#" onClick={(e)=>this.onPopup(true, 'drawingPopupOpen', e)}><span>Drawing</span></a>
             </li>
             <li className="measure-link">
-              <a href="#" onClick={this.preventEvent}><span>Measure</span></a>
-            </li>
-            <li className="tools-link">
-              <a href="#" onClick={this.preventEvent}><span>Tools</span></a>
-            </li>
-            <li className="details-link">
-              <a href="#" onClick={this.preventEvent}><span>Details</span></a>
+              <a href="#" onClick={(e)=>this.onPopup(true, 'rulerPopupOpen', e)}><span>Ruler</span></a>
             </li>
             <li className="search-link">
-              <a href="#" onClick={this.preventEvent}><span>Search</span></a>
-            </li>
-            <li className="timeline-link">
-              <a href="#" onClick={this.preventEvent}><span>Timeline</span></a>
-            </li>
-            <li className="sysadmin-link">
-              <a href="#" onClick={this.preventEvent}><span>Sys Admin</span></a>
+              <a href="#" onClick={(e)=>this.onPopup(true, 'searchPopupOpen', e)}><span>Search</span></a>
             </li>
           </ul>
         </div>
@@ -72,6 +70,14 @@ class SideBarRightComponent extends React.Component {
         <DrawingPopupComponent
           onPopup={this.onPopup}
           drawingPopupOpen={this.state.drawingPopupOpen}
+        />
+        <RulerPopupComponent
+          onPopup={this.onPopup}
+          rulerPopupOpen={this.state.rulerPopupOpen}
+        />
+        <SearchPopupComponent
+          onPopup={this.onPopup}
+          searchPopupOpen={this.state.searchPopupOpen}
         />
       </div>
     );

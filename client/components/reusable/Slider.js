@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 class LvSlider extends React.Component {
 
@@ -48,11 +49,15 @@ class LvSlider extends React.Component {
 
     return (
       <div className="slider-range-block">
-        <p>
-          <input type="text" className="amount" readOnly={true}
-            value={this.state.sliderPercent + (this.props.suffix ? this.props.suffix : '')}
-          />
-        </p>
+        {
+          (this.props.hideValue !== true) && (
+            <p>
+              <input type="text" className="amount" readOnly={true}
+                value={this.state.sliderPercent + (this.props.suffix ? this.props.suffix : '')}
+              />
+            </p>
+          )
+        }
         <div className="slider-range-min fuse_opacity ui-slider-horizontal" id="fuse_capacity">
           <Slider
             value={this.state.sliderPercent}
@@ -68,6 +73,7 @@ class LvSlider extends React.Component {
 }
 
 LvSlider.propTypes = {
+  hideValue: PropTypes.bool,
   max: PropTypes.number,
   min: PropTypes.number,
   suffix: PropTypes.string,
