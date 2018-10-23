@@ -280,9 +280,9 @@ editComponent = (editId) => {
         NamedOperation: ir.NamedOperation,
         MissionType: ir.MissionType,
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
-        PriorityIntelRequirement: ir.PriorityIntelRequirement,
         targetID: ir.targetID,
         objectiveID: ir.objectiveID,
+        EndDate: ir.EndDate,
       },
       ccirCountry: CountryId,
       firstCcir,
@@ -305,6 +305,7 @@ editComponent = (editId) => {
 
   handleIntelRequest2 = (ir) => {
     const { intelRequest } = this.state;
+    debugger;
     this.setState({
       intelRequest: {
         ...intelRequest,
@@ -313,6 +314,7 @@ editComponent = (editId) => {
         Armed: (ir.Armed == undefined || ir.Armed == '' || ir.Armed == null) ? true : ir.Armed,
         BestCollectionTime: ir.BestCollectionTime,
         threatGroupID: ir.threatGroupID,
+        PriorityIntelRequirement: ir.PriorityIntelRequirement,
       },
     });
   }
@@ -324,6 +326,7 @@ editComponent = (editId) => {
         ...intelRequest,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
         LIMIDS_ReqID: ir.LIMIDS_ReqID,
+        ReportClassification: ir.ReportClassification,
       },
     });
   }
@@ -333,7 +336,6 @@ editComponent = (editId) => {
     this.setState({
       intelRequest: {
         ...intelRequest,
-        ReportClassification: ir.ReportClassification,
         locationID: ir.locationID,
         locationcategory: ir.locationcategory,
         district: ir.district,
@@ -392,6 +394,9 @@ editComponent = (editId) => {
       POI2_ID: intelRequest.POI2_ID,
       }
     intelRequest.EEIs = EEIs;
+      debugger;
+    return ;
+
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
@@ -540,18 +545,18 @@ routeStatus(e) {
 }
 
 updateCCIROptions = (items, ccirid) => {
-
   if(items !== null && items !== undefined) {
     const nameOperationSelect = document.getElementsByName('NamedOperation')[0];
-    nameOperationSelect.length = 0;
-
-    items.forEach((element) => {
-      let selected = false;
-      if(ccirid && element.value === ccirid) {
-        selected = true;
-      }
-      nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
-    });
+    if(nameOperationSelect !== undefined){
+      nameOperationSelect.length = 0;
+      items.forEach((element) => {
+        let selected = false;
+        if(ccirid && element.value === ccirid) {
+          selected = true;
+        }
+        nameOperationSelect.add(new Option(element.label, element.value, selected, selected));
+      });
+    }
 
   }
 }
@@ -572,6 +577,7 @@ updatePirOptions = (items, pirdesc) => {
 }
 updatelocationid(generalData) {
   const locationselect = document.getElementsByName('locationID')[0];
+  if(locationselect !== undefined){
   locationselect.length = 0;
   locationselect.add(new Option('--Fetching Locations--', ''));
   const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
@@ -597,6 +603,7 @@ updatelocationid(generalData) {
       locationselect.add(new Option('Error Fetching Locations', ''));
       console.log('Exception comes:' + error);
     });
+  }
 }
 
 renderCCIRPIR = () =>{
@@ -624,7 +631,9 @@ render = () => {
   const { match: { params } } = this.props;
   const editId = params.editId;
 
-  const { intelRequest } = this.state;
+  let { intelRequest } = this.state;
+
+  intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
   const ses = JSON.parse(localStorage.getItem('session'));
   const roles = JSON.parse(ses.UserRoles);
