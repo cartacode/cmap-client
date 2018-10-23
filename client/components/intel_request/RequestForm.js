@@ -241,20 +241,23 @@ editComponent = (editId) => {
         loading: false,
       });
       const { oneIntelRequest } = this.props;
-      const selectedCCIR = this.state.ccirPirMap[oneIntelRequest.NamedOperation];
-      this.setState(
-        {
-          intelRequest: {
-            ...oneIntelRequest,
-            NextHigherUnitId: oneIntelRequest.NextHigherUnitId === null ? this.getHigherUnit() : oneIntelRequest.NextHigherUnitId,
-          },
-          editFetched: true,
-          // firstCcir: this.state.ccirsOpts[oneIntelRequest.NamedOperation][0].label,
-          firstCcir: selectedCCIR.Description1,
-          ccirCountry: selectedCCIR.CountryId,
-        });
-      this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
-      this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
+      if(oneIntelRequest !== null){
+          const selectedCCIR = this.state.ccirPirMap[oneIntelRequest.NamedOperation];
+          this.setState(
+            {
+              intelRequest: {
+                ...oneIntelRequest,
+                NextHigherUnitId: oneIntelRequest.NextHigherUnitId === null ? this.getHigherUnit() : oneIntelRequest.NextHigherUnitId,
+              },
+              editFetched: true,
+              // firstCcir: this.state.ccirsOpts[oneIntelRequest.NamedOperation][0].label,
+              firstCcir: selectedCCIR.Description1,
+              ccirCountry: selectedCCIR.CountryId,
+            });
+          this.updateCCIROptions(this.state.ccirPirOptions, oneIntelRequest.NamedOperation);
+          this.updatePirOptions(this.state.pirs[oneIntelRequest.NamedOperation], oneIntelRequest.PriorityIntelRequirement);
+      }
+
     });
   }
 }
@@ -325,7 +328,7 @@ editComponent = (editId) => {
       intelRequest: {
         ...intelRequest,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
-        LIMIDS_ReqID: ir.LIMIDS_ReqID,
+        LIMIDS_Req: ir.LIMIDS_Req,
         ReportClassification: ir.ReportClassification,
       },
     });
@@ -389,11 +392,14 @@ editComponent = (editId) => {
       district: intelRequest.district,
       location: intelRequest.location,
       gridCoordinates: intelRequest.gridCoordinates,
-      LIMIDS_Req: intelRequest.LIMIDS_ReqID,
+      LIMIDS_Req: intelRequest.LIMIDS_Req,
       POI1_ID: intelRequest.POI1_ID,
       POI2_ID: intelRequest.POI2_ID,
       }
     intelRequest.EEIs = EEIs;
+    debugger;
+    return;
+
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
@@ -707,7 +713,7 @@ render = () => {
 
   const eeiFiled2 = [
     { name: translations['Report Classification'], type: 'dropdown', ddID: 'Clearance/GetIC_ISM_Classifications', domID: 'dispReportClass', valFieldID: 'ReportClassification', required: true, disabled: isDisabled },
-    { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_ReqID', required: true },
+    { name: translations['LIMIDS Request'], type: 'dropdown', ddID: 'LIMIDSReq/GetLIMIDSReqs', domID: 'dispLIMIDS', valFieldID: 'LIMIDS_Req', required: true },
     { name: translations.originator, type: 'input', domID: 'dispLocationPointofContact', ddID: '', valFieldID: 'OriginatorFirstName', readOnly: true },
     { name: translations.DSN, type: 'input', domID: 'DSN', valFieldID: 'OriginatorDSN', readOnly: true },
     { name: translations['Email-SIPR'], type: 'input', domID: 'EmailSIPR', valFieldID: 'OriginatorEmail', readOnly: true },
@@ -817,9 +823,7 @@ render = () => {
             <div className="menu-button">
               <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
               <button type="submit" className="btn btn-warning">
-                {(this.state.intelRequest.IntelRequestID !== '') ? translations.submit
-                  : translations.generateEei
-                }
+                {translations.submit}
               </button>
               <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
             </div>
@@ -827,9 +831,9 @@ render = () => {
           : '' }
       </form> 
 
-      { (this.state.intelRequest.IntelRequestID !== '') ?
+      {/* { (this.state.intelRequest.IntelRequestID !== '') ?
         <IntelEEI irAbbrebation={this.state.intelRequest.Abbreviation} nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
-        : null }
+        : null } */}
 
       {/* {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null } */}
     </div>
