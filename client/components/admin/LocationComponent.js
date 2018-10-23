@@ -190,16 +190,16 @@ class LocationComponent
         //   </span>
         //   </div>
         // ) // Custom cell components!
-        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openBaseModalFrom(row.row.id)} data-tip data-for={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/>
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-xs" onClick={() => this.openBaseModalFrom(row.row.id)} data-tip data-for={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/>
                      <ReactTooltip id='Edit'  type='warning'>
                            <span>Edit</span>
                               </ReactTooltip>  </a>
         &nbsp; 
-          {this.state.editId == row.value ?<span> <a href="javaScript:void('0');" className="btn btn-sm btn-danger action-not-allow" data-tip data-for={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a>
+          {this.state.editId == row.value ?<span> <a href="javaScript:void('0');" className="btn btn-xs btn-danger action-not-allow" data-tip data-for={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a>
                            <ReactTooltip id='Action Not Allowed'  type='warning'>
                                  <span>Action Not Allowed</span>
                               </ReactTooltip>  </span>:
-           <a href="javaScript:void('0');" onClick={() => this.deleteLocations(row.value)} className="btn btn-danger btn-sm" data-tip data-for={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/>
+           <a href="javaScript:void('0');" onClick={() => this.deleteLocations(row.value)} className="btn btn-danger btn-xs" data-tip data-for={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/>
            <ReactTooltip id='Delete'  type='warning'>
                                  <span>Delete</span>
                               </ReactTooltip></a>}

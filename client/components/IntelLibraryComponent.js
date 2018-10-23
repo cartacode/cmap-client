@@ -172,10 +172,10 @@ class IntelLibraryComponent extends React.Component {
         Cell: row => (
          
           <div>
-            <a href={row.value} target="_blank" className="btn btn-success btn-xs" title="Export and Download" > <span className="glyphicon glyphicon-export" /></a>
+            <a href={row.value} target="_blank" className="btn btn-success export btn-xs" title="Export and Download" > <span className="glyphicon glyphicon-download-alt" /></a>
             &nbsp;
             {/* <a href="JavaScript: void('0');" className="btn btn-danger" title="Export and Download" ><span className="glyphicon glyphicon-export" /> </a> */}
-            <a href="Javascript: void('0');" className="btn btn-info btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
+            <a href="Javascript: void('0');" className="btn btn-primary btn-xs" title="Send" onClick={() => this.openSendEmailModal(row)} > <span className="glyphicon glyphicon-send" /></a>
           </div>
         )
       },
