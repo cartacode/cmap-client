@@ -222,8 +222,13 @@ class TimelineFilter extends React.Component {
   }
 
   onRadioSelect = (row) => {
-    const value = row.original.UnitId;
-    const platformInventoryID = row.original.id;
+    let value = row;
+    let platformInventoryID='';
+
+    if(row.original !== undefined){
+        value = row.original.UnitId;
+        platformInventoryID = row.original.id;
+    }
     // const { tab } = this.props;
     // const { selectedResource } = this.state.filter;
     // let value = row.original.id;
