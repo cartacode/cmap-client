@@ -394,9 +394,6 @@ editComponent = (editId) => {
       POI2_ID: intelRequest.POI2_ID,
       }
     intelRequest.EEIs = EEIs;
-      debugger;
-    return ;
-
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
@@ -564,6 +561,7 @@ updateCCIROptions = (items, ccirid) => {
 updatePirOptions = (items, pirdesc) => {
   if(items !== null && items !== undefined) {
     const pirSelect = document.getElementsByName('PriorityIntelRequirement')[0];
+    if(pirSelect !== undefined){
     pirSelect.length = 0;
     items.forEach((element) => {
       let selected = false;
@@ -573,6 +571,7 @@ updatePirOptions = (items, pirdesc) => {
       pirSelect.add(new Option(element.label, element.value, selected, selected));
     });
 
+  }
   }
 }
 updatelocationid(generalData) {
