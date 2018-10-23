@@ -705,7 +705,7 @@ render = () => {
     { name: 'End Date', type: 'date', domID: 'endDate', valFieldID: 'EndDate', required: true, disabled: isDisabled },
     { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isDisabled },
     { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isDisabled },
-    { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'IntelEEIOtions', multiple: true },
+    { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'IntelEEIOtions', multiple: true, required: true },
   ];
 
   const eeiFiled2 = [

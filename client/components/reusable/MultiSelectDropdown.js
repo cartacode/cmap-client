@@ -105,9 +105,13 @@ class MultiSelectDropdown extends React.Component {
       const key = this.props.id || 0;
       return (
         <div>
-            <select className="form-control multiple-select" name={key} onChange={this.handleMultiSelectChange} value={this.state.selectedMultipleDropDownValue} multiple>
+          {this.props.required?
+            <select className="form-control multiple-select" name={key} onChange={this.handleMultiSelectChange} value={this.state.selectedMultipleDropDownValue} multiple required>
               {this.renderItems()}
             </select>
+            :<select className="form-control multiple-select" name={key} onChange={this.handleMultiSelectChange} value={this.state.selectedMultipleDropDownValue} multiple>
+            {this.renderItems()}
+          </select>}
         </div>
       );
     }
