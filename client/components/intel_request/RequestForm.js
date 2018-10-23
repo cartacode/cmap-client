@@ -397,9 +397,6 @@ editComponent = (editId) => {
       POI2_ID: intelRequest.POI2_ID,
       }
     intelRequest.EEIs = EEIs;
-    debugger;
-    return;
-
     intelRequest.Armed = (intelRequest.Armed == undefined || intelRequest.Armed === null || intelRequest.Armed === '') ? 'true' : intelRequest.Armed;
     const { match: { params } } = this.props;
     const editId = params.editId;
