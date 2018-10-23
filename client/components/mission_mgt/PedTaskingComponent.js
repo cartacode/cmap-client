@@ -69,7 +69,7 @@ class PedTaskingComponent extends React.Component {
     }
   };
 
-  radioFilterSelect=(value)=> {
+  radioFilterSelect=(value,platformInventoryID)=> {
     this.setState({
       radioTeamId: value,
     });

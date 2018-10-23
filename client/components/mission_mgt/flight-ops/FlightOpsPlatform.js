@@ -85,7 +85,7 @@ class FlightOpsPlatform extends React.Component {
     this.props.flightOpsPlatforms(unitId);
   };
 
-  radioFilterSelect=(value)=> {
+  radioFilterSelect=(value,platformInventoryID)=> {
     this.setState({
       radioPlatformInvenotryId: value,
     });

@@ -81,7 +81,7 @@ class FlightOpsTeam extends React.Component {
     this.props.flightOpsCrew(unitId);
   };
 
-  radioFilterSelect=(value)=> {
+  radioFilterSelect=(value,platformInventoryID)=> {
     this.setState({
       radioTeamId: value,
     });
