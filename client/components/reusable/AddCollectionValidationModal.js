@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchNextHigherUnit } from 'actions/organicorg';
+import { fetchIntelRequestById } from 'actions/intel';
 import { IntelConstants } from '../../dictionary/constants';
 import FullHeaderLine from 'components/reusable/FullHeaderLine';
 import ModalFormBlock from 'components/reusable/ModalFormBlock';
@@ -17,23 +18,43 @@ class AddCollectionValidationModal extends React.Component {
       intelRequest: {
         SupportedUnit: unitId,
       },
+      editFetched: false,
     };
   }
 
   componentDidMount = () =>{
     const session = JSON.parse(localStorage.getItem('session'));
     const unitId = session.AssignedUnit;
-    const { intelRequest } = this.state;
 
-    // setting next higher unit
-    this.props.fetchNextHigherUnit(unitId).then(() => {
+    this.props.fetchIntelRequestById(this.props.IntelRequestID).then(() => {
+      let { intelRequest } = this.state;
+
       this.setState({
         intelRequest: {
           ...intelRequest,
-          NextHigherUnitId: this.getHigherUnit(),
+          StatusId: this.props.intelData.StatusId,
+          PriorityId: this.props.intelData.PriorityId,
+          SpecialInstructions: this.props.intelData.SpecialInstructions,
+          NextHigherUnitId: this.props.intelData.NextHigherUnitId,
         },
+        editFetched: true,
       });
+
     });
+
+    // // setting next higher unit
+    // this.props.fetchNextHigherUnit(unitId).then(() => {
+    //   let { intelRequest } = this.state;
+    //   this.setState({
+    //     intelRequest: {
+    //       ...intelRequest,
+    //       NextHigherUnitId: this.getHigherUnit(),
+    //     },
+    //     editFetched: true,
+    //   });
+    // });
+
+   
   }
 
 getHigherUnit = () => {
@@ -72,6 +93,11 @@ getHigherUnit = () => {
     });
   }
 
+
+  stopupd = () => {
+    this.setState({ editFetched: false });
+  }
+
   render() {
     const { translations } = this.props;
     // Render nothing if the "show" prop is false
@@ -80,7 +106,6 @@ getHigherUnit = () => {
     }
 
     const { intelRequest } = this.state;
-
     const isStatusDisabled = intelRequest.Abbreviation === IntelConstants.STATUS.APR.abbreviation || (intelRequest.MissionId !== null && intelRequest.MissionId !== undefined);
     const statusElem = { name: translations.DispositionStaus, type: 'dropdown', domID: 'dispDispositionStatus', ddID: 'StatusCodes/GetIntelReqStatusCodes', disabled: isStatusDisabled, valFieldID: 'StatusId', required: true };
 
@@ -109,10 +134,10 @@ getHigherUnit = () => {
                   <FullHeaderLine headerText={translations.collectionValidation} />
                 </div>
                 <div className="col-md-6">
-                  <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} />
+                  <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
                 </div>
                 <div className="col-md-6">
-                  <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} />
+                  <ModalFormBlock fields={intelRequest5} data={this.handleIntelRequest5} initstate ={this.state.intelRequest} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
                 </div>
               </div>
               <div className="row action-buttons">
@@ -146,11 +171,14 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     higherUnit: state.organicorgs.nextHigherUnit,
+    intelData: state.intelrequest.oneIntelRequest,
   };
 };
 
 const mapDispatchToProps = {
   fetchNextHigherUnit,
+  fetchIntelRequestById,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCollectionValidationModal);

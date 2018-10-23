@@ -7,6 +7,8 @@ import CcirPirModal from './ccir-pirs/CcirPirModal';
 import { defaultFilter, getConfirmation  } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
+import ReactTooltip from 'react-tooltip'; 
+
 
 class CcirPirComponent extends React.Component {
 
@@ -167,9 +169,20 @@ render() {
       accessor: 'CCIRPIRId',
       filterable: false,
       maxWidth: 150,
-      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openCcirPirForm(row.value)} title={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-        {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger btn-sm action-not-allow" title={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a> :
-          <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger btn-sm" title={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/></a>}
+      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openCcirPirForm(row.value)} data-tip data-for={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/>
+      <ReactTooltip id='Edit'  type='warning'>
+                           <span>Edit</span>
+                              </ReactTooltip> </a>
+      
+      &nbsp; 
+        {this.state.editId == row.value ? <span><a href="javaScript:void('0');" className="btn btn-danger btn-sm action-not-allow" data-tip data-for={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a>
+        <ReactTooltip id='Action Not Allowed'  type='warning'>
+                           <span>Action Not Allowed</span>
+                              </ReactTooltip> </span> :
+          <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger btn-sm" data-tip data-for={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/>
+          <ReactTooltip id='Delete'  type='warning'>
+                           <span>Delete</span>
+                              </ReactTooltip></a>}  
       </div>,
 
     } 

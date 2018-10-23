@@ -15,6 +15,7 @@ import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
+import ReactTooltip from 'react-tooltip';
 
 class MunitionsSpecificationComponent extends React.Component {
 
@@ -294,9 +295,21 @@ class MunitionsSpecificationComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         maxWidth: 160,
-        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openMunitionsSpecificationForm(row)} title={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/></a>&nbsp; 
-                          {this.state.editId == row.value ? <a href="javaScript:void('0');" className="btn btn-danger action-not-allow btn-sm" title={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a> :
-                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger btn-sm" title={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/></a>}
+        Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-sm" onClick={() => this.openMunitionsSpecificationForm(row)} data-tip data-for={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/>
+                                      <ReactTooltip id='Edit'  type='warning'>
+                                        <span>Edit</span>
+                                     </ReactTooltip> </a>&nbsp; 
+                  {this.state.editId == row.value ?<span> <a href="javaScript:void('0');" className="btn btn-danger action-not-allow btn-sm" data-tip data-for={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a>
+                                    <ReactTooltip id='Action Not Allowed'  type='warning'>
+                                        <span>Action Not Allowed</span>
+                                     </ReactTooltip> </span> :
+                          <a href="javaScript:void('0');" onClick={() => this.deleteMunitions(row.value)} className="btn btn-danger btn-sm" data-tip data-for={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/>
+                                    <ReactTooltip id='Delete'  type='warning'>
+                                    <span>Delete</span>
+                                    </ReactTooltip> </a>}
+                              
+                              
+                             
                     </div>,
       }
     ];

@@ -314,7 +314,6 @@ class TimelineFilter extends React.Component {
     const { translations, tab } = this.props;
     const { selectedResource } = this.state.filter;
     let { startDate, endDate } = this.state.filter;
-    
     // as custom datepicker retunrs strig date on date select so nned to convert this to date obj
     if(typeof startDate === 'string') {
       startDate = moment(startDate).toDate();
@@ -398,18 +397,20 @@ class TimelineFilter extends React.Component {
             <FullHeaderLine headerText={this.props.headerTxt} />
           </div>
           <div className="col-md-12 filter-line text-center">
+            {tab === MissionConsts.TABS.ISR || tab === MissionConsts.TABS.FOP ?
+              <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={resourceFilter} defaultValue = {selectedResource} disable={resourceDisabled}/>
+              : ''
+            }
 
-            <MissionMgtDropDown name="selectedResource" label={translations.resource} data={this.handleFilterData} options={resourceFilter} defaultValue = {selectedResource} disable={resourceDisabled}/>
-
-            {selectedResource === MissionConsts.RESOURCE.TEAM ?
+            {selectedResource === MissionConsts.RESOURCE.TEAM && tab == MissionConsts.TABS.ISR ?
               <MissionMgtDropDown name="teamStatusId" label={translations.teamStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=6" />
               : ''
             }
-            {selectedResource === MissionConsts.RESOURCE.PLATFORM ?
+            {selectedResource === MissionConsts.RESOURCE.PLATFORM && tab == MissionConsts.TABS.ISR ?
               <MissionMgtDropDown name="platformStatusId" label={translations.platformStatus} data={this.handleFilterData} dropdownDataUrl="StatusCodes/GetStatusCodes?type=5" />
               : ''
             }
-            {selectedResource === MissionConsts.RESOURCE.PLATFORM ?
+            {selectedResource === MissionConsts.RESOURCE.PLATFORM && tab == MissionConsts.TABS.ISR ?
               <MissionMgtDropDown name="cocomId" label={translations.cocom} data={this.handleFilterData} dropdownDataUrl="COCOM/GetCOCOMs" />
               : ''
             }
@@ -418,7 +419,10 @@ class TimelineFilter extends React.Component {
               <MissionMgtDropDown name="UnitType" label={translations.teamType} data={this.handleFilterData} dropdownDataUrl="UnitTypes/GetUnitType" />
               : ''
             }
-            <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl={unitsUrl} labelName="UnitName" valueName = "unitID" />
+            { (tab == MissionConsts.TABS.ISR) ?
+              <MissionMgtDropDown name="unitId" label={translations.units} data={this.handleFilterData} dropdownDataUrl={unitsUrl} labelName="UnitName" valueName = "unitID" />
+              : ''
+            }
             {/* <MissionMgtDropDown  name="selectedAssetType" label={translations['assets type']} data={this.handleFilterData} dropdownDataUrl="AssetTypes/GetAssetTypes" /> */}
             <div className="each-select text-left">
               <div className="date-pic">

@@ -11,6 +11,7 @@ import { NotificationManager } from 'react-notifications';
 import Loader from '../reusable/Loader';
 import AddCollectionValidationModal from '../reusable/AddCollectionValidationModal';
 import { collectionManagerUser, adminUser, superAdmin } from '../../dictionary/auth';
+import ReactTooltip from 'react-tooltip';
 
 class RequestComponent extends React.Component {
 
@@ -55,9 +56,10 @@ class RequestComponent extends React.Component {
 
   saveCollectionValidationModal = (intelRequestId, intelRequest) => {
     this.setState({ loading: true });
-    this.props.updateIntelRequest(intelRequestId, intelRequest).then(() => {
+    this.props.updateIntelRequestWithCollectionManager(intelRequestId, intelRequest).then(() => {
       this.closeCollectionValidationModal();
       this.setState({ loading: false });
+      this.loadData();
       this.notify();
     });               
   }
@@ -121,13 +123,13 @@ class RequestComponent extends React.Component {
     const roles = JSON.parse(ses.UserRoles);
     const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
     const isSuperAdmin = roles.some(v => superAdmin.includes(v));
-    const isVisibleCollectionManager = isCollectionMgr && isSuperAdmin;
+    const isVisibleCollectionManager = (isCollectionMgr || isSuperAdmin);
 
     const columns = [
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div>
           {/* <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}> <span>{row.value}</span></Link>
@@ -145,7 +147,7 @@ class RequestComponent extends React.Component {
       {
         Header: translations['Supported unit'],
         accessor: 'COCOMText',
-        maxWidth: 150,
+        maxWidth: 120,
       },
       {
         Header: translations.MissionType,
@@ -180,13 +182,24 @@ class RequestComponent extends React.Component {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 200,
-        Cell: row => <div>  <Link to={`${editurl}${row.value}`} className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-edit"/></Link> &nbsp;
-
+        maxWidth: 260,
+        Cell: row => <div className="actions-btn">  <Link to={`${editurl}${row.value}`} className="edit-btn" data-tip data-for="edit-btn"><span className="glyphicon glyphicon-edit"/></Link>
+        <ReactTooltip id='edit-btn'  type='warning'>
+                     <span>Edit</span>
+              </ReactTooltip>
           { (row.original.MissionId !== null) ? '' :
-            <span><a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a> &nbsp;
-              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="btn btn-danger btn-sm" > <span className="glyphicon glyphicon-plus" title="Add Collection Validation" onClick={() => this.openAddCollectionValidationModal(row)}/></a> : '' }
+          
+            <span><a href="javaScript:void('0');" className="delete-btn" data-tip data-for="delete-btn" > <span className="glyphicon glyphicon-trash" onClick={() => this.deleteIntelRequestById(row.value)}/></a>
+                 <ReactTooltip id='delete-btn'  type='warning'>
+                     <span>Delete</span>
+                  </ReactTooltip>
+                     
+              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" data-tip data-for="CollectionValidation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-transfer"/></a> : '' }
+              <ReactTooltip id='CollectionValidation'  type='warning'>
+                     <span>Add Collection Validation</span>
+              </ReactTooltip>
             </span>
+          
           }
 
         </div>,
@@ -195,16 +208,20 @@ class RequestComponent extends React.Component {
 
     return (
       <div>
+          {this.state.modalOpen ?
           <AddCollectionValidationModal show = {this.state.modalOpen} onClose={this.closeCollectionValidationModal} 
-          IntelRequestID = { this.state.IntelRequestID }
-          save = {this.saveCollectionValidationModal} translations = {translations}/>
+            IntelRequestID = { this.state.IntelRequestID }
+            save = {this.saveCollectionValidationModal} translations = {translations}/>
+          : ''}
         <div className="row orders-assets">
           <div className="header-line">
             <Loader loading={this.state.loading} />
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
               {translations.summary} &nbsp;
-              <Link to={ addurl } className="btn btn-info btn-xs add-data"><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+              <Link to={ addurl } className="btn btn-info btn-xs add-data" ><i className="fa fa-plus"/>&nbsp;{translations.Add}</Link>
+                  
+
 
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
@@ -226,7 +243,7 @@ class RequestComponent extends React.Component {
               data={allRequests}
               loading={this.props.isLoading}
               columns={columns}
-              defaultPageSize={TableDefaults.PAGE_SIZE}
+              defaultPageSize={TableDefaults.PAGE_SIZE_7}
 						  minRows={TableDefaults.MIN_ROWS}
               className="-striped -highlight"
               filterable={true}

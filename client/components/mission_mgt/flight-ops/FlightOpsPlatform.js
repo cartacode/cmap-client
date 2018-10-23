@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../../util/helpers';
 import { flightOpsAtoPlatform, flightOpsPlatforms, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -98,7 +98,7 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row =>  <div className = 'tooltip-custom'>
                       <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
                     </div>,
@@ -106,6 +106,7 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -142,7 +143,7 @@ class FlightOpsPlatform extends React.Component {
         Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
@@ -163,15 +164,21 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row =>  <div className = 'tooltip-custom'>
           {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {
+        Header: translations.tail,
+        accessor: 'TailNumber',
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
+
       },
       {
         Header: translations.Command,
@@ -181,10 +188,6 @@ class FlightOpsPlatform extends React.Component {
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
-      },
-      {
-        Header: translations.tail,
-        accessor: 'TailNumber',
       },
       {
         Header: translations['Date/Time'],
@@ -202,7 +205,7 @@ class FlightOpsPlatform extends React.Component {
         Header: translations.Unassign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 80,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
@@ -220,6 +223,11 @@ class FlightOpsPlatform extends React.Component {
     const { translations, fopPlatforms, fopPlatformAto } = this.props;
     const columnsATOGenerations = this.getLeftColumns();
     const columnsFlightOps = this.getRightColumns();
+    let minRowsForTable = getMinRowsForTable(fopPlatforms.length,fopPlatformAto.length);
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    
 
     return (
       <div>
@@ -233,11 +241,12 @@ class FlightOpsPlatform extends React.Component {
                   <ReactTable
                     data={fopPlatformAto}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
+                    showPagination={true}
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -249,8 +258,8 @@ class FlightOpsPlatform extends React.Component {
                   <ReactTable
                     data={fopPlatforms}
                     columns={columnsFlightOps}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

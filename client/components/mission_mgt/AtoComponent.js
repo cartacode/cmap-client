@@ -4,13 +4,12 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, NoticeType, MissionConsts, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../util/helpers';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 import MissionNameModal from '../reusable/MissionNameModal';
-
 import { missionATOUser } from '../../dictionary/auth';
 
 class AtoComponent extends React.Component {
@@ -149,7 +148,7 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
@@ -157,6 +156,7 @@ moveLeft = (row) => {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -198,11 +198,12 @@ moveLeft = (row) => {
         Header: translations.Add,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            <a href="javaScript:void('0');" className="btn btn-primary"  title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
             &nbsp;
+           
             {/* <a href="javaScript:void('0');" className="btn btn-danger" title="Delete"><span className="glyphicon glyphicon-trash" /> </a> */}
           </div>
         ),
@@ -217,15 +218,21 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {
+        Header: translations.missionUnit,
+        accessor: 'MissionUnit',
+        minWidth: 150,
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -267,10 +274,12 @@ moveLeft = (row) => {
         Header: translations.Remove,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 80,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
+           
+           
             &nbsp;
           </div>
         ),
@@ -290,6 +299,7 @@ moveLeft = (row) => {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let access = roles2.some(v => missionATOUser.includes(v));
+    let minRowsForTable = getMinRowsForTable(atoCollectionPlans.length,atoGenerations.length);
 
     return ( access ? (
       <div>
@@ -304,11 +314,12 @@ moveLeft = (row) => {
                   <ReactTable
                     data={atoCollectionPlans}
                     columns={columnsATOCollectionPlans}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
+                    showPagination={true}
                     defaultFilterMethod={defaultFilter}
                   />
                 </div>
@@ -320,8 +331,8 @@ moveLeft = (row) => {
                   <ReactTable
                     data={atoGenerations}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

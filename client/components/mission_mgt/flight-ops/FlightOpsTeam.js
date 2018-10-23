@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert } from '../../../util/helpers';
+import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../../util/helpers';
 import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
@@ -94,7 +94,7 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div>
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
@@ -102,6 +102,8 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
+
       },
       {
         Header: translations.Command,
@@ -138,7 +140,7 @@ class FlightOpsTeam extends React.Component {
         Header: translations.Assign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Flight Ops" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-right" /></a>
@@ -158,15 +160,20 @@ class FlightOpsTeam extends React.Component {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 100,
+        maxWidth: 70,
         Cell: row => <div>
           {/* <span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /> &nbsp; */}
           <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
         </div>,
       },
       {
+        Header: translations['CrewTeam'],
+        accessor: 'CrewTeam',
+      },
+      {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
       },
       {
         Header: translations.Command,
@@ -193,7 +200,7 @@ class FlightOpsTeam extends React.Component {
         Header: translations.Unassign,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 100,
+        maxWidth: 80,
         Cell: row => (
           <div>
             <a href="javaScript:void('0');" className="btn btn-primary" title="Move To ATO Generation" onClick={() => this.moveLeft(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
@@ -208,6 +215,10 @@ class FlightOpsTeam extends React.Component {
     const { translations, fopCrews, fopCrewAto } = this.props;
     const columnsATOGenerations = this.getLeftColumns();
     const columnsFlightOps = this.getRightColumns();
+    let minRowsForTable = getMinRowsForTable(fopCrews.length,fopCrewAto.length);
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
 
     return (
       <div>
@@ -221,8 +232,8 @@ class FlightOpsTeam extends React.Component {
                   <ReactTable
                     data={fopCrewAto}
                     columns={columnsATOGenerations}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
@@ -237,8 +248,8 @@ class FlightOpsTeam extends React.Component {
                   <ReactTable
                     data={fopCrews}
                     columns={columnsFlightOps}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={TableDefaults.MIN_ROWS}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}

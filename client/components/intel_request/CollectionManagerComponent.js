@@ -6,10 +6,11 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import { NoticeType, TableDefaults, IntelConstants } from '../../dictionary/constants';
-import { defaultFilter, getIntelStatusColor, getConfirmation } from '../../util/helpers';
+import { defaultFilter, getIntelStatusColor, getConfirmation, getMinRowsForTable } from '../../util/helpers';
 import { viewerIdentifiers } from '../../map/viewer';
 import { Link } from 'react-router-dom';
 import Loader from '../reusable/Loader';
+
 
 
 import { collectionManagerUser } from '../../dictionary/auth';
@@ -137,7 +138,18 @@ class CollectionManagerComponent extends React.Component {
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
     const editurl = '/intel-request/detail/';
+    // let minRowsForTable = TableDefaults.MIN_ROWS;
 
+    // if(allCollectionsPlan.length > TableDefaults.PAGE_SIZE_7 || allApprovedIntelRequests.length > TableDefaults.PAGE_SIZE_7 ) {
+    //   minRowsForTable = TableDefaults.MIN_ROWS_7;
+    // } else if(allCollectionsPlan.length > allApprovedIntelRequests.length) {
+    //   minRowsForTable = allCollectionsPlan.length;
+    // } else {
+    //   minRowsForTable = allApprovedIntelRequests.length;
+    // }
+
+   
+    let minRowsForTable = getMinRowsForTable(allCollectionsPlan.length, allApprovedIntelRequests.length);
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
@@ -200,6 +212,7 @@ class CollectionManagerComponent extends React.Component {
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
             <a href="Javascript: void('0');" className="btn btn-primary" title={translations["Move To Collection Plan"]} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+            
             &nbsp;
             <a href="JavaScript: void('0');" className="btn btn-danger" title={translations["Delete"]} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
           </div>
@@ -262,7 +275,7 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             <a href="Javascript:void('0');" className="btn btn-primary" title={translations["Move To Intel Request"]} onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
-            &nbsp;
+                       &nbsp;
           </div>
         ),
       },
@@ -280,8 +293,8 @@ class CollectionManagerComponent extends React.Component {
                   <ReactTable
                     data={allApprovedIntelRequests}
                     columns={intelRequestColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={5}
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}
                     
                     className="-striped -highlight"
                     filterable={false}
@@ -297,8 +310,8 @@ class CollectionManagerComponent extends React.Component {
                   <ReactTable
                     data={allCollectionsPlan}
                     columns={collectionPlanColumns}
-                    defaultPageSize={TableDefaults.PAGE_SIZE}
-                    minRows={5}                    
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    minRows={minRowsForTable}                    
                     className="-striped -highlight"
                     filterable={false}
                     showPagination={true}
@@ -330,7 +343,7 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
             <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-            <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
+            {/* <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> */}
             {/* <img
               className="photo"
               src="/assets/img/intel_request/request/request_pic.png"
