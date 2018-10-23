@@ -367,7 +367,7 @@ class TimelineFilter extends React.Component {
             start_time: moment(obj.startDate),
             end_time: moment(obj.endDate),
             style: {
-              backgroundColor: '#FFC107',
+              backgroundColor: 'red',
               // color: 'yellow',
             },
           };
