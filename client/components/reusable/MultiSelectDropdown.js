@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 
-class Table extends React.Component {
+class MultiSelectDropdown extends React.Component {
 
-    labelField= "description";
+    labelField= 'description';
     valueField = 'id';
 
     constructor(props) {
@@ -13,9 +13,10 @@ class Table extends React.Component {
       this.state = {
         dropdownItems: [],
         selectedDropDownValue: 0,
+        selectedMultipleDropDownValue: [],
       };
 
-      this.handleChange = this.handleChange.bind(this);
+      this.handleMultiSelectChange = this.handleMultiSelectChange.bind(this);
       if(undefined !== props.labelName) {
         this.labelField = props.labelName;
       }
@@ -26,19 +27,19 @@ class Table extends React.Component {
     }
 
     componentWillMount() {
-      let items = [{'label': '--Select Item--', 'value': 0}];
+      const items = [{ 'label': '--Select Item--', 'value': 0 }];
 
       if(this.props.dropdownDataUrl !== undefined && this.props.dropdownDataUrl !== null && this.props.dropdownDataUrl !== '') {
-        
+
         const apiUrl = `${baseUrl}/${this.props.dropdownDataUrl}`;
-        axios.get(apiUrl, {headers:requestHeaders})
+        axios.get(apiUrl, { headers: requestHeaders })
           .then(response => {
             if(response.data) {
               response.data.map(item => {
                 let val = item[this.valueField];
                 if(typeof val === 'string') {
                   val = val.trim();
-                }          
+                }
                 items.push({ 'label': item[this.labelField], 'value': val });
               });
               this.setState({
@@ -51,7 +52,7 @@ class Table extends React.Component {
           });
 
       }
-        
+
       if(this.props.options) {
         this.setState({
           dropdownItems: this.props.options,
@@ -62,20 +63,20 @@ class Table extends React.Component {
 
     componentDidUpdate = () => {
       let { initValue } = this.props;
-      const { selectedDropDownValue } = this.state;
+      const { selectedMultipleDropDownValue } = this.state;
       if(typeof initValue === 'string') {
         initValue = initValue.trim();
       }
-      if(initValue !== selectedDropDownValue) {
+      if(initValue !== selectedMultipleDropDownValue) {
         this.setState({
-          selectedDropDownValue: initValue,
+          selectedMultipleDropDownValue: initValue,
         });
       }
     }
 
     // Generates optins array
     renderItems = () => {
-    
+
       return this.state.dropdownItems.map((data, key) => {
         if(key === 0) { data.value = ''; }
         return (
@@ -84,66 +85,44 @@ class Table extends React.Component {
       });
     }
 
-    handleChange = (e) => {
-      const { name, value } = e.target;
-      // const { selectedDropDownValue } = this.state;
+    handleMultiSelectChange = (e) => {
+      let { name, value } = e.target;
+      let options = e.target.options;
+      let values = [];
+      for (let i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected) {
+          values.push(options[i].value);
+        }
+      }
       this.setState({
-        selectedDropDownValue: value,
+        selectedMultipleDropDownValue: values,
       }, () =>{
-        this.props.dropdownData(value, name);
+        this.props.dropdownData(values, name);
       });
     }
 
     render() {
       const key = this.props.id || 0;
-      const multiSelect = this.props.multiSelect;
       return (
         <div>
-          
-          {/* State {this.state.selectedDropDownValue} value
-        Props {this.props.initValue} Value */}
-
-          {/*  {this.props.required ?
-            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
+          {this.props.required?
+            <select className="form-control multiple-select" name={key} onChange={this.handleMultiSelectChange} value={this.state.selectedMultipleDropDownValue} multiple required>
               {this.renderItems()}
             </select>
-            :
-            <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} >
-              {this.renderItems()}
-            </select>} */}
-
-          {
-            this.props.required ? (this.props.disabled ? <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required disabled>
-              {this.renderItems()}
-            </select> 
-              : 
-              <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} required>
-                {this.renderItems()}
-              </select>)
-
-              :
-            
-              this.props.disabled ?   <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} disabled>
-                {this.renderItems()}
-              </select> 
-                :  
-                <select className="form-control" name={key} onChange={this.handleChange} value={this.state.selectedDropDownValue} >
-                  {this.renderItems()}
-                </select>
-          }
-            
+            :<select className="form-control multiple-select" name={key} onChange={this.handleMultiSelectChange} value={this.state.selectedMultipleDropDownValue} multiple>
+            {this.renderItems()}
+          </select>}
         </div>
       );
     }
 }
 
-Table.propTypes = {     
+MultiSelectDropdown.propTypes = {
   children: PropTypes.element,
   dropdownData: PropTypes.func,
   id: PropTypes.string,
   initValue: PropTypes.any,
-  multiSelect: PropTypes.string,
   required: PropTypes.bool,
 };
 
-export default Table;
+export default MultiSelectDropdown;

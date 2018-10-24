@@ -37,11 +37,21 @@ class TimelineFilter extends React.Component {
         teamStatusId: '',
         startDate,
         endDate,
-
+        
       },
+      pagingState: {
+        pageSize: TableDefaults.PAGE_SIZE_7, // Default Page Size
+        page: 0, // Page Number
+        sorted: true,
+        filtered: true,
+        usePaging: true,
+      },
+      pages: null, // Total Number of Pages
     };
     // preserve the initial state in a new object
     this.baseState = this.state;
+    this.fetchData = this.fetchData.bind(this);
+
   }
 
   componentWillMount = () => {
@@ -61,6 +71,7 @@ class TimelineFilter extends React.Component {
   componentDidMount = () => {
     this.props.onRef(this);
     this.onFind();
+    //this.fetchData(this.state.pagingState);
   }
 
   componentWillUnmount() {
@@ -253,7 +264,6 @@ class TimelineFilter extends React.Component {
    */
   onFind = () => {
     // event.preventDefault();
-    
     const { selectedResource } = this.state.filter;
     
     if(selectedResource === MissionConsts.RESOURCE.PLATFORM) {
@@ -264,10 +274,10 @@ class TimelineFilter extends React.Component {
   }
 
   findPlatformBased = () => {
-    
-    const { filter } = this.state;
+    const { filter, pagingState } = this.state;
     const startDate = moment(filter.startDate).format(DateConsts.DB_DATETIME_FORMAT);
     const endDate = moment(filter.endDate).format(DateConsts.DB_DATETIME_FORMAT);
+    // this.callbackFunction = callback;
     const data =
       {
         'COCOMId': filter.cocomId,
@@ -277,17 +287,18 @@ class TimelineFilter extends React.Component {
         'EndDate': endDate,
       };
 
-    this.props.platformFilter(data).then(() => {
+    this.props.platformFilter(data, pagingState.usePaging, pagingState.pageSize, pagingState.page).then(() => {
       const { filterResults } = this.props;
       this.setState({
-        results: filterResults,
+        results: filterResults.data,
+        pages: filterResults.totalPages,
       });
     });
   }
 
   findTeamBased =()=> {
 
-    const { filter } = this.state;
+    const { filter, pagingState } = this.state;
     const { tab } = this.props;
     const session = JSON.parse(localStorage.getItem('session'));
     let unitType = filter.UnitType;
@@ -311,18 +322,42 @@ class TimelineFilter extends React.Component {
         'StartDate': startDate,
         'EndDate': endDate,
       };
-    this.props.teamFilter(data).then(() => {
+    this.props.teamFilter(data, pagingState.usePaging, pagingState.pageSize, pagingState.page).then(() => {
       const { filterResults } = this.props;
       this.setState({
-        results: filterResults,
+        results: filterResults.data,
+        pages: filterResults.totalPages,
       });
     });
   }
+
+
+  fetchData(state, instance) {
+    // Whenever the table model changes, or the user sorts or changes pages, this method gets called and passed the current table model.
+    // You can set the `loading` prop of the table to true to use the built-in one or show you're own loading bar if you want.
+    this.setState({
+    //   // loading: true,
+      pagingState: {
+        pageSize: state.pageSize,
+        page: state.page + 1,
+        sorted: state.sorted,
+        filtered: state.filtered,
+        usePaging: true,
+      },
+    }, () =>{
+      // Request the data however you want.  Here, we'll use our mocked service we created earlier
+      this.onFind();
+    }
+    );
+    
+  }
+
 
   render() {
     const { translations, tab } = this.props;
     const { selectedResource } = this.state.filter;
     let { startDate, endDate } = this.state.filter;
+    let { pages } = this.state;
     // as custom datepicker retunrs strig date on date select so nned to convert this to date obj
     if(typeof startDate === 'string') {
       startDate = moment(startDate).toDate();
@@ -331,7 +366,7 @@ class TimelineFilter extends React.Component {
       endDate = moment(endDate).toDate();
     }
     
-    let { results } = this.state;
+    let { results, data } = this.state;
     const resourceFilter = [
       { id: MissionConsts.RESOURCE.PLATFORM, description: translations.platform },
       { id: MissionConsts.RESOURCE.TEAM, description: translations.teams },
@@ -387,6 +422,7 @@ class TimelineFilter extends React.Component {
           newItems.push(newItem);
         }); */
       });
+      groups.push({});
     } else {
       results = [];
     }
@@ -464,21 +500,26 @@ class TimelineFilter extends React.Component {
             <div className="col-md-12 timeline-border">
               <div className="col-md-4" style={{ padding: 0 }}>
                 {/* <StatusTable thead={columns} lines={filterResults} translations={translations} /> */}
+                <div id="timeline">
+                  <ReactTable
+                    data={results}
+                    columns={columns}
+                    loading={this.props.isLoading}
+                    //pageSize={5}
+                    minRows={TableDefaults.MIN_ROWS}
+                    className="-striped -highlight"
+                    filterable={false}
+                    manual // Forces table not to paginate or sort automatically, so we can handle it server-side
+                    pages={pages} // Display the total number of pages
+                    onFetchData={this.fetchData} // Request new data when things change
+                    defaultPageSize={TableDefaults.PAGE_SIZE_7}
+                    pageSizeOptions={[7, 10, 20, 25, 50, 100]}
 
-                <ReactTable
-                  data={results}
-                  columns={columns}
-                  loading={this.props.isLoading}
-                  pageSize={pageSize}
-                  minRows={TableDefaults.MIN_ROWS}
-                  className="-striped -highlight"
-                  filterable={false}
-                  showPageSizeOptions={false}
-                  showPagination={false}
                   // previousText="&#8678;"
                   // nextText="&#8680;"
                   // defaultFilterMethod={defaultFilter}
-                />
+                  />
+                </div>
 
               </div>
               <div className="col-md-8" style={{ padding: 0 }}>

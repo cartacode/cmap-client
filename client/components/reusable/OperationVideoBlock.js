@@ -82,7 +82,7 @@ class OperationVideoBlock extends React.Component {
           </div>
           {/* <img src={video} className="video" alt=""/> */}
           <ReactPlayer
-            url='https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8'
+            url='http://18.220.128.32:1935/vod/mp4:jacksontruck.mp4/manifest.mpd'
             className='video'
             playing
             width='100%'

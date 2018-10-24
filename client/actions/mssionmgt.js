@@ -137,17 +137,32 @@ export function moveToATOGenerationFromPedTask(missionId) {
 }
 
 // SEARCH and FILTER APIS
-export function platformFilter(data) {
+
+/**
+ * 
+ * @param {*} data----Data to Send in Body.
+ * @param {*} usePaging----true/false to activate pagination will go as request param.
+ * @param {*} pageSize----PageSize for Pagination , number of records in one Page , will go in Rquest Param
+ * @param {*} page----page is PageNumber for  pagination.
+ */
+export function platformFilter(data, usePaging, pageSize, page) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
-    action: () => axios.put(`${baseUrl}/Search/SearchMissionPlatformInventory`, data, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Search/SearchMissionPlatformInventory?usePaging=` + usePaging + '&pageSize=' + pageSize + '&pageNumber=' + page, data, {headers:requestHeaders}),
   });
 }
 
-export function teamFilter(data) {
+/**
+ * 
+ * @param {*} data----Data to Send in Body
+ * @param {*} usePaging---- true/false to activate pagination will go as request param
+ * @param {*} pageSize---- PageSize for Pagination , number of records in one Page , will go in Rquest Param
+ * @param {*} page----page is PageNumber for  pagination
+ */
+export function teamFilter(data, usePaging, pageSize, page) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
-    action: () => axios.put(`${baseUrl}/Search/SearchMissionTeams`, data, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Search/SearchMissionTeams?usePaging=` + usePaging + '&pageSize=' + pageSize + '&pageNumber=' + page, data, {headers:requestHeaders}),
   });
 }
 

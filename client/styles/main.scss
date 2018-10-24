@@ -5428,3 +5428,28 @@ a.coll-valid-btn {
 .export.btn-xs {
   background: #38964e;
 }
+.multiple-select{
+  height: 10% !important;
+}
+
+/**************************** TimeLine Pagination ************************************/
+#timeline .-next{
+  width: 20px;
+  font-size: 11px;
+}
+
+#timeline .-previous{
+  width: 20px;
+  font-size: 11px;
+}
+#timeline .-pagination {
+  padding: 3px 0px;
+}
+
+.rct-item{
+  top: 59.1px !important;
+}
+.rct-item-content{
+  display: block !important;
+  text-align: center !important;
+}
