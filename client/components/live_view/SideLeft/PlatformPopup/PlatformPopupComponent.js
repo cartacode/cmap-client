@@ -178,7 +178,7 @@ class PlatformPopupComponent extends React.Component {
 
 PlatformPopupComponent.propTypes = {
   hasBall: PropTypes.bool,
-  hasToggle: PropTypes.hasToggle,
+  hasToggle: PropTypes.bool,
   onPopup: PropTypes.func,
   popupOpen: PropTypes.bool,
 };

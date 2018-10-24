@@ -22,7 +22,8 @@ export const viewerSize = {
 
 export default class Map extends React.PureComponent {
   static propTypes = {
-    size: PropTypes.string,
+    size: PropTypes.number,
+    toolBarOptions: PropTypes.object,
     viewerId: PropTypes.string.isRequired,
   }
 
@@ -50,12 +51,14 @@ export default class Map extends React.PureComponent {
   }
 
   render() {
-    const { size = viewerSize.medium } = this.props;
+    const { size = viewerSize.medium, toolBarOptions } = this.props;
+    const toolbar_show = !toolBarOptions ? true: toolBarOptions.show;
+
     return (
       <div className="d-flex">
-        <SideBarLeftComponent />
-        <div id={this._elementId} className="map-wrapper" style={{ width: `${size}%`, marginLeft: '36px', marginRight: '36px' }} />
-        <SideBarRightComponent />
+        {toolbar_show && <SideBarLeftComponent /> }
+        <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`}} />
+        {toolbar_show && <SideBarRightComponent /> }
       </div>
     );
   }

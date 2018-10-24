@@ -4,6 +4,7 @@ import MapsPopupComponent from './MapsPopup';
 import DrawingPopupComponent from './DrawingPopup';
 import RulerPopupComponent from './RulerPopup';
 import SearchPopupComponent from './SearchPopup';
+import KmlPopupComponent from './KmlPopup';
 
 import './SideBarRightComponent.scss';
 
@@ -16,6 +17,7 @@ class SideBarRightComponent extends React.Component {
       drawingPopupOpen: false,
       rulerPopupOpen: false,
       searchPopupOpen: false,
+      kmlPopupOpen: false,
     };
   }
 
@@ -28,6 +30,7 @@ class SideBarRightComponent extends React.Component {
       drawingPopupOpen: false,
       rulerPopupOpen: false,
       searchPopupOpen: false,
+      kmlPopupOpen: false,
     }, () => {
       setTimeout(()=>{
         this.setState({
@@ -58,8 +61,11 @@ class SideBarRightComponent extends React.Component {
             <li className="measure-link">
               <a href="#" onClick={(e)=>this.onPopup(true, 'rulerPopupOpen', e)}><span>Ruler</span></a>
             </li>
+            <li className="kmlkmz-link">
+              <a href="#" onClick={(e)=>this.onPopup(true, 'kmlPopupOpen', e)}><span>Upload</span></a>
+            </li>
             <li className="search-link">
-              <a href="#" onClick={(e)=>this.onPopup(true, 'searchPopupOpen', e)}><span>Search</span></a>
+              <a href="#" onClick={(e)=>this.onPopup(true, 'searchPopupOpen', e)}><span>Fly To</span></a>
             </li>
           </ul>
         </div>
@@ -78,6 +84,10 @@ class SideBarRightComponent extends React.Component {
         <SearchPopupComponent
           onPopup={this.onPopup}
           searchPopupOpen={this.state.searchPopupOpen}
+        />
+        <KmlPopupComponent
+          onPopup={this.onPopup}
+          kmlPopupOpen={this.state.kmlPopupOpen}
         />
       </div>
     );

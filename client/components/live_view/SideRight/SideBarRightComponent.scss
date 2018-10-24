@@ -171,6 +171,24 @@ body.small-height .sidebar-right-block li.sysadmin-link:after {
   margin-left: -12px;
   background: url(/assets/img/live_view/measure_icon.png) no-repeat;
 }
+.sidebar-right-block li.kmlkmz-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/kml_kmz_icon.png) no-repeat;
+}
+.sidebar-right-block li.kmlkmz-link:hover a:before,
+.sidebar-right-block li.kmlkmz-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.measure-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/measure_icon.png) no-repeat;
+}
 .sidebar-right-block li.measure-link:hover a:before,
 .sidebar-right-block li.measure-link.active a:before {
   background-position: 0 -24px;
