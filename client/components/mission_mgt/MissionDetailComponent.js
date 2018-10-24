@@ -234,7 +234,7 @@ class MissionDetailComponent extends React.Component {
               </div>
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
             </div>
-           
+           <div className="col-md-2"></div>
             <div >
               <UploadFileBlock fields={missionBlock5} data={this.handleUploadFileDataWithoutCondition} 
                 initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 

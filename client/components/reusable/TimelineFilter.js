@@ -24,6 +24,7 @@ class TimelineFilter extends React.Component {
     this.state = {
       clear: false,
       selectedRadio: '',
+      platformInventoryID:'',
       results: [],
       filter: {
         selectedResource: '',
@@ -114,7 +115,7 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         Cell: row => <div>
-          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row.value)} />
+          <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
@@ -220,7 +221,14 @@ class TimelineFilter extends React.Component {
     this.props.radioFilterSelect(generatedData);
   }
 
-  onRadioSelect = (value) => {
+  onRadioSelect = (row) => {
+    let value = row;
+    let platformInventoryID='';
+
+    if(row.original !== undefined){
+        value = row.original.UnitId;
+        platformInventoryID = row.original.id;
+    }
     // const { tab } = this.props;
     // const { selectedResource } = this.state.filter;
     // let value = row.original.id;
@@ -234,8 +242,9 @@ class TimelineFilter extends React.Component {
     // }
     this.setState({
       selectedRadio: value,
+      platformInventoryID:platformInventoryID,
     }, () => {
-      this.props.radioFilterSelect(this.state.selectedRadio);
+      this.props.radioFilterSelect(this.state.selectedRadio,this.state.platformInventoryID);
     });
   }
 
@@ -366,7 +375,7 @@ class TimelineFilter extends React.Component {
             start_time: moment(obj.startDate),
             end_time: moment(obj.endDate),
             style: {
-              backgroundColor: '#FFC107',
+              backgroundColor: 'red',
               // color: 'yellow',
             },
           };

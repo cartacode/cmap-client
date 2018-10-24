@@ -183,16 +183,16 @@ class PlatformComponent extends React.Component {
         accessor: 'id',
         filterable: false,
         maxWidth: 150,
-        Cell: row => <div><a href="#" className="btn btn-primary btn-sm" onClick={() => this.openPlatformForm(row.value)}  data-tip data-for="Edit" ><span className="glyphicon glyphicon-edit"/>
+        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" onClick={() => this.openPlatformForm(row.value)}  data-tip data-for="Edit" ><span className="glyphicon glyphicon-edit"/>
                                         <ReactTooltip id='Edit'  type='warning'>
                                             <span>Edit</span>
                                        </ReactTooltip> </a>
                                                 &nbsp; 
-          {this.state.editId == row.value ? <span><a href="javaScript:void('0');" className="btn btn-danger action-not-allow"  data-tip data-for="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a>
+          {this.state.editId == row.value ? <span><a href="javaScript:void('0');" className="btn btn-danger btn-xs action-not-allow"  data-tip data-for="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a>
                                       <ReactTooltip id='Action Not Allowed'  type='warning'>
                                          <span>Action Not Allowed</span>
                                         </ReactTooltip> </span> :
-           <a href="javaScript:void('0');" onClick={() => this.deletePlatformInventory(row.value)} className="btn btn-danger btn-sm"  data-tip data-for="Delete"> <span className="glyphicon glyphicon-trash"/>
+           <a href="javaScript:void('0');" onClick={() => this.deletePlatformInventory(row.value)} className="btn btn-danger btn-xs"  data-tip data-for="Delete"> <span className="glyphicon glyphicon-trash"/>
                                <ReactTooltip id='Delete'  type='warning'>
                                    <span>Delete</span>
                                 </ReactTooltip> </a>}

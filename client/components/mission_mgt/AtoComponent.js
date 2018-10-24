@@ -20,6 +20,7 @@ class AtoComponent extends React.Component {
       defaultResource: MissionConsts.RESOURCE.PLATFORM,
       tab: MissionConsts.TABS.ATO,
       radioUnitId: '',
+      platformInventoryID:'',
       modalOpen: false,
       row: {},
     };
@@ -44,12 +45,12 @@ class AtoComponent extends React.Component {
     return getIntelStatusColor(row.original.Abbreviation);
   }
 
-  radioFilterSelect=(selectedRadio)=>{
-
+  radioFilterSelect=(selectedRadio,platformInventoryID)=>{
     this.setState({
       // unitdId: generatedData.value,
       // owningUnitsId: generatedData.value,
       radioUnitId: selectedRadio,
+      platformInventoryID:platformInventoryID,
     });
   }
 
@@ -72,6 +73,7 @@ moveLeft = (row) => {
     const data = {
       'IntelReqID': intelRequestID,
       'OwningUnit': this.state.radioUnitId,
+      'SuggestedPlatformInventoryID':this.state.platformInventoryID,
     };
 
     // Inserts new values in mission table

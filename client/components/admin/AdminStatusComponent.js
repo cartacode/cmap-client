@@ -442,7 +442,7 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Munition" onClick={() => this.openMunitionForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openMunitionForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" onClick={() => this.openMunitionForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
         
       }
     ];
@@ -591,7 +591,7 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
 
       }
     ];

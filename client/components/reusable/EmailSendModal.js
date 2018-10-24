@@ -56,23 +56,28 @@ class EmailSendModal extends React.Component {
                 <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
               </div>
               <div className="col-md-12 text-left mission-mgt-txt-padding">
-                <label>Subject</label>
-                <input type="text" className="form-control" name="Subject" onChange={this.handleChange} required />
-              </div>
-              <div className="col-md-12 text-left mission-mgt-txt-padding">
                 <label>To</label>
                 <input type="email" className="form-control" name="Recipiants" multiple pattern="^([\w+-.%]+@[A-Za-z0-9_\-\.]+\.[A-Za-z]{2,4},*[\W]*)+$" required onChange={this.handleChange} />
               </div>
               <div className="col-md-12 text-left mission-mgt-txt-padding">
+                <label>Subject</label>
+                <input type="text" className="form-control" name="Subject" onChange={this.handleChange} required />
+              </div>
+              
+              <div className="col-md-12 text-left mission-mgt-txt-padding">
                 <label>Message</label>
                 <textarea className="form-control teaxtarea-width-height" name="Message" onChange={this.handleChange} />
-              </div>
-              <div className="col-md-12 text-center mission-mgt-save-btn-padding" >
-                <button type="submit" className="highlighted-button" >
-                  {translations.submit}
-                </button>
-              </div>
-            </div>
+              </div> &nbsp;
+              <div className="row action-buttons">
+              <div className="menu-button">
+                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                   <button type="submit" className='highlighted-button'>
+                               {translations['submit']}
+                      </button>
+                   <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                 </div>
+                </div>
+               </div>
           </div>
         </form>
       </div>
