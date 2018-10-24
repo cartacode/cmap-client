@@ -5431,3 +5431,17 @@ a.coll-valid-btn {
 .multiple-select{
   height: 10% !important;
 }
+
+/**************************** TimeLine Pagination ************************************/
+#timeline .-next{
+  width: 20px;
+  font-size: 11px;
+}
+
+#timeline .-previous{
+  width: 20px;
+  font-size: 11px;
+}
+#timeline .-pagination {
+  padding: 3px 0px;
+}
