@@ -403,12 +403,12 @@ editComponent = (editId) => {
     const session = JSON.parse(localStorage.getItem('session'));
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
     this.setState({ loading: true });
-    const redirectUrl = '/intel-request/request';
+    const redirectUrl = '/intel-request/detail/';
 
     if(editId !== undefined && editId !== '0') {
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
-        //this.props.history.push(redirectUrl);
+        this.props.history.push(redirectUrl + editId);
         this.notify(NoticeType.UPDATE);
         this.setState({
           loading: false,
@@ -421,7 +421,7 @@ editComponent = (editId) => {
       intelRequest.SupportedUnit = session.AssignedUnit;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
-        //this.props.history.push(redirectUrl);
+        this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
         this.setState({
           intelRequest: this.props.oneIntelRequest,
           loading: false,
@@ -652,8 +652,8 @@ render = () => {
     { name: translations['Support Command'], type: 'dropdown', domID: 'dispCOCOM', ddID: 'COCOM', valFieldID: 'SupportedCommand', required: true, disabled: isDisabled },
     { name: translations['Named Operation'], type: 'dropdown', domID: 'dispNamedOp', valFieldID: 'NamedOperation', required: true, options: [{ label: '--Loading--', value: '' }], disabled: isDisabled },
     { name: translations['Mission Type'], type: 'dropdown', ddID: 'MissionType', domID: 'dispMissionType', valFieldID: 'MissionType', required: true, disabled: isDisabled },
-    { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets', valFieldID: 'targetID', required: true },
-    { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID', required: true }
+    { name: translations['Target#'], type: 'dropdown', domID: 'targetNum', ddID: 'Target/GetTargets', valFieldID: 'targetID' },
+    { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID' }
   ];
 
   const intelRequest2 = [
@@ -726,7 +726,7 @@ render = () => {
 
   const { editFetched } = this.state;
 
-  const redirectUrl = '/intel-request/request';
+  const redirectUrl = '/intel-request/detail/';
 
   return (
     <div>
@@ -741,7 +741,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-             <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
+            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} /> 
            </div>
         </div>
         <div className="col-md-4 one-block">
@@ -834,7 +834,7 @@ render = () => {
         <IntelEEI irAbbrebation={this.state.intelRequest.Abbreviation} nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null } */}
 
-      {this.state.toRedirect ? <Redirect to={`${redirectUrl}`} /> : null }
+      {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null }
     </div>
   );
 }
