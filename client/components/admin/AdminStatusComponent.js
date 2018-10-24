@@ -25,7 +25,7 @@ import MunitionsStatus from './status/MunitionsStatus';
 import { defaultFilter, formatDateTime } from '../../util/helpers';
 import { TableDefaults } from '../../dictionary/constants';
 import ContentBlock from '../reusable/ContentBlock';
-
+import ReactTooltip from 'react-tooltip';
 let rn = 0;
 class AdminStatusComponent extends React.Component {
 
@@ -361,7 +361,11 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Platform" onClick={() => this.openPlatformForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPlatformForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary" data-tip data-for={translations["Edit"]} onClick={() => this.openPlatformForm(row.value)} ><span className="glyphicon glyphicon-edit"/>
+                                                <ReactTooltip id='Edit'  type='warning'>
+                                                 <span>Edit</span>
+                                                </ReactTooltip>
+                             </a></div>,
 
       }
     ];
@@ -404,7 +408,11 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Payload" onClick={() => this.openPayloadForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary" onClick={() => this.openPayloadForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary" data-tip data-for={translations["Edit"]} onClick={() => this.openPayloadForm(row.value)} ><span className="glyphicon glyphicon-edit"/>
+                              <ReactTooltip id='Edit' type='warning'>
+                                  <span>Edit</span>
+                              </ReactTooltip>
+        </a></div>,
 
       }
     ];
@@ -442,7 +450,10 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png"  id="Munition" onClick={() => this.openMunitionForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" onClick={() => this.openMunitionForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" data-tip data-for={translations["Edit"]} onClick={() => this.openMunitionForm(row.value)} ><span className="glyphicon glyphicon-edit"/>
+                                            <ReactTooltip id='Edit'  type='warning'>
+                                                 <span>Edit</span>
+                                            </ReactTooltip></a></div>,
         
       }
     ];
@@ -591,7 +602,10 @@ class AdminStatusComponent extends React.Component {
         accessor: 'ID',
         filterable: false,
         //Cell: row => <span className='number'><img src="/assets/img/general/pen_icon.png" id="Personnel" onClick={() => this.openPersonnelForm(row.value)}/></span>// Custom cell components!
-        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/></a></div>,
+        Cell: row => <div><a href="#" className="btn btn-primary btn-xs" data-tip data-for="Edit" onClick={() => this.openPersonnelForm(row.value)} ><span className="glyphicon glyphicon-edit"/>
+                          <ReactTooltip id='Edit'  type='warning'>
+                                                 <span>Edit</span>
+                                          </ReactTooltip></a></div>,
 
       }
     ];
