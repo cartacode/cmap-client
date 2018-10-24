@@ -1,0 +1,252 @@
+/* Sidebar Right */
+.sidebar-right-block {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  box-sizing: border-box;
+  width: 50px;
+  padding-top: 68px;
+}
+.sidebar-right-block:before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  content: '';
+  background: rgba(40, 72, 98, .7);
+}
+.sidebar-right-block ul li {
+  position: relative;
+  height: 56px;
+}
+.sidebar-right-block ul li a {
+  position: relative;
+  display: block;
+  height: 100%;
+  color: #b4fafe;
+}
+.sidebar-right-block ul li:hover a {
+  color: #ff7c16;
+}
+.sidebar-right-block ul li a:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+}
+.sidebar-right-block ul li a span {
+  line-height: 36px;
+  position: absolute;
+  top: 50%;
+  margin-top: -18px;
+  right: 60px;
+  display: none;
+  width: auto;
+  height: 35px;
+  padding: 0 24px 0 15px;
+  white-space: nowrap;
+  background: rgba(40, 72, 98, .9);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+}
+.sidebar-right-block ul li a span:before {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  margin-top: -6px;
+  border: 6px solid transparent;
+  border-left: 6px solid rgba(40, 72, 98, .9);
+}
+.sidebar-right-block ul li:hover a span {
+  display: block;
+}
+.sidebar-right-block li.details-link {
+  margin-top: 67px;
+}
+.sidebar-right-block li.search-link {
+  /*margin-top: 66px;*/
+}
+.sidebar-right-block li.sysadmin-link {
+  margin-top: 66px;
+}
+body.small-height .sidebar-right-block li.details-link,
+body.small-height .sidebar-right-block li.search-link,
+body.small-height .sidebar-right-block li.sysadmin-link {
+  margin-top: 0;
+}
+body.small-height .sidebar-right-block li.details-link:after,
+body.small-height .sidebar-right-block li.search-link:after,
+body.small-height .sidebar-right-block li.sysadmin-link:after {
+  display: none;
+}
+
+/* Borders style */
+.sidebar-right-block ul li:before {
+  position: absolute;
+  z-index: 0;
+  bottom: -1px;
+  left: 50%;
+  width: 30px;
+  height: 1px;
+  margin-left: -15px;
+  content: '';
+  background: rgba(253, 254, 255, .2);
+}
+.sidebar-right-block li.details-link:after,
+.sidebar-right-block li.search-link:after,
+.sidebar-right-block li.sysadmin-link:after {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 50%;
+  width: 30px;
+  height: 1px;
+  margin-left: -15px;
+  content: '';
+  background: rgba(253, 254, 255, .2);
+}
+.sidebar-right-block li.details-link:hover:after,
+.sidebar-right-block li.search-link:hover:after,
+.sidebar-right-block li.sysadmin-link:hover:after {
+  display: none;
+}
+
+/* Icons for links */
+.sidebar-right-block li.maps-link a:before {
+  width: 22px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -11px;
+  background: url(/assets/img/live_view/maps_icon.png) no-repeat;
+}
+.sidebar-right-block li.maps-link:hover a:before,
+.sidebar-right-block li.maps-link.active a:before {
+  background-position: 0 -24px;
+}
+
+.sidebar-right-block li.geo-admin a:before {
+  width: 22px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -11px;
+  background: url(/assets/img/live_view/admin_icon.png) no-repeat;
+}
+.sidebar-right-block li.geo-admin:hover a:before,
+.sidebar-right-block li.geo-admin.active a:before {
+  background-position: 0 -24px;
+}
+
+.sidebar-right-block li.layers-link a:before {
+  width: 26px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -13px;
+  background: url(/assets/img/live_view/layers_icon.png) no-repeat;
+}
+.sidebar-right-block li.layers-link:hover a:before,
+.sidebar-right-block li.layers-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.drawing-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/drawing_icon.png) no-repeat;
+}
+.sidebar-right-block li.drawing-link:hover a:before,
+.sidebar-right-block li.drawing-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.measure-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/measure_icon.png) no-repeat;
+}
+.sidebar-right-block li.kmlkmz-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/kml_kmz_icon.png) no-repeat;
+}
+.sidebar-right-block li.kmlkmz-link:hover a:before,
+.sidebar-right-block li.kmlkmz-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.measure-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/measure_icon.png) no-repeat;
+}
+.sidebar-right-block li.measure-link:hover a:before,
+.sidebar-right-block li.measure-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.tools-link a:before {
+  width: 25px;
+  height: 25px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/tools_icon.png) no-repeat;
+}
+.sidebar-right-block li.tools-link:hover a:before,
+.sidebar-right-block li.tools-link.active a:before {
+  background-position: 0 -25px;
+}
+.sidebar-right-block li.details-link a:before {
+  width: 20px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -10px;
+  background: url(/assets/img/live_view/details_icon.png) no-repeat;
+}
+.sidebar-right-block li.details-link:hover a:before,
+.sidebar-right-block li.details-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.search-link a:before {
+  width: 25px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/search_icon.png) no-repeat;
+}
+.sidebar-right-block li.search-link:hover a:before,
+.sidebar-right-block li.search-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.timeline-link a:before {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/timeline_icon.png) no-repeat;
+}
+.sidebar-right-block li.timeline-link:hover a:before,
+.sidebar-right-block li.timeline-link.active a:before {
+  background-position: 0 -24px;
+}
+.sidebar-right-block li.sysadmin-link a:before {
+  width: 25px;
+  height: 25px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background: url(/assets/img/live_view/sysadmin_icon.png) no-repeat;
+}
+.sidebar-right-block li.sysadmin-link:hover a:before,
+.sidebar-right-block li.sysadmin-link.active a:before {
+  background-position: 0 -25px;
+}
+
+

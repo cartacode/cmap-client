@@ -1,0 +1,121 @@
+/* Platforms Popup */
+.platforms-popup-block {
+  position: absolute;
+  z-index: 1;
+  top: 40px;
+  /*bottom: 39px;*/
+  left: -283px;
+  box-sizing: border-box;
+  width: 262px;
+  outline: none;
+  background: #022033;
+  transition: left 0.2s;
+}
+.platforms-popup-block.opened {
+  left: 63px;
+}
+
+.platforms-popup-block .title-block {
+  font-family: 'benderbold', sans-serif;
+  font-size: 13px;
+  position: relative;
+  padding: 10px 16px;
+  text-transform: uppercase;
+  color: #b4fafe;
+  background: #012742;
+}
+.platforms-popup-block .title-block .btn-close {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background: #13334a;
+}
+.platforms-popup-block .title-block .btn-close:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  content: '';
+  background: url(/assets/img/live_view/close_icon.png) no-repeat;
+}
+.platforms-popup-block .title-block .btn-close:hover:before {
+  background-position: 0 -10px;
+}
+
+/* SelectMenu Block */
+.platforms-popup-block .selectmenu-block {
+  padding: 16px;
+}
+.platforms-popup-block .selectmenu-block p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #6ca6b5;
+}
+.platforms-popup-block #selectmenu {
+  display: none;
+}
+.platforms-popup-block .ui-selectmenu-button.ui-button {
+  font-size: 14px;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 7px 16px;
+  color: #ff7c16;
+  border: 1px solid #6ca6b5;
+  outline: none;
+  background: #13334a;
+}
+.platforms-popup-block .ui-selectmenu-button.ui-button:before {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 8px;
+  height: 6px;
+  margin-top: -3px;
+  content: '';
+  background: url(/assets/img/live_view/dropdown_icon.png) no-repeat;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  -ms-transition: .2s;
+  -o-transition: .2s;
+}
+.platforms-popup-block .ui-selectmenu-button-open:before {
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.ui-selectmenu-menu {
+  box-sizing: border-box;
+  background: #13334a;
+}
+.ui-menu {
+  border: 1px solid #6ca6b5;
+  box-sizing: border-box;
+  border-top: none;
+  padding: 12px 0 !important;
+}
+.ui-menu .ui-menu-item-wrapper {
+  box-sizing: border-box;
+  padding: 8px 16px !important;
+  font-size: 14px;
+}
+.ui-menu .ui-state-focus,
+.ui-menu .ui-state-active {
+  margin: 0 !important;
+}
+.ui-menu .ui-menu-item:hover .ui-menu-item-wrapper {
+  color: #ff7c16;
+}
+
+.checklist-block > div:hover {
+  background: #13334A;
+}

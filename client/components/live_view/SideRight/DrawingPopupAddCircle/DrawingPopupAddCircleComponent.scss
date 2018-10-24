@@ -1,0 +1,9 @@
+.drawing-popup-block-add-circle {
+  transform: scaleY(0);
+  height: 0;
+
+  &.drawing-popup-block-add-circle.opened {
+    transition: transform 0.4s ease-out;
+    transform: none;
+  }
+}

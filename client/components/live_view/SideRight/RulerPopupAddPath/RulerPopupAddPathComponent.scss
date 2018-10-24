@@ -1,0 +1,8 @@
+.ruler-popup-block-add-path {
+  transform: scaleY(0);
+  height: 0;
+  &.ruler-popup-block-add-path.opened {
+    transition: transform 0.4s ease-out;
+    transform: none;
+  }
+}

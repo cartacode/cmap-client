@@ -1,0 +1,9 @@
+.drawing-popup-block-add-marker {
+  transform: scaleY(0);
+  height: 0;
+  
+  &.drawing-popup-block-add-marker.opened {
+    transition: transform 0.4s ease-out;
+    transform: none;
+  }
+}

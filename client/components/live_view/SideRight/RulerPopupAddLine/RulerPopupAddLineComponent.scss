@@ -1,0 +1,8 @@
+.ruler-popup-block-add-line {
+  transform: scaleY(0);
+  height: 0;
+  &.ruler-popup-block-add-line.opened {
+    transition: transform 0.4s ease-out;
+    transform: none;
+  }
+}

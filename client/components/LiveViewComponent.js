@@ -49,7 +49,7 @@ class LiveViewComponent extends React.Component {
             <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
           <div className="col-md-12">
-            <Map size={viewerSize.medium} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {true}/>
+            <Map size={viewerSize.medium} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {false}/>
           </div>
         </div>
         <div className="row intel-request">
