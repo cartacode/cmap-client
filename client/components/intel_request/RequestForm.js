@@ -635,7 +635,7 @@ render = () => {
 
   let { intelRequest } = this.state;
 
-  intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
+  //intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
   const ses = JSON.parse(localStorage.getItem('session'));
   const roles = JSON.parse(ses.UserRoles);
