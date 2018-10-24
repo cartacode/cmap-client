@@ -403,15 +403,16 @@ editComponent = (editId) => {
     const session = JSON.parse(localStorage.getItem('session'));
     // intelRequest.OrginatorPersonnelID = '16e5eb94-41c1-4385-84da-e52bd843d17d'; // id of user from session
     this.setState({ loading: true });
-    const redirectUrl = '/intel-request/detail/';
+    const redirectUrl = '/intel-request/request';
 
     if(editId !== undefined && editId !== '0') {
       intelRequest.IntelRequestID = editId;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
-        this.props.history.push(redirectUrl + editId);
+        //this.props.history.push(redirectUrl);
         this.notify(NoticeType.UPDATE);
         this.setState({
           loading: false,
+          toRedirect: true,
         });
       });
     } else {
@@ -420,10 +421,11 @@ editComponent = (editId) => {
       intelRequest.SupportedUnit = session.AssignedUnit;
       this.props.addIntelRequest(intelRequest).then(() => {
         this.notify(NoticeType.ADD);
-        this.props.history.push(redirectUrl + this.props.oneIntelRequest.IntelRequestID);
+        //this.props.history.push(redirectUrl);
         this.setState({
           intelRequest: this.props.oneIntelRequest,
           loading: false,
+          toRedirect: true,
         });
       });
     }
@@ -724,7 +726,7 @@ render = () => {
 
   const { editFetched } = this.state;
 
-  const redirectUrl = '/intel-request/detail/';
+  const redirectUrl = '/intel-request/request';
 
   return (
     <div>
@@ -832,7 +834,7 @@ render = () => {
         <IntelEEI irAbbrebation={this.state.intelRequest.Abbreviation} nearestNAIPOI={this.state.updatedLocation} ccirCountry={this.state.ccirCountry} missionId={this.props.oneIntelRequest.MissionId} intelId = {this.props.oneIntelRequest.IntelRequestID} eeis={this.props.oneIntelRequest.IntelReqEEIs} />
         : null } */}
 
-      {/* {this.state.toRedirect ? <Redirect to={`${redirectUrl}${this.props.oneIntelRequest.IntelRequestID}`} /> : null } */}
+      {this.state.toRedirect ? <Redirect to={`${redirectUrl}`} /> : null }
     </div>
   );
 }
