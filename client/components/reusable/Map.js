@@ -98,7 +98,7 @@ export default class Map extends React.PureComponent {
     return (
       <div className="d-flex">
         {toolbar_show && <SideBarLeftComponent /> }
-        <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`}}>
+        <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>
           <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} />
