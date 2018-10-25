@@ -707,6 +707,9 @@ render = () => {
     { name: 'End Date', type: 'date', domID: 'endDate', valFieldID: 'EndDate', required: true, disabled: isDisabled },
     { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isDisabled },
     { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isDisabled },
+  ];
+
+  const eeiFiledOptions = [
     { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'IntelEEIOtions', multiple: true, required: true },
   ];
 
@@ -741,7 +744,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} /> 
+           {/*  <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />  */}
            </div>
         </div>
         <div className="col-md-4 one-block">
@@ -777,8 +780,13 @@ render = () => {
             <FullHeaderLine headerText={translations['intelligence request']} />
           </div> */}
           <div className="col-md-4">
-            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1} multiSelectData ={this.multiSelectChanges} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1}  initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
+
+          <div className="col-md-4">
+            <ModalFormBlock fields={eeiFiledOptions} data={this.multiSelectChanges} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+          </div>
+
           <div className="col-md-4">
             <ModalFormBlock fields={eeiFiled2} data={this.handleIntelRequest7} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>

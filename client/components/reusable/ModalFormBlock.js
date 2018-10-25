@@ -81,7 +81,7 @@ class ModalFormBlock extends React.Component {
         [name]: value,
       },
     }, () => {
-      this.props.multiSelectData(this.state.content);
+      this.props.data(this.state.content);
     });
   }
 
