@@ -494,6 +494,7 @@ setCCIRPIR = (ccirpirObj) =>{
     intelRequest: {
       ...intelRequest,
       NamedOperation: ccirpirObj.CCIRPIRId,
+      district: ccirpirObj.CountryId,
     },
 
     editFetched: true,
@@ -510,6 +511,22 @@ setOneLocation = (location, currentLatLong) =>{
   this.setState({
     updatedLocation,
   });
+  this.setNAIPOIANDGirdCordinateBasedMapSelection(location, currentLatLong);
+}
+
+setNAIPOIANDGirdCordinateBasedMapSelection = (locationsData, currentLatLong) => {
+  const { intelRequest } = this.state;
+  this.setState({
+    intelRequest: {
+      ...intelRequest,
+      location: locationsData[0].city || 'no value',
+      gridCoordinates: currentLatLong.latitude + ',' + currentLatLong.longitude,
+      POI1_ID: locationsData[0].id || 'no value',
+      POI2_ID: locationsData[1].id || 'no value',
+    },
+  });
+
+  console.log('update intelRequest proprty ' + JSON.stringify(intelRequest));                                                                                                                 
 }
 
 resetForm() {
@@ -753,7 +770,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
+            <Map size="80" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
            </div>
         </div>
         <div className="col-md-4 one-block">
