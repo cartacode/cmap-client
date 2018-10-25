@@ -130,8 +130,8 @@ getHigherUnit = () => {
                 <img src="/assets/img/general/close.png" onClick={this.props.onClose} />
               </div>
               <div className="row intel-request ">
-                <div className="col-md-12">
-                  <FullHeaderLine headerText={translations.collectionValidation} />
+                <div className="col-md-12 collection-valid-header">
+                  {translations.collectionValidation}
                 </div>
                 <div className="col-md-6">
                   <ModalFormBlock fields={intelRequest4} data={this.handleIntelRequest4} initstate ={this.state.intelRequest} editFetched = {this.state.editFetched} stopupd = {this.stopupd}/>
