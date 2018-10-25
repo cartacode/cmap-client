@@ -262,7 +262,7 @@ editComponent = (editId) => {
   }
 }
 
-  handleIntelRequest1 = (ir) => {
+  handleIntelRequestSection1 = (ir) => {
     const { intelRequest } = this.state;
     const selectedCCIR = this.state.ccirPirMap[ir.NamedOperation];
     let CountryId = 'US';
@@ -282,10 +282,8 @@ editComponent = (editId) => {
         SupportedCommand: ir.SupportedCommand,
         NamedOperation: ir.NamedOperation,
         MissionType: ir.MissionType,
-        ActiveDateTimeStart: ir.ActiveDateTimeStart,
         targetID: ir.targetID,
         objectiveID: ir.objectiveID,
-        EndDate: ir.EndDate,
       },
       ccirCountry: CountryId,
       firstCcir,
@@ -306,18 +304,30 @@ editComponent = (editId) => {
    
   }
 
-  handleIntelRequest2 = (ir) => {
+  handleIntelRequestSection2 = (ir) => {
     const { intelRequest } = this.state;
-    debugger;
     this.setState({
       intelRequest: {
         ...intelRequest,
         PrimaryPayload: ir.PrimaryPayload,
         SecondaryPayload: ir.SecondaryPayload,
         Armed: (ir.Armed == undefined || ir.Armed == '' || ir.Armed == null) ? true : ir.Armed,
-        BestCollectionTime: ir.BestCollectionTime,
         threatGroupID: ir.threatGroupID,
         PriorityIntelRequirement: ir.PriorityIntelRequirement,
+      },
+    });
+  }
+
+  handleIntelRequestSection4 = (ir) => {
+    const { intelRequest } = this.state;
+    this.setState({
+      intelRequest: {
+        ...intelRequest,
+        BestCollectionTime: ir.BestCollectionTime,
+        ActiveDateTimeStart: ir.ActiveDateTimeStart,
+        EndDate: ir.EndDate,
+        LatestTimeIntelValue: ir.LatestTimeIntelValue,
+     
       },
     });
   }
@@ -327,14 +337,13 @@ editComponent = (editId) => {
     this.setState({
       intelRequest: {
         ...intelRequest,
-        LatestTimeIntelValue: ir.LatestTimeIntelValue,
         LIMIDS_Req: ir.LIMIDS_Req,
         ReportClassification: ir.ReportClassification,
       },
     });
   }
 
-  handleIntelRequest3 = (ir) => {
+  handleIntelRequestSection3 = (ir) => {
     const { intelRequest } = this.state;
     this.setState({
       intelRequest: {
@@ -744,7 +753,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-             <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} /> 
+            <Map size="100" viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
            </div>
         </div>
         <div className="col-md-4 one-block">
@@ -765,13 +774,13 @@ render = () => {
             <FullHeaderLine headerText={translations['intelligence request']} />
           </div>
           <div className="col-md-4">
-            <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequest1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={intelRequest1} data={this.handleIntelRequestSection1} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
           <div className="col-md-4">
-            <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequest2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={intelRequest2} data={this.handleIntelRequestSection2} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
           <div className="col-md-4">
-            <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequest3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={intelRequest3} data={this.handleIntelRequestSection3} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
         </div>
 
@@ -780,7 +789,7 @@ render = () => {
             <FullHeaderLine headerText={translations['intelligence request']} />
           </div> */}
           <div className="col-md-4">
-            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequest1}  initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
+            <ModalFormBlock fields={eeiFiled1} data={this.handleIntelRequestSection4} initstate ={this.state.intelRequest} editFetched={editFetched} stopupd={this.stopUpdate} stopset={this.stopset.bind(this)} clearit={this.state.clear} />
           </div>
 
           <div className="col-md-4">
