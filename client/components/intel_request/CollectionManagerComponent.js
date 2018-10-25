@@ -10,7 +10,7 @@ import { defaultFilter, getIntelStatusColor, getConfirmation, getMinRowsForTable
 import { viewerIdentifiers } from '../../map/viewer';
 import { Link } from 'react-router-dom';
 import Loader from '../reusable/Loader';
-
+import ReactTooltip from 'react-tooltip';
 
 
 import { collectionManagerUser } from '../../dictionary/auth';
@@ -211,10 +211,16 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
-            <a href="Javascript: void('0');" className="btn btn-primary btn-xs" title={translations["Move To Collection Plan"]} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
-            
-            &nbsp;
-            <a href="JavaScript: void('0');" className="btn btn-danger btn-xs" title={translations["Delete"]} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> </a>
+            <a href="Javascript: void('0');" className="btn btn-primary btn-xs" data-tip data-for={translations["Move To Collection Plan"]} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+                                            <ReactTooltip id='Move To Collection Plan' type='warning'>
+                                                <span>Move To Collection Plan</span>
+                                           </ReactTooltip>
+                                         &nbsp;
+            <a href="JavaScript: void('0');" className="btn btn-danger btn-xs" data-tip data-for={translations["Delete"]} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> 
+                                            <ReactTooltip id='Delete' type='warning'>
+                                                  <span>Delete</span>
+                                            </ReactTooltip>
+            </a>
           </div>
         ),
       },
