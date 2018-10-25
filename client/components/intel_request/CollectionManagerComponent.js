@@ -28,7 +28,7 @@ class CollectionManagerComponent extends React.Component {
   }
 
 
-// This will get call when user click on Yes to Delete a Record
+  // This will get call when user click on Yes to Delete a Record
   deleteLogic(value){
     if (value !== undefined && value !== '0') {
       this.setState({loading: true});
@@ -37,25 +37,25 @@ class CollectionManagerComponent extends React.Component {
         this.setState({loading: false});
         // this.setState({ editId: '0' });
         if(this.props.isDeleted){
-        this.notify(NoticeType.DELETE);
-        this.loadData();
-      }
-      else{
-        this.notify(NoticeType.NOT_DELETE);
-      }
+          this.notify(NoticeType.DELETE);
+          this.loadData();
+        }
+        else{
+          this.notify(NoticeType.NOT_DELETE);
+        }
       });
     }
   }
 
-// will call when user click on Delete Button
+  // will call when user click on Delete Button
   deleteApprovedIntelRequests = (value) => {
     const { translations } = this.props;
     // Get Confirm user wish to Delete Yes/No 
     getConfirmation(translations['DeleteConfirmation'],
-                    translations['Yes'],
-                    translations['No'],
-                    () => this.deleteLogic(value)
-                    );
+      translations['Yes'],
+      translations['No'],
+      () => this.deleteLogic(value)
+    );
   };
 
   getColor= (row)=>{
@@ -178,7 +178,7 @@ class CollectionManagerComponent extends React.Component {
         accessor: 'COCOMText',
         maxWidth: 150,
       },
-    /*   {
+      /*   {
         Header: "Status",
         accessor: "Status"
       }, */
@@ -238,7 +238,7 @@ class CollectionManagerComponent extends React.Component {
         Header: translations['Priority'],
         accessor: 'Priority',
       },
-     /*  {
+      /*  {
         Header: "Status",
         accessor: "Status"
       }, */
@@ -324,15 +324,15 @@ class CollectionManagerComponent extends React.Component {
               <div className="col-md-12 text-center">
                 {/* <img className="line" src="/assets/img/admin/edit_up.png" alt=""/> */}
                 { access ? 
-                ( <div className="row action-buttons">
-                <div className="menu-button">
-                  <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
-                  <button className='highlighted-button' onClick={() => this.routeCollectionIntelRequest()} >
-                  {translations["Route"]}
-                  </button>
-                  <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
-                </div>
-                </div>) : null
+                  ( <div className="row action-buttons">
+                    <div className="menu-button">
+                      <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                      <button className='highlighted-button' onClick={() => this.routeCollectionIntelRequest()} >
+                        {translations["Route"]}
+                      </button>
+                      <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                    </div>
+                  </div>) : null
                 }
                 {/* <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/> */}
               </div>
@@ -343,21 +343,15 @@ class CollectionManagerComponent extends React.Component {
           <div className="two-block">
             <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
-             <Map size="100" viewerId={viewerIdentifiers.collectionPlan} /> 
-            {/* <img
-              className="photo"
-              src="/assets/img/intel_request/request/request_pic.png"
-              alt=""
-            /> */}
+            <div className="row">
+              <div className="col-md-1">&nbsp;</div>
+              <div className="col-md-10 text-center">
+                <Map size="100" viewerId={viewerIdentifiers.collectionPlan} toolBarOptions={{ kmlLookUp: false, naipoiLookUp: false }} /> 
+              </div>
+              <div className="col-md-1">&nbsp;</div>
+            </div>
+            
           </div>
-
-          {/* <div className="col-md-6 two-block">
-
-          </div> */}
-
-          {/* <div className="col-md-6">
-
-          </div> */}
         </div>
       </div>
     );
