@@ -127,7 +127,12 @@ class ContentBlock extends React.Component {
 
   handleChangeDate = (changeDate, name) => {
 
-    if(changeDate !== null) {this.updateContent(name, changeDate);}
+    if(changeDate !== null) {
+      // On Select Date/Time Manually By User Convert to UTC Time 
+      const changeDateUTC = new Date(changeDate).toISOString();
+      // this.updateContent(name, changeDate);
+      this.updateContent(name, changeDateUTC);
+    }
   }
 
   /**
@@ -297,12 +302,14 @@ class ContentBlock extends React.Component {
             break;
 
           case 'date':
+          
             if (value === '') {
               value = moment();
             } else {
-              value = moment(value);
+              //value = moment(value);
+              value = moment.utc(value).local();
             }
-            
+           
             input = (
               <div>
                 <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate} />

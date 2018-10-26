@@ -70,7 +70,11 @@ class ModalFormBlock extends React.Component {
   }
 
   handleChangeDate = (changeDate, name) => {
-    this.updateContent(name, changeDate);
+    const changeDateUTC = new Date(changeDate).toISOString();
+
+    //this.updateContent(name, changeDate);
+    this.updateContent(name, changeDateUTC);
+
   }
 
   updateMultiSelectDropdownContent(name, value) {
@@ -185,7 +189,9 @@ class ModalFormBlock extends React.Component {
           if(value === '') {
             value = moment();
           }else {
-            value = moment(value);
+            // value = moment(value);
+            value = moment.utc(value).local();
+
           }
           input = (
             <div>
