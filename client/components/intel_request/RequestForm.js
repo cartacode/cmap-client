@@ -327,7 +327,7 @@ editComponent = (editId) => {
         ...intelRequest,
         BestCollectionTime: ir.BestCollectionTime,
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
-        EndDate: ir.ActiveDateTimeEnd,
+        ActiveDateTimeEnd: ir.ActiveDateTimeEnd,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
      
       },
