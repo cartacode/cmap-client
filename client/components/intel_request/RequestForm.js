@@ -663,7 +663,7 @@ render = () => {
   const { match: { params } } = this.props;
   const editId = params.editId;
 
-  //let { intelRequest } = this.state;
+  let { intelRequest } = this.state;
 
   //intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
