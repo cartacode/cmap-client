@@ -31,10 +31,12 @@ class RequestForm extends React.Component {
     super(props);
 
     const session = JSON.parse(localStorage.getItem('session'));
-    const dt  = moment().add(5, 'days');
-    const active = dt.startOf('day').format(DateConsts.DB_DATETIME_FORMAT);
-    const bct = dt.add(3, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
-    const ltiv = dt.add(6, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
+    let current = moment().utc();
+
+    const dt  = current; //current.add(5, 'days');
+    const active = moment().utc(); //dt.startOf('day').format(DateConsts.DB_DATETIME_FORMAT);
+    const bct = current.add(6, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
+    const ltiv = bct; //dt.add(6, 'hours').format(DateConsts.DB_DATETIME_FORMAT);
     const unitId = session.AssignedUnit;
     this.state = {
       firstCcir: '',
@@ -56,7 +58,7 @@ class RequestForm extends React.Component {
         // MissionType: '',
         // SubMissionType: '',
         ActiveDateTimeStart: active,
-        // ActiveDateTimeEnd: '',
+        ActiveDateTimeEnd: active,
         BestCollectionTime: bct,
         LatestTimeIntelValue: ltiv,
         // PriorityIntelRequirement: '',
@@ -325,7 +327,7 @@ editComponent = (editId) => {
         ...intelRequest,
         BestCollectionTime: ir.BestCollectionTime,
         ActiveDateTimeStart: ir.ActiveDateTimeStart,
-        EndDate: ir.EndDate,
+        EndDate: ir.ActiveDateTimeEnd,
         LatestTimeIntelValue: ir.LatestTimeIntelValue,
      
       },
@@ -661,7 +663,7 @@ render = () => {
   const { match: { params } } = this.props;
   const editId = params.editId;
 
-  let { intelRequest } = this.state;
+  //let { intelRequest } = this.state;
 
   //intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
@@ -730,7 +732,7 @@ render = () => {
   const eeiFiled1 = [
     // { name: translations['Target Name'], type: 'input', domID: 'targetName', valFieldID: 'targetName', required: true },
     { name: translations['Active Date'], type: 'date', domID: 'ActiveDateTimeStart', valFieldID: 'ActiveDateTimeStart', required: true, disabled: isDisabled },
-    { name: 'End Date', type: 'date', domID: 'endDate', valFieldID: 'EndDate', required: true, disabled: isDisabled },
+    { name: 'End Date', type: 'date', domID: 'endDate', valFieldID: 'ActiveDateTimeEnd', required: true, disabled: isDisabled },
     { name: translations['Best Collection Time'], type: 'date', domID: 'BestCollectionTime', valFieldID: 'BestCollectionTime', required: true, disabled: isDisabled },
     { name: translations['Latest Time of Intel Value'], type: 'date', domID: 'LatestTimeIntelValue', valFieldID: 'LatestTimeIntelValue', required: true, disabled: isDisabled },
   ];

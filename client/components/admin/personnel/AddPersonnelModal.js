@@ -16,7 +16,7 @@ class AddPersonnelModal extends React.Component {
 
   constructor(props) {
     super(props);
-    const currentDate = moment();
+    const currentDate = moment().utc();
     const start = currentDate.format(DateConsts.DB_DATETIME_FORMAT);
     const end = currentDate.add(30, 'days').format(DateConsts.DB_DATETIME_FORMAT);
 

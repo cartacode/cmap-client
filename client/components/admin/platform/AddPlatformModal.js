@@ -16,7 +16,7 @@ class AddPlatformModal extends React.Component {
 
   constructor(props) {
     super(props);
-    const current = moment().format(DateConsts.DB_DATETIME_FORMAT);
+    const current = moment().utc().format(DateConsts.DB_DATETIME_FORMAT);
     this.state = {
       file: '',
       clear:false,
