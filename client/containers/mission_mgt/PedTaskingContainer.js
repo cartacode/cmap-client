@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     pedTasksAtoGenerations: state.mssionmgts.pedTasksAtoGenerations,
     pedTasks: state.mssionmgts.pedTasks,
+    isLoading: state.mssionmgts.isFetching,
   };
 };
 

@@ -240,6 +240,7 @@ class FlightOpsPlatform extends React.Component {
                 <div >
                   <ReactTable
                     data={fopPlatformAto}
+                    loading={this.props.isLoading}
                     columns={columnsATOGenerations}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -257,6 +258,7 @@ class FlightOpsPlatform extends React.Component {
                 <div >
                   <ReactTable
                     data={fopPlatforms}
+                    loading={this.props.isLoading}
                     columns={columnsFlightOps}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -291,6 +293,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     fopPlatformAto: state.mssionmgts.fopPlatformAto,
     fopPlatforms: state.mssionmgts.fopPlatforms,
+    isLoading: state.mssionmgts.isFetching,
   };
 };
 

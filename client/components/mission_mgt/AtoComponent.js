@@ -9,7 +9,6 @@ import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
-import MissionNameModal from '../reusable/MissionNameModal';
 import { missionATOUser } from '../../dictionary/auth';
 
 class AtoComponent extends React.Component {
@@ -316,6 +315,7 @@ moveLeft = (row) => {
                 <div >
                   <ReactTable
                     data={atoCollectionPlans}
+                    loading={this.props.isLoading}
                     columns={columnsATOCollectionPlans}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -333,6 +333,7 @@ moveLeft = (row) => {
                 <div >
                   <ReactTable
                     data={atoGenerations}
+                    loading={this.props.isLoading}
                     columns={columnsATOGenerations}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}

@@ -231,6 +231,7 @@ class FlightOpsTeam extends React.Component {
                 <div >
                   <ReactTable
                     data={fopCrewAto}
+                    loading={this.props.isLoading}
                     columns={columnsATOGenerations}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -247,6 +248,7 @@ class FlightOpsTeam extends React.Component {
                 <div >
                   <ReactTable
                     data={fopCrews}
+                    loading={this.props.isLoading}
                     columns={columnsFlightOps}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -280,6 +282,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     fopCrewAto: state.mssionmgts.fopCrewAto,
     fopCrews: state.mssionmgts.fopCrews,
+    isLoading: state.mssionmgts.isFetching,
   };
 };
 

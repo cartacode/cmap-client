@@ -241,6 +241,7 @@ class PedTaskingComponent extends React.Component {
                 <div >
                   <ReactTable
                     data={pedTasksAtoGenerations}
+                    loading={this.props.isLoading}
                     columns={pedTasksAtoGenerationsColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
@@ -257,6 +258,7 @@ class PedTaskingComponent extends React.Component {
                 <div >
                   <ReactTable
                     data={pedTasks}
+                    loading={this.props.isLoading}
                     columns={pedTasksColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}

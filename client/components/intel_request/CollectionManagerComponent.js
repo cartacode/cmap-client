@@ -298,10 +298,10 @@ class CollectionManagerComponent extends React.Component {
                 <div >
                   <ReactTable
                     data={allApprovedIntelRequests}
+                    loading={this.props.isLoading}
                     columns={intelRequestColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}
-                    
                     className="-striped -highlight"
                     filterable={false}
                     showPageSizeOptions={true}
@@ -315,6 +315,7 @@ class CollectionManagerComponent extends React.Component {
                 <div >
                   <ReactTable
                     data={allCollectionsPlan}
+                    loading={this.props.isLoading}
                     columns={collectionPlanColumns}
                     defaultPageSize={TableDefaults.PAGE_SIZE_7}
                     minRows={minRowsForTable}                    
