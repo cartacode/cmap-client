@@ -387,14 +387,14 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["platform"]} />
               <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5}
               minRows={5} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+                defaultFilterMethod={defaultFilter}
               />
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
               <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5}
               minRows={5} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+                defaultFilterMethod={defaultFilter}
               />
             </div>
           </div>
@@ -403,14 +403,14 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText="Munition" />
               <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5}
              minRows={5} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+                defaultFilterMethod={defaultFilter} 
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
               <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={5}
                minRows={5} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+                defaultFilterMethod={defaultFilter} 
               />
             </div>
           </div>
@@ -419,7 +419,7 @@ class StatusComponent extends React.Component {
               <HalfHeaderLine headerText={translations["personnel"]} />
               <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5}
              minRows={5} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+                defaultFilterMethod={defaultFilter} 
               />
             </div>
             <div className="col-md-6">

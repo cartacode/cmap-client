@@ -645,10 +645,9 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["platform"]} />
-              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-               defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
-
+              <ReactTable data={statusplatform} columns={platformColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
+               defaultFilterMethod={defaultFilter} 
                   // getTdProps={(state, rowInfo, column, instance) => {
                   //   return {
                   //     onClick: e =>{
@@ -676,9 +675,9 @@ class AdminStatusComponent extends React.Component {
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["payload"]} />
-              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+              <ReactTable data={statuspayload} columns={payloadColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
+                defaultFilterMethod={defaultFilter} 
               />
             </div>
           </div>
@@ -690,17 +689,16 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText="Munition" />
-              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.PAGE_SIZE} className="-striped -highlight" filterable={true}
-               defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+              <ReactTable data={statusmunition} columns={equipmentColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable={true}
+               defaultFilterMethod={defaultFilter} 
               />     
             </div>
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["ped teams"]} />
-              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
-
+              <ReactTable data={petTeam} columns={petTeamColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
+                defaultFilterMethod={defaultFilter} 
                   getTdProps={(state, rowInfo, column, instance) => {
                     return {
                       onClick: e =>{
@@ -733,9 +731,9 @@ class AdminStatusComponent extends React.Component {
           <div className="col-md-12">
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations["personnel"]} />
-              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={TableDefaults.PAGE_SIZE}
-              minRows={TableDefaults.MIN_ROWS} className="-striped -highlight" filterable
-                defaultFilterMethod={defaultFilter} showPageSizeOptions={false}
+              <ReactTable data={statuspersonnel} columns={personnelColumns} defaultPageSize={5}
+             minRows={5} className="-striped -highlight" filterable
+                defaultFilterMethod={defaultFilter} 
               />
             </div>
             <div className="col-md-6">
