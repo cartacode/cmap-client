@@ -195,7 +195,7 @@ class ModalFormBlock extends React.Component {
           }
           input = (
             <div>
-              <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate}/>
+              <CustomDatePicker name={item.valFieldID} defaultValue={value} changeDate={this.handleChangeDate} previousTimeDisabled = {item.previousTimeDisabled}/>
             </div>
           );
           break;

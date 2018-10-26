@@ -37,18 +37,22 @@ defaultCalendarValue.add(-1, 'month'); */
 const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:20', DateConsts.DB_TIME_FORMAT)}/>;
 
 function disabledTime(date) {
+  
   if (date && (date.date() === 15)) {
     return {
       disabledHours() {
         return [3, 4];
-      },
+      }
     };
   }
+
+   
   return {
     disabledHours() {
       return [1, 2];
     },
   };
+
 }
 
 function disabledDate(current) {
@@ -116,7 +120,31 @@ class CustomDatePicker extends React.Component {
       if((this.props.disablePreviousDate !== undefined && this.props.disablePreviousDate !== null && this.props.disablePreviousDate !== '' && !(this.props.disablePreviousDate))) {
         disabledDateLogic = () => {};
       }
-      
+      let disabledTime = disabledTime;
+
+      if((this.props.previousTimeDisabled !== undefined && this.props.previousTimeDisabled !== null && this.props.previousTimeDisabled !== '' && this.props.previousTimeDisabled)) {
+        disabledTime = () => {
+            return {
+              disabledHours  () {
+              let current = moment();
+              let hours = [];
+              for(let i=0; i<current.hour(); i++){
+                hours.push(i);
+              }   
+              return hours;
+              },
+              
+      disabledMinutes() {
+        let current = moment();
+        let minutes = [];
+        for(let i=0; i<current.minutes(); i++){
+          minutes.push(i);
+        }   
+        return minutes;
+            }
+            }  
+        };
+      }
       const calendar = (<Calendar
         className="custom-calendar"
         locale={enUS}
