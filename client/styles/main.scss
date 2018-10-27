@@ -823,11 +823,12 @@ body .login {
 /*****************************************  live video dashboard css ***********************************/
 video {
   background: url(/assets/img/general/bac2.png) no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 100%!important;
   height: 100%!important;
   display: block;
-  padding: 7px;
+
+  padding: 6px 14px 14px 14px
 }
 
   
