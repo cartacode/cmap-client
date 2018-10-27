@@ -53,7 +53,7 @@ class PedTaskingComponent extends React.Component {
   moveLeft = (row) => {
     const IntelReqID = row.original.IntelRequestID ;    
     const missionId = row.original.MissionId ;    
-    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+    if(missionId !== undefined && missionId !== 0 && missionId !== '') {
       const data = {
         Id: missionId,
         IntelReqID,
@@ -64,8 +64,6 @@ class PedTaskingComponent extends React.Component {
         this.loadData();
         this.timeLine.onFind();
       });
-    } else {
-      showAlert('Please Select Ped Team.');
     }
   };
 
