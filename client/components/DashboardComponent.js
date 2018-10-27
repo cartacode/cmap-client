@@ -57,7 +57,7 @@ class DashboardComponent extends React.Component {
     if(aisrOperation !== undefined && aisrOperation !== null) {
       for(let index = 0; index < aisrOperation.length; index++) {
         const isrStatus = aisrOperation[index];
-        if(statusText === isrStatus.Status) {
+        if(isrStatus.Status !== undefined && statusText === isrStatus.Status.toUpperCase()) {
           statusCount = isrStatus.Count;
           break;
         }
