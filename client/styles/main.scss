@@ -806,9 +806,9 @@ body .login {
           }
         }
         .progress-bar {
-          height: 2px;
+          height: 20px;
           width: 100%;
-          background-color: #262f36;
+          background-color: #86b103;
           text-align: left;
 
           img {
@@ -820,15 +820,16 @@ body .login {
       }
     }
   }
+  
 /*****************************************  live video dashboard css ***********************************/
 video {
-  background: url(/assets/img/general/bac2.png) no-repeat;
-  background-size: contain;
+/*   background: url(/assets/img/general/bac2.png) no-repeat;
+  background-size: contain; */
   width: 100%!important;
   height: 100%!important;
   display: block;
 
-  padding: 6px 14px 14px 14px
+ /*  padding: 6px 14px 14px 14px */
 }
 
   
@@ -5472,4 +5473,9 @@ a.coll-valid-btn {
 /****************** MULTISELECT **************************/
 select.form-control.multiple-select {
   padding: 0px 1px !important;
+  }
+  /******************** progress bar css **********************/
+
+  .progress {
+    height: 7px!important;
   }

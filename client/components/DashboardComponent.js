@@ -13,7 +13,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 
 import { dashboardUser } from '../dictionary/auth';
-import { getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec } from '../util/helpers';
+import { getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec, getMissionStatusColor } from '../util/helpers';
 
 class DashboardComponent extends React.Component {
 
@@ -81,11 +81,26 @@ class DashboardComponent extends React.Component {
     return percent + '%';
   }
 
+  getColor= (item) => {
+    const color = getMissionStatusColor(item.Status);
+    return color.color;
+  }
+
+  /**
+   * TODO: this is the temporary fixing URL, in future it will be from Mission It means from server side according specific mission .
+   */
+  getLiveMissionUrl = (index) =>{
+    let liveMissionURL = 'http://18.220.128.32:1935/vod/mp4:DayFlightVODF.mp4/manifest.mpd';
+    if(index % 2 === 0) {
+      liveMissionURL = 'http://18.220.128.32:1935/vod/mp4:TruckVODF.mp4/manifest.mpd';
+    }
+    return liveMissionURL;
+  }
+
   getOperationVideoBlock() {
     const { translations } = this.props;
-    const currentDate  = new Date();
     return this.props.allLiveOperations.map((item, i) => (
-      <OperationVideoBlock key={'op'+ i} blockHeader={item.MissionName} percent={this.getMissionProgress(item.StartDate, item.EndDate)} remainTime={this.getRTB(item.StartDate, item.EndDate)}/>
+      <OperationVideoBlock key={'op'+ i} blockHeader={item.MissionName} percent={this.getMissionProgress(item.StartDate, item.EndDate)} remainTime={this.getRTB(item.StartDate, item.EndDate)} progressbarColor = {this.getColor(item)} liveMissionURL = {this.getLiveMissionUrl(i)}/>
     )
     );
   }

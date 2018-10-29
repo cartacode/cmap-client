@@ -6,54 +6,69 @@ import {connect} from 'react-redux';
 import ReactPlayer from 'react-player';
 
 
+
 class OperationVideoBlock extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  getStyles= () => {
+    return Object.assign(
+      {
+        'width': this.props.percent,
+        'background-color': this.props.progressbar
+      },
+      
+    );
+  }
+
   render() {
 
     const {translations} = this.props;
 
-    let borderBottom, progressbar, width, video;
+    let borderBottom, progressbar, width, video, backgroundColor;
+    
+    width = this.props.percent;
+    backgroundColor = this.props.progressbarColor;
+    borderBottom = '2px solid #00a651';
 
-    switch(this.props.blockHeader) {
-      case translations['blue devil']:
-        borderBottom = '2px solid #09a3c3';
-        width = this.props.percent;
-        progressbar = '/assets/img/dashboard/blue_progressbar.png';
-        video = '/assets/img/dashboard/video1.png';
-        break;
+    // switch(this.props.blockHeader) {
+    //   case translations['blue devil']:
+    //     borderBottom = '2px solid #09a3c3';
+    //     width = this.props.percent;
+    //     progressbar = '/assets/img/dashboard/blue_progressbar.png';
+    //     video = '/assets/img/dashboard/video1.png';
+    //     break;
 
-      case translations['valient angel']:
-        borderBottom = '2px solid #ff00ff';
-        width = this.props.percent;
-        progressbar = "/assets/img/dashboard/pink_progressbar.png";
-        video = '/assets/img/dashboard/video2.png';
-        break;
+    //   case translations['valient angel']:
+    //     borderBottom = '2px solid #ff00ff';
+    //     width = this.props.percent;
+    //     progressbar = "/assets/img/dashboard/pink_progressbar.png";
+    //     video = '/assets/img/dashboard/video2.png';
+    //     break;
 
-      case translations['rolling thunder']:
-        borderBottom = '2px solid #ff0000';
-        width = this.props.percent;
-        progressbar = '/assets/img/dashboard/red_progressbar.png';
-        video = "/assets/img/dashboard/video3.png";
-        break;
+    //   case translations['rolling thunder']:
+    //     borderBottom = '2px solid #ff0000';
+    //     width = this.props.percent;
+    //     progressbar = '/assets/img/dashboard/red_progressbar.png';
+    //     video = "/assets/img/dashboard/video3.png";
+    //     break;
 
-      case translations['she devil']:
-        borderBottom = '2px solid #00a651';
-        width = this.props.percent;
-        progressbar = "/assets/img/dashboard/green_progressbar.png";
-        video = "/assets/img/dashboard/video3.png";
-        break;
+    //   case translations['she devil']:
+    //     borderBottom = '2px solid #00a651';
+    //     width = this.props.percent;
+    //     progressbar = "/assets/img/dashboard/green_progressbar.png";
+    //     video = "/assets/img/dashboard/video3.png";
+    //     break;
           
-      default:
-        borderBottom = '2px solid #00a651';
-        width = this.props.percent;
-        progressbar = "/assets/img/dashboard/green_progressbar.png";
-        video = "/assets/img/dashboard/video3.png";
-        break;  
-    }
+    //   default:
+    //     borderBottom = '2px solid #00a651';
+    //     width = this.props.percent;
+    //     progressbar = "/assets/img/dashboard/green_progressbar.png";
+    //     video = "/assets/img/dashboard/video3.png";
+    //     break;  
+    // }
 
     return (
       <div className="col-md-3 map-block">
@@ -76,13 +91,18 @@ class OperationVideoBlock extends React.Component {
             </div>
           </div>
           <div className="col-md-12">
-            <div className="progress-bar">
+            {/* <div className="progress-bar">
               <img src={progressbar} alt="" style={{width}} /> 
+            </div> */}
+            <div className="progress">
+              <div className="progress-bar" role="progressbar" aria-valuenow={width} aria-valuemin="0" aria-valuemax="100" style={{ width, backgroundColor }} title={width + ' Progress'}>
+                <span className="sr-only">{width}</span>
+              </div>
             </div>
           </div>
           {/* <img src={video} className="video" alt=""/> */}
           <ReactPlayer
-            url='http://18.220.128.32:1935/vod/mp4:jacksontruck.mp4/manifest.mpd'
+            url= {this.props.liveMissionURL}
             className='video'
             playing
             width='100%'
