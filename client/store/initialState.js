@@ -50,7 +50,9 @@ export default {
     onePersonnel: {},
     isFetching: false,
     isFetchingOne: false,
-    isDeleted: false
+    isDeleted: false,
+    isAdded: false,
+    error: {},
   },
 
   ccirpir: {

@@ -451,43 +451,46 @@ class AddPersonnelModal extends React.Component {
     personnel.Rank = selectedRank;
     const { personnelFiles } = this.state;
 
-    if (this.state.personnel.RoleIDs!=undefined && this.state.personnel.RoleIDs.length!=0)
-    {
-    //We are going to upload files with JSON request body.
-    const formData = new FormData();
-    if (personnelFiles.PersonnelPhoto) {
-      formData.append('PersonnelPhoto', personnelFiles.PersonnelPhoto, personnelFiles.PersonnelPhoto.name);
-    }
-    if (personnelFiles.OrganizationLogo) {
-      formData.append('OrganizationLogo', personnelFiles.OrganizationLogo, personnelFiles.OrganizationLogo.name);
-    }
-    if (personnelFiles.Datasheet) {
-      formData.append('Datasheet', personnelFiles.Datasheet, personnelFiles.Datasheet.name);
-    }
+    if (this.state.personnel.RoleIDs!=undefined && this.state.personnel.RoleIDs.length!=0) {
+      // We are going to upload files with JSON request body.
+      const formData = new FormData();
+      if (personnelFiles.PersonnelPhoto) {
+        formData.append('PersonnelPhoto', personnelFiles.PersonnelPhoto, personnelFiles.PersonnelPhoto.name);
+      }
+      if (personnelFiles.OrganizationLogo) {
+        formData.append('OrganizationLogo', personnelFiles.OrganizationLogo, personnelFiles.OrganizationLogo.name);
+      }
+      if (personnelFiles.Datasheet) {
+        formData.append('Datasheet', personnelFiles.Datasheet, personnelFiles.Datasheet.name);
+      }
     
-    if (editId !== undefined && editId !== '0') {
+      if (editId !== undefined && editId !== '0') {
       // Start Loader
-      this.setState({loading:true});
-      personnel.PersonnelID = editId;
+        this.setState({ loading: true });
+        personnel.PersonnelID = editId;
       
-      formData.append('personnelFormData', JSON.stringify(personnel));
-      this.props.updatePersonnel(editId, formData).then(() => {
+        formData.append('personnelFormData', JSON.stringify(personnel));
+        this.props.updatePersonnel(editId, formData).then(() => {
         // Stop Loader
-        this.setState({loading:false});
-        this.props.onClose(NoticeType.UPDATE);
-      });
-    } else {
-      console.log(personnel);
-      formData.append('personnelFormData', JSON.stringify(personnel));
-      // Start Loader
-      this.setState({loading:true});
-      this.props.addPersonnel(formData).then(() => {
-        // Stop Loader
-        this.setState({loading:false});
-        this.props.onClose(NoticeType.ADD);
-      });
+          this.setState({ loading: false });
+          this.props.onClose(NoticeType.UPDATE, true);
+        });
+      } else {
+       // console.log(personnel);
+        formData.append('personnelFormData', JSON.stringify(personnel));
+        // Start Loader
+        this.setState({ loading: true });
+        this.props.addPersonnel(formData).then((res) => {
+          // Stop Loader
+          this.setState({ loading: false });
+          if(this.props.isAdded) {
+            this.props.onClose(NoticeType.ADD, this.props.isAdded);
+          } else {
+            this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, this.props.error.ModelState.ValidationError[0]);
+          }
+        });
+      }
     }
-  }
   
   else {
    
@@ -815,7 +818,9 @@ AddPersonnelModal.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    onePersonnel: state.personnels.onePersonnel    
+    onePersonnel: state.personnels.onePersonnel,
+    isAdded: state.personnels.isAdded,
+    error: state.personnels.error,
   };
 };
 

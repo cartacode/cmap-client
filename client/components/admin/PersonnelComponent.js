@@ -90,12 +90,16 @@ class PersonnelComponent extends React.Component {
   // }
   // }
 
-closePersonnelForm = (actionType) => {
-  this.loadData(actionType);
-  this.setState({
-    editId: '0',
-    addPersonnelModalOpen: false,
-  });
+closePersonnelForm = (actionType, actionSuccess, msg) => {
+  if(actionSuccess) {
+    this.loadData(actionType);
+    this.setState({
+      editId: '0',
+      addPersonnelModalOpen: false,
+    });
+  }else {
+    this.notify(NoticeType.NOT_ADD, msg);
+  }
 }
 
 loadData = (actionType) => {
@@ -104,13 +108,14 @@ loadData = (actionType) => {
 }
 
 
-notify =(actionType)=>{
+notify =(actionType, msg)=>{
   const { translations } = this.props;
   if (NoticeType.DELETE != actionType) {
-    if(NoticeType.NOT_DELETE === actionType){
+    if(NoticeType.NOT_DELETE === actionType) {
       NotificationManager.error(translations['DeleteUnSuccessfull'],translations['personnel'], 5000);
-    }
-    else if (this.state.editId !== undefined && this.state.editId !== '0') {
+    }else if (NoticeType.NOT_ADD === actionType) {
+      NotificationManager.error(msg, translations['personnel'], 5000);
+    }else if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['UpdatedSuccesfully'], translations['personnel'], 5000);
     }else{
       NotificationManager.success(translations['AddedSuccesfully'], translations['personnel'], 5000);

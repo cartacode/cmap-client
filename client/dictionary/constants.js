@@ -6,6 +6,7 @@ export const NoticeType = {
   MOVE_TO_INTEL_REQUEST: 'MOVE_TO_INTEL_REQUEST',
   NOT_DELETE: 'NOT_DELETE',
   ERROR: 'ERROR',
+  NOT_ADD: 'NOT_ADD',
 };
 
 export const DateConsts = {
