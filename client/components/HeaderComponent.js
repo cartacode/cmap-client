@@ -168,14 +168,23 @@ class HeaderComponent extends React.Component {
   render () {
     const {translations} = this.props;
     let ses = JSON.parse(localStorage.getItem('session'));
-    let userName, rank, assignedUnit, locationName = '';
+    let userName, rank, assignedUnit, locationName, deployedUnit, unitName = '';
     if (ses)
     {
      userName = ses.userName;
-    rank = ses.rankAbbrev;
+     rank = ses.RankAbbrev;
      assignedUnit = ses.AssignedUnitName;
+     deployedUnit = ses.DeployedUnitName;
      locationName = ses.LocationName;
-    
+      console.log(deployedUnit);
+        if(deployedUnit==="")
+        {  
+           unitName = assignedUnit;
+        } 
+        else 
+        { 
+          unitName = deployedUnit;
+        }
     }
 
     return (
@@ -207,7 +216,7 @@ class HeaderComponent extends React.Component {
               {userName}
             </div>
             <div className="">
-              {rank}, {assignedUnit}
+              {rank}, {unitName}
             </div>
             <div className="">
               {locationName}
