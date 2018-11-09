@@ -11,6 +11,8 @@ import Loader from '../reusable/Loader';
 import {  getConfirmation } from '../../util/helpers';
 import ReactTooltip from 'react-tooltip';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class PayloadsComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -99,7 +101,12 @@ class PayloadsComponent extends React.Component {
 	}
 
 	render() {
-	  const { translations, allPayloadInventory } = this.props;
+		const { translations, allPayloadInventory } = this.props;
+		
+		let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
 
 	  const columns = [{
 	    Header: translations.type,
@@ -164,7 +171,7 @@ class PayloadsComponent extends React.Component {
 	  }
 	  ];
 
-	  return (
+	  return ( access ? (
 	    <div>
 	      <div className="row orders-assets">
 	        <Loader loading={this.state.loading} />
@@ -209,7 +216,7 @@ class PayloadsComponent extends React.Component {
 	          />
 	        </div>
 	      </div>
-	    </div>
+		</div> ) : null
 	  );
 	}
 }

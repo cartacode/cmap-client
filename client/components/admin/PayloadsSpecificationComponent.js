@@ -16,6 +16,8 @@ import Loader from '../reusable/Loader';
 import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 import ReactTooltip from 'react-tooltip';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class PayloadsSpecificationComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -268,7 +270,13 @@ class PayloadsSpecificationComponent extends React.Component {
 
 	render() {
 	  const { translations } = this.props;
-	  const { allPayloads, payloadList, payloadTypes, cocomList, locationList } = this.props;
+		const { allPayloads, payloadList, payloadTypes, cocomList, locationList } = this.props;
+		
+		let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
 	  const addPayloads = [
 	    { name: translations['eo/ir'], onClick: this.openEoirModal, typeSpec: 'EO/IR', id: 1 },
 	    { name: translations.sar, onClick: this.openSargmtiModal, typeSpec: 'SAR/GMTI', id: 2 },
@@ -334,7 +342,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	    },
 	  ];
 
-	  return (
+	  return ( access ? (
 	    <div>
 	      <div className="row orders-assets">
 	        <div className="header-line">
@@ -386,7 +394,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	        </div>
 	      </div>
 
-	    </div>
+		</div> ) : null
 	  );
 	}
 }

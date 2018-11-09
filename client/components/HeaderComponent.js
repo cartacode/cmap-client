@@ -10,7 +10,7 @@ import { supportedLanguages } from 'dictionary/localization';
 import { Route, Redirect } from 'react-router-dom';
 import initialState from 'store/initialState';
 
-import { adminUser, dashboardUser, livewViewUser, statusUser, intelReqUser, missionManageUser } from '../dictionary/auth';
+import { adminUser, dashboardUser, livewViewUser, statusUser, intelReqUser, intelLibraryUser, missionManageUser, sysDocsUser } from '../dictionary/auth';
 
 class HeaderComponent extends React.Component {
 
@@ -73,7 +73,9 @@ class HeaderComponent extends React.Component {
     let liveViewAccess = roles2.some(v => livewViewUser.includes(v));
     let statusAccess = roles2.some(v => statusUser.includes(v));
     let intelReqAccess = roles2.some(v => intelReqUser.includes(v));
+    let intelLibAccess = roles2.some(v => intelLibraryUser.includes(v));
     let missionManageAccess = roles2.some(v => missionManageUser.includes(v));
+    let sysDocsAccess = roles2.some(v => sysDocsUser.includes(v));
 
     let tr = true;
     let fa = false;
@@ -101,10 +103,16 @@ class HeaderComponent extends React.Component {
       menuItems.push({title: translations['mission mgt'], url: '/mission-mgt/isr-sync'});
     }
 
-    menuItems.push({title: translations['intel library'], url: '/intel-library'});
+    if(intelLibAccess) {
+      menuItems.push({title: translations['intel library'], url: '/intel-library'});
+    }
     
     if(adminAccess) { 
       menuItems.push({title: translations['admin'], url: '/admin/personnel'});
+    }
+
+    if(sysDocsAccess) { 
+      menuItems.push({title: translations['admin'], url: '/admin/sys-config'});
     }
 
     

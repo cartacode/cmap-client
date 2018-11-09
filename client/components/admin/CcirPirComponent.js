@@ -9,6 +9,7 @@ import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip'; 
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
 
 class CcirPirComponent extends React.Component {
 
@@ -131,6 +132,10 @@ notify =(type)=>{
 
 render() {
 
+  let ses = JSON.parse(localStorage.getItem('session'));
+  let roles = ses.UserRoles;
+  let roles2 = JSON.parse(roles);
+  let access = roles2.some(v => adminUser.includes(v));
     
   const {translations} = this.props;
   const {allCcirPirs} = this.props;
@@ -188,7 +193,7 @@ render() {
     } 
   ];
 
-  return (
+  return ( access ? (
     <div>
       
       <div className="row orders-assets">
@@ -227,7 +232,7 @@ render() {
           />
         </div>
       </div>
-    </div>
+  </div> ) : null
   );
 }
 }

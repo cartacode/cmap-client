@@ -9,8 +9,9 @@ import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
 import FilterDropDown from '../reusable/FilterDropdown';
- import ReactTooltip from 'react-tooltip'; 
+import ReactTooltip from 'react-tooltip'; 
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
 
 class LocationComponent
   extends React.Component {
@@ -135,6 +136,12 @@ class LocationComponent
     //   { name: translations["POI"], onClick: this.poiModal }
     // ];
     const { allLocations } = this.props;
+
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
     const columns = [
       {
         Header: translations.type,
@@ -213,7 +220,7 @@ class LocationComponent
 
     
 
-    return (
+    return ( access ? (
       <div>
         <div className="row orders-assets">
           <Loader loading={this.state.loading} />
@@ -275,7 +282,7 @@ class LocationComponent
             </div>
           </div>
         </div>
-      </div>
+    </div> ) : null
     );
   }
 }

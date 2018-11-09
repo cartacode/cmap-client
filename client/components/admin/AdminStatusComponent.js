@@ -27,6 +27,9 @@ import { TableDefaults } from '../../dictionary/constants';
 import ContentBlock from '../reusable/ContentBlock';
 import ReactTooltip from 'react-tooltip';
 let rn = 0;
+
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class AdminStatusComponent extends React.Component {
 
   constructor(props) {
@@ -241,7 +244,10 @@ class AdminStatusComponent extends React.Component {
     {name: 'Unit', type: 'dropdown', domID: 'dispAssignedUnit', ddID: 'Units/GetUnits', valFieldID: 'dispAssignedUnit'},
   ];
 
-  
+  let ses = JSON.parse(localStorage.getItem('session'));
+  let roles = ses.UserRoles;
+  let roles2 = JSON.parse(roles);
+  let access = roles2.some(v => adminUser.includes(v));
 
     let {whichModal} = this.state;
     let $what=''; 
@@ -615,7 +621,7 @@ class AdminStatusComponent extends React.Component {
       'Currently coordinating with U.S. units and anto patners on joint mission training to begin on 05 januar...'
     ];
 
-    return (
+    return ( access ? (
       <div>
         <div className="row orders-assets" style={{marginBottom:0}}>
           <div className="header-line">
@@ -835,7 +841,7 @@ class AdminStatusComponent extends React.Component {
               </div>
             </div>            
         </Modal>
-      </div>
+    </div> ) : null
     );
   }
 }

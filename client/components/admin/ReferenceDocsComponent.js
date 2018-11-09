@@ -7,6 +7,8 @@ import ButtonsBlock from '../reusable/ButtonsBlock';
 import ConfigBlock from '../reusable/ConfigBlock';
 import { Redirect } from 'react-router-dom';
 
+import { sysDocsUser } from '../../dictionary/auth';
+
 class ReferenceDocsComponent extends React.Component {
 
   constructor(props) {
@@ -54,7 +56,12 @@ class ReferenceDocsComponent extends React.Component {
       {name: translations['Legacy Depot Status'], type: 'checkbox'},
     ];
 
-    return (
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => sysDocsUser.includes(v));
+
+    return ( access ? (
       <div>
         <div className="row sys-config">
           <div className="col-md-12">
@@ -80,7 +87,7 @@ class ReferenceDocsComponent extends React.Component {
             
         
 
-      </div>
+      </div> ) : null
     );
   }
 }

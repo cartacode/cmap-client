@@ -1,5 +1,7 @@
 export const adminUser = ["f5bfb78f-38c6-48f4-8773-59c2543e0805","6dd5ba55-f445-4a30-8270-fdbc992434af"];
 
+export const adminTabUser = ["f5bfb78f-38c6-48f4-8773-59c2543e0805","6dd5ba55-f445-4a30-8270-fdbc992434af", "586f2a2d-ded0-43cc-879f-a0ab98b567a8"];
+
 export const dashboardUser = ["b63ca868-af4b-486f-9540-3d01eca089fe","7554b13b-bb2b-4203-a334-5417f5b03650",
                                 "d669b1ed-5e2c-4c27-8d16-60388dffcc2a","6dd5ba55-f445-4a30-8270-fdbc992434af", 
                                 "0425a61c-f00e-40d7-93d4-f811e1891ade", "f09c4e3a-eebe-434e-a2a2-b0b44cbcca93", 
@@ -51,3 +53,5 @@ export const collectionManagerUser = ["f5bfb78f-38c6-48f4-8773-59c2543e0805","6d
 "b63ca868-af4b-486f-9540-3d01eca089fe"];
 
 export const superAdmin = ["f5bfb78f-38c6-48f4-8773-59c2543e0805"];
+
+export const sysDocsUser = ["586f2a2d-ded0-43cc-879f-a0ab98b567a8"];

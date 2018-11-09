@@ -11,7 +11,7 @@ import { NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 
-import { superAdmin } from '../../dictionary/auth';
+import { superAdmin, adminUser } from '../../dictionary/auth';
 
 class PersonnelComponent extends React.Component {
 
@@ -174,6 +174,7 @@ render() {
   let roles = ses.UserRoles;
   let roles2 = JSON.parse(roles);
   let access = roles2.some(v => superAdmin.includes(v));
+  let access2 = roles2.some(v => adminUser.includes(v));
 
   const columns = [
     {
@@ -236,7 +237,7 @@ render() {
     },
   ];
 
-  return (
+  return ( access2 ? (
     <div>
       <Loader loading={this.state.loading} />
       <div className="row orders-assets">
@@ -285,7 +286,7 @@ render() {
           />
         </div>
       </div>
-    </div>
+  </div> ) : null
   );
 }
 }

@@ -17,6 +17,8 @@ import Loader from '../reusable/Loader';
 import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 import ReactTooltip from 'react-tooltip';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class MunitionsSpecificationComponent extends React.Component {
 
   constructor(props) {
@@ -215,6 +217,11 @@ class MunitionsSpecificationComponent extends React.Component {
 
     const { translations } = this.props;
 
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
     const munitions = [
       { name: translations['Missile'], onClick: this.missileModal },
       { name: translations['Rocket'], onClick: this.rocketModal },
@@ -314,7 +321,7 @@ class MunitionsSpecificationComponent extends React.Component {
       }
     ];
     
-    return (
+    return ( access ? (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
@@ -363,7 +370,7 @@ class MunitionsSpecificationComponent extends React.Component {
           </div>
         </div>
         
-      </div>
+    </div> ) : null
     );
   }
 }

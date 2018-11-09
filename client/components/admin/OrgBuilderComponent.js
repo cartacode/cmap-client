@@ -19,6 +19,8 @@ import { fetchOrganicPersonnel } from '../../actions/organicpersonnel';
 // import '../../../node_modules/treant-js/vendor/raphael.js';
 // import Treant from '../../../node_modules/treant-js/Treant.js';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 let forceRemount = 0;
 class OrgBuilderComponent extends React.Component {
 
@@ -480,7 +482,12 @@ render() {
 
   console.log(listOrganicPersonnels);
 
-  return (
+  let ses = JSON.parse(localStorage.getItem('session'));
+  let roles = ses.UserRoles;
+  let roles2 = JSON.parse(roles);
+  let access = roles2.some(v => adminUser.includes(v));
+
+  return ( access ? (
     <div>
       <div className="row personnel" >
         <div className="header-line">
@@ -514,7 +521,7 @@ render() {
           <TreeComponent data={this.state.orgData} forceRemount={forceRemount} collapsible={true} callfunc={this.func} pathFunc="straight" />
         </div>  
         </div>
-      </div>
+  </div> ) : null
   );
 }
 }

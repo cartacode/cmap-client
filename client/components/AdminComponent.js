@@ -19,7 +19,7 @@ import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
 import ReferenceDocsContainer from '../containers/admin/ReferenceDocsContainer';
 import SubMenu from './reusable/SubMenu';
-import { adminUser } from '../dictionary/auth';
+import { adminUser, sysDocsUser, adminTabUser } from '../dictionary/auth';
 
 class AdminComponent extends React.Component {
 
@@ -45,7 +45,34 @@ class AdminComponent extends React.Component {
 
     const subMenuNames = [translations['inventory'],translations['Specifications']];
 
-    const menuItems = [
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let sysDocsAccess = roles2.some(v => sysDocsUser.includes(v));
+
+    // const menuItems = [
+    //   {title: translations['personnel'], url: `${match.url}/personnel` },
+    //   {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true, },
+    //   {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
+    //   {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
+    //   {title: translations['Location'], url: `${match.url}/location`},
+    //   {title: translations['status'], url: `${match.url}/admin-status`},
+    //   {title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
+    //   {title: translations['Org builder'], url: `${match.url}/org-builder`},
+    //   // {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
+    //   // {title: translations['Sys. Health'], url: `${match.url}/sys-health`},
+    //   // {title: 'Reference Docs', url: `${match.url}/sys-config`},
+    // ];
+
+    let menuItems = [];
+
+    if(sysDocsAccess) {
+      menuItems.push({title: 'Reference Docs', url: `${match.url}/sys-config`});
+    }
+
+    else {
+      
+      menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel` },
       {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true, },
       {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
@@ -56,8 +83,9 @@ class AdminComponent extends React.Component {
       {title: translations['Org builder'], url: `${match.url}/org-builder`},
       // {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
       // {title: translations['Sys. Health'], url: `${match.url}/sys-health`},
-      {title: 'Reference Docs', url: `${match.url}/sys-config`},
     ];
+
+    }
 
     return menuItems.map((item, i) => {
       let image = '/assets/img/menu/button-line-highlight.png';
@@ -94,8 +122,9 @@ class AdminComponent extends React.Component {
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
-    let access = roles2.some(v => adminUser.includes(v));
-    console.log(access);
+    let access = roles2.some(v => adminTabUser.includes(v));
+    let access2 = roles2.some(v => sysDocsUser.includes(v));
+    console.log(access2);
     
     return ( access ? (
       <div>
@@ -120,7 +149,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
           <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />
         </Switch>
-      </div>) : <div><div className="col-md-2"></div><h4 className="header-text">Not Authorized</h4><div className="col-md-4"></div></div>
+      </div>) : null
     );
   }
 }

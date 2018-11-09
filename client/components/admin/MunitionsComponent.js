@@ -10,6 +10,8 @@ import { TableDefaults, NoticeType } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import ReactTooltip  from 'react-tooltip';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class MunitionsComponent extends React.Component {
 
   constructor(props) {
@@ -114,6 +116,11 @@ notify =(actionType)=>{
 
     const {translations} = this.props;
 
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
     const munitions = [
       {name:translations['Missile'], onClick:this.missileModal},
       {name:translations['Rocket'], onClick:this.rocketModal},
@@ -182,7 +189,7 @@ notify =(actionType)=>{
       }
     ];
 
-    return (
+    return ( access ? (
       <div>
         <div className="row orders-assets">
           <div className="header-line">
@@ -223,7 +230,7 @@ notify =(actionType)=>{
           </div>
         </div>
         
-      </div>
+    </div> ) : null
     );
   }
 }

@@ -10,6 +10,8 @@ import { NoticeType, TableDefaults } from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 
+import { superAdmin, adminUser } from '../../dictionary/auth';
+
 class PlatformsSpecificationComponent extends React.Component {
 
   constructor(props) {
@@ -142,6 +144,11 @@ class PlatformsSpecificationComponent extends React.Component {
     const { translations } = this.props;
     const { allPlatforms } = this.props;
 
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
     const columns = [
 
       {
@@ -197,7 +204,7 @@ class PlatformsSpecificationComponent extends React.Component {
       },
     ];
 
-    return (
+    return ( access ? (
       <div>
         <Loader loading={this.state.loading} />
         <div className="row orders-assets">
@@ -241,7 +248,7 @@ class PlatformsSpecificationComponent extends React.Component {
         </div>
 
         {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
-      </div>
+    </div> ) : null
     );
   }
 }

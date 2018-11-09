@@ -10,7 +10,7 @@ import { defaultFilter, getConfirmation } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 
-
+import { superAdmin, adminUser } from '../../dictionary/auth';
 
 
 
@@ -133,6 +133,11 @@ class PlatformComponent extends React.Component {
     const { translations } = this.props;
     const { allPlatformInventory } = this.props;
 
+    let ses = JSON.parse(localStorage.getItem('session'));
+    let roles = ses.UserRoles;
+    let roles2 = JSON.parse(roles);
+    let access = roles2.some(v => adminUser.includes(v));
+
     const columns = [
 
       {
@@ -205,7 +210,7 @@ class PlatformComponent extends React.Component {
       }
     ];
 
-    return (
+    return ( access ? (
       <div>
         <Loader loading={this.state.loading} />
 
@@ -249,7 +254,7 @@ class PlatformComponent extends React.Component {
         </div>
 
         {/* <TableRowDetailModal show={this.state.tableRowDetailModalOpen} onClose={this.tableRowDetailModal} rowdata = {rowFields} translations = {translations}/> */}
-      </div>
+    </div> ) : null
     );
   }
 }
