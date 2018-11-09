@@ -168,10 +168,12 @@ class HeaderComponent extends React.Component {
   render () {
     const {translations} = this.props;
     let ses = JSON.parse(localStorage.getItem('session'));
-    let userName, rank, assignedUnit, locationName, deployedUnit, unitName = '';
+    let userName, rank, assignedUnit, locationName, deployedUnit, unitName, firstName, lastName = '';
     if (ses)
     {
      userName = ses.userName;
+     firstName = ses.FirstName;
+     lastName = ses.LastName;
      rank = ses.RankAbbrev;
      assignedUnit = ses.AssignedUnitName;
      deployedUnit = ses.DeployedUnitName;
@@ -213,10 +215,10 @@ class HeaderComponent extends React.Component {
               <img src="/assets/img/menu/vertical-line.png" className="line-img" alt=""/>
             </div>
             <div className="">
-              {userName}
+            {rank} {firstName} {lastName}
             </div>
             <div className="">
-              {rank}, {unitName}
+               {unitName}
             </div>
             <div className="">
               {locationName}
