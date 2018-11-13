@@ -408,11 +408,7 @@ class TimelineFilter extends React.Component {
             group: group.id,
             title: missionName,
             start_time: moment(obj.startDate),
-            end_time: moment(obj.endDate),
-            style: {
-              backgroundColor: 'red',
-              // color: 'yellow',
-            },
+            end_time: moment(obj.endDate)            
           };
           items.push(item);
         }

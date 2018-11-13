@@ -25,72 +25,63 @@ import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
 let condition = true;
 class NavigationComponent extends React.Component {
 
-  
+  componentDidUpdate() {
+    const ses = JSON.parse(localStorage.getItem('session'));
 
-  componentDidUpdate () {
-    let ses = JSON.parse(localStorage.getItem('session'));
-    
-    if (ses === null)
-    { console.log("Empty Session"); }
-    else 
+    if (ses === null) { console.log('Empty Session'); } else
     {
-    
-    if(Object.keys(ses).length === 0 && ses.constructor === Object)
-    { console.log('Empty Session'); }
-    else
-    {
-    let expired = ses['.expires'];
-    let exp = new Date(expired).toISOString();
-    
-    // console.log(new Date().toISOString());
-    let current = new Date().toISOString();
-    
-    if (exp < current)           
-    {       
+      console.log(ses);
+      if(Object.keys(ses).length === 0 && ses.constructor === Object) { console.log('Empty Session'); } else {
+        const expired = ses['.expires'];
+        const exp = new Date(expired).toISOString();
+        console.log(exp);
+        // console.log(new Date().toISOString());
+        const current = new Date().toISOString();
+        console.log(current);
+        if (exp < current)
+        {
         //   localStorage.removeItem('session');
         //  console.log("Logged Out");
-        //  this.props.history.push('/'); 
+        //  this.props.history.push('/');
         //  alert("Session Expired - Please Login");
         //  condition = false;
-       if(window.location.pathname!='/login')
-       { 
-        // alert("Here");
-        console.log("Unauthorized");
-        let refresh_token = ses.refresh_token;
-        console.log(refresh_token);
-        // alert(exp);
-        let obj = {'grant_type':'refresh_token', 'refresh_token': refresh_token}       
-        // alert(exp);
-        this.props.refresh(obj).then(() => {        
-          let { loginData } = this.props;
-          let mySession = JSON.stringify(loginData);
-          const { authenticated } = this.props;
-          localStorage.setItem('session',mySession);
-          if (authenticated)
-          { 
-            requestHeaders['Authorization']='Bearer '+ loginData.access_token;
-            formDataRequestHeader['Authorization']='Bearer '+ loginData.access_token;
-            window.location.reload();
-          }
+          if(window.location.pathname != '/login') {
+            // alert("Here");
+            console.log('Unauthorized');
+            const refresh_token = ses.refresh_token;
+            console.log(refresh_token);
+            // alert(exp);
+            const obj = { 'grant_type': 'refresh_token', refresh_token };
+            // alert(exp);
+            this.props.refresh(obj).then(() => {
+              const { loginData } = this.props;
+              const mySession = JSON.stringify(loginData);
+              const { authenticated } = this.props;
+              localStorage.setItem('session', mySession);
+              if (authenticated) {
+                requestHeaders.Authorization = 'Bearer ' + loginData.access_token;
+                formDataRequestHeader.Authorization = 'Bearer ' + loginData.access_token;
+                window.location.reload();
+              }
 
-        });
+            });
+          }
+        }
+        condition = false;
       }
     }
-            condition = false;
-  }
-  }
   }
 
   render() {
-        let roles = initialState.auth.userRoles;
+    const roles = initialState.auth.userRoles;
     return (
       <div>
-      <Route path="/" render={(route) =>{
+        <Route path="/" render={(route) =>{
 
-            return route.location.pathname==='/login' ? null : <HeaderContainer/>;
+          return route.location.pathname === '/login' ? null : <HeaderContainer/>;
         }} />
         <Switch>
-          <PrivateRoute exact path="/" component={DashboardContainer} > <Redirect to='/dashboard' /> </PrivateRoute>
+          <PrivateRoute exact path="/" component={DashboardContainer} > <Redirect to="/dashboard" /> </PrivateRoute>
           <PrivateRoute exact path="/dashboard" component={DashboardContainer} />
           <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
           <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
@@ -111,7 +102,7 @@ class NavigationComponent extends React.Component {
 }
 
 NavigationComponent.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 };
 
 const mapStateToProps = state => {
@@ -126,4 +117,4 @@ const mapDispatchToProps = {
   refresh,
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(NavigationComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationComponent);
