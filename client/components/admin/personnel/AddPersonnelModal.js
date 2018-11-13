@@ -443,7 +443,7 @@ class AddPersonnelModal extends React.Component {
   }
 
   handleSubmit = event => {
-    console.log(this.state.personnel);
+    
     event.preventDefault();
     let {  personnel } = this.state;
     let { editId } = this.props;

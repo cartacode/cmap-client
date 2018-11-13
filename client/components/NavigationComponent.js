@@ -29,22 +29,22 @@ class NavigationComponent extends React.Component {
 
   componentDidUpdate () {
     let ses = JSON.parse(localStorage.getItem('session'));
-    console.log("Here-Pre");
+    
     if (ses === null)
     { console.log("Empty Session"); }
     else 
     {
-    console.log(ses);
+    
     if(Object.keys(ses).length === 0 && ses.constructor === Object)
     { console.log('Empty Session'); }
     else
     {
     let expired = ses['.expires'];
     let exp = new Date(expired).toISOString();
-    console.log(exp);
+    
     // console.log(new Date().toISOString());
     let current = new Date().toISOString();
-    console.log(current);
+    
     if (exp < current)           
     {       
         //   localStorage.removeItem('session');

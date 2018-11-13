@@ -3791,15 +3791,15 @@ one-block {
   bottom: 0px;
   left: 0px;
   right: 0px;
-  backgroundcolor: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 70px 200px;
 }
 
 .modal-content {
   background: url("/assets/img/menu/background-dashboard.png") no-repeat;
-  borderradius: 5px;
-  maxwidth: 300px !important;
-  maxheight: 400px !important;
+  border-radius: 5px;
+  max-width: 300px !important;
+  max-height: 400px !important;
   margin: 0px;
   padding: 30px;
   border: 2px solid;
@@ -5458,13 +5458,11 @@ a.coll-valid-btn {
   padding: 3px 0px;
 }
 
-.rct-item{
-  top: 59.1px !important;
-}
 .rct-item-content{
   display: block !important;
   text-align: center !important;
 }
+
 .collection-valid-header{
     text-align: center;
     font-size: 18px;

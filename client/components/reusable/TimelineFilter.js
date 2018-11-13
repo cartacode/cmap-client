@@ -422,6 +422,7 @@ class TimelineFilter extends React.Component {
           newItems.push(newItem);
         }); */
       });
+      // adding an empty group to make make another row in timeline corresponding to pagination space in table on left
       groups.push({});
     } else {
       results = [];
@@ -530,7 +531,7 @@ class TimelineFilter extends React.Component {
                   lineHeight={52}
                   headerLabelGroupHeight={28}
                   headerLabelHeight={32}
-                  // itemHeightRatio={0.80}
+                  itemHeightRatio={0.50}
                   // rightSidebarWidth={100}
                   items={items}
                   defaultTimeStart={startDate}

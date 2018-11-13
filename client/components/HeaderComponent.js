@@ -178,7 +178,7 @@ class HeaderComponent extends React.Component {
      assignedUnit = ses.AssignedUnitName;
      deployedUnit = ses.DeployedUnitName;
      locationName = ses.LocationName;
-      console.log(deployedUnit);
+     
         if(deployedUnit==="")
         {  
            unitName = assignedUnit;
