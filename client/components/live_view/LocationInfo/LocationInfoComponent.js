@@ -33,15 +33,15 @@ class LocationInfoComponent extends React.Component {
               <span>{latitude.toFixed(4)}"</span>
             </li>
             <li className="lon-block">
-              <span>LON:</span>
+              <span style={{ color: 'darkgoldenrod' }} >LON:</span>
               <span>{longitude.toFixed(4)}"</span>
             </li>
             <li className="elv-block">
-              <span>ELV:</span>
+              <span style={{ color: 'crimson' }} >ELV:</span>
               <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
             <li className="alt-block">
-              <span>ALT:</span>
+              <span style={{ color: 'deeppink' }} >ALT:</span>
               <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
           </ul>
