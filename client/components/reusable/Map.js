@@ -41,6 +41,9 @@ export default class Map extends React.PureComponent {
     }
   }
 
+  static state = {
+    latlong: PropTypes.object
+  }
 
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar, true);
@@ -56,6 +59,7 @@ export default class Map extends React.PureComponent {
   }
 
   dblClickPlotMap = (currenLatLong, viewerId, viewer) =>{
+    this.setState({ latlong: currenLatLong });
     console.log("=====currentLatLong=", currenLatLong);
     let nearestNeighbourNAIPOI;
     let nearestNeighbourKML;
@@ -119,6 +123,7 @@ export default class Map extends React.PureComponent {
 
   render() {
     const { size = viewerSize.medium, toolBarOptions } = this.props;
+    const { latlong } = this.state;
     const toolbar_show = !toolBarOptions ? true: toolBarOptions.show;
 
     return (
@@ -127,7 +132,7 @@ export default class Map extends React.PureComponent {
         <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>
-          <LocationInfoComponent/>
+          <LocationInfoComponent latlong={latlong}/>
           {/* <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} /> */}
         </div>
         {toolbar_show && <SideBarRightComponent /> }
