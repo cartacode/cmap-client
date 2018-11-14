@@ -199,7 +199,7 @@ notify =(actionType)=>{
               {translations.inventory} &nbsp;
               {!this.state.addMunitionsInventoryOpen ?
 	              <span>
-	                <a className="btn btn-info btn-xs add-data" onClick={() => this.openMunitionsForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+	                <a className="btn btn-info btn-xs add-data" onClick={() => this.openMunitionsForm('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a>
 	              </span>
 	              : '' }
             </div>

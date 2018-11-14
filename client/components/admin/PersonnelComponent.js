@@ -249,7 +249,7 @@ render() {
           
           <span>
             {translations.summary} &nbsp;
-          { access ? <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a> : null }
+          { access ? <a className="btn btn-info btn-xs add-data" onClick={() => this.openPersonnelForm('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a> : null }
           </span>
          
           : translations.form }

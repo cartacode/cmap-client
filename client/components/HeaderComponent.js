@@ -77,13 +77,10 @@ class HeaderComponent extends React.Component {
     let missionManageAccess = roles2.some(v => missionManageUser.includes(v));
     let sysDocsAccess = roles2.some(v => sysDocsUser.includes(v));
 
-    let tr = true;
-    let fa = false;
-
-    let menuItems = [];
+    const menuItems = [];
 
 
-    if(dashboardAccess){
+    if(dashboardAccess) {
       menuItems.push({title: translations['dashboard'], url: '/dashboard'});
     }
 
@@ -260,12 +257,12 @@ class HeaderComponent extends React.Component {
               </ul>
               <ul className="pull-right setting-user">
         <li className="dropdown">
-          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="fa fa-cog "></i><span className="caret"></span></a>
+          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="glyphicon glyphicon-cog"></i><span className="caret"></span></a>
           <ul className="dropdown-menu" role="menu">
-                       <li><a href="#"><i className="fa fa-user"></i> User Setting</a></li>
-            <li><NavLink to='/change-password'> <i className="fa fa-key"></i> Change Password</NavLink></li>
+                       <li><a href="#"><i className="glyphicon glyphicon-user"/> User Setting</a></li>
+            <li><NavLink to='/change-password'> <i className="glyphicon glyphicon-lock"/> Change Password</NavLink></li>
             <li className="divider"></li>
-            <li><NavLink to="/login" onClick={this.logoutCall}><i className="fa fa-sign-out"></i> Log Out</NavLink></li>
+            <li><NavLink to="/login" onClick={this.logoutCall}><i className="glyphicon glyphicon-log-out"/> Log Out</NavLink></li>
           </ul>
         </li>
       

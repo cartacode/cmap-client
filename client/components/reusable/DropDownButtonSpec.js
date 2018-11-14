@@ -40,7 +40,7 @@ class DropDownButtonSpec extends React.Component {
           {this.renderItems(key)}
         </ul>
       
-        <i className="fa fa-angle-down arrow-font"/>&nbsp;
+        <i className="glyphicon glyphicon-chevron-down arrow-font"/>&nbsp;
         {/* <img className="arrow" src="/assets/img/admin/small-arrow.png" alt=""/> */}
       </span>
     );

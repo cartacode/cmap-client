@@ -231,7 +231,7 @@ class LocationComponent
               {!this.state.baseModalOpen ?
                 <span>
                   {translations.summary} &nbsp;
-                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openBaseModalFrom('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openBaseModalFrom('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a>
                 </span>
                 : translations.form }
             </div>

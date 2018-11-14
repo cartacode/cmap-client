@@ -215,7 +215,7 @@ class PlatformsSpecificationComponent extends React.Component {
               {!this.state.addPlatformModalOpen ?
                 <span>
                   {/* {translations.summary} &nbsp; */}
-                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPlatformForm('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openPlatformForm('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a>
                 </span>
                 : '' }
             </div>

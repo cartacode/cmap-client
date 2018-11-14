@@ -155,7 +155,7 @@ class IntelEEI extends React.Component {
               {/* <div className="header-text">
                 {translations['mission eei\'s']} &nbsp;
                 { !this.state.isFormOpened && (missionId === null || missionId === undefined) && (irAbbrebation !== IntelConstants.STATUS.AV.abbreviation) ?
-                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openEEI('0')}><i className="fa fa-plus"/>&nbsp;{translations.Add}</a>
+                  <a className="btn btn-info btn-xs add-data" onClick={() => this.openEEI('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a>
                   : null }
               </div> */}
               <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
