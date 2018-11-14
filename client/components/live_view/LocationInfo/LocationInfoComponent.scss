@@ -1,0 +1,23 @@
+.location-info-bar {
+    background-color: rgba(40, 72, 98, 0.7);
+    position: absolute;
+    bottom: 0;
+    min-height: 35px;
+    margin-bottom: 5px;
+    padding: 0;
+    z-index: 4;
+}
+
+.sidebar-bottom-block {
+    padding-left: 5%;
+}
+
+.sidebar-bottom-block ul li {
+    display: inline-block;
+    min-width: 100px;
+    font-size: 17px;
+
+    span {
+        margin: 5px;
+    }
+}

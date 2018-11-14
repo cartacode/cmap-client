@@ -215,6 +215,7 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
     var currentLatLong = {
       longitude: Cesium.Math.toDegrees(cartographicClick.longitude),
       latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
+      height:    cartographicClick.height,
     }
     if(typeof dblClickHandler === "function"){
       dblClickHandler(currentLatLong, viewerId, viewer);
@@ -244,30 +245,30 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
   const viewer = viewers.get(viewerId);
  
   viewer.entities.add({
-  name : 'Bounding Box Center',
-  position : Cesium.Cartesian3.fromDegrees(x, y, z),
-  point : {
-      pixelSize : 5,
-      color : Cesium.Color.RED,
-      outlineColor : Cesium.Color.WHITE,
-      outlineWidth : 2
-  },
-  label : {
-      text : label,
-      font : '14pt monospace',
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth : 2,
-      verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset : new Cesium.Cartesian2(0, -9)
+    name : 'Bounding Box Center',
+    position : Cesium.Cartesian3.fromDegrees(x, y, z),
+    point : {
+        pixelSize : 5,
+        color : Cesium.Color.RED,
+        outlineColor : Cesium.Color.WHITE,
+        outlineWidth : 2
+    },
+    label : {
+        text : label,
+        font : '14pt monospace',
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        outlineWidth : 2,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
+        pixelOffset : new Cesium.Cartesian2(0, -9)
+    }
+  });
+  if(focus) {
+    viewer.flyTo(viewer.entities);
   }
-});
-if(focus) {
-  viewer.flyTo(viewer.entities);
-}
 
 }
 export function moveFar(viewerId){
   
   var center = Cesium.Cartesian3.fromDegrees(-82.5, 35.3);
-viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, 0.0, 4200000.0));
+  viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, 0.0, 4200000.0));
 }
