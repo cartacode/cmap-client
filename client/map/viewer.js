@@ -237,6 +237,31 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
+export function createTestObject(viewerId) {
+  const viewer = viewers.get(viewerId);
+
+  var blueBox = viewer.entities.add({
+      name : 'Blue box',
+      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+      box : {
+          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          material : Cesium.Color.BLUE
+      }
+  });
+
+  var redBox = viewer.entities.add({
+      name : 'Red box with black outline',
+      position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
+      box : {
+          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          material : Cesium.Color.RED.withAlpha(0.5),
+          outline : true,
+          outlineColor : Cesium.Color.BLACK
+      }
+  });
+  viewer.zoomTo(viewer.entities);
+}
+
 export function addPoint(x, y, z, viewerId, label, focus=false){
   if (!viewers.has(viewerId)) {
     return;
@@ -262,6 +287,8 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
         pixelOffset : new Cesium.Cartesian2(0, -9)
     }
   });
+
+  console.log(viewer);
   if(focus) {
     viewer.flyTo(viewer.entities);
   }

@@ -5,7 +5,7 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 import {addKML} from 'map/kml';
-import {addPoint,} from 'map/viewer';
+import {addPoint, createTestObject} from 'map/viewer';
 
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -47,6 +47,7 @@ export default class Map extends React.PureComponent {
 
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar, true);
+    createTestObject(this.props.viewerId);
   }
 
   componentWillUnmount() {
@@ -67,6 +68,7 @@ export default class Map extends React.PureComponent {
 
     nearestNeighbourNAIPOI = UTILS['naipoiLookUp'](currenLatLong, viewerId);
     viewer.entities.removeAll();
+    console.log("pass here");
     addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, 'Current Lat-Long '+currenLatLong.latitude+','+currenLatLong.longitude, true);
     addPoint(Number(nearestNeighbourNAIPOI[0].locationLongitude), Number(nearestNeighbourNAIPOI[0].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbourNAIPOI[0].type+' '+nearestNeighbourNAIPOI[0].locationLatitude+','+nearestNeighbourNAIPOI[0].locationLongitude, true);
     addPoint(Number(nearestNeighbourNAIPOI[1].locationLongitude), Number(nearestNeighbourNAIPOI[1].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbourNAIPOI[1].type+' '+nearestNeighbourNAIPOI[1].locationLatitude+','+nearestNeighbourNAIPOI[1].locationLongitude, true);
@@ -82,7 +84,7 @@ export default class Map extends React.PureComponent {
   }
 
   dblClickCallback = (currenLatLong, viewerId, viewer) =>{
-      this.dblClickPlotMap(currenLatLong, viewerId, viewer);
+    this.dblClickPlotMap(currenLatLong, viewerId, viewer);
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{

@@ -5,43 +5,28 @@ export const UTILS = {
 
 };
 function performLocationLookUp(currentLatLong) {
-  let nai = JSON.parse(localStorage.getItem('NAI'));
-
-      
-let poi=JSON.parse(localStorage.getItem("POI"));
-
-      //locations=nai.concat(poi),
-      
-let naiDistances =[]; let poiDistances = [];
+  let nai = JSON.parse(localStorage.getItem('NAI'));     
+  let poi=JSON.parse(localStorage.getItem("POI"));
+  let naiDistances =[]; let poiDistances = [];
   for(var i = 0; nai[i]; i++) {
-    let xDistance = nai[i].locationLongitude - currentLatLong.longitude;
-
-          
-let yDistance = nai[i].locationLatitude-currentLatLong.latitude;
-
-          
-let distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+    let xDistance = nai[i].locationLongitude - currentLatLong.longitude;     
+    let yDistance = nai[i].locationLatitude-currentLatLong.latitude;
+    let distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     naiDistances.push({ distance, index: i });
   }
   naiDistances.sort(function(a, b) {
     return a.distance - b.distance;
   });
   for(var i = 0; poi[i]; i++) {
-    let xDistance = poi[i].locationLongitude - currentLatLong.longitude;
-
-          
-let yDistance = poi[i].locationLatitude-currentLatLong.latitude;
-
-          
-let distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+    let xDistance = poi[i].locationLongitude - currentLatLong.longitude;         
+    let yDistance = poi[i].locationLatitude-currentLatLong.latitude;
+    let distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     poiDistances.push({ distance, index: i });
   }
   poiDistances.sort(function(a, b) {
     return a.distance - b.distance;
   });
   return [nai[naiDistances[0].index], poi[poiDistances[0].index]];
-
-
 }
 function performKMLLookUp(currentLatLong) {
   const centerPoints = [];
