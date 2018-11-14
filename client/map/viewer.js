@@ -30,7 +30,7 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, liveViewToolBar) {
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,liveViewToolBar) {
   if (viewers.has(viewerId)) {
     return;
   }
@@ -192,7 +192,8 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, liveViewToo
    * Attaching double click event on canvas, to retrieve lat, long values
   */
   if(!liveViewToolBar){
-    attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK)
+    attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK);
+    attachLeftClick(viewer, viewerId, LEFT_CLICK);
     viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
     viewers.set(viewerId, viewer);
     return viewer;
@@ -222,6 +223,28 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
     }
   },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
+}
+
+function attachLeftClick(viewer, viewerId, leftClickHandler) {
+  var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+  screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
+    var cartesian = viewer.scene.pickPosition(movement.position);
+
+    if (Cesium.defined(cartesian)) {
+      var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+      var longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+      var latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+      var heightString = Number(cartographic.height); 
+      console.log("=====", longitudeString, latitudeString, heightString);
+      heightString = heightString>0 ? heightString: 0;
+      var currentLatLong = {
+        longitude: Number(longitudeString),
+        latitude:  Number(latitudeString),
+        height:    heightString,
+      }
+      leftClickHandler(currentLatLong, viewerId, viewer);  
+    }
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
 /**
@@ -259,7 +282,7 @@ export function createTestObject(viewerId) {
           outlineColor : Cesium.Color.BLACK
       }
   });
-  viewer.zoomTo(viewer.entities);
+//  viewer.zoomTo(viewer.entities);
 }
 
 export function addPoint(x, y, z, viewerId, label, focus=false){

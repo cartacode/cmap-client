@@ -37,7 +37,7 @@ export default class Map extends React.PureComponent {
     };
     this.MAP_EVENTS = {
       LEFT_DOUBLE_CLICK : this.dblClickCallback,
-    
+      LEFT_CLICK : this.leftClickCallback,
     }
   }
 
@@ -46,7 +46,7 @@ export default class Map extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.props.enableLiveViewToolBar, true);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
     createTestObject(this.props.viewerId);
   }
 
@@ -60,7 +60,6 @@ export default class Map extends React.PureComponent {
   }
 
   dblClickPlotMap = (currenLatLong, viewerId, viewer) =>{
-    this.setState({ latlong: currenLatLong });
     console.log("=====currentLatLong=", currenLatLong);
     let nearestNeighbourNAIPOI;
     let nearestNeighbourKML;
@@ -85,6 +84,10 @@ export default class Map extends React.PureComponent {
 
   dblClickCallback = (currenLatLong, viewerId, viewer) =>{
     this.dblClickPlotMap(currenLatLong, viewerId, viewer);
+  }
+
+  leftClickCallback = (worldPosition, viewerId, viewer) => {
+    this.setState({ latlong: worldPosition });
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{
