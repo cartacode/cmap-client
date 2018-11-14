@@ -21,7 +21,8 @@ class LocationInfoComponent extends React.Component {
   }
 
   render() {
-    const { latlong: { latitude, longitude, height } } = this.props
+    const { latlong: { latitude, longitude, height } } = this.props;
+
     return (
 
       <div className="col-md-12 location-info-bar">
@@ -29,19 +30,19 @@ class LocationInfoComponent extends React.Component {
           <ul>
             <li className="lat-block">
               <span style={{ color: 'chartreuse' }} >LAT:</span>
-              <span>{latitude}</span>
+              <span>{latitude.toFixed(4)}"</span>
             </li>
             <li className="lon-block">
               <span>LON:</span>
-              <span>{longitude}</span>
+              <span>{longitude.toFixed(4)}"</span>
             </li>
             <li className="elv-block">
               <span>ELV:</span>
-              <span>{height}</span>
+              <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
             <li className="alt-block">
               <span>ALT:</span>
-              <span>{height}</span>
+              <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
           </ul>
         </div>
