@@ -178,7 +178,7 @@ class AddPersonnelModal extends React.Component {
 
   editComponent = (editId) => {
 
-    document.getElementById('UserName').readOnly = true;
+    // document.getElementById('UserName').readOnly = true;
     document.getElementsByName('Password')[0].required = false;
     document.getElementsByName('ConfirmPassword')[0].required = false;
 
@@ -195,7 +195,14 @@ class AddPersonnelModal extends React.Component {
           imagePreviewUrl: this.props.onePersonnel.PersonnelPhoto,
           imagePreviewUrl2: this.props.onePersonnel.OrganizationLogo,
           isImagedRequired:  false
-        }, () => { console.log(this.state.personnel) });
+        }, () => { console.log(this.state.personnel) 
+        
+        if(this.state.personnel.UserName === null) 
+        {  document.getElementById('UserName').readOnly = false;  }
+        else 
+        {  document.getElementById('UserName').readOnly = true; } 
+        
+        });
 
         let roleArray = this.props.onePersonnel.RoleIDs;
         console.log(roleArray);
