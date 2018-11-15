@@ -52,6 +52,7 @@ export default {
     isFetchingOne: false,
     isDeleted: false,
     isAdded: false,
+    isUpdated: false,
     error: {},
   },
 

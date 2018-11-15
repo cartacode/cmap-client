@@ -113,12 +113,16 @@ loadData = (actionType) => {
 
 notify =(actionType, msg)=>{
   const { translations } = this.props;
-  if (NoticeType.DELETE != actionType) {
+  if (NoticeType.NOT_UPDATE === actionType) {
+    NotificationManager.error(msg, translations['personnel'], 5000);
+  }
+  else if (NoticeType.DELETE != actionType) {
     if(NoticeType.NOT_DELETE === actionType) {
       NotificationManager.error(translations['DeleteUnSuccessfull'],translations['personnel'], 5000);
     }else if (NoticeType.NOT_ADD === actionType) {
       NotificationManager.error(msg, translations['personnel'], 5000);
-    }else if (this.state.editId !== undefined && this.state.editId !== '0') {
+    }
+    else if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['UpdatedSuccesfully'], translations['personnel'], 5000);
     }else{
       NotificationManager.success(translations['AddedSuccesfully'], translations['personnel'], 5000);

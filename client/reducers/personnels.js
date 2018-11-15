@@ -1,4 +1,4 @@
-import { PERSONNEL__FETCH, PERSONNEL__FETCH_ONE, PERSONNEL__DELETE_ONE, PERSONNEL__ADD } from 'dictionary/action';
+import { PERSONNEL__FETCH, PERSONNEL__FETCH_ONE, PERSONNEL__DELETE_ONE, PERSONNEL__ADD, PERSONNEL__UPDATE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function personnels(state = initialState.personnels, { payload, type, error }) {
@@ -56,6 +56,25 @@ export default function personnels(state = initialState.personnels, { payload, t
       return {
         ...state,
         isAdded: false,
+        error: error.response.data,
+      };
+
+
+    case PERSONNEL__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+
+      };
+    case PERSONNEL__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+    case PERSONNEL__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
         error: error.response.data,
       };
 

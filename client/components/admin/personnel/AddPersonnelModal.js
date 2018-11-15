@@ -480,7 +480,14 @@ class AddPersonnelModal extends React.Component {
         this.props.updatePersonnel(editId, formData).then(() => {
         // Stop Loader
           this.setState({ loading: false });
-          this.props.onClose(NoticeType.UPDATE, true);
+          //this.props.onClose(NoticeType.UPDATE, true);
+          // if records updated successfull
+          if(this.props.isUpdated) {
+            this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+          } else {
+            // if record not updated successfully
+            this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, this.props.error.Message);
+          }
         });
       } else {
        // console.log(personnel);
@@ -827,6 +834,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     onePersonnel: state.personnels.onePersonnel,
     isAdded: state.personnels.isAdded,
+    isUpdated: state.personnels.isUpdated,
     error: state.personnels.error,
   };
 };
