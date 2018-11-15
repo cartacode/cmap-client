@@ -16,22 +16,46 @@ class ReferenceDocsComponent extends React.Component {
   }
 
   handleClick = (i) => {
-    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS Architecture Diagram.pdf","../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf","http://18.222.48.211:8081/swagger/ui/index#/"];
+    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Roadmap September 2018.pdf", "../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "http://18.222.48.211:8081/swagger/ui/index#/"];
+    window.location.href=documentHref[i];
+  }
+
+  handleClick2 = (i) => {
+    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS High-level Architecture Diagram.pdf", "../../assets/documents/Tradecraft Technologies - AMPS API Documentation Reference.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf","../../assets/documents/Tradecraft Technologies - AMPS Architecture Diagram.pdf","../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf","http://18.222.48.211:8081/swagger/ui/index#/"];
+    window.location.href=documentHref[i];
+  }
+
+  handleClick3 = (i) => {
+    const documentHref = ["https://github.com/TradecraftTech"];
     window.location.href=documentHref[i];
   }
 
   handleClicks = (i) => {
-    const documentHref2 = ["../../assets/documents/Tradecraft Technologies - AMPS Product Roadmap September 2018.pdf","../../assets/documents/Tradecraft Technologies - AMPS Software Config Mgmt Versioning Guidance.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Software License Ageeement.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Software Maintenance and Hardware Warranty Agreement.docx.pdf"];
+    const documentHref2 = ["../../assets/documents/Tradecraft Technologies - AMPS Software Config Mgmt Versioning Guidance.pdf"];
     window.location.href=documentHref2[i];
   }
 
+  handleClicks2 = (i) => {
+    const documentHref2 = ["../../assets/documents/Tradecraft Technologies - AMPS Software Config Mgmt Versioning Guidance.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Change Management _ Backwards Compatibility Reference.pdf","../../assets/documents/Tradecraft Technologies - AMPS Error Handling Reference.pdf", "../../assets/documents/Tradecraft Technologies - AMPS System Monitoring Reference.pdf", "../../assets/documents/Tradecraft Technologies - AMPS User Interface Testing and Guidance.pdf"];
+    window.location.href=documentHref2[i];
+  }
+
+  handleClicks3 = (i) => {
+    const documentHref2 = ["../../assets/documents/Tradecraft Technologies - AMPS Software License Ageeement.pdf", "../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Software Maintenance and Hardware Warranty Agreement.docx.pdf"];
+    window.location.href=documentHref2[i];
+  }
 
   render() {
 
     const {translations} = this.props;
-    const userPermissionButtons = ["Architecture Diagram", "End User Licence Agreement EULA", "AMPS Marketing Brief September 2018", "AMPS Product Marketing Sheet","API Documentation"];
-    
-    const serverConfigButtons = ["Product Roadmap September 2018", "Software Config Management Versioning Guidance", "Software License Agreement", "Software Maintenance and Hardware Warranty Agreement",];
+    const userPermissionButtons = ["AMPS Product Brief", "AMPS Product Sheet", "Product Roadmap",];
+    const userPermissionButtons2 = ["Architecture Diagram", "API Documentation", "Developers Guide", "Integrators Guide",];
+    const userPermissionButtons3 = ["Source/Binary/Installer Repository",];
+
+    const serverConfigButtons = ["IA Security/SCAP Scan Report",];
+    const serverConfigButtons2 = ["Config Management Versioning Guidance", "Change Management & Compatibility Reference", "Error Handling Reference", "System Monitoring Reference", "User Interface Testing & Guidance",];
+    const serverConfigButtons3 = ["Software License Agreement", "End User Licence Agreement EULA", "Software Maintenance and Hardware Warranty Agreement",]
+
     const storageConfigButtons = [translations['direct storage admin'], translations['storage status'], translations['repository quotas'], translations['distributed archive admin'],];
     const videoConfigButtons = [translations['video ingestion'], translations['stream distribution'], translations['bandwidth tracking'], translations['remote hub admin'],];
 
@@ -72,9 +96,13 @@ class ReferenceDocsComponent extends React.Component {
             </div>
             <div className="col-md-4">
               <ButtonsBlock buttons={userPermissionButtons} cl={this.handleClick}/>
+              <ButtonsBlock buttons={userPermissionButtons2} cl={this.handleClick2}/>
+              <ButtonsBlock buttons={userPermissionButtons3} cl={this.handleClick3}/>
             </div>
             <div className="col-md-4">
               <ButtonsBlock buttons={serverConfigButtons} cl={this.handleClicks}/>
+              <ButtonsBlock buttons={serverConfigButtons2} cl={this.handleClicks2}/>
+              <ButtonsBlock buttons={serverConfigButtons3} cl={this.handleClicks3}/>
             </div>
             <div className="col-md-2">
             </div>
