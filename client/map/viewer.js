@@ -286,9 +286,9 @@ export function createTestObject(viewerId) {
 
   var blueBox = viewer.entities.add({
       name : 'Blue box',
-      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
       box : {
-          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
           material : Cesium.Color.BLUE
       }
   });
@@ -297,7 +297,7 @@ export function createTestObject(viewerId) {
       name : 'Red box with black outline',
       position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
       box : {
-          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
           material : Cesium.Color.RED.withAlpha(0.5),
           outline : true,
           outlineColor : Cesium.Color.BLACK
