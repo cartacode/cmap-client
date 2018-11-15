@@ -324,6 +324,7 @@ moveLeft = (row) => {
                     showPageSizeOptions={true}
                     showPagination={true}
                     defaultFilterMethod={defaultFilter}
+                    pageSizeOptions={[7, 10, 20, 25, 50, 100]}
                   />
                 </div>
               </div>
@@ -339,8 +340,10 @@ moveLeft = (row) => {
                     minRows={minRowsForTable}
                     className="-striped -highlight"
                     filterable={false}
+                    showPageSizeOptions={true}
                     showPagination={true}
                     defaultFilterMethod={defaultFilter}
+                    pageSizeOptions={[7, 10, 20, 25, 50, 100]}
                   />
                 </div>
               </div>

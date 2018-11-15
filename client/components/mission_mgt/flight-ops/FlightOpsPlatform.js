@@ -249,6 +249,7 @@ class FlightOpsPlatform extends React.Component {
                     showPageSizeOptions={true}
                     showPagination={true}
                     defaultFilterMethod={defaultFilter}
+                    pageSizeOptions={[7, 10, 20, 25, 50, 100]}
                   />
                 </div>
               </div>
@@ -266,6 +267,7 @@ class FlightOpsPlatform extends React.Component {
                     filterable={false}
                     showPagination={true}
                     defaultFilterMethod={defaultFilter}
+                    pageSizeOptions={[7, 10, 20, 25, 50, 100]}
                   />
                 </div>
               </div>

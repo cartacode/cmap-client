@@ -249,6 +249,7 @@ class RequestComponent extends React.Component {
               className="-striped -highlight"
               filterable={true}
               defaultFilterMethod={defaultFilter}
+              pageSizeOptions={[7, 10, 20, 25, 50, 100]}
             />
           </div>
         </div>
