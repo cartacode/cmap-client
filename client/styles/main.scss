@@ -1556,7 +1556,7 @@ video {
 
     img {
       float: left;
-      width: 42%;
+      width: 33%;
       margin-top: 7px;
     }
 
@@ -1566,7 +1566,7 @@ video {
 
     .header-text {
       float: left;
-      width: 16%;
+      width: 34%;
       text-align: center;
       text-transform: uppercase;
     }
@@ -1605,17 +1605,17 @@ video {
       }
 
       .date-pic {
-        margin-left: 5px;
-        margin-right: 5px;
+      
         display: inline-block;
-        vertical-align: text-bottom;
+    
 
         input {
-          width: 165px;
+          width: 165px!important;
           padding-left: 5px;
           color: #84a1e0;
           background-color: #0f2b3d;
           font-size: 12px;
+          height: 25px;
         }
         .calendar {
           display: inline-block;
@@ -1937,6 +1937,8 @@ button.ccir-button {
             width: 165px;
             padding-left: 5px;
             color: #afc5d3;
+
+            
           }
           .calendar {
             display: inline-block;
