@@ -92,6 +92,8 @@ class Accordion extends React.Component {
       this.props.stopCall();
       this.openEditForm(edit);
     }
+    let { CommandRelation } = this.props;
+    console.log(CommandRelation);
   }
 
   save = () => {
@@ -413,13 +415,14 @@ class Accordion extends React.Component {
     let { editId } = this.state;
     let { addUnit } = this.state;
     let { TeamMembers } = this.state;
+    let { CommandRelation } = this.props;
     if (editId !== undefined && editId !== '0') {
         addUnit.id = editId;
         this.props.updateUnit(editId, addUnit);
         showAlert("Org Added");
     }
     else {
-      addUnit.CommandRelationship = '1';
+      addUnit.CommandRelationship = CommandRelation;
     this.props.addOraganicOrg(addUnit).then( () => {
       showAlert("Org Added");
      this.setState({clear:true});
@@ -472,9 +475,9 @@ class Accordion extends React.Component {
     ];
 
     const lastSectionFields = [
-      { name: 'Name', type: 'input', domID: 'description', valFieldID: 'description' },
-      { name: 'Unit Identification Code', type: 'input', domID: 'UnitIdentificationCode', valFieldID: 'UnitIdentificationCode' },
-      { name: 'Derivative UIC', type: 'input', domID: 'DerivativeUIC', valFieldID: 'DerivativeUIC' },
+      { name: 'Name', type: 'input', domID: 'description', valFieldID: 'description',maxlength:100 },
+      { name: 'Unit Identification Code', type: 'input', domID: 'UnitIdentificationCode', valFieldID: 'UnitIdentificationCode',maxlength:10 },
+      { name: 'Derivative UIC', type: 'input', domID: 'DerivativeUIC', valFieldID: 'DerivativeUIC',maxlength:10 },
       {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType', domID: 'UnitType', valFieldID: 'UnitType'},
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Personnel/GetCommanderList', domID: 'Commander', valFieldID: 'Commander'},
       {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations', domID: 'UnitSpecialization', valFieldID: 'UnitSpecialization' },

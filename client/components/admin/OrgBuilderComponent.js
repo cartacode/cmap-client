@@ -33,6 +33,7 @@ class OrgBuilderComponent extends React.Component {
       branch:'1',
       callEdit:false,
       edit:'0',
+      CommandRelation:'1',
       treeConfig: {
         orientation: 'vertical',
         svgSquare: {
@@ -137,6 +138,10 @@ class OrgBuilderComponent extends React.Component {
        orgData: orgData3
      }, () => {console.log(this.state.orgData); forceRemount = forceRemount +1;});
 
+     this.setState({
+       CommandRelation:'4'
+     });
+
   }
 
   deployedPersonnelChartView = () => {
@@ -171,6 +176,10 @@ class OrgBuilderComponent extends React.Component {
      this.setState({
        orgData: orgData2
      });
+
+     this.setState({
+      CommandRelation:'1'
+    });
    }
 
    setBranch = (id) => {
@@ -514,7 +523,7 @@ render() {
 
       <div className="row personnel" >
        <div className="col-md-3"> 
-          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} deployedPersonneChart={this.deployedPersonnelChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels} fetchUnitById={this.fetchUnits} oneUnit={this.props.oneUnit} callEdit={this.state.callEdit} edit={this.state.edit} stopCall={this.stopCall}/> }
+          { <Accordion orgChart={this.orgChartView} personnelChart={this.personnelChartView} deployedChart={this.deployedChartView} deployedPersonneChart={this.deployedPersonnelChartView} setBranch={this.setBranch} fetchPersonnelsByFilter={this.fetchPersonnels} listPersonnel={listOrganicPersonnels} fetchUnitById={this.fetchUnits} oneUnit={this.props.oneUnit} callEdit={this.state.callEdit} edit={this.state.edit} stopCall={this.stopCall} CommandRelation={this.state.CommandRelation}/> }
        </div>   
        <div className="col-md-9"> 
 {/*             <Tree data={this.state.orgData} orientation={this.state.treeConfig.orientation} nodeSvgShape= {this.state.treeConfig.svgSquare}/> */}
