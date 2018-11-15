@@ -200,6 +200,25 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   }
 }
 
+export function initialViewer(viewerId) {
+  if (!viewers.has(viewerId)) {
+    return;
+  }
+
+  const viewer = viewers.get(viewerId);
+  const init_session = JSON.parse(localStorage.getItem("session"));
+  const init_longitude = Number(init_session.LocationLongitude);
+  const init_latitude = Number(init_session.LocationLatitude);
+
+  viewer.camera.setView({
+    destination : Cesium.Cartesian3.fromDegrees(
+      init_longitude,
+      init_latitude,
+      Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
+    )
+  });
+}
+
 /**
  * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 
