@@ -1,4 +1,4 @@
-import { PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE, PLATFORM_INVENTORY__DELETE_ONE, PLATFORM_INVENTORY__ADD } from 'dictionary/action';
+import { PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE, PLATFORM_INVENTORY__DELETE_ONE, PLATFORM_INVENTORY__ADD, PLATFORM_INVENTORY__UPDATE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function platforms(state = initialState.platforms, { payload, type }) {
@@ -55,6 +55,23 @@ export default function platforms(state = initialState.platforms, { payload, typ
       return {
         ...state,
         isAdded: false,
+        error: '',
+      };
+
+    case PLATFORM_INVENTORY__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case PLATFORM_INVENTORY__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+    case PLATFORM_INVENTORY__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
         error: '',
       };
 

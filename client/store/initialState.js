@@ -72,6 +72,7 @@ export default {
     allPlatformInventory: [],
     onePlatformInventory: {},
     isAdded: false,
+    isUpdated:false,
     error: {},
   },
 

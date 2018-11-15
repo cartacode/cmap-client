@@ -7,6 +7,7 @@ export const NoticeType = {
   NOT_DELETE: 'NOT_DELETE',
   ERROR: 'ERROR',
   NOT_ADD: 'NOT_ADD',
+  NOT_UPDATE: 'NOT_UPDATE'
 };
 
 export const DateConsts = {

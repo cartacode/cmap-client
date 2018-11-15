@@ -114,6 +114,9 @@ class PlatformComponent extends React.Component {
     else if (NoticeType.NOT_ADD === actionType) {
       NotificationManager.error(msg, translations['Platform Inventory Title'], 5000);
     }
+    else if (NoticeType.NOT_UPDATE === actionType) {
+      NotificationManager.error(msg, translations['Platform Inventory Title'], 5000);
+    }
     else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);

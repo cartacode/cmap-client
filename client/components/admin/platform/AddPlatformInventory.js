@@ -160,7 +160,12 @@ class AddPlatformInventory extends React.Component {
         this.setState({
           loading:false
         });
-        this.props.onClose(NoticeType.UPDATE);
+        //this.props.onClose(NoticeType.UPDATE);
+        if(this.props.isUpdated) {
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, 'An error has occurred');
+        }
       });
     } else {
       this.props.addPlatformInventory(platform).then( (res) => {
@@ -362,6 +367,7 @@ const mapStateToProps = state => {
     translations: state.localization.staticText,
     onePlatformInventory: state.platforminventory.onePlatformInventory,
     isAdded: state.platforminventory.isAdded,
+    isUpdated: state.platforminventory.isUpdated,
     error: state.platforminventory.error,
   };
 };
