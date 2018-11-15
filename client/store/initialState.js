@@ -70,7 +70,9 @@ export default {
     isFetchingOne: false,
     isDeleted:false,
     allPlatformInventory: [],
-    onePlatformInventory: {}
+    onePlatformInventory: {},
+    isAdded: false,
+    error: {},
   },
 
   collections: {

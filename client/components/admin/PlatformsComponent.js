@@ -45,12 +45,26 @@ class PlatformComponent extends React.Component {
     });
   }
 
-  closePlatformForm = (actionType) => {
+  /*closePlatformForm = (actionType) => {
     this.loadData(actionType);
     this.setState({
       editId: 0,
       addPlatformInventoryOpen: false,
     });
+  }*/
+// @param: actionType - this is type of action like ADD, NOT_ADD etc.
+// @param: actionSuccess - true/false for action success or not
+// @param: msg: - text to display the Success/error message
+  closePlatformForm = (actionType, actionSuccess, msg) => {
+    if(actionSuccess) {
+      this.loadData(actionType);
+      this.setState({
+        editId: '0',
+        addPlatformInventoryOpen: false,
+      });
+    }else {
+      this.notify(actionType, msg);
+    }
   }
 
   loadData = (actionType) => {
@@ -92,15 +106,19 @@ class PlatformComponent extends React.Component {
                     );	 
 	}
 
-  notify =(actionType)=>{
+  notify =(actionType, msg)=>{
     const { translations } = this.props;
     if(NoticeType.NOT_DELETE === actionType){
       NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
     }
+    else if (NoticeType.NOT_ADD === actionType) {
+      NotificationManager.error(msg, translations['Platform Inventory Title'], 5000);
+    }
     else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['UpdatedSuccesfully'], translations['Platform Inventory Title'], 5000);
-      }else{
+      }
+      else{
         NotificationManager.success(translations['AddedSuccesfully'], translations['Platform Inventory Title'], 5000);
       }
     }else{

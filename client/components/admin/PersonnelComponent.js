@@ -90,7 +90,9 @@ class PersonnelComponent extends React.Component {
   //     }); });
   // }
   // }
-
+// @param: actionType - this is type of action like ADD, NOT_ADD etc.
+// @param: actionSuccess - true/false for action success or not
+// @param: msg: - text to display the Success/error message
 closePersonnelForm = (actionType, actionSuccess, msg) => {
   if(actionSuccess) {
     this.loadData(actionType);
@@ -99,7 +101,7 @@ closePersonnelForm = (actionType, actionSuccess, msg) => {
       addPersonnelModalOpen: false,
     });
   }else {
-    this.notify(NoticeType.NOT_ADD, msg);
+    this.notify(actionType, msg);
   }
 }
 

@@ -1,4 +1,4 @@
-import { PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE, PLATFORM_INVENTORY__DELETE_ONE } from 'dictionary/action';
+import { PLATFORM_INVENTORY__FETCH, PLATFORM_INVENTORY__FETCH_ONE, PLATFORM_INVENTORY__DELETE_ONE, PLATFORM_INVENTORY__ADD } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function platforms(state = initialState.platforms, { payload, type }) {
@@ -25,7 +25,7 @@ export default function platforms(state = initialState.platforms, { payload, typ
         isFetching: false,
         onePlatformInventory: payload.data,
       };
-      case PLATFORM_INVENTORY__DELETE_ONE.REQUEST:
+    case PLATFORM_INVENTORY__DELETE_ONE.REQUEST:
       return {
         ...state,
         isDeleted: false,
@@ -35,11 +35,29 @@ export default function platforms(state = initialState.platforms, { payload, typ
         ...state,
         isDeleted: true,
       };
-      case PLATFORM_INVENTORY__DELETE_ONE.FAILURE:
+    case PLATFORM_INVENTORY__DELETE_ONE.FAILURE:
       return {
         ...state,
         isDeleted: false,
       };
+
+    case PLATFORM_INVENTORY__ADD.REQUEST:
+      return {
+        ...state,
+        isAdded: false,
+      };
+    case PLATFORM_INVENTORY__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+    case PLATFORM_INVENTORY__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error: '',
+      };
+
     default:
       return state;
   }
