@@ -10,7 +10,7 @@ import { TableDefaults, IntelConstants } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
 import Loader from '../reusable/Loader';
 import AddCollectionValidationModal from '../reusable/AddCollectionValidationModal';
-import { collectionManagerUser, adminUser, superAdmin } from '../../dictionary/auth';
+import { collectionManagerUser, adminUser, superAdmin, intelCustomer } from '../../dictionary/auth';
 import ReactTooltip from 'react-tooltip';
 
 class RequestComponent extends React.Component {
@@ -121,9 +121,10 @@ class RequestComponent extends React.Component {
 
     const ses = JSON.parse(localStorage.getItem('session'));
     const roles = JSON.parse(ses.UserRoles);
-    const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
+    // const isCollectionMgr = roles.some(v => collectionManagerUser.includes(v));
+    const isIntelCustomer = roles.some(v => intelCustomer.includes(v));
     const isSuperAdmin = roles.some(v => superAdmin.includes(v));
-    const isVisibleCollectionManager = (isCollectionMgr || isSuperAdmin);
+    const canAddIntel = (isSuperAdmin || isIntelCustomer);
 
     const columns = [
       {
@@ -194,7 +195,7 @@ class RequestComponent extends React.Component {
                      <span>Delete</span>
                   </ReactTooltip>
                      
-              { (isVisibleCollectionManager && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" data-tip data-for="CollectionValidation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-transfer"/></a> : '' }
+              { (canAddIntel && row.original.Abbreviation === IntelConstants.STATUS.AV.abbreviation) ? <a href="javaScript:void('0');" className="coll-valid-btn" data-tip data-for="CollectionValidation" onClick={() => this.openAddCollectionValidationModal(row)}> <span className="glyphicon glyphicon-transfer"/></a> : '' }
               <ReactTooltip id='CollectionValidation'  type='warning'>
                      <span>Add Collection Validation</span>
               </ReactTooltip>

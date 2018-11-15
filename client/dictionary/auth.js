@@ -55,3 +55,5 @@ export const collectionManagerUser = ["f5bfb78f-38c6-48f4-8773-59c2543e0805","6d
 export const superAdmin = ["f5bfb78f-38c6-48f4-8773-59c2543e0805"];
 
 export const sysDocsUser = ["586f2a2d-ded0-43cc-879f-a0ab98b567a8"];
+
+export const intelCustomer = ['0425a61c-f00e-40d7-93d4-f811e1891ade'];
