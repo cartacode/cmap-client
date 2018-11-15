@@ -207,8 +207,10 @@ export function initialViewer(viewerId) {
 
   const viewer = viewers.get(viewerId);
   const init_session = JSON.parse(localStorage.getItem("session"));
-  const init_longitude = Number(init_session.LocationLongitude);
-  const init_latitude = Number(init_session.LocationLatitude);
+  const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
+
+  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude; 
+  const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
 
   viewer.camera.setView({
     destination : Cesium.Cartesian3.fromDegrees(

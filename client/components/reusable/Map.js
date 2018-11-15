@@ -48,7 +48,7 @@ export default class Map extends React.PureComponent {
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
     createTestObject(this.props.viewerId);
-//    initialViewer(this.props.viewerId);
+    initialViewer(this.props.viewerId);
   }
 
   componentWillUnmount() {
@@ -89,7 +89,6 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
-    initialViewer(this.props.viewerId);
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{
