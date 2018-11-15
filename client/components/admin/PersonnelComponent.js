@@ -12,6 +12,7 @@ import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 
 import { superAdmin, adminUser } from '../../dictionary/auth';
+import ScrollToTop from '../reusable/ScrollToTop';
 
 class PersonnelComponent extends React.Component {
 
@@ -239,6 +240,7 @@ render() {
 
   return ( access2 ? (
     <div>
+      <ScrollToTop />
       <Loader loading={this.state.loading} />
       <div className="row orders-assets">
         <div className="header-line">
