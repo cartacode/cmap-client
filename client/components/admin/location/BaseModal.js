@@ -459,9 +459,9 @@ class BaseModal extends React.Component {
            </div>
          </div>
          <div className = "row personnel">
-            {/* <div className="col-md-12">
+           <div className="col-md-12">
             <Map size="100" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-           </div> */}
+           </div>
          </div>
          <div className="row personnel" >
            <div className="under-location-content">

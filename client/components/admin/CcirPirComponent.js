@@ -46,7 +46,7 @@ class CcirPirComponent extends React.Component {
   }
 
   // Close Add/Edit Form
-closeCcirPirForm = (messageType) => {
+/* closeCcirPirForm = (messageType) => {
   //show Success Message
   this.loadData(messageType);
   this.props.fetchCcirPirs();
@@ -54,6 +54,21 @@ closeCcirPirForm = (messageType) => {
     editId: '0',
     addCcirPirModalOpen: false,
   });
+} */
+
+// @param: actionType - this is type of action like ADD, NOT_ADD etc.
+// @param: actionSuccess - true/false for action success or not
+// @param: msg: - text to display the Success/error message
+closeCcirPirForm = (actionType, actionSuccess, msg) => {
+  if(actionSuccess) {
+    this.loadData(actionType);
+    this.setState({
+      editId: '0',
+      addCcirPirModalOpen: false,
+    });
+  }else {
+    this.notify(actionType, msg);
+  }
 }
 
 
@@ -97,10 +112,16 @@ deleteCcirPirRecord(row){
 }
 
 // function to Display Success Messages
-notify =(type)=>{
+notify =(type, msg)=>{
   const { translations } = this.props;
   if(type === NoticeType.NOT_DELETE){
     NotificationManager.error(translations['DeleteUnSuccessfull'], translations['CCIRPIR Title'], 5000);
+  }
+  else if (NoticeType.NOT_UPDATE === type) {
+    NotificationManager.error(msg, translations['CCIRPIR Title'], 5000);
+  }
+  else if (NoticeType.NOT_ADD === type) {
+    NotificationManager.error(msg, translations['CCIRPIR Title'], 5000);
   }
   else if(type === NoticeType.DELETE){
     NotificationManager.success(translations['DeletedSuccesfully'], translations['CCIRPIR Title'], 5000);

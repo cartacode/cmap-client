@@ -67,7 +67,10 @@ export default {
     oneCcirPir: {},
     isFetching: false,
     isFetchingOne: false,
-    isDeleted: false
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {}
   },
 
   platforms: {

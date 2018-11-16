@@ -215,6 +215,7 @@ resetForm = () => {
     let centerPoints;
     const { ccirpir } = this.state;
     const { editId } = this.props;
+    const { translations } = this.props;
 
     // if New File Selected
     if(typeof kmlFile === 'object') {
@@ -233,7 +234,14 @@ resetForm = () => {
       this.props.updateCcirPir(editId, formData).then(() => {
         // Stop Loader
         this.setState({ loading: false });
-        this.props.onClose(NoticeType.UPDATE);
+        //this.props.onClose(NoticeType.UPDATE);
+        // if records updated successfull
+        if(this.props.isUpdated) {
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          // if record not updated successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+        }
       });
     } else {
       ccirpir.LastUpdateUserId = null;
@@ -243,7 +251,12 @@ resetForm = () => {
       this.props.addCcirPir(formData).then(() => {
         // Stop Loader
         this.setState({ loading: false });
-        this.props.onClose(NoticeType.ADD);
+        //this.props.onClose(NoticeType.ADD);
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+        }
       });
     }
   }
@@ -359,6 +372,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     oneCcirPir: state.ccirpir.oneCcirPir,
+    isAdded: state.ccirpir.isAdded,
+    isUpdated: state.ccirpir.isUpdated,
+    error: state.ccirpir.error
   };
 };
 

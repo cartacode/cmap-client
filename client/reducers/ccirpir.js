@@ -1,7 +1,7 @@
-import { CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__DELETE_ONE } from 'dictionary/action';
+import { CCIRPIR__ADD, CCIRPIR__UPDATE, CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function ccirpir(state = initialState.ccirpir, { payload, type }) {
+export default function ccirpir(state = initialState.ccirpir, { payload, type, error }) {
   switch (type) {
     case CCIRPIR__FETCH.REQUEST:
       return {
@@ -39,6 +39,40 @@ export default function ccirpir(state = initialState.ccirpir, { payload, type })
       return {
         ...state,
         isDeleted: false,
+      };
+
+    case CCIRPIR__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case CCIRPIR__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+      case CCIRPIR__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
+        error: ''
+      };
+
+    case CCIRPIR__ADD.REQUEST:
+      return {
+        ...state,
+        isAdded: false,
+      };
+    case CCIRPIR__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+      case CCIRPIR__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error: ''
       };
    
 
