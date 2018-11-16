@@ -25,7 +25,7 @@ class LocationInfoComponent extends React.Component {
 
     return (
 
-      <div className="col-md-12 location-info-bar">
+      <div className="col-md-12 location-info-bar" style={{background: 'rgba(40, 72, 98, 0.7)' }}>
         <div className="sidebar-bottom-block">
           <ul>
             <li className="lat-block">
