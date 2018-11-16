@@ -180,6 +180,10 @@ export const InputAttributes = {
   TEXTAREA_LEN: 500,
 };
 
+export const massegaes = {
+  ERROR: 'An error has occured',
+}
+
 /* Pending - Gray  
 Available - White
 Off-line – Red
