@@ -10,6 +10,7 @@ import { uploadFile } from 'actions/file';
 import { addPayloadInventory, updatePayloadInventory, fetchPayloadInventoryById } from 'actions/payloadinventory';
 import Loader from '../../reusable/Loader';
 import { requestHeaders } from '../../../dictionary/network';
+import { NoticeType} from '../../../dictionary/constants';
 
 class AddPayloadsInventory extends React.Component {
 
@@ -101,17 +102,33 @@ class AddPayloadsInventory extends React.Component {
     event.preventDefault();
     const { editId } = this.props;
     let { payloads } = this.state;
+    const { translations } = this.props;
+
     if (editId !== undefined && editId !== '0') {
       this.setState({loading:true});
       payloads.id = editId;
       this.props.updatePayloadInventory(editId, payloads).then( () => {
         this.setState({loading:false});
-        this.props.onClose('UPDATE');});
+        //this.props.onClose('UPDATE');
+        // if records updated successfull
+        if(this.props.isUpdated) {
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          // if record not updated successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, this.props.error.Message);
+        }
+      });
     } else {
       this.setState({loading:true});
       this.props.addPayloadInventory(this.state.payloads).then( () => {
         this.setState({loading:false});
-        this.props.onClose('ADD');}
+        //this.props.onClose('ADD');
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, this.props.error.Message);
+        }
+      }
       );
     }
     
@@ -279,6 +296,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     onePayloadInventory: state.payloadinventory.onePayloadInventory,
+    isAdded: state.payloadinventory.isAdded,
+    isUpdated: state.payloadinventory.isUpdated,
+    error: state.payloadinventory.error
   };
 };
 

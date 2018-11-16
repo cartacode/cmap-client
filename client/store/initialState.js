@@ -40,10 +40,13 @@ export default {
     isTypesFetching: false,
     isFetchingOne: false,
     isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
     payloadList: [],
     payloadTypes: [],    
     onePayloadInventory: {},
-    allPayloadInventory: []
+    allPayloadInventory: [],
+    error: {},
   },
   personnels: {
     allPersonnels: [],

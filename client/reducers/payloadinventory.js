@@ -1,7 +1,7 @@
-import { PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD_INVENTORY__DELETE_ONE } from 'dictionary/action';
+import { PAYLOAD_INVENTORY__FETCH, PAYLOAD_INVENTORY__FETCH_ONE, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD_INVENTORY__DELETE_ONE, PAYLOAD_INVENTORY__ADD, PAYLOAD_INVENTORY__UPDATE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function payloads(state = initialState.payloads, { payload, type }) {
+export default function payloads(state = initialState.payloads, { payload, type,  error }) {
   switch (type) {
     case PAYLOAD_INVENTORY__FETCH.REQUEST:
       return {
@@ -40,6 +40,44 @@ export default function payloads(state = initialState.payloads, { payload, type 
         ...state,
         isDeleted: false,
       };
+
+
+    case PAYLOAD_INVENTORY__ADD.REQUEST:
+      return {
+        ...state,
+        isAdded: false,
+      };
+    case PAYLOAD_INVENTORY__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+    case PAYLOAD_INVENTORY__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error: error.response.data,
+      };
+
+
+    case PAYLOAD_INVENTORY__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case PAYLOAD_INVENTORY__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+      case PAYLOAD_INVENTORY__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
+        error: error.response.data,
+      };
+
+
     // case PAYLOAD_LIST__FETCH.REQUEST:
     //   return {
     //     ...state,
