@@ -316,14 +316,25 @@ class WamiModal extends React.Component {
       this.setState({loading: true});
       this.props.updatePayload(editId, formData).then(() => {
         this.setState({loading: false});
-        this.props.onClose(NoticeType.UPDATE);
+        //this.props.onClose(NoticeType.UPDATE);
+        if(this.props.isUpdated) {
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          // if record not updated successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, this.props.error.Message );
+        }
       });
     } else {
       formData.append("payloadFormData", JSON.stringify(payload));
       this.setState({loading: true});
       this.props.addPayload(formData).then(() => { 
         this.setState({loading: false});
-        this.props.onClose(NoticeType.ADD);
+        //this.props.onClose(NoticeType.ADD);
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, this.props.error.Message);
+        }
       });
     }
   }
@@ -504,6 +515,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     onePayload: state.payloads.onePayload,
+    isAdded: state.payloads.isAdded,
+    isUpdated: state.payloads.isUpdated,
+    error: state.payloads.error,
   };
 };
 

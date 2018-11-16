@@ -17,6 +17,7 @@ import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 import ReactTooltip from 'react-tooltip';
 
 import { superAdmin, adminUser } from '../../dictionary/auth';
+import ScrollToTop from '../reusable/ScrollToTop';
 
 class PayloadsSpecificationComponent extends React.Component {
   constructor(props) {
@@ -138,19 +139,23 @@ class PayloadsSpecificationComponent extends React.Component {
 	  });
 	}
 
-	closePayloadSpecifiction=(actionType)=>{
-	  this.loadData(actionType);
-	  this.setState({
-	    payloadSpecType: '',
-	    payloadTypeId: 0,
-	    editId: '0',
-	    eoirModalOpen: false,
-	    sargmtiModalOpen: false,
-	    wamiModalOpen: false,
-	    sigintModalOpen: false,
-			equipmentModalOpen: false,
-			selectedSpecText: '',
-	  });
+	closePayloadSpecifiction=(actionType, actionSuccess, msg)=>{
+		if(actionSuccess) {
+			this.loadData(actionType);
+			this.setState({
+				payloadSpecType: '',
+				payloadTypeId: 0,
+				editId: '0',
+				eoirModalOpen: false,
+				sargmtiModalOpen: false,
+				wamiModalOpen: false,
+				sigintModalOpen: false,
+				equipmentModalOpen: false,
+				selectedSpecText: '',
+			});
+	 }else{
+		this.notify(actionType, msg);
+	 }
 
 	}
 
@@ -161,11 +166,18 @@ class PayloadsSpecificationComponent extends React.Component {
 	}
 
 	// actionType means ADD, UPDATE, DELETE
-	notify =(actionType)=>{
+	notify =(actionType, msg)=>{
 	  const { translations } = this.props;
 	  if(NoticeType.NOT_DELETE === actionType) {
 	    NotificationManager.error(translations.DeleteUnSuccessfull, translations['Payload Library Title'], 5000);
-	  } else if(NoticeType.DELETE != actionType) {
+		} 
+		else if (NoticeType.NOT_ADD === actionType) {
+      NotificationManager.error(msg, translations['Payload Library Title'], 5000);
+    }
+    else if (NoticeType.NOT_UPDATE === actionType) {
+      NotificationManager.error(msg, translations['Payload Library Title'], 5000); 
+		}
+		else if(NoticeType.DELETE != actionType) {
 	    if (this.state.editId !== undefined && this.state.editId !== '0') {
 	      NotificationManager.success(translations.UpdatedSuccesfully, translations['Payload Library Title'], 5000);
 	    }else{
@@ -344,6 +356,7 @@ class PayloadsSpecificationComponent extends React.Component {
 
 	  return ( access ? (
 	    <div>
+				<ScrollToTop />
 	      <div className="row orders-assets">
 	        <div className="header-line">
 	          <Loader loading={this.state.loading} />
