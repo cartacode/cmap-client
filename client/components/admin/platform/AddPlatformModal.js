@@ -251,6 +251,7 @@ class AddPlatformModal extends React.Component {
     });
     let { platform } = this.state;
     const { editId } = this.props;
+    const { translations } = this.props;
 
     const { platformFiles } = this.state;
     //We are going to upload files with JSON request body.
@@ -285,7 +286,7 @@ class AddPlatformModal extends React.Component {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
         } else {
           // if Not updated Successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, 'An error has occurred');
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
         }
       });
     } else {
@@ -301,7 +302,7 @@ class AddPlatformModal extends React.Component {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
         } else {
           // if not added successfully
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, 'An error has occurred');
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
         }
       });
        

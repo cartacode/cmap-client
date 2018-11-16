@@ -153,7 +153,8 @@ class AddPlatformInventory extends React.Component {
     event.preventDefault();
     let { platform } = this.state;
     const { editId } = this.props;
-    
+    const { translations } = this.props;
+
     if (editId !== undefined && editId !== '0') {
       platform.id = editId;
       this.props.updatePlatformInventory(editId, platform).then( () => {
@@ -164,7 +165,7 @@ class AddPlatformInventory extends React.Component {
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
         } else {
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, 'An error has occurred');
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
         }
       });
     } else {
@@ -176,7 +177,7 @@ class AddPlatformInventory extends React.Component {
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
         } else {
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, 'An error has occurred');
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
         }
       });
     }
