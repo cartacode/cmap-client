@@ -279,7 +279,15 @@ class AddPlatformModal extends React.Component {
         this.setState({
           loading:false
         });
-        this.props.onClose(NoticeType.UPDATE);});
+        //this.props.onClose(NoticeType.UPDATE);
+        if(this.props.isUpdated) {
+          // if updated successfully
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          // if Not updated Successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, 'An error has occurred');
+        }
+      });
     } else {
       formData.append("platformFormData", JSON.stringify(platform));
       // TO DO: Will pass form Data in place of platform 
@@ -287,7 +295,16 @@ class AddPlatformModal extends React.Component {
         this.setState({
           loading:false
         });
-        this.props.onClose(NoticeType.ADD); });
+        //this.props.onClose(NoticeType.ADD); 
+        // if added successfully
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else {
+          // if not added successfully
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, 'An error has occurred');
+        }
+      });
+       
     }
   }
 
@@ -611,6 +628,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     onePlatform: state.platforms.onePlatform,
+    isAdded: state.platforms.isAdded,
+    isUpdated: state.platforms.isUpdated,
+    error: state.platforms.error,
   };
 };
 
