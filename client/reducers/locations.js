@@ -1,7 +1,7 @@
-import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__DELETE_ONE } from 'dictionary/action';
+import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__ADD, LOCATION__UPDATE, LOCATION__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function locations(state = initialState.locations, { payload, type }) {
+export default function locations(state = initialState.locations, { payload, type, error }) {
   switch (type) {
     case LOCATION__FETCH.REQUEST:
       return {
@@ -62,6 +62,43 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isDeleted: false,
       };
+
+
+      case LOCATION__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case LOCATION__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+      case LOCATION__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
+        error: ''
+      };
+
+
+      case LOCATION__ADD.REQUEST:
+      return {
+        ...state,
+        isAdded: false,
+      };
+    case LOCATION__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+      case LOCATION__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error:''
+      };
+
     default:
       return state;
   }

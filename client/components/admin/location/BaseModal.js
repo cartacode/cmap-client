@@ -10,6 +10,8 @@ import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
 import Map, { viewerSize } from 'components/reusable/Map';
 import { viewerIdentifiers } from 'map/viewer';
+import {NoticeType} from 'dictionary/constants';
+
 
 class BaseModal extends React.Component {
 
@@ -297,6 +299,7 @@ class BaseModal extends React.Component {
 
     const { location, locationFiles } = this.state;
     const { editId } = this.props;
+    const { translations } = this.props;
 
     // We are going to upload files with JSON request body.
     const formData = new FormData();
@@ -321,14 +324,29 @@ class BaseModal extends React.Component {
       this.props.updateLocation(editId, formData).then(() => {
         // End Loader
         this.setState({ loading: false });
-        this.props.onClose();
+        //this.props.onClose();
+        //this.props.onClose(NoticeType.UPDATE);
+        if(this.props.isUpdated) {
+          // if updated successfully
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else {
+          // if Not updated Successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+        }
       });
     } else {
       formData.append('locationFormData', JSON.stringify(location));
       this.props.addLocation(formData).then(() => {
         // End Loader
         this.setState({ loading: false });
-        this.props.onClose();
+        //this.props.onClose();
+         // if added successfully
+         if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else {
+          // if not added successfully
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+        }
       });
     }
   }
@@ -441,9 +459,9 @@ class BaseModal extends React.Component {
            </div>
          </div>
          <div className = "row personnel">
-            <div className="col-md-12">
+            {/* <div className="col-md-12">
             <Map size="100" viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} />
-           </div>
+           </div> */}
          </div>
          <div className="row personnel" >
            <div className="under-location-content">
@@ -497,6 +515,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     oneLocation: state.locations.oneLocation,
+    isAdded: state.locations.isAdded,
+    isUpdated: state.locations.isUpdated,
+    error: state.locations.error
   };
 };
 

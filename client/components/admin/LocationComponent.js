@@ -46,14 +46,34 @@ class LocationComponent
     });
   };
 
-  closeBaseModalFrom = () => {
+  /* closeBaseModalFrom = () => {
     this.notify();
     this.props.fetchLocations();
     this.setState({
       editId: "0",
       baseModalOpen: false
     });
-  };
+  }; */
+
+  // @param: actionType - this is type of action like ADD, NOT_ADD etc.
+// @param: actionSuccess - true/false for action success or not
+// @param: msg: - text to display the Success/error message
+closeBaseModalFrom = (actionType, actionSuccess, msg) => {
+  if(actionSuccess) {
+    this.loadData(actionType);
+    this.setState({
+      editId: '0',
+      baseModalOpen: false,
+    });
+  }else {
+    this.notify(actionType, msg);
+  }
+}
+
+loadData = (actionType) => {
+  this.notify(actionType);
+  this.props.fetchLocations();
+}
 
   stopupdate = () => 
   {
@@ -98,11 +118,17 @@ class LocationComponent
                     );
   }
   
-  notify =(actionType)=>{
+  notify =(actionType, msg)=>{
     const { translations } = this.props;
     if (NoticeType.DELETE != actionType) { 
       if(NoticeType.NOT_DELETE === actionType){
         NotificationManager.error(translations['DeleteUnSuccessfull'], translations['Location Title'], 5000);
+      }
+      else if (NoticeType.NOT_ADD === actionType) {
+        NotificationManager.error(msg, translations['Location Title'], 5000);
+      }
+      else if (NoticeType.NOT_UPDATE === actionType) {
+        NotificationManager.error(msg, translations['Location Title'], 5000);
       }
       else if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['UpdatedSuccesfully'], translations['Location Title'], 5000);
