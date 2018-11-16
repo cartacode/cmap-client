@@ -200,6 +200,27 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   }
 }
 
+export function initialViewer(viewerId) {
+  if (!viewers.has(viewerId)) {
+    return;
+  }
+
+  const viewer = viewers.get(viewerId);
+  const init_session = JSON.parse(localStorage.getItem("session"));
+  const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
+
+  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude; 
+  const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
+
+  viewer.camera.setView({
+    destination : Cesium.Cartesian3.fromDegrees(
+      init_longitude,
+      init_latitude,
+      Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
+    )
+  });
+}
+
 /**
  * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 
@@ -265,9 +286,9 @@ export function createTestObject(viewerId) {
 
   var blueBox = viewer.entities.add({
       name : 'Blue box',
-      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
       box : {
-          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
           material : Cesium.Color.BLUE
       }
   });
@@ -276,7 +297,7 @@ export function createTestObject(viewerId) {
       name : 'Red box with black outline',
       position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
       box : {
-          dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
           material : Cesium.Color.RED.withAlpha(0.5),
           outline : true,
           outlineColor : Cesium.Color.BLACK

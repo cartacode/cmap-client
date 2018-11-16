@@ -5,7 +5,7 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 import {addKML} from 'map/kml';
-import {addPoint, createTestObject} from 'map/viewer';
+import {addPoint, createTestObject, initialViewer,} from 'map/viewer';
 
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -48,6 +48,7 @@ export default class Map extends React.PureComponent {
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
     createTestObject(this.props.viewerId);
+    initialViewer(this.props.viewerId);
   }
 
   componentWillUnmount() {
