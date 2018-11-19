@@ -221,8 +221,25 @@ export function initialViewer(viewerId) {
   });
 }
 
-export function addPin(viewerId, longitude, latitude) {
+export function addPin(viewerId) {
+  const viewer = viewers.get(viewerId);
+  const pinBuilder = new Cesium.PinBuilder();
+  const init_session = JSON.parse(localStorage.getItem("session"));
+  const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
 
+  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude; 
+  const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
+
+  Cesium.when(pinBuilder.fromMakiIconId('town', Cesium.Color.BLUE, 48), function(canvas) {
+    return viewer.entities.add({
+        name : 'Hospital',
+        position : Cesium.Cartesian3.fromDegrees(init_longitude, init_latitude),
+        billboard : {
+            image : canvas.toDataURL(),
+            verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+        }
+    });
+  });
 }
 
 /**
