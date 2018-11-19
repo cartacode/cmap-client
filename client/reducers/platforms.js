@@ -1,5 +1,6 @@
 import {PLATFORM__FETCH, PLATFORM__FETCH_ONE, PLATFORM__DELETE_ONE, PLATFORM__ADD, PLATFORM__UPDATE } from 'dictionary/action';
 import initialState from 'store/initialState';
+import { Error } from '../dictionary/constants';
 
 export default function platforms(state = initialState.platforms, { payload, type }) {
   switch (type) {
@@ -40,8 +41,6 @@ export default function platforms(state = initialState.platforms, { payload, typ
         ...state,
         isDeleted: false,
       };
-
-
     case PLATFORM__ADD.REQUEST:
       return {
         ...state,
@@ -52,15 +51,13 @@ export default function platforms(state = initialState.platforms, { payload, typ
         ...state,
         isAdded: true,
       };
-      case PLATFORM__ADD.FAILURE:
+    case PLATFORM__ADD.FAILURE:
       return {
         ...state,
         isAdded: false,
-        error: '',
+        error: Error.ERROR_CODE,
       };
-
-
-      case PLATFORM__UPDATE.REQUEST:
+    case PLATFORM__UPDATE.REQUEST:
       return {
         ...state,
         isUpdated: false,
@@ -70,14 +67,12 @@ export default function platforms(state = initialState.platforms, { payload, typ
         ...state,
         isUpdated: true,
       };
-      case PLATFORM__UPDATE.FAILURE:
+    case PLATFORM__UPDATE.FAILURE:
       return {
         ...state,
         isUpdated: false,
-        error: '',
+        error: Error.ERROR_CODE,
       };
-
-
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
-import {NoticeType, DateConsts} from '../../../dictionary/constants';
+import {NoticeType, DateConsts, Error} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import moment from 'moment';
 
@@ -284,9 +284,10 @@ class AddPlatformModal extends React.Component {
         if(this.props.isUpdated) {
           // if updated successfully
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
+        } 
+        else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
           // if Not updated Successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
@@ -300,9 +301,10 @@ class AddPlatformModal extends React.Component {
         // if added successfully
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
+        } 
+        else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
           // if not added successfully
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
        

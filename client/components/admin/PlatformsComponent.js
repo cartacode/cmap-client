@@ -55,7 +55,7 @@ class PlatformComponent extends React.Component {
 // @param: actionType - this is type of action like ADD, NOT_ADD etc.
 // @param: actionSuccess - true/false for action success or not
 // @param: msg: - text to display the Success/error message
-  closePlatformForm = (actionType, actionSuccess, msg) => {
+  closePlatformForm = (actionType, actionSuccess) => {
     if(actionSuccess) {
       this.loadData(actionType);
       this.setState({
@@ -63,7 +63,7 @@ class PlatformComponent extends React.Component {
         addPlatformInventoryOpen: false,
       });
     }else {
-      this.notify(actionType, msg);
+      this.notify(actionType);
     }
   }
 
@@ -106,16 +106,16 @@ class PlatformComponent extends React.Component {
                     );	 
 	}
 
-  notify =(actionType, msg)=>{
+  notify =(actionType)=>{
     const { translations } = this.props;
     if(NoticeType.NOT_DELETE === actionType){
       NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Platform Inventory Title'], 5000);
     }
     else if (NoticeType.NOT_ADD === actionType) {
-      NotificationManager.error(msg, translations['Platform Inventory Title'], 5000);
+      NotificationManager.error(translations.AddUnSuccessfull, translations['Platform Inventory Title'], 5000);
     }
     else if (NoticeType.NOT_UPDATE === actionType) {
-      NotificationManager.error(msg, translations['Platform Inventory Title'], 5000);
+      NotificationManager.error(translations.UpdateUnSuccessfull, translations['Platform Inventory Title'], 5000);
     }
     else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {

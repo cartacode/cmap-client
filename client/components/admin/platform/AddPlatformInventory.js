@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 
 import axios from 'axios';
-import {NoticeType} from '../../../dictionary/constants';
+import {NoticeType, Error} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import { requestHeaders, baseUrl } from '../../../dictionary/network';
 
@@ -164,8 +164,9 @@ class AddPlatformInventory extends React.Component {
         //this.props.onClose(NoticeType.UPDATE);
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+        } 
+        else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE ) {
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
@@ -176,8 +177,9 @@ class AddPlatformInventory extends React.Component {
         //this.props.onClose(NoticeType.ADD);
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+        } 
+        else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }
