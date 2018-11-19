@@ -13,7 +13,7 @@ class SideBarLeftComponent extends React.Component {
       hasBall: true,
       hasToggle: true,
       menuClicked: [
-        false,
+        true,
         false,
         false,
         false,
@@ -67,6 +67,20 @@ class SideBarLeftComponent extends React.Component {
     }
   }
 
+  onHomeButton = (event, menuIndex) => {
+    $(".cesium-home-button").click();
+    if (menuIndex !== undefined) {
+      this.setState({
+        menuClicked: this.state.menuClicked.map((item, i) => {
+          if (i === menuIndex) {
+            return true;
+          }
+          return false;
+        }),
+      });
+    }
+  }
+
   render() {
     const { menuClicked } = this.state;
     return (
@@ -78,7 +92,7 @@ class SideBarLeftComponent extends React.Component {
 
           <ul>
             <li className={'home-link' + (menuClicked[0] ? ' active' : '')}>
-              <a href="#" onClick={(e)=>this.onPopup(true, e, true, false, 0)}><span>Home</span></a>
+              <a href="#" onClick={(e)=>this.onHomeButton(e, 0)}><span>Home</span></a>
             </li>
             <li className={'missions-link' + (menuClicked[1] ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 1)}><span>Missions</span></a>
