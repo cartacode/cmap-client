@@ -78,7 +78,7 @@ class SideBarLeftComponent extends React.Component {
 
           <ul>
             <li className={'home-link' + (menuClicked[0] ? ' active' : '')}>
-              <a href="#" onClick={(e)=>this.onPopup(true, e, true, false, 0)}><span>Home</span></a>
+              <a href="#"><span>Home</span></a>
             </li>
             <li className={'missions-link' + (menuClicked[1] ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 1)}><span>Missions</span></a>

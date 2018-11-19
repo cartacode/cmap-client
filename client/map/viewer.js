@@ -221,6 +221,10 @@ export function initialViewer(viewerId) {
   });
 }
 
+export function addPin(viewerId, longitude, latitude) {
+
+}
+
 /**
  * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer 

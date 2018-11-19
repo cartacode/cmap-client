@@ -5,7 +5,7 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 import {addKML} from 'map/kml';
-import {addPoint, createTestObject, initialViewer,} from 'map/viewer';
+import {addPoint, createTestObject, initialViewer, addPin} from 'map/viewer';
 
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -89,6 +89,7 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
+    addPin(this.props.viewerId, worldPosition.latlong.longitude, worldPosition.latlong.latitude);
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{
