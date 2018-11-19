@@ -232,7 +232,6 @@ export function addPin(viewerId) {
 
   Cesium.when(pinBuilder.fromMakiIconId('town', Cesium.Color.BLUE, 48), function(canvas) {
     return viewer.entities.add({
-        name : 'Hospital',
         position : Cesium.Cartesian3.fromDegrees(init_longitude, init_latitude),
         billboard : {
             image : canvas.toDataURL(),
