@@ -11,6 +11,7 @@ import Loader from '../../reusable/Loader';
 import Map, { viewerSize } from 'components/reusable/Map';
 import { viewerIdentifiers } from 'map/viewer';
 import {NoticeType} from 'dictionary/constants';
+import { Error } from '../../../dictionary/constants';
 
 
 class BaseModal extends React.Component {
@@ -329,9 +330,9 @@ class BaseModal extends React.Component {
         if(this.props.isUpdated) {
           // if updated successfully
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE){
           // if Not updated Successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
@@ -343,9 +344,9 @@ class BaseModal extends React.Component {
          // if added successfully
          if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
           // if not added successfully
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }
@@ -505,10 +506,10 @@ class BaseModal extends React.Component {
 }
 
 BaseModal.propTypes = {
+  children: PropTypes.node,
   editId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
-  children: PropTypes.node,
 };
 
 const mapStateToProps = state => {
@@ -517,7 +518,7 @@ const mapStateToProps = state => {
     oneLocation: state.locations.oneLocation,
     isAdded: state.locations.isAdded,
     isUpdated: state.locations.isUpdated,
-    error: state.locations.error
+    error: state.locations.error,
   };
 };
 

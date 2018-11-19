@@ -1,5 +1,6 @@
 import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__ADD, LOCATION__UPDATE, LOCATION__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
+import { Error } from '../dictionary/constants';
 
 export default function locations(state = initialState.locations, { payload, type, error }) {
   switch (type) {
@@ -14,7 +15,7 @@ export default function locations(state = initialState.locations, { payload, typ
         isFetching: false,
         allLocations: payload.data,
       };
-      case LOCATION__FETCH_ONE.REQUEST:
+    case LOCATION__FETCH_ONE.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -47,7 +48,7 @@ export default function locations(state = initialState.locations, { payload, typ
         isTypesFetching: false,
         locationTypes: payload.data,
       };
-      case LOCATION__DELETE_ONE.REQUEST:
+    case LOCATION__DELETE_ONE.REQUEST:
       return {
         ...state,
         isDeleted: false,
@@ -57,14 +58,12 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isDeleted: true,
       };
-      case LOCATION__DELETE_ONE.FAILURE:
+    case LOCATION__DELETE_ONE.FAILURE:
       return {
         ...state,
         isDeleted: false,
       };
-
-
-      case LOCATION__UPDATE.REQUEST:
+    case LOCATION__UPDATE.REQUEST:
       return {
         ...state,
         isUpdated: false,
@@ -74,15 +73,13 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isUpdated: true,
       };
-      case LOCATION__UPDATE.FAILURE:
+    case LOCATION__UPDATE.FAILURE:
       return {
         ...state,
         isUpdated: false,
-        error: ''
+        error: Error.ERROR_CODE,
       };
-
-
-      case LOCATION__ADD.REQUEST:
+    case LOCATION__ADD.REQUEST:
       return {
         ...state,
         isAdded: false,
@@ -92,11 +89,11 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isAdded: true,
       };
-      case LOCATION__ADD.FAILURE:
+    case LOCATION__ADD.FAILURE:
       return {
         ...state,
         isAdded: false,
-        error:''
+        error: Error.ERROR_CODE,
       };
 
     default:
