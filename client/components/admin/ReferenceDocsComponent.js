@@ -21,7 +21,7 @@ class ReferenceDocsComponent extends React.Component {
   }
 
   handleClick2 = (i) => {
-    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS High-level Architecture Diagram.pdf", "../../assets/documents/Tradecraft Technologies - AMPS API Documentation Reference.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Marketing Brief September 2018.pdf","../../assets/documents/Tradecraft Technologies - AMPS Architecture Diagram.pdf","../../assets/documents/Tradecraft Technologies - AMPS End User Licence Agreement EULA.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Product Marketing Sheet.pdf","http://18.222.48.211:8081/swagger/ui/index#/"];
+    const documentHref = ["../../assets/documents/Tradecraft Technologies - AMPS High-level Architecture Diagram.pdf", "../../assets/documents/Tradecraft Technologies - AMPS API Documentation Reference.pdf", "../../assets/documents/Tradecraft Technologies - AMPS Developers Guide.pdf","../../assets/documents/Tradecraft Technologies - AMPS Integration Guide.pdf"];
     window.location.href=documentHref[i];
   }
 
