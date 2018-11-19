@@ -20,6 +20,12 @@ export const viewerSize = {
   medium: 100,
 };
 
+export const defaultLocation = {
+  longitude: -117.38380562649462,
+  latitude: 43.38974235735528,
+  height: 0
+}
+
 export default class Map extends React.PureComponent {
   static propTypes = {
     size: PropTypes.number,
@@ -50,6 +56,12 @@ export default class Map extends React.PureComponent {
     createTestObject(this.props.viewerId);
     initialViewer(this.props.viewerId);
     addPin(this.props.viewerId);
+
+    // add the default location or user location into the location bar
+    const init_session = JSON.parse(localStorage.getItem("session"));
+    const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude; 
+    const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : defaultLocation.latitude;
+    this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
   }
 
   componentWillUnmount() {
