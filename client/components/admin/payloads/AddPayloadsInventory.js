@@ -113,9 +113,9 @@ class AddPayloadsInventory extends React.Component {
         // if records updated successfull
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE){
           // if record not updated successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, this.props.error.Message);
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
@@ -125,8 +125,8 @@ class AddPayloadsInventory extends React.Component {
         //this.props.onClose('ADD');
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, this.props.error.Message);
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE ) {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       }
       );
@@ -298,7 +298,7 @@ const mapStateToProps = state => {
     onePayloadInventory: state.payloadinventory.onePayloadInventory,
     isAdded: state.payloadinventory.isAdded,
     isUpdated: state.payloadinventory.isUpdated,
-    error: state.payloadinventory.error
+    error: state.payloadinventory.error,
   };
 };
 

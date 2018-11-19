@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
-import {NoticeType} from '../../../dictionary/constants';
+import {NoticeType, Error} from '../../../dictionary/constants';
 
 
 
@@ -322,9 +322,9 @@ class EoirModal extends React.Component {
          //this.props.onClose(NoticeType.UPDATE); 
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
-          // if record not updated successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, this.props.error.Message );
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+            // if record not updated successfully
+            this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
         });
     } else {
@@ -335,8 +335,8 @@ class EoirModal extends React.Component {
         //this.props.onClose(NoticeType.ADD); 
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, this.props.error.Message);
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }

@@ -139,7 +139,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	  });
 	}
 
-	closePayloadSpecifiction=(actionType, actionSuccess, msg)=>{
+	closePayloadSpecifiction=(actionType, actionSuccess)=>{
 		if(actionSuccess) {
 			this.loadData(actionType);
 			this.setState({
@@ -154,7 +154,7 @@ class PayloadsSpecificationComponent extends React.Component {
 				selectedSpecText: '',
 			});
 	 }else{
-		this.notify(actionType, msg);
+		this.notify(actionType);
 	 }
 
 	}
@@ -166,16 +166,17 @@ class PayloadsSpecificationComponent extends React.Component {
 	}
 
 	// actionType means ADD, UPDATE, DELETE
-	notify =(actionType, msg)=>{
+	notify =(actionType)=>{
+
 	  const { translations } = this.props;
 	  if(NoticeType.NOT_DELETE === actionType) {
 	    NotificationManager.error(translations.DeleteUnSuccessfull, translations['Payload Library Title'], 5000);
 		} 
 		else if (NoticeType.NOT_ADD === actionType) {
-      NotificationManager.error(msg, translations['Payload Library Title'], 5000);
+      NotificationManager.error(translations.AddUnSuccessfull, translations['Payload Library Title'], 5000);
     }
     else if (NoticeType.NOT_UPDATE === actionType) {
-      NotificationManager.error(msg, translations['Payload Library Title'], 5000); 
+      NotificationManager.error(translations.UpdateUnSuccessfull, translations['Payload Library Title'], 5000); 
 		}
 		else if(NoticeType.DELETE != actionType) {
 	    if (this.state.editId !== undefined && this.state.editId !== '0') {

@@ -1,5 +1,6 @@
 import { PAYLOAD__FETCH, PAYLOAD_LIST__FETCH, PAYLOAD_TYPE__FETCH, PAYLOAD__FETCH_ONE, PAYLOAD__DELETE_ONE, PAYLOAD__ADD, PAYLOAD__UPDATE } from 'dictionary/action';
 import initialState from 'store/initialState';
+import { Error } from '../dictionary/constants';
 
 export default function payloads(state = initialState.payloads, { payload, type, error }) {
   switch (type) {
@@ -77,7 +78,7 @@ export default function payloads(state = initialState.payloads, { payload, type,
       return {
         ...state,
         isAdded: false,
-        error: error.response.data,
+        error: Error.ERROR_CODE,
       };
     case PAYLOAD__UPDATE.REQUEST:
       return {
@@ -94,7 +95,7 @@ export default function payloads(state = initialState.payloads, { payload, type,
       return {
         ...state,
         isUpdated: false,
-        error: error.response.data,
+        error: Error.ERROR_CODE,
       };
     default:
       return state;
