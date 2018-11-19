@@ -90,9 +90,9 @@ class DashboardComponent extends React.Component {
    * TODO: this is the temporary fixing URL, in future it will be from Mission It means from server side according specific mission .
    */
   getLiveMissionUrl = (index) =>{
-    let liveMissionURL = 'http://18.220.128.32:1935/vod/mp4:DayFlightVODF.mp4/manifest.mpd';
+    let liveMissionURL = 'http://18.219.160.200:1935/vod/mp4:DayFlightVODF.mp4/manifest.mpd';
     if(index % 2 === 0) {
-      liveMissionURL = 'http://18.220.128.32:1935/vod/mp4:TruckVODF.mp4/manifest.mpd';
+      liveMissionURL = 'http://18.219.160.200:1935/vod/mp4:TruckVODF.mp4/manifest.mpd';
     }
     return liveMissionURL;
   }
