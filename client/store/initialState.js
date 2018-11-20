@@ -32,7 +32,10 @@ export default {
     isDeleted: false,
     allMunitionInventory: [],
     oneMunitionInventory: {},
-    oneMunition: {}
+    oneMunition: {},
+    isAdded:false,
+    isUpdated:false,
+    error:{}
   },
 
   payloads: {

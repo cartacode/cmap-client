@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
-import { NoticeType } from '../../../dictionary/constants';
+import { NoticeType,Error } from '../../../dictionary/constants';
 
 
 class GunModal extends React.Component {
@@ -282,6 +282,7 @@ class GunModal extends React.Component {
     const { editId } = this.props;
     munition.MunitionType = this.props.munitionType;
     const { gunMunitionFiles } = this.state;
+    const { translations } = this.props;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
     if (gunMunitionFiles.MunitionPhoto) {
@@ -308,10 +309,18 @@ class GunModal extends React.Component {
       console.log("munition " + JSON.stringify(munition));
       formData.append("munitionFormData", JSON.stringify(munition));
       this.setState({loading: true});
+      const { translations } = this.props;
 
       this.props.updateMunition(editId, formData).then(() => { 
         this.setState({loading: false});
         this.props.onClose(NoticeType.UPDATE);
+
+        if(this.props.isUpdated) {
+          this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE){
+          // if record not updated successfully
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
+        }
        });
     } else {
       formData.append("munitionFormData", JSON.stringify(munition));
@@ -319,6 +328,12 @@ class GunModal extends React.Component {
       this.props.addMunition(formData).then(() => { 
         this.setState({loading: false});
         this.props.onClose(NoticeType.ADD); 
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
+        }
+
       });
     }
   }
@@ -332,7 +347,7 @@ class GunModal extends React.Component {
     const {translations}= this.props;
    this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("ClearConfirmation")) {
+    if (confirm(translations['ClearConfirmation'])) {
       this.setState({
         clear: true,
         gunPhotoPreviewUrl: '/assets/img/admin/rockets.png',
@@ -372,7 +387,7 @@ class GunModal extends React.Component {
     const { munitionType } = this.props;
 
     const generalFields = [
-      { name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName', required: true },
+      { name: translations['Munition Name'], type: 'input', domID: 'MunitionName', valFieldID: 'MunitionName', required: false },
       { name: translations['Munition Nomenclature'], type: 'input', domID: 'MunitionNomenclature', valFieldID: 'MunitionNomenclature', required: true },
       { name: translations['Mission Role'], type: 'dropdown', domID: 'MissionRole', ddID: 'MunitionRoles', valFieldID: 'MunitionRole', required: true },
       { name: translations['Manufacture'], type: 'dropdown', domID: 'dispMunitionManufacturer', ddID: 'Companies/GetCompanies', valFieldID: 'MunitionManufacturer' },
@@ -492,6 +507,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     oneMunition: state.munitions.oneMunition,
+    isAdded: state.munitions.isAdded,
+    isUpdated: state.munitions.isUpdated,
+    error: state.munitions.error,
   };
 };
 

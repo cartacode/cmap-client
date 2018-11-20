@@ -1,7 +1,7 @@
-import { MUNITION_INVENTORY__FETCH, MUNITION_INVENTORY__FETCH_ONE, MUNITION_INVENTORY__DELETE_ONE } from 'dictionary/action';
+import { MUNITION_INVENTORY__FETCH, MUNITION_INVENTORY__FETCH_ONE, MUNITION_INVENTORY__DELETE_ONE, MUNITION_INVENTORY__ADD,MUNITION_INVENTORY__UPDATE} from 'dictionary/action';
 import initialState from 'store/initialState';
-
-export default function munitions(state = initialState.munitions, { payload, type }) {
+import {Error} from '../dictionary/constants';
+export default function munitions(state = initialState.munitions, { payload, type, error }) {
   switch (type) {
     case MUNITION_INVENTORY__FETCH.REQUEST:
       return {
@@ -40,7 +40,31 @@ export default function munitions(state = initialState.munitions, { payload, typ
         ...state,
         isDeleted: false,
       }; 
+      case MUNITION_INVENTORY__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+      case MUNITION_INVENTORY__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error:Error.ERROR_CODE,
+      }; 
+      case MUNITION_INVENTORY__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+      case MUNITION_INVENTORY__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
+        error:Error.ERROR_CODE,
+      }; 
+      
     default:
       return state;
+    
   }
 }

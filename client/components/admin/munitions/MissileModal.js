@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 import UploadFileBlock from '../../reusable/UploadFileBlock';
 import Loader from '../../reusable/Loader';
-import { NoticeType } from '../../../dictionary/constants';
+import { NoticeType,Error} from '../../../dictionary/constants';
 
 
 class MissileModal extends React.Component {
@@ -292,7 +292,7 @@ class MissileModal extends React.Component {
     const { missileMunitionFiles } = this.state;
     //We are going to upload files with JSON request body.
     const formData = new FormData();
-    if (missileMunitionFiles.MunitionPhoto) {
+        if (missileMunitionFiles.MunitionPhoto) {
       formData.append('MunitionPhoto', missileMunitionFiles.MunitionPhoto, missileMunitionFiles.MunitionPhoto.name);
     }
     if (missileMunitionFiles.MunitionWireframe) {
@@ -318,6 +318,13 @@ class MissileModal extends React.Component {
       this.props.updateMunition(editId, formData).then(() => { 
             this.setState({loading: false});
             this.props.onClose(NoticeType.UPDATE);
+
+    if(this.props.isUpdated) {
+              this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+            } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+              // if record not updated successfully
+              this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
+            }        
       });
     } else {
       formData.append("munitionFormData", JSON.stringify(munition));
@@ -326,6 +333,12 @@ class MissileModal extends React.Component {
       this.props.addMunition(formData).then(() => { 
         this.setState({loading: false});
         this.props.onClose(NoticeType.ADD);
+
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
+        }
        });
     }
 
@@ -339,7 +352,7 @@ class MissileModal extends React.Component {
     const {translations}=this.props;
     this.setState(this.baseState);
     console.log("FORM RESET DONE");
-    if (confirm("ClearConfirmation")) {
+    if (confirm(translations['ClearConfirmation'])) {
       this.setState({
          clear: true,
          missilePhotoPreviewUrl: '/assets/img/admin/rockets.png',
@@ -496,6 +509,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     oneMunition: state.munitions.oneMunition,
+    isAdded: state.munitions.isAdded,
+    isUpdated: state.munitions.isUpdated,
+    error: state.munitions.error,
   };
 };
 

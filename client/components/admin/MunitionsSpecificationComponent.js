@@ -11,8 +11,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
-import { defaultFilter, getConfirmation } from '../../util/helpers';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { defaultFilter, getConfirmation,} from '../../util/helpers';
+import { TableDefaults, NoticeType,Error} from '../../dictionary/constants';
 import Loader from '../reusable/Loader';
 import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 import ReactTooltip from 'react-tooltip';
@@ -180,6 +180,12 @@ class MunitionsSpecificationComponent extends React.Component {
     if(NoticeType.NOT_DELETE === actionType){
       NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Munition Library Title'], 5000);
     }
+    else if (NoticeType.NOT_ADD === actionType) {
+      NotificationManager.error(translations.AddUnSuccessfull, translations['Munition Inventory Title'], 5000);
+    }
+    else if (NoticeType.NOT_UPDATE === actionType) {
+      NotificationManager.error(translations.UpdateUnSuccessfull, translations['Munition Inventory Title'], 5000);
+    } 
     else if (NoticeType.DELETE != actionType) {
       if (this.state.editId !== undefined && this.state.editId !== '0') {
         NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Library Title'], 5000);
@@ -190,7 +196,7 @@ class MunitionsSpecificationComponent extends React.Component {
         NotificationManager.success(translations['DeletedSuccesfully'],translations['Munition Library Title'], 5000);
     }
   }
-
+  
   handleChange(value) {
     console.log(value);
   }

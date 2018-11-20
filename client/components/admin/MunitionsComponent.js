@@ -44,14 +44,24 @@ openMunitionsForm = (row) => {
   });
 }
 
-closeMunitionsForm = (actionType) => {
-  this.notify(actionType);
-  this.props.fetchMunitionInventory();
+closeMunitionsForm = (actionType,actionSuccess) => {
+  if(actionSuccess) {
+    this.loadData(actionType);
+
+  /* this.notify(actionType);
+  this.props.fetchMunitionInventory(); */
   this.setState({
     editId: '0',
     addMunitionsInventoryOpen: false,
   });
 }
+else {
+  this.notify(actionType);
+}}
+
+loadData = (actionType) => {
+  this.notify(actionType);
+  this.props.fetchMunitionInventory();}
 
 // This will get call when user click on Yes to Delete a Record
 deleteLogic(value){
@@ -63,10 +73,10 @@ deleteLogic(value){
       //this.setState({ editId: '0' });
       if(this.props.isDeleted){
         this.props.fetchMunitionInventory();
-        this.notify(NoticeType.DELETE);
+        this.notify(NoticeType.DELETE, '');
       }
       else{
-        this.notify(NoticeType.NOT_DELETE);
+        this.notify(NoticeType.NOT_DELETE, '');
 
       }
     });
@@ -85,10 +95,17 @@ deleteMunitions = (value) => {
 }
 
 notify =(actionType)=>{
+
   const { translations } = this.props;
   if(NoticeType.NOT_DELETE === actionType){
     NotificationManager.error(translations['DeleteUnSuccessfull'],translations['Munition Inventory Title'], 5000);
   }
+  else if (NoticeType.NOT_ADD === actionType) {
+    NotificationManager.error(translations.AddUnSuccessfull, translations['Munition Inventory Title'], 5000);
+  }
+  else if (NoticeType.NOT_UPDATE === actionType) {
+    NotificationManager.error(translations.UpdateUnSuccessfull, translations['Munition Inventory Title'], 5000);
+  } 
   else if ('DELETE' != actionType) {
     if (this.state.editId !== undefined && this.state.editId !== '0') {
       NotificationManager.success(translations['UpdatedSuccesfully'], translations['Munition Inventory Title'], 5000);

@@ -7,6 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from "../../reusable/ContentBlock";
 import Loader from '../../reusable/Loader';
+import { NoticeType, Error} from '../../../dictionary/constants';
 
 
 
@@ -116,19 +117,35 @@ class AddMunitionsInventory extends React.Component {
     event.preventDefault();
     const { editId } = this.props;
     let { munition } = this.state;
+    const { translations } = this.props;
+   
     if (editId !== undefined && editId !== '0') {
       this.setState({loading: true});
       munition.id = editId;
       this.props.updateMunitionInventory(editId, munition).then(() => { 
       this.setState({loading: false});
-      this.props.onClose();
-     });
+     // this.props.onClose();
+      
+      if(this.props.isUpdated) {
+        this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
+      } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+        // if record not updated successfully
+        this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
+      }});
     } else {
       this.setState({loading: true});
       console.log(munition);
       this.props.addMunitionInventory(munition).then(() => { 
         this.setState({loading: false});
-        this.props.onClose(); 
+        //this.props.onClose();
+        console.log(this.props.isAdded);
+        if(this.props.isAdded) {
+          this.props.onClose(NoticeType.ADD, this.props.isAdded);
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE )  {
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
+        }
+        
+
       });
     }
   }
@@ -286,6 +303,9 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     oneMunitionInventory: state.munitionsinventory.oneMunitionInventory,
+    isAdded:state.munitionsinventory.isAdded,
+    isUpdated:state.munitionsinventory.isUpdated,
+    error:state.munitionsinventory.error,
   };
 };
 
