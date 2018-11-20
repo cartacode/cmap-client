@@ -112,16 +112,19 @@ deleteCcirPirRecord(row){
 }
 
 // function to Display Success Messages
-notify =(type, msg)=>{
+notify =(type,actionType)=>{
   const { translations } = this.props;
-  if(type === NoticeType.NOT_DELETE){
+    if(type === NoticeType.NOT_DELETE){
     NotificationManager.error(translations['DeleteUnSuccessfull'], translations['CCIRPIR Title'], 5000);
   }
-  else if (NoticeType.NOT_UPDATE === type) {
-    NotificationManager.error(msg, translations['CCIRPIR Title'], 5000);
+  else if (NoticeType.NOT_ADD === actionType) {
+    NotificationManager.error(translations.AddUnSuccessfull, translations['CCIRPIR Title'], 5000);
   }
+  else if (NoticeType.NOT_UPDATE === actionType) {
+    NotificationManager.error(translations.UpdateUnSuccessfull, translations['CCIRPIR Title'], 5000);
+  } 
   else if (NoticeType.NOT_ADD === type) {
-    NotificationManager.error(msg, translations['CCIRPIR Title'], 5000);
+    NotificationManager.error(translations.AddUnSuccessfull, translations['CCIRPIR Title'], 5000);
   }
   else if(type === NoticeType.DELETE){
     NotificationManager.success(translations['DeletedSuccesfully'], translations['CCIRPIR Title'], 5000);
@@ -134,9 +137,7 @@ notify =(type, msg)=>{
   else if(type === NoticeType.UPDATE){
     NotificationManager.success(translations['UpdatedSuccesfully'], translations['CCIRPIR Title'], 5000);
   }
-  else{
 
-  }
 }
 
 

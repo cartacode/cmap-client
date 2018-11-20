@@ -1,6 +1,6 @@
 import { CCIRPIR__ADD, CCIRPIR__UPDATE, CCIRPIR__FETCH, CCIRPIR__FETCH_ONE, CCIRPIR__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
-
+import {Error} from '../dictionary/constants';
 export default function ccirpir(state = initialState.ccirpir, { payload, type, error }) {
   switch (type) {
     case CCIRPIR__FETCH.REQUEST:
@@ -55,7 +55,7 @@ export default function ccirpir(state = initialState.ccirpir, { payload, type, e
       return {
         ...state,
         isUpdated: false,
-        error: ''
+        error:Error.ERROR_CODE,
       };
 
     case CCIRPIR__ADD.REQUEST:
@@ -72,7 +72,7 @@ export default function ccirpir(state = initialState.ccirpir, { payload, type, e
       return {
         ...state,
         isAdded: false,
-        error: ''
+        error:Error.ERROR_CODE,
       };
    
 

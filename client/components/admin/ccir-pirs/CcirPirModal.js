@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContentBlock from '../../reusable/ContentBlock';
 import { connect } from 'react-redux';
 import { addCcirPir, updateCcirPir, fetchCcirPirById } from 'actions/ccirpir';
-import { NoticeType } from '../../../dictionary/constants';
+import { NoticeType,Error } from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import axios from 'axios';
 import { getKMLCenter } from 'map/kmlGrinder';
@@ -238,9 +238,9 @@ resetForm = () => {
         // if records updated successfull
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        } else {
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE){
           // if record not updated successfully
-          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated, translations["GenralErrorMessage"]);
+          this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
@@ -254,8 +254,8 @@ resetForm = () => {
         //this.props.onClose(NoticeType.ADD);
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        } else {
-          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded, translations["GenralErrorMessage"]);
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE){
+          this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }
