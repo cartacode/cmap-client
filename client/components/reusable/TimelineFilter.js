@@ -352,12 +352,24 @@ class TimelineFilter extends React.Component {
     
   }
 
-
   render() {
     const { translations, tab } = this.props;
     const { selectedResource } = this.state.filter;
     let { startDate, endDate } = this.state.filter;
     let { pages } = this.state;
+
+    const keys = {
+      groupIdKey: 'id',
+      groupTitleKey: 'title',
+      groupRightTitleKey: 'rightTitle',
+      itemIdKey: 'id',
+      itemTitleKey: 'title',
+      itemDivTitleKey: 'title',
+      itemGroupKey: 'group',
+      itemTimeStartKey: 'start_time',
+      itemTimeEndKey: 'end_time',
+    };
+
     // as custom datepicker retunrs strig date on date select so nned to convert this to date obj
     if(typeof startDate === 'string') {
       startDate = moment(startDate).toDate();
@@ -367,14 +379,15 @@ class TimelineFilter extends React.Component {
     }
     
     let { results, data } = this.state;
+
     const resourceFilter = [
       { id: MissionConsts.RESOURCE.PLATFORM, description: translations.platform },
       { id: MissionConsts.RESOURCE.TEAM, description: translations.teams },
     ];
 
     const columns = this.getColumns(selectedResource);
-    const groups = [];
-    const items = [];
+    let groups = [];
+    let items = [];
 
     let titleField = 'Name';
     // const rootUnitId = 15;
@@ -530,6 +543,7 @@ class TimelineFilter extends React.Component {
                   itemHeightRatio={0.50}
                   // rightSidebarWidth={100}
                   items={items}
+                  keys={keys}
                   defaultTimeStart={startDate}
                   defaultTimeEnd={endDate}
                   visibleTimeStart={startDate.getTime()}
