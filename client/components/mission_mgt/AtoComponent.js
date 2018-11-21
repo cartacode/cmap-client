@@ -67,6 +67,7 @@ class AtoComponent extends React.Component {
   }
 
 moveLeft = (row) => {
+  const { translations } = this.props;
   const intelRequestID = row.original.IntelRequestID;
   if(this.state.radioUnitId !== '' && this.state.radioUnitId !== 0) {
     //Need to add one more property SuggestedPlatformInventoryID
@@ -78,9 +79,13 @@ moveLeft = (row) => {
 
     // Inserts new values in mission table
     this.props.moveToATOGenerationFromCollectionPlan(data).then(() => {
-      //this.missionModalNameModal(null);
-      this.loadData();
-      this.timeLine.onFind();
+      const { isBooked, error } = this.props;
+      if(isBooked){
+          NotificationManager.error(error,'Error', 5000);
+      }else{
+        this.loadData();
+        this.timeLine.onFind();
+      }
     });
 
   } else {

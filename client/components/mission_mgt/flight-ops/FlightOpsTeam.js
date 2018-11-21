@@ -10,6 +10,7 @@ import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromF
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
+import { NotificationManager } from 'react-notifications';
 
 class FlightOpsTeam extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class FlightOpsTeam extends React.Component {
   // Move Left to Right
   // Updates CrewId in mission
   moveRight = (row) => {
+    const { translations } = this.props;
     const IntelReqID = row.original.IntelRequestID ;
     const missionId = row.original.MissionId;    
     if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
@@ -42,8 +44,13 @@ class FlightOpsTeam extends React.Component {
         'Type': 'Crew',
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
-        this.loadData();
-        this.timeLine.onFind();
+        const { isBooked, error } = this.props;
+        if(isBooked){
+            NotificationManager.error(error,'Error', 5000);
+        }else{
+          this.loadData();
+          this.timeLine.onFind();
+        }
       });
     } else {
       showAlert('Please Select Team');
@@ -63,8 +70,9 @@ class FlightOpsTeam extends React.Component {
         'Type': 'Crew',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
-        this.loadData();
-        this.timeLine.onFind();
+          this.loadData();
+          this.timeLine.onFind();
+        
       });
     } else {
       showAlert('Please Select Team');
@@ -283,6 +291,8 @@ const mapStateToProps = state => {
     fopCrewAto: state.mssionmgts.fopCrewAto,
     fopCrews: state.mssionmgts.fopCrews,
     isLoading: state.mssionmgts.isFetching,
+    isBooked: state.mssionmgts.isBooked,
+    error: state.mssionmgts.error,
   };
 };
 

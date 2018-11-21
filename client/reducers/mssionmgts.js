@@ -2,10 +2,10 @@ import { ATO_COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH,
   FOP_ATO_PLATFORM__FETCH, FOP_PLATFORM__FETCH,
   FOP_ATO_CREW__FETCH, FOP_CREW__FETCH,
   PED_TASKS__FETCH ,PED_TASKS_ATO_GENERATION__FETCH, 
-  SEARCH_MISSION_FILTER, MISSION_SUMMARY__FETCH, MISSION_DETAIL__FETCH } from 'dictionary/action';
+  SEARCH_MISSION_FILTER, MISSION_SUMMARY__FETCH, MISSION_DETAIL__FETCH, COLLECTION_PLAN_TO_ATO_GENERATION, FLIGHT_OPS_TO_ATO_GEN__MOVE, ATO_GEN_TO_FLIGHT_OPS__MOVE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
-export default function collections(state = initialState.mssionmgts, { payload, type }) {
+export default function collections(state = initialState.mssionmgts, { payload, type, error }) {
   switch (type) {
 
     case ATO_COLLECTION_PLAN__FETCH.REQUEST:
@@ -118,7 +118,7 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         isFetching: false,
         allMissionSummary: payload.data,
       };
-      case MISSION_DETAIL__FETCH.REQUEST:
+    case MISSION_DETAIL__FETCH.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -129,6 +129,57 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         isFetching: false,
         oneMissionDetail: payload.data,
       };
+    case COLLECTION_PLAN_TO_ATO_GENERATION.REQUEST:
+      return {
+        ...state,
+        isBooked: true,
+      };  
+    case COLLECTION_PLAN_TO_ATO_GENERATION.SUCCESS:
+      return {
+        ...state,
+        isBooked: false,
+      };
+    case COLLECTION_PLAN_TO_ATO_GENERATION.FAILURE:
+      return {
+        ...state,
+        isBooked: true,
+        error: error.response.data.Message,
+      };  
+    case FLIGHT_OPS_TO_ATO_GEN__MOVE.REQUEST:
+      return {
+        ...state,
+        isBooked: true,
+      };  
+    case FLIGHT_OPS_TO_ATO_GEN__MOVE.SUCCESS:
+      return {
+        ...state,
+        isBooked: false,
+      };
+    case FLIGHT_OPS_TO_ATO_GEN__MOVE.FAILURE:
+      return {
+        ...state,
+        isBooked: true,
+        error: error.response.data.Message,
+      };   
+    case ATO_GEN_TO_FLIGHT_OPS__MOVE.REQUEST:
+      return {
+        ...state,
+        isBooked: true,
+      };  
+    case ATO_GEN_TO_FLIGHT_OPS__MOVE.SUCCESS:
+      return {
+        ...state,
+        isBooked: false,
+      };
+    case ATO_GEN_TO_FLIGHT_OPS__MOVE.FAILURE:
+      return {
+        ...state,
+        isBooked: true,
+        error: error.response.data.Message,
+      };   
+
+      
+      
     default:
       return state;
   }

@@ -10,6 +10,8 @@ const mapStateToProps = state => {
     pedTasksAtoGenerations: state.mssionmgts.pedTasksAtoGenerations,
     pedTasks: state.mssionmgts.pedTasks,
     isLoading: state.mssionmgts.isFetching,
+    isBooked: state.mssionmgts.isBooked,
+    error: state.mssionmgts.error,
   };
 };
 

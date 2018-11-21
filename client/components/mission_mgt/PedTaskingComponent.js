@@ -10,6 +10,7 @@ import TimelineFilter from '../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
 
 import { missionPEDUser } from '../../dictionary/auth';
+import { NotificationManager } from 'react-notifications';
 
 class PedTaskingComponent extends React.Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class PedTaskingComponent extends React.Component {
   
   //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
   moveLeft = (row) => {
+    const { translations } = this.props;
     const IntelReqID = row.original.IntelRequestID ;    
     const missionId = row.original.MissionId ;    
     if(missionId !== undefined && missionId !== 0 && missionId !== '') {
@@ -61,8 +63,13 @@ class PedTaskingComponent extends React.Component {
         Type: 'Ped',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
-        this.loadData();
-        this.timeLine.onFind();
+        const { isBooked, error } = this.props;
+        if(isBooked){
+            NotificationManager.error(error,'Error', 5000);
+        }else{
+          this.loadData();
+          this.timeLine.onFind();
+        }
       });
     }
   };

@@ -11,6 +11,8 @@ const mapStateToProps = state => {
     atoCollectionPlans: state.mssionmgts.atoCollectionPlans,
     atoGenerations: state.mssionmgts.atoGenerations,
     isLoading: state.mssionmgts.isFetching,
+    isBooked: state.mssionmgts.isBooked,
+    error: state.mssionmgts.error,
     router: state.router,
   };
 };

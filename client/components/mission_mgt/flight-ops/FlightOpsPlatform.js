@@ -10,6 +10,7 @@ import { flightOpsAtoPlatform, flightOpsPlatforms, moveToFlightOPSFromATO, moveT
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
+import { NotificationManager } from 'react-notifications';
 
 class FlightOpsPlatform extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class FlightOpsPlatform extends React.Component {
   // Move Left to Right
   // Updates PlatformInventoryId in mission
   moveRight = (row) => {
+    const { translations } = this.props;
     const missionId = row.original.MissionId;
     const IntelReqID = row.original.IntelRequestID ;
     // const intelRequestID = row.original.IntelRequestID;
@@ -43,8 +45,13 @@ class FlightOpsPlatform extends React.Component {
         'Type': 'Platform',
       };
       this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
-        this.loadData();
-        this.timeLine.onFind();
+        const { isBooked, error } = this.props;
+        if(isBooked){
+            NotificationManager.error(error,'Error', 5000);
+        }else{
+          this.loadData();
+          this.timeLine.onFind();
+        }
       });
     } else {
       showAlert('Please Select Platform');
@@ -66,8 +73,8 @@ class FlightOpsPlatform extends React.Component {
         'Type': 'Platform',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
-        this.loadData();
-        this.timeLine.onFind();
+          this.loadData();
+          this.timeLine.onFind();
       });
     } else {
       showAlert('Please Select Platform');
@@ -296,6 +303,8 @@ const mapStateToProps = state => {
     fopPlatformAto: state.mssionmgts.fopPlatformAto,
     fopPlatforms: state.mssionmgts.fopPlatforms,
     isLoading: state.mssionmgts.isFetching,
+    isBooked: state.mssionmgts.isBooked,
+    error: state.mssionmgts.error,
   };
 };
 

@@ -109,7 +109,9 @@ export default {
     isFetching: false,
     filterResults: [],
     allMissionSummary:[],
-    oneMissionDetail:{}
+    oneMissionDetail:{},
+    isBooked: false,
+    error: {},
   },
   paygrades: {
     paygradeList: [],
