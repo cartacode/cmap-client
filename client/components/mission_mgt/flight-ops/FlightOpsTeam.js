@@ -11,6 +11,7 @@ import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
 import { NotificationManager } from 'react-notifications';
+import ReactTooltip  from 'react-tooltip';
 
 class FlightOpsTeam extends React.Component {
   constructor(props) {
@@ -104,7 +105,10 @@ class FlightOpsTeam extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
         Cell: row => <div>
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.PlatformName?row.original.PlatformName:'Not Found'}><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.PlatformName?row.original.PlatformName:'Not Found'} type='warning'>
+                                 <span>{row.original.PlatformName?row.original.PlatformName:'Not Found'}</span>
+          </ReactTooltip>
         </div>,
       },
       {

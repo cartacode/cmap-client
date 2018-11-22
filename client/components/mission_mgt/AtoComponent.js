@@ -10,6 +10,7 @@ import TimelineFilter from '../reusable/TimelineFilter';
 import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 import { missionATOUser } from '../../dictionary/auth';
+import ReactTooltip  from 'react-tooltip';
 
 class AtoComponent extends React.Component {
 
@@ -228,7 +229,10 @@ moveLeft = (row) => {
         maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`}    data-tip data-for={row.original.PlatformName?row.original.PlatformName:'Not Found'}><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.PlatformName?row.original.PlatformName:'Not Found'} type='warning'>
+                                 <span>{row.original.PlatformName?row.original.PlatformName:'Not Found'}</span>
+                             </ReactTooltip>
         </div>,
       },
       {
