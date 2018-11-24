@@ -148,7 +148,7 @@ export function moveToATOGenerationFromPedTask(missionId) {
 export function platformFilter(data, usePaging, pageSize, page) {
   return createAction({
     type: SEARCH_MISSION_FILTER,
-    action: () => axios.put(`${baseUrl}/Search/SearchMissionPlatformInventory?usePaging=` + usePaging + '&pageSize=' + pageSize + '&pageNumber=' + page, data, {headers:requestHeaders}),
+    action: () => axios.put(`${baseUrl}/Search/SearchMissionPlatformInventory?usePaging=` + usePaging + '&pageSize=' + pageSize + '&pageNumber=' + page + '&readOnly=true', data, {headers:requestHeaders}),
   });
 }
 
