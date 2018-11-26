@@ -29,19 +29,19 @@ class LocationInfoComponent extends React.Component {
         <div className="sidebar-bottom-block">
           <ul>
             <li className="lat-block">
-              <span style={{ color: 'chartreuse' }} >LAT:</span>
+              <span style={{ color: 'chartreuse' }} ><strong>LAT:</strong></span>
               <span>{latitude.toFixed(4)}"</span>
             </li>
             <li className="lon-block">
-              <span style={{ color: 'darkgoldenrod' }} >LON:</span>
+              <span style={{ color: 'darkgoldenrod' }} ><strong>LON:</strong></span>
               <span>{longitude.toFixed(4)}"</span>
             </li>
             <li className="elv-block">
-              <span style={{ color: 'crimson' }} >ELV:</span>
+              <span style={{ color: 'crimson' }} ><strong>ELV:</strong></span>
               <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
             <li className="alt-block">
-              <span style={{ color: 'deeppink' }} >ALT:</span>
+              <span style={{ color: 'deeppink' }} ><strong>ALT:</strong></span>
               <span>{ height > 0 ? height.toLocaleString(): 0 }m</span>
             </li>
           </ul>

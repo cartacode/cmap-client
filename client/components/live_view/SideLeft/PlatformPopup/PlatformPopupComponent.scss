@@ -124,3 +124,18 @@
   height: 700px;
   overflow-y: auto;
 }
+
+.checklist-block::-webkit-scrollbar {
+  width: 8px !important;
+  background-color: #1b5d8c !important;
+}
+
+.checklist-block::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  background-color: #15354c !important;
+}
+
+.checklist-block::-webkit-scrollbar-track {
+  border-radius: 10px !important;
+  background-color: #1b5d8c !important;
+}

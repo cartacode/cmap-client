@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 import CheckBox from '../../../reusable/CheckBox';
 
@@ -16,7 +16,8 @@ class PlatformPopupItemComponent extends React.Component {
   }
 
   onChangeState = (e) => {
-    if (e.target.tagName.toUpperCase() === 'SPAN') {
+    console.log(e.target);
+    if (!e.target.classList.contains('checkbox-default')) {
       e.preventDefault();
       return;
     }
