@@ -309,7 +309,32 @@ export function destroyViewer(viewerId) {
 export function createTestObject(viewerId) {
   const viewer = viewers.get(viewerId);
 
-  var blueBox = viewer.entities.add({
+  const pinBuilder = new Cesium.PinBuilder();
+  let mapData = {data:[
+    {lat: 34.60247, long: 32.977567, icon: 'airport', color: Cesium.Color.GREEN},
+    {lat: 44.05804819999999, long: -75.7487779, icon: 'airport', color: Cesium.Color.GREEN},
+    {lat: 31.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN},
+    {lat: 31.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN},
+    {lat: 27.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW},
+    {lat: 33.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW},
+    {lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW},
+    {lat: 33.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW},
+    {lat: 33.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW},
+  ]};
+  
+  mapData.data.forEach(pin => {
+    Cesium.when(pinBuilder.fromMakiIconId(pin.icon, pin.color, 35), function(canvas) {
+      return viewer.entities.add({
+          position : Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
+          billboard : {
+              image : canvas.toDataURL(),
+              verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+          }
+      });
+    });
+  });
+
+  /*var blueBox = viewer.entities.add({
       name : 'Blue box',
       position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
       box : {
@@ -327,7 +352,7 @@ export function createTestObject(viewerId) {
           outline : true,
           outlineColor : Cesium.Color.BLACK
       }
-  });
+  });*/
 //  viewer.zoomTo(viewer.entities);
 }
 
