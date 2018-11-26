@@ -244,6 +244,20 @@ getRTB = (startDate, endDate) => {
 
     const langs = ['val 1', 'val 2'];
 
+    const sigacts = [{value:'Kinetic Strikes', label:'Kinetic Strikes'},{value:'Small Arms Fire', label:'Small Arms Fire'},{value:'IEDs', label:'IEDs'},
+    {value:'Mortar Fire', label:'Mortar Fire'}, {value:'Casualty-Enemy', label:'Casualty-Enemy'}, {value:'Casualty-Civilian', label:'Casualty-Civilian'},
+    {value:'Abduction', label:'Abduction'},{value:'Suspicious Activity', label:'Suspicious Activity'},{value:'Friendly Activity', label:'Friendly Activity'}
+    ];
+
+    const weather = [{value:'Current Surface', label:'Current Surface'},{value:'Current Air', label:'Current Air'},{value:'Current Sea', label:'Current Sea'},
+    {value:'Next 24-Surface', label:'Next 24-Surface'}, {value:'Next 24-Air', label:'Next 24-Air'}, {value:'Next 24-Sea', label:'Next 24-Sea'} ];
+
+    const aisr = [{value:'Active Missions', label:'Active Missions'},{value:'Past 30 Days', label:'Past 30 Days'},{value:'Past 5 Days', label:'Past 5 Days'},
+    {value:'Past 1 Day', label:'Past 1 Day'}, {value:'Upcoming 1 Day', label:'Upcoming 1 Day'}, {value:'Upcoming 5 Days', label:'Upcoming 5 Days'} ];
+
+    const force = [{value:'Blue Forces', label:'Blue Forces'},{value:'Red Forces', label:'Red Forces'},{value:'Green Forces', label:'Green Forces'},
+    {value:'Yellow Forces', label:'Yellow Forces'}, {value:'All Forces', label:'All Forces'}];
+
     const { translations } = this.props;
 
     // For Platform
@@ -398,7 +412,8 @@ getRTB = (startDate, endDate) => {
                       {translations.sigacts}
                     </div>
                     <div className="col-md-6 t">
-                      <Dropdown key="1" id="1" items={langs}/>
+                      <Dropdown key="1" id="1" options={sigacts}/>
+                      
                     </div>
                   </div>
                   <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>
@@ -411,7 +426,7 @@ getRTB = (startDate, endDate) => {
                       {translations['current weather']}
                     </div>
                     <div className="col-md-6 ">
-                      <Dropdown key="1" id="1" items={langs}/>
+                      <Dropdown key="1" id="1" options={weather}/>
                     </div>
                   </div>
                   <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>
@@ -424,7 +439,7 @@ getRTB = (startDate, endDate) => {
                       {translations['a-isr coverage']}
                     </div>
                     <div className="col-md-6 ">
-                      <Dropdown key="1" id="1" items={langs}/>
+                      <Dropdown key="1" id="1" options={aisr}/>
                     </div>
                   </div>
                   <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>
@@ -437,7 +452,7 @@ getRTB = (startDate, endDate) => {
                       {translations['force positions']}
                     </div>
                     <div className="col-md-6 ">
-                      <Dropdown key="1" id="1" items={langs}/>
+                      <Dropdown key="1" id="1" options={force}/>
                     </div>
                   </div>
                   <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>
