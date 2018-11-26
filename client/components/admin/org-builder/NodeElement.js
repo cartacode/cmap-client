@@ -42,7 +42,7 @@ class NodeElement extends React.PureComponent {
        {nodeData.type === "Personnel" ?  (<span><span className="rank-text">{nodeData.Rank}</span> <br/>
        <span className="unit-text"> {nodeData.DutyPosition}</span></span>) : (<span> 
        <span className="unit-text"> {nodeData.Location}Personnel Count: <b>{nodeData.PersonnelCount}</b> 
-       <br/> FMC: <b>{nodeData.PlatformStatuses.FMCPlatformCount}</b> PMC: <b>{nodeData.PlatformStatuses.PMCPlatformCount}</b> NMC: <b>{nodeData.PlatformStatuses.NMCPlatformCount}</b> 
+       <br/> FMC: <b>{nodeData.PlatformStatuses[0].TotalInventoryCount}</b> PMC: <b>{nodeData.PlatformStatuses[1].TotalInventoryCount}</b> NMC: <b>{nodeData.PlatformStatuses[2].TotalInventoryCount}</b> 
        </span> <br/> </span>) }
           
           </div>
