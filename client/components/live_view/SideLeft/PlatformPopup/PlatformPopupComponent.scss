@@ -119,3 +119,8 @@
 .checklist-block > div:hover {
   background: #13334A;
 }
+
+.checklist-block {
+  height: 700px;
+  overflow-y: auto;
+}

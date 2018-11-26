@@ -59,116 +59,116 @@ class PlatformPopupComponent extends React.Component {
         <div className="checklist-block">
 
           <PlatformPopupItemComponent
-            color={'#FFAC00'}
-            textValue={'Vehicles'}
+            color={'#008000'}
+            textValue={'Reaper (**YNO 3X33)'}
             checked={true}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: LRE-99 Tail #:**YNO 3X33 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#16DCFF'}
-            textValue={'Satellite'}
+            color={'#008000'}
+            textValue={'Gray Eagle (**YNO 3X6)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: Ft Drum Tail #:**YNO 3X6 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#D100FF'}
-            textValue={'Fighter'}
+            color={'#008000'}
+            textValue={'Guardrail (**YNO 3X11)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: Ft Bliss Tail #:**YNO 3X11 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#A78BFF'}
-            textValue={'Ships'}
+            color={'#008000'}
+            textValue={'Reaper (**YNO 3X30)'}
             checked={true}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: LRE-99 Tail #:**YNO 3X30 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#C65D92'}
-            textValue={'Vehicles'}
+            color={'#008000'}
+            textValue={'Reaper (**YNO 3X24)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: LRE-99 Tail #:**YNO 3X24 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#C7FF00'}
-            textValue={'Aircraft'}
+            color={'#008000'}
+            textValue={'Reaper (**YNO 3X27)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: LRE-99 Tail #:**YNO 3X27 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#0091FF'}
-            textValue={'Ships'}
+            color={'#008000'}
+            textValue={'Gray Eagle (**YNO 3X3)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Con Tail #:**YNO 3X3 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#00FFE3'}
-            textValue={'Submarines'}
+            color={'#008000'}
+            textValue={'Gray Eagle (**YNO 3X7)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: Ft Drum Tail #:**YNO 3X7 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#FFFEBE'}
-            textValue={'Rockets'}
+            color={'#008000'}
+            textValue={'EMARSS-M (**YNO 3X12)'}
             checked={true}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X12 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#FFFFFF'}
-            textValue={'Aircraft'}
+            color={'#008000'}
+            textValue={'DHC-8 (**YNO 3X23)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X23 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#FFC598'}
-            textValue={'Fighter'}
+            color={'#008000'}
+            textValue={'EMARSS-M (**YNO 3X13)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X13 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#95BDD9'}
-            textValue={'Ships'}
+            color={'#008000'}
+            textValue={'Raven (**YNO 3X36)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Axe Tail #:**YNO 3X36 Status: PMC'}
           />
           <PlatformPopupItemComponent
-            color={'#4A8C5C'}
-            textValue={'Satellite'}
+            color={'#008000'}
+            textValue={'Raven (**YNO 3X34)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF Axe Tail #:**YNO 3X34 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#A77168'}
-            textValue={'Aircraft'}
+            color={'#008000'}
+            textValue={'EMARSS-M (**YNO 3X14)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: Ft Hood Tail #:**YNO 3X14 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#962D1B'}
-            textValue={'Rockets'}
+            color={'#008000'}
+            textValue={'Reaper (**YNO 3X26)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: LRE-99 Tail #:**YNO 3X26 Status: FMC'}
           />
           <PlatformPopupItemComponent
-            color={'#4C63AA'}
-            textValue={'Submarines'}
+            color={'#008000'}
+            textValue={'Gray Eagle (**YNO 3X19)'}
             checked={false}
             hasColorBall={this.props.hasBall}
-            popupText={'Lay description text sample texttext sample text'}
+            popupText={'Location: FOB TF-Eagle Tail #:**YNO 3X19 Status: FMC'}
           />
         </div>
       </div>
