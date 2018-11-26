@@ -53,7 +53,7 @@ export default class Map extends React.PureComponent {
 
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
-    createTestObject(this.props.viewerId);
+    //createTestObject(this.props.viewerId);
     initialViewer(this.props.viewerId);
     addPin(this.props.viewerId);
 

@@ -47,12 +47,17 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     navigationHelpButton : false,
     timeline: false,
     shadows: true,
-    imageryProvider: new Cesium.WebMapServiceImageryProvider({
-        layers: 'AMPS:WORLDGEOTIF',
-        srs:'EPSG:4326',
-        proxy: new Cesium.DefaultProxy('/proxy/'),
-        url: getImageryurl(),
-      })
+    //imageryProvider: new Cesium.WebMapServiceImageryProvider({
+      //  layers: 'AMPS:WORLDGEOTIF',
+      //  srs:'EPSG:4326',
+      //  proxy: new Cesium.DefaultProxy('/proxy/'),
+      //  url: getImageryurl(),
+      //})
+    imageryProvider: new Cesium.BingMapsImageryProvider({
+      url : 'https://dev.virtualearth.net',
+      key : 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
+      mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+    })
   });
   // extend our view by the cesium navigation mixin
   //   var options = {};
@@ -68,20 +73,20 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   let layers = viewer.scene.imageryLayers;
 
   let alphCounter = 0.0, _layers=[];
-  for(let i=0; LAYERS[i]; i++){
-    _layers.push(layers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
-      url: getImageryurl(),
-          proxy: new Cesium.DefaultProxy('/proxy/'),
-          layers: LAYERS[i],
-          maximumLevel : 8,
-          srs: COORDINATE_SYTEM.EPSG,
+  //for(let i=0; LAYERS[i]; i++){
+    //_layers.push(layers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
+      //url: getImageryurl(),
+        //  proxy: new Cesium.DefaultProxy('/proxy/'),
+          //layers: LAYERS[i],
+          //maximumLevel : 8,
+          //srs: COORDINATE_SYTEM.EPSG,
           
-      })));
+      //})));
     //  layers.lower(_layers[i]);
     //  alphCounter+=((alphCounter+1)/10);
     // _layers[i].alpha = 0.5;    
     // _layers[i].brightness = (i+1).toFixed(1);
-  }
+  //}
   
   //var cesiumWidget = new Cesium.CesiumWidget(elementId, {scene3DOnly: true});
   if(liveViewToolBar) {
