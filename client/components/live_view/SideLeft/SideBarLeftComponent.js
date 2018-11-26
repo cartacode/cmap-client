@@ -101,7 +101,7 @@ class SideBarLeftComponent extends React.Component {
               <a href="#" onClick={(e)=>this.onPopup(true, e, false, false, 2)}><span>Sources</span></a>
             </li>
             <li className={'platforms-link' + (menuClicked[3] ? ' active' : '')}>
-              <a href="#" onClick={(e)=>this.onPopup(true, e, false, true, 3)}><span>Platforms</span></a>
+              <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 3)}><span>Platforms</span></a>
             </li>
             <li className={'humint-link' + (menuClicked[4] ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 4)}><span>Personnel</span></a>
