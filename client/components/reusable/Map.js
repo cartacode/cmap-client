@@ -5,8 +5,8 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 import {addKML} from 'map/kml';
-import {addPoint, createTestObject, initialViewer, addPin} from 'map/viewer';
-
+import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap} from 'map/viewer';
+import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
 import LocationInfoComponent from '../live_view/LocationInfo'
@@ -53,15 +53,20 @@ export default class Map extends React.PureComponent {
 
   componentDidMount() {
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
-    addPin(this.props.viewerId);
-    createTestObject(this.props.viewerId);
-    initialViewer(this.props.viewerId);
 
     // add the default location or user location into the location bar
     const init_session = JSON.parse(localStorage.getItem("session"));
     const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude; 
     const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : defaultLocation.latitude;
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
+
+    //add pin for current user's home location
+    addNewPin(init_latitude, init_longitude, 'town', Cesium.Color.BLUE, 'home', this.props.viewerId);
+    
+    if(!(!this.props.toolBarOptions ? true: this.props.toolBarOptions.show)) {
+      createTestObject(this.props.viewerId);
+    }
+    initialViewer(this.props.viewerId);
   }
 
   componentWillUnmount() {
@@ -140,6 +145,30 @@ export default class Map extends React.PureComponent {
     }
   }
 
+  positionMapToCoords = (lat, long) =>{
+    this.setState({ latlong: { latitude: lat, longitude: long, height: 0 } });
+    positionMap(lat, long, this.props.viewerId);
+  }
+
+  addPin =(lat, long, iconId, pinColor, pinId) =>{
+    let color;
+    if(pinColor === 'blue') {
+      color = Cesium.Color.BLUE;
+    } else if(pinColor === 'green') {
+      color = Cesium.Color.GREEN;
+    } else if(pinColor === 'red') {
+      color = Cesium.Color.RED;
+    } else if(pinColor === 'yellow') {
+      color = Cesium.Color.YELLOW;
+    }
+
+    addNewPin(lat, long, iconId, color, pinId, this.props.viewerId);
+  }
+
+  removePin =(pinId) =>{
+    removePinById(pinId, this.props.viewerId);
+  }
+
   render() {
     const { size = viewerSize.medium, toolBarOptions } = this.props;
     const { latlong } = this.state;
@@ -147,7 +176,7 @@ export default class Map extends React.PureComponent {
 
     return (
       <div className="d-flex">
-        {toolbar_show && <SideBarLeftComponent /> }
+        {toolbar_show && <SideBarLeftComponent moveMap={this.positionMapToCoords} addPin={this.addPin} removePin={this.removePin} /> }
         <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import SelectBox from '../../../reusable/SelectBox';
 import PlatformPopupItemComponent from '../PlatformPopupItem';
 import CheckBox from '../../../reusable/CheckBox';
-
+import { fetchPlatformInventory } from 'actions/platforminventory';
 import './PlatformPopupComponent.scss';
 
 class PlatformPopupComponent extends React.Component {
@@ -12,19 +12,25 @@ class PlatformPopupComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAll: false,
+      showAll: true,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchPlatformInventory();
   }
 
   onChangeShowAll = (state) => {
     this.setState({
       showAll: state,
-    })
+    });
   }
 
   render() {
+    const { allPlatformInventory } = this.props;
+
     return (
-      <div className={'platforms-popup-block popup-block scroll-pane' + (this.props.popupOpen ? ' opened' : '')}>
+      <div className={'platforms-popup-block popup-block scroll-pane' + ((this.props.popupOpen && this.props.menuClicked) ? ' opened' : '')}>
         <div className="title-block">
           PLATFORMS
           <div
@@ -57,119 +63,28 @@ class PlatformPopupComponent extends React.Component {
         </div>
 
         <div className="checklist-block">
+          { allPlatformInventory && allPlatformInventory.map((item, index) => {
+             this.props.addPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
+                               Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
+                               'airport', 'green', item.id);
 
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Reaper (**YNO 3X33)'}
-            checked={true}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: LRE-99 Tail #:**YNO 3X33 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Gray Eagle (**YNO 3X6)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: Ft Drum Tail #:**YNO 3X6 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Guardrail (**YNO 3X11)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: Ft Bliss Tail #:**YNO 3X11 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Reaper (**YNO 3X30)'}
-            checked={true}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: LRE-99 Tail #:**YNO 3X30 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Reaper (**YNO 3X24)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: LRE-99 Tail #:**YNO 3X24 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Reaper (**YNO 3X27)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: LRE-99 Tail #:**YNO 3X27 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Gray Eagle (**YNO 3X3)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Con Tail #:**YNO 3X3 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Gray Eagle (**YNO 3X7)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: Ft Drum Tail #:**YNO 3X7 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'EMARSS-M (**YNO 3X12)'}
-            checked={true}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X12 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'DHC-8 (**YNO 3X23)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X23 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'EMARSS-M (**YNO 3X13)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Eagle Tail #:**YNO 3X13 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Raven (**YNO 3X36)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Axe Tail #:**YNO 3X36 Status: PMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Raven (**YNO 3X34)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF Axe Tail #:**YNO 3X34 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'EMARSS-M (**YNO 3X14)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: Ft Hood Tail #:**YNO 3X14 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Reaper (**YNO 3X26)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: LRE-99 Tail #:**YNO 3X26 Status: FMC'}
-          />
-          <PlatformPopupItemComponent
-            color={'#008000'}
-            textValue={'Gray Eagle (**YNO 3X19)'}
-            checked={false}
-            hasColorBall={this.props.hasBall}
-            popupText={'Location: FOB TF-Eagle Tail #:**YNO 3X19 Status: FMC'}
-          />
+             return <PlatformPopupItemComponent
+              color={'#008000'}
+              textValue={item.name}
+              checked={true}
+              hasColorBall={this.props.hasBall}
+              popupText={'Location: ' + item.location + ' Tail #: ' + item.tailNbr + ' Status: ' + item.StatusAbbrev}
+              lat={Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude)}
+              long={Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude)}
+              uniqueID={item.id}
+              pinColor={'green'}
+              pinType={'airport'}
+              moveMap={this.props.moveMap}
+              addPin={this.props.addPin}
+              removePin={this.props.removePin}
+              key={index}
+            />;
+          }) }
         </div>
       </div>
     );
@@ -177,10 +92,25 @@ class PlatformPopupComponent extends React.Component {
 }
 
 PlatformPopupComponent.propTypes = {
+  addPin: PropTypes.func,
   hasBall: PropTypes.bool,
   hasToggle: PropTypes.bool,
+  menuClicked: PropTypes.bool,
+  moveMap: PropTypes.func,
   onPopup: PropTypes.func,
   popupOpen: PropTypes.bool,
+  removePin: PropTypes.func,
 };
 
-export default PlatformPopupComponent;
+const mapStateToProps = state => {
+  return {
+    allPlatformInventory: state.platforminventory.allPlatformInventory,
+    isLoading: state.platforminventory.isFetching,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchPlatformInventory,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformPopupComponent);

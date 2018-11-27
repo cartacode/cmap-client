@@ -16,14 +16,22 @@ class PlatformPopupItemComponent extends React.Component {
   }
 
   onChangeState = (e) => {
-    console.log(e.target);
-    if (!e.target.classList.contains('checkbox-default')) {
+    if (e.target.classList.contains('checkbox-default')) {
+      const newVal = !this.state.checked;
+      this.setState({
+        checked: newVal,
+      });
+
+      if(newVal) {
+        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinColor, this.props.uniqueID);
+      } else {
+        this.props.removePin(this.props.uniqueID);
+      }
+    } else {
+      this.props.moveMap(this.props.lat, this.props.long);
       e.preventDefault();
       return;
     }
-    this.setState({
-      checked: !this.state.checked,
-    })
   }
 
   render() {
@@ -50,11 +58,19 @@ PlatformPopupItemComponent.defaultProps = {
 };
 
 PlatformPopupItemComponent.propTypes = {
+  addPin: PropTypes.func,
   checked: PropTypes.bool,
   color: PropTypes.string,
   hasColorBall: PropTypes.bool,
+  lat: PropTypes.number,
+  long: PropTypes.number,
+  moveMap: PropTypes.func,
+  pinColor: PropTypes.string,
+  pinType: PropTypes.string,
   popupText: PropTypes.string,
+  removePin: PropTypes.func,
   textValue: PropTypes.string,
+  uniqueID: PropTypes.string,
 };
 
 export default PlatformPopupItemComponent;

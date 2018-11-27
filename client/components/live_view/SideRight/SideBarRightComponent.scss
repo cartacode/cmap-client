@@ -8,6 +8,7 @@
   box-sizing: border-box;
   width: 50px;
   padding-top: 68px;
+  height: 99.4%;
 }
 .sidebar-right-block:before {
   position: absolute;
@@ -249,4 +250,6 @@ body.small-height .sidebar-right-block li.sysadmin-link:after {
   background-position: 0 -25px;
 }
 
-
+body {
+  overflow-x: hidden;
+}

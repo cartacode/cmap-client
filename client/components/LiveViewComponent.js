@@ -35,7 +35,7 @@ class LiveViewComponent extends React.Component {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let access = roles2.some(v => livewViewUser.includes(v));
-    console.log(access);
+    //console.log(access);
 
     return ( access ? (
       <div>

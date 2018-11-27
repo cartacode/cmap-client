@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PlatformPopupComponent from './PlatformPopup';
+import PersonnelPopupComponent from './PersonnelPopup';
 
 import './SideBarLeftComponent.scss';
 
@@ -83,6 +84,7 @@ class SideBarLeftComponent extends React.Component {
 
   render() {
     const { menuClicked } = this.state;
+
     return (
       <div style={{background: 'rgba(40, 72, 98, 0.7)' }}>
         <div className="sidebar-left-block sidebar-block">
@@ -111,9 +113,24 @@ class SideBarLeftComponent extends React.Component {
 
         <PlatformPopupComponent
           popupOpen={this.state.popupOpen}
+          menuClicked={this.state.menuClicked[3]}
           onPopup={this.onPopup}
           hasBall={this.state.hasBall}
           hasToggle={this.state.hasToggle}
+          moveMap={this.props.moveMap}
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
+        />
+
+        <PersonnelPopupComponent
+          popupOpen={this.state.popupOpen}
+          menuClicked={this.state.menuClicked[4]}
+          onPopup={this.onPopup}
+          hasBall={this.state.hasBall}
+          hasToggle={this.state.hasToggle}
+          moveMap={this.props.moveMap}
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
         />
       </div>
     );

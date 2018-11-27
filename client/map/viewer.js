@@ -221,29 +221,47 @@ export function initialViewer(viewerId) {
     destination : Cesium.Cartesian3.fromDegrees(
       init_longitude,
       init_latitude,
-      Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
+      30000.0
+      //Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
     )
   });
 }
 
-export function addPin(viewerId) {
+export function positionMap(latitude, longitude, viewerId) {
+  const viewer = viewers.get(viewerId);
+  viewer.camera.flyTo({
+    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 15000.0)
+  });
+
+  /*viewer.camera.setView({
+    destination : Cesium.Cartesian3.fromDegrees(
+      longitude,
+      latitude,
+      10000
+      //(Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height/2)
+    )
+  });*/
+}
+
+export function addNewPin(latitude, longitude, iconId, color, pinId, viewerId) {
   const viewer = viewers.get(viewerId);
   const pinBuilder = new Cesium.PinBuilder();
-  const init_session = JSON.parse(localStorage.getItem("session"));
-  const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
 
-  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude; 
-  const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
-
-  Cesium.when(pinBuilder.fromMakiIconId('town', Cesium.Color.BLUE, 48), function(canvas) {
+  Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), function(canvas) {
     return viewer.entities.add({
-        position : Cesium.Cartesian3.fromDegrees(init_longitude, init_latitude),
+        id : pinId,   
+        position : Cesium.Cartesian3.fromDegrees(longitude, latitude),
         billboard : {
             image : canvas.toDataURL(),
             verticalOrigin : Cesium.VerticalOrigin.BOTTOM
         }
     });
   });
+}
+
+export function removePinById(pinId, viewerId) {
+  const viewer = viewers.get(viewerId);
+  viewer.entities.removeById(pinId);
 }
 
 /**
