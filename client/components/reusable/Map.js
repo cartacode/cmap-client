@@ -28,6 +28,7 @@ export const defaultLocation = {
 
 export default class Map extends React.PureComponent {
   static propTypes = {
+    setOneLocation: PropTypes.func,
     size: PropTypes.number,
     toolBarOptions: PropTypes.object,
     viewerId: PropTypes.string.isRequired,
@@ -107,6 +108,15 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
+    
+    if(this.props.setOneLocation) {
+      removePinById('IR-GRID-COORDS', this.props.viewerId);
+      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId);
+      
+      //placeholder for future code
+      const returnObj = [{city:'',id:''},{city:'',id:''}];
+      this.props.setOneLocation(returnObj, worldPosition);
+    }
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{

@@ -527,7 +527,13 @@ setNAIPOIANDGirdCordinateBasedMapSelection = (locationsData, currentLatLong) => 
       POI2_ID: locationsData[1].id || 'no value',
     },
   });
+  
+  const gridCoords = document.getElementsByName('gridCoordinates')[0];
 
+  if(gridCoords) {
+    gridCoords.value = currentLatLong.latitude + ',' + currentLatLong.longitude;
+  }
+  
   console.log('update intelRequest proprty ' + JSON.stringify(intelRequest));                                                                                                                 
 }
 

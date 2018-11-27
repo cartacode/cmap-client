@@ -292,7 +292,7 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
 function attachLeftClick(viewer, viewerId, leftClickHandler) {
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
   screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
-    var cartesian = viewer.scene.pickPosition(movement.position);
+    let cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
 
     if (Cesium.defined(cartesian)) {
       var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
