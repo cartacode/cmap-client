@@ -4,8 +4,8 @@ import uuid from 'uuid/v4';
 import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
-import {addKML} from 'map/kml';
-import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap} from 'map/viewer';
+//import {addKML} from 'map/kml';
+import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML} from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -41,6 +41,7 @@ export default class Map extends React.PureComponent {
     this.lookUpMode = this.lookUpMode.bind(this);
     this.state = {
       performKMLLookUp: false,
+      KMLDataSrcCollection: [],
     };
     this.MAP_EVENTS = {
       LEFT_DOUBLE_CLICK : this.dblClickCallback,
@@ -62,7 +63,7 @@ export default class Map extends React.PureComponent {
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
 
     //add pin for current user's home location
-    addNewPin(init_latitude, init_longitude, 'town', Cesium.Color.BLUE, 'home', this.props.viewerId);
+    addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'home', this.props.viewerId);
     
     if(!(!this.props.toolBarOptions ? true: this.props.toolBarOptions.show)) {
       createTestObject(this.props.viewerId);
@@ -111,7 +112,7 @@ export default class Map extends React.PureComponent {
     
     if(this.props.setOneLocation) {
       removePinById('IR-GRID-COORDS', this.props.viewerId);
-      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId);
+      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId);
       
       //placeholder for future code
       const returnObj = [{city:'',id:''},{city:'',id:''}];
@@ -160,7 +161,7 @@ export default class Map extends React.PureComponent {
     positionMap(lat, long, this.props.viewerId);
   }
 
-  addPin =(lat, long, iconId, pinColor, pinId) =>{
+  addPin =(lat, long, iconId, pinText, pinColor, pinId) =>{
     let color;
     if(pinColor === 'blue') {
       color = Cesium.Color.BLUE;
@@ -172,11 +173,22 @@ export default class Map extends React.PureComponent {
       color = Cesium.Color.YELLOW;
     }
 
-    addNewPin(lat, long, iconId, color, pinId, this.props.viewerId);
+    addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId);
   }
 
   removePin =(pinId) =>{
     removePinById(pinId, this.props.viewerId);
+  }
+
+  addKMLToMap = (kmlSrc, uniqueId) => {
+    addKML(kmlSrc, uniqueId, this.props.viewerId, this.state.KMLDataSrcCollection);
+  }
+
+  removeKMLFromMap = (kmlDataSource) => {
+    const newArr = removeKML(kmlDataSource, this.props.viewerId, this.state.KMLDataSrcCollection);
+    this.setState({
+      KMLDataSrcCollection: newArr
+    });
   }
 
   render() {
@@ -186,7 +198,7 @@ export default class Map extends React.PureComponent {
 
     return (
       <div className="d-flex">
-        {toolbar_show && <SideBarLeftComponent moveMap={this.positionMapToCoords} addPin={this.addPin} removePin={this.removePin} /> }
+        {toolbar_show && <SideBarLeftComponent moveMap={this.positionMapToCoords} addPin={this.addPin} removePin={this.removePin} addKMLToMap={this.addKMLToMap} removeKML={this.removeKMLFromMap} /> }
         <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>

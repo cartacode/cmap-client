@@ -75,7 +75,7 @@ class PersonnelPopupComponent extends React.Component {
             { allPersonnels && allPersonnels.map((item, index) => {
                 this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
                                   Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-                                  'campsite', 'yellow', item.ID);
+                                  'campsite', null, 'yellow', item.ID);
                 
                 return <PlatformPopupItemComponent
                 color={'#FFFF00'}

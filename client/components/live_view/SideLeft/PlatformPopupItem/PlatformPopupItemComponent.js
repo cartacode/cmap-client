@@ -23,13 +23,31 @@ class PlatformPopupItemComponent extends React.Component {
       });
 
       if(newVal) {
-        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinColor, this.props.uniqueID);
+        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
+
+        if(this.props.kmlSrc) {
+          this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+        }
       } else {
         this.props.removePin(this.props.uniqueID);
+
+        if(this.props.kmlSrc) {
+          this.props.removeKML(this.props.uniqueID);
+        }
       }
     } else {
-      this.props.moveMap(this.props.lat, this.props.long);
       e.preventDefault();
+
+      if(this.props.kmlSrc) {
+        this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+
+        this.setState({
+          checked: true,
+        });
+      } else {
+        this.props.moveMap(this.props.lat, this.props.long);
+      }
+
       return;
     }
   }
@@ -58,16 +76,20 @@ PlatformPopupItemComponent.defaultProps = {
 };
 
 PlatformPopupItemComponent.propTypes = {
+  addKML: PropTypes.func,
   addPin: PropTypes.func,
   checked: PropTypes.bool,
   color: PropTypes.string,
   hasColorBall: PropTypes.bool,
+  kmlSrc: PropTypes.string,
   lat: PropTypes.number,
   long: PropTypes.number,
   moveMap: PropTypes.func,
   pinColor: PropTypes.string,
+  pinText: PropTypes.string,
   pinType: PropTypes.string,
   popupText: PropTypes.string,
+  removeKML: PropTypes.func,
   removePin: PropTypes.func,
   textValue: PropTypes.string,
   uniqueID: PropTypes.string,

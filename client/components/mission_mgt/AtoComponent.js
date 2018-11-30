@@ -158,7 +158,16 @@ moveLeft = (row) => {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
-          <Link to={`${editurl}${row.original.IntelRequestID}`}><span className="hand-cursor" >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
+            <span>
+              Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
+              Platform: {row.original.PlatformName ? row.original.PlatformName + (row.original.TailNumber ? ' (' + row.original.TailNumber + ')' : '') : (row.original.SuggestedPlatformName ? row.original.SuggestedPlatformName : 'Not Found')}
+              <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
+              <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
+              <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
+            </span>
+          </ReactTooltip>
         </div>,
       },
       {
@@ -229,10 +238,16 @@ moveLeft = (row) => {
         maxWidth: 70,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`}    data-tip data-for={row.original.PlatformName?row.original.PlatformName:'Not Found'}><span className="hand-cursor" >{row.value}</span></Link>
-          <ReactTooltip id={row.original.PlatformName?row.original.PlatformName:'Not Found'} type='warning'>
-                                 <span>{row.original.PlatformName?row.original.PlatformName:'Not Found'}</span>
-                             </ReactTooltip>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
+            <span>
+              Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
+              Platform: {row.original.PlatformName ? row.original.PlatformName + (row.original.TailNumber ? ' (' + row.original.TailNumber + ')' : '') : (row.original.SuggestedPlatformName ? row.original.SuggestedPlatformName : 'Not Found')}
+              <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
+              <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
+              <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
+            </span>
+          </ReactTooltip>
         </div>,
       },
       {

@@ -2,6 +2,7 @@ import React from 'react';
 
 import PlatformPopupComponent from './PlatformPopup';
 import PersonnelPopupComponent from './PersonnelPopup';
+import MissionPopupComponent from './MissionPopup';
 
 import './SideBarLeftComponent.scss';
 
@@ -131,6 +132,19 @@ class SideBarLeftComponent extends React.Component {
           moveMap={this.props.moveMap}
           addPin={this.props.addPin}
           removePin={this.props.removePin}
+        />
+
+        <MissionPopupComponent
+          popupOpen={this.state.popupOpen}
+          menuClicked={this.state.menuClicked[1]}
+          onPopup={this.onPopup}
+          hasBall={this.state.hasBall}
+          hasToggle={this.state.hasToggle}
+          moveMap={this.props.moveMap}
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
+          addKML={this.props.addKMLToMap}
+          removeKML={this.props.removeKML}
         />
       </div>
     );

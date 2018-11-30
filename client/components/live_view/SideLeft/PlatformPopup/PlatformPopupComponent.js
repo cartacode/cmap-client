@@ -66,7 +66,7 @@ class PlatformPopupComponent extends React.Component {
           { allPlatformInventory && allPlatformInventory.map((item, index) => {
              this.props.addPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
                                Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
-                               'airport', 'green', item.id);
+                               'airport', null, 'green', item.id);
 
              return <PlatformPopupItemComponent
               color={'#008000'}

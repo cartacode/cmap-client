@@ -225,6 +225,53 @@ export function initialViewer(viewerId) {
       //Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
     )
   });
+
+  Cesium.KmlDataSource.load('7WondersoftheWorldTour.kmz',
+  {
+       camera: viewer.scene.camera,
+       canvas: viewer.scene.canvas
+  }).then(function(kml) {
+    //kml.entities.values.forEach(item => {
+    //  console.log(item);
+    //  viewer.dataSources.add(item);
+    //});
+    
+  });
+
+  
+}
+
+var kmlDataSourceCollection = [];
+
+export function addKML(KMLSource, dataSourceID, viewerId, KMLDSCollection) {
+  console.log('ba', KMLDSCollection);
+  if(kmlDataSourceCollection.findIndex(x => x.id === dataSourceID) < 0) {
+    const viewer = viewers.get(viewerId);
+    Cesium.when(viewer.dataSources.add(Cesium.KmlDataSource.load(KMLSource,
+      {
+            camera: viewer.scene.camera,
+            canvas: viewer.scene.canvas
+      })
+    ), function(datasource) {
+      KMLDSCollection.push({
+        id: dataSourceID,
+        dataSource: datasource
+      });
+      viewer.flyTo(datasource);
+      console.log('aa', KMLDSCollection);
+    });
+  }
+}
+
+export function removeKML(dataSourceID, viewerId, KMLDSCollection) {
+  const viewer = viewers.get(viewerId);
+  const dataSource = KMLDSCollection.find(x => x.id === dataSourceID);
+  console.log('br', KMLDSCollection, dataSourceID, (KMLDSCollection[0].id === dataSourceID));
+  if(dataSource) {
+    viewer.dataSources.remove(dataSource.dataSource, true);
+    return KMLDSCollection.filter(x => x !== dataSourceID);
+    //console.log('ar', KMLDSCollection, removed);
+  }
 }
 
 export function positionMap(latitude, longitude, viewerId) {
@@ -232,31 +279,35 @@ export function positionMap(latitude, longitude, viewerId) {
   viewer.camera.flyTo({
     destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 15000.0)
   });
-
-  /*viewer.camera.setView({
-    destination : Cesium.Cartesian3.fromDegrees(
-      longitude,
-      latitude,
-      10000
-      //(Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height/2)
-    )
-  });*/
 }
 
-export function addNewPin(latitude, longitude, iconId, color, pinId, viewerId) {
+export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId) {
   const viewer = viewers.get(viewerId);
   const pinBuilder = new Cesium.PinBuilder();
 
-  Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), function(canvas) {
-    return viewer.entities.add({
+  if(!pinText) {
+    Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), function(canvas) {
+      return viewer.entities.add({
+          id : pinId,   
+          position : Cesium.Cartesian3.fromDegrees(longitude, latitude),
+          billboard : {
+              image : canvas.toDataURL(),
+              verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+          }
+      });
+    });
+  } else {
+    Cesium.when(pinBuilder.fromText(pinText, color, 36), function(canvas) {
+      return viewer.entities.add({
         id : pinId,   
         position : Cesium.Cartesian3.fromDegrees(longitude, latitude),
         billboard : {
             image : canvas.toDataURL(),
             verticalOrigin : Cesium.VerticalOrigin.BOTTOM
         }
+      });
     });
-  });
+  }
 }
 
 export function removePinById(pinId, viewerId) {

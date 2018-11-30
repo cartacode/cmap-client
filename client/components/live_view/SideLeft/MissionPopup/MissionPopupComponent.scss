@@ -1,5 +1,5 @@
-/* Personnel Popup */
-.personnel-popup-block {
+/* mission Popup */
+.mission-popup-block {
     position: absolute;
     z-index: 1;
     top: 40px;
@@ -11,11 +11,11 @@
     background: #022033;
     transition: left 0.2s;
   }
-  .personnel-popup-block.opened {
+  .mission-popup-block.opened {
     left: 63px;
   }
   
-  .personnel-popup-block .title-block {
+  .mission-popup-block .title-block {
     font-family: 'benderbold', sans-serif;
     font-size: 13px;
     position: relative;
@@ -24,7 +24,7 @@
     color: #b4fafe;
     background: #012742;
   }
-  .personnel-popup-block .title-block .btn-close {
+  .mission-popup-block .title-block .btn-close {
     position: absolute;
     top: 6px;
     right: 12px;
@@ -33,7 +33,7 @@
     cursor: pointer;
     background: #13334a;
   }
-  .personnel-popup-block .title-block .btn-close:before {
+  .mission-popup-block .title-block .btn-close:before {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -44,23 +44,23 @@
     content: '';
     background: url(/assets/img/live_view/close_icon.png) no-repeat;
   }
-  .personnel-popup-block .title-block .btn-close:hover:before {
+  .mission-popup-block .title-block .btn-close:hover:before {
     background-position: 0 -10px;
   }
   
   /* SelectMenu Block */
-  .personnel-popup-block .selectmenu-block {
+  .mission-popup-block .selectmenu-block {
     padding: 16px;
   }
-  .personnel-popup-block .selectmenu-block p {
+  .mission-popup-block .selectmenu-block p {
     font-size: 14px;
     margin-bottom: 10px;
     color: #6ca6b5;
   }
-  .personnel-popup-block #selectmenu {
+  .mission-popup-block #selectmenu {
     display: none;
   }
-  .personnel-popup-block .ui-selectmenu-button.ui-button {
+  .mission-popup-block .ui-selectmenu-button.ui-button {
     font-size: 14px;
     position: relative;
     box-sizing: border-box;
@@ -72,7 +72,7 @@
     outline: none;
     background: #13334a;
   }
-  .personnel-popup-block .ui-selectmenu-button.ui-button:before {
+  .mission-popup-block .ui-selectmenu-button.ui-button:before {
     position: absolute;
     top: 50%;
     right: 16px;
@@ -86,7 +86,7 @@
     -ms-transition: .2s;
     -o-transition: .2s;
   }
-  .personnel-popup-block .ui-selectmenu-button-open:before {
+  .mission-popup-block .ui-selectmenu-button-open:before {
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
