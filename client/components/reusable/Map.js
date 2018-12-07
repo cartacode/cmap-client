@@ -5,7 +5,7 @@ import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML} from 'map/viewer';
+import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, toggleShowEntity } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -41,7 +41,6 @@ export default class Map extends React.PureComponent {
     this.lookUpMode = this.lookUpMode.bind(this);
     this.state = {
       performKMLLookUp: false,
-      KMLDataSrcCollection: [],
     };
     this.MAP_EVENTS = {
       LEFT_DOUBLE_CLICK : this.dblClickCallback,
@@ -181,14 +180,12 @@ export default class Map extends React.PureComponent {
   }
 
   addKMLToMap = (kmlSrc, uniqueId) => {
-    addKML(kmlSrc, uniqueId, this.props.viewerId, this.state.KMLDataSrcCollection);
+    addKML(kmlSrc, uniqueId, this.props.viewerId);
   }
 
   removeKMLFromMap = (kmlDataSource) => {
-    const newArr = removeKML(kmlDataSource, this.props.viewerId, this.state.KMLDataSrcCollection);
-    this.setState({
-      KMLDataSrcCollection: newArr
-    });
+    // removeKML(kmlDataSource, this.props.viewerId, this.state.KMLDataSrcCollection);
+    toggleShowEntity(kmlDataSource, false, this.props.viewerId);
   }
 
   render() {

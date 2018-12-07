@@ -15,7 +15,13 @@ class PlatformPopupItemComponent extends React.Component {
     };
   }
 
-  onChangeState = (e) => {
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      checked: nextProps.checked,
+    });
+  }
+
+  onRowChangeState = (e) => {
     if (e.target.classList.contains('checkbox-default')) {
       const newVal = !this.state.checked;
       this.setState({
@@ -23,16 +29,16 @@ class PlatformPopupItemComponent extends React.Component {
       });
 
       if(newVal) {
-        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
-
         if(this.props.kmlSrc) {
           this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+        } else {
+          this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
         }
       } else {
-        this.props.removePin(this.props.uniqueID);
-
         if(this.props.kmlSrc) {
           this.props.removeKML(this.props.uniqueID);
+        } else {
+          this.props.removePin(this.props.uniqueID);
         }
       }
     } else {
@@ -52,10 +58,29 @@ class PlatformPopupItemComponent extends React.Component {
     }
   }
 
+  onChangeState = (state) => {
+    if(state) {
+      if(this.props.kmlSrc) {
+        this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+      } else {
+        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
+      }
+    } else {
+      if(this.props.kmlSrc) {
+        this.props.removeKML(this.props.uniqueID);
+      } else {
+        this.props.removePin(this.props.uniqueID);
+      }
+    }
+  }
+
   render() {
     const { color, popupText, textValue, hasColorBall } = this.props;
+
+    this.onChangeState(this.state.checked);
+
     return (
-      <div className="popup-item" onClick={(e)=>this.onChangeState(e)}>
+      <div className="popup-item" onClick={(e)=>this.onRowChangeState(e)}>
         {
           hasColorBall && <i style={{ background: color }} />
         }
@@ -63,7 +88,6 @@ class PlatformPopupItemComponent extends React.Component {
         <span className="info-icon" data-tip={popupText} />
         <CheckBox
           defaultValue={this.state.checked}
-          onChangeState={this.onChangeState}
         />
         <ReactTooltip className={'popup-toggle'} />
       </div>

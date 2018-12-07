@@ -10,66 +10,62 @@ import './MissionPopupComponent.scss';
 
 class MissionPopupComponent extends React.Component {
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        showAll: true,
-      };
-    }
-  
-    componentDidMount() {
-        this.props.fetchMissionSummary();
-    }
-  
-    onChangeShowAll = (state) => {
-      console.log(state);
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAll: false,
+    };
+  }
+
+  componentDidMount() {
+    this.props.fetchMissionSummary();
+  }
+
+  onChangeState = (state) => {
+    this.setState({
+      showAll: state,
+    }, () => {
       if(state) {
-  
+        this.props.addKML('', 'MISSIONS-PARENT');
       } else {
-          (this.props.allMissionSummary) ? this.props.allMissionSummary.forEach(item => {
-              console.log(item.ID);
-              this.props.removePin(item.ID);
-          }) : null;
+        this.props.removeKML('MISSIONS-PARENT');
       }
-  
-      this.setState({
-        showAll: state,
-      });
+    });
+  }
+
+  convertDMSToDD = (degrees, minutes, seconds, direction) => {
+    let dd = Number(degrees) + (minutes / 60) + (seconds / 3600);
+
+    if (direction === 'S' || direction === 'W') {
+      dd *= -1;
+    } // Don't do anything for N or E
+
+    return Number(dd);
+  }
+
+  getLatLongFromGridCoords = (gridCoords) => {
+    const returnObj = {
+      latitude: 0,
+      longitude: 0,
+    };
+
+    if(!gridCoords) {
+      return returnObj;
     }
-  
-    convertDMSToDD = (degrees, minutes, seconds, direction) => {
-        let dd = Number(degrees) + (minutes / 60) + (seconds / 3600);
 
-        if (direction === 'S' || direction === 'W') {
-            dd = dd * -1;
-        } // Don't do anything for N or E
+    if(gridCoords.includes('°')) {
+      const parts = gridCoords.split(/[^\d\w]+/);
 
-        return Number(dd);
-    }
+      returnObj.latitude = this.convertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
+      returnObj.longitude = this.convertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
+    } else if(gridCoords.includes(',')) {
+      const parts = gridCoords.split(',');
+      returnObj.latitude = Number(parts[0]);
+      returnObj.longitude = Number(parts[1]);
+    } 
 
-    getLatLongFromGridCoords = (gridCoords) => {
-        let returnObj = {
-            latitude: 0,
-            longitude: 0,
-        };
-
-        if(!gridCoords) {
-            return returnObj;
-        }
-
-        if(gridCoords.includes('°')) {
-            const parts = gridCoords.split(/[^\d\w]+/);
-        
-            returnObj.latitude = this.convertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
-            returnObj.longitude = this.convertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
-        } else if(gridCoords.includes(',')) {
-            const parts = gridCoords.split(',');
-            returnObj.latitude = Number(parts[0]);
-            returnObj.longitude = Number(parts[1]);
-        } 
-
-        return returnObj;
-    }
+    return returnObj;
+  }
 
     render() {
         const { allMissionSummary } = this.props;
@@ -100,7 +96,7 @@ class MissionPopupComponent extends React.Component {
                   <span className="mr-4">Show All</span>
                   <CheckBox
                     defaultValue={this.state.showAll}
-                    onChangeState={this.onChangeShowAll}
+                    onChangeState={this.onChangeState}
                   />
                 </div>
             }
@@ -118,7 +114,7 @@ class MissionPopupComponent extends React.Component {
                   return <PlatformPopupItemComponent
                   color={'#FF0000'}
                   textValue={item.MissionName}
-                  checked={false}
+                  checked={this.state.showAll}
                   hasColorBall={this.props.hasBall}
                   popupText={'Start: ' + formatDateTime(item.StartDate) + ' End: ' + formatDateTime(item.EndDate) + ' Status: ' + item.Status}
                   lat={latLong.latitude}

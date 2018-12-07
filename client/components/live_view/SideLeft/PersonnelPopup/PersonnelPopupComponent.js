@@ -17,22 +17,18 @@ class PersonnelPopupComponent extends React.Component {
   }
 
   componentDidMount() {
-      this.props.fetchPersonnels();
+    this.props.fetchPersonnels();
   }
 
   onChangeShowAll = (state) => {
-    console.log(state);
-    if(state) {
-
-    } else {
-        (this.props.allPersonnels) ? this.props.allPersonnels.forEach(item => {
-            console.log(item.ID);
-            this.props.removePin(item.ID);
-        }) : null;
-    }
-
     this.setState({
       showAll: state,
+    }, () => {
+      if(state) {
+        this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
+      } else {
+        this.props.removePin('PERSONNEL-PARENT');
+      }
     });
   }
 
@@ -72,28 +68,28 @@ class PersonnelPopupComponent extends React.Component {
         </div>
 
         <div className="checklist-block">
-            { allPersonnels && allPersonnels.map((item, index) => {
-                this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
-                                  Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-                                  'campsite', null, 'yellow', item.ID);
-                
-                return <PlatformPopupItemComponent
-                color={'#FFFF00'}
-                textValue={(item.rank !== 'Unknown' ? (item.rank + ' ') : '') + item.firstName + ' ' + item.lastName}
-                checked={true}
-                hasColorBall={this.props.hasBall}
-                popupText={(item.deployedUnit !== null ? 'Deployed Unit: ' + item.deployedUnit : (item.assignedUnit !== null ? 'Assigned Unit: ' + item.assignedUnit : ''))}
-                lat={Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude)}
-                long={Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude)}
-                uniqueID={item.ID}
-                pinColor={'yellow'}
-                pinType={'campsite'}
-                moveMap={this.props.moveMap}
-                addPin={this.props.addPin}
-                removePin={this.props.removePin}
-                key={index}
+          { allPersonnels && allPersonnels.map((item, index) => {
+            this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
+              Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
+              'campsite', null, 'yellow', item.ID);
+
+            return <PlatformPopupItemComponent
+              color={'#FFFF00'}
+              textValue={(item.rank !== 'Unknown' ? (item.rank + ' ') : '') + item.firstName + ' ' + item.lastName}
+              checked={this.state.showAll}
+              hasColorBall={this.props.hasBall}
+              popupText={(item.deployedUnit !== null ? 'Deployed Unit: ' + item.deployedUnit : (item.assignedUnit !== null ? 'Assigned Unit: ' + item.assignedUnit : ''))}
+              lat={Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude)}
+              long={Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude)}
+              uniqueID={item.ID}
+              pinColor={'yellow'}
+              pinType={'campsite'}
+              moveMap={this.props.moveMap}
+              addPin={this.props.addPin}
+              removePin={this.props.removePin}
+              key={index}
             />;
-            }) }
+          }) }
         </div>
       </div>
     );
@@ -111,14 +107,14 @@ PersonnelPopupComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-    return {
-        allPersonnels: state.personnels.allPersonnels,
-        isLoading: state.personnels.isFetching,
-    };
+  return {
+    allPersonnels: state.personnels.allPersonnels,
+    isLoading: state.personnels.isFetching,
   };
-  
-  const mapDispatchToProps = {
-    fetchPersonnels,
-  };
+};
+
+const mapDispatchToProps = {
+  fetchPersonnels,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonnelPopupComponent);

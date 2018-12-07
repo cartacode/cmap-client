@@ -23,6 +23,12 @@ class PlatformPopupComponent extends React.Component {
   onChangeShowAll = (state) => {
     this.setState({
       showAll: state,
+    }, () => {
+      if(state) {
+        this.props.addPin(0, 0, null, null, null, 'PLATFORMS-PARENT');
+      } else {
+        this.props.removePin('PLATFORMS-PARENT');
+      }
     });
   }
 
@@ -71,7 +77,7 @@ class PlatformPopupComponent extends React.Component {
              return <PlatformPopupItemComponent
               color={'#008000'}
               textValue={item.name}
-              checked={true}
+              checked={this.state.showAll}
               hasColorBall={this.props.hasBall}
               popupText={'Location: ' + item.location + ' Tail #: ' + item.tailNbr + ' Status: ' + item.StatusAbbrev}
               lat={Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude)}

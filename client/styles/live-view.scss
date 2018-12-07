@@ -1109,3 +1109,36 @@ button.btn-delete {
 button.btn-save {
   background: #FF7C16 !important;
 }
+
+.cesium-viewer-infoBoxContainer {
+  position: absolute;
+  top: 0px;
+  background: #6CA6B5 !important;
+  color: #FFF;
+  border: 1px solid #FFF;
+}
+
+.cesium-viewer-infoBoxContainer .cesium-infoBox-camera {
+  display: none;
+}
+
+.cesium-viewer-infoBoxContainer .cesium-infoBox-iframe {
+  overflow: hidden;
+  border: none;
+  height: 75px!important;
+}
+
+.cesium-viewer-infoBoxContainer .cesium-infoBox-close {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  margin-right: 0 !important;
+}
+
+.cesium-viewer-infoBoxContainer .cesium-infoBox-title {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: underline;
+}

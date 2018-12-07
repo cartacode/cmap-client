@@ -30,7 +30,7 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,liveViewToolBar) {
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, liveViewToolBar) {
   if (viewers.has(viewerId)) {
     return;
   }
@@ -38,13 +38,12 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     animation: false,
     fullscreenButton: false,
     baseLayerPicker: false,
-    fullscreenButton: false,
     geocoder: false,
     homeButton: true,
     infoBox: false,
     sceneModePicker: false,
     selectionIndicator: false,
-    navigationHelpButton : false,
+    navigationHelpButton: false,
     timeline: false,
     shadows: true,
     //imageryProvider: new Cesium.WebMapServiceImageryProvider({
@@ -54,9 +53,9 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
       //  url: getImageryurl(),
       //})
     imageryProvider: new Cesium.BingMapsImageryProvider({
-      url : 'https://dev.virtualearth.net',
-      key : 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
-      mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+      url: 'https://dev.virtualearth.net',
+      key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
+      mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
     })
   });
   // extend our view by the cesium navigation mixin
@@ -114,17 +113,17 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
       billboard.setEditable();
     });
     toolbar.addListener('polylineCreated', function(event) {
-        loggingMessage('Polyline created with ' + event.positions.length + ' points');
-        var polyline = new DrawHelper.PolylinePrimitive({
-            positions: event.positions,
-            width: 5,
-            geodesic: true
-        });
-        scene.primitives.add(polyline);
-        polyline.setEditable();
-        polyline.addListener('onEdited', function(event) {
-            loggingMessage('Polyline edited, ' + event.positions.length + ' points');
-        });
+      loggingMessage('Polyline created with ' + event.positions.length + ' points');
+      var polyline = new DrawHelper.PolylinePrimitive({
+          positions: event.positions,
+          width: 5,
+          geodesic: true
+      });
+      scene.primitives.add(polyline);
+      polyline.setEditable();
+      polyline.addListener('onEdited', function(event) {
+          loggingMessage('Polyline edited, ' + event.positions.length + ' points');
+      });
     });
     toolbar.addListener('polygonCreated', function(event) {
         loggingMessage('Polygon created with ' + event.positions.length + ' points');
@@ -226,51 +225,100 @@ export function initialViewer(viewerId) {
     )
   });
 
-  Cesium.KmlDataSource.load('7WondersoftheWorldTour.kmz',
-  {
-       camera: viewer.scene.camera,
-       canvas: viewer.scene.canvas
-  }).then(function(kml) {
-    //kml.entities.values.forEach(item => {
-    //  console.log(item);
-    //  viewer.dataSources.add(item);
-    //});
-    
-  });
-
-  
+  // Add parent nodes to handle panel toggle all on/off
+  viewer.entities.add({ id: 'MISSIONS-PARENT' });
+  viewer.entities.add({ id: 'PLATFORMS-PARENT' });
+  viewer.entities.add({ id: 'PERSONNEL-PARENT' });
 }
 
-var kmlDataSourceCollection = [];
+export function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false) {
+  const viewer = viewers.get(viewerId);
+  const existingEntity = viewer.entities.getById(dataSourceID);
 
-export function addKML(KMLSource, dataSourceID, viewerId, KMLDSCollection) {
-  console.log('ba', KMLDSCollection);
-  if(kmlDataSourceCollection.findIndex(x => x.id === dataSourceID) < 0) {
-    const viewer = viewers.get(viewerId);
-    Cesium.when(viewer.dataSources.add(Cesium.KmlDataSource.load(KMLSource,
+  if(!existingEntity) {
+    Cesium.when(Cesium.KmlDataSource.load(KMLSource,
       {
-            camera: viewer.scene.camera,
-            canvas: viewer.scene.canvas
-      })
-    ), function(datasource) {
-      KMLDSCollection.push({
+        camera: viewer.scene.camera,
+        canvas: viewer.scene.canvas,
+      }
+    ), (kml) => {
+      const missionParent = viewer.entities.getById('MISSIONS-PARENT');
+      const parentEntity = viewer.entities.add({
         id: dataSourceID,
-        dataSource: datasource
+        parent: missionParent,
       });
-      viewer.flyTo(datasource);
-      console.log('aa', KMLDSCollection);
+
+      kml.entities.values.forEach(item => {
+        if(Cesium.defined(item.position)) {
+          // console.log("position defined", item.billboard.image, item.id, item.position);
+          addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap);
+        } else if (Cesium.defined(item.polyline)) {
+          // Placemark with LineString geometry    
+          // console.log("polyline defined");
+          addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap);
+        }
+        else if (Cesium.defined(item.polygon)) {
+          // Placemark with Polygon geometry
+          // console.log("polygon defined");
+          addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap);
+        } else if (Cesium.defined(item.wall)) {
+          // console.log("wall defined");
+          addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap);
+        }
+      });
     });
+  } else {
+    toggleShowEntity(dataSourceID, true, viewerId);
+
+    if(bMoveMap) {
+      viewer.flyTo(existingEntity);
+    }
   }
 }
 
-export function removeKML(dataSourceID, viewerId, KMLDSCollection) {
+export function removeKML(dataSourceID, viewerId) {
   const viewer = viewers.get(viewerId);
-  const dataSource = KMLDSCollection.find(x => x.id === dataSourceID);
-  console.log('br', KMLDSCollection, dataSourceID, (KMLDSCollection[0].id === dataSourceID));
-  if(dataSource) {
-    viewer.dataSources.remove(dataSource.dataSource, true);
-    return KMLDSCollection.filter(x => x !== dataSourceID);
-    //console.log('ar', KMLDSCollection, removed);
+
+  const children = viewer.entities.values.filter((x) => x.parent && x.parent.id === dataSourceID);
+
+  children.forEach(item => {
+    viewer.entities.removeById(item.id);
+  });
+
+  viewer.entities.removeById(dataSourceID);
+}
+
+const toggleEntityParents = (entityId, bDisplay, viewerId) => {
+  const viewer = viewers.get(viewerId);
+  const entity = viewer.entities.getById(entityId);
+
+  if(entity.parent) {
+    toggleEntityParents(entity.parent.id, bDisplay, viewerId);
+  }
+
+  entity.show = bDisplay;
+};
+
+const toggleEntityChildren = (entityId, bDisplay, viewerId) => {
+  const viewer = viewers.get(viewerId);
+  const children = viewer.entities.values.filter((x) => x.parent && x.parent.id === entityId);
+
+  children.forEach(item => {
+    toggleEntityChildren(item.id, bDisplay, viewerId);
+  });
+
+  viewer.entities.getById(entityId).show = bDisplay;
+};
+
+export function toggleShowEntity(entityId, bDisplay, viewerId) {
+  const viewer = viewers.get(viewerId);
+
+  if(viewer.entities.getById(entityId)) {
+    toggleEntityChildren(entityId, bDisplay, viewerId);
+
+    if(bDisplay) {
+      toggleEntityParents(entityId, bDisplay, viewerId);
+    }
   }
 }
 
@@ -281,38 +329,149 @@ export function positionMap(latitude, longitude, viewerId) {
   });
 }
 
-export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId) {
+export function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity, bMoveMap = false) {
   const viewer = viewers.get(viewerId);
-  const pinBuilder = new Cesium.PinBuilder();
 
-  if(!pinText) {
-    Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), function(canvas) {
-      return viewer.entities.add({
-          id : pinId,   
-          position : Cesium.Cartesian3.fromDegrees(longitude, latitude),
-          billboard : {
-              image : canvas.toDataURL(),
-              verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+  const newEntity = viewer.entities.add({
+    id: polygonId,
+    name: labelText,
+    polygon: polygon,
+    parent: parentEntity,
+  });
+
+  if(bMoveMap) {
+    viewer.flyTo(newEntity);
+  }
+}
+
+export function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMoveMap = false) {
+  const viewer = viewers.get(viewerId);
+
+  const newEntity = viewer.entities.add({
+    id: lineId,
+    name: labelText,
+    label: {
+      text: labelText,
+      font: 'small-caps bold 24px/1 sans-serif',
+      verticalOrigin: Cesium.VerticalOrigin.TOP,
+      scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.4, 1.5e7, 0.7),
+      pixelOffset: new Cesium.Cartesian2(0, 10),
+      fillColor: Cesium.Color.DARKBLUE,
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 1.0,
+    },
+    polyline: line,
+    parent: parentEntity,
+  });
+
+  if(bMoveMap) {
+    viewer.flyTo(newEntity);
+  }
+}
+
+export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false) {
+  const viewer = viewers.get(viewerId);
+
+  const newEntity = viewer.entities.add({
+    id: wallId,
+    label: {
+      text: labelText,
+      font: 'small-caps bold 24px/1 sans-serif',
+      verticalOrigin: Cesium.VerticalOrigin.TOP,
+      scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.4, 1.5e7, 0.7),
+      pixelOffset: new Cesium.Cartesian2(0, 10),
+      fillColor: Cesium.Color.DARKBLUE,
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 1.0,
+    },
+    wall: wall,
+    description: '<strong>Test 1 2 3</strong><br/>Another line testing',
+    name: labelText,
+    parent: parentEntity,
+  });
+
+  if(bMoveMap) {
+    viewer.flyTo(newEntity);
+  }
+}
+
+export function addNewPinByPosition(position, billboard, pinText, pinId, viewerId, parentEntity, bMoveMap = false) {
+  const viewer = viewers.get(viewerId);
+
+  const newEntity = viewer.entities.add({
+    id: pinId,
+    position: position,
+    label: {
+      text: pinText,
+      font: 'small-caps bold 24px/1 sans-serif',
+      verticalOrigin: Cesium.VerticalOrigin.TOP,
+      scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.4, 1.5e7, 0.7),
+      pixelOffset: new Cesium.Cartesian2(0, 10),
+      fillColor: Cesium.Color.DARKBLUE,
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 1.0,
+    },
+    billboard: billboard,
+    parent: parentEntity,
+  });
+
+  if(bMoveMap) {
+    viewer.flyTo(newEntity);
+  }
+}
+
+export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, bMoveMap = false) {
+  const viewer = viewers.get(viewerId);
+  let entity = (pinId ? viewer.entities.getById(pinId) : null);
+
+  if(!entity) {
+    const pinBuilder = new Cesium.PinBuilder();
+
+    if(!pinText) {
+      Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), (canvas) => {
+        entity = viewer.entities.add({
+          id: pinId,
+          position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+          billboard: {
+            image: canvas.toDataURL(),
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          },
+        }).then(() => {
+          if(bMoveMap) {
+            positionMap(latitude, longitude, viewerId);
           }
+        });
       });
-    });
+    } else {
+      Cesium.when(pinBuilder.fromText(pinText, color, 36), (canvas) => {
+        entity = viewer.entities.add({
+          id: pinId,
+          position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+          billboard: {
+            image: canvas.toDataURL(),
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          },
+        }).then(() => {
+          if(bMoveMap) {
+            positionMap(latitude, longitude, viewerId);
+          }
+        });
+      });
+    }
   } else {
-    Cesium.when(pinBuilder.fromText(pinText, color, 36), function(canvas) {
-      return viewer.entities.add({
-        id : pinId,   
-        position : Cesium.Cartesian3.fromDegrees(longitude, latitude),
-        billboard : {
-            image : canvas.toDataURL(),
-            verticalOrigin : Cesium.VerticalOrigin.BOTTOM
-        }
-      });
-    });
+    toggleShowEntity(pinId, true, viewerId);
+
+    if(bMoveMap) {
+      positionMap(latitude, longitude, viewerId);
+    }
   }
 }
 
 export function removePinById(pinId, viewerId) {
-  const viewer = viewers.get(viewerId);
-  viewer.entities.removeById(pinId);
+  toggleShowEntity(pinId, false, viewerId);
 }
 
 /**
@@ -343,6 +502,11 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
 function attachLeftClick(viewer, viewerId, leftClickHandler) {
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
   screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
+    const pickedObject = viewer.scene.pick(movement.position);
+    console.log(pickedObject);
+    console.log(viewer.infoBox);
+    viewer.infoBox.container.style.top = movement.position.y + 'px';
+    viewer.infoBox.container.style.left = movement.position.x + 'px';
     let cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
 
     if (Cesium.defined(cartesian)) {

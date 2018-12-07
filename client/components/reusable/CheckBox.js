@@ -13,16 +13,15 @@ class CheckBox extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       selected: nextProps.defaultValue,
-    })
-
+    });
   }
 
   handleChange = () => {
     this.setState({
       selected: !this.state.selected,
     }, ()=>{
-      if (this.props.onChangeState) {
-        // this.props.onChangeState(this.state.selected);
+      if (typeof this.props.onChangeState === 'function') {
+        this.props.onChangeState(this.state.selected);
       }
     });
   }
