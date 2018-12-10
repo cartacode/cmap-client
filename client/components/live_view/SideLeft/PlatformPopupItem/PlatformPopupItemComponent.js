@@ -30,9 +30,9 @@ class PlatformPopupItemComponent extends React.Component {
 
       if(newVal) {
         if(this.props.kmlSrc) {
-          this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+          this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
         } else {
-          this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
+          this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText);
         }
       } else {
         if(this.props.kmlSrc) {
@@ -61,9 +61,9 @@ class PlatformPopupItemComponent extends React.Component {
   onChangeState = (state) => {
     if(state) {
       if(this.props.kmlSrc) {
-        this.props.addKML(this.props.kmlSrc, this.props.uniqueID);
+        this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
       } else {
-        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID);
+        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText);
       }
     } else {
       if(this.props.kmlSrc) {
@@ -116,6 +116,8 @@ PlatformPopupItemComponent.propTypes = {
   removeKML: PropTypes.func,
   removePin: PropTypes.func,
   textValue: PropTypes.string,
+  tooltipLabel: PropTypes.string,
+  tooltipText: PropTypes.string,
   uniqueID: PropTypes.string,
 };
 

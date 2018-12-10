@@ -146,6 +146,17 @@ body.small-height .sidebar-left-block li.image-link:after {
 .sidebar-left-block li.missions-link.active a:before {
   background-position: 0 -23px;
 }
+.sidebar-left-block li.intel-req-link a:before {
+  width: 20px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -10px;
+  background: url(/assets/img/live_view/details_icon.png);
+}
+.sidebar-left-block li.intel-req-link:hover a:before,
+.sidebar-left-block li.intel-req-link.active a:before {
+  background-position: 0 -24px;
+}
 .sidebar-left-block li.platforms-link a:before {
   width: 27px;
   height: 23px;

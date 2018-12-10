@@ -13,7 +13,7 @@ class MissionPopupComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAll: false,
+      showAll: true,
     };
   }
 
@@ -130,6 +130,9 @@ class MissionPopupComponent extends React.Component {
                   addKML={this.props.addKML}
                   removeKML={this.props.removeKML}
                   kmlSrc={item.FlightPlan}
+                  tooltipText={'<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
+                  item.MissionName + '<br/>' + item.Platform + '<br/>' + item.MissionType + '<br/>' + item.SupportedUnit +
+                  '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
               />;
               }) }
           </div>

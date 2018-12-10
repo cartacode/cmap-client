@@ -89,6 +89,10 @@ class PlatformPopupComponent extends React.Component {
               addPin={this.props.addPin}
               removePin={this.props.removePin}
               key={index}
+              tooltipLabel={item.name}
+              tooltipText={'<img src="/assets/img/admin/aircraft.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' +
+              item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
+              '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
             />;
           }) }
         </div>

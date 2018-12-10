@@ -40,7 +40,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     baseLayerPicker: false,
     geocoder: false,
     homeButton: true,
-    infoBox: false,
+    infoBox: true,
     sceneModePicker: false,
     selectionIndicator: false,
     navigationHelpButton: false,
@@ -185,7 +185,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   //   layers: 'amps:gis_osm_roads_free_1',
   //   credit : 'Black Marble imagery courtesy NASA Earth Observatory'
   // }));
-  //lebanonRoadsLayer.alpha = 0.3;
+  // lebanonRoadsLayer.alpha = 0.3;
   // Corrects the viewer styling
   viewer.canvas.style.height = '100%';
   viewer.canvas.style.width = '100%';
@@ -195,13 +195,17 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
    * TODO: Move to separate file
    * Attaching double click event on canvas, to retrieve lat, long values
   */
-  if(!liveViewToolBar){
+  if(!liveViewToolBar) {
     attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK);
     attachLeftClick(viewer, viewerId, LEFT_CLICK);
     viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
     viewers.set(viewerId, viewer);
     return viewer;
   }
+
+  Cesium.subscribeAndEvaluate(viewer.infoBox.viewModel, 'clickClosed', (newValue) => {
+    console.log('clicked', newValue);
+  });
 }
 
 export function initialViewer(viewerId) {
@@ -217,21 +221,23 @@ export function initialViewer(viewerId) {
   const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
 
   viewer.camera.setView({
-    destination : Cesium.Cartesian3.fromDegrees(
+    destination: Cesium.Cartesian3.fromDegrees(
       init_longitude,
       init_latitude,
       30000.0
-      //Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
-    )
+      // Cesium.Ellipsoid.WGS84.cartesianToCartographic(viewer.camera.position).height
+    ),
   });
 
   // Add parent nodes to handle panel toggle all on/off
   viewer.entities.add({ id: 'MISSIONS-PARENT' });
   viewer.entities.add({ id: 'PLATFORMS-PARENT' });
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
+
+  viewer.infoBox.container.style.display = 'none';
 }
 
-export function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false) {
+export function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false, tooltipText) {
   const viewer = viewers.get(viewerId);
   const existingEntity = viewer.entities.getById(dataSourceID);
 
@@ -251,19 +257,19 @@ export function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false) {
       kml.entities.values.forEach(item => {
         if(Cesium.defined(item.position)) {
           // console.log("position defined", item.billboard.image, item.id, item.position);
-          addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap);
+          addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         } else if (Cesium.defined(item.polyline)) {
           // Placemark with LineString geometry    
           // console.log("polyline defined");
-          addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap);
+          addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         }
         else if (Cesium.defined(item.polygon)) {
           // Placemark with Polygon geometry
           // console.log("polygon defined");
-          addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap);
+          addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         } else if (Cesium.defined(item.wall)) {
           // console.log("wall defined");
-          addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap);
+          addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         }
       });
     });
@@ -370,7 +376,7 @@ export function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMo
   }
 }
 
-export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false) {
+export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false, tooltipText) {
   const viewer = viewers.get(viewerId);
 
   const newEntity = viewer.entities.add({
@@ -387,7 +393,7 @@ export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMa
       outlineWidth: 1.0,
     },
     wall: wall,
-    description: '<strong>Test 1 2 3</strong><br/>Another line testing',
+    description: tooltipText,
     name: labelText,
     parent: parentEntity,
   });
@@ -423,7 +429,7 @@ export function addNewPinByPosition(position, billboard, pinText, pinId, viewerI
   }
 }
 
-export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, bMoveMap = false) {
+export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
   const viewer = viewers.get(viewerId);
   let entity = (pinId ? viewer.entities.getById(pinId) : null);
 
@@ -439,6 +445,8 @@ export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, vi
             image: canvas.toDataURL(),
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
+          name: tooltipLabel,
+          description: tooltipText,
         }).then(() => {
           if(bMoveMap) {
             positionMap(latitude, longitude, viewerId);
@@ -505,8 +513,15 @@ function attachLeftClick(viewer, viewerId, leftClickHandler) {
     const pickedObject = viewer.scene.pick(movement.position);
     console.log(pickedObject);
     console.log(viewer.infoBox);
-    viewer.infoBox.container.style.top = movement.position.y + 'px';
-    viewer.infoBox.container.style.left = movement.position.x + 'px';
+
+    if(Cesium.defined(pickedObject)) {
+      viewer.infoBox.container.style.top = movement.position.y + 'px';
+      viewer.infoBox.container.style.left = movement.position.x + 'px';
+      viewer.infoBox.container.style.display = 'block';
+    } else {
+      viewer.infoBox.container.style.display = 'none';
+    }
+
     let cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
 
     if (Cesium.defined(cartesian)) {

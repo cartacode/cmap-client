@@ -62,7 +62,7 @@ export default class Map extends React.PureComponent {
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
 
     //add pin for current user's home location
-    addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'home', this.props.viewerId);
+    addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'Home', this.props.viewerId);
     
     if(!(!this.props.toolBarOptions ? true: this.props.toolBarOptions.show)) {
       createTestObject(this.props.viewerId);
@@ -160,7 +160,7 @@ export default class Map extends React.PureComponent {
     positionMap(lat, long, this.props.viewerId);
   }
 
-  addPin =(lat, long, iconId, pinText, pinColor, pinId) =>{
+  addPin =(lat, long, iconId, pinText, pinColor, pinId, tooltipLabel, tooltipText) =>{
     let color;
     if(pinColor === 'blue') {
       color = Cesium.Color.BLUE;
@@ -172,15 +172,15 @@ export default class Map extends React.PureComponent {
       color = Cesium.Color.YELLOW;
     }
 
-    addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId);
+    addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId, tooltipLabel, tooltipText);
   }
 
   removePin =(pinId) =>{
     removePinById(pinId, this.props.viewerId);
   }
 
-  addKMLToMap = (kmlSrc, uniqueId) => {
-    addKML(kmlSrc, uniqueId, this.props.viewerId);
+  addKMLToMap = (kmlSrc, uniqueId, tooltipText) => {
+    addKML(kmlSrc, uniqueId, this.props.viewerId, false, tooltipText);
   }
 
   removeKMLFromMap = (kmlDataSource) => {

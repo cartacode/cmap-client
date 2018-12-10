@@ -88,6 +88,10 @@ class PersonnelPopupComponent extends React.Component {
               addPin={this.props.addPin}
               removePin={this.props.removePin}
               key={index}
+              tooltipLabel={item.firstName + ' ' + item.lastName}
+              tooltipText={'<img src="/assets/img/admin/photo_1_old.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' + item.firstName + ' ' + item.lastName +
+              '<br/>' + item.rank + '<br/>' + item.branchOfService + ' / ' + item.assignedUnit + '<br/>' + item.branchOfService + ' / ' + item.deployedUnit + '<br/>' +
+              item.location + '<br/>' + item.status + '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
             />;
           }) }
         </div>

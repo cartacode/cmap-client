@@ -1113,9 +1113,10 @@ button.btn-save {
 .cesium-viewer-infoBoxContainer {
   position: absolute;
   top: 0px;
-  background: #6CA6B5 !important;
+  background: rgba(40, 72, 98, .9) !important;
   color: #FFF;
-  border: 1px solid #FFF;
+  border: 1px solid #FF7C16;
+  width: 355px;
 }
 
 .cesium-viewer-infoBoxContainer .cesium-infoBox-camera {
@@ -1125,7 +1126,8 @@ button.btn-save {
 .cesium-viewer-infoBoxContainer .cesium-infoBox-iframe {
   overflow: hidden;
   border: none;
-  height: 75px!important;
+  height: 140px!important;
+  width: 360px;
 }
 
 .cesium-viewer-infoBoxContainer .cesium-infoBox-close {
@@ -1138,7 +1140,12 @@ button.btn-save {
 .cesium-viewer-infoBoxContainer .cesium-infoBox-title {
   width: 100%;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   text-decoration: underline;
+  font-family: inherit;
+}
+
+.cesium-infoBox-description a {
+  color: #ff7c16;
 }
