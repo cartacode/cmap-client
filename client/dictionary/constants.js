@@ -11,14 +11,14 @@ export const NoticeType = {
 };
 
 export const DateConsts = {
-  DATE_FORMAT: 'M-D-YY',
+  DATE_FORMAT: 'M/D/YY',
   TIME_FORMAT: 'h:mm A',
-  DATETIME_FORMAT: 'M-D-YY h:mm A',
+  DATETIME_FORMAT: 'MM/DD/YY h:mm A',
   DB_DATETIME_FORMAT: 'YYYY-MM-DDTHH:mm:ss',
   DB_DATE_FORMAT: 'YYYY-MM-DD',
   DB_TIME_FORMAT: 'HH:mm:ss',
-  UI_DATETIME_FORMAT: 'MM-DD-YYYY hh:mm A',
-  UI_DATE_FORMAT: 'MM-DD-YYYY',
+  UI_DATETIME_FORMAT: 'MM/DD/YYYY hh:mm A',
+  UI_DATE_FORMAT: 'MM/DD/YYYY',
   UI_TIME_FORMAT: 'hh:mm A',
 };
 

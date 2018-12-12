@@ -136,6 +136,10 @@ class TimelineFilter extends React.Component {
         accessor: 'Name',
       },
       {
+        Header: translations.unit,
+        accessor: 'OwningUnit',
+      },
+      {
         Header: translations['Tail#'],
         accessor: 'TailNumber',
       },
@@ -159,14 +163,21 @@ class TimelineFilter extends React.Component {
     ] },
     ];
 
-    // remove radio button column if tab is ISR
+    // remove radio button column and tail # if tab is ISR
     if(tab === MissionConsts.TABS.ISR) {
-      sidebarHeader[0].columns.splice(0, 2);
+      sidebarHeader[0].columns.splice(3, 1);
+      sidebarHeader[0].columns.splice(0, 1);
       // sidebarHeader[0].columns.splice(0, 1);
     }
-    // tail # not needed in case of ATO and ISR Sync
-    if(tab !== MissionConsts.TABS.FOP) {
-      sidebarHeader[0].columns.splice(1, 1);
+
+    // remove tail # for ATO
+    if(tab === MissionConsts.TABS.ATO) {
+      sidebarHeader[0].columns.splice(3, 1);
+    }
+
+    // owning unit not needed in case of FOP
+    if(tab === MissionConsts.TABS.FOP) {
+      sidebarHeader[0].columns.splice(2, 1);
     }
 
     return sidebarHeader;

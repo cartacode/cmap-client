@@ -156,7 +156,7 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 70,
+        maxWidth: 50,
         Cell: row => <div className="tooltip-custom">
           <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
@@ -176,23 +176,17 @@ moveLeft = (row) => {
         maxWidth: 80,
       },
       {
-        Header: translations.Command,
-        accessor: 'COCOMText',
-        maxWidth: 150,
+        Header: translations['Supported Unit'],
+        accessor: 'SupportedUnitName',
+        maxWidth: 100,
+      },
+      {
+        Header: translations['Named Operation'],
+        accessor: 'CCIRPIRName',
       },
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
-      },
-      {
-        Header: 'Payload',
-        accessor: 'PrimaryPayloadName',
-      },
-      {
-        Header: translations.Armed,
-        accessor: 'Armed',
-        maxWidth: 80,
-        Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
         Header: translations['Date/Time'],
@@ -201,15 +195,15 @@ moveLeft = (row) => {
           return formatDateTime(d.BestCollectionTime);
         },
       },
-      // {
-      //   Header: translations['Asset'],
-      //   accessor: 'Asset',
-      //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
-      // },
       {
-        Header: translations.status,
-        accessor: 'Status',
-        minWidth: 150,
+        Header: translations.payload,
+        accessor: 'PrimaryPayloadName',
+      },
+      {
+        Header: translations.Armed,
+        accessor: 'Armed',
+        maxWidth: 60,
+        Cell: ({ value }) => (value ? 'Yes' : 'No'),
       },
       {
         Header: translations.Add,
@@ -235,7 +229,7 @@ moveLeft = (row) => {
       {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
-        maxWidth: 70,
+        maxWidth: 50,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
           <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
@@ -256,45 +250,36 @@ moveLeft = (row) => {
         minWidth: 150,
       },
       {
-        Header: translations.Priority,
-        accessor: 'Priority',
+        Header: translations.Location,
+        accessor: 'MissionUnitLocation',
         maxWidth: 80,
       },
       {
-        Header: translations.Command,
-        accessor: 'COCOMText',
+        Header: translations.platform,
+        id: 'PlatformName',
+        accessor: r => {
+          return (r.PlatformName ? r.PlatformName : r.SuggestedPlatformName);
+        },
         maxWidth: 150,
       },
       {
-        Header: translations['Mission Type'],
-        accessor: 'MissionTypeText',
+        Header: translations.payload,
+        accessor: 'PrimaryPayloadAbbreviation',
+        maxWidth: 85,
       },
       {
-        Header: 'Payload',
-        accessor: 'PrimaryPayloadName',
+        Header: translations.payload,
+        accessor: 'SecondaryPayloadAbbreviation',
+        maxWidth: 85,
       },
       {
         Header: translations.Armed,
-        accessor: 'Armed',
-        maxWidth: 80,
-        Cell: ({ value }) => (value ? 'Yes' : 'No'),
-      },
-      {
-        Header: translations['Date/Time'],
-        id: 'BestCollectionTime',
-        accessor: d => {
-          return formatDateTime(d.BestCollectionTime);
+        id: 'Armed',
+        maxWidth: 60,
+        accessor: r => {
+          return ((r.PlatformName) ? ((r.AssgnPlatformArm1 === null && r.AssgnPlatformArm2 === null && r.AssgnPlatformArm3 === null) ? 'No' : 'Yes')
+            : ((r.SuggstdPlatformArm1 === null && r.SuggstdPlatformArm2 === null && r.SuggstdPlatformArm3 === null) ? 'No' : 'Yes'));
         },
-      },
-      // {
-      //   Header: translations['Asset'],
-      //   accessor: 'Asset',
-      //   Cell: ({ value }) => (value ? 'Yes' : 'No'),
-      // },
-      {
-        Header: translations.status,
-        accessor: 'Status',
-        minWidth: 150,
       },
       {
         Header: translations.Remove,
@@ -303,9 +288,7 @@ moveLeft = (row) => {
         maxWidth: 80,
         Cell: row => (
           <div>
-            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>
-           
-           
+            <a href="javaScript:void('0');" className="btn btn-primary" title="Move To Collection Plan" onClick={() => this.moveRight(row)}> <span className="glyphicon glyphicon-circle-arrow-left" /></a>   
             &nbsp;
           </div>
         ),

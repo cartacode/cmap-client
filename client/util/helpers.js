@@ -28,7 +28,7 @@ export const formatDate = (dateObj) => {
 export const formatDateTime = (dateObj) => {
   moment.locale('en');
   // return moment(dateObj).local().format(DateConsts.DATETIME_FORMAT);
-  return moment.utc(dateObj).local().format(DateConsts.DATETIME_FORMAT);;
+  return moment.utc(dateObj).local().format(DateConsts.DATETIME_FORMAT);
 };
 
 export const formatTime = (dateObj) => {

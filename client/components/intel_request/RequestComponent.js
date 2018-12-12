@@ -172,18 +172,18 @@ class RequestComponent extends React.Component {
         },
       },
       {
-        Header: translations.LTIV,
-        id: 'LatestTimeIntelValue',
+        Header: translations['Best Collection Time'],
+        id: 'BestCollectionTime',
         maxWidth: 150,
         accessor: d => {
-          return formatDateTime(d.LatestTimeIntelValue);
+          return formatDateTime(d.BestCollectionTime);
         },
       },
       {
         Header: translations.view,
         accessor: 'IntelRequestID',
         filterable: false,
-        maxWidth: 260,
+        maxWidth: 180,
         Cell: row => <div className="actions-btn">  <Link to={`${editurl}${row.value}`} className="edit-btn" data-tip data-for="edit-btn"><span className="glyphicon glyphicon-edit"/></Link>
         <ReactTooltip id='edit-btn'  type='warning'>
                      <span>Edit</span>
