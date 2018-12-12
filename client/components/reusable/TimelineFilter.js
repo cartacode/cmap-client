@@ -125,35 +125,36 @@ class TimelineFilter extends React.Component {
       {
         Header: translations.select,
         accessor: id,
+        maxWidth: 62,
         Cell: row => <div>
           <input type="radio" id={row.original.id} name="selectedRadio" value={row.value} onChange={() => this.onRadioSelect(row)} />
           <label htmlFor={row.original.id}><span /></label>
         </div>,
       },
       {
-        Header: translations['Tail#'],
-        accessor: 'TailNumber',
-      },
-      {
-        Header: translations.Location,
-        accessor: 'Location',
-      },
-      {
         Header: translations.platform,
         accessor: 'Name',
       },
       {
-        Header: translations.Unit,
-        accessor: 'OwningUnit',
+        Header: translations['Tail#'],
+        accessor: 'TailNumber',
+      },
+      {
+        Header: translations.status,
+        accessor: 'PlatformStatus',
+        maxWidth: 61,
       },
       {
         Header: translations.payload,
         accessor: 'Payload',
       },
       {
-        Header: translations.Armed,
-        accessor: 'IsArmed',
-        Cell: ({ value }) => (value ? 'Yes' : 'No'),
+        Header: translations.payload,
+        accessor: 'Payload2',
+      },
+      {
+        Header: translations.Location,
+        accessor: 'Location',
       },
     ] },
     ];
@@ -182,6 +183,7 @@ class TimelineFilter extends React.Component {
       {
         Header: translations.select,
         accessor: id,
+        maxWidth: 62,
         Cell: row => <div>
           <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
           <label htmlFor={row.original.id}><span /></label>
@@ -203,11 +205,6 @@ class TimelineFilter extends React.Component {
         Header: translations.Type,
         accessor: 'TeamType',
       },
-      {
-        Header: translations.specialization,
-        accessor: 'Specialization',
-      },
-
     ] },
     ];
 
