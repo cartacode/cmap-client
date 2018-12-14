@@ -25,7 +25,7 @@ class PersonnelPopupComponent extends React.Component {
       showAll: state,
     }, () => {
       if(state) {
-        this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
+        // this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
       } else {
         this.props.removePin('PERSONNEL-PARENT');
       }
@@ -71,10 +71,10 @@ class PersonnelPopupComponent extends React.Component {
           { allPersonnels && allPersonnels.map((item, index) => {
             this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
               Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-              'campsite', null, 'yellow', item.ID);
+              'campsite', null, 'orange', item.ID);
 
             return <PlatformPopupItemComponent
-              color={'#FFFF00'}
+              color={'#FFA500'}
               textValue={(item.rank !== 'Unknown' ? (item.rank + ' ') : '') + item.firstName + ' ' + item.lastName}
               checked={this.state.showAll}
               hasColorBall={this.props.hasBall}
@@ -82,7 +82,7 @@ class PersonnelPopupComponent extends React.Component {
               lat={Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude)}
               long={Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude)}
               uniqueID={item.ID}
-              pinColor={'yellow'}
+              pinColor={'orange'}
               pinType={'campsite'}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}

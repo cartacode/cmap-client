@@ -10,6 +10,7 @@ import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
 import LocationInfoComponent from '../live_view/LocationInfo'
+import { addCircle } from '../../map/viewer';
 
 /**
  * The map of Cesium viewer sizes.
@@ -28,6 +29,8 @@ export const defaultLocation = {
 
 export default class Map extends React.PureComponent {
   static propTypes = {
+    enableLiveViewToolBar: PropTypes.bool,
+    intelReqData: PropTypes.array,
     setOneLocation: PropTypes.func,
     size: PropTypes.number,
     toolBarOptions: PropTypes.object,
@@ -53,18 +56,20 @@ export default class Map extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true);
+    console.log(this.props.viewerId);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true, this.initialSettings);
 
+    console.log('init settings');
     // add the default location or user location into the location bar
-    const init_session = JSON.parse(localStorage.getItem("session"));
+    const init_session = JSON.parse(localStorage.getItem('session'));
     const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude; 
     const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : defaultLocation.latitude;
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
 
-    //add pin for current user's home location
+    // add pin for current user's home location
     addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'Home', this.props.viewerId);
-    
-    if(!(!this.props.toolBarOptions ? true: this.props.toolBarOptions.show)) {
+
+    if(!(!this.props.toolBarOptions ? true : this.props.toolBarOptions.show)) {
       createTestObject(this.props.viewerId);
     }
     initialViewer(this.props.viewerId);
@@ -160,7 +165,7 @@ export default class Map extends React.PureComponent {
     positionMap(lat, long, this.props.viewerId);
   }
 
-  addPin =(lat, long, iconId, pinText, pinColor, pinId, tooltipLabel, tooltipText) =>{
+  addPin =(lat, long, iconId, pinText, pinColor, pinId, tooltipLabel, tooltipText, pinType) =>{
     let color;
     if(pinColor === 'blue') {
       color = Cesium.Color.BLUE;
@@ -170,9 +175,17 @@ export default class Map extends React.PureComponent {
       color = Cesium.Color.RED;
     } else if(pinColor === 'yellow') {
       color = Cesium.Color.YELLOW;
+    } else if(pinColor === 'orange') {
+      color = Cesium.Color.ORANGE;
+    } else if(pinColor === 'lightGreen') {
+      color = Cesium.Color.LIGHTGREEN;
     }
 
-    addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId, tooltipLabel, tooltipText);
+    if(pinType && pinType === 'circle') {
+      addCircle(lat, long, pinText, pinId, this.props.viewerId, null, false, pinText, color);
+    } else {
+      addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId, tooltipLabel, tooltipText);
+    }
   }
 
   removePin =(pinId) =>{
@@ -195,7 +208,16 @@ export default class Map extends React.PureComponent {
 
     return (
       <div className="d-flex">
-        {toolbar_show && <SideBarLeftComponent moveMap={this.positionMapToCoords} addPin={this.addPin} removePin={this.removePin} addKMLToMap={this.addKMLToMap} removeKML={this.removeKMLFromMap} /> }
+        {toolbar_show && 
+          <SideBarLeftComponent
+            moveMap={this.positionMapToCoords}
+            addPin={this.addPin}
+            removePin={this.removePin}
+            addKMLToMap={this.addKMLToMap}
+            removeKML={this.removeKMLFromMap}
+            intelReqData={this.props.intelReqData}
+          />
+        }
         <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>

@@ -30,7 +30,8 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, liveViewToolBar) {
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, liveViewToolBar, callback) {
+  console.log('createViewer viewerId:', viewerId);
   if (viewers.has(viewerId)) {
     return;
   }
@@ -56,7 +57,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
       url: 'https://dev.virtualearth.net',
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-    })
+    }),
   });
   // extend our view by the cesium navigation mixin
   //   var options = {};
@@ -203,17 +204,27 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     return viewer;
   }
 
-  Cesium.subscribeAndEvaluate(viewer.infoBox.viewModel, 'clickClosed', (newValue) => {
+  if(typeof callback === 'function') {
+    callback();
+  }
+
+  /*Cesium.subscribeAndEvaluate(viewer.infoBox.viewModel, 'clickClosed', (newValue) => {
     console.log('clicked', newValue);
-  });
+  });*/
 }
 
-export function initialViewer(viewerId) {
+export async function initialViewer(viewerId) {
   if (!viewers.has(viewerId)) {
     return;
   }
 
-  const viewer = viewers.get(viewerId);
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(5000);
+    viewer = viewers.get(viewerId);
+  }
+
   const init_session = JSON.parse(localStorage.getItem("session"));
   const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
 
@@ -237,8 +248,14 @@ export function initialViewer(viewerId) {
   viewer.infoBox.container.style.display = 'none';
 }
 
-export function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false, tooltipText) {
-  const viewer = viewers.get(viewerId);
+export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false, tooltipText) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(5000);
+    viewer = viewers.get(viewerId);
+  }
+
   const existingEntity = viewer.entities.getById(dataSourceID);
 
   if(!existingEntity) {
@@ -335,6 +352,10 @@ export function positionMap(latitude, longitude, viewerId) {
   });
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity, bMoveMap = false) {
   const viewer = viewers.get(viewerId);
 
@@ -403,8 +424,49 @@ export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMa
   }
 }
 
-export function addNewPinByPosition(position, billboard, pinText, pinId, viewerId, parentEntity, bMoveMap = false) {
-  const viewer = viewers.get(viewerId);
+export async function addCircle(centerPointLat, centerPointLong, circleText, circleId, viewerId, parentEntity, bMoveMap = false, tooltipText, circleColor) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
+
+  const entity = (circleId && viewer && viewer.entities && viewer.entities.getById(circleId) ? viewer.entities.getById(circleId) : null);
+
+  if(!entity) {
+    const newEntity = viewer.entities.add({
+      id: circleId,
+      position: Cesium.Cartesian3.fromDegrees(centerPointLong, centerPointLat),
+      ellipse: {
+        semiMinorAxis: 400.0,
+        semiMajorAxis: 400.0,
+        material: new Cesium.ColorMaterialProperty(circleColor),
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 80000),
+      },
+      description: tooltipText,
+      name: circleText,
+      label: new Cesium.LabelGraphics({
+        text: circleText,
+        font: 'small-caps bold 12px/1 sans-serif',
+        fillColor: Cesium.Color.BLACK,
+        translucencyByDistance: new Cesium.NearFarScalar(0, 100, 230000, 0),
+      }),
+    });
+
+    if(bMoveMap) {
+      viewer.flyTo(newEntity);
+    }
+  }
+}
+
+export async function addNewPinByPosition(position, billboard, pinText, pinId, viewerId, parentEntity, bMoveMap = false) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
 
   const newEntity = viewer.entities.add({
     id: pinId,
@@ -429,9 +491,16 @@ export function addNewPinByPosition(position, billboard, pinText, pinId, viewerI
   }
 }
 
-export function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
-  const viewer = viewers.get(viewerId);
-  let entity = (pinId ? viewer.entities.getById(pinId) : null);
+export async function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
+  // console.log(pinId, pinText);
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
+
+  let entity = (pinId && viewer && viewer.entities && viewer.entities.getById(pinId) ? viewer.entities.getById(pinId) : null);
 
   if(!entity) {
     const pinBuilder = new Cesium.PinBuilder();

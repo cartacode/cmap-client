@@ -63,7 +63,7 @@ class PlatformPopupItemComponent extends React.Component {
       if(this.props.kmlSrc) {
         this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
       } else {
-        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText);
+        this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText, this.props.pinType);
       }
     } else {
       if(this.props.kmlSrc) {

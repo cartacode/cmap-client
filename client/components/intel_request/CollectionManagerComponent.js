@@ -113,6 +113,8 @@ class CollectionManagerComponent extends React.Component {
     this.props.fetchApprovedIntelRequests(unitId, IntelConstants.STATUS.AV.abbreviation, false);
     // fetch collectiion plans 
     this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.APR.abbreviation);
+    // fetch all intel requests for map
+    this.props.fetchIntelRequests();
   };
 
   notify = actionType => {
@@ -137,6 +139,7 @@ class CollectionManagerComponent extends React.Component {
     const { translations } = this.props;
     const { allApprovedIntelRequests } = this.props;
     const { allCollectionsPlan } = this.props;
+    const { allRequests } = this.props;
     const editurl = '/intel-request/detail/';
     // let minRowsForTable = TableDefaults.MIN_ROWS;
 
@@ -348,14 +351,14 @@ class CollectionManagerComponent extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row personnel">
+        <div className="row personnel collectionMgr">
           <div className="two-block">
             <Loader loading={this.state.loading} />
             <FullHeaderLine headerText={translations.CollectionMap} />
             <div className="row">
               <div className="col-md-1">&nbsp;</div>
               <div className="col-md-10 text-center">
-                <Map size={100} viewerId={viewerIdentifiers.collectionPlan} enableLiveViewToolBar = {false} /> 
+                <Map size={100} viewerId={viewerIdentifiers.collectionPlan} enableLiveViewToolBar = {false} intelReqData={allRequests} />
               </div>
               <div className="col-md-1">&nbsp;</div>
             </div>

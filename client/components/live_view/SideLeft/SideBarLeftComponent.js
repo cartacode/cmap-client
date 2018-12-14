@@ -3,6 +3,7 @@ import React from 'react';
 import PlatformPopupComponent from './PlatformPopup';
 import PersonnelPopupComponent from './PersonnelPopup';
 import MissionPopupComponent from './MissionPopup';
+import IntelReqPopupComponent from './IntelReqPopup';
 
 import './SideBarLeftComponent.scss';
 
@@ -98,7 +99,7 @@ class SideBarLeftComponent extends React.Component {
               <a href="#" onClick={(e)=>this.onHomeButton(e, 0)}><span>Home</span></a>
             </li>
             <li className={'intel-req-link' + (menuClicked[2] ? ' active' : '')}>
-              <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 1)}><span>Intel Requests</span></a>
+              <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 2)}><span>Intel Requests</span></a>
             </li>
             <li className={'missions-link' + (menuClicked[1] ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, e, true, true, 1)}><span>Missions</span></a>
@@ -149,6 +150,18 @@ class SideBarLeftComponent extends React.Component {
           removePin={this.props.removePin}
           addKML={this.props.addKMLToMap}
           removeKML={this.props.removeKML}
+        />
+
+        <IntelReqPopupComponent
+          popupOpen={this.state.popupOpen}
+          menuClicked={this.state.menuClicked[2]}
+          onPopup={this.onPopup}
+          hasBall={this.state.hasBall}
+          hasToggle={this.state.hasToggle}
+          moveMap={this.props.moveMap}
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
+          intelReqData={this.props.intelReqData}
         />
       </div>
     );
