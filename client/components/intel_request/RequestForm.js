@@ -202,11 +202,21 @@ createCcirPirData = (editId) => {
 
       // pir options for drodown for given ccirid
       const pirOptions = [
-        { 'value': 'Description5', 'label': item.Description5 },
-        { 'value': 'Description6', 'label': item.Description6 },
-        { 'value': 'Description7', 'label': item.Description7 },
-        { 'value': 'Description8', 'label': item.Description8 },
+        { 'value': 'Description5', 'label': item.Description5 }
       ];
+
+      if(item.Description6) {
+        pirOptions.push({ 'value': 'Description6', 'label': item.Description6 });
+      }
+
+      if(item.Description7) {
+        pirOptions.push({ 'value': 'Description7', 'label': item.Description7 });
+      }
+
+      if(item.Description8) {
+        pirOptions.push({ 'value': 'Description8', 'label': item.Description8 });
+      }
+
       pirs[item.CCIRPIRId] = pirOptions;
 
       // cciir options for drodown for given ccirid
