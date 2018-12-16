@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import uuid from 'uuid/v4';
-import { createViewer, destroyViewer, } from 'map/viewer';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import {addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, toggleShowEntity } from 'map/viewer';
+import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
-import LocationInfoComponent from '../live_view/LocationInfo'
-import { addCircle } from '../../map/viewer';
+import LocationInfoComponent from '../live_view/LocationInfo';
 
 /**
  * The map of Cesium viewer sizes.
@@ -182,7 +180,7 @@ export default class Map extends React.PureComponent {
     }
 
     if(pinType && pinType === 'circle') {
-      addCircle(lat, long, pinText, pinId, this.props.viewerId, null, false, pinText, color);
+      addCircle(lat, long, pinText, pinId, this.props.viewerId, null, false, tooltipText, color);
     } else {
       addNewPin(lat, long, iconId, pinText, color, pinId, this.props.viewerId, tooltipLabel, tooltipText);
     }
@@ -199,6 +197,16 @@ export default class Map extends React.PureComponent {
   removeKMLFromMap = (kmlDataSource) => {
     // removeKML(kmlDataSource, this.props.viewerId, this.state.KMLDataSrcCollection);
     toggleShowEntity(kmlDataSource, false, this.props.viewerId);
+  }
+
+  changeMapLayer = (newMapLayer, layerLevel) => {
+    console.log('change', newMapLayer, layerLevel);
+    changeLayer(newMapLayer, layerLevel, this.props.viewerId);
+  }
+
+  adjustLayerTransparency = (layerLevel, alphaLevel) => {
+    console.log('adjust', layerLevel, alphaLevel);
+    adjustLayerTransparency(layerLevel, alphaLevel, this.props.viewerId);
   }
 
   render() {
@@ -224,7 +232,12 @@ export default class Map extends React.PureComponent {
           <LocationInfoComponent latlong={latlong}/>
           {/* <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} /> */}
         </div>
-        {toolbar_show && <SideBarRightComponent /> }
+        {toolbar_show && 
+          <SideBarRightComponent 
+            setMapLayer={this.changeMapLayer}
+            setLayerTransparency={this.adjustLayerTransparency}
+          />
+        }
       </div>
     );
   }

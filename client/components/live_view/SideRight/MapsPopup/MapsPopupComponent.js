@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { layerIdentifiers, layerLevels } from '../../../../map/viewer';
 import LvSlider from '../../../reusable/Slider';
 
 import './MapsPopupComponent.scss';
@@ -11,7 +11,10 @@ class MapsPopupComponent extends React.Component {
     super(props);
     this.state = {
       fusePopupOpen: false,
-      sliderPercent: 50,
+      sliderPercent: [
+        100, // base
+        50, // top
+      ],
       menuClicked: [
         false, //
         false, //
@@ -34,27 +37,32 @@ class MapsPopupComponent extends React.Component {
   showFusePopup = () => {
     this.setState({
       fusePopupOpen: !this.state.fusePopupOpen,
+      fuseItemClicked: [true, false],
     });
   }
 
   onClickBase = (e) => {
     this.preventEvent(e);
     this.setState({
-      sliderPercent: 100,
-      fuseItemClicked: [true, false]
+      fuseItemClicked: [true, false],
     });
   }
 
   onClickTop = (e) => {
     this.preventEvent(e);
     this.setState({
-      sliderPercent: 50,
-      fuseItemClicked: [false, true]
+      fuseItemClicked: [false, true],
     });
   }
 
   onClickMenuItem = (index, e) => {
     this.preventEvent(e);
+    let layer = layerLevels.base;
+
+    if(this.state.fusePopupOpen && this.state.fuseItemClicked[1]) {
+      layer = layerLevels.top;
+    }
+
     this.setState({
       menuClicked: this.state.menuClicked.map((item, i) => {
         if (i === index) {
@@ -62,10 +70,38 @@ class MapsPopupComponent extends React.Component {
         }
         return false;
       }),
+    }, () => {
+      if(index === 0) { // Aerial
+        this.props.setMapLayer(layerIdentifiers.aerial, layer);
+        this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
+      } else if(index === 1) { // street
+        this.props.setMapLayer(layerIdentifiers.road, layer);
+        this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
+      } else if(index === 4) { // aerial with labels
+        this.props.setMapLayer(layerIdentifiers.aerialLabels, layer);
+        this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
+      } else if(index === 5) {
+        this.showFusePopup();
+      }
     });
+  }
 
-    if ( index === 5) {
-      this.showFusePopup();
+  onOpacityChange = (newPct) => {
+    const basePct = this.state.sliderPercent[0];
+    const topPct = this.state.sliderPercent[1];
+
+    if(this.state.fuseItemClicked[0] === true) {
+      this.setState({
+        sliderPercent: [newPct, topPct],
+      }, () => {
+        this.props.setLayerTransparency(layerLevels.base, (newPct / 100));
+      });
+    } else if(this.state.fuseItemClicked[1] === true) {
+      this.setState({
+        sliderPercent: [basePct, newPct],
+      }, () => {
+        this.props.setLayerTransparency(layerLevels.top, (newPct / 100));
+      });
     }
   }
 
@@ -91,14 +127,14 @@ class MapsPopupComponent extends React.Component {
           <a href="#" className={'street-link' + (menuClicked[1] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(1, e)}>
             <span>Street</span>
           </a>
-          <a href="#" className={'sea-link' + (menuClicked[2] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(2, e)}>
+          { /*<a href="#" className={'sea-link' + (menuClicked[2] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(2, e)}>
             <span>Sea</span>
           </a>
           <a href="#" className={'air-link' + (menuClicked[3] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(3, e)}>
             <span>Air</span>
-          </a>
+          </a>*/ }
           <a href="#" className={'columbus-link' + (menuClicked[4] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(4, e)}>
-            <span>Columbus</span>
+            <span>Satellite with Labels</span>
           </a>
           <a href="#" className={'fuse-link' + (menuClicked[5] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(5, e)}>
             <span>Fuse</span>
@@ -115,10 +151,11 @@ class MapsPopupComponent extends React.Component {
             <div className="title">Opacity</div>
             <div>
               <LvSlider
-                value={this.state.sliderPercent}
+                value={(!this.state.fusePopupOpen || this.state.fuseItemClicked[0]) ? this.state.sliderPercent[0] : this.state.sliderPercent[1]}
                 min={1}
                 max={100}
                 suffix={'%'}
+                onChange={this.onOpacityChange}
               />
             </div>
           </div>
@@ -131,6 +168,8 @@ class MapsPopupComponent extends React.Component {
 MapsPopupComponent.propTypes = {
   mapsPopupOpen: PropTypes.bool,
   onPopup: PropTypes.func,
+  setLayerTransparency: PropTypes.func,
+  setMapLayer: PropTypes.func,
 };
 
 export default MapsPopupComponent;

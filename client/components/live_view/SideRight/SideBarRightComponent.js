@@ -72,6 +72,8 @@ class SideBarRightComponent extends React.Component {
         <MapsPopupComponent
           onPopup={this.onPopup}
           mapsPopupOpen={this.state.mapsPopupOpen}
+          setMapLayer={this.props.setMapLayer}
+          setLayerTransparency={this.props.setLayerTransparency}
         />
         <DrawingPopupComponent
           onPopup={this.onPopup}

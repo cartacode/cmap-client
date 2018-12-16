@@ -17,6 +17,16 @@ export const viewerIdentifiers = {
   collectionPlan: 'COLLECTION_PLAN',
 };
 
+export const layerIdentifiers = {
+  aerial: Cesium.BingMapsStyle.AERIAL,
+  road: Cesium.BingMapsStyle.ROAD,
+  aerialLabels: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
+};
+
+export const layerLevels = {
+  base: 0,
+  top: 1,
+};
 
 /**
  * The map of viewer identifiers to their corresponding viewer instance.
@@ -246,6 +256,42 @@ export async function initialViewer(viewerId) {
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
 
   viewer.infoBox.container.style.display = 'none';
+}
+
+export async function changeLayer(mapLayer, layerLevel, viewerId) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(5000);
+    viewer = viewers.get(viewerId);
+  }
+
+  const existLayer = viewer.imageryLayers.get(layerLevel);
+
+  if(existLayer) {
+    viewer.imageryLayers.remove(existLayer, true);
+  }
+
+  viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
+    url: 'https://dev.virtualearth.net',
+    key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
+    mapStyle: mapLayer,
+  }), layerLevel);
+}
+
+export async function adjustLayerTransparency(layerLevel, alphaLevel, viewerId) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(5000);
+    viewer = viewers.get(viewerId);
+  }
+
+  const existLayer = viewer.imageryLayers.get(layerLevel);
+
+  if(existLayer) {
+    existLayer.alpha = alphaLevel;
+  }
 }
 
 export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false, tooltipText) {

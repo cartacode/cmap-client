@@ -29,12 +29,17 @@ class LvSlider extends React.Component {
       if(this.state.sliderPercent > max) {
         this.setState({
           sliderPercent: max,
+        }, () => {
+          this.props.onChange(this.state.sliderPercent);
         });
-      }
-      if(this.state.sliderPercent < min) {
+      } else if(this.state.sliderPercent < min) {
         this.setState({
           sliderPercent: min,
+        }, () => {
+          this.props.onChange(this.state.sliderPercent);
         });
+      } else {
+        this.props.onChange(this.state.sliderPercent);
       }
     });
   }
@@ -42,6 +47,8 @@ class LvSlider extends React.Component {
   onChangePercentByValue = (v) => {
     this.setState({
       sliderPercent: v,
+    }, () => {
+      this.props.onChange(this.state.sliderPercent);
     });
   }
 
@@ -76,6 +83,7 @@ LvSlider.propTypes = {
   hideValue: PropTypes.bool,
   max: PropTypes.number,
   min: PropTypes.number,
+  onChange: PropTypes.func,
   suffix: PropTypes.string,
   value: PropTypes.number,
 };
