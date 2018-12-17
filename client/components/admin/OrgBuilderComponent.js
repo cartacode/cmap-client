@@ -502,7 +502,7 @@ render() {
         <div className="header-line">
           <img src="/assets/img/admin/personnel_1.png" alt=""/>
           <div className="header-text">
-            {translations["organisation builder"]}
+            {translations["Chain of Command"]}
           </div>
           <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
         </div>
