@@ -28,10 +28,10 @@ class RulerPopupAddLineComponent extends React.Component {
               <div className={'w-100px ml-4'}>
                 <SelectBox
                   options={[
-                    { value: '0', label: 'Unit1' },
-                    { value: '1', label: 'Unit2' },
-                    { value: '2', label: 'Unit3' },
-                    { value: '3', label: 'Unit4' }
+                    { value: '0', label: 'm' },
+                    { value: '1', label: 'km' },
+                    { value: '2', label: 'yd' },
+                    { value: '3', label: 'mi' },
                   ]}
                 />
               </div>

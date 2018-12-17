@@ -7,6 +7,7 @@ import SearchPopupComponent from './SearchPopup';
 import KmlPopupComponent from './KmlPopup';
 
 import './SideBarRightComponent.scss';
+import LayerPopupComponent from './LayerPopup/LayerPopupComponent';
 
 class SideBarRightComponent extends React.Component {
 
@@ -18,6 +19,7 @@ class SideBarRightComponent extends React.Component {
       rulerPopupOpen: false,
       searchPopupOpen: false,
       kmlPopupOpen: false,
+      layersPopupOpen: false,
     };
   }
 
@@ -31,6 +33,7 @@ class SideBarRightComponent extends React.Component {
       rulerPopupOpen: false,
       searchPopupOpen: false,
       kmlPopupOpen: false,
+      layersPopupOpen: false,
     }, () => {
       setTimeout(()=>{
         this.setState({
@@ -49,22 +52,22 @@ class SideBarRightComponent extends React.Component {
       <div>
         <div className="sidebar-right-block sidebar-block">
           <ul>
-            <li className="maps-link">
+            <li className={'maps-link' + (this.state.mapsPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'mapsPopupOpen', e)}><span>Maps</span></a>
             </li>
-            <li className="layers-link">
-              <a href="#" onClick={this.preventEvent}><span>Layers</span></a>
+            <li className={'layers-link' + (this.state.layersPopupOpen ? ' active' : '')}>
+              <a href="#" onClick={(e)=>this.onPopup(true, 'layersPopupOpen', e)}><span>Layers</span></a>
             </li>
-            <li className="drawing-link">
+            <li className={'drawing-link' + (this.state.drawingPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'drawingPopupOpen', e)}><span>Drawing</span></a>
             </li>
-            <li className="measure-link">
+            <li className={'measure-link' + (this.state.rulerPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'rulerPopupOpen', e)}><span>Ruler</span></a>
             </li>
-            <li className="kmlkmz-link">
+            <li className={'kmlkmz-link' + (this.state.kmlPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'kmlPopupOpen', e)}><span>Upload</span></a>
             </li>
-            <li className="search-link">
+            <li className={'search-link' + (this.state.searchPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'searchPopupOpen', e)}><span>Fly To</span></a>
             </li>
           </ul>
@@ -90,6 +93,12 @@ class SideBarRightComponent extends React.Component {
         <KmlPopupComponent
           onPopup={this.onPopup}
           kmlPopupOpen={this.state.kmlPopupOpen}
+        />
+        <LayerPopupComponent
+          onPopup={this.onPopup}
+          layersPopupOpen={this.state.layersPopupOpen}
+          addKML={this.props.addKMLToMap}
+          removeKML={this.props.removeKML}
         />
       </div>
     );

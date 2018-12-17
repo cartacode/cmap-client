@@ -1,0 +1,64 @@
+/* Popup Item */
+.popup-item {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 2px auto;
+    padding: 9px 95px 9px 36px;
+    font-size: 14px;
+    color: #b4fafe;
+    background: #022033;
+    cursor: pointer;
+  
+    i {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      display: block;
+      box-sizing: border-box;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset rgba(0, 0, 0, 0.7) 0 -1px 9px, rgba(0, 0, 0, 0.7) 0 2px 12px;
+    }
+  
+    span {
+      position: absolute;
+      top: 7px;
+      right: 66px;
+      display: block;
+      width: 18px;
+      height: 18px;
+      background: url(/assets/img/live_view/info_icon.svg) no-repeat;
+      cursor: pointer;
+    }
+  
+    .checkbox-default {
+      position: absolute;
+      top: 7px;
+      right: 16px;
+      width: 34px;
+      height: 18px;
+    }
+  
+    .popup-toggle {
+      background: rgba(40, 72, 98, 0.7) !important;
+    }
+  
+    .__react_component_tooltip.place-left::after {
+      border-left: 8px solid rgba(40, 72, 98, 0.7) !important;
+    }
+  
+    .__react_component_tooltip.place-right::after {
+        border-right: 8px solid rgba(40, 72, 98, 0.7) !important;
+    }
+  
+    .__react_component_tooltip.place-top::after {
+        border-top: 8px solid rgba(40, 72, 98, 0.7) !important;
+    }
+  
+    .__react_component_tooltip.place-bottom::after {
+        border-bottom: 8px solid rgba(40, 72, 98, 0.7) !important;
+    }
+  }
+  

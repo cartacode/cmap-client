@@ -255,7 +255,9 @@ export async function initialViewer(viewerId) {
   viewer.entities.add({ id: 'PLATFORMS-PARENT' });
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
 
-  viewer.infoBox.container.style.display = 'none';
+  if(viewer.infoBox) {
+    viewer.infoBox.container.style.display = 'none';
+  }
 }
 
 export async function changeLayer(mapLayer, layerLevel, viewerId) {
@@ -519,7 +521,7 @@ export async function addNewPinByPosition(position, billboard, pinText, pinId, v
     position: position,
     label: {
       text: pinText,
-      font: 'small-caps bold 24px/1 sans-serif',
+      font: 'small-caps bold 14px/1 sans-serif',
       verticalOrigin: Cesium.VerticalOrigin.TOP,
       scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.4, 1.5e7, 0.7),
       pixelOffset: new Cesium.Cartesian2(0, 10),
@@ -629,12 +631,14 @@ function attachLeftClick(viewer, viewerId, leftClickHandler) {
     console.log(pickedObject);
     console.log(viewer.infoBox);
 
-    if(Cesium.defined(pickedObject)) {
-      viewer.infoBox.container.style.top = movement.position.y + 'px';
-      viewer.infoBox.container.style.left = movement.position.x + 'px';
-      viewer.infoBox.container.style.display = 'block';
-    } else {
-      viewer.infoBox.container.style.display = 'none';
+    if(Cesium.defined(viewer.infoBox)) {
+      if(Cesium.defined(pickedObject)) {
+        viewer.infoBox.container.style.top = movement.position.y + 'px';
+        viewer.infoBox.container.style.left = movement.position.x + 'px';
+        viewer.infoBox.container.style.display = 'block';
+      } else {
+        viewer.infoBox.container.style.display = 'none';
+      }
     }
 
     let cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
