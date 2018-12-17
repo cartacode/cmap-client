@@ -236,6 +236,8 @@ export default class Map extends React.PureComponent {
           <SideBarRightComponent 
             setMapLayer={this.changeMapLayer}
             setLayerTransparency={this.adjustLayerTransparency}
+            addKMLToMap={this.addKMLToMap}
+            removeKML={this.removeKMLFromMap}
           />
         }
       </div>
