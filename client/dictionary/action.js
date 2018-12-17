@@ -29,6 +29,7 @@ export const LOCATION__UPDATE = createActionType('LOCATION__UPDATE');
 export const LOCATION__FETCH = createActionType('LOCATION__FETCH');
 export const LOCATION__FETCH_ONE = createActionType('LOCATION__FETCH_ONE');
 export const LOCATION_LIST__FETCH = createActionType('LOCATION_LIST__FETCH');
+export const LOCATION_KML__FETCH = createActionType('LOCATION_KML__FETCH');
 export const LOCATION_TYPE__FETCH = createActionType('LOCATION_TYPE__FETCH');
 export const LOCATION__DELETE_ONE = createActionType('LOCATION__DELETE_ONE');
 

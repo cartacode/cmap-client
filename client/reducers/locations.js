@@ -1,4 +1,4 @@
-import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__ADD, LOCATION__UPDATE, LOCATION__DELETE_ONE } from 'dictionary/action';
+import { LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_LIST__FETCH, LOCATION_KML__FETCH, LOCATION_TYPE__FETCH, LOCATION__ADD, LOCATION__UPDATE, LOCATION__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 import { Error } from '../dictionary/constants';
 
@@ -36,6 +36,17 @@ export default function locations(state = initialState.locations, { payload, typ
         ...state,
         isListFetching: false,
         locationList: payload.data,
+      };
+    case LOCATION_KML__FETCH.REQUEST:
+      return {
+        ...state,
+        isKMLFetching: true,
+      };
+    case LOCATION_KML__FETCH.SUCCESS:
+      return {
+        ...state,
+        isListFetching: false,
+        locationKMLs: payload.data,
       };
     case LOCATION_TYPE__FETCH.REQUEST:
       return {
