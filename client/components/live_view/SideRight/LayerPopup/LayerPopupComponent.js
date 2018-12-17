@@ -34,12 +34,16 @@ class LayerPopupComponent extends React.Component {
   }
 
   getFilterOptions = (data) => {
-    const arrItems = data.map((item) => {
-      return { value: item.id, label: item.description };
-    });
+    if(data) {
+      const arrItems = data.map((item) => {
+        return { value: item.id, label: item.description };
+      });
 
-    arrItems.push({ value: -1, label: 'Map Drawings' });
-    return arrItems;
+      arrItems.push({ value: -1, label: 'Map Drawings' });
+      return arrItems;
+    } else {
+      return [];
+    }
   }
 
   render() {
@@ -61,6 +65,8 @@ class LayerPopupComponent extends React.Component {
               options={ this.getFilterOptions(locationTypes) }
             />
           }
+        </div>
+        <div>
           {
             this.props.hasToggle &&
               <div className="d-flex justify-content-center">
@@ -72,7 +78,6 @@ class LayerPopupComponent extends React.Component {
               </div>
           }
         </div>
-
         <div className="checklist-block">
           { locationKMLs && locationKMLs.map((item, index) => {
             return <PopupListingItem
