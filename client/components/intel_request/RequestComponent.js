@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { defaultFilter, formatDateTime, getIntelStatusColor, getConfirmation } from '../../util/helpers';
 import { TableDefaults, IntelConstants } from '../../dictionary/constants';
 import { NotificationManager } from 'react-notifications';
@@ -32,6 +32,7 @@ class RequestComponent extends React.Component {
       loading: false,
       modalOpen: false,
       IntelRequestID: null,
+      toRequestForm: false,
 
     };
 
@@ -103,11 +104,22 @@ class RequestComponent extends React.Component {
       () => this.deleteLogic(value)
     );
   }
+  // Copy Intel Request for resubmission
+  copyIntel = (value) => {
+    this.props.resubmitIntelRequest(value).then(() => {
+      this.setState({
+        toRequestForm: true,
+      });
+    });
+  }
 
+  // get status color
   getColor= (row)=> {
     return getIntelStatusColor(row.original.Abbreviation);
   }
   render() {
+
+    const requstFomrUrl = '/intel-request/detail/';
 
     const { translations } = this.props;
 
@@ -203,12 +215,18 @@ class RequestComponent extends React.Component {
           
           }
 
+          <a href="javaScript:void('0');" data-tip="" data-for="resubmit-btn" className="resubmit-btn"> <span className="glyphicon glyphicon-retweet" onClick={() => this.copyIntel(row.value)}/></a>
+          <ReactTooltip id="resubmit-btn" type="warning">
+            <span>Resubmit Intel</span>
+          </ReactTooltip>
         </div>,
       },
     ];
 
     return (
       <div>
+        {this.state.toRequestForm ? <Redirect to={`${requstFomrUrl}${this.props.oneIntelCopy.IntelRequestID}`} /> : null }
+
           {this.state.modalOpen ?
           <AddCollectionValidationModal show = {this.state.modalOpen} onClose={this.closeCollectionValidationModal} 
             IntelRequestID = { this.state.IntelRequestID }
