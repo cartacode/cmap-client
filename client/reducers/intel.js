@@ -6,6 +6,7 @@ import {
   INTEL_REQUEST__UPDATE,
   INTEL_REQUEST__DELETE,
   INTEL_APPROVED_VALIDATED__STATUS_UPDATE,
+  INTEL_REQUEST__COPY,
 } from 'dictionary/action';
 import initialState from 'store/initialState';
 
@@ -88,9 +89,17 @@ export default function intel(state = initialState.intelrequest, {
         ...state,
         isStatusUpdated: false,
       };
-
-
-
+    case INTEL_REQUEST__COPY.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case INTEL_REQUEST__COPY.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        oneIntelRequest: payload.data,
+      };
     default:
       return state;
   }
