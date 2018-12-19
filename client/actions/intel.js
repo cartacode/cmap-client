@@ -72,7 +72,7 @@ export function deleteIntelRequestById(id) {
 export function resubmitIntelRequest(id) {
   return createAction({
     type: INTEL_REQUEST__COPY,
-    action: () => axios.post(`${baseUrl}/IntelRequest/CopyIntelRequest?IntelReqID=${id}`, { headers: requestHeaders }),
+    action: () => axios.post(`${baseUrl}/IntelRequest/CopyIntelRequest?IntelReqID=${id}`, null, { headers: requestHeaders }),
   });
 }
 
