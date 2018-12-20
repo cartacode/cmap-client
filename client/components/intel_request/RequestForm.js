@@ -428,6 +428,7 @@ editComponent = (editId) => {
 
     if(editId !== undefined && editId !== '0') {
       intelRequest.IntelRequestID = editId;
+      intelRequest.ReqUserFrndlyID = -1;
       this.props.updateIntelRequest(editId, intelRequest).then(() => {
         this.props.history.push(redirectUrl + editId);
         this.notify(NoticeType.UPDATE);

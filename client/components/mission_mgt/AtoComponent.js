@@ -197,7 +197,8 @@ moveLeft = (row) => {
       },
       {
         Header: translations.payload,
-        accessor: 'PrimaryPayloadName',
+        accessor: 'PrimaryPayloadAbbreviation',
+        maxWidth: 85,
       },
       {
         Header: translations.Armed,
