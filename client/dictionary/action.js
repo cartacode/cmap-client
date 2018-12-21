@@ -21,6 +21,8 @@ export const INTEL_REQUEST__FETCH_ONE = createActionType('INTEL_REQUEST__FETCH_O
 export const INTEL_REQUEST__DELETE = createActionType('INTEL_REQUEST__DELETE');
 export const INTEL_REQUEST_COLL_MANAGER__UPDATE = createActionType('INTEL_REQUEST_COLL_MANAGER__UPDATE');
 export const INTEL_REQUEST__COPY = createActionType('INTEL_REQUEST__COPY');
+export const INTEL_REQUEST__PRIORITY_CHANGE = createActionType('INTEL_REQUEST__PRIORITY_CHANGE');
+
 
 
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');

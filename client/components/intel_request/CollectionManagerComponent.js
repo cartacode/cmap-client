@@ -90,12 +90,10 @@ class CollectionManagerComponent extends React.Component {
     // const unitId = 25; // TODO Make it of loggend in users units id once login is implemented
     const statusId = IntelConstants.STATUS.APR.id;// 'APR';
     this.props.routeCollectionIntelRequest(unitId,statusId).then(() => {
-      // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
       this.loadData();
+      this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
     });
   };
-
-  
 
   deleteCollectionPlan=(value)=>{
     if (value !== undefined && value !== '0') {
@@ -104,6 +102,23 @@ class CollectionManagerComponent extends React.Component {
         this.loadData();
       });
     }
+  }
+
+  
+  //  To update priority of intel request depending on which button has been clicked. 
+  // Lower number means greater priority
+  updateIntelPriority = (row, orderIndex) => {
+    
+  // value of orderndex can be 1 or -1() depeding which icon has been clicked
+    const newPriority = row.original.CollectionMgrPriority + orderIndex;
+    alert(newPriority);
+    this.props.changeIntelPriority(row.original.IntelRequestID, newPriority).then(() => {
+    // this.loadData();
+    // const session = JSON.parse(localStorage.getItem('session'));
+    // const unitId = session.AssignedUnit;
+    // this.props.fetchCollectionPlans(unitId, IntelConstants.STATUS.APR.abbreviation);
+    // this.notify(NoticeType.ROUTE_COLLECTION_INTEL_REQUEST);
+    });
   }
 
   loadData = () => {
@@ -130,8 +145,10 @@ class CollectionManagerComponent extends React.Component {
     } else if (NoticeType.DELETE == actionType) {
       NotificationManager.success(translations['Intel Request delete'], translations['Intel Request Title'], 5000);
     }
-    else if(NoticeType.NOT_DELETE === actionType){
+    else if(NoticeType.NOT_DELETE === actionType) {
       NotificationManager.error(translations.DeleteUnSuccessfull, translations['Intel Request Title'], 5000);
+    } else if(NoticeType.NOT_DELETE === actionType) {
+      NotificationManager.error(translations['Intel Routed Successfully'], translations['Intel Request Title'], 5000);
     }
   };
 
@@ -152,7 +169,7 @@ class CollectionManagerComponent extends React.Component {
     // }
 
    
-    let minRowsForTable = getMinRowsForTable(allCollectionsPlan.length, allApprovedIntelRequests.length);
+    const minRowsForTable = getMinRowsForTable(allCollectionsPlan.length, allApprovedIntelRequests.length);
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
@@ -160,7 +177,7 @@ class CollectionManagerComponent extends React.Component {
 
     const intelRequestColumns = [
       {
-        Header: translations['Request'],
+        Header: translations.Request,
         accessor: 'ReqUserFrndlyID',
         maxWidth: 100,
         // Cell: row => <div>
@@ -177,7 +194,7 @@ class CollectionManagerComponent extends React.Component {
       },
      
       {
-        Header:translations['Supported unit'],
+        Header: translations['Supported unit'],
         accessor: 'COCOMText',
         maxWidth: 150,
       },
@@ -214,12 +231,12 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             {/* <Link to={`${editurl}${row.value}`} className="text-success"  title="Edit" > <span className="glyphicon glyphicon-edit" /> </Link> */}&nbsp;
-            <a href="Javascript: void('0');" className="btn btn-primary btn-xs" data-tip data-for={translations["Move To Collection Plan"]} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
-                                            <ReactTooltip id='Move To Collection Plan' type='warning'>
+            <a href="Javascript: void('0');" className="btn btn-primary btn-xs" data-tip data-for={translations['Move To Collection Plan']} onClick={() => this.moveToCollectionPlan(row)} > <span className="glyphicon glyphicon-circle-arrow-right" /></a>
+                                            <ReactTooltip id="Move To Collection Plan" type="warning">
                                                 <span>Move To Collection Plan</span>
                                            </ReactTooltip>
                                          &nbsp;
-            <a href="JavaScript: void('0');" className="btn btn-danger btn-xs" data-tip data-for={translations["Delete"]} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> 
+            <a href="JavaScript: void('0');" className="btn btn-danger btn-xs" data-tip data-for={translations.Delete} onClick={() => this.deleteApprovedIntelRequests(row.value)} ><span className="glyphicon glyphicon-trash" /> 
                                             <ReactTooltip id='Delete' type='warning'>
                                                   <span>Delete</span>
                                             </ReactTooltip>
@@ -239,32 +256,24 @@ class CollectionManagerComponent extends React.Component {
           <Link to={`${editurl}${row.original.IntelRequestID}`} >{row.value}</Link>
         </div>,
       },
-      // {
-      //   Header: 'Asset',
-      //   accessor: 'Asset',
-      // },
       {
-        Header: translations['Priority'],
-        accessor: 'Priority',
+        Header: translations.Priority,
+        accessor: 'CollectionMgrPriority',
       },
-      /*  {
-        Header: "Status",
-        accessor: "Status"
-      }, */
       {
         Header: translations['Mission Type'],
         accessor: 'MissionTypeText',
       },
       {
-        Header: translations['Payload'],
+        Header: translations.Payload,
         accessor: 'PrimaryPayloadName',
       },
       {
-        Header: translations['Armed'],
+        Header: translations.Armed,
         accessor: 'Armed',
         maxWidth: 80,
         Cell: row => <div>
-          <span>{row.original.Armed ? translations['YES'] : translations['NO']}</span>
+          <span>{row.original.Armed ? translations.YES : translations.NO}</span>
         </div>,
       },
       {
@@ -283,8 +292,25 @@ class CollectionManagerComponent extends React.Component {
         maxWidth: 100,
         Cell: row => (
           <div>
-            <a href="Javascript:void('0');" className="btn btn-primary btn-xs" title={translations["Move To Intel Request"]} onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
-                       &nbsp;
+            <a href="Javascript:void('0');" className="btn btn-primary btn-xs" title={translations['Move To Intel Request']} onClick={() => this.moveToIntelRequest(row.value)} > <span className="glyphicon glyphicon-circle-arrow-left" /> </a>
+          </div>
+        ),
+      },
+      {
+        Header: translations.Move,
+        accessor: 'IntelRequestID',
+        filterable: false,
+        maxWidth: 150,
+        Cell: row => (
+          <div>
+            { (row.index !== 0) ?
+              <a href="Javascript:void('0');" className="btn btn-success btn-xs" title={translations['Increase Priority']} onClick={() => this.updateIntelPriority(row, -1)} > <span className="glyphicon glyphicon-triangle-top" /> </a>
+              : null }
+            &nbsp;
+            
+            { (row.index !== allCollectionsPlan.length - 1) ?
+              <a href="Javascript:void('0');" className="btn btn-danger btn-xs" title={translations['Decrease Priority']} onClick={() => this.updateIntelPriority(row, 1)} > <span className="glyphicon glyphicon-triangle-bottom" /> </a>
+              : null }
           </div>
         ),
       },

@@ -1,6 +1,14 @@
 import axios from 'axios';
-import { COLLECTION_PLAN__FETCH, INTEL_APPROVED_REQUEST__FETCH, MOVE_TO_COLLECTION__PLAN, MOVE_TO_INTEL__REQUEST, DELETE_COLLECTION__PLAN, 
-  INTEL_APPROVED_REQUEST__DELETE_ONE, ROUTE_COLLECTION__PLAN } from 'dictionary/action';
+import {
+  COLLECTION_PLAN__FETCH,
+  INTEL_APPROVED_REQUEST__FETCH,
+  MOVE_TO_COLLECTION__PLAN,
+  MOVE_TO_INTEL__REQUEST,
+  DELETE_COLLECTION__PLAN,
+  INTEL_APPROVED_REQUEST__DELETE_ONE,
+  ROUTE_COLLECTION__PLAN,
+  INTEL_REQUEST__PRIORITY_CHANGE,
+} from 'dictionary/action';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -52,5 +60,12 @@ export function routeCollectionIntelRequest(unitId, statusId) {
   return createAction({
     type: ROUTE_COLLECTION__PLAN,
     action: () => axios.put(`${baseUrl}/IntelRequest/RouteCollectionIntelRequest?unitId=${unitId}&statusId=${statusId}`, { }, {headers:requestHeaders}),
+  });
+}
+
+export function changeIntelPriority(intelRequestId, newPriority) {
+  return createAction({
+    type: INTEL_REQUEST__PRIORITY_CHANGE,
+    action: () => axios.put(`${baseUrl}/IntelRequest/ChangeIntelReqPriority?intelRequestId=${intelRequestId}&priority=${newPriority}`, { }, { headers: requestHeaders }),
   });
 }
