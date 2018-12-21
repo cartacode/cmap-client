@@ -112,18 +112,18 @@ class IntelReqPopupComponent extends React.Component {
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
 
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
-              this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan === true ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
+              this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
             }
 
             return <PlatformPopupItemComponent
-              color={(item.IsInCollectionPlan === true ? '#90EE90' : '#FFFF00')}
+              color={(item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? '#90EE90' : '#FFFF00')}
               textValue={'Intel Request #' + item.ReqUserFrndlyID}
               checked={this.state.showAll}
               hasColorBall={this.props.hasBall}
               lat={latLong.latitude}
               long={latLong.longitude}
               uniqueID={'INTELREQ-' + item.IntelRequestID}
-              pinColor={(item.IsInCollectionPlan === true ? 'lightGreen' : 'yellow')}
+              pinColor={(item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow')}
               pinType={'circle'}
               pinText={item.ReqUserFrndlyID.toString()}
               moveMap={this.props.moveMap}
