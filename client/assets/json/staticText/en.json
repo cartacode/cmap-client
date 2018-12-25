@@ -834,7 +834,9 @@
 
  "Edit":"Edit",
  "Export and Download":"Export and Download",
- "GenralErrorMessage": "An Error Has Occured"
+ "GenralErrorMessage": "An Error Has Occured",
+ "Increase Priority":"Increase Priority",
+ "Decrease Priority":"Decrease Priority"
 
 
 }
