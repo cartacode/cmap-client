@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import PedTaskingComponent from '../../components/mission_mgt/PedTaskingComponent';
 import { fetchPedTasks, fetchPedTasksATO, 
-  moveToPedTaskFromATOGeneration, moveToATOGenerationFromPedTask, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
+  moveToPedTaskFromATOGeneration, moveToATOGenerationFromPedTask, moveToFlightOPSFromATO, moveToATOFromFlightOPS, assignTeams } from 'actions/mssionmgt';
 
 const mapStateToProps = state => {
   return {
@@ -22,6 +22,7 @@ const mapDispatchToProps = {
   moveToATOGenerationFromPedTask,
   moveToFlightOPSFromATO,
   moveToATOFromFlightOPS,
+  assignTeams,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PedTaskingComponent);

@@ -148,6 +148,8 @@ export const FLIGHT_OPS_TO_ATO_GEN__MOVE = createActionType('FLIGHT_OPS_TO_ATO_G
 export const ATO_GEN_TO_PED_TASK__MOVE = createActionType('ATO_GEN_TO_PED_TASK__MOVE');
 export const PED_TASK_TO_ATO_GEN__MOVE = createActionType('PED_TASK_TO_ATO_GEN__MOVE');
 
+export const MISSION__ASSIGN_TEAMS = createActionType('MISSION__ASSIGN_TEAMS');
+
 export const SEARCH_MISSION_FILTER = createActionType('SEARCH_MISSION_FILTER');
 export const MISSION_SUMMARY__FETCH = createActionType('MISSION_SUMMARY__FETCH');
 export const MISSION_DETAIL__FETCH = createActionType('MISSION_DETAIL__FETCH');

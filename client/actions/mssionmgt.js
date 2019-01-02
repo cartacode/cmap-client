@@ -1,9 +1,27 @@
 import axios from 'axios';
 
-import { ATO_COLLECTION_PLAN__FETCH, ATO_GENERATION__FETCH, PED_TASKS__FETCH, ROUTE_ATO_GENERATION, COLLECTION_PLAN_TO_ATO_GENERATION,
-  FOP_ATO_PLATFORM__FETCH, FOP_PLATFORM__FETCH, FOP_ATO_CREW__FETCH, FOP_CREW__FETCH, 
-  PED_TASKS_ATO_GENERATION__FETCH, SEARCH_MISSION_FILTER, ATO_GEN_TO_FLIGHT_OPS__MOVE, FLIGHT_OPS_TO_ATO_GEN__MOVE,
-   ATO_GEN_TO_PED_TASK__MOVE, MISSION_REPORT_UPLOAD, PED_TASK_TO_ATO_GEN__MOVE, ATO_GEN_TO_COLLECTION_PLAN__MOVE, MISSION_SUMMARY__FETCH, MISSION_DETAIL__FETCH } from 'dictionary/action';
+import {
+  ATO_COLLECTION_PLAN__FETCH,
+  ATO_GENERATION__FETCH,
+  PED_TASKS__FETCH,
+  ROUTE_ATO_GENERATION,
+  COLLECTION_PLAN_TO_ATO_GENERATION,
+  FOP_ATO_PLATFORM__FETCH,
+  FOP_PLATFORM__FETCH,
+  FOP_ATO_CREW__FETCH,
+  FOP_CREW__FETCH,
+  PED_TASKS_ATO_GENERATION__FETCH,
+  SEARCH_MISSION_FILTER,
+  ATO_GEN_TO_FLIGHT_OPS__MOVE,
+  FLIGHT_OPS_TO_ATO_GEN__MOVE,
+  ATO_GEN_TO_PED_TASK__MOVE,
+  MISSION_REPORT_UPLOAD,
+  PED_TASK_TO_ATO_GEN__MOVE,
+  ATO_GEN_TO_COLLECTION_PLAN__MOVE,
+  MISSION_SUMMARY__FETCH,
+  MISSION_DETAIL__FETCH,
+  MISSION__ASSIGN_TEAMS,
+} from 'dictionary/action';
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -133,6 +151,13 @@ export function moveToATOGenerationFromPedTask(missionId) {
   return createAction({
     type: PED_TASK_TO_ATO_GEN__MOVE,
     action: () => axios.put(`${baseUrl}/Mission/MoveOutFromFlightOPS?missionId=${missionId}`, { } ,{headers:requestHeaders}),
+  });
+}
+
+export function assignTeams(data) {
+  return createAction({
+    type: MISSION__ASSIGN_TEAMS,
+    action: () => axios.post(`${baseUrl}/Mission/AssignTeams`, data, { headers: requestHeaders }),
   });
 }
 

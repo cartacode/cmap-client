@@ -50,6 +50,11 @@ class PedTaskingComponent extends React.Component {
      showAlert('Please Select Ped Team.');
    }
  }
+
+ assignTeams = (row) => {
+  const IntelReqID = row.original.IntelRequestID ;
+  const missionId = row.original.MissionId;
+ }
   
   //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
   moveLeft = (row) => {

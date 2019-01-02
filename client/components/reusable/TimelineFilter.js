@@ -7,11 +7,11 @@ import 'react-table/react-table.css';
 import CustomDatePicker from './CustomDatePicker';
 import FullHeaderLine from './FullHeaderLine';
 import MissionMgtDropDown from './MissionMgtDropDown';
-import StatusTable from './StatusTable';
+import TickBox from './TickBox';
 import { connect } from 'react-redux';
 import { teamFilter, platformFilter } from '../../actions/mssionmgt';
 import { MissionConsts, UnitConsts, DateConsts, TableDefaults } from '../../dictionary/constants';
-import { defaultFilter } from '../../util/helpers';
+
 import ReactTable from 'react-table';
 
 class TimelineFilter extends React.Component {
@@ -24,6 +24,8 @@ class TimelineFilter extends React.Component {
     this.state = {
       clear: false,
       selectedRadio: '',
+      selectedTeams: [],
+      selectedPlatform: '',
       platformInventoryID:'',
       results: [],
       filter: {
@@ -195,10 +197,11 @@ class TimelineFilter extends React.Component {
         Header: translations.select,
         accessor: id,
         maxWidth: 62,
-        Cell: row => <div>
-          <input type="radio" id={row.original[id]} name="selectedRadio" onClick={() => this.onRadioSelect(row.value)} />
-          <label htmlFor={row.original.id}><span /></label>
-        </div>,
+        Cell: row => <TickBox id={'team-' + row.original[id]} name="teams" value={row.value} onChecked={this.onTeamCheck} onUnchecked={this.onTeamUnCheck}/>,
+        // <div>
+        //   <input type="checkbox" id={row.original[id]} name="teams" onClick={() => this.onTeamCheck(row)} />
+        //   <label htmlFor={row.original.id}><span /></label>
+        // </div>,
       },
       {
         Header: translations.Location,
@@ -230,6 +233,27 @@ class TimelineFilter extends React.Component {
 
   }
 
+  // Removing team from teams array
+  onTeamUnCheck = (teamId) => {
+    const { selectedTeams } = this.state;
+    const idx = selectedTeams.indexOf(teamId);
+    if(idx !== -1) {
+      selectedTeams.splice(idx, 1);
+    }
+    this.setState({
+      selectedTeams,
+    });
+  }
+
+  // Pushing teamId to teams array
+  onTeamCheck = (teamId) => {
+    const { selectedTeams } = this.state;
+    // selectedTeams.push(teamId);
+    this.setState({
+      selectedTeams: [...selectedTeams, teamId],
+    });
+  }
+
   radioFilterSelect = (row) => {
     const value = row.value;
     const { filter } = this.state;
@@ -244,9 +268,9 @@ class TimelineFilter extends React.Component {
     let value = row;
     let platformInventoryID='';
 
-    if(row.original !== undefined){
-        value = row.original.UnitId;
-        platformInventoryID = row.original.id;
+    if(row.original !== undefined) {
+      value = row.original.UnitId;
+      platformInventoryID = row.original.id;
     }
     // const { tab } = this.props;
     // const { selectedResource } = this.state.filter;
@@ -261,7 +285,7 @@ class TimelineFilter extends React.Component {
     // }
     this.setState({
       selectedRadio: value,
-      platformInventoryID:platformInventoryID,
+      platformInventoryID,
     }, () => {
       this.props.radioFilterSelect(this.state.selectedRadio,this.state.platformInventoryID);
     });
