@@ -111,7 +111,7 @@ class CollectionManagerComponent extends React.Component {
     
   // value of orderndex can be 1 or -1() depeding which icon has been clicked
     const newPriority = row.original.CollectionMgrPriority + orderIndex;
-    alert(newPriority);
+   // alert(newPriority);
     this.props.changeIntelPriority(row.original.IntelRequestID, newPriority).then(() => {
     // this.loadData();
     // const session = JSON.parse(localStorage.getItem('session'));
@@ -304,12 +304,23 @@ class CollectionManagerComponent extends React.Component {
         Cell: row => (
           <div>
             { (row.index !== 0) ?
-              <a href="Javascript:void('0');" className="btn btn-success btn-xs" title={translations['Increase Priority']} onClick={() => this.updateIntelPriority(row, -1)} > <span className="glyphicon glyphicon-triangle-top" /> </a>
+              <a href="Javascript:void('0');" className="btn btn-success btn-xs" data-tip data-for={translations['Increase Priority']} onClick={() => this.updateIntelPriority(row, -1)} > <span className="glyphicon glyphicon-triangle-top" />
+              
+                                            <ReactTooltip id="Increase Priority" type="warning">
+                                                 <span>Increase Priority</span>
+                                            </ReactTooltip>
+               </a>
+              
               : null }
             &nbsp;
             
             { (row.index !== allCollectionsPlan.length - 1) ?
-              <a href="Javascript:void('0');" className="btn btn-danger btn-xs" title={translations['Decrease Priority']} onClick={() => this.updateIntelPriority(row, 1)} > <span className="glyphicon glyphicon-triangle-bottom" /> </a>
+              <a href="Javascript:void('0');" className="btn btn-danger btn-xs" data-tip data-for={translations['Decrease Priority']} onClick={() => this.updateIntelPriority(row, 1)} > <span className="glyphicon glyphicon-triangle-bottom" />
+              
+                                           <ReactTooltip id="Decrease Priority" type="warning">
+                                                <span>Decrease Priority </span>
+                                           </ReactTooltip>
+               </a>
               : null }
           </div>
         ),
@@ -385,7 +396,7 @@ class CollectionManagerComponent extends React.Component {
               <div className="col-md-1">&nbsp;</div>
               <div className="col-md-10 text-center">
                 <Map size={100} viewerId={viewerIdentifiers.collectionPlan} enableLiveViewToolBar = {false} intelReqData={allRequests} />
-              </div>
+               </div>
               <div className="col-md-1">&nbsp;</div>
             </div>
             

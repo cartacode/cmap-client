@@ -826,8 +826,9 @@
  "Supported unit":"Supported unit",
  "missionUnit": "Mission Unit",
  "CrewTeam": "Crew Team",
- "PedTeam": "Ped Team"
-
+ "PedTeam": "Ped Team",
+ "Increase Priority":"Increase Priority",
+ "Decrease Priority":"Decrease Priority"
  
   
 }
