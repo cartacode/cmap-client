@@ -242,6 +242,8 @@ class TimelineFilter extends React.Component {
     }
     this.setState({
       selectedTeams,
+    }, () => {
+      this.props.checkBoxSelect(this.state.selectedTeams);
     });
   }
 
@@ -251,6 +253,8 @@ class TimelineFilter extends React.Component {
     // selectedTeams.push(teamId);
     this.setState({
       selectedTeams: [...selectedTeams, teamId],
+    }, () => {
+      this.props.checkBoxSelect(this.state.selectedTeams);
     });
   }
 
@@ -605,9 +609,10 @@ class TimelineFilter extends React.Component {
 }
 
 TimelineFilter.propTypes = {
-  children: PropTypes.element,
+  checkBoxSelect: PropTypes.func,
+  children: PropTypes.element,  
   defaultResource: PropTypes.string,
-  headerTxt: PropTypes.string,
+  headerTxt: PropTypes.string,  
   radioFilterSelect: PropTypes.func,
   tab: PropTypes.string,
   updateResource: PropTypes.func,

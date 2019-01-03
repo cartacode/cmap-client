@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { TableDefaults, MissionConsts } from '../../../dictionary/constants';
 import { defaultFilter, getIntelStatusColor, formatDateTime, showAlert, getMinRowsForTable } from '../../../util/helpers';
-import { flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
+import { assignTeams, flightOpsAtoCrew, flightOpsCrew, moveToFlightOPSFromATO, moveToATOFromFlightOPS } from 'actions/mssionmgt';
 import FullHeaderLine from '../../reusable/FullHeaderLine';
 import TimelineFilter from '../../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
@@ -19,7 +19,7 @@ class FlightOpsTeam extends React.Component {
     this.state = {
       defaultResource: MissionConsts.RESOURCE.TEAM,
       tab: MissionConsts.TABS.FOP,
-      radioTeamId: '',
+      selectedTeams: [],
     };
   }
 
@@ -35,26 +35,43 @@ class FlightOpsTeam extends React.Component {
   // Updates CrewId in mission
   moveRight = (row) => {
     const { translations } = this.props;
-    const IntelReqID = row.original.IntelRequestID ;
-    const missionId = row.original.MissionId;    
-    if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+    const IntelReqID = row.original.IntelRequestID;
+    const missionId = row.original.MissionId;
+    // if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+    //   const data = {
+    //     'Id': missionId,
+    //     IntelReqID,
+    //     'CrewTeamId': this.state.radioTeamId,
+    //     'Type': 'Crew',
+    //   };
+    //   this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
+    //     const { isBooked, error } = this.props;
+    //     if(isBooked) {
+    //       NotificationManager.error(error, 'Error', 5000);
+    //     }else{
+    //       this.loadData();
+    //       this.timeLine.onFind();
+    //     }
+    //   });
+    // }
+    if(this.state.selectedTeams.length > 0) {
       const data = {
         'Id': missionId,
-        'IntelReqID': IntelReqID,
-        'CrewTeamId': this.state.radioTeamId,
+        IntelReqID,
+        'TeamIDs': this.state.selectedTeams,
         'Type': 'Crew',
       };
-      this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
+      this.props.assignTeams(data).then(() => {
         const { isBooked, error } = this.props;
-        if(isBooked){
-            NotificationManager.error(error,'Error', 5000);
+        if(isBooked) {
+          NotificationManager.error(error, 'Error', 5000);
         }else{
           this.loadData();
           this.timeLine.onFind();
         }
       });
     } else {
-      showAlert('Please Select Team');
+      showAlert('Please Select Atleast One Team');
     }
   }
 
@@ -71,9 +88,8 @@ class FlightOpsTeam extends React.Component {
         'Type': 'Crew',
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
-          this.loadData();
-          this.timeLine.onFind();
-        
+        this.loadData();
+        this.timeLine.onFind();
       });
     } else {
       showAlert('Please Select Team');
@@ -90,9 +106,15 @@ class FlightOpsTeam extends React.Component {
     this.props.flightOpsCrew(unitId);
   };
 
-  radioFilterSelect=(value,platformInventoryID)=> {
+  // radioFilterSelect=(value,platformInventoryID)=> {
+  //   this.setState({
+  //     radioTeamId: value,
+  //   });
+  // }
+
+  onTeamSelect = (teams) => {
     this.setState({
-      radioTeamId: value,
+      selectedTeams: teams,
     });
   }
 
@@ -291,7 +313,7 @@ class FlightOpsTeam extends React.Component {
 
         </div>
         <div >
-        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} updateResource={this.props.updateResource}/>
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations.flightops} defaultResource={this.state.defaultResource} tab={this.state.tab} checkBoxSelect={this.onTeamSelect} updateResource={this.props.updateResource}/>
        </div>
       </div>
     );
@@ -316,10 +338,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  assignTeams,
   flightOpsAtoCrew,
   flightOpsCrew,
   moveToFlightOPSFromATO,
   moveToATOFromFlightOPS,
-
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FlightOpsTeam);

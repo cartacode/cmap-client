@@ -8,7 +8,7 @@ import { defaultFilter, formatDateTime, getIntelStatusColor, showAlert, getMinRo
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import TimelineFilter from '../reusable/TimelineFilter';
 import Link from 'react-router-dom/Link';
-import ReactTooltip  from 'react-tooltip';
+import ReactTooltip from 'react-tooltip';
 
 import { missionPEDUser } from '../../dictionary/auth';
 import { NotificationManager } from 'react-notifications';
@@ -20,6 +20,7 @@ class PedTaskingComponent extends React.Component {
       defaultResource: MissionConsts.RESOURCE.TEAM,
       tab: MissionConsts.TABS.PED,
       radioTeamId: '',
+      selectedTeams: [],
     };
   }
 
@@ -33,16 +34,28 @@ class PedTaskingComponent extends React.Component {
 
   //  Move Intel from ATO table to PED table . i.e Left -> Right.
  moveRight = (row) => {
-   const IntelReqID = row.original.IntelRequestID ;
-   const missionId = row.original.MissionId;    
-   if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+   const IntelReqID = row.original.IntelRequestID;
+   const missionId = row.original.MissionId;
+   //  if(this.state.radioTeamId !== undefined && this.state.radioTeamId !== 0 && this.state.radioTeamId !== '') {
+   //    const data = {
+   //      'Id': missionId,
+   //      IntelReqID,
+   //      'PedTeamID': this.state.radioTeamId,
+   //      'Type': 'Ped',
+   //    };
+   //    this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
+   //      this.loadData();
+   //      this.timeLine.onFind();
+   //    });
+   //  }
+   if(this.state.selectedTeams.length > 0) {
      const data = {
        'Id': missionId,
        IntelReqID,
-       'PedTeamID': this.state.radioTeamId,
+       'TeamIDs': this.state.selectedTeams,
        'Type': 'Ped',
      };
-     this.props.moveToFlightOPSFromATO(missionId, data).then(() => {
+     this.props.assignTeams(data).then(() => {
        this.loadData();
        this.timeLine.onFind();
      });
@@ -51,16 +64,11 @@ class PedTaskingComponent extends React.Component {
    }
  }
 
- assignTeams = (row) => {
-  const IntelReqID = row.original.IntelRequestID ;
-  const missionId = row.original.MissionId;
- }
-  
   //  Move Intel from PED tabe to ATO table. i.e Right -> Left.
   moveLeft = (row) => {
     const { translations } = this.props;
-    const IntelReqID = row.original.IntelRequestID ;    
-    const missionId = row.original.MissionId ;    
+    const IntelReqID = row.original.IntelRequestID;
+    const missionId = row.original.MissionId;
     if(missionId !== undefined && missionId !== 0 && missionId !== '') {
       const data = {
         Id: missionId,
@@ -70,8 +78,8 @@ class PedTaskingComponent extends React.Component {
       };
       this.props.moveToATOFromFlightOPS(data).then(() => {
         const { isBooked, error } = this.props;
-        if(isBooked){
-            NotificationManager.error(error,'Error', 5000);
+        if(isBooked) {
+          NotificationManager.error(error, 'Error', 5000);
         }else{
           this.loadData();
           this.timeLine.onFind();
@@ -80,9 +88,15 @@ class PedTaskingComponent extends React.Component {
     }
   };
 
-  radioFilterSelect=(value,platformInventoryID)=> {
+  radioFilterSelect=(value, platformInventoryID)=> {
     this.setState({
       radioTeamId: value,
+    });
+  }
+
+  onTeamSelect = (teams) => {
+    this.setState({
+      selectedTeams: teams,
     });
   }
 
@@ -94,11 +108,10 @@ class PedTaskingComponent extends React.Component {
 
     // LEFT SIDE TABLE = Where PedTeamId = null and Status Is = AAG
     this.props.fetchPedTasksATO(unitId);
-  
+
     // RIGHT SIDE TABLE = Where PedTeamId != null and Status Is = AAG
     this.props.fetchPedTasks(unitId);
   };
-
 
   getLeftColumns = () => {
     const editurl = '/intel-request/detail/';
@@ -108,18 +121,18 @@ class PedTaskingComponent extends React.Component {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
-        Cell: row =>  <div className = 'tooltip-custom'>
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
-          <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
-              <span>
+        Cell: row => <div className = "tooltip-custom">
+          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} type="warning">
+            <span>
                 Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
                 Platform: {row.original.PlatformName ? row.original.PlatformName + (row.original.TailNumber ? ' (' + row.original.TailNumber + ')' : '') : (row.original.SuggestedPlatformName ? row.original.SuggestedPlatformName : 'Not Found')}
-                <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
-                <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
-                <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
-              </span>
+              <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
+              <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
+              <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
+            </span>
           </ReactTooltip>
-      </div>,
+        </div>,
       },
       {
         Header: translations.missionUnit,
@@ -182,22 +195,22 @@ class PedTaskingComponent extends React.Component {
         Header: translations['IR#'],
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
-        Cell: row =>  <div className = 'tooltip-custom'>
+        Cell: row => <div className = "tooltip-custom">
           {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
-          <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
-              <span>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <ReactTooltip id={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} type="warning">
+            <span>
                 Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
                 Platform: {row.original.PlatformName ? row.original.PlatformName + (row.original.TailNumber ? ' (' + row.original.TailNumber + ')' : '') : (row.original.SuggestedPlatformName ? row.original.SuggestedPlatformName : 'Not Found')}
-                <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
-                <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
-                <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
-              </span>
+              <br/>Flight Crew: {row.original.CrewTeam ? row.original.CrewTeam : ''}
+              <br/>PED Team: {row.original.PedTeam ? row.original.PedTeam : ''}
+              <br/>Payloads: {row.original.PrimaryPayloadAbbreviation ? row.original.PrimaryPayloadAbbreviation : '' } / {row.original.SecondaryPayloadAbbreviation ? row.original.SecondaryPayloadAbbreviation : '' }
+            </span>
           </ReactTooltip>
-      </div>,
+        </div>,
       },
       {
-        Header: translations['PedTeam'],
+        Header: translations.PedTeam,
         accessor: 'PedTeam',
         minWidth: 150,
       },
@@ -224,11 +237,11 @@ class PedTaskingComponent extends React.Component {
         },
       },
       {
-        Header: translations['status'],
+        Header: translations.status,
         accessor: 'Status',
         minWidth: 150,
       },
-      
+
       {
         Header: translations.Unassign,
         accessor: 'missionId',
@@ -252,17 +265,17 @@ class PedTaskingComponent extends React.Component {
     // For Right Table
     const pedTasksColumns = this.getRightColumns();
 
-    let ses = JSON.parse(localStorage.getItem('session'));
-    let roles = ses.UserRoles;
-    let roles2 = JSON.parse(roles);
-    let access = roles2.some(v => missionPEDUser.includes(v));
-    let minRowsForTable = getMinRowsForTable(pedTasksAtoGenerations.length,pedTasks.length);
-  
-   
-    
-    return ( access ? (
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = ses.UserRoles;
+    const roles2 = JSON.parse(roles);
+    const access = roles2.some(v => missionPEDUser.includes(v));
+    const minRowsForTable = getMinRowsForTable(pedTasksAtoGenerations.length, pedTasks.length);
+
+
+
+    return (access ? (
       <div>
-        
+
         <div className="row mission-mgt" >
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">
@@ -285,7 +298,7 @@ class PedTaskingComponent extends React.Component {
               </div>
 
               <div className="col-md-6">
-                <FullHeaderLine headerText={translations['PedTaskHeader']} />
+                <FullHeaderLine headerText={translations.PedTaskHeader} />
                 <div >
                   <ReactTable
                     data={pedTasks}
@@ -305,7 +318,7 @@ class PedTaskingComponent extends React.Component {
           </div>
 
         </div>
-        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} radioFilterSelect={this.radioFilterSelect} />
+        <TimelineFilter onRef={ref => (this.timeLine = ref)} translations={translations} headerTxt={translations['ped tasking']} defaultResource={this.state.defaultResource} tab={this.state.tab} checkBoxSelect={this.onTeamSelect} />
       </div>) : null
     );
   }
