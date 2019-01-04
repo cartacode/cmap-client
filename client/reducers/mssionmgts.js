@@ -199,6 +199,12 @@ export default function collections(state = initialState.mssionmgts, { payload, 
         ...state,
         isBooked: false,
       };
+    case MISSION__ASSIGN_TEAMS.FAILURE:
+      return {
+        ...state,
+        isBooked: true,
+        error: error.response.data.Message,
+      };
     default:
       return state;
   }

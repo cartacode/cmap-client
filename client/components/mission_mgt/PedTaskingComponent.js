@@ -56,8 +56,13 @@ class PedTaskingComponent extends React.Component {
        'Type': 'Ped',
      };
      this.props.assignTeams(data).then(() => {
-       this.loadData();
-       this.timeLine.onFind();
+       const { isBooked, error } = this.props;
+       if(isBooked) {
+         NotificationManager.error(error, 'Error', 5000);
+       }else{
+         this.loadData();
+         this.timeLine.onFind();
+       }
      });
    } else {
      showAlert('Please Select Ped Team.');
