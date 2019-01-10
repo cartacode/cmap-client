@@ -3802,8 +3802,8 @@ one-block {
 .modal-content {
   background: url("/assets/img/menu/background-dashboard.png") no-repeat;
   border-radius: 5px;
-  max-width: 300px !important;
-  max-height: 400px !important;
+  min-width: 300px !important;
+  min-height: 400px !important;
   margin: 0px;
   padding: 30px;
   border: 2px solid;
