@@ -203,7 +203,7 @@ class FlightOpsPlatform extends React.Component {
       },
       {
         Header: translations.Priority,
-        accessor: 'Priority',
+        accessor: 'CollectionMgrPriority',
         maxWidth: 80,
 
       },

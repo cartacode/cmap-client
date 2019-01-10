@@ -681,7 +681,7 @@ render = () => {
   const editId = params.editId;
 
   let { intelRequest } = this.state;
-
+console.log(intelRequest)
   //intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
   const ses = JSON.parse(localStorage.getItem('session'));
