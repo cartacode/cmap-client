@@ -19,7 +19,7 @@ import SysHealthContainer from '../containers/admin/SysHealthContainer';
 import SysConfigContainer from '../containers/admin/SysConfigContainer';
 import ReferenceDocsContainer from '../containers/admin/ReferenceDocsContainer';
 import SubMenu from './reusable/SubMenu';
-import { adminUser, sysDocsUser, adminTabUser } from '../dictionary/auth';
+import { adminUser, sysDocsUser, adminTabUser, intelCustomer } from '../dictionary/auth';
 
 class AdminComponent extends React.Component {
 
@@ -49,6 +49,8 @@ class AdminComponent extends React.Component {
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
     let sysDocsAccess = roles2.some(v => sysDocsUser.includes(v));
+    let locationAccess = roles2.some(v => intelCustomer.includes(v));
+
 
     // const menuItems = [
     //   {title: translations['personnel'], url: `${match.url}/personnel` },
@@ -68,6 +70,9 @@ class AdminComponent extends React.Component {
 
     if(sysDocsAccess) {
       menuItems.push({title: 'Reference Docs', url: `${match.url}/sys-config`});
+    }
+    if(locationAccess) {
+      menuItems.push({title: translations['Location'], url: `${match.url}/location`});
     }
 
     else {
@@ -122,9 +127,8 @@ class AdminComponent extends React.Component {
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
-    let access = roles2.some(v => adminTabUser.includes(v));
+    let access = roles2.some(v => adminTabUser.includes(v) );
     let access2 = roles2.some(v => sysDocsUser.includes(v));
-    console.log(access2);
     
     return ( access ? (
       <div>
