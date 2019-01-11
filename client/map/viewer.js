@@ -57,17 +57,13 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     navigationHelpButton: false,
     timeline: false,
     shadows: true,
-    //imageryProvider: new Cesium.WebMapServiceImageryProvider({
-      //  layers: 'AMPS:WORLDGEOTIF',
-      //  srs:'EPSG:4326',
-      //  proxy: new Cesium.DefaultProxy('/proxy/'),
-      //  url: getImageryurl(),
-      //})
-    imageryProvider: new Cesium.BingMapsImageryProvider({
-      url: 'https://dev.virtualearth.net',
-      key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
-      mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-    }),
+    imageryProvider: new Cesium.WebMapServiceImageryProvider({
+       layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+       srs:'EPSG:4326',
+       proxy: new Cesium.DefaultProxy('/proxy/'),
+       url : 'http://18.219.160.200:9090/geoserver/wms'
+       //  url: getImageryurl(),
+      }),
   });
   // extend our view by the cesium navigation mixin
   //   var options = {};
