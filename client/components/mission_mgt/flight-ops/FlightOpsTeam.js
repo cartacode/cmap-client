@@ -141,7 +141,7 @@ class FlightOpsTeam extends React.Component {
       },
       {
         Header: translations.Priority,
-        accessor: 'Priority',
+        accessor: 'CollectionMgrPriority',
         maxWidth: 80,
 
       },
@@ -221,7 +221,7 @@ class FlightOpsTeam extends React.Component {
       },
       {
         Header: translations.Priority,
-        accessor: 'Priority',
+        accessor: 'CollectionMgrPriority',
         maxWidth: 80,
       },
       {

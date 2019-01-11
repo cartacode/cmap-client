@@ -172,7 +172,7 @@ moveLeft = (row) => {
       },
       {
         Header: translations.Priority,
-        accessor: 'Priority',
+        accessor: 'CollectionMgrPriority',
         maxWidth: 80,
       },
       {

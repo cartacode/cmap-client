@@ -10,7 +10,7 @@ import { supportedLanguages } from 'dictionary/localization';
 import { Route, Redirect } from 'react-router-dom';
 import initialState from 'store/initialState';
 
-import { adminUser, dashboardUser, livewViewUser, statusUser, intelReqUser, intelLibraryUser, missionManageUser, sysDocsUser } from '../dictionary/auth';
+import { adminUser, dashboardUser, livewViewUser, statusUser, intelReqUser, intelLibraryUser, missionManageUser, sysDocsUser, intelCustomer } from '../dictionary/auth';
 
 class HeaderComponent extends React.Component {
 
@@ -76,6 +76,10 @@ class HeaderComponent extends React.Component {
     let intelLibAccess = roles2.some(v => intelLibraryUser.includes(v));
     let missionManageAccess = roles2.some(v => missionManageUser.includes(v));
     let sysDocsAccess = roles2.some(v => sysDocsUser.includes(v));
+    // User with intelCustomer role have access to Location Tab inside Admin Tab
+    // So we have to show Admin Tab to go inside Admin Tab
+    let adminAccessForIntelCustomer = roles2.some(v => intelCustomer.includes(v));
+
 
     const menuItems = [];
 
@@ -106,6 +110,10 @@ class HeaderComponent extends React.Component {
     
     if(adminAccess) { 
       menuItems.push({title: translations['admin'], url: '/admin/personnel'});
+    }
+
+    if(adminAccessForIntelCustomer) { 
+      menuItems.push({title: translations['admin'], url: '/admin/location'});
     }
 
     if(sysDocsAccess) { 

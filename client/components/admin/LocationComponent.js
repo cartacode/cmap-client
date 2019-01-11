@@ -11,7 +11,7 @@ import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
 import FilterDropDown from '../reusable/FilterDropdown';
 import ReactTooltip from 'react-tooltip'; 
 
-import { superAdmin, adminUser } from '../../dictionary/auth';
+import { superAdmin, adminUser, intelCustomer  } from '../../dictionary/auth';
 
 class LocationComponent
   extends React.Component {
@@ -166,7 +166,8 @@ loadData = (actionType) => {
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
-    let access = roles2.some(v => adminUser.includes(v));
+    // Admin can see All Tabs And IntelCustomer can see Location Tab
+    let access = roles2.some(v => adminUser.includes(v) || intelCustomer.includes(v));
 
     const columns = [
       {

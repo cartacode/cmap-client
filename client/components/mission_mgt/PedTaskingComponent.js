@@ -219,9 +219,15 @@ class PedTaskingComponent extends React.Component {
         accessor: 'PedTeam',
         minWidth: 150,
       },
-      {
+     /*  {
         Header: translations.Priority,
         accessor: 'Priority',
+        maxWidth: 80,
+
+      }, */
+      {
+        Header: translations.Priority,
+        accessor: 'CollectionMgrPriority',
         maxWidth: 80,
 
       },
