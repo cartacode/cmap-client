@@ -58,19 +58,12 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     timeline: false,
     shadows: true,
     imageryProvider: new Cesium.WebMapServiceImageryProvider({
-      //  layers: 'AMPS:WORLDGEOTIF',
-      layers: 'asia_categorized:asia-osm',
-       srs: 'EPSG:3857',
+       layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+       srs:'EPSG:4326',
        proxy: new Cesium.DefaultProxy('/proxy/'),
-      //  url: 'http://ec2-18-219-160-200.us-east-2.compute.amazonaws.com:9090/geoserver/asia_categorized/wms?service=WMS&version=1.1.0&request=GetMap&layers=asia_categorized%3Aasia-osm&bbox=-2.0037509999999996E7%2C-1255767.3750000007%2C2.0037509999999996E7%2C1.7380689999999996E7&width=768&height=357&srs=EPSG%3A3857&format=application/openlayers',
-       url: 'http://ec2-18-219-160-200.us-east-2.compute.amazonaws.com:9090/geoserver/asia_categorized/wms',
-
+       url : 'http://18.219.160.200:9090/geoserver/wms'
+       //  url: getImageryurl(),
       }),
-    // imageryProvider: new Cesium.BingMapsImageryProvider({
-    //   url: 'https://dev.virtualearth.net',
-    //   key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
-    //   mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-    // }),
   });
   // extend our view by the cesium navigation mixin
   //   var options = {};
