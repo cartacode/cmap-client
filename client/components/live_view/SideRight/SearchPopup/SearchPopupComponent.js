@@ -13,6 +13,10 @@ class SearchPopupComponent extends React.Component {
     };
   }
 
+  componentDidMount(){
+    this.props.setContainer('fly-to');
+  };
+
   render() {
     return (
       <div className={'search-popup-block right-popup-block' + (this.props.searchPopupOpen ? ' opened' : '')}>
@@ -30,9 +34,9 @@ class SearchPopupComponent extends React.Component {
 
         <div className="fly-to-link">
           <p>Fly To...</p>
-          <div className="search">
-            <input id="search_address" type="text" placeholder="Search" />
-            <button />
+          <div className="search" id="fly-to">
+            {/*<input id="search_address" type="text" placeholder="Search" />
+            <button />*/}
           </div>
         </div>
       </div>

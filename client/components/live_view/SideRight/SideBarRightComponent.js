@@ -87,6 +87,7 @@ class SideBarRightComponent extends React.Component {
           rulerPopupOpen={this.state.rulerPopupOpen}
         />
         <SearchPopupComponent
+          setContainer={this.props.setContainer}
           onPopup={this.onPopup}
           searchPopupOpen={this.state.searchPopupOpen}
         />
