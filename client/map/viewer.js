@@ -45,6 +45,8 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   if (viewers.has(viewerId)) {
     return;
   }
+  // Specify access key to get the geocodes from cesium api
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5OWUzZTI2Ni0zZmEyLTQ4MzQtYmE3NS1jMTU2MzEyOWYzZDgiLCJpZCI6NDY1OSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTM4ODk1N30.iOKoHxirli-lHdjLqb2FuXKo34CskRFrM3z7_6HPzZk';
   const viewer = new Cesium.Viewer(elementId, {
     animation: false,
     fullscreenButton: false,
@@ -275,6 +277,21 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
     key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
     mapStyle: mapLayer,
   }), layerLevel);
+}
+
+export async function flyTo(container, viewerId)
+{
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(5000);
+    viewer = viewers.get(viewerId);
+  }
+
+  var geocode = new Cesium.Geocoder({
+    container:container, 
+    scene: viewer.scene
+    });
 }
 
 export async function adjustLayerTransparency(layerLevel, alphaLevel, viewerId) {

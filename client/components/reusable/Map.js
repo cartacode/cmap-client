@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity } from 'map/viewer';
+import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -209,6 +209,11 @@ export default class Map extends React.PureComponent {
     adjustLayerTransparency(layerLevel, alphaLevel, this.props.viewerId);
   }
 
+  flyTo = (container) => {
+    console.log('geocoder container: ' + container);
+    flyTo(container, this.props.viewerId)
+  }
+
   render() {
     const { size = viewerSize.medium, toolBarOptions } = this.props;
     const { latlong } = this.state;
@@ -233,7 +238,8 @@ export default class Map extends React.PureComponent {
           {/* <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} /> */}
         </div>
         {toolbar_show && 
-          <SideBarRightComponent 
+          <SideBarRightComponent
+            setContainer={this.flyTo} 
             setMapLayer={this.changeMapLayer}
             setLayerTransparency={this.adjustLayerTransparency}
             addKMLToMap={this.addKMLToMap}
