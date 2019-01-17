@@ -6,11 +6,10 @@ import LvSlider from '../../../reusable/Slider';
 import './MapsPopupComponent.scss';
 
 class MapsPopupComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      fusePopupOpen: false,
+      fusePopupOpen: false, // for setting opacity of  base and top layers
       sliderPercent: [
         100, // base
         50, // top
@@ -45,11 +44,12 @@ class MapsPopupComponent extends React.Component {
 
   showFusePopup = () => {
     this.setState({
-      fusePopupOpen: !this.state.fusePopupOpen,
-      fuseItemClicked: [true, false],
+      fusePopupOpen: !this.state.fusePopupOpen, // toggle the popup
+      fuseItemClicked: [true, false], // by default the base layer is selected
     });
   }
 
+  // activate base layer opacity functionality
   onClickBase = (e) => {
     this.preventEvent(e);
     this.setState({
@@ -57,6 +57,7 @@ class MapsPopupComponent extends React.Component {
     });
   }
 
+  // activate top layer opacity functionality
   onClickTop = (e) => {
     this.preventEvent(e);
     this.setState({
@@ -64,10 +65,14 @@ class MapsPopupComponent extends React.Component {
     });
   }
 
+  // selecting any of the 4 provided bing maps layers
   onClickMenuItem = (index, e) => {
     this.preventEvent(e);
+    // initially selecting layer to be base layer
     let layer = layerLevels.base;
 
+    // if fuse popup is opened and Top is selected 
+    // then layer is top-layer
     if (this.state.fusePopupOpen && this.state.fuseItemClicked[1]) {
       layer = layerLevels.top;
     }
@@ -98,6 +103,7 @@ class MapsPopupComponent extends React.Component {
     });
   }
 
+  // selecting geoserver map layers 
   onLocalSelectMap = (index, e) => {
     this.preventEvent(e);
     this.setState({
@@ -112,11 +118,12 @@ class MapsPopupComponent extends React.Component {
       }),
     }, () => {
       console.log(this.state.localMapSelect);
-      this.props.setMapLayer('Geotiff', 0);
+      this.props.setMapLayer('Geotiff', 0); // 0 is for base layer, 1 is for top layer
     }
     );
   }
 
+  // selecting b/w local-Internet maps
   onClickSelectMap = (index, e) => {
     this.preventEvent(e);
     this.setState({
@@ -127,13 +134,7 @@ class MapsPopupComponent extends React.Component {
           return false;
       }),
     }, () => {
-      if (index == 0) {
-        document.getElementById('local-map').style.display = 'block';
-        document.getElementById('default-map').style.display = 'none';
-      } else {
-        document.getElementById('local-map').style.display = 'none';
-        document.getElementById('default-map').style.display = 'block';
-      }
+      console.log(this.state.mapSelect);
     });
   }
 
@@ -159,6 +160,7 @@ class MapsPopupComponent extends React.Component {
   render() {
     const { menuClicked, fuseItemClicked, mapSelect, localMapSelect } = this.state;
     return (
+
       <div className={'maps-popup-block right-popup-block' + (this.props.mapsPopupOpen ? ' opened' : '')}>
         <div className="title-block">
           MAPS
@@ -180,7 +182,7 @@ class MapsPopupComponent extends React.Component {
         </div>
         <hr />
 
-        <div className='local-maps-menu clearfix' id='local-map'>
+        <div className={'local-maps-menu' + (mapSelect[0] ? ' open' : '') + ' clearfix'}>
           <ul>
             <li><a href="#" className={(localMapSelect[0] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(0, e)}>DEFAULT</a></li>
             {/*<li>Asia Server</li>
@@ -188,7 +190,7 @@ class MapsPopupComponent extends React.Component {
           </ul>
         </div>
 
-        <div className="sidebar-maps-menu clearfix" id="default-map">
+        <div className={'sidebar-maps-menu' + (mapSelect[1] ? ' open' : '') + ' clearfix'}>
           <a href="#" className={'satellite-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
             <span>Satellite</span>
           </a>

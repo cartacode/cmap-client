@@ -185,7 +185,12 @@ export const Error = {
   ERROR_CODE: 417,
 }
 
-/* Pending - Gray  
+export const ImageryUrls = { 
+  BING_IMAGERY: 'https://dev.virtualearth.net',
+  GEOSERVER_IMAGERY: 'http://18.219.160.200:9090/geoserver/wms'
+}
+
+/* Pending - Gray
 Available - White
 Off-line – Red
 Booked – Green

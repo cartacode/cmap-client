@@ -5,7 +5,7 @@ import {DrawHelper} from 'map/drawHelper';
 import {LAYERS} from 'map/layer-names';
 import {COORDINATE_SYTEM} from 'map/coordinate-system';
 import {getImageryurl} from 'map/config';
-
+import { ImageryUrls } from 'dictionary/constants';
 /**
  * The identifiers of the Cesium viewers in the application.
  * @type  {Object.<string>}
@@ -59,13 +59,18 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     navigationHelpButton: false,
     timeline: false,
     shadows: true,
-    imageryProvider: new Cesium.WebMapServiceImageryProvider({
-       layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
-       srs:'EPSG:4326',
-       proxy: new Cesium.DefaultProxy('/proxy/'),
-       url : 'http://18.219.160.200:9090/geoserver/wms'
-       //  url: getImageryurl(),
-      }),
+    imageryProvider: new Cesium.BingMapsImageryProvider({
+      url: ImageryUrls.BING_IMAGERY,
+      key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
+      mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
+    }),
+    // imageryProvider: new Cesium.WebMapServiceImageryProvider({
+    //    layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+    //    srs:'EPSG:4326',
+    //    proxy: new Cesium.DefaultProxy('/proxy/'),
+    //    url : 'http://18.219.160.200:9090/geoserver/wms'
+    //    //  url: getImageryurl(),
+    //   }),
   });
   // extend our view by the cesium navigation mixin
   //   var options = {};
@@ -278,14 +283,14 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       srs:'EPSG:4326',
       format:'image/png',
       proxy: new Cesium.DefaultProxy('/proxy/'),
-      url : 'http://18.219.160.200:9090/geoserver/wms'
+      url : ImageryUrls.GEOSERVER_IMAGERY,
      }));
   } else {
     viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
-      url: 'https://dev.virtualearth.net',
+      url: ImageryUrls.BING_IMAGERY,
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: mapLayer,
-    }), layerLevel);
+    }), layerLevel); 
   }
   
 }
