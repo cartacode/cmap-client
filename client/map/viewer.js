@@ -272,11 +272,22 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
     viewer.imageryLayers.remove(existLayer, true);
   }
 
-  viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
-    url: 'https://dev.virtualearth.net',
-    key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
-    mapStyle: mapLayer,
-  }), layerLevel);
+  if (mapLayer == 'Geotiff') {
+    viewer.scene.imageryLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
+      layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+      srs:'EPSG:4326',
+      format:'image/png',
+      proxy: new Cesium.DefaultProxy('/proxy/'),
+      url : 'http://18.219.160.200:9090/geoserver/wms'
+     }));
+  } else {
+    viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
+      url: 'https://dev.virtualearth.net',
+      key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
+      mapStyle: mapLayer,
+    }), layerLevel);
+  }
+  
 }
 
 export async function flyTo(container, viewerId)

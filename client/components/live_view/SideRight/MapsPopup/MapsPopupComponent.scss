@@ -13,6 +13,7 @@
 .maps-popup-block.right-popup-block .title-block {
   background: none;
 }
+
 .maps-popup-block.right-popup-block .btn-control {
   position: absolute;
   top: 6px;
@@ -20,6 +21,7 @@
   height: 24px;
   width: 80px;
 }
+
 .maps-popup-block.right-popup-block .btn-control div {
   width: 24px;
   height: 24px;
@@ -27,21 +29,56 @@
   float: left;
   cursor: pointer;
 }
+
 .maps-popup-block.right-popup-block .btn-control .btn-close {
   background: url(/assets/img/live_view//btn_close.svg) no-repeat;
   background-size: cover;
 }
+
 .maps-popup-block.right-popup-block .btn-control .btn-close:before {
   display: none;
 }
+
 .maps-popup-block.right-popup-block .btn-control .btn-expand {
   background: url(/assets/img/live_view/btn_expand.svg) no-repeat;
   background-size: cover;
   margin: 0 4px;
   visibility: hidden;
 }
+
 .maps-popup-block.right-popup-block .btn-control .btn-curtail {
   background: url(/assets/img/live_view/btn_curtail.svg) no-repeat;
   background-size: cover;
   visibility: hidden;
+}
+
+
+.maps-popup-block.right-popup-block .show-maps a,
+.local-maps-menu a {
+  text-decoration: none;
+}
+
+.maps-popup-block.right-popup-block .show-maps a:hover,
+.local-maps-menu a:hover {
+  color: #ff7c16;
+}
+
+.show-maps .active,
+.local-maps-menu .active {
+  color: #ff7c16;
+}
+
+.maps-popup-block.right-popup-block .show-maps ul li {
+  float: left;
+  margin: 10px 0px;
+  margin-left: 15px;
+}
+
+.maps-popup-block.right-popup-block hr {
+  margin: 0;
+}
+
+.local-maps-menu {
+  margin: 10px 20px;
+  display: none;
 }

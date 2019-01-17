@@ -71,6 +71,7 @@ class SideBarLeftComponent extends React.Component {
   }
 
   onHomeButton = (event, menuIndex) => {
+    event.preventDefault();
     $(".cesium-home-button").click();
     if (menuIndex !== undefined) {
       this.setState({
