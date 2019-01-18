@@ -6,11 +6,10 @@ import LvSlider from '../../../reusable/Slider';
 import './MapsPopupComponent.scss';
 
 class MapsPopupComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      fusePopupOpen: false,
+      fusePopupOpen: false, // for setting opacity of  base and top layers
       sliderPercent: [
         100, // base
         50, // top
@@ -26,6 +25,15 @@ class MapsPopupComponent extends React.Component {
       fuseItemClicked: [
         false, // base
         false, // top
+      ],
+      mapSelect: [
+        false, // Local Map
+        true  // Default Map
+      ],
+      localMapSelect: [
+        false, // Geoserver Geotiff
+        false, // Asia Server 
+        false // Syria and Lebanon
       ]
     };
   }
@@ -36,11 +44,12 @@ class MapsPopupComponent extends React.Component {
 
   showFusePopup = () => {
     this.setState({
-      fusePopupOpen: !this.state.fusePopupOpen,
-      fuseItemClicked: [true, false],
+      fusePopupOpen: !this.state.fusePopupOpen, // toggle the popup
+      fuseItemClicked: [true, false], // by default the base layer is selected
     });
   }
 
+  // activate base layer opacity functionality
   onClickBase = (e) => {
     this.preventEvent(e);
     this.setState({
@@ -48,6 +57,7 @@ class MapsPopupComponent extends React.Component {
     });
   }
 
+  // activate top layer opacity functionality
   onClickTop = (e) => {
     this.preventEvent(e);
     this.setState({
@@ -55,34 +65,76 @@ class MapsPopupComponent extends React.Component {
     });
   }
 
+  // selecting any of the 4 provided bing maps layers
   onClickMenuItem = (index, e) => {
     this.preventEvent(e);
+    // initially selecting layer to be base layer
     let layer = layerLevels.base;
 
-    if(this.state.fusePopupOpen && this.state.fuseItemClicked[1]) {
+    // if fuse popup is opened and Top is selected 
+    // then layer is top-layer
+    if (this.state.fusePopupOpen && this.state.fuseItemClicked[1]) {
       layer = layerLevels.top;
     }
 
     this.setState({
-      menuClicked: this.state.menuClicked.map((item, i) => {
-        if (i === index) {
-          return true;
-        }
+      localMapSelect: this.state.localMapSelect.map(() => {
         return false;
       }),
+      menuClicked: this.state.menuClicked.map((item, i) => {
+        if (i === index)
+          return true;
+        else
+          return false;
+      }),
     }, () => {
-      if(index === 0) { // Aerial
+      if (index === 0) { // Aerial
         this.props.setMapLayer(layerIdentifiers.aerial, layer);
         this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
-      } else if(index === 1) { // street
+      } else if (index === 1) { // street
         this.props.setMapLayer(layerIdentifiers.road, layer);
         this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
-      } else if(index === 4) { // aerial with labels
+      } else if (index === 4) { // aerial with labels
         this.props.setMapLayer(layerIdentifiers.aerialLabels, layer);
         this.props.setLayerTransparency(layer, (this.state.sliderPercent[layer] / 100));
-      } else if(index === 5) {
+      } else if (index === 5) {
         this.showFusePopup();
       }
+    });
+  }
+
+  // selecting geoserver map layers 
+  onLocalSelectMap = (index, e) => {
+    this.preventEvent(e);
+    this.setState({
+      menuClicked: this.state.menuClicked.map(() => {
+        return false;
+      }),
+      localMapSelect: this.state.localMapSelect.map((item, i) => {
+        if (i == index)
+          return true;
+        else
+          return false;
+      }),
+    }, () => {
+      console.log(this.state.localMapSelect);
+      this.props.setMapLayer('Geotiff', 0); // 0 is for base layer, 1 is for top layer
+    }
+    );
+  }
+
+  // selecting b/w local-Internet maps
+  onClickSelectMap = (index, e) => {
+    this.preventEvent(e);
+    this.setState({
+      mapSelect: this.state.mapSelect.map((item, i) => {
+        if (i === index)
+          return true;
+        else
+          return false;
+      }),
+    }, () => {
+      console.log(this.state.mapSelect);
     });
   }
 
@@ -90,13 +142,13 @@ class MapsPopupComponent extends React.Component {
     const basePct = this.state.sliderPercent[0];
     const topPct = this.state.sliderPercent[1];
 
-    if(this.state.fuseItemClicked[0] === true) {
+    if (this.state.fuseItemClicked[0] === true) {
       this.setState({
         sliderPercent: [newPct, topPct],
       }, () => {
         this.props.setLayerTransparency(layerLevels.base, (newPct / 100));
       });
-    } else if(this.state.fuseItemClicked[1] === true) {
+    } else if (this.state.fuseItemClicked[1] === true) {
       this.setState({
         sliderPercent: [basePct, newPct],
       }, () => {
@@ -106,8 +158,9 @@ class MapsPopupComponent extends React.Component {
   }
 
   render() {
-    const { menuClicked, fuseItemClicked } = this.state;
+    const { menuClicked, fuseItemClicked, mapSelect, localMapSelect } = this.state;
     return (
+
       <div className={'maps-popup-block right-popup-block' + (this.props.mapsPopupOpen ? ' opened' : '')}>
         <div className="title-block">
           MAPS
@@ -120,7 +173,24 @@ class MapsPopupComponent extends React.Component {
             />
           </div>
         </div>
-        <div className="sidebar-maps-menu clearfix">
+
+        <div className='show-maps clearfix'>
+          <ul>
+            <li><a href="#" className={(mapSelect[0] ? 'active' : '')} onClick={(e) => this.onClickSelectMap(0, e)}>LOCAL</a></li>
+            <li><a href="#" className={(mapSelect[1] ? 'active' : '')} onClick={(e) => this.onClickSelectMap(1, e)}>INTERNET</a></li>
+          </ul>
+        </div>
+        <hr />
+
+        <div className={'local-maps-menu' + (mapSelect[0] ? ' open' : '') + ' clearfix'}>
+          <ul>
+            <li><a href="#" className={(localMapSelect[0] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(0, e)}>DEFAULT</a></li>
+            {/*<li>Asia Server</li>
+            <li>Syria & Lebanon</li>*/}
+          </ul>
+        </div>
+
+        <div className={'sidebar-maps-menu' + (mapSelect[1] ? ' open' : '') + ' clearfix'}>
           <a href="#" className={'satellite-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
             <span>Satellite</span>
           </a>
