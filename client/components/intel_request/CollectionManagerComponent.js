@@ -195,7 +195,7 @@ class CollectionManagerComponent extends React.Component {
      
       {
         Header: translations['Supported unit'],
-        accessor: 'Unit',
+        accessor: 'SupportedUnitName',
         maxWidth: 150,
       },
       /*   {
