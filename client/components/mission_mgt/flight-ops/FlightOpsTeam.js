@@ -140,41 +140,41 @@ class FlightOpsTeam extends React.Component {
         </div>,
       },
       {
-        Header: translations.Priority,
-        accessor: 'CollectionMgrPriority',
-        maxWidth: 80,
-
+        Header: translations.missionUnit,
+        accessor: 'MissionUnit',
+        minWidth: 150,
       },
       {
-        Header: translations.Command,
-        accessor: 'COCOMText',
+        Header: translations.Location,
+        accessor: 'MissionUnitLocation',
+        maxWidth: 80,
+      },
+      {
+        Header: translations.platform,
+        id: 'PlatformName',
+        accessor: r => {
+          return (r.PlatformName ? r.PlatformName : r.SuggestedPlatformName);
+        },
         maxWidth: 150,
       },
       {
-        Header: translations['Mission Type'],
-        accessor: 'MissionTypeText',
+        Header: translations.payload,
+        accessor: 'PrimaryPayloadAbbreviation',
+        maxWidth: 85,
       },
       {
-        Header: 'Payload',
-        accessor: 'PrimaryPayloadName',
+        Header: translations.payload,
+        accessor: 'SecondaryPayloadAbbreviation',
+        maxWidth: 85,
       },
       {
-        Header: translations['Armed'],
-        accessor: 'Armed',
-        maxWidth: 80,
-        Cell: ({ value }) => (value ? 'Yes' : 'No'),
-      },
-      {
-        Header: translations['Date/Time'],
-        id: 'BestCollectionTime',
-        accessor: d => {
-          return formatDateTime(d.BestCollectionTime);
+        Header: translations.Armed,
+        id: 'Armed',
+        maxWidth: 60,
+        accessor: r => {
+          return ((r.PlatformName) ? ((r.AssgnPlatformArm1 === null && r.AssgnPlatformArm2 === null && r.AssgnPlatformArm3 === null) ? 'No' : 'Yes')
+            : ((r.SuggstdPlatformArm1 === null && r.SuggstdPlatformArm2 === null && r.SuggstdPlatformArm3 === null) ? 'No' : 'Yes'));
         },
-      },
-      {
-        Header: translations['status'],
-        accessor: 'Status',
-        minWidth: 150,
       },
       {
         Header: translations.Assign,
