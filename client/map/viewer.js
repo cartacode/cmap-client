@@ -406,15 +406,19 @@ const toggleEntityChildren = (entityId, bDisplay, viewerId) => {
   children.forEach(item => {
     toggleEntityChildren(item.id, bDisplay, viewerId);
   });
-
+  
   viewer.entities.getById(entityId).show = bDisplay;
 };
 
-export function toggleShowEntity(entityId, bDisplay, viewerId) {
+export function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = false) {
   const viewer = viewers.get(viewerId);
 
   if(viewer.entities.getById(entityId)) {
-    toggleEntityChildren(entityId, bDisplay, viewerId);
+    if(bDestroy) {
+      viewer.entities.removeById(entityId);
+    } else {
+      toggleEntityChildren(entityId, bDisplay, viewerId);
+    }
 
     if(bDisplay) {
       toggleEntityParents(entityId, bDisplay, viewerId);
@@ -624,8 +628,8 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
   }
 }
 
-export function removePinById(pinId, viewerId) {
-  toggleShowEntity(pinId, false, viewerId);
+export function removePinById(pinId, viewerId, bDestroy = false) {
+  toggleShowEntity(pinId, false, viewerId, bDestroy);
 }
 
 /**
@@ -679,11 +683,13 @@ function attachLeftClick(viewer, viewerId, leftClickHandler) {
       var heightString = Number(cartographic.height); 
       console.log("=====", longitudeString, latitudeString, heightString);
       heightString = heightString>0 ? heightString: 0;
+      
       var currentLatLong = {
         longitude: Number(longitudeString),
         latitude:  Number(latitudeString),
         height:    heightString,
       }
+      
       leftClickHandler(currentLatLong, viewerId, viewer);  
     }
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);

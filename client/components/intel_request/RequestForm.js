@@ -357,6 +357,7 @@ editComponent = (editId) => {
 
   handleIntelRequestSection3 = (ir) => {
     const { intelRequest } = this.state;
+    
     this.setState({
       intelRequest: {
         ...intelRequest,
@@ -537,15 +538,9 @@ setNAIPOIANDGirdCordinateBasedMapSelection = (locationsData, currentLatLong) => 
       POI1_ID: locationsData[0].id || 'no value',
       POI2_ID: locationsData[1].id || 'no value',
     },
+    editFetched: true,
+    clear: false,
   });
-  
-  const gridCoords = document.getElementsByName('gridCoordinates')[0];
-
-  if(gridCoords) {
-    gridCoords.value = currentLatLong.latitude + ',' + currentLatLong.longitude;
-  }
-  
-  console.log('update intelRequest proprty ' + JSON.stringify(intelRequest));                                                                                                                 
 }
 
 resetForm() {
@@ -681,7 +676,7 @@ render = () => {
   const editId = params.editId;
 
   let { intelRequest } = this.state;
-console.log(intelRequest)
+
   //intelRequest.IntelEEIOtions = ["1", "2", "3", "4", "5"];
 
   const ses = JSON.parse(localStorage.getItem('session'));
@@ -789,7 +784,7 @@ console.log(intelRequest)
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map size={80} viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} />
+            <Map size={80} viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} displayGridCoords={this.state.intelRequest.gridCoordinates} />
            </div>
         </div>
         <div className="col-md-4 one-block">

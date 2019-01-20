@@ -27,6 +27,7 @@ export const defaultLocation = {
 
 export default class Map extends React.PureComponent {
   static propTypes = {
+    displayGridCoords: PropTypes.string,
     enableLiveViewToolBar: PropTypes.bool,
     intelReqData: PropTypes.array,
     setOneLocation: PropTypes.func,
@@ -73,6 +74,20 @@ export default class Map extends React.PureComponent {
     initialViewer(this.props.viewerId);
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.displayGridCoords || this.props.displayGridCoords) {
+      if(prevProps.displayGridCoords !== this.props.displayGridCoords) {
+        const coords = this.getLatLongFromGridCoords(this.props.displayGridCoords);
+        console.log(coords.longitude + ', ' + coords.latitude + '=======');
+        this.setState({ latlong: { latitude: coords.latitude, longitude: coords.longitude, height: 0 } }, () => {
+          removePinById('IR-GRID-COORDS', this.props.viewerId, true);
+          addNewPin(coords.latitude, coords.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, '', '', true);
+          this.positionMapToCoords(coords.latitude, coords.longitude);
+        });
+      }
+    }
+  }
+
   componentWillUnmount() {
     destroyViewer(this.props.viewerId);
     this._viewer = null;
@@ -111,11 +126,11 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
-    
+
     if(this.props.setOneLocation) {
-      removePinById('IR-GRID-COORDS', this.props.viewerId);
-      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId);
-      
+      removePinById('IR-GRID-COORDS', this.props.viewerId, true);
+      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, '', '', true);
+
       //placeholder for future code
       const returnObj = [{city:'',id:''},{city:'',id:''}];
       this.props.setOneLocation(returnObj, worldPosition);
@@ -156,6 +171,40 @@ export default class Map extends React.PureComponent {
           this.props.updateLatLong([currenLatLong.longitude, currenLatLong.latitude]);
         }
     }
+  }
+
+  convertDMSToDD = (degrees, minutes, seconds, direction) => {
+    let dd = Number(degrees) + (minutes / 60) + (seconds / 3600);
+
+    if (direction === 'S' || direction === 'W') {
+      dd *= -1;
+    } // Don't do anything for N or E
+
+    return Number(dd);
+  }
+
+  getLatLongFromGridCoords = (gridCoords) => {
+    const returnObj = {
+      latitude: 0,
+      longitude: 0,
+    };
+
+    if(!gridCoords) {
+      return returnObj;
+    }
+
+    if(gridCoords.includes('°')) {
+      const parts = gridCoords.split(/[^\d\w]+/);
+
+      returnObj.latitude = this.convertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
+      returnObj.longitude = this.convertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
+    } else if(gridCoords.includes(',')) {
+      const parts = gridCoords.split(',');
+      returnObj.latitude = Number(parts[0]);
+      returnObj.longitude = Number(parts[1]);
+    } 
+
+    return returnObj;
   }
 
   positionMapToCoords = (lat, long) =>{
