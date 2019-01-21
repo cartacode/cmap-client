@@ -30,10 +30,10 @@ class OrgBuilderComponent extends React.Component {
       isAddNodeFormOpen: false,
       isOptionModalOpen: false,
       nodeId: null,
-      branch:'1',
+      branch:'12',
       callEdit:false,
       edit:'0',
-      CommandRelation:'1',
+      CommandRelation:'4',
       treeConfig: {
         orientation: 'vertical',
         svgSquare: {
@@ -86,10 +86,10 @@ class OrgBuilderComponent extends React.Component {
 
   componentDidMount = () => {
   this.props.fetchOrganicOrg(this.state.branch);
-  this.props.fetchOrganicPersonnel().then(()=> { 
-    this.personnelChartView(); 
+  this.props.fetchOrganicPersonnel();
+  this.props.fetchDeployedOrg(this.state.branch).then(()=> { 
+    this.deployedChartView(); 
   });
-  this.props.fetchDeployedOrg(this.state.branch);
   this.props.fetchDeployedPersonnel(this.state.branch);
   }
 
@@ -166,10 +166,10 @@ class OrgBuilderComponent extends React.Component {
 
   orgChartView = () => {
     console.log("Here");
-    const { allOrganicOrgs } = this.props;
-    console.log(allOrganicOrgs);
+    const { allOrganicOrgs, allDeployedOrgs } = this.props;
+    console.log(allOrganicOrgs, allDeployedOrgs);
 
-    let orgData2 = [ allOrganicOrgs ];
+    let orgData2 = (allDeployedOrgs) ? [ allDeployedOrgs ] : [ allOrganicOrgs ];
 
     forceRemount = forceRemount +1;
    
@@ -177,15 +177,22 @@ class OrgBuilderComponent extends React.Component {
        orgData: orgData2
      });
 
-     this.setState({
-      CommandRelation:'1'
-    });
+     /*this.setState({
+      CommandRelation: (this.state.branch == 12) ? '4' : '1'
+    });*/
    }
 
    setBranch = (id) => {
       this.setState ({
-        branch:id
-      }, () => { this.props.fetchOrganicOrg(this.state.branch).then( ()  => { this.orgChartView(); } ) })
+        branch: id,
+        CommandRelation: (id == 12) ? '4' : this.state.CommandRelation,
+      }, () => {
+        if(this.state.CommandRelation === '1') {
+          this.props.fetchOrganicOrg(this.state.branch).then(() => { this.orgChartView(); });
+        } else {
+          this.props.fetchDeployedOrg(this.state.branch).then(() => { this.orgChartView(); }); 
+        }
+      });
    }
 
    personnelChartView = () => {
