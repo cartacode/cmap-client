@@ -44,8 +44,8 @@ class SearchPopupComponent extends React.Component {
 
         <div className='show-fly-to clearfix'>
           <ul>
-            <li><a href="#" className={(flyToSelect ? 'active' : '')} onClick={(e) => this.onClickFlyTo('local', e)}>LOCAL</a></li>
-            <li><a href="#" className={(flyToSelect ? '' : 'active')} onClick={(e) => this.onClickFlyTo('internet', e)}>INTERNET</a></li>
+            <li><a href="#" className={(flyToSelect ? 'active' : '')} onClick={(e) => this.onClickFlyTo(MapTypes.LOCAL, e)}>LOCAL</a></li>
+            <li><a href="#" className={(flyToSelect ? '' : 'active')} onClick={(e) => this.onClickFlyTo(MapTypes.INTERNET, e)}>INTERNET</a></li>
           </ul>
         </div>
         <hr />
