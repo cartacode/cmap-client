@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { MapTypes } from 'dictionary/constants';
 import LvSlider from '../../../reusable/Slider';
 
 import './SearchPopupComponent.scss';
@@ -16,13 +16,13 @@ class SearchPopupComponent extends React.Component {
 
   onClickFlyTo = (flyto, e) => {
     e.preventDefault();
-    if (flyto == 'local')
+    if (flyto === MapTypes.LOCAL)
       this.setState({ flyToSelect: true });
-    else
+    else if (flyto === MapTypes.INTERNET)
       this.setState({ flyToSelect: false });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.setContainer('default-fly-to');
   };
 
