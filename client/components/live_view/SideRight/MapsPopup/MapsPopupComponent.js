@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { layerIdentifiers, layerLevels } from '../../../../map/viewer';
 import LvSlider from '../../../reusable/Slider';
-
+import { LocalMapLayer } from 'dictionary/constants';
 import './MapsPopupComponent.scss';
 
 class MapsPopupComponent extends React.Component {
@@ -117,8 +117,12 @@ class MapsPopupComponent extends React.Component {
           return false;
       }),
     }, () => {
-      console.log(this.state.localMapSelect);
-      this.props.setMapLayer('Geotiff', 0); // 0 is for base layer, 1 is for top layer
+      if (index == 0) // World Map
+        this.props.setMapLayer(LocalMapLayer.WORLD_MAP, 0); // 0 is for base layer, 1 is for top layer
+      else if (index == 1) // Asia Server
+        this.props.setMapLayer(LocalMapLayer.ASIA_CATEGORIZED, 0);
+      else if (index == 2) // Syria-Lebanon
+        this.props.setMapLayer(LocalMapLayer.SYRIA_LEBANON, 0);
     }
     );
   }
@@ -133,8 +137,6 @@ class MapsPopupComponent extends React.Component {
         else
           return false;
       }),
-    }, () => {
-      console.log(this.state.mapSelect);
     });
   }
 
@@ -184,9 +186,9 @@ class MapsPopupComponent extends React.Component {
 
         <div className={'local-maps-menu' + (mapSelect[0] ? ' open' : '') + ' clearfix'}>
           <ul>
-            <li><a href="#" className={(localMapSelect[0] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(0, e)}>DEFAULT</a></li>
-            {/*<li>Asia Server</li>
-            <li>Syria & Lebanon</li>*/}
+            <li><a href="#" className={(localMapSelect[0] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(0, e)}>WORLD</a></li>
+            <li><a href="#" className={(localMapSelect[1] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(1, e)}>ASIA</a></li>
+            <li><a href="#" className={(localMapSelect[2] ? 'active' : '')} onClick={(e) => this.onLocalSelectMap(2, e)}>SYRIA / LEBANON</a></li>
           </ul>
         </div>
 
