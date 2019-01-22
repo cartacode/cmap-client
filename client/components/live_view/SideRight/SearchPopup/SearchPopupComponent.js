@@ -42,13 +42,13 @@ class SearchPopupComponent extends React.Component {
           </div>
         </div>
 
-        <div className='show-fly-to clearfix'>
+        {/*<div className='show-fly-to clearfix'>
           <ul>
             <li><a href="#" className={(flyToSelect ? 'active' : '')} onClick={(e) => this.onClickFlyTo(MapTypes.LOCAL, e)}>LOCAL</a></li>
             <li><a href="#" className={(flyToSelect ? '' : 'active')} onClick={(e) => this.onClickFlyTo(MapTypes.INTERNET, e)}>INTERNET</a></li>
           </ul>
         </div>
-        <hr />
+        <hr />*/}
 
         <div className="fly-to-link">
           <p>Fly To...</p>
