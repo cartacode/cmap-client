@@ -5,7 +5,7 @@ import {DrawHelper} from 'map/drawHelper';
 import {LAYERS} from 'map/layer-names';
 import {COORDINATE_SYTEM} from 'map/coordinate-system';
 import {getImageryurl} from 'map/config';
-import { ImageryUrls } from 'dictionary/constants';
+import { ImageryUrls, LocalMapLayer } from 'dictionary/constants';
 /**
  * The identifiers of the Cesium viewers in the application.
  * @type  {Object.<string>}
@@ -277,12 +277,12 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
     viewer.imageryLayers.remove(existLayer, true);
   }
 
-  if (mapLayer == 'Geotiff') {
+  if (mapLayer === LocalMapLayer.WORLD_MAP ||mapLayer === LocalMapLayer.ASIA_CATEGORIZED || mapLayer === LocalMapLayer.SYRIA_LEBANON) {
     viewer.scene.imageryLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
-      layers: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+      layers: mapLayer,
       srs:'EPSG:4326',
-      format:'image/png',
-      proxy: new Cesium.DefaultProxy('/proxy/'),
+      // format:'image/png',
+      // proxy: new Cesium.DefaultProxy('/proxy/'),
       url : ImageryUrls.GEOSERVER_IMAGERY,
      }));
   } else {
@@ -292,7 +292,6 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       mapStyle: mapLayer,
     }), layerLevel); 
   }
-  
 }
 
 export async function flyTo(container, viewerId)

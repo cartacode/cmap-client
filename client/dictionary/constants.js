@@ -185,9 +185,20 @@ export const Error = {
   ERROR_CODE: 417,
 }
 
-export const ImageryUrls = { 
+export const ImageryUrls = {
   BING_IMAGERY: 'https://dev.virtualearth.net',
   GEOSERVER_IMAGERY: 'http://18.219.160.200:9090/geoserver/wms'
+}
+
+export const MapTypes = {
+  LOCAL: 'local',
+  INTERNET: 'internet'
+}
+
+export const LocalMapLayer = {
+  WORLD_MAP: 'WORLD_RADAR:WORLDGEOTIF',
+  ASIA_CATEGORIZED: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+  SYRIA_LEBANON: 'WORLD_RADAR:WORLDGEOTIF,SYRIA_LEBNON:Syria_Lenon_generated_Map'
 }
 
 /* Pending - Gray
