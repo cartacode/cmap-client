@@ -195,6 +195,12 @@ export const MapTypes = {
   INTERNET: 'internet'
 }
 
+export const LocalMapLayer = {
+  WORLD_MAP: 'WORLD_RADAR:WORLDGEOTIF',
+  ASIA_CATEGORIZED: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+  SYRIA_LEBANON: 'WORLD_RADAR:WORLDGEOTIF,SYRIA_LEBNON:Syria_Lenon_generated_Map'
+}
+
 /* Pending - Gray
 Available - White
 Off-line – Red
