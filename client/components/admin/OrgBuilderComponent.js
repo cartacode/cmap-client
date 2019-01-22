@@ -85,12 +85,18 @@ class OrgBuilderComponent extends React.Component {
   }
 
   componentDidMount = () => {
-  this.props.fetchOrganicOrg(this.state.branch);
-  this.props.fetchOrganicPersonnel();
-  this.props.fetchDeployedOrg(this.state.branch).then(()=> { 
-    this.deployedChartView(); 
-  });
-  this.props.fetchDeployedPersonnel(this.state.branch);
+    this.props.fetchOrganicOrg(this.state.branch).then(() => {
+      if(this.state.branch === '1') {
+        this.orgChartView();
+      }
+    });
+    this.props.fetchDeployedOrg(this.state.branch).then(() => {
+      if(this.state.branch !== '1') {
+        this.deployedChartView();
+      }
+    });
+    this.props.fetchOrganicPersonnel();
+    this.props.fetchDeployedPersonnel(this.state.branch);
   }
 
   renderSchema = () => {
@@ -165,11 +171,11 @@ class OrgBuilderComponent extends React.Component {
   }
 
   orgChartView = () => {
-    console.log("Here");
+    console.log("Here", this.state.branch, this.state.CommandRelation);
     const { allOrganicOrgs, allDeployedOrgs } = this.props;
-    console.log(allOrganicOrgs, allDeployedOrgs);
+    console.log(allOrganicOrgs, allDeployedOrgs, this.state.CommandRelation);
 
-    let orgData2 = (allDeployedOrgs) ? [ allDeployedOrgs ] : [ allOrganicOrgs ];
+    let orgData2 = (this.state.CommandRelation !== '1') ? [ allDeployedOrgs ] : [ allOrganicOrgs ];
 
     forceRemount = forceRemount +1;
    
@@ -177,16 +183,17 @@ class OrgBuilderComponent extends React.Component {
        orgData: orgData2
      });
 
-     /*this.setState({
+     this.setState({
       CommandRelation: (this.state.branch == 12) ? '4' : '1'
-    });*/
+    });
    }
 
    setBranch = (id) => {
       this.setState ({
         branch: id,
-        CommandRelation: (id == 12) ? '4' : this.state.CommandRelation,
+        CommandRelation: (id == 12) ? '4' : '1',
       }, () => {
+        console.log('branch=', this.state.branch, ' commRelation=', this.state.CommandRelation);
         if(this.state.CommandRelation === '1') {
           this.props.fetchOrganicOrg(this.state.branch).then(() => { this.orgChartView(); });
         } else {
@@ -493,6 +500,7 @@ render() {
 
   const { translations } = this.props;
   const { allOrganicOrgs } = this.props;
+  const { allDeployedOrgs } = this.props;
   const { allOrganicPersonnels } = this.props;
   const { listOrganicPersonnels } = this.props;
 
