@@ -445,7 +445,7 @@ class Accordion extends React.Component {
       {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits'},
       {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1'},
       {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition'},
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=1'},
       {name: 'MOS', type: 'dropdown', ddID:'MOS'},
     ];
 
@@ -456,7 +456,7 @@ class Accordion extends React.Component {
       {name: 'Deployed Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'DeployedUnit', valFieldID: 'DeployedUnit'},
       {name: 'Team', type: 'dropdown', ddID:'Units/GetUnits?onlyTeams=1', domID: 'TeamID', valFieldID: 'TeamID'},
       {name: 'Duty Position', type: 'dropdown', ddID:'DutyPosition', domID: 'DutyPosition', valFieldID: 'DutyPosition'},
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2', domID: 'LocationID', valFieldID: 'LocationID'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=1', domID: 'LocationID', valFieldID: 'LocationID'},
       {name: 'MOS', type: 'dropdown', ddID:'MOS', domID: 'MOS', valFieldID: 'MOS'},
       {name: 'Search', type: 'input', domID: 'FreeFormSearchText', valFieldID: 'FreeFormSearchText'},
     ];
@@ -465,7 +465,7 @@ class Accordion extends React.Component {
       {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType'},
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Personnel/GetCommanderList'},
       {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations'},
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=1'},
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits'},
     ];
 
@@ -481,7 +481,7 @@ class Accordion extends React.Component {
       {name: 'Type (Unit, TF, Team)', type: 'dropdown', ddID:'UnitTypes/GetUnitType', domID: 'UnitType', valFieldID: 'UnitType'},
       {name: 'Commander/Team Lead', type: 'dropdown', ddID:'Personnel/GetCommanderList', domID: 'Commander', valFieldID: 'Commander'},
       {name: 'Unit Specialization', type: 'dropdown', ddID:'UnitSpecializations/GetUnitSpecializations', domID: 'UnitSpecialization', valFieldID: 'UnitSpecialization' },
-      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=2', domID: 'LocationID', valFieldID: 'LocationID'},
+      {name: 'Location', type: 'dropdown', ddID:'Locations/GetLocationsByCategory?Category=1', domID: 'LocationID', valFieldID: 'LocationID'},
       {name: 'Reports to Unit', type: 'dropdown', ddID:'Units/GetUnits', domID: 'ParentUnitID', valFieldID: 'ParentUnitID'},
     ];
 
