@@ -31,7 +31,7 @@ class OperationVideoBlock extends React.Component {
     
     width = this.props.percent;
     backgroundColor = this.props.progressbarColor;
-    borderBottom = '2px solid #00a651';
+    borderBottom = '2px solid orange';
 
     // switch(this.props.blockHeader) {
     //   case translations['blue devil']:
