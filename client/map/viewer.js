@@ -53,7 +53,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     baseLayerPicker: false,
     geocoder: false,
     homeButton: true,
-    infoBox: true,
+    infoBox: false,
     sceneModePicker: false,
     selectionIndicator: false,
     navigationHelpButton: false,
@@ -306,7 +306,7 @@ export async function flyTo(container, viewerId)
   var geocode = new Cesium.Geocoder({
     container:container, 
     scene: viewer.scene
-    });
+  });
 }
 
 export async function adjustLayerTransparency(layerLevel, alphaLevel, viewerId) {
@@ -335,12 +335,11 @@ export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false
   const existingEntity = viewer.entities.getById(dataSourceID);
 
   if(!existingEntity) {
-    Cesium.when(Cesium.KmlDataSource.load(KMLSource,
-      {
-        camera: viewer.scene.camera,
-        canvas: viewer.scene.canvas,
-      }
-    ), (kml) => {
+    Cesium.KmlDataSource.load(KMLSource,
+    {
+      camera: viewer.scene.camera,
+      canvas: viewer.scene.canvas,
+    }).then((kml) => {
       const missionParent = viewer.entities.getById('MISSIONS-PARENT');
       const parentEntity = viewer.entities.add({
         id: dataSourceID,
@@ -355,8 +354,7 @@ export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false
           // Placemark with LineString geometry    
           // console.log("polyline defined");
           addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
-        }
-        else if (Cesium.defined(item.polygon)) {
+        } else if (Cesium.defined(item.polygon)) {
           // Placemark with Polygon geometry
           // console.log("polygon defined");
           addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
@@ -365,6 +363,8 @@ export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false
           addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         }
       });
+    }, (error) => {
+      console.log('error', KMLSource, error);
     });
   } else {
     toggleShowEntity(dataSourceID, true, viewerId);
@@ -405,14 +405,19 @@ const toggleEntityChildren = (entityId, bDisplay, viewerId) => {
   children.forEach(item => {
     toggleEntityChildren(item.id, bDisplay, viewerId);
   });
-  
+
   viewer.entities.getById(entityId).show = bDisplay;
 };
 
-export function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = false) {
-  const viewer = viewers.get(viewerId);
+export async function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = false) {
+  let viewer = viewers.get(viewerId);
 
-  if(viewer.entities.getById(entityId)) {
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
+
+  if(viewer.entities && viewer.entities.getById(entityId)) {
     if(bDestroy) {
       viewer.entities.removeById(entityId);
     } else {
@@ -425,10 +430,16 @@ export function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = false)
   }
 }
 
-export function positionMap(latitude, longitude, viewerId) {
-  const viewer = viewers.get(viewerId);
+export async function positionMap(latitude, longitude, viewerId) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
+
   viewer.camera.flyTo({
-    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 15000.0)
+    destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 15000.0)
   });
 }
 
@@ -436,8 +447,13 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity, bMoveMap = false) {
-  const viewer = viewers.get(viewerId);
+export async function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity, bMoveMap = false) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
 
   const newEntity = viewer.entities.add({
     id: polygonId,
@@ -451,8 +467,13 @@ export function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity
   }
 }
 
-export function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMoveMap = false) {
-  const viewer = viewers.get(viewerId);
+export async function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMoveMap = false) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
 
   const newEntity = viewer.entities.add({
     id: lineId,
@@ -477,8 +498,13 @@ export function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMo
   }
 }
 
-export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false, tooltipText) {
-  const viewer = viewers.get(viewerId);
+export async function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false, tooltipText) {
+  let viewer = viewers.get(viewerId);
+
+  if(!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
 
   const newEntity = viewer.entities.add({
     id: wallId,
@@ -505,10 +531,12 @@ export function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMa
 }
 
 export async function addCircle(centerPointLat, centerPointLong, circleText, circleId, viewerId, parentEntity, bMoveMap = false, tooltipText, circleColor) {
+  if(isNaN(centerPointLat) || isNaN(centerPointLong)) { return; }
+
   let viewer = viewers.get(viewerId);
 
   if(!viewer) {
-    await sleep(3000);
+    await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
@@ -560,7 +588,7 @@ export async function addNewPinByPosition(position, billboard, pinText, pinId, v
       fillColor: Cesium.Color.DARKBLUE,
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       outlineColor: Cesium.Color.WHITE,
-      outlineWidth: 1.0,
+      outlineWidth: 0.8,
     },
     billboard: billboard,
     parent: parentEntity,
@@ -573,6 +601,8 @@ export async function addNewPinByPosition(position, billboard, pinText, pinId, v
 
 export async function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
   // console.log(pinId, pinText);
+  if(isNaN(longitude) || isNaN(latitude)) { return; }
+
   let viewer = viewers.get(viewerId);
 
   if(!viewer) {
@@ -656,40 +686,68 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
 
 }
 
-function attachLeftClick(viewer, viewerId, leftClickHandler) {
-  var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+async function attachLeftClick(viewer, viewerId, leftClickHandler) {
+  if(!viewer) {
+    await sleep(5000);
+  }
+
+  let screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
   screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
     const pickedObject = viewer.scene.pick(movement.position);
-    console.log(pickedObject);
-    console.log(viewer.infoBox);
 
-    if(Cesium.defined(viewer.infoBox)) {
-      if(Cesium.defined(pickedObject)) {
-        viewer.infoBox.container.style.top = movement.position.y + 'px';
-        viewer.infoBox.container.style.left = movement.position.x + 'px';
-        viewer.infoBox.container.style.display = 'block';
-      } else {
-        viewer.infoBox.container.style.display = 'none';
-      }
-    }
-
-    let cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
+    const cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
 
     if (Cesium.defined(cartesian)) {
-      var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-      var longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
-      var latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
-      var heightString = Number(cartographic.height); 
-      console.log("=====", longitudeString, latitudeString, heightString);
-      heightString = heightString>0 ? heightString: 0;
-      
-      var currentLatLong = {
-        longitude: Number(longitudeString),
-        latitude:  Number(latitudeString),
-        height:    heightString,
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+
+      if(Cesium.defined(pickedObject)) {
+        console.log(pickedObject);
+
+        if(pickedObject.id && pickedObject.id.description) {
+          const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
+                            '<foreignObject width="100%" height="100%">' +
+                            '<div xmlns="http://www.w3.org/1999/xhtml">' +
+                            pickedObject.id.description.getValue() + '</div>' +
+                            '</foreignObject>' +
+                            '</svg>';
+          console.log(svgString)
+          console.log('data:image/svg+xml;base64,' + window.btoa(svgString));
+          const image = new Image();
+          image.src = 'data:image/svg+xml;base64,' + window.btoa(svgString);
+          let canvas = document.createElement('canvas');
+          canvas.width = 300;
+          canvas.height = 300;
+
+          // Need to wait for image to load before proceeding to draw
+          image.onload = () => {
+            canvas.getContext('2d').drawImage(image, 0, 0);
+            viewer.entities.add({
+              id: 'Test_SVG',
+              position: Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude)),
+              billboard: {
+                image: canvas,
+              },
+              // description: '<p>This is a cupcake that can be modified.</p>'
+            });
+          };
+        }
       }
-      
-      leftClickHandler(currentLatLong, viewerId, viewer);  
+
+      if (Cesium.defined(cartographic)) {
+        const longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+        const latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+        let heightString = Number(cartographic.height);
+        console.log('=====', longitudeString, latitudeString, heightString);
+        heightString = heightString > 0 ? heightString : 0;
+
+        const currentLatLong = {
+          longitude: Number(longitudeString),
+          latitude: Number(latitudeString),
+          height: heightString,
+        };
+
+        leftClickHandler(currentLatLong, viewerId, viewer);  
+      }
     }
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
