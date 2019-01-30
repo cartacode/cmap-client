@@ -376,7 +376,7 @@ getRTB = (startDate, endDate) => {
           </div>
 
           <div className="col-md-12">
-            {/*  <div className="col-md-12"> */}
+            <div className="col-md-6"> *
             <div className="status-block-header">{translations['ops utilization']}</div>
             <div className="status-block">
               <DashboardCircleStatus statusHeader={translations.platform} statusPercent={(opsPlatform !== null && opsPlatform !== undefined) ? opsPlatform + '%' : '0%'} />
@@ -385,8 +385,8 @@ getRTB = (startDate, endDate) => {
               <DashboardCircleStatus statusHeader={translations['line crew']} statusPercent={this.getOPSUtilizationPercentage(3)} />
               <DashboardCircleStatus statusHeader={translations['ped crew']} statusPercent={this.getOPSUtilizationPercentage(1)} />
             </div>
-            {/* </div> */}
-            {/*  <div className="col-md-6">
+             </div>
+            <div className="col-md-6">
               <div className="status-block-header">{translations['intel performance']}</div>
               <div className="status-block">
                 <DashboardCircleStatus statusHeader={translations['ccri\'s']} statusPercent="85%" />
@@ -395,7 +395,7 @@ getRTB = (startDate, endDate) => {
                 <DashboardCircleStatus statusHeader={translations['nai\'s']} statusPercent="72%" />
                 <DashboardCircleStatus statusHeader={translations['pid\'s']} statusPercent="43%" />
               </div>
-            </div> */}
+            </div> 
           </div>
         </div>
         <div className="row dashboard">
