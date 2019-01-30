@@ -29,6 +29,7 @@ export default class Map extends React.PureComponent {
   static propTypes = {
     displayGridCoords: PropTypes.string,
     enableLiveViewToolBar: PropTypes.bool,
+    height: PropTypes.number,
     intelReqData: PropTypes.array,
     setOneLocation: PropTypes.func,
     size: PropTypes.number,
@@ -109,6 +110,7 @@ export default class Map extends React.PureComponent {
     addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, 'Current Lat-Long '+currenLatLong.latitude+','+currenLatLong.longitude, true);
     addPoint(Number(nearestNeighbourNAIPOI[0].locationLongitude), Number(nearestNeighbourNAIPOI[0].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbourNAIPOI[0].type+' '+nearestNeighbourNAIPOI[0].locationLatitude+','+nearestNeighbourNAIPOI[0].locationLongitude, true);
     addPoint(Number(nearestNeighbourNAIPOI[1].locationLongitude), Number(nearestNeighbourNAIPOI[1].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbourNAIPOI[1].type+' '+nearestNeighbourNAIPOI[1].locationLatitude+','+nearestNeighbourNAIPOI[1].locationLongitude, true);
+    nearestNeighbourNAIPOI = [{city:'',id:''},{city:'',id:''}];
     console.log('nearest nai/poi', nearestNeighbourNAIPOI);
     this.props.setOneLocation(nearestNeighbourNAIPOI, currenLatLong);
 
@@ -264,7 +266,7 @@ export default class Map extends React.PureComponent {
   }
 
   render() {
-    const { size = viewerSize.medium, toolBarOptions } = this.props;
+    const { size = viewerSize.medium, toolBarOptions, height = 100 } = this.props;
     const { latlong } = this.state;
     const toolbar_show = !toolBarOptions ? true: toolBarOptions.show;
 
@@ -280,7 +282,7 @@ export default class Map extends React.PureComponent {
             intelReqData={this.props.intelReqData}
           />
         }
-        <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ width: `${size}%`, overflow: 'hidden'}}>
+        <div id={this._elementId} className="map-wrapper" style={toolbar_show ? { height: `${height}vh`, width: `${size}%`, marginLeft: '36px', marginRight: '36px' }:{ height: `${height}vh`, width: `${size}%`, overflow: 'hidden'}}>
           <div id="drawingToolBar"/>
           <div id="logging"/>
           <LocationInfoComponent latlong={latlong}/>

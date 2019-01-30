@@ -460,8 +460,8 @@ editComponent = (editId) => {
       intelReqEEI: {
         ...intelReqEEI,
         gridCoordinates: locationsData.currentLatLong.latitude + ', ' + locationsData.currentLatLong.longitude,
-        POI1_ID: locationsData.location[0].id || 'no value',
-        POI2_ID: locationsData.location[1].id || 'no value',
+        POI1_ID: locationsData.location[0].id || null,
+        POI2_ID: locationsData.location[1].id || null,
       },
       eeiFetched: true,
       clear: false,
@@ -535,8 +535,8 @@ setNAIPOIANDGirdCordinateBasedMapSelection = (locationsData, currentLatLong) => 
       ...intelRequest,
       location: locationsData[0].city || 'no value',
       gridCoordinates: currentLatLong.latitude + ',' + currentLatLong.longitude,
-      POI1_ID: locationsData[0].id || 'no value',
-      POI2_ID: locationsData[1].id || 'no value',
+      POI1_ID: locationsData[0].id || null,
+      POI2_ID: locationsData[1].id || null,
     },
     editFetched: true,
     clear: false,
@@ -784,7 +784,7 @@ render = () => {
             <img className="mirrored-X-image" src="/assets/img/status/theader_line.png" alt=""/>
           </div>
           <div className="two-block">
-            <Map size={80} viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} displayGridCoords={this.state.intelRequest.gridCoordinates} />
+            <Map size={100} height={50} viewerId={viewerIdentifiers.intelRequest} setCCIRPIR={this.setCCIRPIR} setOneLocation={this.setOneLocation} toolBarOptions={{ kmlLookUp: true, naipoiLookUp: true }} displayGridCoords={this.state.intelRequest.gridCoordinates} />
            </div>
         </div>
         <div className="col-md-4 one-block">
