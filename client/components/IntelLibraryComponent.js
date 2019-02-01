@@ -33,7 +33,7 @@ class IntelLibraryComponent extends React.Component {
 
   loadData = () => {
     const session = JSON.parse(localStorage.getItem('session'));
-    const unitId = session.AssignedUnit;
+    const unitId = session.DeployedUnit || session.AssignedUnit;
     this.props.fetchIntelLibraryRequests(unitId);
   };
 
