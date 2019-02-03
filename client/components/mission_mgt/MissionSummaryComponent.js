@@ -56,7 +56,7 @@ class MissionSummaryComponent extends React.Component {
       },
       {
         Header: translations['Ped Team'],
-        accessor: 'PedTeam',
+        accessor: 'PEDTeam',
       },
       {
         Header: translations['Start Date'],
