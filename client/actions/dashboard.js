@@ -45,18 +45,18 @@ export function fetchAISROpreationStatus() {
   });
 }
 //Latest Intelligence:- List of Missions with status Mission Pending.
-export function fetchLatestIntelligence(statusId, unitId) {
+export function fetchLatestIntelligence(unitId) {
   return createAction({
     type: FETCH_LATEST_INTELLIGENCE,
-    action: () => axios.get(`${baseUrl}/Mission/GetMissionByUnitIdAndSatatusId?statusId=${statusId}&unitId=${unitId}`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Mission/GetIntelLibraryMissions?unitId=${unitId}`, { headers: requestHeaders }),
   });
 }
 
 //Upcoming Mission:- List of Missions with status Intel Posted. 
-export function fetchUpcomingMission(statusId, unitId) {
+export function fetchUpcomingMission() {
   return createAction({
     type: FETCH_UPCOMING_MISSION,
-    action: () => axios.get(`${baseUrl}/Mission/GetMissionByUnitIdAndSatatusId?statusId=${statusId}&unitId=${unitId}`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Mission/GetUpcomingMissions`, { headers: requestHeaders }),
   });
 }
 //LIVE OPERATION

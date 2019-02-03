@@ -13,7 +13,7 @@ import 'react-table/react-table.css';
 import ReactTable from 'react-table';
 
 import { dashboardUser } from '../dictionary/auth';
-import { getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec, getMissionStatusColor } from '../util/helpers';
+import { formatDateTime, getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec, getMissionStatusColor } from '../util/helpers';
 
 class DashboardComponent extends React.Component {
 
@@ -31,20 +31,19 @@ class DashboardComponent extends React.Component {
 
   loadData = () => {
     const session = JSON.parse(localStorage.getItem('session'));
-    const unitId = session.AssignedUnit;
+    const unitId = session.DeployedUnit || session.AssignedUnit;
 
     this.props.fetchOPSUtilizationPayload();
     this.props.fetchOPSUtilizationPlatform();
     this.props.fetchOPSUtilizationMission();
     this.props.fetchAISROpreationStatus();
     
-    /* Latest Intelligence:- List of Missions with status Mission Pending.
-    "Statusid": 35, "StatusAbbrev": "MPNDG", */
-    this.props.fetchLatestIntelligence(35, unitId);
+    /* Latest Intelligence:- List of Intel Posted to Library */
+    this.props.fetchLatestIntelligence(unitId);
 
     /* Upcoming Mission:- List of Missions with status Intel Posted.
     "Statusid": 38,"StatusAbbrev": "IPOST", */
-    this.props.fetchUpcomingMission(38, unitId);
+    this.props.fetchUpcomingMission(35, unitId);
 
     //Live Operation Only those Missions which status is active and except videos.
     //"Active" Status-36
@@ -155,16 +154,21 @@ class DashboardComponent extends React.Component {
           }
           return a.length > b.length ? 1 : -1;
         }, // String-based value accessors!
+        Cell: d => <div><span>
+          {formatDateTime(d.BestCollectionTime)}
+        </span></div>,
       },
       {
-        Header: translations['Mission Name'],
-        accessor: 'MissionName',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
+        Header: translations['Supported Command'],
+        accessor: 'SupportedCommand',
       },
       {
-        Header: translations.area,
-        accessor: 'Area',
+        Header: translations['Named Operation'],
+        accessor: 'NamedOperation',
+      },
+      {
+        Header: translations['Threat Group'],
+        accessor: 'ThreatGroup',
       },
       {
         Header: translations['Mission Type'],
@@ -173,6 +177,7 @@ class DashboardComponent extends React.Component {
       {
         Header: translations.classification,
         accessor: 'Classification',
+        maxWidth: 60,
       },
     ];
   }
@@ -187,24 +192,25 @@ class DashboardComponent extends React.Component {
           row[filter.id].startsWith(filter.value),
 
         sortMethod: (a, b) => {
-          if (a.length === b.length) {
-            return a > b ? 1 : -1;
-          }
-          return a.length > b.length ? 1 : -1;
-        }, // String-based value accessors!
+          const temp = moment(a);
+          const tmp2 = moment(b);
+          return temp.diff(tmp2);
+        },
         Cell: row => <div>
           <span>{this.getCountdown(row)}</span>
         </div>,
       },
       {
-        Header: translations['Mission Name'],
-        accessor: 'MissionName',
-        filterMethod: (filter, row) =>
-          row[filter.id].startsWith(filter.value),
+        Header: translations['Supported Command'],
+        accessor: 'SupportedCommand',
       },
       {
-        Header: translations.area,
-        accessor: 'Area',
+        Header: translations['Threat Group'],
+        accessor: 'ThreatGroup',
+      },
+      {
+        Header: translations['Named Operation'],
+        accessor: 'NamedOperation',
       },
       {
         Header: translations['Mission Type'],
@@ -213,6 +219,7 @@ class DashboardComponent extends React.Component {
       {
         Header: translations.classification,
         accessor: 'Classification',
+        maxWidth: 60,
       },
     ];
   }

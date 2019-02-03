@@ -219,9 +219,9 @@ class CollectionManagerComponent extends React.Component {
         </div>,
       },
       {
-        Header: translations['status'],
-        accessor: 'Status',
-        minWidth: 150,
+        Header: translations['Named Operation'],
+        accessor: 'CCIRPIRName',
+        minWidth: 100,
       },
       {
         Header: translations.Actions,

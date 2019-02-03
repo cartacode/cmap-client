@@ -33,7 +33,7 @@ class IntelLibraryComponent extends React.Component {
 
   loadData = () => {
     const session = JSON.parse(localStorage.getItem('session'));
-    const unitId = session.AssignedUnit;
+    const unitId = session.DeployedUnit || session.AssignedUnit;
     this.props.fetchIntelLibraryRequests(unitId);
   };
 
@@ -88,23 +88,11 @@ class IntelLibraryComponent extends React.Component {
         maxWidth: 135,
       },
       {
-        Header: translations.type,
-        accessor: 'MissionType',
-      },
-      {
-        Header: translations.start,
+        Header: translations.date,
         id: 'StartDate',
         maxWidth: 135,
         accessor: d => {
           return formatDateTime(d.StartDate);
-        },
-      },
-      {
-        Header: translations.end,
-        id: 'EndDate',
-        maxWidth: 135,
-        accessor: d => {
-          return formatDateTime(d.EndDate);
         },
       },
       {
@@ -113,19 +101,38 @@ class IntelLibraryComponent extends React.Component {
         maxWidth: 135,
       },
       {
+        Header: translations['Supported Unit'],
+        maxWidth: 135,
+        accessor: 'Unit',
+      },
+      {
+        Header: translations['pir'],
+        accessor: 'PIR',
+      },
+      {
+        Header: translations['Threat Group'],
+        accessor: 'ThreatGroup',
+      },
+      {
+        Header: translations['Objective'],
+        accessor: 'Objective',
+      },
+      {
+        Header: translations['Target#'],
+        accessor: 'Target',
+      },
+      {
+        Header: translations['City/Town'],
+        accessor: 'City',
+      },
+      {
         Header: translations.Country,
         accessor: 'Country',
         maxWidth: 135,
       },
       {
-        Header: translations.Unit,
-        accessor: 'Unit',
-      },
-
-      {
-        Header: translations.classification,
-        accessor: 'Classification',
-        maxWidth: 135,
+        Header: translations['Primary Sensor'],
+        accessor: 'SensorType',
       },
 
       // {

@@ -240,14 +240,11 @@ class MissionDetailComponent extends React.Component {
                 initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
                 isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
             </div>
-            { IntelConstants.STATUS.IPNDG.id === missionDetail.StatusId || IntelConstants.STATUS.IPOST.id === missionDetail.StatusId ?
-
-              <div >
-                <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
-                  initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
-                  isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
-              </div>
-              : ''}
+            <div >
+              <UploadFileBlock fields={missionBlock4} data={this.handleUploadFileData} 
+                initstate={this.state.missionDetail} previewFile={this.handleFilePreview} 
+                isImagedRequired={true} editFetched = {this.state.editFetched} stopupd = {this.stopupd} />
+            </div>
           </div>
           <div className="row action-buttons">
             <div className="menu-button">
