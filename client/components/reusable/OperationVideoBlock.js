@@ -103,10 +103,12 @@ class OperationVideoBlock extends React.Component {
           {/* <img src={video} className="video" alt=""/> */}
           <ReactPlayer
             url= {this.props.liveMissionURL}
-            className='video'
-            playing
-            width='100%'
-            height='100%'
+            className="video"
+            playing={true}
+            loop={true}
+            controls={true}
+            width="100%"
+            height="100%"
           />
         </div>
       </div>
