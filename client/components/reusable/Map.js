@@ -73,6 +73,12 @@ export default class Map extends React.PureComponent {
       createTestObject(this.props.viewerId);
     }
     initialViewer(this.props.viewerId);
+
+    addKML('/assets/IR_177_Black_Adder.kmz', uuid(), this.props.viewerId);
+    addKML('/assets/IR_189_Suspect_Rocket_POO_site.kmz', uuid(), this.props.viewerId);
+    addKML('/assets/IR_192_Suspect_terrorists.kmz', uuid(), this.props.viewerId);
+    addKML('/assets/IR_197_Suspected_LH.kmz', uuid(), this.props.viewerId);
+    addKML('/assets/IR_212_OBJ_Blue_Ash.kmz', uuid(), this.props.viewerId);
   }
 
   componentDidUpdate(prevProps) {

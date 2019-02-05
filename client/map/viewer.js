@@ -53,7 +53,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     baseLayerPicker: false,
     geocoder: false,
     homeButton: true,
-    infoBox: false,
+    infoBox: true,
     sceneModePicker: false,
     selectionIndicator: false,
     navigationHelpButton: false,
@@ -704,7 +704,14 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
         console.log(pickedObject);
 
         if(pickedObject.id && pickedObject.id.description) {
-          const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
+          if(Cesium.defined(viewer.infoBox)) {
+            viewer.infoBox.container.style.top = movement.position.y + 'px';
+            viewer.infoBox.container.style.left = movement.position.x + 'px';
+            viewer.infoBox.container.style.display = 'block';
+          }
+
+          // commenting for the demo; continue build after demo
+          /* const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
                             '<foreignObject width="100%" height="100%">' +
                             '<div xmlns="http://www.w3.org/1999/xhtml">' +
                             pickedObject.id.description.getValue() + '</div>' +
@@ -729,7 +736,11 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
               },
               // description: '<p>This is a cupcake that can be modified.</p>'
             });
-          };
+          }; */
+        } 
+      } else {
+        if(Cesium.defined(viewer.infoBox)) {
+          viewer.infoBox.container.style.display = 'none';
         }
       }
 

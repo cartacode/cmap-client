@@ -17,7 +17,7 @@ class PersonnelPopupComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchPersonnels();
+    // this.props.fetchPersonnels();  turning off for demo
   }
 
   onChangeShowAll = (state) => {

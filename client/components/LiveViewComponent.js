@@ -44,7 +44,7 @@ class LiveViewComponent extends React.Component {
             <FullHeaderLine headerText={translations["real-time intelligence/threat picture"]} />
           </div>
           <div className="col-md-12">
-            <Map size={viewerSize.medium} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {false}/>
+            <Map size={viewerSize.medium} height={95} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {false}/>
           </div>
         </div>
       </div>) : null
