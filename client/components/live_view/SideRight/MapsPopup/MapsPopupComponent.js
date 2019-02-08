@@ -193,9 +193,13 @@ class MapsPopupComponent extends React.Component {
         </div>
 
         <div className={'sidebar-maps-menu' + (mapSelect[1] ? ' open' : '') + ' clearfix'}>
-          <a href="#" className={'satellite-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
+          {/* <a href="#" className={'satellite-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
+            <span>Satellite</span>
+          </a> */}
+          <a href="#" className={'columbus-link' + (menuClicked[0] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(0, e)}>
             <span>Satellite</span>
           </a>
+         
           <a href="#" className={'street-link' + (menuClicked[1] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(1, e)}>
             <span>Street</span>
           </a>
@@ -205,9 +209,9 @@ class MapsPopupComponent extends React.Component {
           <a href="#" className={'air-link' + (menuClicked[3] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(3, e)}>
             <span>Air</span>
           </a>*/ }
-          <a href="#" className={'columbus-link' + (menuClicked[4] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(4, e)}>
+         {/*  <a href="#" className={'columbus-link' + (menuClicked[4] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(4, e)}>
             <span>Satellite with Labels</span>
-          </a>
+          </a> */}
           <a href="#" className={'fuse-link' + (menuClicked[5] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(5, e)}>
             <span>Fuse</span>
           </a>
