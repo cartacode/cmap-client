@@ -395,7 +395,7 @@ class CollectionManagerComponent extends React.Component {
             <div className="row">
               <div className="col-md-1">&nbsp;</div>
               <div className="col-md-10 text-center">
-                <Map size={100} viewerId={viewerIdentifiers.collectionPlan} enableLiveViewToolBar = {false} intelReqData={allRequests} />
+                <Map size={100} viewerId={viewerIdentifiers.collectionPlan} enableLiveViewToolBar = {false} toolBarOptions={{ show:false }} intelReqData={allRequests} />
                </div>
               <div className="col-md-1">&nbsp;</div>
             </div>
