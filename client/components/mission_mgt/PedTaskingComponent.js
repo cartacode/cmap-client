@@ -232,8 +232,8 @@ class PedTaskingComponent extends React.Component {
 
       },
       {
-        Header: translations.Command,
-        accessor: 'COCOMText',
+        Header: translations['Supported Unit'],
+        accessor: 'SupportedUnitName',
         maxWidth: 150,
       },
       {

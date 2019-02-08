@@ -225,8 +225,8 @@ class FlightOpsTeam extends React.Component {
         maxWidth: 80,
       },
       {
-        Header: translations.Command,
-        accessor: 'COCOMText',
+        Header: translations['Supported Unit'],
+        accessor: 'SupportedUnitName',
         maxWidth: 150,
       },
       {
