@@ -56,7 +56,7 @@ class IntelLibraryComponent extends React.Component {
   notify = () => {
     const { translations } = this.props;
     NotificationManager.success('', 'Email is successfully sent.', 5000);
-  
+
   };
 
   closeEmailModal = () => {
@@ -177,13 +177,19 @@ class IntelLibraryComponent extends React.Component {
         filterable: false,
         maxWidth: 80,
         Cell: row => (
-         
+
           <div>
+          <a href={row.value} target="_blank" className="btn btn-primary btn-xs" data-tip data-for={translations["View"]} > <span className="glyphicon glyphicon-eye-open" />
+          <ReactTooltip id='view'  type='view'>
+             <span>view</span>
+           </ReactTooltip>
+
+          </a>
             <a href={row.value} target="_blank" className="btn btn-success export btn-xs" data-tip data-for={translations["Export and Download"]} > <span className="glyphicon glyphicon-download-alt" />
                                               <ReactTooltip id='Export and Download'  type='warning'>
                                                  <span>Export and Download</span>
                                                </ReactTooltip>
-            
+
             </a>
             &nbsp;
             {/* <a href="JavaScript: void('0');" className="btn btn-danger" title="Export and Download" ><span className="glyphicon glyphicon-export" /> </a> */}
@@ -191,7 +197,7 @@ class IntelLibraryComponent extends React.Component {
                                            <ReactTooltip id='Send'  type='warning'>
                                                  <span>Send</span>
                                            </ReactTooltip>
-            
+
             </a>
           </div>
         )
@@ -220,7 +226,7 @@ class IntelLibraryComponent extends React.Component {
     const roles = ses.UserRoles;
     const roles2 = JSON.parse(roles);
     const access = roles2.some(v => intelLibraryUser.includes(v));
-    
+
     const searchResult = allIntelLibraries;
     const searchResultColumns = this.getTableheaderColumns();
 
