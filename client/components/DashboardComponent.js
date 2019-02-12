@@ -205,7 +205,10 @@ class DashboardComponent extends React.Component {
           return temp.diff(tmp2);
         },
         Cell: row => <div>
+
+        <Link to={{ pathname: `/mission-mgt/mission-detail/${row.original.MissionID}` }} target="_blank">
           <span>{this.getCountdown(row)}</span>
+        </Link>
         </div>,
       },
       {
@@ -514,9 +517,9 @@ getRTB = (startDate, endDate) => {
                 columns={missionColumns}
                 defaultPageSize={5}
                 getTrProps={(state, rowInfo) => ({
-                  //onClick: () => '<a href="http://ec2-18-220-128-32.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Mission/Intel Report 177_33836fe3-3849-464f-b1ef-854fdb246823.docx" target="_blank" className="btn btn-success export btn-xs" > <span className="glyphicon glyphicon-download-alt" /></a>'
-                  onClick: () => console.log(rowInfo)
-                  //onClick: () => this.props.history.push(`mission-mgt/mission-detail/195`);
+
+                 // onClick: () => this.props.history.push(`mission-mgt/mission-detail/`+rowInfo.original.MissionID)
+                 // onClick: () => '<a href="" >df</a>'
                  })}
                 className="-striped -highlight"
                 filterable
