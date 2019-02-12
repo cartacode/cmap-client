@@ -91,6 +91,27 @@ export function updateMunitionStatus(id, munition) {
   });
 }
 
+export function fetchPEDStatus(unit) {
+  return createAction({
+    type: STATUS_PED__FETCH,
+    action: () => axios.get(`${baseUrl}/PayloadStatus/GetPayloadStatusData?specificUnit=${unit}&onlyUsersDeployedUnits=false`, {headers:requestHeaders}),
+  });
+}
+
+export function fetchPEDStatusById(id) {
+  return createAction({
+    type: STATUS_PED__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/MunitionStatus/GetMunitionsStatus/${id}`, {headers:requestHeaders}),
+  });
+}
+
+export function updatePEDStatus(id, ped) {
+  return createAction({
+    type: STATUS_PED__UPDATE,
+    action: () => axios.put(`${baseUrl}/MunitionStatus/PutMunitionsStatusUpdate/${id}`, JSON.stringify(ped), {headers:requestHeaders}),
+  });
+}
+
 export function fetchUnitLogo(unit) {
   return createAction({
     type: UNIT_LOGO__FETCH,
