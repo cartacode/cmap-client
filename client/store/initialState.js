@@ -135,6 +135,7 @@ export default {
     onePersonnel: {},
     oneMunition: {},
     logo: {},
+    comment:{},
     isFetching: false,
   },
 

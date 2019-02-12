@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE, STATUS_MUNITION__FETCH_ONE, STATUS_MUNITION__UPDATE, UNIT_LOGO__FETCH} from 'dictionary/action';
-import { baseUrl, requestHeaders } from 'dictionary/network';
+import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PLATFORM__UPDATE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PAYLOAD__UPDATE, STATUS_PERSONNEL__FETCH_ONE, STATUS_PERSONNEL__UPDATE, STATUS_MUNITION__FETCH_ONE, STATUS_MUNITION__UPDATE, UNIT_LOGO__FETCH, UNIT_STATUS__FETCH, UNIT_STATUS__ADD} from 'dictionary/action';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
 
@@ -97,3 +97,19 @@ export function fetchUnitLogo(unit) {
     action: () => axios.get(`${baseUrl}/Units/GetUnitLogo?UnitID=${unit}`, {headers:requestHeaders}),
   });
 }
+
+export function fetchUnitStatus(unit) {
+  return createAction({
+    type: UNIT_STATUS__FETCH,
+    action: () => axios.get(`${baseUrl}/StatusStats/GetUnitStatus?specificUnit=${unit}`, {headers:requestHeaders}),
+  });
+}
+
+export function addUnitStatus(unit) {
+  return createAction({
+    type: UNIT_STATUS__ADD,
+    action: () => axios.post(`${baseUrl}/StatusStats/UpsertUnitStatus`, unit, { headers: requestHeaders }),
+  });
+}
+
+
