@@ -5495,3 +5495,17 @@ select.form-control.multiple-select {
   .rct-scroll {
     border-right: 1px solid #ed7d31;
 }
+
+/************************************************** cesium map search box icon alignment  ****************/    
+
+#default-fly-to svg.cesium-svgPath-svg {
+   position: absolute;
+  right: 27px;
+  top: 80px;
+  cursor: pointer;
+  width: 23px;
+  
+}
+#default-fly-to path {
+  fill: #ed7d31;
+}
