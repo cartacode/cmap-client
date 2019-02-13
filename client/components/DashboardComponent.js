@@ -11,7 +11,7 @@ import OperationVideoBlock from './reusable/OperationVideoBlock';
 
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
-
+import { Link } from 'react-router-dom';
 import { dashboardUser } from '../dictionary/auth';
 import { formatDateTime, getTime, getMissionProgressPercentage, getDiffInMin, getDiffInSec, getHHMMSSFromSec, getMissionStatusColor } from '../util/helpers';
 
@@ -37,7 +37,7 @@ class DashboardComponent extends React.Component {
     this.props.fetchOPSUtilizationPlatform();
     this.props.fetchOPSUtilizationMission();
     this.props.fetchAISROpreationStatus();
-    
+
     /* Latest Intelligence:- List of Intel Posted to Library */
     this.props.fetchLatestIntelligence(unitId);
 
@@ -103,7 +103,7 @@ class DashboardComponent extends React.Component {
     const oper2 = { MissionName: 'VALIENT ANGEL', missionProgress: '70%', rtb: '04:40:11', color: 'magenta', liveUrl: 'http://18.219.160.200:1935/vod/mp4:CONUStrafficISR.mp4/manifest.mpd' };
     const oper3 = { MissionName: 'ROLLING THUNDER', missionProgress: '50%', rtb: '03:00:21', color: 'red', liveUrl: 'http://18.219.160.200:1935/vod/mp4:UAVWinter.mp4/manifest.mpd' };
     const oper4 = { MissionName: 'GODS EYE', missionProgress: '80%', rtb: '05:23:09', color: 'green', liveUrl: 'http://18.219.160.200:1935/vod/mp4:Vid3.mp4/manifest.mpd' };
-    
+
     dummyLiveOperations.push(oper1);
     dummyLiveOperations.push(oper2);
     dummyLiveOperations.push(oper3);
@@ -141,10 +141,12 @@ class DashboardComponent extends React.Component {
 
   getIntelColumns() {
     const { translations } = this.props;
+
     return  [
       {
         Header: translations.date,
         accessor: 'StartDate',
+
         filterMethod: (filter, row) =>
           row[filter.id].startsWith(filter.value),
 
@@ -154,9 +156,15 @@ class DashboardComponent extends React.Component {
           }
           return a.length > b.length ? 1 : -1;
         }, // String-based value accessors!
-        Cell: d => <div><span>
+        Cell : d => <div><span>
+
+        <a href={(d.original.Report)} target="_blank">
           {formatDateTime(d.BestCollectionTime)}
-        </span></div>,
+        </a>
+        </span>
+
+        </div>,
+
       },
       {
         Header: translations['Supported Command'],
@@ -197,7 +205,10 @@ class DashboardComponent extends React.Component {
           return temp.diff(tmp2);
         },
         Cell: row => <div>
+
+        <Link to={{ pathname: `/mission-mgt/mission-detail/${row.original.MissionID}` }} target="_blank">
           <span>{this.getCountdown(row)}</span>
+        </Link>
         </div>,
       },
       {
@@ -234,14 +245,14 @@ class DashboardComponent extends React.Component {
       if(progress < 0 || progress > 100) {
         progress = 1;
       }
-  
+
       return progress + '%';
     }
 
     // Time elapsed for mission
 getRTB = (startDate, endDate) => {
-  
-  
+
+
   const currentDate = new Date();
   // const start = moment(startDate);
   let secondsElapsed = getDiffInSec(startDate, currentDate);
@@ -250,7 +261,7 @@ getRTB = (startDate, endDate) => {
   }
   // const formattedTime = moment.duration(secondsElapsed, 'seconds').format('hh:mm:ss');
   const formattedTime = getHHMMSSFromSec(secondsElapsed);
-  
+
   return formattedTime;
 
 }
@@ -296,9 +307,9 @@ getRTB = (startDate, endDate) => {
     // For right table
     const { allUpcomingMissions } = this.props;
 
-    const { allLiveOperations } = this.props;
+    const { allLiveOperatallLatestIntelligenceions } = this.props;
 
-    
+
 
     if(opsPlatform instanceof Object) {
       opsPlatform = '0';
@@ -402,7 +413,7 @@ getRTB = (startDate, endDate) => {
                 <DashboardCircleStatus statusHeader={translations['nai\'s']} statusPercent="72%" />
                 <DashboardCircleStatus statusHeader={translations['pid\'s']} statusPercent="43%" />
               </div>
-            </div> 
+            </div>
           </div>
         </div>
         <div className="row dashboard">
@@ -434,7 +445,7 @@ getRTB = (startDate, endDate) => {
                     </div>
                     <div className="col-md-6 t">
                       <Dropdown key="1" id="1" options={sigacts}/>
-                      
+
                     </div>
                   </div>
                   <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>
@@ -487,13 +498,16 @@ getRTB = (startDate, endDate) => {
             <div className="col-md-6">
               <HalfHeaderLine headerText={translations['latest intelligence']} />
               <ReactTable
-                data={latestIntellegence}
+                    data={latestIntellegence}
                 columns={intelColumns}
                 defaultPageSize={5}
                 className="-striped -highlight"
+
                 filterable
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
+
+
               />
             </div>
             <div className="col-md-6">
@@ -502,8 +516,14 @@ getRTB = (startDate, endDate) => {
                 data={upcomingMission}
                 columns={missionColumns}
                 defaultPageSize={5}
+                getTrProps={(state, rowInfo) => ({
+
+                 // onClick: () => this.props.history.push(`mission-mgt/mission-detail/`+rowInfo.original.MissionID)
+                 // onClick: () => '<a href="" >df</a>'
+                 })}
                 className="-striped -highlight"
                 filterable
+
                 defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
               />

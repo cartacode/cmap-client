@@ -158,7 +158,7 @@ moveLeft = (row) => {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 50,
         Cell: row => <div className="tooltip-custom">
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <Link  target="_blank" to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" target="_blank">{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
             <span>
               Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
@@ -233,7 +233,7 @@ moveLeft = (row) => {
         maxWidth: 50,
         Cell: row => <div className="tooltip-custom">
           {/* <a href="Javascript:void(0)" title={row.original.Status} ><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <Link to={`${editurl}${row.original.IntelRequestID}`} target="_blank" data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
             <span>
               Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
