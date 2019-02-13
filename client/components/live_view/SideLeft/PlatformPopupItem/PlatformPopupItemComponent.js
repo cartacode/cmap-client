@@ -86,9 +86,9 @@ class PlatformPopupItemComponent extends React.Component {
         }
         {textValue}
         <span className="info-icon" data-tip={popupText} />
-        <CheckBox
+       {/*  <CheckBox
           defaultValue={this.state.checked}
-        />
+        />  */}
         <ReactTooltip className={'popup-toggle'} />
       </div>
     );
