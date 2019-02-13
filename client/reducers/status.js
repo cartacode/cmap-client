@@ -1,4 +1,4 @@
-import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PERSONNEL__FETCH_ONE, STATUS_MUNITION__FETCH_ONE, UNIT_LOGO__FETCH } from 'dictionary/action';
+import { STATUS_PLATFORM__FETCH, STATUS_PAYLOAD__FETCH, STATUS_PERSONNEL__FETCH, STATUS_MUNITION__FETCH, STATUS_PLATFORM__FETCH_ONE, STATUS_PAYLOAD__FETCH_ONE, STATUS_PERSONNEL__FETCH_ONE, STATUS_MUNITION__FETCH_ONE, UNIT_LOGO__FETCH, UNIT_STATUS__FETCH } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function status(state = initialState.status, { payload, type }) {
@@ -90,6 +90,17 @@ export default function status(state = initialState.status, { payload, type }) {
         ...state,
         isFetching: false,
         oneMunition: payload.data,
+      };
+      case UNIT_STATUS__FETCH.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case UNIT_STATUS__FETCH.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        comment: payload.data,
       };
     case UNIT_LOGO__FETCH.REQUEST:
       return {

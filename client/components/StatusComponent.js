@@ -72,6 +72,13 @@ class StatusComponent extends React.Component {
       });
     
     });
+
+    this.props.fetchUnitStatus(specificUnit).then(()=>{
+      if(this.props.comment!==null)
+      {
+        document.getElementById('comment').innerHTML=this.props.comment.statusComment;
+      }
+    });
   }
 
   statusModal = () => {
@@ -130,6 +137,7 @@ class StatusComponent extends React.Component {
 
   handleOrganizationAndDutyData = (organizationAndDutyData) => {
     const { unit } = this.state;
+    document.getElementById('comment').innerHTML='';
     this.setState({       
         unit: organizationAndDutyData.dispAssignedUnit,
     }, () => { 
@@ -146,6 +154,13 @@ class StatusComponent extends React.Component {
     
     });
 
+    this.props.fetchUnitStatus(this.state.unit).then(()=>{
+      if(this.props.comment!==null)
+      {
+        document.getElementById('comment').innerHTML=this.props.comment.statusComment;
+      }
+      
+    });
      });
   
   console.log("Is this called");
@@ -436,8 +451,8 @@ class StatusComponent extends React.Component {
                 </thead>
                 <tbody className="tbody">
                   <tr >
-                    <div className="comment-body">
-                      {this.state.comment}
+                    <div className="comment-body" id="comment">
+                       
                     </div>
                   </tr>
                 </tbody>
