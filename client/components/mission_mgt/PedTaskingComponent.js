@@ -127,7 +127,7 @@ class PedTaskingComponent extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
         Cell: row => <div className = "tooltip-custom">
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <Link target="_blank" to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} type="warning">
             <span>
                 Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
@@ -202,7 +202,7 @@ class PedTaskingComponent extends React.Component {
         maxWidth: 70,
         Cell: row => <div className = "tooltip-custom">
           {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <Link target="_blank" to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID ? row.original.IntelRequestID:'Not Found'} type="warning">
             <span>
                 Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>

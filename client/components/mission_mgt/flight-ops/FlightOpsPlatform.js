@@ -19,7 +19,7 @@ class FlightOpsPlatform extends React.Component {
     this.state = {
       defaultResource: MissionConsts.RESOURCE.PLATFORM,
       tab: MissionConsts.TABS.FOP,
-      radioPlatformInvenotryId: '',      
+      radioPlatformInvenotryId: '',
     };
   }
 
@@ -62,8 +62,8 @@ class FlightOpsPlatform extends React.Component {
   // Move Right to Left
   // Updates PlatformInventoryId to null in mission
   moveLeft = (row) => {
-    const IntelReqID = row.original.IntelRequestID ;    
-    const missionId = row.original.MissionId ;    
+    const IntelReqID = row.original.IntelRequestID ;
+    const missionId = row.original.MissionId ;
     const unitId  = row.original.UnitId ;
     if((IntelReqID !== undefined && IntelReqID !== 0) && (missionId !== undefined && missionId !== 0)) {
       const data = {
@@ -80,7 +80,7 @@ class FlightOpsPlatform extends React.Component {
     } else {
       showAlert('Please Select Platform');
     }
-  
+
   }
 
   loadData = () => {
@@ -108,7 +108,7 @@ class FlightOpsPlatform extends React.Component {
         accessor: 'ReqUserFrndlyID',
         maxWidth: 70,
         Cell: row =>  <div className = 'tooltip-custom'>
-            <Link to={`${editurl}${row.original.IntelRequestID}`}  data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+            <Link target="_blank" to={`${editurl}${row.original.IntelRequestID}`}  data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
             <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type='warning'>
             <span>
               Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
@@ -185,7 +185,7 @@ class FlightOpsPlatform extends React.Component {
         maxWidth: 70,
         Cell: row =>  <div className = 'tooltip-custom'>
           {/* <a href = "javascript:void('0');" title = {row.original.Status}><span style ={this.getColor(row)} className="glyphicon glyphicon-stop" /></a> */}
-          <Link to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
+          <Link target="_blank" to={`${editurl}${row.original.IntelRequestID}`} data-tip data-for={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} data-multiline><span className="hand-cursor" >{row.value}</span></Link>
           <ReactTooltip id={row.original.IntelRequestID?row.original.IntelRequestID:'Not Found'} type="warning">
               <span>
                 Mission: {row.original.MissionName ? row.original.MissionName : ''} <br/><br/>
@@ -254,11 +254,11 @@ class FlightOpsPlatform extends React.Component {
     let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
     let roles2 = JSON.parse(roles);
-    
+
 
     return (
       <div>
-        
+
         <div className="row mission-mgt">
           <div className="col-md-12">
             <div className="row collection-plan-table-margin-top">

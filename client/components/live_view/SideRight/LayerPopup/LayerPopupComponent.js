@@ -17,7 +17,7 @@ class LayerPopupComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchLocationKMLs();
+    //this.props.fetchLocationKMLs();
     this.props.fetchLocationTypes();
   }
 
@@ -47,7 +47,14 @@ class LayerPopupComponent extends React.Component {
   }
 
   render() {
+
     const { locationKMLs, locationTypes } = this.props;
+
+
+    const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
+      , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
+
+  //const { locationKML } = {'LocationName':'abdf','Category':'xyx', 'LocationLatitude':'76.22', 'LocationLongitude':'76.22','LocationID':'IND',   };
 
     return (
       <div className={'layers-popup-block popup-block scroll-pane' + ((this.props.layersPopupOpen) ? ' opened' : '')}>
@@ -61,9 +68,9 @@ class LayerPopupComponent extends React.Component {
 
         <div className="selectmenu-block">
           {
-            <SelectBox
-              options={ this.getFilterOptions(locationTypes) }
-            />
+            // <SelectBox
+            //   options={ this.getFilterOptions(locationTypes) }
+            // />
           }
         </div>
         <div>
@@ -79,7 +86,7 @@ class LayerPopupComponent extends React.Component {
           }
         </div>
         <div className="checklist-block">
-          { locationKMLs && locationKMLs.map((item, index) => {
+          { /*locationKMLs && locationKMLs.map((item, index) => {
             return <PopupListingItem
               color={'#008000'}
               textValue={item.LocationName}
@@ -102,7 +109,17 @@ class LayerPopupComponent extends React.Component {
               tooltipText={'<img src="/assets/img/admin/aircraft.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' +
               item.Category + '<br/>' + item.LocationName + '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
             />;
-          }) }
+          }) */}
+          {
+            listItem.map((number) =>
+              <div class="popup-item">
+
+              {number} <CheckBox />
+                  </div>
+          )
+
+          }
+
         </div>
       </div>
     );
@@ -126,7 +143,7 @@ const mapStateToProps = state => {
   return {
     locationTypes: state.locations.locationTypes,
     isTypesFetching: state.locations.isTypesFetching,
-    locationKMLs: state.locations.locationKMLs,
+    //locationKMLs: state.locations.locationKMLs,
     isKMLFetching: state.locations.isKMLFetching,
   };
 };
