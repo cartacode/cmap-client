@@ -72,6 +72,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //    //  url: getImageryurl(),
     //   }),
   });
+  createMapTestObject(viewer);
   // extend our view by the cesium navigation mixin
   //   var options = {};
   //   options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
@@ -277,6 +278,8 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
     viewer.imageryLayers.remove(existLayer, true);
   }
 
+
+
   if (mapLayer === LocalMapLayer.WORLD_MAP ||mapLayer === LocalMapLayer.ASIA_CATEGORIZED || mapLayer === LocalMapLayer.SYRIA_LEBANON) {
     viewer.scene.imageryLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
       layers: mapLayer,
@@ -284,7 +287,9 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       // format:'image/png',
       // proxy: new Cesium.DefaultProxy('/proxy/'),
       url : ImageryUrls.GEOSERVER_IMAGERY,
-     }));
+     })
+     );
+     createMapTestObject(viewer);
   } else {
     viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
       url: ImageryUrls.BING_IMAGERY,
@@ -832,17 +837,18 @@ export function createMapTestObject(viewer) {
     console.log(" BUILDING LAYERS!!!");
   var path = '../client/assets/img/live_view/map_layer/';
   let mapData = {data:[
-    {lat: 32.60247, long: 32.977567, icon: path + 'bases.png', color: Cesium.Color.GREEN},
-    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', color: Cesium.Color.GREEN},
-    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', color: Cesium.Color.GREEN},
-    {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png', color: Cesium.Color.GREEN}
-    // {lat: 12.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN},
-    // {lat: 10.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN},
-    // {lat: 76.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW},
-    // {lat: 11.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW},
-    // {lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW},
-    // {lat: 31.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW},
-    // {lat: 37.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW},
+    {lat: 32.60247, long: 32.977567, icon: path + 'bases.png'},
+    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png'},
+    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png'},
+    {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png'},
+    {lat: 200.05804819999999, long: -42.7487779, icon: path + 'blue_forces.png'},
+    {lat: 122.05804819999999, long: 200.7487779, icon: path + 'blue_forces.png'},
+    {lat: 15.812438, long: -19.421321, icon: path + 'camera_white.png'},
+    {lat: 56.973057, long: -85.472778, icon: path + 'intel_request.png'},
+    {lat: 87.60247, long: 11.977567, icon: path + 'observation_blue.png'},
+    {lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png'},
+    {lat: 22.8124, long: 87.4912, icon: path + 'sigint_orange.png'},
+    {lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png'}
   ]};
 
   mapData.data.forEach(pin => {
@@ -851,7 +857,9 @@ export function createMapTestObject(viewer) {
           billboard : {
               image : pin.icon,
               verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
-              scale : 1.0
+              scale : 1.0,
+              width : 35,
+              height : 35
           }
       });
   });
