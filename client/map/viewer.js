@@ -1,4 +1,5 @@
 import Cesium from 'cesium/Cesium';
+import CesiumNavigation from "cesium-navigation-es6";
 import {DrawHelper} from 'map/drawHelper';
 // eslint-disable-line import/no-unresolved
 //  import ViewerCesiumNavigationMixin from 'cesiumNav/viewerCesiumNavigationMixin';
@@ -73,13 +74,15 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //   }),
   });
   // extend our view by the cesium navigation mixin
-  //   var options = {};
-  //   options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
+    var options = {};
+    options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
 
-  // options.enableCompass= false;
-  // options.enableZoomControls= true;
-  // options.enableDistanceLegend= true;
-  // options.enableCompassOuterRing= true;
+  options.enableCompass= true;
+  options.enableZoomControls= true;
+  options.enableDistanceLegend= true;
+  options.enableCompassOuterRing= true;
+  CesiumNavigation(viewer, options);
+  
   // viewer.extend(Cesium.viewerCesiumNavigationMixin, options);
 
   // Adding layers
