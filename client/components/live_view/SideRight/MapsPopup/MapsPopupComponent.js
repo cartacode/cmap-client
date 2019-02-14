@@ -203,12 +203,12 @@ class MapsPopupComponent extends React.Component {
           <a href="#" className={'street-link' + (menuClicked[1] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(1, e)}>
             <span>Street</span>
           </a>
-          { /*<a href="#" className={'sea-link' + (menuClicked[2] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(2, e)}>
+          <a href="#" className={'sea-link' + (menuClicked[2] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(2, e)}>
             <span>Sea</span>
           </a>
           <a href="#" className={'air-link' + (menuClicked[3] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(3, e)}>
             <span>Air</span>
-          </a>*/ }
+          </a>
          {/*  <a href="#" className={'columbus-link' + (menuClicked[4] ? ' active' : '')} onClick={(e) => this.onClickMenuItem(4, e)}>
             <span>Satellite with Labels</span>
           </a> */}

@@ -35,7 +35,7 @@ class AdminStatusComponent extends React.Component {
   constructor(props) {
     super(props);
     this.onClear();
-    this.onSubmit();
+    
     this.state={
       statusModalOpen:false,
       whichModal:'Platform',
@@ -52,7 +52,8 @@ class AdminStatusComponent extends React.Component {
       payloadStatusOpen:false,
       personnelStatusOpen:false,
       munitionStatusOpen:false,
-      unit:''
+      unit:'',
+      comment:''
     }
   }
 
@@ -71,7 +72,20 @@ class AdminStatusComponent extends React.Component {
     this.props.fetchMunitionsStatus(specificUnit);
     this.props.fetchPersonnelsStatus(specificUnit).then( () => {  this.updateUnit(); } );
    
+    this.props.fetchUnitStatus(specificUnit).then(()=>{
+      if(this.props.comment!==null)
+      {
+        document.getElementById('comment').value=this.props.comment.statusComment;
+        this.setState({
+          comment:this.props.comment.statusComment
+        });
+      }
+    });
    
+  }
+
+  handleChange(event) {
+    this.setState({comment: event.target.value});
   }
 
   // componentDidUpdate () {
@@ -167,6 +181,14 @@ class AdminStatusComponent extends React.Component {
 
   onSubmit(){
     console.log("submit");
+    console.log(this.state);
+    let { unit } = this.state;
+    let { comment } = this.state;
+    let unitObj = {
+      "UnitID":unit,
+      "StatusComment":comment
+    }
+    this.props.addUnitStatus(unitObj);
   }
 
   updateRows() {
@@ -195,18 +217,30 @@ class AdminStatusComponent extends React.Component {
 
   handleOrganizationAndDutyData = (organizationAndDutyData) => {
     const { unit } = this.state;
+    document.getElementById('comment').value='';
     this.setState({       
         unit: organizationAndDutyData.dispAssignedUnit,
+        comment:''
     }, () => { 
       console.log(this.state.unit);
     this.props.fetchPlatformsStatus(this.state.unit);
     this.props.fetchPayloadsStatus(this.state.unit);
     this.props.fetchMunitionsStatus(this.state.unit);
-    this.props.fetchPersonnelsStatus(this.state.unit)
+    this.props.fetchPersonnelsStatus(this.state.unit);
+    this.props.fetchUnitStatus(this.state.unit).then(()=>{
+      if(this.props.comment!==null)
+      {
+        document.getElementById('comment').value=this.props.comment.statusComment;
+        this.setState({
+          comment:this.props.comment.statusComment
+        });
+      }
+    });
 
      });
-  
-  console.log("Is this called");
+
+    
+ 
   }
 
   updateUnit = () =>
@@ -756,9 +790,18 @@ class AdminStatusComponent extends React.Component {
                 </thead>
                 <tbody className="tbody">
                   <tr >
-                    <textarea className="comment-body" width="100%">
-                      {comment}
+                    <textarea className="comment-body" width="100%" id="comment" onChange={this.handleChange.bind(this)}>
+                      
                     </textarea>
+                  </tr>
+                  <tr>
+                  <div className="action-buttons" >
+                    <img className="line" src="/assets/img/admin/edit_up.png" alt=""/>
+                    <button className="highlighted-button" onClick={this.onSubmit.bind(this)}>
+                    {translations["submit"]} 
+                    </button>
+                    <img className="line mirrored-Y-image" src="/assets/img/admin/edit_up.png" alt=""/>
+                  </div>
                   </tr>
                 </tbody>
               </table>

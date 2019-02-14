@@ -14,12 +14,15 @@ class IntelReqPopupComponent extends React.Component {
     super(props);
     this.state = {
       showAll: true,
+      itemsToDisplay:null,
+      allItems:null
     };
   }
 
   componentDidMount() {
     if(!this.props.intelReqData) {
       this.props.fetchIntelRequests();
+      
     }
   }
 
@@ -33,6 +36,26 @@ class IntelReqPopupComponent extends React.Component {
         this.props.removeKML('MISSIONS-PARENT');
       }*/
     });
+  }
+
+  /**
+   * Function will get called to filter data , Search Box in Intel on Left Hand Side Toolbar on LIVE View
+   */
+  getFilteredList = (event) => {
+    // Get All Requests 
+    const { allRequests } = this.props;
+    // IRData to get final data , All Records.
+    const IRData = (this.props.intelReqData ? this.props.intelReqData : allRequests);
+    // By Default all the records will be here to display
+    var updatedList = IRData;
+    // Update the updatedList Variable to display the filtered data 
+    updatedList = updatedList.filter(function(item){
+      let searchItem = 'Intel Request #'+item.ReqUserFrndlyID;
+      return searchItem.toLowerCase().search(
+        event.target.value.toLowerCase()) !== -1;
+    });
+    // Set State
+    this.setState({itemsToDisplay: updatedList});
   }
 
   convertDMSToDD = (degrees, minutes, seconds, direction) => {
@@ -72,6 +95,8 @@ class IntelReqPopupComponent extends React.Component {
   render() {
     const { allRequests } = this.props;
     const IRData = (this.props.intelReqData ? this.props.intelReqData : allRequests);
+    
+    let itemsToDisplay = this.state.itemsToDisplay ? this.state.itemsToDisplay : IRData;
     return (
       <div className={'intelReq-popup-block popup-block scroll-pane' + ((this.props.popupOpen && this.props.menuClicked) ? ' opened' : '')}>
         <div className="title-block">
@@ -95,18 +120,22 @@ class IntelReqPopupComponent extends React.Component {
           */}
           {
             this.props.hasToggle &&
-              <div className="d-flex justify-content-center">
+            <div>
+              <span>
+                <input type="search" placeholder="Search" className="col-md-6" onChange={this.getFilteredList} />
+              </span>
+              <span className="d-flex justify-content-end">
                 <span className="mr-4">Show All</span>
                 <CheckBox
                   defaultValue={this.state.showAll}
                   onChangeState={this.onChangeState}
                 />
+              </span>
               </div>
           }
         </div>
-
         <div className="checklist-block">
-          { IRData && IRData.map((item, index) => {
+          { itemsToDisplay && itemsToDisplay.map((item, index) => {
             // only display current and future items
             if((new Date(item.ActiveDateTimeEnd) < (new Date()))) { return; }
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
