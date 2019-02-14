@@ -14,6 +14,7 @@ class MissionPopupComponent extends React.Component {
     super(props);
     this.state = {
       showAll: true,
+      itemsToDisplay:null
     };
   }
 
@@ -31,6 +32,25 @@ class MissionPopupComponent extends React.Component {
         this.props.removeKML('MISSIONS-PARENT');
       }
     });
+  }
+
+  /**
+   * Function will get called to filter data , Search Box in Mission on Left Hand Side Toolbar on LIVE View
+   */
+  getFilteredList = (event) => {
+    // Get All Missions 
+    const { allMissionSummary } = this.props;
+   
+    // By Default all the records will be here to display
+    var updatedList = allMissionSummary;
+    // Update the updatedList Variable to display the filtered data 
+    updatedList = updatedList.filter(function(item){
+      let searchItem = item.MissionName;
+      return searchItem.toLowerCase().search(
+        event.target.value.toLowerCase()) !== -1;
+    });
+    // Set State
+    this.setState({itemsToDisplay: updatedList});
   }
 
   convertDMSToDD = (degrees, minutes, seconds, direction) => {
@@ -69,6 +89,8 @@ class MissionPopupComponent extends React.Component {
 
   render() {
     const { allMissionSummary } = this.props;
+    let itemsToDisplay = this.state.itemsToDisplay ? this.state.itemsToDisplay : allMissionSummary;
+
     return (
       <div className={'mission-popup-block popup-block scroll-pane' + ((this.props.popupOpen && this.props.menuClicked) ? ' opened' : '')}>
         <div className="title-block">
@@ -92,18 +114,23 @@ class MissionPopupComponent extends React.Component {
           */}
           {
             this.props.hasToggle &&
-              <div className="d-flex justify-content-center">
+            <div>
+               <span>
+                <input type="search" placeholder="Search" className="col-md-6" onChange={this.getFilteredList} />
+              </span>
+              <span className="d-flex justify-content-end">
                 <span className="mr-4">Show All</span>
                 <CheckBox
                   defaultValue={this.state.showAll}
                   onChangeState={this.onChangeState}
                 />
-              </div>
+              </span>
+            </div>
           }
         </div>
 
         <div className="checklist-block">
-          { allMissionSummary && allMissionSummary.map((item, index) => {
+          { itemsToDisplay && itemsToDisplay.map((item, index) => {
             if((new Date(item.EndDate) < (new Date()))) { return; }
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
 
