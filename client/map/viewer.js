@@ -93,14 +93,14 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
           //layers: LAYERS[i],
           //maximumLevel : 8,
           //srs: COORDINATE_SYTEM.EPSG,
-          
+
       //})));
     //  layers.lower(_layers[i]);
     //  alphCounter+=((alphCounter+1)/10);
-    // _layers[i].alpha = 0.5;    
+    // _layers[i].alpha = 0.5;
     // _layers[i].brightness = (i+1).toFixed(1);
   //}
-  
+
   //var cesiumWidget = new Cesium.CesiumWidget(elementId, {scene3DOnly: true});
   if(liveViewToolBar) {
     var drawHelper = new DrawHelper(viewer);
@@ -241,7 +241,7 @@ export async function initialViewer(viewerId) {
   const init_session = JSON.parse(localStorage.getItem("session"));
   const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
 
-  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude; 
+  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude;
   const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
 
   viewer.camera.setView({
@@ -290,7 +290,8 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       url: ImageryUrls.BING_IMAGERY,
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: mapLayer,
-    }), layerLevel); 
+    }), layerLevel);
+    createMapTestObject(viewer);
   }
 }
 
@@ -304,7 +305,7 @@ export async function flyTo(container, viewerId)
   }
 
   var geocode = new Cesium.Geocoder({
-    container:container, 
+    container:container,
     scene: viewer.scene
   });
 }
@@ -351,7 +352,7 @@ export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false
           // console.log("position defined", item.billboard.image, item.id, item.position);
           addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         } else if (Cesium.defined(item.polyline)) {
-          // Placemark with LineString geometry    
+          // Placemark with LineString geometry
           // console.log("polyline defined");
           addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
         } else if (Cesium.defined(item.polygon)) {
@@ -663,7 +664,7 @@ export function removePinById(pinId, viewerId, bDestroy = false) {
 
 /**
  * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
- * @param {*} viewer 
+ * @param {*} viewer
  */
 function attachDoubleClick(viewer, viewerId, dblClickHandler){
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -737,7 +738,7 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
               // description: '<p>This is a cupcake that can be modified.</p>'
             });
           }; */
-        } 
+        }
       } else {
         if(Cesium.defined(viewer.infoBox)) {
           viewer.infoBox.container.style.display = 'none';
@@ -757,7 +758,7 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
           height: heightString,
         };
 
-        leftClickHandler(currentLatLong, viewerId, viewer);  
+        leftClickHandler(currentLatLong, viewerId, viewer);
       }
     }
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
@@ -791,7 +792,7 @@ export function createTestObject(viewerId) {
     {lat: 33.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW},
     {lat: 33.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW},
   ]};
-  
+
   mapData.data.forEach(pin => {
     Cesium.when(pinBuilder.fromMakiIconId(pin.icon, pin.color, 35), function(canvas) {
       return viewer.entities.add({
@@ -826,13 +827,65 @@ export function createTestObject(viewerId) {
 //  viewer.zoomTo(viewer.entities);
 }
 
+
+export function createMapTestObject(viewer) {
+    console.log(" BUILDING LAYERS!!!");
+  var path = '../client/assets/img/live_view/map_layer/';
+  let mapData = {data:[
+    {lat: 32.60247, long: 32.977567, icon: path + 'bases.png', color: Cesium.Color.GREEN},
+    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', color: Cesium.Color.GREEN},
+    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', color: Cesium.Color.GREEN},
+    {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png', color: Cesium.Color.GREEN}
+    // {lat: 12.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN},
+    // {lat: 10.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN},
+    // {lat: 76.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW},
+    // {lat: 11.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW},
+    // {lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW},
+    // {lat: 31.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW},
+    // {lat: 37.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW},
+  ]};
+
+  mapData.data.forEach(pin => {
+        viewer.entities.add({
+          position : Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
+          billboard : {
+              image : pin.icon,
+              verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
+              scale : 1.0
+          }
+      });
+  });
+
+  /*var blueBox = viewer.entities.add({
+      name : 'Blue box',
+      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
+      box : {
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
+          material : Cesium.Color.BLUE
+      }
+  });
+
+  var redBox = viewer.entities.add({
+      name : 'Red box with black outline',
+      position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
+      box : {
+          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
+          material : Cesium.Color.RED.withAlpha(0.5),
+          outline : true,
+          outlineColor : Cesium.Color.BLACK
+      }
+  });*/
+//  viewer.zoomTo(viewer.entities);
+}
+
+
 export function addPoint(x, y, z, viewerId, label, focus=false){
   if (!viewers.has(viewerId)) {
     return;
   }
 
   const viewer = viewers.get(viewerId);
- 
+
   viewer.entities.add({
     name : 'Bounding Box Center',
     position : Cesium.Cartesian3.fromDegrees(x, y, z),
@@ -858,8 +911,10 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
   }
 
 }
+
+
 export function moveFar(viewerId){
-  
+
   var center = Cesium.Cartesian3.fromDegrees(-82.5, 35.3);
   viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, 0.0, 4200000.0));
 }
