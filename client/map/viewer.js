@@ -782,6 +782,13 @@ export function destroyViewer(viewerId) {
   viewers.delete(viewerId);
 }
 
+// Function to toggle map layer icons
+export function toggleMapLayerIcon(map_name, viewerId){
+    const viewer = viewers.get(viewerId);
+    const entity = viewer.entities.getById(map_name);
+    entity.show = !entity.show ;
+}
+
 export function createTestObject(viewerId) {
   const viewer = viewers.get(viewerId);
 
@@ -834,25 +841,52 @@ export function createTestObject(viewerId) {
 
 
 export function createMapTestObject(viewer) {
-    console.log(" BUILDING LAYERS!!!");
   var path = '../client/assets/img/live_view/map_layer/';
+
+  // Static data which will generate Icons of Sensors , Bases etc on Globe
+
   let mapData = {data:[
-    {lat: 32.60247, long: 32.977567, icon: path + 'bases.png'},
-    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png'},
-    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png'},
-    {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png'},
-    {lat: 200.05804819999999, long: -42.7487779, icon: path + 'blue_forces.png'},
-    {lat: 122.05804819999999, long: 200.7487779, icon: path + 'blue_forces.png'},
-    {lat: 15.812438, long: -19.421321, icon: path + 'camera_white.png'},
-    {lat: 56.973057, long: -85.472778, icon: path + 'intel_request.png'},
-    {lat: 87.60247, long: 11.977567, icon: path + 'observation_blue.png'},
-    {lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png'},
-    {lat: 22.8124, long: 87.4912, icon: path + 'sigint_orange.png'},
-    {lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png'}
+    {lat: 32.60247, long: 32.977567, icon: path + 'plane.png', id : "platform_0"},
+    {lat: 32.60247, long: -12.977567, icon: path + 'plane.png', id : "platform_1"},
+    {lat: 12.60247, long:  12.977567, icon: path + 'plane.png', id : "platform_2"},
+    {lat: 122.60247, long:  23.977567, icon: path + 'boat.png', id : "boat_0"},
+    {lat: 190.60247, long:  223.977567, icon: path + 'boat.png', id : "boat_1"},
+    {lat: 12.60247, long:  98.977567, icon: path + 'user.png', id : "personnel_0"},
+    {lat: 122.60247, long:  -98.977567, icon: path + 'user.png', id : "personnel_1"},
+    {lat: 152.60247, long:  98.977567, icon: path + 'user.png', id : "personnel_2"},
+    {lat: 1.60247, long:  11.977567, icon: path + 'satellite.png', id : "sensor_0"},
+    {lat: 12.20247, long:  -11.977567, icon: path + 'satellite.png', id : "sensor_1"},
+    {lat: 187.60247, long:  11.977567, icon: path + 'satellite.png', id : "sensor_2"},
+    {lat: 19.60247, long:  -23.977567, icon: path + 'base.png', id : "bases_0"},
+    {lat: 122.60247, long:  23.977567, icon: path + 'report.png', id : "intel_requirement_0"},
+    {lat: 152.60247, long:  213.977567, icon: path + 'pois.png', id : "pois_0"},
+    {lat: 22.60247, long:  -23.977567, icon: path + 'pois.png', id : "pois_1"},
+    {lat: 21.60247, long:  -223.977567, icon: path + 'ci_green.png', id : "ci_0"},
+    {lat: 224.60247, long:  -2.977567, icon: path + 'ci_green.png', id : "ci_1"},
+    {lat: 221.60247, long:   93.977567, icon: path + 'ci_green.png', id : "ci_2"},
+    {lat: 21.60247, long:   -93.977567, icon: path + 'osint_purple.png', id : "oswt_0"},
+    {lat: 11.60247, long:   -21.977567, icon: path + 'gmti_pink.png', id : "gmti_0"},
+    {lat: 11.60247, long:   -21.977567, icon: path + 'intel_request.png', id : "intel_request_collection_point_0"},
+    {lat: 11.60247, long:   -21.977567, icon: path + 'intel_request.png', id : "intel_request_collection_point_1"},
+    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', id : "sigacts_0"},
+    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', id : "sigacts_1"},
+    {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png', id : "blue_forces_0"},
+    {lat: 200.05804819999999, long: -42.7487779, icon: path + 'blue_forces.png', id : "blue_forces_1"},
+    {lat: 122.05804819999999, long: 200.7487779, icon: path + 'blue_forces.png', id : "blue_forces_2"},
+    {lat: 15.812438, long: -19.421321, icon: path + 'camera_white.png', id : "image_0"},
+    {lat: 12.812438, long: -12.421321, icon: path + 'camera_white.png', id : "image_1"},
+    {lat: 56.973057, long: -85.472778, icon: path + 'intel_request.png', id : "intel_request_0"},
+    {lat: 87.60247, long: 11.977567, icon: path + 'observation_blue.png', id : "observation_0"},
+    {lat: 21.60247, long: 121.977567, icon: path + 'observation_blue.png', id : "observation_1"},
+    {lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png', id : "sigacts_2"},
+    {lat: 22.8124, long: 87.4912, icon: path + 'sigint_orange.png', id : "sigint_0"},
+    {lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png', id : "sigint_1"}
   ]};
 
+// Creating entity out of the above array 
   mapData.data.forEach(pin => {
         viewer.entities.add({
+            id : pin.id,
           position : Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
           billboard : {
               image : pin.icon,
@@ -860,7 +894,8 @@ export function createMapTestObject(viewer) {
               scale : 1.0,
               width : 35,
               height : 35
-          }
+          },
+          show : false
       });
   });
 

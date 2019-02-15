@@ -11,8 +11,59 @@ class LayerPopupComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    // Static data to load map layer icons
     this.state = {
       showAll: true,
+     static_data : {
+          platform :{
+              length : 3
+          },
+          boat :{
+              length : 2
+          },
+          personnel :{
+              length : 3
+          },
+          sensor :{
+              length : 3
+          },
+          blue_forces :{
+              length : 3
+          },
+          bases :{
+              length : 1
+          },
+          intel_requirement :{
+              length : 1
+          },
+          sigacts :{
+              length : 3
+          },
+          pois :{
+              length : 2
+          },
+          ci :{
+              length : 3
+          },
+          sigint :{
+              length : 2
+          },
+          oswt :{
+              length : 1
+          },
+          gmti :{
+              length : 1
+          },
+          intel_request_collection_point :{
+              length : 2
+          },
+          observation :{
+              length : 2
+          },
+          image :{
+              length : 2
+          },
+      }
     };
   }
 
@@ -45,14 +96,22 @@ class LayerPopupComponent extends React.Component {
       return [];
     }
   }
-
+  myFunction = (number) => {
+      const str = number.split(" ").join("_");
+      const str_temp = str.toLowerCase();
+      const length = this.state.static_data[str_temp].length;
+      for(let i=0;i<length;i++){
+          const map_str = str_temp + "_" + i;
+          this.props.toggleMapLayer(map_str);
+      }
+  }
   render() {
 
     const { locationKMLs, locationTypes } = this.props;
 
-
-    const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
-      , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
+    const listItem = ['Platform', 'Boat', 'Personnel', 'Sensor'
+      , 'Blue forces', 'Bases', 'Intel Requirement', 'SIGACTS', 'POIS','CI','SIGINT','OSWT','GMTI',
+      'Intel Request Collection Point', 'Observation', 'Image'];
 
   //const { locationKML } = {'LocationName':'abdf','Category':'xyx', 'LocationLatitude':'76.22', 'LocationLongitude':'76.22','LocationID':'IND',   };
 
@@ -114,7 +173,7 @@ class LayerPopupComponent extends React.Component {
             listItem.map((number) =>
               <div class="popup-item">
 
-              {number} <CheckBox />
+              {number} <CheckBox onChangeState={this.myFunction.bind(this,number)} />
                   </div>
           )
 
