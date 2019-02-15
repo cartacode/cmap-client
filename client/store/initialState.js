@@ -24,7 +24,8 @@ export default {
     isDeleted: false,
     isAdded: false,
     isUpdated: false,
-    error: {}
+    error: {},
+    allLayers:[]
   },
 
   munitions: {
