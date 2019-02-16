@@ -73,6 +73,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //   }),
   });
   createMapTestObject(viewer);
+  create3DModel(viewer);
   // extend our view by the cesium navigation mixin
   //   var options = {};
   //   options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
@@ -290,6 +291,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
      })
      );
      createMapTestObject(viewer);
+     create3DModel(viewer);
   } else {
     viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
       url: ImageryUrls.BING_IMAGERY,
@@ -297,6 +299,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       mapStyle: mapLayer,
     }), layerLevel);
     createMapTestObject(viewer);
+    create3DModel(viewer);
   }
 }
 
@@ -839,6 +842,27 @@ export function createTestObject(viewerId) {
 //  viewer.zoomTo(viewer.entities);
 }
 
+export function create3DModel(viewer){
+let position = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 150000.0);
+let heading = Cesium.Math.toRadians(0);
+let pitch = 90;
+let roll = 180;
+let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+let path = '../client/assets/models/predator.glb';
+let entity = viewer.entities.add({
+    name : "Predator",
+    position : position,
+    orientation : orientation,
+    model : {
+        uri : path,
+        minimumPixelSize : 20000,
+        maximumScale : 40000
+    }
+});
+viewer.zoomTo(entity);
+}
+
 
 export function createMapTestObject(viewer) {
   var path = '../client/assets/img/live_view/map_layer/';
@@ -883,7 +907,7 @@ export function createMapTestObject(viewer) {
     {lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png', id : "sigint_1"}
   ]};
 
-// Creating entity out of the above array 
+// Creating entity out of the above array
   mapData.data.forEach(pin => {
         viewer.entities.add({
             id : pin.id,
