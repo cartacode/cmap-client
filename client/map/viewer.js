@@ -870,11 +870,11 @@ export function createMapTestObject(viewer) {
   // Static data which will generate Icons of Sensors , Bases etc on Globe
 
   let mapData = {data:[
-    {lat: 32.60247, long: 32.977567, icon: path + 'plane.png', id : "platform_0"},
-    {lat: 32.60247, long: -12.977567, icon: path + 'plane.png', id : "platform_1"},
-    {lat: 12.60247, long:  12.977567, icon: path + 'plane.png', id : "platform_2"},
-    {lat: 122.60247, long:  23.977567, icon: path + 'boat.png', id : "boat_0"},
-    {lat: 190.60247, long:  223.977567, icon: path + 'boat.png', id : "boat_1"},
+    {lat: 32.60247, long: 32.977567, icon: path + 'plane.png', id : "air_0"},
+    {lat: 32.60247, long: -12.977567, icon: path + 'plane.png', id : "air_1"},
+    {lat: 12.60247, long:  12.977567, icon: path + 'plane.png', id : "air_2"},
+    {lat: 122.60247, long:  23.977567, icon: path + 'boat.png', id : "maritime_0"},
+    {lat: 190.60247, long:  223.977567, icon: path + 'boat.png', id : "maritime_1"},
     {lat: 12.60247, long:  98.977567, icon: path + 'user.png', id : "personnel_0"},
     {lat: 122.60247, long:  -98.977567, icon: path + 'user.png', id : "personnel_1"},
     {lat: 152.60247, long:  98.977567, icon: path + 'user.png', id : "personnel_2"},

@@ -15,10 +15,13 @@ class LayerPopupComponent extends React.Component {
     this.state = {
       showAll: true,
      static_data : {
-          platform :{
+          space :{
+             length : 0
+          },
+          air :{
               length : 3
           },
-          boat :{
+          maritime :{
               length : 2
           },
           personnel :{
@@ -109,7 +112,7 @@ class LayerPopupComponent extends React.Component {
 
     const { locationKMLs, locationTypes } = this.props;
 
-    const listItem = ['Platform', 'Boat', 'Personnel', 'Sensor'
+    const listItem = ['Space','Air', 'Martitime', 'Personnel', 'Sensor'
       , 'Blue forces', 'Bases', 'Intel Requirement', 'SIGACTS', 'POIS','CI','SIGINT','OSWT','GMTI',
       'Intel Request Collection Point', 'Observation', 'Image'];
 
