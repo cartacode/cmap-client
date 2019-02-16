@@ -136,14 +136,15 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
-
+    // alert("lllll");
     if(this.props.setOneLocation) {
+      // alert("pppp");
       removePinById('IR-GRID-COORDS', this.props.viewerId, true);
       addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, '', '', true);
 
       //placeholder for future code
       const returnObj = [{city:'',id:''},{city:'',id:''}];
-      this.props.setOneLocation(returnObj, worldPosition);
+      //this.props.setOneLocation(returnObj, worldPosition);
     }
   }
 
