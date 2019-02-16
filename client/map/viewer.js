@@ -633,6 +633,8 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
 
     if (!pinText) {
       Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), (canvas) => {
+        // alert(tooltipLabel);
+        // alert(tooltipText);
         entity = viewer.entities.add({
           id: pinId,
           position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
@@ -643,7 +645,9 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
           name: tooltipLabel,
           description: tooltipText,
         }).then(() => {
+          alert('pp')
           if (bMoveMap) {
+            alert('lll')
             positionMap(latitude, longitude, viewerId);
           }
         });
@@ -658,7 +662,9 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
         }).then(() => {
+          alert('qqq')
           if (bMoveMap) {
+            alert('rrr')
             positionMap(latitude, longitude, viewerId);
           }
         });
@@ -814,6 +820,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           let parentDiv = document.createElement('div');
 
           let form = document.createElement('form');
+          form.setAttribute('action', ' ');
           form.style.padding = '10px';
 
           let lats = document.createElement('P');
@@ -826,6 +833,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           let layerSelectLabel = document.createElement('label');
           layerSelectLabel.innerHTML = 'Layer Select : '
           let layerSelect = document.createElement("SELECT");
+          layerSelect.id = 'layer-select';
 
           let blueForce = document.createElement("option");
           blueForce.text = 'Blue Forces';
@@ -855,6 +863,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           let title = document.createElement('label');
           title.innerHTML = 'Title : '
           let titleInput = document.createElement('input');
+          titleInput.id = 'title-input';
           titleDiv.appendChild(title);
           titleDiv.appendChild(titleInput);
 
@@ -862,6 +871,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           let description = document.createElement('label');
           description.innerHTML = 'Description : '
           let descriptionInput = document.createElement('input');
+          descriptionInput.id = 'description-input';
           descriptionDiv.appendChild(description);
           descriptionDiv.appendChild(descriptionInput);
 
@@ -870,14 +880,55 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           file.innerHTML = 'File Upload : '
           let fileInput = document.createElement('input');
           fileInput.type = 'file';
+          fileInput.id = 'file-input';
           fileDiv.appendChild(file);
           fileDiv.appendChild(fileInput);
 
           let submitButton = document.createElement('button');
           submitButton.innerHTML = 'Submit';
-          submitButton.addEventListener('onclick', (event) => {
+          submitButton.id = 'add-icon';
+          submitButton.onclick = (event) => {
             event.preventDefault();
-          });
+            let layer = $('#layer-select').val();
+
+            if (layer === 'Blue Forces')
+              layer = 'blue_forces';
+            else if (layer === 'Intel Report')
+              layer = 'intel_request';
+            else if (layer === 'Observation')
+              layer = 'observation_blue';
+            else if (layer === 'SIGACT')
+              layer = 'sigacts_red';
+            else if (layer === 'Media')
+              layer = 'sigint_orange';
+
+            let title = $('#title-input').val();
+            let desc = $('#description-input').val();
+
+            var path = '../client/assets/img/live_view/map_layer/';
+            
+            // var k = `<div>
+	          //   <form>
+		        //     <label>Lat</label>
+		        //     <span>${latitudeString}</span>
+	          //     </form>
+            // </div>`
+
+            // parentDiv.innerHTML = k;
+
+            viewer.entities.add({
+              position: Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString)),
+              billboard: {
+                image: `${path}${layer}.png`,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                width: 35,
+                height: 35
+              }
+            });
+
+            console.log($('#file-input').val());
+            viewer.infoBox.container.style.display = 'none';
+          };
 
           form.appendChild(lats);
           form.appendChild(longs);
@@ -900,6 +951,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           viewer.infoBox.container.style.top = movement.position.y + 'px';
           viewer.infoBox.container.style.left = movement.position.x + 'px';
           viewer.infoBox.container.style.display = 'block';
+
           let box = viewer.infoBox.container;
           box.removeChild(box.childNodes[0]);
         }
