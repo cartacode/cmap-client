@@ -48,6 +48,7 @@ export default class Map extends React.PureComponent {
     this.MAP_EVENTS = {
       LEFT_DOUBLE_CLICK : this.dblClickCallback,
       LEFT_CLICK : this.leftClickCallback,
+      RIGHT_CLICK : this.rightClickCallback,
     }
   }
 
@@ -57,7 +58,7 @@ export default class Map extends React.PureComponent {
 
   componentDidMount() {
     console.log(this.props.viewerId);
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.props.enableLiveViewToolBar, true, this.initialSettings);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.MAP_EVENTS.RIGHT_CLICK, this.props.enableLiveViewToolBar, true, this.initialSettings);
 
     console.log('init settings');
     // add the default location or user location into the location bar
@@ -72,6 +73,7 @@ export default class Map extends React.PureComponent {
     if(!(!this.props.toolBarOptions ? true : this.props.toolBarOptions.show)) {
       createTestObject(this.props.viewerId);
     }
+
     initialViewer(this.props.viewerId);
 
     addKML('/assets/IR_177_Black_Adder.kmz', uuid(), this.props.viewerId);
@@ -134,15 +136,23 @@ export default class Map extends React.PureComponent {
 
   leftClickCallback = (worldPosition, viewerId, viewer) => {
     this.setState({ latlong: worldPosition });
-
+    // alert("lllll");
     if(this.props.setOneLocation) {
+      // alert("pppp");
       removePinById('IR-GRID-COORDS', this.props.viewerId, true);
       addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, '', '', true);
 
       //placeholder for future code
       const returnObj = [{city:'',id:''},{city:'',id:''}];
-      this.props.setOneLocation(returnObj, worldPosition);
+      //this.props.setOneLocation(returnObj, worldPosition);
     }
+  }
+
+  // Right click toolbar open functionality
+  rightClickCallback = (worldPosition, viewerId, viewer) => {
+
+    // TODO - EXTRA RIGHT CLICK FUNCTIONALITY
+    console.log('Right clicked');
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{

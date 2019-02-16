@@ -14,8 +14,7 @@ class IntelReqPopupComponent extends React.Component {
     super(props);
     this.state = {
       showAll: true,
-      itemsToDisplay:null,
-      allItems:null
+      itemsToDisplay:null
     };
   }
 

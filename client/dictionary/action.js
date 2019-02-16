@@ -177,4 +177,5 @@ export const INTEL_LIBRARY_REQUEST__FETCH_ONE = createActionType('INTEL_LIBRARY_
 export const INTEL_LIBRARY_REQUEST__FETCH = createActionType('INTEL_LIBRARY_REQUEST__FETCH');
 export const INTEL_LIBRARY_SEND__EMAIL = createActionType('INTEL_LIBRARY_SEND__EMAIL');
 
+export const MAP_LAYERS__FETCH = createActionType('MAP_LAYERS__FETCH');
 

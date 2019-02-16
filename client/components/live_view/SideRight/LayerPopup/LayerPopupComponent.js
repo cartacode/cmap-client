@@ -5,6 +5,8 @@ import SelectBox from '../../../reusable/SelectBox';
 import PopupListingItem from '../PopupListingItem';
 import CheckBox from '../../../reusable/CheckBox';
 import { fetchLocationKMLs, fetchLocationTypes } from 'actions/location';
+import { fetchMapLayers } from 'actions/liveview';
+
 import './LayerPopupComponent.scss';
 
 class LayerPopupComponent extends React.Component {
@@ -73,6 +75,8 @@ class LayerPopupComponent extends React.Component {
   componentDidMount() {
     //this.props.fetchLocationKMLs();
     this.props.fetchLocationTypes();
+    // Fetch All Layers to Display in the right side tool bar Layers Button
+    this.props.fetchMapLayers();
   }
 
   onChangeShowAll = (state) => {
@@ -110,12 +114,12 @@ class LayerPopupComponent extends React.Component {
   }
   render() {
 
-    const { locationKMLs, locationTypes } = this.props;
+    const { locationKMLs, locationTypes, allLayers} = this.props;
 
-    const listItem = ['Space','Air', 'Martitime', 'Personnel', 'Sensor'
-      , 'Blue forces', 'Bases', 'Intel Requirement', 'SIGACTS', 'POIS','CI','SIGINT','OSWT','GMTI',
-      'Intel Request Collection Point', 'Observation', 'Image'];
 
+    /* const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
+      , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
+ */
   //const { locationKML } = {'LocationName':'abdf','Category':'xyx', 'LocationLatitude':'76.22', 'LocationLongitude':'76.22','LocationID':'IND',   };
 
     return (
@@ -173,10 +177,10 @@ class LayerPopupComponent extends React.Component {
             />;
           }) */}
           {
-            listItem.map((number) =>
-              <div class="popup-item">
+            allLayers.map((number) =>
+              <div className="popup-item">
 
-              {number} <CheckBox onChangeState={this.myFunction.bind(this,number)} />
+              {number.name} <CheckBox onChangeState={this.myFunction.bind(this,number.name)} />
                   </div>
           )
 
@@ -207,12 +211,15 @@ const mapStateToProps = state => {
     isTypesFetching: state.locations.isTypesFetching,
     //locationKMLs: state.locations.locationKMLs,
     isKMLFetching: state.locations.isKMLFetching,
+    allLayers: state.locations.allLayers
   };
 };
 
 const mapDispatchToProps = {
   fetchLocationKMLs,
   fetchLocationTypes,
+  fetchMapLayers,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerPopupComponent);

@@ -2311,7 +2311,7 @@ input {
 }
 
 .upload-content {
-  height: 84%;
+  height: auto;
   background-color: rgba(19, 38, 56, 0.5);
   padding: 8px 20px;
 
@@ -3981,7 +3981,7 @@ one-block {
         input {
           width: 100px !important;
         }
-      }
+      }  
     }
 
     .nai-description {
@@ -5509,3 +5509,9 @@ select.form-control.multiple-select {
 #default-fly-to path {
   fill: #ed7d31;
 }
+/************************************************ mission summary upload button aligntment css *******************************/  
+input#uploadFile0 {
+  line-height: 25px;
+  padding-left: 2px;
+}
+

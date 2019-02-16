@@ -1,10 +1,11 @@
 import Cesium from 'cesium/Cesium';
-import {DrawHelper} from 'map/drawHelper';
+import CesiumNavigation from "cesium-navigation-es6";
+import { DrawHelper } from 'map/drawHelper';
 // eslint-disable-line import/no-unresolved
 //  import ViewerCesiumNavigationMixin from 'cesiumNav/viewerCesiumNavigationMixin';
-import {LAYERS} from 'map/layer-names';
-import {COORDINATE_SYTEM} from 'map/coordinate-system';
-import {getImageryurl} from 'map/config';
+import { LAYERS } from 'map/layer-names';
+import { COORDINATE_SYTEM } from 'map/coordinate-system';
+import { getImageryurl } from 'map/config';
 import { ImageryUrls, LocalMapLayer } from 'dictionary/constants';
 /**
  * The identifiers of the Cesium viewers in the application.
@@ -40,11 +41,12 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, liveViewToolBar, callback) {
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, RIGHT_CLICK, liveViewToolBar, callback) {
   console.log('createViewer viewerId:', viewerId);
   if (viewers.has(viewerId)) {
     return;
   }
+
   // Specify access key to get the geocodes from cesium api
   Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5OWUzZTI2Ni0zZmEyLTQ4MzQtYmE3NS1jMTU2MzEyOWYzZDgiLCJpZCI6NDY1OSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTM4ODk1N30.iOKoHxirli-lHdjLqb2FuXKo34CskRFrM3z7_6HPzZk';
   const viewer = new Cesium.Viewer(elementId, {
@@ -75,96 +77,105 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   createMapTestObject(viewer);
   create3DModel(viewer);
   // extend our view by the cesium navigation mixin
-  //   var options = {};
-  //   options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
+  let options = {};
+  options.defaultResetView = Cesium.Rectangle.fromDegrees(71, 3, 90, 14);
 
-  // options.enableCompass= false;
-  // options.enableZoomControls= true;
-  // options.enableDistanceLegend= true;
-  // options.enableCompassOuterRing= true;
-  // viewer.extend(Cesium.viewerCesiumNavigationMixin, options);
+  options.enableCompass = true;
+  options.enableZoomControls = true;
+  options.enableDistanceLegend = true;
+  options.enableCompassOuterRing = true;
+  CesiumNavigation(viewer, options);
 
   // Adding layers
   let layers = viewer.scene.imageryLayers;
 
-  let alphCounter = 0.0, _layers=[];
+  let alphCounter = 0.0, _layers = [];
   //for(let i=0; LAYERS[i]; i++){
-    //_layers.push(layers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
-      //url: getImageryurl(),
-        //  proxy: new Cesium.DefaultProxy('/proxy/'),
-          //layers: LAYERS[i],
-          //maximumLevel : 8,
-          //srs: COORDINATE_SYTEM.EPSG,
+  //_layers.push(layers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
+  //url: getImageryurl(),
+  //  proxy: new Cesium.DefaultProxy('/proxy/'),
+  //layers: LAYERS[i],
+  //maximumLevel : 8,
+  //srs: COORDINATE_SYTEM.EPSG,
 
-      //})));
-    //  layers.lower(_layers[i]);
-    //  alphCounter+=((alphCounter+1)/10);
-    // _layers[i].alpha = 0.5;
-    // _layers[i].brightness = (i+1).toFixed(1);
+  //})));
+  //  layers.lower(_layers[i]);
+  //  alphCounter+=((alphCounter+1)/10);
+  // _layers[i].alpha = 0.5;
+  // _layers[i].brightness = (i+1).toFixed(1);
   //}
 
   //var cesiumWidget = new Cesium.CesiumWidget(elementId, {scene3DOnly: true});
-  if(liveViewToolBar) {
+  if (liveViewToolBar) {
     var drawHelper = new DrawHelper(viewer);
     var toolbar = drawHelper.addToolbar(document.getElementById("drawingToolBar"), {
-        buttons: ['marker', 'polyline', 'polygon', 'circle']
+      buttons: ['marker', 'polyline', 'polygon', 'circle']
     });
-    var scene = viewer.scene;
-    toolbar.addListener('markerCreated', function(event) {
+
+    let scene = viewer.scene;
+
+    toolbar.addListener('markerCreated', function (event) {
       loggingMessage('Marker created at ' + event.position.toString());
       // create one common billboard collection for all billboards
       var b = new Cesium.BillboardCollection();
       scene.primitives.add(b);
+
       var billboard = b.add({
-          show : true,
-          position : event.position,
-          pixelOffset : new Cesium.Cartesian2(0, 0),
-          eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0),
-          horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
-          verticalOrigin : Cesium.VerticalOrigin.CENTER,
-          scale : 1.0,
-          image: '/vendor/cesium-drawhelper-master/img/glyphicons_242_google_maps.png',
-          color : new Cesium.Color(1.0, 1.0, 1.0, 1.0)
+        show: true,
+        position: event.position,
+        pixelOffset: new Cesium.Cartesian2(0, 0),
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        scale: 1.0,
+        image: '/vendor/cesium-drawhelper-master/img/glyphicons_242_google_maps.png',
+        color: new Cesium.Color(1.0, 1.0, 1.0, 1.0)
       });
       billboard.setEditable();
     });
-    toolbar.addListener('polylineCreated', function(event) {
+
+    toolbar.addListener('polylineCreated', function (event) {
       loggingMessage('Polyline created with ' + event.positions.length + ' points');
       var polyline = new DrawHelper.PolylinePrimitive({
-          positions: event.positions,
-          width: 5,
-          geodesic: true
+        positions: event.positions,
+        width: 5,
+        geodesic: true
       });
       scene.primitives.add(polyline);
       polyline.setEditable();
-      polyline.addListener('onEdited', function(event) {
-          loggingMessage('Polyline edited, ' + event.positions.length + ' points');
+      polyline.addListener('onEdited', function (event) {
+        loggingMessage('Polyline edited, ' + event.positions.length + ' points');
       });
     });
-    toolbar.addListener('polygonCreated', function(event) {
-        loggingMessage('Polygon created with ' + event.positions.length + ' points');
-        var polygon = new DrawHelper.PolygonPrimitive({
-            positions: event.positions,
-            material : Cesium.Material.fromType('Checkerboard')
-        });
-        scene.primitives.add(polygon);
-        polygon.setEditable();
-        polygon.addListener('onEdited', function(event) {
-            loggingMessage('Polygon edited, ' + event.positions.length + ' points');
-        });
+    toolbar.addListener('polygonCreated', function (event) {
+      loggingMessage('Polygon created with ' + event.positions.length + ' points');
+      var polygon = new DrawHelper.PolygonPrimitive({
+        positions: event.positions,
+        material: Cesium.Material.fromType('Checkerboard')
+      });
+
+      scene.primitives.add(polygon);
+
+      polygon.setEditable();
+      polygon.addListener('onEdited', function (event) {
+        loggingMessage('Polygon edited, ' + event.positions.length + ' points');
+      });
     });
-    toolbar.addListener('circleCreated', function(event) {
-        loggingMessage('Circle created: center is ' + event.center.toString() + ' and radius is ' + event.radius.toFixed(1) + ' meters');
-        var circle = new DrawHelper.CirclePrimitive({
-            center: event.center,
-            radius: event.radius,
-            material: Cesium.Material.fromType(Cesium.Material.RimLightingType)
-        });
-        scene.primitives.add(circle);
-        circle.setEditable();
-        circle.addListener('onEdited', function(event) {
-            loggingMessage('Circle edited: radius is ' + event.radius.toFixed(1) + ' meters');
-        });
+
+    toolbar.addListener('circleCreated', function (event) {
+      loggingMessage('Circle created: center is ' + event.center.toString() + ' and radius is ' + event.radius.toFixed(1) + ' meters');
+      var circle = new DrawHelper.CirclePrimitive({
+        center: event.center,
+        radius: event.radius,
+        material: Cesium.Material.fromType(Cesium.Material.RimLightingType)
+      });
+
+      scene.primitives.add(circle);
+      circle.setEditable();
+      circle.addListener('onEdited', function (event) {
+        loggingMessage('Circle edited: radius is ' + event.radius.toFixed(1) + ' meters');
+      });
+
     });
     // toolbar.addListener('extentCreated', function(event) {
     //     var extent = event.extent;
@@ -179,10 +190,12 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //         loggingMessage('Extent edited: extent is (N: ' + event.extent.north.toFixed(3) + ', E: ' + event.extent.east.toFixed(3) + ', S: ' + event.extent.south.toFixed(3) + ', W: ' + event.extent.west.toFixed(3) + ')');
     //     });
     // });
-    var logging = document.getElementById('logging');
+
+    let logging = document.getElementById('logging');
     function loggingMessage(message) {
-        logging.innerHTML = message;
+      logging.innerHTML = message;
     }
+
   }
   //   var layers = viewer.scene.imageryLayers;
   //   var statesLayer = layers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
@@ -203,6 +216,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   // }));
   // lebanonRoadsLayer.alpha = 0.3;
   // Corrects the viewer styling
+
   viewer.canvas.style.height = '100%';
   viewer.canvas.style.width = '100%';
 
@@ -211,15 +225,17 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
    * TODO: Move to separate file
    * Attaching double click event on canvas, to retrieve lat, long values
   */
-  if(!liveViewToolBar) {
+
+  if (!liveViewToolBar) {
     attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK);
     attachLeftClick(viewer, viewerId, LEFT_CLICK);
+    attachRightClick(viewer, viewerId, RIGHT_CLICK);
     viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
     viewers.set(viewerId, viewer);
     return viewer;
   }
 
-  if(typeof callback === 'function') {
+  if (typeof callback === 'function') {
     callback();
   }
 
@@ -235,7 +251,7 @@ export async function initialViewer(viewerId) {
 
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
@@ -243,8 +259,8 @@ export async function initialViewer(viewerId) {
   const init_session = JSON.parse(localStorage.getItem("session"));
   const default_info = { longitude: -117.38380562649462, latitude: 43.38974235735528, height: 0 }
 
-  const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : default_info.longitude;
-  const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : default_info.latitude;
+  const init_longitude = init_session.LocationLongitude ? Number(init_session.LocationLongitude) : default_info.longitude;
+  const init_latitude = init_session.LocationLatitude ? Number(init_session.LocationLatitude) : default_info.latitude;
 
   viewer.camera.setView({
     destination: Cesium.Cartesian3.fromDegrees(
@@ -260,7 +276,7 @@ export async function initialViewer(viewerId) {
   viewer.entities.add({ id: 'PLATFORMS-PARENT' });
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
 
-  if(viewer.infoBox) {
+  if (viewer.infoBox) {
     viewer.infoBox.container.style.display = 'none';
   }
 }
@@ -268,23 +284,21 @@ export async function initialViewer(viewerId) {
 export async function changeLayer(mapLayer, layerLevel, viewerId) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
   const existLayer = viewer.imageryLayers.get(layerLevel);
 
-  if(existLayer) {
+  if (existLayer) {
     viewer.imageryLayers.remove(existLayer, true);
   }
 
-
-
-  if (mapLayer === LocalMapLayer.WORLD_MAP ||mapLayer === LocalMapLayer.ASIA_CATEGORIZED || mapLayer === LocalMapLayer.SYRIA_LEBANON) {
+  if (mapLayer === LocalMapLayer.WORLD_MAP || mapLayer === LocalMapLayer.ASIA_CATEGORIZED || mapLayer === LocalMapLayer.SYRIA_LEBANON) {
     viewer.scene.imageryLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
       layers: mapLayer,
-      srs:'EPSG:4326',
+      srs: 'EPSG:4326',
       // format:'image/png',
       // proxy: new Cesium.DefaultProxy('/proxy/'),
       url : ImageryUrls.GEOSERVER_IMAGERY,
@@ -303,17 +317,16 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
   }
 }
 
-export async function flyTo(container, viewerId)
-{
+export async function flyTo(container, viewerId) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
   var geocode = new Cesium.Geocoder({
-    container:container,
+    container: container,
     scene: viewer.scene
   });
 }
@@ -321,14 +334,14 @@ export async function flyTo(container, viewerId)
 export async function adjustLayerTransparency(layerLevel, alphaLevel, viewerId) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
   const existLayer = viewer.imageryLayers.get(layerLevel);
 
-  if(existLayer) {
+  if (existLayer) {
     existLayer.alpha = alphaLevel;
   }
 }
@@ -336,49 +349,49 @@ export async function adjustLayerTransparency(layerLevel, alphaLevel, viewerId) 
 export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false, tooltipText) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
   const existingEntity = viewer.entities.getById(dataSourceID);
 
-  if(!existingEntity) {
+  if (!existingEntity) {
     Cesium.KmlDataSource.load(KMLSource,
-    {
-      camera: viewer.scene.camera,
-      canvas: viewer.scene.canvas,
-    }).then((kml) => {
-      const missionParent = viewer.entities.getById('MISSIONS-PARENT');
-      const parentEntity = viewer.entities.add({
-        id: dataSourceID,
-        parent: missionParent,
-      });
+      {
+        camera: viewer.scene.camera,
+        canvas: viewer.scene.canvas,
+      }).then((kml) => {
+        const missionParent = viewer.entities.getById('MISSIONS-PARENT');
+        const parentEntity = viewer.entities.add({
+          id: dataSourceID,
+          parent: missionParent,
+        });
 
-      kml.entities.values.forEach(item => {
-        if(Cesium.defined(item.position)) {
-          // console.log("position defined", item.billboard.image, item.id, item.position);
-          addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
-        } else if (Cesium.defined(item.polyline)) {
-          // Placemark with LineString geometry
-          // console.log("polyline defined");
-          addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
-        } else if (Cesium.defined(item.polygon)) {
-          // Placemark with Polygon geometry
-          // console.log("polygon defined");
-          addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
-        } else if (Cesium.defined(item.wall)) {
-          // console.log("wall defined");
-          addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
-        }
+        kml.entities.values.forEach(item => {
+          if (Cesium.defined(item.position)) {
+            // console.log("position defined", item.billboard.image, item.id, item.position);
+            addNewPinByPosition(item.position, item.billboard, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
+          } else if (Cesium.defined(item.polyline)) {
+            // Placemark with LineString geometry
+            // console.log("polyline defined");
+            addPolyline(item.polyline, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
+          } else if (Cesium.defined(item.polygon)) {
+            // Placemark with Polygon geometry
+            // console.log("polygon defined");
+            addPolygon(item.polygon, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
+          } else if (Cesium.defined(item.wall)) {
+            // console.log("wall defined");
+            addWall(item.wall, item.name, item.id, viewerId, parentEntity, bMoveMap, tooltipText);
+          }
+        });
+      }, (error) => {
+        console.log('error', KMLSource, error);
       });
-    }, (error) => {
-      console.log('error', KMLSource, error);
-    });
   } else {
     toggleShowEntity(dataSourceID, true, viewerId);
 
-    if(bMoveMap) {
+    if (bMoveMap) {
       viewer.flyTo(existingEntity);
     }
   }
@@ -400,7 +413,7 @@ const toggleEntityParents = (entityId, bDisplay, viewerId) => {
   const viewer = viewers.get(viewerId);
   const entity = viewer.entities.getById(entityId);
 
-  if(entity.parent) {
+  if (entity.parent) {
     toggleEntityParents(entity.parent.id, bDisplay, viewerId);
   }
 
@@ -421,19 +434,19 @@ const toggleEntityChildren = (entityId, bDisplay, viewerId) => {
 export async function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = false) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
 
-  if(viewer.entities && viewer.entities.getById(entityId)) {
-    if(bDestroy) {
+  if (viewer.entities && viewer.entities.getById(entityId)) {
+    if (bDestroy) {
       viewer.entities.removeById(entityId);
     } else {
       toggleEntityChildren(entityId, bDisplay, viewerId);
     }
 
-    if(bDisplay) {
+    if (bDisplay) {
       toggleEntityParents(entityId, bDisplay, viewerId);
     }
   }
@@ -442,7 +455,7 @@ export async function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = 
 export async function positionMap(latitude, longitude, viewerId) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
@@ -459,7 +472,7 @@ function sleep(ms) {
 export async function addPolygon(polygon, labelText, polygonId, viewerId, parentEntity, bMoveMap = false) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
@@ -471,7 +484,7 @@ export async function addPolygon(polygon, labelText, polygonId, viewerId, parent
     parent: parentEntity,
   });
 
-  if(bMoveMap) {
+  if (bMoveMap) {
     viewer.flyTo(newEntity);
   }
 }
@@ -479,7 +492,7 @@ export async function addPolygon(polygon, labelText, polygonId, viewerId, parent
 export async function addPolyline(line, labelText, lineId, viewerId, parentEntity, bMoveMap = false) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
@@ -502,7 +515,7 @@ export async function addPolyline(line, labelText, lineId, viewerId, parentEntit
     parent: parentEntity,
   });
 
-  if(bMoveMap) {
+  if (bMoveMap) {
     viewer.flyTo(newEntity);
   }
 }
@@ -510,7 +523,7 @@ export async function addPolyline(line, labelText, lineId, viewerId, parentEntit
 export async function addWall(wall, labelText, wallId, viewerId, parentEntity, bMoveMap = false, tooltipText) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
@@ -534,24 +547,24 @@ export async function addWall(wall, labelText, wallId, viewerId, parentEntity, b
     parent: parentEntity,
   });
 
-  if(bMoveMap) {
+  if (bMoveMap) {
     viewer.flyTo(newEntity);
   }
 }
 
 export async function addCircle(centerPointLat, centerPointLong, circleText, circleId, viewerId, parentEntity, bMoveMap = false, tooltipText, circleColor) {
-  if(isNaN(centerPointLat) || isNaN(centerPointLong)) { return; }
+  if (isNaN(centerPointLat) || isNaN(centerPointLong)) { return; }
 
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
     viewer = viewers.get(viewerId);
   }
 
   const entity = (circleId && viewer && viewer.entities && viewer.entities.getById(circleId) ? viewer.entities.getById(circleId) : null);
 
-  if(!entity) {
+  if (!entity) {
     const newEntity = viewer.entities.add({
       id: circleId,
       position: Cesium.Cartesian3.fromDegrees(centerPointLong, centerPointLat),
@@ -571,7 +584,7 @@ export async function addCircle(centerPointLat, centerPointLong, circleText, cir
       }),
     });
 
-    if(bMoveMap) {
+    if (bMoveMap) {
       viewer.flyTo(newEntity);
     }
   }
@@ -580,7 +593,7 @@ export async function addCircle(centerPointLat, centerPointLong, circleText, cir
 export async function addNewPinByPosition(position, billboard, pinText, pinId, viewerId, parentEntity, bMoveMap = false) {
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
@@ -603,29 +616,31 @@ export async function addNewPinByPosition(position, billboard, pinText, pinId, v
     parent: parentEntity,
   });
 
-  if(bMoveMap) {
+  if (bMoveMap) {
     viewer.flyTo(newEntity);
   }
 }
 
 export async function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
   // console.log(pinId, pinText);
-  if(isNaN(longitude) || isNaN(latitude)) { return; }
+  if (isNaN(longitude) || isNaN(latitude)) { return; }
 
   let viewer = viewers.get(viewerId);
 
-  if(!viewer) {
+  if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
   }
 
   let entity = (pinId && viewer && viewer.entities && viewer.entities.getById(pinId) ? viewer.entities.getById(pinId) : null);
 
-  if(!entity) {
+  if (!entity) {
     const pinBuilder = new Cesium.PinBuilder();
 
-    if(!pinText) {
+    if (!pinText) {
       Cesium.when(pinBuilder.fromMakiIconId(iconId, color, 36), (canvas) => {
+        // alert(tooltipLabel);
+        // alert(tooltipText);
         entity = viewer.entities.add({
           id: pinId,
           position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
@@ -636,7 +651,9 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
           name: tooltipLabel,
           description: tooltipText,
         }).then(() => {
-          if(bMoveMap) {
+          alert('pp')
+          if (bMoveMap) {
+            alert('lll')
             positionMap(latitude, longitude, viewerId);
           }
         });
@@ -651,7 +668,9 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
         }).then(() => {
-          if(bMoveMap) {
+          alert('qqq')
+          if (bMoveMap) {
+            alert('rrr')
             positionMap(latitude, longitude, viewerId);
           }
         });
@@ -660,7 +679,7 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
   } else {
     toggleShowEntity(pinId, true, viewerId);
 
-    if(bMoveMap) {
+    if (bMoveMap) {
       positionMap(latitude, longitude, viewerId);
     }
   }
@@ -674,7 +693,8 @@ export function removePinById(pinId, viewerId, bDestroy = false) {
  * attachDoubleClick: returns the lat-long values of point where mouse is double clicked
  * @param {*} viewer
  */
-function attachDoubleClick(viewer, viewerId, dblClickHandler){
+function attachDoubleClick(viewer, viewerId, dblClickHandler) {
+
   var screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
   // Event handler for left click
@@ -685,35 +705,34 @@ function attachDoubleClick(viewer, viewerId, dblClickHandler){
     var cartographicClick = Cesium.Ellipsoid.WGS84.cartesianToCartographic(clickPosition);
     var currentLatLong = {
       longitude: Cesium.Math.toDegrees(cartographicClick.longitude),
-      latitude:  Cesium.Math.toDegrees(cartographicClick.latitude),
-      height:    cartographicClick.height,
+      latitude: Cesium.Math.toDegrees(cartographicClick.latitude),
+      height: cartographicClick.height,
     }
-    if(typeof dblClickHandler === "function"){
+    if (typeof dblClickHandler === "function") {
       dblClickHandler(currentLatLong, viewerId, viewer);
     }
-  },  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+  }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
 }
 
 async function attachLeftClick(viewer, viewerId, leftClickHandler) {
-  if(!viewer) {
+  if (!viewer) {
     await sleep(5000);
   }
 
   let screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
   screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
     const pickedObject = viewer.scene.pick(movement.position);
-
     const cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
 
     if (Cesium.defined(cartesian)) {
       const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
-      if(Cesium.defined(pickedObject)) {
-        console.log(pickedObject);
+      if (Cesium.defined(pickedObject)) {
+        if (pickedObject.id && pickedObject.id.description) {
 
-        if(pickedObject.id && pickedObject.id.description) {
-          if(Cesium.defined(viewer.infoBox)) {
+          if (Cesium.defined(viewer.infoBox)) {
             viewer.infoBox.container.style.top = movement.position.y + 'px';
             viewer.infoBox.container.style.left = movement.position.x + 'px';
             viewer.infoBox.container.style.display = 'block';
@@ -748,7 +767,7 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
           }; */
         }
       } else {
-        if(Cesium.defined(viewer.infoBox)) {
+        if (Cesium.defined(viewer.infoBox)) {
           viewer.infoBox.container.style.display = 'none';
         }
       }
@@ -772,10 +791,197 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
+async function attachRightClick(viewer, viewerId, rightClickHandler) {
+  if (!viewer) {
+    await sleep(5000);
+  }
+
+  // Selecting whole viewer object
+  let screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+  // Right click functionality
+  screenSpaceEventHandler.setInputAction(function onRightClick(movement) {
+    const pickedObject = viewer.scene.pick(movement.position);
+    console.log(pickedObject);
+
+    // Selecting globe position from the viewer object
+    const cartesian = viewer.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
+
+    if (Cesium.defined(cartesian)) {
+      // Selecting the coords from globe position
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+
+      if (Cesium.defined(cartographic)) {
+        // Getting the lats, longs and height of clicked position
+        const longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+        const latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+        let heightString = Number(cartographic.height);
+
+        console.log('=====', longitudeString, latitudeString, heightString);
+        heightString = heightString > 0 ? heightString : 0;
+
+        // Info box containing types of billboards
+        if (Cesium.defined(viewer.infoBox)) {
+
+          let parentDiv = document.createElement('div');
+
+          let form = document.createElement('form');
+          form.setAttribute('action', ' ');
+          form.style.padding = '10px';
+
+          let lats = document.createElement('P');
+          lats.innerHTML = `Lat: ${latitudeString}`;
+
+          let longs = document.createElement('P');
+          longs.innerHTML = `Lng: ${longitudeString}`;
+
+          let layerSelectDiv = document.createElement('div');
+          let layerSelectLabel = document.createElement('label');
+          layerSelectLabel.innerHTML = 'Layer Select : '
+          let layerSelect = document.createElement("SELECT");
+          layerSelect.id = 'layer-select';
+
+          let blueForce = document.createElement("option");
+          blueForce.text = 'Blue Forces';
+
+          let intelReport = document.createElement("option");
+          intelReport.text = 'Intel Report';
+
+          let observation = document.createElement("option");
+          observation.text = 'Observation';
+
+          let sigact = document.createElement("option");
+          sigact.text = 'SIGACT';
+
+          let media = document.createElement("option");
+          media.text = 'Media';
+
+          layerSelect.appendChild(blueForce);
+          layerSelect.appendChild(intelReport);
+          layerSelect.appendChild(observation);
+          layerSelect.appendChild(sigact);
+          layerSelect.appendChild(media);
+
+          layerSelectDiv.appendChild(layerSelectLabel);
+          layerSelectDiv.appendChild(layerSelect);
+
+          let titleDiv = document.createElement('div');
+          let title = document.createElement('label');
+          title.innerHTML = 'Title : '
+          let titleInput = document.createElement('input');
+          titleInput.id = 'title-input';
+          titleDiv.appendChild(title);
+          titleDiv.appendChild(titleInput);
+
+          let descriptionDiv = document.createElement('div');
+          let description = document.createElement('label');
+          description.innerHTML = 'Description : '
+          let descriptionInput = document.createElement('input');
+          descriptionInput.id = 'description-input';
+          descriptionDiv.appendChild(description);
+          descriptionDiv.appendChild(descriptionInput);
+
+          let fileDiv = document.createElement('div');
+          let file = document.createElement('label');
+          file.innerHTML = 'File Upload : '
+          let fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.id = 'file-input';
+          fileDiv.appendChild(file);
+          fileDiv.appendChild(fileInput);
+
+          let submitButton = document.createElement('button');
+          submitButton.innerHTML = 'Submit';
+          submitButton.id = 'add-icon';
+          submitButton.onclick = (event) => {
+            event.preventDefault();
+            let layer = $('#layer-select').val();
+
+            if (layer === 'Blue Forces')
+              layer = 'blue_forces';
+            else if (layer === 'Intel Report')
+              layer = 'intel_request';
+            else if (layer === 'Observation')
+              layer = 'observation_blue';
+            else if (layer === 'SIGACT')
+              layer = 'sigacts_red';
+            else if (layer === 'Media')
+              layer = 'sigint_orange';
+
+            let title = $('#title-input').val();
+            let desc = $('#description-input').val();
+
+            var path = '../client/assets/img/live_view/map_layer/';
+
+            // var k = `<div>
+	          //   <form>
+		        //     <label>Lat</label>
+		        //     <span>${latitudeString}</span>
+	          //     </form>
+            // </div>`
+
+            // parentDiv.innerHTML = k;
+
+            viewer.entities.add({
+              position: Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString)),
+              billboard: {
+                image: `${path}${layer}.png`,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                width: 35,
+                height: 35
+              }
+            });
+
+            console.log($('#file-input').val());
+            viewer.infoBox.container.style.display = 'none';
+          };
+
+          form.appendChild(lats);
+          form.appendChild(longs);
+
+          form.appendChild(layerSelectDiv);
+
+          form.appendChild(titleDiv);
+
+          form.appendChild(descriptionDiv);
+
+          form.appendChild(fileDiv);
+
+          form.appendChild(submitButton);
+
+          parentDiv.appendChild(form);
+
+          viewer.infoBox.container.appendChild(parentDiv);
+          // .getElementsByClassName('cesium-infoBox-description')
+
+          viewer.infoBox.container.style.top = movement.position.y + 'px';
+          viewer.infoBox.container.style.left = movement.position.x + 'px';
+          viewer.infoBox.container.style.display = 'block';
+
+          let box = viewer.infoBox.container;
+          box.removeChild(box.childNodes[0]);
+        }
+
+        // Object that contains lat, long, height
+        const currentLatLong = {
+          longitude: Number(longitudeString),
+          latitude: Number(latitudeString),
+          height: heightString,
+        };
+
+        // Calling the rightClickCallback functionality defined in map component
+        rightClickHandler(currentLatLong, viewerId, viewer);
+      }
+    }
+  }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+}
+
+
 /**
  * Destroys the viewer representing the provided identifier.
  * @param {string}  viewerId  The identifier of the viewer.
  */
+
 export function destroyViewer(viewerId) {
   if (!viewers.has(viewerId)) {
     return;
@@ -796,26 +1002,28 @@ export function createTestObject(viewerId) {
   const viewer = viewers.get(viewerId);
 
   const pinBuilder = new Cesium.PinBuilder();
-  let mapData = {data:[
-    {lat: 34.60247, long: 32.977567, icon: 'airport', color: Cesium.Color.GREEN},
-    {lat: 44.05804819999999, long: -75.7487779, icon: 'airport', color: Cesium.Color.GREEN},
-    {lat: 31.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN},
-    {lat: 31.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN},
-    {lat: 27.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW},
-    {lat: 33.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW},
-    {lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW},
-    {lat: 33.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW},
-    {lat: 33.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW},
-  ]};
+  let mapData = {
+    data: [
+      { lat: 34.60247, long: 32.977567, icon: 'airport', color: Cesium.Color.GREEN },
+      { lat: 44.05804819999999, long: -75.7487779, icon: 'airport', color: Cesium.Color.GREEN },
+      { lat: 31.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN },
+      { lat: 31.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN },
+      { lat: 27.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW },
+      { lat: 33.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW },
+      { lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW },
+      { lat: 33.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW },
+      { lat: 33.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW },
+    ]
+  };
 
   mapData.data.forEach(pin => {
-    Cesium.when(pinBuilder.fromMakiIconId(pin.icon, pin.color, 35), function(canvas) {
+    Cesium.when(pinBuilder.fromMakiIconId(pin.icon, pin.color, 35), function (canvas) {
       return viewer.entities.add({
-          position : Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
-          billboard : {
-              image : canvas.toDataURL(),
-              verticalOrigin : Cesium.VerticalOrigin.BOTTOM
-          }
+        position: Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
+        billboard: {
+          image: canvas.toDataURL(),
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+        }
       });
     });
   });
@@ -839,7 +1047,7 @@ export function createTestObject(viewerId) {
           outlineColor : Cesium.Color.BLACK
       }
   });*/
-//  viewer.zoomTo(viewer.entities);
+  //  viewer.zoomTo(viewer.entities);
 }
 
 export function create3DModel(viewer){
@@ -954,26 +1162,26 @@ export function addPoint(x, y, z, viewerId, label, focus=false){
   const viewer = viewers.get(viewerId);
 
   viewer.entities.add({
-    name : 'Bounding Box Center',
-    position : Cesium.Cartesian3.fromDegrees(x, y, z),
-    point : {
-        pixelSize : 5,
-        color : Cesium.Color.RED,
-        outlineColor : Cesium.Color.WHITE,
-        outlineWidth : 2
+    name: 'Bounding Box Center',
+    position: Cesium.Cartesian3.fromDegrees(x, y, z),
+    point: {
+      pixelSize: 5,
+      color: Cesium.Color.RED,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 2
     },
-    label : {
-        text : label,
-        font : '14pt monospace',
-        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        outlineWidth : 2,
-        verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
-        pixelOffset : new Cesium.Cartesian2(0, -9)
+    label: {
+      text: label,
+      font: '14pt monospace',
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineWidth: 2,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      pixelOffset: new Cesium.Cartesian2(0, -9)
     }
   });
 
   console.log(viewer);
-  if(focus) {
+  if (focus) {
     viewer.flyTo(viewer.entities);
   }
 

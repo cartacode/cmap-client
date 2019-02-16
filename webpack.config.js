@@ -28,7 +28,7 @@ module.exports = function getWebpackConfig() {
     module: {
       rules: [
         {
-          test: /\.(css|scss)$/,
+          test: /\.(css|scss|less)$/,
           use: [
             { loader: 'style-loader' },
             { loader: 'css-loader' },
@@ -44,6 +44,7 @@ module.exports = function getWebpackConfig() {
               },
             },
             { loader: 'sass-loader' },
+            { loader: 'less-loader' },
           ],
         },
         {
