@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
+import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, toggleMapLayerIcon, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -63,7 +63,7 @@ export default class Map extends React.PureComponent {
     console.log('init settings');
     // add the default location or user location into the location bar
     const init_session = JSON.parse(localStorage.getItem('session'));
-    const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude; 
+    const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude;
     const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : defaultLocation.latitude;
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
 
@@ -162,10 +162,10 @@ export default class Map extends React.PureComponent {
         nearestNeighbour = UTILS['kmlLookUp'](currenLatLong, viewerId);
         let nearestPoint = nearestNeighbour.point.split(',');
         viewer.entities.removeAll();
-          
+
         addPoint(Number(nearestPoint[0]), Number(nearestPoint[1]), Number(nearestPoint[2]), viewerId, 'nearest point '+nearestPoint[0]+','+nearestPoint[1]);
         addKML(nearestNeighbour.KMLUri, viewerId);
-            
+
         this.props.setCCIRPIR(nearestNeighbour);
         break;
       case 'naipoiLookUp':
@@ -175,12 +175,12 @@ export default class Map extends React.PureComponent {
         addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, 'Current Lat-Long '+currenLatLong.latitude+','+currenLatLong.longitude, true);
 
         addPoint(Number(nearestNeighbour[0].locationLongitude), Number(nearestNeighbour[0].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbour[0].type+' '+nearestNeighbour[0].locationLatitude+','+nearestNeighbour[0].locationLongitude, true);
-          
+
         addPoint(Number(nearestNeighbour[1].locationLongitude), Number(nearestNeighbour[1].locationLatitude), 0,viewerId, 'Nearest '+nearestNeighbour[1].type+' '+nearestNeighbour[1].locationLatitude+','+nearestNeighbour[1].locationLongitude, true);
         console.log('nearest nai/poi', nearestNeighbour);
         this.props.setOneLocation(nearestNeighbour, currenLatLong);
         break;
-          
+
       default:
         // addPoint(currenLatLong.longitude, currenLatLong.latitude, 0,viewerId, "Current Lat-Long "+currenLatLong.latitude+","+currenLatLong.longitude, true);
         if(this.props.updateLatLong) {
@@ -220,7 +220,7 @@ export default class Map extends React.PureComponent {
       const parts = gridCoords.split(',');
       returnObj.latitude = Number(parts[0]);
       returnObj.longitude = Number(parts[1]);
-    } 
+    }
 
     return returnObj;
   }
@@ -256,7 +256,9 @@ export default class Map extends React.PureComponent {
   removePin =(pinId) =>{
     removePinById(pinId, this.props.viewerId);
   }
-
+  toggleMapIcon =(map_name) =>{
+      toggleMapLayerIcon(map_name, this.props.viewerId);
+  }
   addKMLToMap = (kmlSrc, uniqueId, tooltipText) => {
     addKML(kmlSrc, uniqueId, this.props.viewerId, false, tooltipText);
   }
@@ -281,6 +283,7 @@ export default class Map extends React.PureComponent {
     flyTo(container, this.props.viewerId)
   }
 
+
   render() {
     const { size = viewerSize.medium, toolBarOptions, height = 100 } = this.props;
     const { latlong } = this.state;
@@ -288,7 +291,7 @@ export default class Map extends React.PureComponent {
 
     return (
       <div className="d-flex">
-        {toolbar_show && 
+        {toolbar_show &&
           <SideBarLeftComponent
             moveMap={this.positionMapToCoords}
             addPin={this.addPin}
@@ -304,13 +307,14 @@ export default class Map extends React.PureComponent {
           <LocationInfoComponent latlong={latlong}/>
           {/* <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} /> */}
         </div>
-        {toolbar_show && 
+        {toolbar_show &&
           <SideBarRightComponent
-            setContainer={this.flyTo} 
+            setContainer={this.flyTo}
             setMapLayer={this.changeMapLayer}
             setLayerTransparency={this.adjustLayerTransparency}
             addKMLToMap={this.addKMLToMap}
             removeKML={this.removeKMLFromMap}
+            toggleMapLayer={this.toggleMapIcon}
           />
         }
       </div>

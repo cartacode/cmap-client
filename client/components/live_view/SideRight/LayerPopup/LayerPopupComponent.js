@@ -13,8 +13,83 @@ class LayerPopupComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    // Static data to load map layer icons
     this.state = {
       showAll: true,
+     static_data : {
+          space :{
+             length : 0
+          },
+          air :{
+              length : 3
+          },
+          maritime :{
+              length : 2
+          },
+          personnel :{
+              length : 3
+          },
+          sensor :{
+              length : 3
+          },
+          blue_forces :{
+              length : 3
+          },
+          bases :{
+              length : 1
+          },
+          intel_requirement :{
+              length : 1
+          },
+          sigact :{
+              length : 3
+          },
+          pois :{
+              length : 2
+          },
+          ci :{
+              length : 3
+          },
+          sigint :{
+              length : 2
+          },
+          oswt :{
+              length : 1
+          },
+          gmti :{
+              length : 1
+          },
+          intel_request_collection_point :{
+              length : 2
+          },
+          observation :{
+              length : 2
+          },
+          image :{
+              length : 2
+          },
+          media :{
+              length : 0
+          },
+          terrestrial :{
+              length : 0
+          },
+          weather :{
+              length : 0
+          },
+          base_locations :{
+              length : 0
+          },
+          nais :{
+              length : 0
+          },
+          missions :{
+              length : 0
+          },
+          intel_report :{
+              length : 0
+          }
+      }
     };
   }
 
@@ -49,11 +124,23 @@ class LayerPopupComponent extends React.Component {
       return [];
     }
   }
+  myFunction = (number) => {
+      const str = number.split(" ").join("_");
+      const str_temp = str.toLowerCase();
 
+      if(str_temp in this.state.static_data)
+      {
+          const length = this.state.static_data[str_temp].length;
+          for(let i=0;i<length;i++){
+              const map_str = str_temp + "_" + i;
+              this.props.toggleMapLayer(map_str);
+          }
+      }
+  }
   render() {
 
     const { locationKMLs, locationTypes, allLayers} = this.props;
-
+    //console.log("VISHAL",this.props.allLayers);
 
     /* const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
       , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
@@ -118,7 +205,7 @@ class LayerPopupComponent extends React.Component {
             allLayers.map((number) =>
               <div className="popup-item">
 
-              {number.name} <CheckBox />
+              {number.name} <CheckBox onChangeState={this.myFunction.bind(this,number.name)} />
                   </div>
           )
 

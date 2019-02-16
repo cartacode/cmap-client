@@ -5,9 +5,10 @@ import DrawingPopupComponent from './DrawingPopup';
 import RulerPopupComponent from './RulerPopup';
 import SearchPopupComponent from './SearchPopup';
 import KmlPopupComponent from './KmlPopup';
+import LayersPopupComponent from './LayerPopup';
 
 import './SideBarRightComponent.scss';
-import LayerPopupComponent from './LayerPopup/LayerPopupComponent';
+//import LayerPopupComponent from './LayerPopup/LayerPopupComponent';
 
 class SideBarRightComponent extends React.Component {
 
@@ -78,6 +79,14 @@ class SideBarRightComponent extends React.Component {
           setMapLayer={this.props.setMapLayer}
           setLayerTransparency={this.props.setLayerTransparency}
         />
+        <LayersPopupComponent
+          onPopup={this.onPopup}
+          layersPopupOpen={this.state.layersPopupOpen}
+          addKML={this.props.addKMLToMap}
+          removeKML={this.props.removeKML}
+          onPopup={this.onPopup}
+          toggleMapLayer={this.props.toggleMapLayer}
+        />
         <DrawingPopupComponent
           onPopup={this.onPopup}
           drawingPopupOpen={this.state.drawingPopupOpen}
@@ -94,12 +103,6 @@ class SideBarRightComponent extends React.Component {
         <KmlPopupComponent
           onPopup={this.onPopup}
           kmlPopupOpen={this.state.kmlPopupOpen}
-        />
-        <LayerPopupComponent
-          onPopup={this.onPopup}
-          layersPopupOpen={this.state.layersPopupOpen}
-          addKML={this.props.addKMLToMap}
-          removeKML={this.props.removeKML}
         />
       </div>
     );
