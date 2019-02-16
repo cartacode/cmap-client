@@ -33,7 +33,7 @@ class IntelEEI extends React.Component {
     const { intelId, eeis } = this.props;
     this.setState({
       intelId,
-      missionEEI: eeis,
+      missionEEI: [],
     });
   }
 
