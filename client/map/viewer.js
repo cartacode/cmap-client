@@ -1100,8 +1100,8 @@ export function createMapTestObject(viewer) {
     {lat: 11.60247, long:   -21.977567, icon: path + 'gmti_pink.png', id : "gmti_0"},
     {lat: 11.60247, long:   -21.977567, icon: path + 'intel_request.png', id : "intel_request_collection_point_0"},
     {lat: 11.60247, long:   -21.977567, icon: path + 'intel_request.png', id : "intel_request_collection_point_1"},
-    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', id : "sigacts_0"},
-    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', id : "sigacts_1"},
+    {lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', id : "sigact_0"},
+    {lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', id : "sigact_1"},
     {lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png', id : "blue_forces_0"},
     {lat: 200.05804819999999, long: -42.7487779, icon: path + 'blue_forces.png', id : "blue_forces_1"},
     {lat: 122.05804819999999, long: 200.7487779, icon: path + 'blue_forces.png', id : "blue_forces_2"},
@@ -1110,7 +1110,7 @@ export function createMapTestObject(viewer) {
     {lat: 56.973057, long: -85.472778, icon: path + 'intel_request.png', id : "intel_request_0"},
     {lat: 87.60247, long: 11.977567, icon: path + 'observation_blue.png', id : "observation_0"},
     {lat: 21.60247, long: 121.977567, icon: path + 'observation_blue.png', id : "observation_1"},
-    {lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png', id : "sigacts_2"},
+    {lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png', id : "sigact_2"},
     {lat: 22.8124, long: 87.4912, icon: path + 'sigint_orange.png', id : "sigint_0"},
     {lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png', id : "sigint_1"}
   ]};

@@ -41,7 +41,7 @@ class LayerPopupComponent extends React.Component {
           intel_requirement :{
               length : 1
           },
-          sigacts :{
+          sigact :{
               length : 3
           },
           pois :{
@@ -68,6 +68,27 @@ class LayerPopupComponent extends React.Component {
           image :{
               length : 2
           },
+          media :{
+              length : 0
+          },
+          terrestrial :{
+              length : 0
+          },
+          weather :{
+              length : 0
+          },
+          base_locations :{
+              length : 0
+          },
+          nais :{
+              length : 0
+          },
+          missions :{
+              length : 0
+          },
+          intel_report :{
+              length : 0
+          }
       }
     };
   }
@@ -106,16 +127,20 @@ class LayerPopupComponent extends React.Component {
   myFunction = (number) => {
       const str = number.split(" ").join("_");
       const str_temp = str.toLowerCase();
-      const length = this.state.static_data[str_temp].length;
-      for(let i=0;i<length;i++){
-          const map_str = str_temp + "_" + i;
-          this.props.toggleMapLayer(map_str);
+
+      if(str_temp in this.state.static_data)
+      {
+          const length = this.state.static_data[str_temp].length;
+          for(let i=0;i<length;i++){
+              const map_str = str_temp + "_" + i;
+              this.props.toggleMapLayer(map_str);
+          }
       }
   }
   render() {
 
     const { locationKMLs, locationTypes, allLayers} = this.props;
-
+    //console.log("VISHAL",this.props.allLayers);
 
     /* const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
       , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
