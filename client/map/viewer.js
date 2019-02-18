@@ -1083,8 +1083,7 @@ export function create3DModel(viewer) {
 
 
 export function createMapTestObject(viewer) {
-  var path = '../client/assets/img/live_view/map_layer/';
-
+  var path = '/assets/img/live_view/map_layer/';
   // Static data which will generate Icons of Sensors , Bases etc on Globe
 
   let mapData = {
