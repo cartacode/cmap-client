@@ -168,8 +168,10 @@ class UploadFileBlock extends React.Component {
     }
 
     render() {
+        const mainClass = this.props.blockWidth ? this.props.blockWidth + ' upload-block' : 'col-md-4 upload-block';
+
         return (
-            <div className="col-md-4 upload-block">
+            <div className={mainClass}>
                 <div className="upload-imagery">
                     <img src={this.props.headerLine} alt="" />
                     <div className="header-text">
@@ -186,6 +188,7 @@ class UploadFileBlock extends React.Component {
 }
 
 UploadFileBlock.propTypes = {
+    blockWidth: PropTypes.string,
     children: PropTypes.element,
 };
 

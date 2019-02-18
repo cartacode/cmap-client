@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { LOCATION__ADD, LOCATION__UPDATE, LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_KML__FETCH, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__DELETE_ONE } from 'dictionary/action';
+import { LOCATION__ADD, LOCATION__KML_ADD, LOCATION__UPDATE, LOCATION__FETCH, LOCATION__FETCH_ONE, LOCATION_KML__FETCH, LOCATION_LIST__FETCH, LOCATION_TYPE__FETCH, LOCATION__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
@@ -12,6 +12,12 @@ export function addLocation(location) {
   });
 }
 
+export function addLocationKML(location) {
+  return createAction({
+    type: LOCATION__KML_ADD,
+    action: () => axios.post(`${baseUrl}/Locations/PostKML`, location, {headers:formDataRequestHeader}),
+  });
+}
 
 export function updateLocation(id, location) {
   return createAction({

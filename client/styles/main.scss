@@ -2311,7 +2311,7 @@ input {
 }
 
 .upload-content {
-  height: auto;
+  height: 84%;
   background-color: rgba(19, 38, 56, 0.5);
   padding: 8px 20px;
 
@@ -5382,6 +5382,15 @@ btn-warning.focus, .btn-warning:focus {
 .mission-detail-view.info-field input {
   width: 100%!important;
 }
+
+.mssnDetailUpldBlock .upload-imagery {
+  display: none !important;
+}
+
+.mssnDetailUpldBlock .upload-block {
+  margin-bottom: 0px !important;
+}
+
 /*********************** TIMELINE BORDER ********************************/
 .timeline-border {
   border: 1px solid #ed7d31;

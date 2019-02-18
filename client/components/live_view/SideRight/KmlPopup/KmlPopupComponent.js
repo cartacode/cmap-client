@@ -28,7 +28,7 @@ class KmlPopupComponent extends React.Component {
           </div>
 
           <div>
-            <KmlPopupAddKmlComponent />
+            <KmlPopupAddKmlComponent closeBlock={this.props.onPopup} addKML={this.props.addKML} />
           </div>
         </div>
       </div>
@@ -37,6 +37,7 @@ class KmlPopupComponent extends React.Component {
 }
 
 KmlPopupComponent.propTypes = {
+  addKML: PropTypes.func,
   kmlPopupOpen: PropTypes.bool,
   onPopup: PropTypes.func,
 };

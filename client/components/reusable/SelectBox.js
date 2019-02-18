@@ -19,6 +19,7 @@ class SelectBox extends React.Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
+    this.props.setChangedData(selectedOption.value);
   }
 
   render() {
@@ -38,6 +39,7 @@ class SelectBox extends React.Component {
 
 SelectBox.propTypes = {
   options: PropTypes.array,
+  setChangedData: PropTypes.func,
 };
 
 export default SelectBox;

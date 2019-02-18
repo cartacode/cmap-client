@@ -28,6 +28,7 @@ export const INTEL_REQUEST__PRIORITY_CHANGE = createActionType('INTEL_REQUEST__P
 export const LOCALIZATION__UPDATE = createActionType('LOCALIZATION__UPDATE');
 
 export const LOCATION__ADD = createActionType('LOCATION__ADD');
+export const LOCATION__KML_ADD = createActionType('LOCATION__KML_ADD');
 export const LOCATION__UPDATE = createActionType('LOCATION__UPDATE');
 export const LOCATION__FETCH = createActionType('LOCATION__FETCH');
 export const LOCATION__FETCH_ONE = createActionType('LOCATION__FETCH_ONE');

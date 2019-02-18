@@ -102,6 +102,7 @@ class SideBarRightComponent extends React.Component {
         />
         <KmlPopupComponent
           onPopup={this.onPopup}
+          addKML={this.props.addKMLToMap}
           kmlPopupOpen={this.state.kmlPopupOpen}
         />
       </div>
