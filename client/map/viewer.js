@@ -915,7 +915,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
             let title = $('#title-input').val();
             let desc = $('#description-input').val();
 
-            var path = '../client/assets/img/live_view/map_layer/';
+            var path = '/assets/img/live_view/map_layer/';
 
             // var k = `<div>
             //   <form>
@@ -1067,7 +1067,7 @@ export function create3DModel(viewer) {
   let roll = 180;
   let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
   let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-  let path = '../client/assets/models/predator.glb';
+  let path = '/assets/models/predator.glb';
   let entity = viewer.entities.add({
     name: "Predator",
     position: position,
