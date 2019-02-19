@@ -1067,7 +1067,7 @@ export function create3DModel(viewer) {
   let roll = 180;
   let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
   let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-  let path = '/assets/models/predator.glb';
+  let path = '/assets/models/predator.gltf';
   let entity = viewer.entities.add({
     name: "Predator",
     position: position,
