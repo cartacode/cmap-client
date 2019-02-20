@@ -449,9 +449,9 @@ getRTB = (startDate, endDate) => {
 
                     </div>
                   </div>
-                  <Link  to={`${liveViewUrl}`}>
+                  {/* <Link  to={`${liveViewUrl}`}> */}
                     <img src="/assets/img/intel_request/operating_picture/sigacts.png" className="photo" alt=""/>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -464,9 +464,9 @@ getRTB = (startDate, endDate) => {
                       <Dropdown key="1" id="1" options={weather}/>
                     </div>
                   </div>
-                  <Link  to={`${liveViewUrl}`}>
+                  {/* <Link  to={`${liveViewUrl}`}> */}
                     <img src="/assets/img/intel_request/operating_picture/current_weather.png" className="photo" alt=""/>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -479,9 +479,9 @@ getRTB = (startDate, endDate) => {
                       <Dropdown key="1" id="1" options={aisr}/>
                     </div>
                   </div>
-                  <Link  to={`${liveViewUrl}`}>
+                  {/* <Link  to={`${liveViewUrl}`}> */}
                     <img src="/assets/img/intel_request/operating_picture/a-isr.png" className="photo" alt=""/>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </div>
               <div className="col-md-3 map-block">
@@ -494,9 +494,9 @@ getRTB = (startDate, endDate) => {
                       <Dropdown key="1" id="1" options={force}/>
                     </div>
                   </div>
-                  <Link  to={`${liveViewUrl}`}>
+                  {/* <Link  to={`${liveViewUrl}`}> */}
                     <img src="/assets/img/intel_request/operating_picture/force_position.png" className="photo" alt=""/>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </div>
             </div>
