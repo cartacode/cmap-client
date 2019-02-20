@@ -13,7 +13,7 @@ class MissionPopupComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAll: true,
+      showAll: false,
       itemsToDisplay:null
     };
   }

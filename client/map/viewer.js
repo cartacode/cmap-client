@@ -959,32 +959,73 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
             let layer = $('#layer-select').val();
 
             if (layer === 'Blue Forces')
-              layer = 'blue_forces';
+              layer = 'bolt_logo';
             else if (layer === 'Intel Report')
-              layer = 'intel_request';
+              layer = 'paper_list_logo';
             else if (layer === 'Observation')
-              layer = 'observation_blue';
+              layer = 'lens_logo';
             else if (layer === 'SIGACT')
-              layer = 'sigacts_red';
+              layer = 'stats_logo';
             else if (layer === 'Media')
-              layer = 'sigint_orange';
+              layer = 'photocamera_logo';
 
             let title = $('#title-input').val();
             let desc = $('#description-input').val();
 
-            var path = '/assets/img/live_view/map_layer/';
+            // var path = '/assets/img/live_view/map_layer/';
+
+            let path = '/assets/models/';
+
+            // viewer.entities.add({
+            //   position: Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString)),
+            //   billboard: {
+            //     image: `${path}${layer}.png`,
+            //     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            //     width: 35,
+            //     height: 35
+            //   },
+            //   name: title,
+            //   description: desc
+            // });
+            // const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+            //   Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
+
+            var position = Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString));
+            var heading = Cesium.Math.toRadians(0);
+            var pitch = -90;
+            var roll = 0;
+            var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+            var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
 
             viewer.entities.add({
-              position: Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString)),
-              billboard: {
-                image: `${path}${layer}.png`,
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                width: 35,
-                height: 35
-              },
               name: title,
+              position: position,
+              orientation: orientation,
+              model: {
+                uri: `${path}${layer}.gltf`,
+                minimumPixelSize: 12000,
+                maximumScale: 20000,
+                scale: 10
+              },
               description: desc
             });
+
+            // Cesium.when(Cesium.Model.fromGltf({
+            //   url: '/assets/models/' + iconName + '.gltf',
+            //   modelMatrix,
+            //   scale: 200.0,
+            // }), model => {
+            //   console.log(model);
+            //   const mapObj = viewer.scene.primitives.add(model).then(() => {
+            //     if (bMoveMap) {
+            //       positionMap(latitude, longitude, viewerId);
+            //     }
+            //   });
+            // });
+
+
+
+
 
             console.log($('#file-input').val());
             viewer.infoBox.container.style.display = 'none';
