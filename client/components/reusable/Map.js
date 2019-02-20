@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import { createViewer, destroyViewer, addCircle, changeLayer, addPoint, createTestObject, initialViewer, toggleMapLayerIcon, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
+import { createViewer, destroyViewer, addCircle, addNew3DPin, changeLayer, addPoint, createTestObject, initialViewer, toggleMapLayerIcon, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -247,6 +247,10 @@ export default class Map extends React.PureComponent {
     }
   }
 
+  add3DPin = (latitude, longitude, iconName, pinText, pinId, tooltipLabel, tooltipText, bMoveMap) => {
+    addNew3DPin(latitude, longitude, iconName, pinText, pinId, this.props.viewerId, tooltipLabel, tooltipText, bMoveMap);
+  }
+
   removePin =(pinId) =>{
     removePinById(pinId, this.props.viewerId);
   }
@@ -289,6 +293,7 @@ export default class Map extends React.PureComponent {
           <SideBarLeftComponent
             moveMap={this.positionMapToCoords}
             addPin={this.addPin}
+            add3DPin={this.add3DPin}
             removePin={this.removePin}
             addKMLToMap={this.addKMLToMap}
             removeKML={this.removeKMLFromMap}

@@ -95,9 +95,9 @@ class PlatformPopupComponent extends React.Component {
 
         <div className="checklist-block">
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
-             this.props.addPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
+             this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
                                Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
-                               'airport', null, 'green', item.id);
+                               'airplane_logo', '', item.id, '', '', false);
 
              return <PlatformPopupItemComponent
               color={'#008000'}
@@ -108,10 +108,11 @@ class PlatformPopupComponent extends React.Component {
               lat={Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude)}
               long={Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude)}
               uniqueID={item.id}
-              pinColor={'green'}
-              pinType={'airport'}
+              pinColor={'airplane_logo'}
+              pinType={'3D'}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}
+              add3DPin={this.props.add3DPin}
               removePin={this.props.removePin}
               key={index}
               tooltipLabel={item.name}
@@ -127,6 +128,7 @@ class PlatformPopupComponent extends React.Component {
 }
 
 PlatformPopupComponent.propTypes = {
+  add3DPin: PropTypes.func,
   addPin: PropTypes.func,
   hasBall: PropTypes.bool,
   hasToggle: PropTypes.bool,

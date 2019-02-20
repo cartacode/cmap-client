@@ -621,6 +621,43 @@ export async function addNewPinByPosition(position, billboard, pinText, pinId, v
   }
 }
 
+export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
+  if (isNaN(longitude) || isNaN(latitude)) { return; }
+
+  let viewer = viewers.get(viewerId);
+
+  if (!viewer) {
+    await sleep(3000);
+    viewer = viewers.get(viewerId);
+  }
+
+  let entity = (pinId && viewer && viewer.entities && viewer.entities.getById(pinId) ? viewer.entities.getById(pinId) : null);
+
+  if (!entity) {
+    const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+      Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
+
+    Cesium.when(Cesium.Model.fromGltf({
+      url: '/assets/models/' + iconName + '.gltf',
+      modelMatrix,
+      scale: 200.0,
+    }), model => {
+      console.log(model);
+      const mapObj = viewer.scene.primitives.add(model).then(() => {
+        if (bMoveMap) {
+          positionMap(latitude, longitude, viewerId);
+        }
+      });
+    });
+  } else {
+    toggleShowEntity(pinId, true, viewerId);
+
+    if (bMoveMap) {
+      positionMap(latitude, longitude, viewerId);
+    }
+  }
+}
+
 export async function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
   // console.log(pinId, pinText);
   if (isNaN(longitude) || isNaN(latitude)) { return; }
@@ -651,9 +688,7 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
           name: tooltipLabel,
           description: tooltipText,
         }).then(() => {
-          alert('pp')
           if (bMoveMap) {
-            alert('lll')
             positionMap(latitude, longitude, viewerId);
           }
         });
@@ -668,9 +703,7 @@ export async function addNewPin(latitude, longitude, iconId, pinText, color, pin
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
         }).then(() => {
-          alert('qqq')
           if (bMoveMap) {
-            alert('rrr')
             positionMap(latitude, longitude, viewerId);
           }
         });

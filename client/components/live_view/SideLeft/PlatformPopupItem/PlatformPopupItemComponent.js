@@ -32,6 +32,8 @@ class PlatformPopupItemComponent extends React.Component {
       if(newVal) {
         if(this.props.kmlSrc) {
           this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
+        } else if(this.props.pinType === '3D') {
+          this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
         } else {
           this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText);
         }
@@ -51,6 +53,8 @@ class PlatformPopupItemComponent extends React.Component {
         this.setState({
           checked: true,
         });
+      } else if(this.props.pinType === '3D') {
+        this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
       } else {
         this.props.moveMap(this.props.lat, this.props.long);
       }
@@ -63,6 +67,9 @@ class PlatformPopupItemComponent extends React.Component {
     if(state) {
       if(this.props.kmlSrc) {
         this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
+      } else if(this.props.pinType === '3D') {
+        console.log(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
+        this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
       } else {
         this.props.addPin(this.props.lat, this.props.long, this.props.pinType, this.props.pinText, this.props.pinColor, this.props.uniqueID, this.props.tooltipLabel, this.props.tooltipText, this.props.pinType);
       }
@@ -101,6 +108,7 @@ PlatformPopupItemComponent.defaultProps = {
 };
 
 PlatformPopupItemComponent.propTypes = {
+  add3DPin: PropTypes.func,
   addKML: PropTypes.func,
   addPin: PropTypes.func,
   checked: PropTypes.bool,

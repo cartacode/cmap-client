@@ -140,7 +140,8 @@ class IntelReqPopupComponent extends React.Component {
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
 
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
-              this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
+              //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
+              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', '', true);
             }
 
             return <PlatformPopupItemComponent
@@ -151,11 +152,12 @@ class IntelReqPopupComponent extends React.Component {
               lat={latLong.latitude}
               long={latLong.longitude}
               uniqueID={'INTELREQ-' + item.IntelRequestID}
-              pinColor={(item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow')}
-              pinType={'circle'}
+              pinColor={'cross_logo'}
+              pinType={'3D'}
               pinText={item.ReqUserFrndlyID.toString()}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}
+              add3DPin={this.props.add3DPin}
               removePin={this.props.removePin}
               key={index}
               addKML={this.props.addKML}
@@ -172,6 +174,7 @@ class IntelReqPopupComponent extends React.Component {
 }
 
 IntelReqPopupComponent.propTypes = {
+  add3DPin: PropTypes.func,
   addKML: PropTypes.func,
   addPin: PropTypes.func,
   hasBall: PropTypes.bool,
