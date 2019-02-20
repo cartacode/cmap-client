@@ -950,15 +950,6 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
 
             var path = '/assets/img/live_view/map_layer/';
 
-            // var k = `<div>
-            //   <form>
-            //     <label>Lat</label>
-            //     <span>${latitudeString}</span>
-            //     </form>
-            // </div>`
-
-            // parentDiv.innerHTML = k;
-
             viewer.entities.add({
               position: Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString)),
               billboard: {
@@ -966,7 +957,9 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
                 verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 width: 35,
                 height: 35
-              }
+              },
+              name: title,
+              description: desc
             });
 
             console.log($('#file-input').val());
