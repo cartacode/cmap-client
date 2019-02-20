@@ -5523,4 +5523,13 @@ input#uploadFile0 {
   line-height: 25px;
   padding-left: 2px;
 }
+/********************************************  compass css ****************************/
 
+.cesium-svgPath-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
