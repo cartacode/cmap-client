@@ -74,7 +74,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //    //  url: getImageryurl(),
     //   }),
   });
-  createMapTestObject(viewer);
+  //createMapTestObject(viewer);
   create3DModel(viewer);
   // extend our view by the cesium navigation mixin
   let options = {};
@@ -304,7 +304,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       url: ImageryUrls.GEOSERVER_IMAGERY,
     })
     );
-    createMapTestObject(viewer);
+    //createMapTestObject(viewer);
     create3DModel(viewer);
   } else {
     viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
@@ -312,7 +312,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: mapLayer,
     }), layerLevel);
-    createMapTestObject(viewer);
+    //createMapTestObject(viewer);
     create3DModel(viewer);
   }
 }
@@ -633,14 +633,38 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
 
   let entity = (pinId && viewer && viewer.entities && viewer.entities.getById(pinId) ? viewer.entities.getById(pinId) : null);
 
+
   if (!entity) {
+
+    //   console.log("3Did",pinId);
+    // var position = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0);
+    // var heading = Cesium.Math.toRadians(0);
+    // var pitch = 0;
+    // var roll = 0;
+    // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+    // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+    //
+    // viewer.entities.add({
+    //   id : pinId,
+    //   position : position,
+    //   orientation : orientation,
+    //   model : {
+    //       url: '/assets/models/' + iconName + '.gltf',
+    //       minimumPixelSize : 40000,
+    //       maximumScale : 50000,
+    //       scale : 25
+    //   }
+    // });
+    //
+
     const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
       Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
 
     Cesium.when(Cesium.Model.fromGltf({
+      id : pinId,
       url: '/assets/models/' + iconName + '.gltf',
       modelMatrix,
-      scale: 200.0,
+      scale: 10000.0,
     }), model => {
       console.log(model);
       const mapObj = viewer.scene.primitives.add(model).then(() => {

@@ -310,6 +310,7 @@ export default class Map extends React.PureComponent {
           <SideBarRightComponent
             setContainer={this.flyTo}
             setMapLayer={this.changeMapLayer}
+            add3DPin={this.add3DPin}
             setLayerTransparency={this.adjustLayerTransparency}
             addKMLToMap={this.addKMLToMap}
             removeKML={this.removeKMLFromMap}

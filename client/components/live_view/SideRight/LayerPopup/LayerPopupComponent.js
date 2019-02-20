@@ -17,80 +17,89 @@ class LayerPopupComponent extends React.Component {
     this.state = {
       showAll: true,
      static_data : {
-          space :{
-             length : 0
-          },
           air :{
-              length : 3
+              length : 10,
+              imageId : 'airplane_logo'
           },
           maritime :{
-              length : 2
+              length : 12,
+              imageId : 'boat'
           },
           personnel :{
-              length : 3
+              length : 5,
+              imageId : 'people_logo'
           },
           sensor :{
-              length : 3
+              length : 8,
+              imageId : 'bolt_logo'
           },
           blue_forces :{
-              length : 3
+              length : 4,
+              imageId : 'info_logo'
           },
           bases :{
-              length : 1
+              length : 6,
+              imageId : 'house_logo'
           },
           intel_requirement :{
-              length : 1
-          },
-          sigact :{
-              length : 3
+              length : 3,
+              imageId : 'paper_list_logo'
           },
           pois :{
-              length : 2
+              length : 6,
+              imageId : 'star_logo'
           },
           ci :{
-              length : 3
+              length : 8,
+              imageId : 'eye_logo'
           },
           sigint :{
-              length : 2
+              length : 4,
+              imageId : 'stats_logo'
           },
           oswt :{
-              length : 1
+              length : 5,
+              imageId : 'megaphone_logo'
           },
           gmti :{
-              length : 1
+              length : 4,
+              imageId : 'pointer_logo'
           },
           intel_request_collection_point :{
-              length : 2
+              length : 7,
+              imageId : 'cross_logo'
           },
           observation :{
-              length : 2
-          },
-          image :{
-              length : 2
+              length : 4,
+              imageId : 'lens_logo'
           },
           media :{
-              length : 0
-          },
-          terrestrial :{
-              length : 0
-          },
-          weather :{
-              length : 0
-          },
-          base_locations :{
-              length : 0
-          },
-          nais :{
-              length : 0
-          },
-          missions :{
-              length : 0
-          },
-          intel_report :{
-              length : 0
+              length : 4,
+              imageId : 'photocamera_logo'
           }
       }
     };
+
+    // Code to create the points
+    let arr =  this.props.allLayers;
+    let key = Object.keys(this.state.static_data);
+    for(let i=1 ; i < key.length ; i++){
+        let len = this.state.static_data[key[i]].length;
+        for(let j=0;j<len;j++){
+            let min=0;
+            let max=200;
+            let lat = Math.random() * (+max - +min) + +min;
+            let lon = Math.random() * (+max - +min) + +min;
+            let map_str = key[i] + "_" + j;
+            // this.props.toggleMapLayer(map_str);
+            //call 3D pin
+            this.props.add3DPin(lat, lon, this.state.static_data[key[i]].imageId, '', map_str, '', '', true);
+            console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
+        }
+
+    }
+
+
   }
 
   componentDidMount() {
@@ -140,7 +149,6 @@ class LayerPopupComponent extends React.Component {
   render() {
 
     const { locationKMLs, locationTypes, allLayers} = this.props;
-    //console.log("VISHAL",this.props.allLayers);
 
     /* const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
       , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];
@@ -208,7 +216,7 @@ class LayerPopupComponent extends React.Component {
               {number.name} <CheckBox onChangeState={this.myFunction.bind(this,number.name)}/>
                   {
                     number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
-                  && number.subCategories.map((subCategory) => 
+                  && number.subCategories.map((subCategory) =>
                     <div className="popup-item">{subCategory.name} <CheckBox onChangeState={this.myFunction.bind(this,subCategory.name)} /> </div>
                 )
               }
