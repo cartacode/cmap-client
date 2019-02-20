@@ -18,63 +18,63 @@ class LayerPopupComponent extends React.Component {
       showAll: true,
      static_data : {
           air :{
-              length : 10,
+              length : 25,
               imageId : 'airplane_logo'
           },
           maritime :{
-              length : 12,
+              length : 50,
               imageId : 'boat'
           },
           personnel :{
-              length : 5,
+              length : 30,
               imageId : 'people_logo'
           },
           sensor :{
-              length : 8,
+              length : 90,
               imageId : 'bolt_logo'
           },
           blue_forces :{
-              length : 4,
+              length : 10,
               imageId : 'info_logo'
           },
           bases :{
-              length : 6,
+              length : 12,
               imageId : 'house_logo'
           },
           intel_requirement :{
-              length : 3,
+              length : 30,
               imageId : 'paper_list_logo'
           },
           pois :{
-              length : 6,
+              length : 10,
               imageId : 'star_logo'
           },
           ci :{
-              length : 8,
+              length : 25,
               imageId : 'eye_logo'
           },
           sigint :{
-              length : 4,
+              length : 10,
               imageId : 'stats_logo'
           },
           oswt :{
-              length : 5,
+              length : 20,
               imageId : 'megaphone_logo'
           },
           gmti :{
-              length : 4,
+              length : 30,
               imageId : 'pointer_logo'
           },
           intel_request_collection_point :{
-              length : 7,
+              length : 15,
               imageId : 'cross_logo'
           },
           observation :{
-              length : 4,
+              length : 20,
               imageId : 'lens_logo'
           },
           media :{
-              length : 4,
+              length : 12,
               imageId : 'photocamera_logo'
           }
       }
