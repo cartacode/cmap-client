@@ -99,7 +99,7 @@ class MissionMgtDropDown extends React.Component {
       return (
         <div className="each-select text-left">
           <label>{label}</label>
-          <select className="form-control" disabled={disable} name={name} onChange={this.handleChange} value = {this.state.selectedDropDownValue}>
+          <select className="form-control" disabled={disable} name={name} onChange={this.handleChange} value = {this.state.selectedDropDownValue} >
             {this.renderItems()}
           </select>
         </div>

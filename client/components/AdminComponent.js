@@ -11,6 +11,7 @@ import PayloadsSpecificationContainer from '../containers/admin/PayloadsSpecific
 import MunitionsContainer from '../containers/admin/MunitionsContainer';
 import MunitionsSpecificationContainer from '../containers/admin/MunitionsSpecificationContainer';
 import AdminStatusContainer from '../containers/admin/AdminStatusContainer';
+import ReportsContainer from '../containers/admin/ReportsContainer';
 import LocationContainer from '../containers/admin/LocationContainer';
 import CcirPirContainer from '../containers/admin/CcirPirContainer';
 import OrgBuilderContainer from '../containers/admin/OrgBuilderContainer';
@@ -84,6 +85,7 @@ class AdminComponent extends React.Component {
       {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
       {title: translations['Location'], url: `${match.url}/location`},
       {title: translations['status'], url: `${match.url}/admin-status`},
+      {title: translations['reports'], url: `${match.url}/reports`},
       {title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
       {title: translations['Chain of Command'], url: `${match.url}/org-builder`},
       // {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
@@ -147,6 +149,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/munitionsspec`} component={MunitionsSpecificationContainer} />
           <Route path={`${match.url}/location`} component={LocationContainer} />
           <Route path={`${match.url}/admin-status`} component={AdminStatusContainer} />
+          <Route path={`${match.url}/reports`} component={ReportsContainer} />
           <Route path={`${match.url}/ccir-pir`} component={CcirPirContainer} />
           <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} />
           <Route path={`${match.url}/com-net`} component={ComNetContainer} />

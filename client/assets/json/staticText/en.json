@@ -2,6 +2,7 @@
   "dashboard": "dashboard",
   "liveview": "liveview",
   "status": "status",
+  "reports": "reports",
   "intel request": "Intel Request",
   "mission mgt": "mission mgt",
   "schedules": "schedules",
