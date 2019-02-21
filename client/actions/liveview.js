@@ -14,5 +14,13 @@ export function fetchMapLayers() {
   });
 }
 
+export function postMapLayer(data) {
+  debugger;
+  return createAction({
+    type: MAP_LAYER__POST,
+    action: () => axios.post(`${baseUrl}/MapLayer/PostMapLayer`, data,  {headers:requestHeaders}),
+  });
+}
+
 
 
