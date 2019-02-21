@@ -35,7 +35,7 @@ class LayerPopupComponent extends React.Component {
           },
           blue_forces :{
               length : 10,
-              imageId : 'info_logo'
+              imageId : 'horse_logo'
           },
           bases :{
               length : 12,
@@ -83,7 +83,7 @@ class LayerPopupComponent extends React.Component {
     // Code to create the points
     let arr =  this.props.allLayers;
     let key = Object.keys(this.state.static_data);
-    for(let i=1 ; i < key.length ; i++){
+    for(let i=0 ; i < key.length ; i++){
         let len = this.state.static_data[key[i]].length;
         for(let j=0;j<len;j++){
             let min=0;
@@ -213,11 +213,11 @@ class LayerPopupComponent extends React.Component {
             allLayers.map((number) =>
               <div className="popup-item">
 
-              {number.name} <CheckBox />
+              {number.name} <CheckBox onChangeState={this.myFunction.bind(this,number.name)}/>
                   {
                     number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
                   && number.subCategories.map((subCategory) =>
-                    <div className="popup-item">{subCategory.name} <CheckBox  /> </div>
+                    <div className="popup-item">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name)}/> </div>
                 )
               }
                   </div>

@@ -656,23 +656,47 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
     //   }
     // });
     //
+    // Setting position and orientation of the Entity Model
+    var position = Cesium.Cartesian3.fromDegrees(longitude, latitude,0);
+    var heading = Cesium.Math.toRadians(0);
+    var pitch = -90;
+    var roll = 0;
+    var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+    var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
 
-    const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-      Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
-
-    Cesium.when(Cesium.Model.fromGltf({
-      id : pinId,
-      url: '/assets/models/' + iconName + '.gltf',
-      modelMatrix,
-      scale: 10000.0,
-    }), model => {
-      console.log(model);
-      const mapObj = viewer.scene.primitives.add(model).then(() => {
-        if (bMoveMap) {
-          positionMap(latitude, longitude, viewerId);
-        }
-      });
+    // Setting path of models
+    let path = '/assets/models/';
+    // Creating entity of models with default visibility as hidden
+    var x = viewer.entities.add({
+        id : pinId,
+        position: position,
+        orientation: orientation,
+        model: {
+                uri: `${path}${iconName}.gltf`,
+                minimumPixelSize: 128,
+                maximumScale: 200000
+            },
+        description: `lat:${latitude} lon:${longitude}, type:${iconName}`,
+        show : false
     });
+    console.log("VIOLENT",x.id);
+
+    // const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+    //   Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
+    //
+    // Cesium.when(Cesium.Model.fromGltf({
+    //   id : pinId,
+    //   url: '/assets/models/' + iconName + '.gltf',
+    //   modelMatrix,
+    //   scale: 10000.0,
+    // }), model => {
+    //   console.log(model);
+    //   const mapObj = viewer.scene.primitives.add(model).then(() => {
+    //     if (bMoveMap) {
+    //       positionMap(latitude, longitude, viewerId);
+    //     }
+    //   });
+    // });
   } else {
     toggleShowEntity(pinId, true, viewerId);
 
@@ -1003,9 +1027,8 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
               orientation: orientation,
               model: {
                 uri: `${path}${layer}.gltf`,
-                minimumPixelSize: 12000,
-                maximumScale: 20000,
-                scale: 10
+                minimumPixelSize: 128,
+                maximumScale: 200000
               },
               description: desc
             });
@@ -1094,8 +1117,11 @@ export function destroyViewer(viewerId) {
 
 // Function to toggle map layer icons
 export function toggleMapLayerIcon(map_name, viewerId) {
+  // const viewer = viewers.get(viewerId);
+  // const entity = viewer.entities.getById(map_name);
   const viewer = viewers.get(viewerId);
   const entity = viewer.entities.getById(map_name);
+  console.log("TOGGLE",entity.id);
   entity.show = !entity.show;
 }
 
