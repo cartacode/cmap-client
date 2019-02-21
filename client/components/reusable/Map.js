@@ -70,11 +70,13 @@ export default class Map extends React.PureComponent {
     // add pin for current user's home location
     addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'Home', this.props.viewerId);
 
-    if(!(!this.props.toolBarOptions ? true : this.props.toolBarOptions.show)) {
-      createTestObject(this.props.viewerId);
-    }
-
     initialViewer(this.props.viewerId);
+    
+    // prevents Windows Chrome context menu from displaying on right-click
+    $('body').on('contextmenu', '.map-wrapper', (e) => {
+      e.preventDefault();
+      return false;
+    });
   }
 
   componentDidUpdate(prevProps) {

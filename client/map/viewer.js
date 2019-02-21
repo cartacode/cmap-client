@@ -74,7 +74,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //    //  url: getImageryurl(),
     //   }),
   });
-  //createMapTestObject(viewer);
+  
   create3DModel(viewer);
   // extend our view by the cesium navigation mixin
   let options = {};
@@ -304,7 +304,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       url: ImageryUrls.GEOSERVER_IMAGERY,
     })
     );
-    //createMapTestObject(viewer);
+
     create3DModel(viewer);
   } else {
     viewer.imageryLayers.addImageryProvider(new Cesium.BingMapsImageryProvider({
@@ -312,7 +312,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: mapLayer,
     }), layerLevel);
-    //createMapTestObject(viewer);
+    
     create3DModel(viewer);
   }
 }
@@ -1099,58 +1099,6 @@ export function toggleMapLayerIcon(map_name, viewerId) {
   entity.show = !entity.show;
 }
 
-export function createTestObject(viewerId) {
-  const viewer = viewers.get(viewerId);
-
-  const pinBuilder = new Cesium.PinBuilder();
-  let mapData = {
-    data: [
-      { lat: 34.60247, long: 32.977567, icon: 'airport', color: Cesium.Color.GREEN },
-      { lat: 44.05804819999999, long: -75.7487779, icon: 'airport', color: Cesium.Color.GREEN },
-      { lat: 31.1363315, long: -97.7797049, icon: 'airport', color: Cesium.Color.GREEN },
-      { lat: 31.812438, long: -106.421321, icon: 'airport', color: Cesium.Color.GREEN },
-      { lat: 27.849444, long: -82.521111, icon: 'campsite', color: Cesium.Color.YELLOW },
-      { lat: 33.973057, long: -80.472778, icon: 'campsite', color: Cesium.Color.YELLOW },
-      { lat: 34.60247, long: 32.977567, icon: 'campsite', color: Cesium.Color.YELLOW },
-      { lat: 33.562609, long: 35.36881, icon: 'campsite', color: Cesium.Color.YELLOW },
-      { lat: 33.8124, long: 35.4912, icon: 'campsite', color: Cesium.Color.YELLOW },
-    ]
-  };
-
-  mapData.data.forEach(pin => {
-    Cesium.when(pinBuilder.fromMakiIconId(pin.icon, pin.color, 35), function (canvas) {
-      return viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
-        billboard: {
-          image: canvas.toDataURL(),
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-        }
-      });
-    });
-  });
-
-  /*var blueBox = viewer.entities.add({
-      name : 'Blue box',
-      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
-      box : {
-          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
-          material : Cesium.Color.BLUE
-      }
-  });
-
-  var redBox = viewer.entities.add({
-      name : 'Red box with black outline',
-      position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
-      box : {
-          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
-          material : Cesium.Color.RED.withAlpha(0.5),
-          outline : true,
-          outlineColor : Cesium.Color.BLACK
-      }
-  });*/
-  //  viewer.zoomTo(viewer.entities);
-}
-
 export function create3DModel(viewer) {
   let position = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 150000.0);
   let heading = Cesium.Math.toRadians(0);
@@ -1171,90 +1119,6 @@ export function create3DModel(viewer) {
   });
   viewer.zoomTo(entity);
 }
-
-
-export function createMapTestObject(viewer) {
-  var path = '/assets/img/live_view/map_layer/';
-  // Static data which will generate Icons of Sensors , Bases etc on Globe
-
-  let mapData = {
-    data: [
-      { lat: 32.60247, long: 32.977567, icon: path + 'plane.png', id: "air_0" },
-      { lat: 32.60247, long: -12.977567, icon: path + 'plane.png', id: "air_1" },
-      { lat: 12.60247, long: 12.977567, icon: path + 'plane.png', id: "air_2" },
-      { lat: 122.60247, long: 23.977567, icon: path + 'boat.png', id: "maritime_0" },
-      { lat: 190.60247, long: 223.977567, icon: path + 'boat.png', id: "maritime_1" },
-      { lat: 12.60247, long: 98.977567, icon: path + 'user.png', id: "personnel_0" },
-      { lat: 122.60247, long: -98.977567, icon: path + 'user.png', id: "personnel_1" },
-      { lat: 152.60247, long: 98.977567, icon: path + 'user.png', id: "personnel_2" },
-      { lat: 1.60247, long: 11.977567, icon: path + 'satellite.png', id: "sensor_0" },
-      { lat: 12.20247, long: -11.977567, icon: path + 'satellite.png', id: "sensor_1" },
-      { lat: 187.60247, long: 11.977567, icon: path + 'satellite.png', id: "sensor_2" },
-      { lat: 19.60247, long: -23.977567, icon: path + 'base.png', id: "bases_0" },
-      { lat: 122.60247, long: 23.977567, icon: path + 'report.png', id: "intel_requirement_0" },
-      { lat: 152.60247, long: 213.977567, icon: path + 'pois.png', id: "pois_0" },
-      { lat: 22.60247, long: -23.977567, icon: path + 'pois.png', id: "pois_1" },
-      { lat: 21.60247, long: -223.977567, icon: path + 'ci_green.png', id: "ci_0" },
-      { lat: 224.60247, long: -2.977567, icon: path + 'ci_green.png', id: "ci_1" },
-      { lat: 221.60247, long: 93.977567, icon: path + 'ci_green.png', id: "ci_2" },
-      { lat: 21.60247, long: -93.977567, icon: path + 'osint_purple.png', id: "oswt_0" },
-      { lat: 11.60247, long: -21.977567, icon: path + 'gmti_pink.png', id: "gmti_0" },
-      { lat: 11.60247, long: -21.977567, icon: path + 'intel_request.png', id: "intel_request_collection_point_0" },
-      { lat: 11.60247, long: -21.977567, icon: path + 'intel_request.png', id: "intel_request_collection_point_1" },
-      { lat: 45.05804819999999, long: -75.7487779, icon: path + 'sigacts.png', id: "sigact_0" },
-      { lat: 21.05804819999999, long: -23.7487779, icon: path + 'sigacts.png', id: "sigact_1" },
-      { lat: 11.05804819999999, long: -71.7487779, icon: path + 'blue_forces.png', id: "blue_forces_0" },
-      { lat: 200.05804819999999, long: -42.7487779, icon: path + 'blue_forces.png', id: "blue_forces_1" },
-      { lat: 122.05804819999999, long: 200.7487779, icon: path + 'blue_forces.png', id: "blue_forces_2" },
-      { lat: 15.812438, long: -19.421321, icon: path + 'camera_white.png', id: "image_0" },
-      { lat: 12.812438, long: -12.421321, icon: path + 'camera_white.png', id: "image_1" },
-      { lat: 56.973057, long: -85.472778, icon: path + 'intel_request.png', id: "intel_request_0" },
-      { lat: 87.60247, long: 11.977567, icon: path + 'observation_blue.png', id: "observation_0" },
-      { lat: 21.60247, long: 121.977567, icon: path + 'observation_blue.png', id: "observation_1" },
-      { lat: 65.562609, long: -23.36881, icon: path + 'sigacts_red.png', id: "sigact_2" },
-      { lat: 22.8124, long: 87.4912, icon: path + 'sigint_orange.png', id: "sigint_0" },
-      { lat: 112.8124, long: 82.4912, icon: path + 'sigint_orange.png', id: "sigint_1" }
-    ]
-  };
-
-  // Creating entity out of the above array
-  mapData.data.forEach(pin => {
-    viewer.entities.add({
-      id: pin.id,
-      position: Cesium.Cartesian3.fromDegrees(pin.long, pin.lat),
-      billboard: {
-        image: pin.icon,
-        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-        scale: 1.0,
-        width: 35,
-        height: 35
-      },
-      show: false
-    });
-  });
-
-  /*var blueBox = viewer.entities.add({
-      name : 'Blue box',
-      position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 30000.0),
-      box : {
-          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
-          material : Cesium.Color.BLUE
-      }
-  });
-
-  var redBox = viewer.entities.add({
-      name : 'Red box with black outline',
-      position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
-      box : {
-          dimensions : new Cesium.Cartesian3(40000.0, 30000.0, 50000.0),
-          material : Cesium.Color.RED.withAlpha(0.5),
-          outline : true,
-          outlineColor : Cesium.Color.BLACK
-      }
-  });*/
-  //  viewer.zoomTo(viewer.entities);
-}
-
 
 export function addPoint(x, y, z, viewerId, label, focus = false) {
   if (!viewers.has(viewerId)) {
