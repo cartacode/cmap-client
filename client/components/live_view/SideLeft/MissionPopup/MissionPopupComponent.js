@@ -147,8 +147,8 @@ class MissionPopupComponent extends React.Component {
               lat={latLong.latitude}
               long={latLong.longitude}
               uniqueID={'MISSION-' + item.MissionId}
-              pinColor={'horse_logo'}
-              pinType={'3D'}
+              pinColor={'red'}
+              pinType={'marker'}
               pinText={item.MissionId.toString()}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}
