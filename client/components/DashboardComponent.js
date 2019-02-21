@@ -101,8 +101,8 @@ class DashboardComponent extends React.Component {
     const dummyLiveOperations = [];
     const oper1 = { MissionName: 'BLUE DEVIL', missionProgress: '33%', rtb: '02:44:32', color: 'blue', liveUrl: 'http://18.219.160.200:1935/vod/mp4:Vid1.mp4/manifest.mpd' };
     const oper2 = { MissionName: 'VALIENT ANGEL', missionProgress: '70%', rtb: '04:40:11', color: 'magenta', liveUrl: 'http://18.219.160.200:1935/vod/mp4:CONUStrafficISR.mp4/manifest.mpd' };
-    const oper3 = { MissionName: 'ROLLING THUNDER', missionProgress: '50%', rtb: '03:00:21', color: 'red', liveUrl: 'http://18.219.160.200:1935/vod/mp4:UAVWinter.mp4/manifest.mpd' };
-    const oper4 = { MissionName: 'GODS EYE', missionProgress: '80%', rtb: '05:23:09', color: 'green', liveUrl: 'http://18.219.160.200:1935/vod/mp4:Vid3.mp4/manifest.mpd' };
+    const oper3 = { MissionName: 'ROLLING THUNDER', missionProgress: '50%', rtb: '03:00:21', color: 'red', liveUrl: 'http://18.219.160.200:1935/vod/mp4:Vid3.mp4/manifest.mpd' };
+    const oper4 = { MissionName: 'GODS EYE', missionProgress: '80%', rtb: '05:23:09', color: 'green', liveUrl: 'http://18.219.160.200:1935/vod/mp4:TruckVODF.mp4/manifest.mpd' };
 
     dummyLiveOperations.push(oper1);
     dummyLiveOperations.push(oper2);

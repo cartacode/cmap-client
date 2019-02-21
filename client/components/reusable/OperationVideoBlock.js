@@ -109,6 +109,7 @@ class OperationVideoBlock extends React.Component {
             controls={true}
             width="100%"
             height="100%"
+            muted
           />
         </div>
       </div>
