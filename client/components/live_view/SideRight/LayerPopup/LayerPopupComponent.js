@@ -217,7 +217,7 @@ class LayerPopupComponent extends React.Component {
                   {
                     number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
                   && number.subCategories.map((subCategory) =>
-                    <div className="popup-item">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name)}/> </div>
+                    <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name)}/> </div>
                 )
               }
                   </div>
