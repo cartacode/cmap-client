@@ -8,6 +8,9 @@ import HalfHeaderLine from './reusable/HalfHeaderLine';
 import DashboardCircleStatus from './reusable/DashboardCircleStatus';
 import NumBlock from './reusable/NumBlock';
 import OperationVideoBlock from './reusable/OperationVideoBlock';
+import Countdown from 'react-countdown-now';
+import Ticker from 'react-ticker'
+import TimeAgo from 'react-timeago'
 
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
@@ -118,6 +121,48 @@ class DashboardComponent extends React.Component {
     // ));
   }
 
+  getSeconds(row) {
+    let startDate = row.original.StartDate;
+    let date1 = new Date(Date.parse(startDate));
+    let startTime = date1.getTime();
+    // startDate = new Date(startDate);
+    const currentDate = new Date();
+    let currentTime = currentDate.getTime();
+    // get total seconds between the times
+    let differenceMS = Math.abs(startDate - currentDate);
+    let difference = startTime - currentTime;
+
+    if(difference < 0)
+    {
+      difference = 0;
+    }
+
+    let differenceCount = Math.abs(startTime - currentTime);
+
+    return difference;
+  }
+
+  getSign(row) {
+    let startDate = row.original.StartDate;
+    let date1 = new Date(Date.parse(startDate));
+    let startTime = date1.getTime();
+    // startDate = new Date(startDate);
+    const currentDate = new Date();
+    let currentTime = currentDate.getTime();
+    // get total seconds between the times
+    let difference = startTime - currentTime;
+    let sign = 1;
+
+    if(difference < 0)
+    {
+      sign = 0;
+    }
+
+    return sign;
+
+  }
+
+
   getCountdown(row) {
     //const oneDay = 1000 * 60 * 60 * 24;
     let startDate = row.original.StartDate;
@@ -207,7 +252,10 @@ class DashboardComponent extends React.Component {
         Cell: row => <div>
 
         <Link to={{ pathname: `/mission-mgt/mission-detail/${row.original.MissionID}` }} target="_blank">
-          <span>{this.getCountdown(row)}</span>
+          {/* <span>{this.getCountdown(row)}</span> */}
+          {this.getSign(row) == 0 ? (<span style={{color:'red'}}> <Countdown date={this.getSeconds(row) + Date.now()} /></span>) : (<span> <Countdown date={this.getSeconds(row) + Date.now()} /></span>)}
+          
+          {/* <span style={{color:'red'}}><TimeAgo date={this.getDateVal(row)} /></span> */}
         </Link>
         </div>,
       },
@@ -546,6 +594,9 @@ getRTB = (startDate, endDate) => {
             <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
         </div>
+
+      
+        
 
       </div>) : null
     );
