@@ -240,19 +240,19 @@ class LayerPopupComponent extends React.Component {
   for(let i=1 ; i < key.length ; i++){
       let len = static_data[key[i]].length;
       var data = static_data[key[i]].data;
-console.log("OOOOOO "+ data);
+//console.log("OOOOOO "+ data);
       for(let j=0;j<len;j++){
           let min=0;
           let max=200;
           let lat = 0;
           let lon = 0;  
           if(data !=null && data != undefined && data != '' && data.length>0){
-            console.log("HHHHHHHH "+data);
-            console.log("YYYYYY "+JSON.stringify(data))
+           // console.log("HHHHHHHH "+data);
+           // console.log("YYYYYY "+JSON.stringify(data))
             lat = data[j].latitude;
             lon = data[j].longitude;
           }
-          console.log(lat +" "+ lon);
+         // console.log(lat +" "+ lon);
          // let lat = Math.random() * (+max - +min) + +min;
           //let lon = Math.random() * (+max - +min) + +min;
           let map_str = key[i] + "_" + j;
