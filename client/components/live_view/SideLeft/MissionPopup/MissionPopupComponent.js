@@ -38,12 +38,12 @@ class MissionPopupComponent extends React.Component {
    * Function will get called to filter data , Search Box in Mission on Left Hand Side Toolbar on LIVE View
    */
   getFilteredList = (event) => {
-    // Get All Missions 
+    // Get All Missions
     const { allMissionSummary } = this.props;
-   
+
     // By Default all the records will be here to display
     var updatedList = allMissionSummary;
-    // Update the updatedList Variable to display the filtered data 
+    // Update the updatedList Variable to display the filtered data
     updatedList = updatedList.filter(function(item){
       let searchItem = item.MissionName;
       return searchItem.toLowerCase().search(
@@ -82,7 +82,7 @@ class MissionPopupComponent extends React.Component {
       const parts = gridCoords.split(',');
       returnObj.latitude = Number(parts[0]);
       returnObj.longitude = Number(parts[1]);
-    } 
+    }
 
     return returnObj;
   }
@@ -147,8 +147,8 @@ class MissionPopupComponent extends React.Component {
               lat={latLong.latitude}
               long={latLong.longitude}
               uniqueID={'MISSION-' + item.MissionId}
-              pinColor={'red'}
-              pinType={'marker'}
+              pinColor={'horse_logo'}
+              pinType={'3D'}
               pinText={item.MissionId.toString()}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}

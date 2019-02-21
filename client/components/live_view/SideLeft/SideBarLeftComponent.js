@@ -138,6 +138,7 @@ class SideBarLeftComponent extends React.Component {
           hasToggle={this.state.hasToggle}
           moveMap={this.props.moveMap}
           addPin={this.props.addPin}
+          add3DPin={this.props.add3DPin}
           removePin={this.props.removePin}
         />
 
@@ -149,6 +150,7 @@ class SideBarLeftComponent extends React.Component {
           hasToggle={this.state.hasToggle}
           moveMap={this.props.moveMap}
           addPin={this.props.addPin}
+          add3DPin={this.props.add3DPin}
           removePin={this.props.removePin}
           addKML={this.props.addKMLToMap}
           removeKML={this.props.removeKML}

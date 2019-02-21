@@ -18,7 +18,7 @@ class PersonnelPopupComponent extends React.Component {
   }
 
   componentDidMount() {
-     this.props.fetchPersonnels();  
+     this.props.fetchPersonnels();
   }
 
   onChangeShowAll = (state) => {
@@ -38,12 +38,12 @@ class PersonnelPopupComponent extends React.Component {
    * Function will get called to filter data , Search Box in Personnel on Left Hand Side Toolbar on LIVE View
    */
   getFilteredList = (event) => {
-    // Get All Personnel 
+    // Get All Personnel
     const { allPersonnels } = this.props;
-   
+
     // By Default all the records will be here to display
     var updatedList = allPersonnels;
-    // Update the updatedList Variable to display the filtered data 
+    // Update the updatedList Variable to display the filtered data
     updatedList = updatedList.filter(function(item){
       let searchItem = (item.rank !== 'Unknown' ? (item.rank + ' ') : '') + item.firstName + ' ' + item.lastName;
       return searchItem.toLowerCase().search(
@@ -98,9 +98,12 @@ class PersonnelPopupComponent extends React.Component {
 
         <div className="checklist-block">
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
-            this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
-              Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-              'campsite', null, 'orange', item.ID);
+            // this.props.addPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
+            //   Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
+            //   'campsite', null, 'orange', item.ID);
+              this.props.add3DPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
+                                Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
+                                'people_logo', '', item.id, '', '', false);
 
             return <PlatformPopupItemComponent
               color={'#FFA500'}
@@ -111,10 +114,11 @@ class PersonnelPopupComponent extends React.Component {
               lat={Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude)}
               long={Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude)}
               uniqueID={item.ID}
-              pinColor={'orange'}
-              pinType={'campsite'}
+              pinColor={'people_logo'}
+              pinType={'3D'}
               moveMap={this.props.moveMap}
               addPin={this.props.addPin}
+              add3DPin={this.props.add3DPin}
               removePin={this.props.removePin}
               key={index}
               tooltipLabel={item.firstName + ' ' + item.lastName}

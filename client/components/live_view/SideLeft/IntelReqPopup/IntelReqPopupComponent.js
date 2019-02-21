@@ -141,7 +141,7 @@ class IntelReqPopupComponent extends React.Component {
 
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
               //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
-              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', '', true);
+              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', '', false);
             }
 
             return <PlatformPopupItemComponent
