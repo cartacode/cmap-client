@@ -14,8 +14,6 @@ import Map, { viewerSize } from 'components/reusable/Map';
 import { viewerIdentifiers } from 'map/viewer';
 
 import { livewViewUser } from '../dictionary/auth';
-import {postMapLayer} from 'actions/liveview';
-import { connect } from 'react-redux';
 
 class LiveViewComponent extends React.Component {
 
@@ -26,16 +24,7 @@ class LiveViewComponent extends React.Component {
     };
   }
 
-  postMapLayersFunc(){
-    var data = {
-      "id": 0,
-      "name": "string",
-      "categoryID": 0,
-      "description": "string",
-      "fileLocation": "string"
-    };
-    this.props.postMapLayer(data);
-  }
+
 
   render() {
 
@@ -55,8 +44,7 @@ class LiveViewComponent extends React.Component {
             <FullHeaderLine headerText={translations["real-time intelligence/threat picture"]} />
           </div>
           <div className="col-md-12">
-            <Map size={viewerSize.medium} height={95} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {false}
-            postMapLayers={this.postMapLayersFunc}/>
+            <Map size={viewerSize.medium} height={95} viewerId={viewerIdentifiers.liveView} enableLiveViewToolBar = {false}/>
           </div>
         </div>
       </div>) : null
@@ -133,10 +121,5 @@ class LiveViewComponent extends React.Component {
 LiveViewComponent.propTypes = {
   children: PropTypes.element,
 };
-const mapStateToProps = state => { }
-const mapDispatchToProps = {
-  postMapLayer
-}
 
-export default connect(mapStateToProps,  mapDispatchToProps)(LiveViewComponent);
-
+export default LiveViewComponent;

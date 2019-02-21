@@ -35,7 +35,6 @@ export default class Map extends React.PureComponent {
     size: PropTypes.number,
     toolBarOptions: PropTypes.object,
     viewerId: PropTypes.string.isRequired,
-    postMapLayers: PropTypes.func,
   }
 
   constructor(props) {
@@ -50,7 +49,6 @@ export default class Map extends React.PureComponent {
       LEFT_DOUBLE_CLICK : this.dblClickCallback,
       LEFT_CLICK : this.leftClickCallback,
       RIGHT_CLICK : this.rightClickCallback,
-      POST_MAP_LAYER: this.postMapLayersFunc
     }
   }
 
@@ -58,15 +56,9 @@ export default class Map extends React.PureComponent {
     latlong: PropTypes.object
   }
 
-  postMapLayersFunc(){
-    alert('pppppppppp');
-   
-    console.log('lllllll');
-    this.props.postMapLayers();
-  }
   componentDidMount() {
     console.log(this.props.viewerId);
-    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.MAP_EVENTS.RIGHT_CLICK, this.props.enableLiveViewToolBar, true, this.postMapLayers, this.initialSettings);
+    this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.MAP_EVENTS.RIGHT_CLICK, this.props.enableLiveViewToolBar, true, this.initialSettings);
 
     console.log('init settings');
     // add the default location or user location into the location bar
@@ -74,6 +66,7 @@ export default class Map extends React.PureComponent {
     const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude;
     const init_latitude = init_session.LocationLatitude? Number(init_session.LocationLatitude) : defaultLocation.latitude;
     this.setState({ latlong: { latitude: init_latitude, longitude: init_longitude, height: 0 } });
+
     // add pin for current user's home location
     addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'Home', this.props.viewerId);
 
@@ -153,8 +146,8 @@ export default class Map extends React.PureComponent {
 
   // Right click toolbar open functionality
   rightClickCallback = (worldPosition, viewerId, viewer) => {
+
     // TODO - EXTRA RIGHT CLICK FUNCTIONALITY
-    alert('kkkkkk');
     console.log('Right clicked');
   }
 

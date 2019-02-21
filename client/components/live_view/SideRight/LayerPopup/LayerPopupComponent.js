@@ -81,7 +81,7 @@ class LayerPopupComponent extends React.Component {
     };
 
     // Code to create the points
-    //console.log( this.props);
+    let arr =  this.props.allLayers;
     let key = Object.keys(this.state.static_data);
     for(let i=0 ; i < key.length ; i++){
         let len = this.state.static_data[key[i]].length;
@@ -94,7 +94,7 @@ class LayerPopupComponent extends React.Component {
             // this.props.toggleMapLayer(map_str);
             //call 3D pin
             this.props.add3DPin(lat, lon, this.state.static_data[key[i]].imageId, '', map_str, '', '', true);
-            //console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
+            console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
         }
 
     }
@@ -149,120 +149,6 @@ class LayerPopupComponent extends React.Component {
   render() {
 
     const { locationKMLs, locationTypes, allLayers} = this.props;
-
-    var static_data = {
-      air :{
-          length : 25,
-          imageId : 'airplane_logo'
-      },
-      maritime :{
-          length : 50,
-          imageId : 'boat'
-      },
-      personnel :{
-          length : 30,
-          imageId : 'people_logo'
-      },
-      sensor :{
-          length : 90,
-          imageId : 'bolt_logo'
-      },
-      blue_forces :{
-          length : 10,
-          imageId : 'info_logo'
-      },
-      bases :{
-          length : 12,
-          imageId : 'house_logo'
-      },
-      intel_requirement :{
-          length : 30,
-          imageId : 'paper_list_logo'
-      },
-      pois :{
-          length : 10,
-          imageId : 'star_logo'
-      },
-      ci :{
-          length : 25,
-          imageId : 'eye_logo'
-      },
-      sigint :{
-          length : 10,
-          imageId : 'stats_logo'
-      },
-      oswt :{
-          length : 20,
-          imageId : 'megaphone_logo'
-      },
-      gmti :{
-          length : 30,
-          imageId : 'pointer_logo'
-      },
-      intel_request_collection_point :{
-          length : 15,
-          imageId : 'cross_logo'
-      },
-      observation :{
-          length : 20,
-          imageId : 'lens_logo'
-      },
-      media :{
-          length : 12,
-          imageId : 'photocamera_logo'
-      }
-  };
-
-  for(var i=0 ; i<allLayers.length; i++){
-    //console.log(allLayers[i].name);
-    var fieldName = allLayers[i].name;
-    const str = fieldName.split(" ").join("_");
-    const str_temp = str.toLowerCase();
-    if(str_temp in static_data)
-    {
-      //console.log("PPPP "+str_temp+" "+allLayers[i].data+ "    "+allLayers[i].data.length)
-      if(allLayers[i].data != null && allLayers[i].data != undefined && allLayers[i].data != ''){
-        static_data[str_temp].length = allLayers[i].data.length;
-        static_data[str_temp].data = allLayers[i].data;
-      }
-      else{
-        static_data[str_temp].length = 0;
-        static_data[str_temp].data = [];
-      }
-      //console.log("LLLL "+str_temp +" LLLL "+static_data[str_temp].length);
-    }
-  }//console.log('KKKKK');
-  //console.log(static_data);
-//debugger;
-
-  let arr =  this.props.allLayers;
-  let key = Object.keys(static_data);
-  for(let i=1 ; i < key.length ; i++){
-      let len = static_data[key[i]].length;
-      var data = static_data[key[i]].data;
-//console.log("OOOOOO "+ data);
-      for(let j=0;j<len;j++){
-          let min=0;
-          let max=200;
-          let lat = 0;
-          let lon = 0;  
-          if(data !=null && data != undefined && data != '' && data.length>0){
-           // console.log("HHHHHHHH "+data);
-           // console.log("YYYYYY "+JSON.stringify(data))
-            lat = data[j].latitude;
-            lon = data[j].longitude;
-          }
-         // console.log(lat +" "+ lon);
-         // let lat = Math.random() * (+max - +min) + +min;
-          //let lon = Math.random() * (+max - +min) + +min;
-          let map_str = key[i] + "_" + j;
-          // this.props.toggleMapLayer(map_str);
-          //call 3D pin
-          this.props.add3DPin(lat, lon, this.state.static_data[key[i]].imageId, '', map_str, '', '', true);
-          //console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
-      }
-
-  }
 
     /* const listItem = ['Space', 'Air', 'Maritime', 'Blue Forces'
       , 'Observations',  'Intel Picture', 'SIGACTS', 'Weather','Airfield','Base Locationsnpm ','NAIs','POIs'];

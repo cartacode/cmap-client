@@ -41,8 +41,7 @@ export const viewers = new Map();
  * @param   {string}  elementId The identifier of the viewer's parent element.
  * @returns {Object}
  */
-export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, RIGHT_CLICK, liveViewToolBar,  callback, POST_MAP_LAYER) {
-  
+export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, RIGHT_CLICK, liveViewToolBar, callback) {
   console.log('createViewer viewerId:', viewerId);
   if (viewers.has(viewerId)) {
     return;
@@ -230,7 +229,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   if (!liveViewToolBar) {
     attachDoubleClick(viewer, viewerId, LEFT_DOUBLE_CLICK);
     attachLeftClick(viewer, viewerId, LEFT_CLICK);
-    attachRightClick(viewer, viewerId, RIGHT_CLICK, POST_MAP_LAYER);
+    attachRightClick(viewer, viewerId, RIGHT_CLICK);
     viewer.cesiumWidget._creditContainer.parentNode.removeChild(viewer.cesiumWidget._creditContainer);
     viewers.set(viewerId, viewer);
     return viewer;
@@ -877,7 +876,7 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
-async function attachRightClick(viewer, viewerId, rightClickHandler, postMapLayer) {
+async function attachRightClick(viewer, viewerId, rightClickHandler) {
   if (!viewer) {
     await sleep(5000);
   }
@@ -996,7 +995,6 @@ async function attachRightClick(viewer, viewerId, rightClickHandler, postMapLaye
 
             let title = $('#title-input').val();
             let desc = $('#description-input').val();
-            postMapLayer();
 
             // var path = '/assets/img/live_view/map_layer/';
 
@@ -1094,6 +1092,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler, postMapLaye
           latitude: Number(latitudeString),
           height: heightString,
         };
+
         // Calling the rightClickCallback functionality defined in map component
         rightClickHandler(currentLatLong, viewerId, viewer);
       }
