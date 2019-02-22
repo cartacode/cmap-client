@@ -30,6 +30,7 @@ class DashboardComponent extends React.Component {
     this.loadData();
     }
     else { <Redirect to="/login"/> }
+    this.props.fetchMapLayers().then(()=>{console.log(this.props.allLayers)});
   }
 
   loadData = () => {
@@ -314,6 +315,12 @@ getRTB = (startDate, endDate) => {
 
 }
 
+getVal = () => {
+  console.log("Get val");
+
+  return "Text";
+}
+
   render() {
 
     const ses = JSON.parse(localStorage.getItem('session'));
@@ -358,7 +365,8 @@ getRTB = (startDate, endDate) => {
 
     const { allLiveOperatallLatestIntelligenceions } = this.props;
 
-
+    // All Layers 
+    let { allLayers } = this.props;
 
     if(opsPlatform instanceof Object) {
       opsPlatform = '0';
@@ -587,14 +595,32 @@ getRTB = (startDate, endDate) => {
             </div>
           </div>
         </div>
-        <div className="row dashboard">
+        {/* <div className="row dashboard">
           <div className="col-md-12 alert">
             <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
             <div>flash alert: [08:12:00] vbied in massoud square: 54 civ, 3 nato casulties ... developing ... [08:01:01] vbied in massoud square: 54 civ, 3 narto casul</div>
             <img src="/assets/img/admin/exclamation_mark.png" alt="" />
           </div>
-        </div>
+        </div> */}
+        
+        {this.props.allLayers.length > 0 ? (
+        <Ticker mode="smooth"  offset="run-in">
+        {({ index }) => (
+          index < allLayers.length ? 
+         ( <div style={{color:'red', fontSize:'15px'}} className="alert">
+          <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
+          &nbsp;&nbsp; Name: {allLayers[index].name}&nbsp;&nbsp; Description: {allLayers[index].description} &nbsp;&nbsp;
+          <img src="/assets/img/admin/exclamation_mark.png" alt="" />
+         </div> ) : null
+        )}
+    </Ticker>
 
+         ) : null } 
+
+
+       
+
+    
       
         
 
