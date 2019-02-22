@@ -28,9 +28,9 @@ class DashboardComponent extends React.Component {
     const session = JSON.parse(localStorage.getItem('session'));
     if (session){
     this.loadData();
+    this.props.fetchMapLayers().then(()=>{});
     }
     else { <Redirect to="/login"/> }
-    this.props.fetchMapLayers().then(()=>{console.log(this.props.allLayers)});
   }
 
   loadData = () => {
@@ -336,6 +336,8 @@ getVal = () => {
     {value:'Abduction', label:'Abduction'},{value:'Suspicious Activity', label:'Suspicious Activity'},{value:'Friendly Activity', label:'Friendly Activity'}
     ];
 
+    const sigactsData = [{"createDate":"2018-07-31T06:03:33.197","description":"Camp S D Butler (Camp Foster, Kinser, Courtney, Hansen, Schwab and MCAS Futenma)","fileLocation":null,"latitude":null,"longitude":null,"name":"Camp S D Butler (Camp Foster, Kinser, Courtney, Hansen, Schwab and MCAS Futenma)","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Naval Support Activity Washington","fileLocation":null,"latitude":null,"longitude":null,"name":"Naval Support Activity Washington","categoryID":11},{"createDate":"2019-01-23T01:55:29.91","description":"Fort George G. Meade","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Fort George G. Meade_d0d0f45f-e5df-48b6-a578-9a305b83dd38.kmz","latitude":"39.0625N","longitude":"76.4435W","name":"Fort George G. Meade","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Yuma Proving Ground","fileLocation":null,"latitude":null,"longitude":null,"name":"Yuma Proving Ground","categoryID":11},{"createDate":"2019-01-23T02:01:08.613","description":"Fort Myer (Joint Base Myer - Henderson Hall)","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Fort Myer (Joint Base Myer - Henderson Hall)_8b44db21-9709-421d-a514-f3b504086fe8.kmz","latitude":"38.8803N","longitude":"77.0797W","name":"Fort Myer (Joint Base Myer - Henderson Hall)","categoryID":11},{"createDate":"2019-01-25T02:51:16.247","description":"Camp Parks","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Camp Parks_5a571254-2bb7-4500-a0e5-744f4ebd9d0b.kmz","latitude":"42.2556N","longitude":"121.5403W","name":"Camp Parks","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Laughlin AFB","fileLocation":null,"latitude":null,"longitude":null,"name":"Laughlin AFB","categoryID":11},{"createDate":"2019-01-24T02:30:47.163","description":"Fort Leonard Wood","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Fort Leonard Wood_7b57ae68-0032-4d9b-af29-78badf317020.kmz","latitude":"37.4424N","longitude":"92.0734W","name":"Fort Leonard Wood","categoryID":11},{"createDate":"2019-01-30T16:46:26.557","description":"Fairchild AFB","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Fairchild AFB_bdc1e48b-2a46-4caa-92f6-7f4e077e9460.kmz","latitude":"47.3654N","longitude":"117.3920W","name":"Fairchild AFB","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Maxwell AFB and Gunter Annex","fileLocation":null,"latitude":null,"longitude":null,"name":"Maxwell AFB and Gunter Annex","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Peterson AFB","fileLocation":null,"latitude":null,"longitude":null,"name":"Peterson AFB","categoryID":11},{"createDate":"2019-01-25T02:49:28.877","description":"Camp Humphreys / USAG Humphreys","fileLocation":"http://ec2-18-222-48-211.us-east-2.compute.amazonaws.com:8081/Content/UploadFiles/Location/Camp Humphreys  USAG Humphreys_89676bbd-fba0-492d-b15e-a824e57c5980.kmz","latitude":"36.58N","longitude":"127.02E","name":"Camp Humphreys / USAG Humphreys","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"USAG Rheinland-Pfalz, Baumholder","fileLocation":null,"latitude":null,"longitude":null,"name":"USAG Rheinland-Pfalz, Baumholder","categoryID":11},{"createDate":"2018-07-31T06:03:33.197","description":"Marine Corps Air Station Iwakuni","fileLocation":null,"latitude":null,"longitude":null,"name":"Marine Corps Air Station Iwakuni","categoryID":11}];
+
     const weather = [{value:'Current Surface', label:'Current Surface'},{value:'Current Air', label:'Current Air'},{value:'Current Sea', label:'Current Sea'},
     {value:'Next 24-Surface', label:'Next 24-Surface'}, {value:'Next 24-Air', label:'Next 24-Air'}, {value:'Next 24-Sea', label:'Next 24-Sea'} ];
 
@@ -609,7 +611,7 @@ getVal = () => {
           index < allLayers.length ? 
          ( <div style={{color:'red', fontSize:'15px'}} className="alert">
           <img src="/assets/img/admin/exclamation_mark.png" alt=""/>
-          &nbsp;&nbsp; Name: {allLayers[index].name}&nbsp;&nbsp; Description: {allLayers[index].description} &nbsp;&nbsp;
+          &nbsp;&nbsp; Name: {sigactsData[index].name}&nbsp;&nbsp; Description: {sigactsData[index].description} &nbsp;&nbsp;
           <img src="/assets/img/admin/exclamation_mark.png" alt="" />
          </div> ) : null
         )}
