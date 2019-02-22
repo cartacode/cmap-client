@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import Cesium from 'cesium/Cesium';
 import CesiumNavigation from "cesium-navigation-es6";
 import { DrawHelper } from 'map/drawHelper';
@@ -7,6 +9,8 @@ import { LAYERS } from 'map/layer-names';
 import { COORDINATE_SYTEM } from 'map/coordinate-system';
 import { getImageryurl } from 'map/config';
 import { ImageryUrls, LocalMapLayer } from 'dictionary/constants';
+import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
+
 /**
  * The identifiers of the Cesium viewers in the application.
  * @type  {Object.<string>}
@@ -658,8 +662,8 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
     //
     // Setting position and orientation of the Entity Model
     var position = Cesium.Cartesian3.fromDegrees(longitude, latitude,0);
-    var heading = Cesium.Math.toRadians(0);
-    var pitch = 99;
+    var heading = Cesium.Math.toRadians(90);
+    var pitch = 200;
     var roll = 0;
     var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
     var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
@@ -928,18 +932,23 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
 
           let blueForce = document.createElement("option");
           blueForce.text = 'Blue Forces';
+          blueForce.value = 1;
 
           let intelReport = document.createElement("option");
           intelReport.text = 'Intel Report';
+          intelReport.value = 2;
 
           let observation = document.createElement("option");
           observation.text = 'Observation';
+          observation.value = 3;
 
           let sigact = document.createElement("option");
           sigact.text = 'SIGACT';
+          sigact.value = 4;
 
           let media = document.createElement("option");
           media.text = 'Media';
+          media.value = 5;
 
           layerSelect.appendChild(blueForce);
           layerSelect.appendChild(intelReport);
@@ -980,8 +989,8 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           submitButton.id = 'add-icon';
           submitButton.onclick = (event) => {
             event.preventDefault();
-            let layer = $('#layer-select').val();
-
+            let layer = $('#layer-select option:selected').text();
+            console.log(layer);
             if (layer === 'Blue Forces')
               layer = 'bolt_logo';
             else if (layer === 'Intel Report')
@@ -995,7 +1004,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
 
             let title = $('#title-input').val();
             let desc = $('#description-input').val();
-
+            let categoryId = $('#layer-select').val();
             // var path = '/assets/img/live_view/map_layer/';
 
             let path = '/assets/models/';
@@ -1015,40 +1024,37 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
             //   Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
 
             var position = Cesium.Cartesian3.fromDegrees(Number(longitudeString), Number(latitudeString));
-            var heading = Cesium.Math.toRadians(0);
-            var pitch = -90;
+            var heading = Cesium.Math.toRadians(100);
+            var pitch = 200;
             var roll = 0;
             var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
             var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
 
-            viewer.entities.add({
+            let entity = viewer.entities.add({
               name: title,
               position: position,
               orientation: orientation,
               model: {
                 uri: `${path}${layer}.gltf`,
-                minimumPixelSize: 128,
-                maximumScale: 200000
+                minimumPixelSize: 50,
+                maximumScale: 100000,
+                scale: 10
               },
               description: desc
             });
+            var fileLocation = $('#file-input').val().split('\\').pop();;
+           var data = {
+              "name": title,
+              "categoryID": categoryId,
+              "description": desc,
+              "fileLocation": fileLocation,
+              "longitude": longitudeString,
+              "latitude": latitudeString,
+              "createDate": new Date()
+            };
+            axios.post(`${baseUrl}/MapLayer/PostMapLayer`, JSON.stringify(data), { headers: requestHeaders })
 
-            // Cesium.when(Cesium.Model.fromGltf({
-            //   url: '/assets/models/' + iconName + '.gltf',
-            //   modelMatrix,
-            //   scale: 200.0,
-            // }), model => {
-            //   console.log(model);
-            //   const mapObj = viewer.scene.primitives.add(model).then(() => {
-            //     if (bMoveMap) {
-            //       positionMap(latitude, longitude, viewerId);
-            //     }
-            //   });
-            // });
-
-
-
-
+            // viewer.flyTo(entity, {maximumHeight : 100000});
 
             console.log($('#file-input').val());
             viewer.infoBox.container.style.display = 'none';
