@@ -662,8 +662,8 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
     //
     // Setting position and orientation of the Entity Model
     var position = Cesium.Cartesian3.fromDegrees(longitude, latitude,0);
-    var heading = Cesium.Math.toRadians(0);
-    var pitch = 99;
+    var heading = Cesium.Math.toRadians(90);
+    var pitch = 200;
     var roll = 0;
     var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
     var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
