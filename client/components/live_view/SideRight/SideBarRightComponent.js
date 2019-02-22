@@ -83,6 +83,8 @@ class SideBarRightComponent extends React.Component {
           onPopup={this.onPopup}
           layersPopupOpen={this.state.layersPopupOpen}
           add3DPin={this.props.add3DPin}
+          add3DPinWithParent={this.props.add3DPinWithParent}
+          createParentMarker={this.props.createParentMarker}
           addKML={this.props.addKMLToMap}
           removeKML={this.props.removeKML}
           onPopup={this.onPopup}
