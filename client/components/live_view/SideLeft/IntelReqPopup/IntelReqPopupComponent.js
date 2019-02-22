@@ -137,6 +137,7 @@ class IntelReqPopupComponent extends React.Component {
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
             // only display current and future items
             if((new Date(item.ActiveDateTimeEnd) < (new Date()))) { return; }
+            console.log("ITEM",item.GridCoordinates);
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
 
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
