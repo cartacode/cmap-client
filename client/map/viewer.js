@@ -659,7 +659,7 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
     // Setting position and orientation of the Entity Model
     var position = Cesium.Cartesian3.fromDegrees(longitude, latitude,0);
     var heading = Cesium.Math.toRadians(0);
-    var pitch = -90;
+    var pitch = 99;
     var roll = 0;
     var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
     var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
@@ -673,13 +673,13 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
         orientation: orientation,
         model: {
                 uri: `${path}${iconName}.gltf`,
-                minimumPixelSize: 128,
+                minimumPixelSize: 50,
                 maximumScale: 200000
             },
         description: `lat:${latitude} lon:${longitude}, type:${iconName}`,
         show : false
     });
-    console.log("VIOLENT",x.id);
+    //console.log("VIOLENT",x.id);
 
     // const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
     //   Cesium.Cartesian3.fromDegrees(longitude, latitude, 0.0));
@@ -1125,7 +1125,7 @@ export function toggleMapLayerIcon(map_name, viewerId) {
   entity.show = !entity.show;
 }
 
-export function create3DModel(viewer) {
+export function create3DModel(viewer, bMoveMap = false) {
   let position = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 150000.0);
   let heading = Cesium.Math.toRadians(0);
   let pitch = 90;
@@ -1143,7 +1143,10 @@ export function create3DModel(viewer) {
       maximumScale: 40000
     }
   });
-  viewer.zoomTo(entity);
+  
+  if(bMoveMap) {
+    viewer.zoomTo(entity);
+  }
 }
 
 export function addPoint(x, y, z, viewerId, label, focus = false) {

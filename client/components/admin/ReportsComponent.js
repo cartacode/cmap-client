@@ -118,7 +118,7 @@ class ReportsComponent extends React.Component {
     const { translations } = this.props;
 
     const session = JSON.parse(localStorage.getItem('session'));
-    const rootUnitId = session.AssignedUnit;
+    const rootUnitId = session.DeployedUnit;
     // units api will be diff for FlighOps and Ped Screens
     let unitsUrl = 'CommandStructure/GetUserUnitAndSubordinateUnits?rootUnitID=' + rootUnitId;
     let { startDate, endDate } = this.state.filter;
