@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import ToolBar from 'map/ToolBar';
 import {UTILS} from 'map/Utils';
 //import {addKML} from 'map/kml';
-import { createViewer, createParent, addNew3DPinWithParent, destroyViewer, addCircle, addNew3DPin, changeLayer, addPoint, createTestObject, initialViewer, toggleMapLayerIcon, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
+import { createViewer, destroyViewer, addCircle, addNew3DPin, changeLayer, addPoint, createTestObject, initialViewer, toggleMapLayerIcon, addNewPin, removePinById, positionMap, addKML, removeKML, adjustLayerTransparency, toggleShowEntity, flyTo } from 'map/viewer';
 import Cesium from 'cesium/Cesium';
 import SideBarLeftComponent from '../live_view/SideLeft';
 import SideBarRightComponent from '../live_view/SideRight';
@@ -71,7 +71,7 @@ export default class Map extends React.PureComponent {
     addNewPin(init_latitude, init_longitude, 'town', null, Cesium.Color.BLUE, 'Home', this.props.viewerId);
 
     initialViewer(this.props.viewerId);
-
+    
     // prevents Windows Chrome context menu from displaying on right-click
     $('body').on('contextmenu', '.map-wrapper', (e) => {
       e.preventDefault();
@@ -94,7 +94,6 @@ export default class Map extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    alert('kjhgfghjkhgfghjk');
     destroyViewer(this.props.viewerId);
     this._viewer = null;
   }
@@ -254,13 +253,6 @@ export default class Map extends React.PureComponent {
     addNew3DPin(latitude, longitude, iconName, pinText, pinId, this.props.viewerId, tooltipLabel, tooltipText, bMoveMap);
   }
 
-  add3DPinWithParent = (latitude, longitude, iconName, pinText, pinId, tooltipLabel, tooltipText, bMoveMap) =>{
-      addNew3DPinWithParent(latitude, longitude, iconName, pinText, pinId, this.props.viewerId, tooltipLabel, tooltipText, bMoveMap);
-  }
-  createParentMarker = (parent_name) => {
-      createParent(parent_name, this.props.viewerId);
-  }
-
   removePin =(pinId) =>{
     removePinById(pinId, this.props.viewerId);
   }
@@ -321,8 +313,6 @@ export default class Map extends React.PureComponent {
             setContainer={this.flyTo}
             setMapLayer={this.changeMapLayer}
             add3DPin={this.add3DPin}
-            add3DPinWithParent={this.add3DPinWithParent}
-            createParentMarker={this.createParentMarker}
             setLayerTransparency={this.adjustLayerTransparency}
             addKMLToMap={this.addKMLToMap}
             removeKML={this.removeKMLFromMap}

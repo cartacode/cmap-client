@@ -78,7 +78,7 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
     //    //  url: getImageryurl(),
     //   }),
   });
-
+  
   create3DModel(viewer);
   // extend our view by the cesium navigation mixin
   let options = {};
@@ -280,7 +280,6 @@ export async function initialViewer(viewerId) {
   viewer.entities.add({ id: 'PLATFORMS-PARENT' });
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
 
-
   if (viewer.infoBox) {
     viewer.infoBox.container.style.display = 'none';
   }
@@ -317,7 +316,7 @@ export async function changeLayer(mapLayer, layerLevel, viewerId) {
       key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
       mapStyle: mapLayer,
     }), layerLevel);
-
+    
     create3DModel(viewer);
   }
 }
@@ -710,56 +709,6 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
     }
   }
 }
-
-// Function to add 3D Map Markers with Parent Entity
-//  here pinId is parent Entity
-export async function addNew3DPinWithParent(latitude, longitude, iconName, pinText, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
-  if (isNaN(longitude) || isNaN(latitude)) { return; }
-
-  let viewer = viewers.get(viewerId);
-  alert(viewer);
-  if (!viewer) {
-    await sleep(3000);
-    viewer = viewers.get(viewerId);
-  }
-
-  let entity = (pinId && viewer && viewer.entities && viewer.entities.getById(pinId) ? viewer.entities.getById(pinId) : null);
-
-
-  if (!entity) {
-
-    var position = Cesium.Cartesian3.fromDegrees(longitude, latitude,0);
-    var heading = Cesium.Math.toRadians(0);
-    var pitch = 99;
-    var roll = 0;
-    var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-    var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-
-    // Setting path of models
-    let path = '/assets/models/';
-    // Creating entity of models with default visibility as hidden
-    //var id = viewer.entities.getById(pinId);
-    var x = viewer.entities.add({
-        id : pinId,
-        position: position,
-        orientation: orientation,
-        model: {
-                uri: `${path}${iconName}.gltf`,
-                minimumPixelSize: 50,
-                maximumScale: 200000
-            },
-        description: `lat:${latitude} lon:${longitude}, type:${iconName}`
-    });
-    console.log("MODEL GENERATED", JSON.stringify(x));
-  } else {
-    toggleShowEntity(pinId, true, viewerId);
-
-    if (bMoveMap) {
-      positionMap(latitude, longitude, viewerId);
-    }
-  }
-}
-
 
 export async function addNewPin(latitude, longitude, iconId, pinText, color, pinId, viewerId, tooltipLabel, tooltipText, bMoveMap = false) {
   // console.log(pinId, pinText);
@@ -1177,20 +1126,9 @@ export function toggleMapLayerIcon(map_name, viewerId) {
   // const viewer = viewers.get(viewerId);
   // const entity = viewer.entities.getById(map_name);
   const viewer = viewers.get(viewerId);
-  if(viewer.entities.getById(map_name) != undefined){
-      const entity =viewer.entities.getById(map_name);
-      console.log("TOGGLE",entity.id);
-      entity.show = !entity.show;
-  }
-
-}
-
-export function createParent(parent_name, viewerId){
-      const viewer = viewers.get(viewerId);
-      if(viewer.entities.getById(parent_name) == undefined){
-          const y = viewer.entities.add({ id: parent_name });
-          // console.log("PARENT:",JSON.stringify(y));
-      }
+  const entity = viewer.entities.getById(map_name);
+  console.log("TOGGLE",entity.id);
+  entity.show = !entity.show;
 }
 
 export function create3DModel(viewer, bMoveMap = false) {
@@ -1211,7 +1149,7 @@ export function create3DModel(viewer, bMoveMap = false) {
       maximumScale: 40000
     }
   });
-
+  
   if(bMoveMap) {
     viewer.zoomTo(entity);
   }
