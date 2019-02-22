@@ -23,6 +23,7 @@ class PlatformPopupItemComponent extends React.Component {
   }
 
   onRowChangeState = (e) => {
+    
     if (e.target.classList.contains('checkbox-default')) {
       const newVal = !this.state.checked;
       this.setState({
@@ -54,7 +55,8 @@ class PlatformPopupItemComponent extends React.Component {
           checked: true,
         });
       } else if(this.props.pinType === '3D') {
-        this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
+        // this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
+        this.props.moveMap(this.props.lat, this.props.long);
       } else {
         this.props.moveMap(this.props.lat, this.props.long);
       }

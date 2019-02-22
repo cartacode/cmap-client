@@ -963,7 +963,7 @@ ul, li {
 
 /* Checkbox */
 .checkbox-default {
-  width: 34px;
+  width: 50px;
   height: 18px;
   background: url(/assets/img/live_view/checkbox_icon.png);
   cursor: pointer;
@@ -1117,6 +1117,7 @@ button.btn-save {
   color: #FFF;
   border: 1px solid #FF7C16;
   width: 355px;
+  padding: 0px 0px 22px 0px;
 }
 
 .cesium-viewer-infoBoxContainer .cesium-infoBox-camera {
@@ -1129,6 +1130,7 @@ button.btn-save {
   height: 140px!important;
   width: 360px;
 }
+
 
 .cesium-viewer-infoBoxContainer .cesium-infoBox-close {
   position: absolute;
@@ -1148,4 +1150,31 @@ button.btn-save {
 
 .cesium-infoBox-description a {
   color: #ff7c16;
+}
+
+.cesium-viewer-infoBoxContainer div {
+  margin: 10px 0px;
+}
+.cesium-viewer-infoBoxContainer label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 300;
+  width: 93px;
+}
+#add-icon {
+  float: right;
+  text-align: center;
+  margin-right: 4px;
+}
+.cesium-viewer-infoBoxContainer input[type="file"] {
+  display: inline-block;
+}
+#layer-select {
+  width: 67%;
+  height: 26px;
+  color:#000;
+}
+.cesium-viewer-infoBoxContainer form {
+    padding: 10px 27px!important;
 }
