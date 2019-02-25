@@ -46,7 +46,7 @@ export const viewers = new Map();
  * @returns {Object}
  */
 export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK, RIGHT_CLICK, liveViewToolBar, callback) {
-  console.log('createViewer viewerId:', viewerId);
+
   if (viewers.has(viewerId)) {
     return;
   }
@@ -1185,9 +1185,16 @@ export function toggleMapLayerIcon(map_name, viewerId) {
 
 }
 
-export function createParent(parent_name, viewerId){
-      const viewer = viewers.get(viewerId);
-      if(viewer.entities.getById(parent_name) == undefined){
+export async function createParent(parent_name, viewerId){
+      let viewer = viewers.get(viewerId);
+      if (!viewer) {
+        await sleep(5000);
+        viewer = viewers.get(viewerId);
+      }
+    
+      if(viewer != null && viewer != '' && viewer != undefined && viewer.entities.getById(parent_name) == undefined) {
+        //if(viewer.entities.getById(parent_name) == undefined){
+
           const y = viewer.entities.add({ id: parent_name });
           // console.log("PARENT:",JSON.stringify(y));
       }
