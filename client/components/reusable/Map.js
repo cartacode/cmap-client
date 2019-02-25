@@ -57,10 +57,9 @@ export default class Map extends React.PureComponent {
   }
 
   componentDidMount() {
-    console.log(this.props.viewerId);
+    ///console.log("BBBBBBBBB "+this.props.viewerId);
     this._viewer = createViewer(this.props.viewerId, this._elementId, this.MAP_EVENTS.LEFT_DOUBLE_CLICK, this.MAP_EVENTS.LEFT_CLICK, this.MAP_EVENTS.RIGHT_CLICK, this.props.enableLiveViewToolBar, true, this.initialSettings);
-
-    console.log('init settings');
+    //console.log('init settings ' + this._viewer);
     // add the default location or user location into the location bar
     const init_session = JSON.parse(localStorage.getItem('session'));
     const init_longitude = init_session.LocationLongitude? Number(init_session.LocationLongitude) : defaultLocation.longitude;
@@ -94,7 +93,7 @@ export default class Map extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    alert('kjhgfghjkhgfghjk');
+    //alert('kjhgfghjkhgfghjk');
     destroyViewer(this.props.viewerId);
     this._viewer = null;
   }
@@ -149,7 +148,6 @@ export default class Map extends React.PureComponent {
   rightClickCallback = (worldPosition, viewerId, viewer) => {
 
     // TODO - EXTRA RIGHT CLICK FUNCTIONALITY
-    console.log('Right clicked');
   }
 
   dblClickCallback_bkp = (currenLatLong, viewerId, viewer) =>{
