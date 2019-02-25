@@ -26,7 +26,7 @@ class PersonnelPopupComponent extends React.Component {
       showAll: state,
     }, () => {
       if(state) {
-        // this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
+         this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
       } else {
         this.props.removePin('PERSONNEL-PARENT');
       }
