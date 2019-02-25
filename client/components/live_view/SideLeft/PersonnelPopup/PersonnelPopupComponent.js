@@ -26,7 +26,7 @@ class PersonnelPopupComponent extends React.Component {
       showAll: state,
     }, () => {
       if(state) {
-         this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
+        // this.props.addPin(0, 0, null, null, null, 'PERSONNEL-PARENT');
       } else {
         this.props.removePin('PERSONNEL-PARENT');
       }
@@ -55,8 +55,7 @@ class PersonnelPopupComponent extends React.Component {
 
   render() {
     const { allPersonnels } = this.props;
-    console.log(allPersonnels);
-    console.log(JSON.stringify(allPersonnels));
+   
     let itemsToDisplay = this.state.itemsToDisplay ? this.state.itemsToDisplay : allPersonnels;
     return (
       <div className={'personnel-popup-block popup-block scroll-pane' + ((this.props.popupOpen && this.props.menuClicked) ? ' opened' : '')}>
