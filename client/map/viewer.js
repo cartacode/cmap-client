@@ -279,6 +279,8 @@ export async function initialViewer(viewerId) {
   viewer.entities.add({ id: 'MISSIONS-PARENT' });
   viewer.entities.add({ id: 'PLATFORMS-PARENT' });
   viewer.entities.add({ id: 'PERSONNEL-PARENT' });
+  //viewer.entities.add({ id: 'air-PARENT' });
+
 
 
   if (viewer.infoBox) {
@@ -367,7 +369,7 @@ export async function addKML(KMLSource, dataSourceID, viewerId, bMoveMap = false
         camera: viewer.scene.camera,
         canvas: viewer.scene.canvas,
       }).then((kml) => {
-        const missionParent = viewer.entities.getById('MISSIONS-PARENT');
+        const missionParent = viewer.entities.getById(dataSourceID);
         const parentEntity = viewer.entities.add({
           id: dataSourceID,
           parent: missionParent,

@@ -100,11 +100,19 @@ class LayerPopupComponent extends React.Component {
         return returnObj;
     }
 
-    myFunction = (number) => {
+   /**
+    * number : name that get display in the layers Right Side,
+    * layerData: Data to display on Map,
+    * selected: Check box value true/false
+    */
+    myFunction = ( number, layerData, selected) => {
+        
         //console.log(number);
         const str = number.split(" ").join("_");
         const str_temp = str.toLowerCase();
         // alert(JSON.stringify(this.toggle_data));
+       // check if data is here
+        if(layerData.length > 0){
         if(str_temp in this.toggle_data){
             let x = this.toggle_data[str_temp];
             let length = x.count;
@@ -112,6 +120,17 @@ class LayerPopupComponent extends React.Component {
                 this.props.toggleMapLayer(str_temp+'_'+i);
             }
         }
+    }
+    else{
+        // if no Data coming in API to display, Load KML File
+        // if check box value true load KML file
+        if(selected) {
+            this.props.addKML('./assets/demo.kml', number+'-PARENT');
+          } else {
+              // if check box value false Remove KML data for that Layer
+            this.props.removeKML(number+'-PARENT');
+          }
+    } 
 
         //this.props.toggleMapLayer(map_str);
     }
@@ -180,6 +199,7 @@ class LayerPopupComponent extends React.Component {
             allLayers.forEach((list) => {
                 //console.log("DATA",JSON.stringify(list));
                 if(!(this.makeStr(list.name) in data)){
+
                     if(list.data.length >= 1 ){
 
                         let arr =[];
@@ -205,7 +225,11 @@ class LayerPopupComponent extends React.Component {
                             value : arr,
                             imageId : image
                         };
-                    }}
+                    }
+                    else {
+                        //this.props.addKML('./assets/demo.kml', list.name+'-PARENT' , list.name+'-PARENT');
+                    }
+                }
                     else{
                         list.data.forEach((dat) => {
 
@@ -224,11 +248,11 @@ class LayerPopupComponent extends React.Component {
                 //     console.log("CREATE PARENT ",k);
                 //     this.props.createParentMarker(k);
                 // });
-                for(let i = 1; i< key.length ; i++ )
+                /* for(let i = 1; i< key.length ; i++ )
                 {
                     console.log("CREATE PARENT ",key[i]);
                     this.props.createParentMarker(key[i]);
-                }
+                } */
                 for(let i = 1; i< key.length ; i++ )
                 {
                         if(data[key[i]].value.length>=0 || data[key[i]].value.length!=null){
@@ -319,12 +343,11 @@ class LayerPopupComponent extends React.Component {
                 {
                 allLayers.map((number) =>
                 <div className="popup-item">
-
-                {number.name} <CheckBox onChangeState={this.myFunction.bind(this,number.name)}/>
+                {number.name} <CheckBox onChangeState={this.myFunction.bind(this, number.name, number.data)}/>
                 {
                 number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
                 && number.subCategories.map((subCategory) =>
-                <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name)}/> </div>
+                <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, number.data)}/> </div>
             )
         }
         </div>
