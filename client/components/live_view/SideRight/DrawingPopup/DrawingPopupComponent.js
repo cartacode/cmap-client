@@ -41,6 +41,7 @@ class DrawingPopupComponent extends React.Component {
 
   render() {
     const { addPopOpens } = this.state;
+    const selfie = this;
     return (
       <div className={'drawing-popup-block right-popup-block' + (this.props.drawingPopupOpen ? ' opened' : '')}>
         <div className="scroll-pane">

@@ -1684,6 +1684,10 @@ export const DrawHelper = (function() {
                 document.getElementById("polyline").classList.remove("active");
                 document.getElementById("polygon").classList.remove("active");
                 document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.add("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingMarker({
                     callback: function(position) {
                         _self.executeListeners({name: 'markerCreated', position: position});
@@ -1696,6 +1700,10 @@ export const DrawHelper = (function() {
                 document.getElementById("polyline").classList.add("active");
                 document.getElementById("polygon").classList.remove("active");
                 document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.add("opened");
                 drawHelper.startDrawingPolyline({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polylineCreated', positions: positions});
@@ -1708,6 +1716,10 @@ export const DrawHelper = (function() {
                 document.getElementById("polyline").classList.remove("active");
                 document.getElementById("polygon").classList.add("active");
                 document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.add("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingPolygon({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polygonCreated', positions: positions});
@@ -1728,6 +1740,10 @@ export const DrawHelper = (function() {
                 document.getElementById("polyline").classList.remove("active");
                 document.getElementById("polygon").classList.remove("active");
                 document.getElementById("circle").classList.add("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.add("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingCircle({
                     callback: function(center, radius) {
                         _self.executeListeners({name: 'circleCreated', center: center, radius: radius});

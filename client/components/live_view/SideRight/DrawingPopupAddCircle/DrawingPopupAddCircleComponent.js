@@ -21,7 +21,7 @@ class DrawingPopupAddCircleComponent extends React.Component {
 
   render() {
     return (
-      <div className={'drawing-popup-block-add-circle' + (this.props.showOpen ? ' opened' : '')}>
+      <div id="add-circle" className={'drawing-popup-block-add-circle' + (this.props.showOpen ? ' opened' : '')}>
         <div className={'m-2 border-bottom-1'}>Add Circle</div>
         <div className={'p-3'} style={{background: '#022033'}}>
 
