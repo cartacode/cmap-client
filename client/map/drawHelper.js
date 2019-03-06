@@ -789,7 +789,6 @@ export const DrawHelper = (function() {
     }
 
     _.prototype.startDrawingMarker = function(options) {
-
         var options = copyOptions(options, defaultBillboard);
 
         this.startDrawing(
@@ -1665,20 +1664,26 @@ export const DrawHelper = (function() {
             function addIcon(id, url, title, callback, className = '') {
                 var div = document.createElement('DIV');
                 div.className = 'button ' + className;
+                div.id = id;
                 div.title = title;
                 toolbar.appendChild(div);
                 div.onclick = callback;
+                console.log(url);
                 var span = document.createElement('SPAN');
                 div.appendChild(span);
                 var image = document.createElement('IMG');
                 image.src = url;
-                //span.appendChild(image);
+                // span.appendChild(image);
                 return div;
             }
 
             var scene = drawHelper._scene;
 
             addIcon('marker', options.markerIcon, 'Click to start drawing a 2D marker', function() {
+                document.getElementById("marker").classList.add("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.remove("active");
                 drawHelper.startDrawingMarker({
                     callback: function(position) {
                         _self.executeListeners({name: 'markerCreated', position: position});
@@ -1687,6 +1692,10 @@ export const DrawHelper = (function() {
             }, 'drop-poi-link');
 
             addIcon('polyline', options.polylineIcon, 'Click to start drawing a 2D polyline', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.add("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.remove("active");
                 drawHelper.startDrawingPolyline({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polylineCreated', positions: positions});
@@ -1695,6 +1704,10 @@ export const DrawHelper = (function() {
             }, 'line-link');
 
             addIcon('polygon', options.polygonIcon, 'Click to start drawing a 2D polygon', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.add("active");
+                document.getElementById("circle").classList.remove("active");
                 drawHelper.startDrawingPolygon({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polygonCreated', positions: positions});
@@ -1711,6 +1724,10 @@ export const DrawHelper = (function() {
             // })
 
             addIcon('circle', options.circleIcon, 'Click to start drawing a Circle', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.add("active");
                 drawHelper.startDrawingCircle({
                     callback: function(center, radius) {
                         _self.executeListeners({name: 'circleCreated', center: center, radius: radius});
