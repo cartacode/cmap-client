@@ -92,9 +92,9 @@ class LayerPopupComponent extends React.Component {
             let lon = Math.random() * (+max - +min) + +min;
             let map_str = key[i] + "_" + j;
             // this.props.toggleMapLayer(map_str);
-            //call 3D pin
+            // call 3D pin
             this.props.add3DPin(lat, lon, this.state.static_data[key[i]].imageId, '', map_str, '', '', true);
-            console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
+            // console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
         }
 
     }

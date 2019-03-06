@@ -9,7 +9,7 @@ import './PlatformPopupItemComponent.scss';
 class PlatformPopupItemComponent extends React.Component {
 
   constructor(props) {
-      console.log("checkbox props ",props);
+    // console.log("checkbox props ",props);
     super(props);
     this.state = {
       checked: props.checked,

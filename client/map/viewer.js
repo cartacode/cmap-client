@@ -110,9 +110,9 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   //}
 
   //var cesiumWidget = new Cesium.CesiumWidget(elementId, {scene3DOnly: true});
-  if (liveViewToolBar) {
+  if (true) {
     var drawHelper = new DrawHelper(viewer);
-    var toolbar = drawHelper.addToolbar(document.getElementById("drawingToolBar"), {
+    var toolbar = drawHelper.addToolbar(document.getElementById("drawingToolsRight"), {
       buttons: ['marker', 'polyline', 'polygon', 'circle']
     });
 
