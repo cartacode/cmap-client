@@ -139,10 +139,12 @@ class IntelReqPopupComponent extends React.Component {
             if((new Date(item.ActiveDateTimeEnd) < (new Date()))) { return; }
             console.log("ITEM",item.GridCoordinates);
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
-
+            let tooltipTextData = '<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
+            'Intel Request #' + item.ReqUserFrndlyID + '<br/>' + item.MissionTypeText + '<br/>' + item.SupportedUnitName +
+            '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
               //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
-              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', '', false);
+              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, item.ReportClassificationName, tooltipTextData, false);
             }
 
             return <PlatformPopupItemComponent
@@ -163,9 +165,8 @@ class IntelReqPopupComponent extends React.Component {
               key={index}
               addKML={this.props.addKML}
               removeKML={this.props.removeKML}
-              tooltipText={'<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
-              'Intel Request #' + item.ReqUserFrndlyID + '<br/>' + item.MissionTypeText + '<br/>' + item.SupportedUnitName +
-              '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
+              tooltipLabel={item.ReportClassificationName}
+              tooltipText={tooltipTextData}
             />;
           }) }
         </div>
