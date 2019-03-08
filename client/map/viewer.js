@@ -683,7 +683,9 @@ export async function addNew3DPin(latitude, longitude, iconName, pinText, pinId,
                 minimumPixelSize: 50,
                 maximumScale: 200000
             },
-        description: `lat:${latitude} lon:${longitude}, type:${iconName}`,
+        //description: `lat:${latitude} lon:${longitude}, type:${iconName}`,
+        description:`${tooltipText}`,
+        name:`${tooltipLabel}`,
         show : false
     });
     //console.log("VIOLENT",x.id);

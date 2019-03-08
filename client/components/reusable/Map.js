@@ -136,7 +136,7 @@ export default class Map extends React.PureComponent {
     if(this.props.setOneLocation) {
       // alert("pppp");
       removePinById('IR-GRID-COORDS', this.props.viewerId, true);
-      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, '', '', true);
+      addNewPin(worldPosition.latitude, worldPosition.longitude, 'marker', null, Cesium.Color.RED, 'IR-GRID-COORDS', this.props.viewerId, this.props.tooltipLabel,this.props.tooltipText, true);
 
       //placeholder for future code
       const returnObj = [{city:'',id:''},{city:'',id:''}];

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+<visibility>1</visibility>
+<NetworkLink>
+<name>PP1</name>
+<flyToView>0</flyToView>
+<Url><href>http://alphaalpha.ddns.net:4181/pp_google.kml</href>
+<refreshMode>onInterval</refreshMode>
+<refreshInterval>4</refreshInterval>
+<viewRefreshMode>never</viewRefreshMode>
+</Url>
+<refreshVisibility>1</refreshVisibility>
+</NetworkLink>
+</Document>
+</kml>

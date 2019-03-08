@@ -95,9 +95,14 @@ class PlatformPopupComponent extends React.Component {
 
         <div className="checklist-block">
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
+            let tooltipLabelData = item.name;
+            let tooltipTextData =  '<img src="/assets/img/admin/aircraft.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' +
+            item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
+            '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
              this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
                                Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
-                               'airplane_logo', '', item.id, '', '', false);
+                               'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData , false);
+                              
 
              return <PlatformPopupItemComponent
               color={'#008000'}
@@ -115,10 +120,8 @@ class PlatformPopupComponent extends React.Component {
               add3DPin={this.props.add3DPin}
               removePin={this.props.removePin}
               key={index}
-              tooltipLabel={item.name}
-              tooltipText={'<img src="/assets/img/admin/aircraft.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' +
-              item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
-              '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
+              tooltipLabel={tooltipLabelData}
+              tooltipText={tooltipTextData}
             />;
           }) }
         </div>

@@ -124,12 +124,12 @@ class LayerPopupComponent extends React.Component {
     else{
         // if no Data coming in API to display, Load KML File
         // if check box value true load KML file
-        if(selected) {
-            this.props.addKML('./assets/demo.kml', number+'-PARENT');
-          } else {
+       // if(selected) {
+       //     this.props.addKML('./assets/demo.kml', number+'-PARENT');
+        //  } else {
               // if check box value false Remove KML data for that Layer
-            this.props.removeKML(number+'-PARENT');
-          }
+        //    this.props.removeKML(number+'-PARENT');
+        //  }
     } 
 
         //this.props.toggleMapLayer(map_str);
@@ -211,7 +211,8 @@ class LayerPopupComponent extends React.Component {
                             && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360){
                                 let temp = dat.latitude + ',' + dat.longitude;
                                 let temp_map_data = this.getLatLongFromGridCoords(temp);
-                                arr.push({lat :temp_map_data.latitude , lon : temp_map_data.longitude});
+                                arr.push({lat :temp_map_data.latitude , lon : temp_map_data.longitude, allData : dat});
+
                             }
                         });
                         let image = "";
@@ -237,12 +238,11 @@ class LayerPopupComponent extends React.Component {
                             && dat.latitude!= '' && dat.latitude <=360  && dat.latitude >=-360 &&
                             dat.longitude!='undefined' && dat.longitude!= null
                             && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360){
-                                data[this.makeStr(list.name)].value.push({lat :dat.latitude , lon : dat.longitude});
+                                data[this.makeStr(list.name)].value.push({lat :dat.latitude , lon : dat.longitude, allData : dat });
                             }
                         });
                     }
                 });
-
                 let key = Object.keys(data);
                 // key.forEach((k) => {
                 //     console.log("CREATE PARENT ",k);
@@ -259,13 +259,13 @@ class LayerPopupComponent extends React.Component {
                             //add pin call
                             let image_id = data[key[i]].imageId;
                             let arr_of_point = data[key[i]].value;
-                            console.log("ARRAY",arr_of_point);
                             let j =0;
                             if(!(key[i] in this.toggle_data)){
                             arr_of_point.forEach((pin) => {
-                                console.log("CREATE CHILD ",key[i],pin);
-
-                                this.props.add3DPin(pin.lat,pin.lon,image_id,'',key[i] + '_' + j,'','',false);
+                                let tooltipTextData = '<img src="/assets/img/live_view/map_layer/'+image_id+'.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
+                                'Name : '+pin.allData.name+'<br/>'+'lat : ' + pin.lat + '<br/>' + 'long : '+pin.lon+ '<br/>' + 'Description : '+pin.allData.description +
+                                '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
+                                this.props.add3DPin(pin.lat,pin.lon,image_id,'',key[i] + '_' + j,pin.allData.name,tooltipTextData,false);
                                 j++
                             });
                             this.toggle_data[key[i]] = {
