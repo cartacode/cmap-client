@@ -101,7 +101,7 @@ class PersonnelPopupComponent extends React.Component {
             //   'campsite', null, 'orange', item.ID);
               this.props.add3DPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
                                 Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-                                'people_logo', '', item.id, '', '', false);
+                                'people_logo', '', item.ID, '', '', false);
 
             return <PlatformPopupItemComponent
               color={'#FFA500'}
