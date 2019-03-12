@@ -55,7 +55,7 @@ class PersonnelPopupComponent extends React.Component {
 
   render() {
     const { allPersonnels } = this.props;
-   
+
     let itemsToDisplay = this.state.itemsToDisplay ? this.state.itemsToDisplay : allPersonnels;
     return (
       <div className={'personnel-popup-block popup-block scroll-pane' + ((this.props.popupOpen && this.props.menuClicked) ? ' opened' : '')}>

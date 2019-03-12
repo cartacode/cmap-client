@@ -20,7 +20,7 @@ class DrawingPopupAddPolygonComponent extends React.Component {
 
   render() {
     return (
-      <div className={'drawing-popup-block-add-polygon' + (this.props.showOpen ? ' opened' : '')}>
+      <div id="add-polygon" className={'drawing-popup-block-add-polygon' + (this.props.showOpen ? ' opened' : '')}>
         <div className={'m-2 border-bottom-1'}>Add Polygon</div>
         <div className={'p-3'} style={{background: '#022033'}}>
 

@@ -22,6 +22,7 @@ class LayerPopupComponent extends React.Component {
         };
         this.state = {
             showAll: true,
+
             // toggle_data : {
             //     key : {
             //         count : 0,
@@ -112,8 +113,8 @@ class LayerPopupComponent extends React.Component {
         //
         // }
 
+        };
 
-    }
 
     componentDidMount() {
         //this.props.fetchLocationKMLs();
@@ -210,6 +211,7 @@ class LayerPopupComponent extends React.Component {
             }
         }
 
+
         // check checkbox status
         if(selected) {
             // if data is coming in API
@@ -227,7 +229,7 @@ class LayerPopupComponent extends React.Component {
                // if check box value false Remove KML data for that Layer
              this.props.removeKML(number+'-PARENT');
            }
-    }
+ }
     else{
         // if no Data coming in API to display, Load KML File
         // if check box value true load KML file
@@ -317,12 +319,14 @@ class LayerPopupComponent extends React.Component {
 
                         let arr =[];
                         list.data.forEach((dat) => {
+
                             // if file location given ignore lat lng value
                             if(dat.latitude!='undefined' && dat.latitude!= null
                             && dat.latitude!= '' && dat.latitude <=360  && dat.latitude >=-360 &&
                             dat.longitude!='undefined' && dat.longitude!= null
                             && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360
                             && !(dat.fileLocation != '' && dat.fileLocation != undefined && dat.fileLocation != null ) ){
+
                                 let temp = dat.latitude + ',' + dat.longitude;
                                 let temp_map_data = this.getLatLongFromGridCoords(temp);
                                 arr.push({lat :temp_map_data.latitude , lon : temp_map_data.longitude, allData : dat});
@@ -347,6 +351,7 @@ class LayerPopupComponent extends React.Component {
                 }
                     else{
                         list.data.forEach((dat) => {
+
                             // if file location given ignore lat lng value
                             if(dat.latitude!='undefined' && dat.latitude!= null
                             && dat.latitude!= '' && dat.latitude <=360  && dat.latitude >=-360 &&
@@ -462,8 +467,8 @@ class LayerPopupComponent extends React.Component {
                 {
                 number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
                 && number.subCategories.map((subCategory) =>
-                <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, '')}/> </div>
-            )
+               <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, '')}/> </div>
+               )
         }
         </div>
     )

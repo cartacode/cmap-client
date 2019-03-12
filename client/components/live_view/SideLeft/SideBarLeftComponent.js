@@ -87,10 +87,10 @@ class SideBarLeftComponent extends React.Component {
 
   render() {
     const { menuClicked } = this.state;
-
+    const {toolbar_show} = this.props;
     return (
       <div style={{background: 'rgba(40, 72, 98, 0.7)' }}>
-        <div className="sidebar-left-block sidebar-block">
+        {toolbar_show && <div className="sidebar-left-block sidebar-block">
           <a href="#" className="logo">
             <img src="../../../../assets/img/live_view/logo.png" alt="logo" />
           </a>
@@ -117,6 +117,7 @@ class SideBarLeftComponent extends React.Component {
             </li>
           </ul>
         </div>
+        }
 
         <PlatformPopupComponent
           popupOpen={this.state.popupOpen}

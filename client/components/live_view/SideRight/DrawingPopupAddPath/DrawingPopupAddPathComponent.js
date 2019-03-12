@@ -21,7 +21,7 @@ class DrawingPopupAddPathComponent extends React.Component {
 
   render() {
     return (
-      <div className={'drawing-popup-block-add-path' + (this.props.showOpen ? ' opened' : '')}>
+      <div id="add-path" className={'drawing-popup-block-add-path' + (this.props.showOpen ? ' opened' : '')}>
         <div className={'m-2 border-bottom-1'}>Add Path</div>
         <div className={'p-3'} style={{background: '#022033'}}>
 

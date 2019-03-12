@@ -41,6 +41,7 @@ class DrawingPopupComponent extends React.Component {
 
   render() {
     const { addPopOpens } = this.state;
+    const selfie = this;
     return (
       <div className={'drawing-popup-block right-popup-block' + (this.props.drawingPopupOpen ? ' opened' : '')}>
         <div className="scroll-pane">
@@ -57,22 +58,8 @@ class DrawingPopupComponent extends React.Component {
           </div>
 
           <div className="primary-tools-menu">
-            <div className="figures-block primary-list-block clearfix">
-              <div className={'drop-poi-link' + (addPopOpens[4] ? ' active' : '')}>
-                <a href="#" onClick={(e) => this.onShowAddPanel(4, e)}>Drop</a>
-              </div>
-              <div className={'rectangle-link' + (addPopOpens[0] ? ' active' : '')}>
-                <a href="#" onClick={(e) => this.onShowAddPanel(0, e)}>Rectangle</a>
-              </div>
-              <div className={'polygon-link' + (addPopOpens[1] ? ' active' : '')}>
-                <a href="#" onClick={(e) => this.onShowAddPanel(1, e)}>Polygon</a>
-              </div>
-              <div className={'circle-link' + (addPopOpens[2] ? ' active' : '')}>
-                <a href="#" onClick={(e) => this.onShowAddPanel(2, e)}>Circle</a>
-              </div>
-              <div className={'path-link' + (addPopOpens[3] ? ' active' : '')}>
-                <a href="#" onClick={(e) => this.onShowAddPanel(3, e)}>Path</a>
-              </div>
+            <div id="drawingToolsRight" className="figures-block primary-list-block clearfix">
+              
             </div>
           </div>
 

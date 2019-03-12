@@ -789,7 +789,6 @@ export const DrawHelper = (function() {
     }
 
     _.prototype.startDrawingMarker = function(options) {
-
         var options = copyOptions(options, defaultBillboard);
 
         this.startDrawing(
@@ -1642,10 +1641,10 @@ export const DrawHelper = (function() {
             }
 
             var drawOptions = {
-                markerIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_242_google_maps.png",
-                polylineIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_097_vector_path_line.png",
-                polygonIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_096_vector_path_polygon.png",
-                circleIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_095_vector_path_circle.png",
+                markerIcon: "/assets/img/live_view/droppoi_icon.png", // "/vendor/cesium-drawhelper-master/img/glyphicons_242_google_maps.png",
+                polylineIcon: "/assets/img/live_view/line_icon.png", // "/vendor/cesium-drawhelper-master/img/glyphicons_097_vector_path_line.png",
+                polygonIcon: "/assets/img/live_view/polygon_icon.png",  // "/vendor/cesium-drawhelper-master/img/glyphicons_096_vector_path_polygon.png",
+                circleIcon: "/assets/img/live_view/circle_icon.png", // "/vendor/cesium-drawhelper-master/img/glyphicons_095_vector_path_circle.png",
                // extentIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_094_vector_path_square.png",
                 clearIcon: "/vendor/cesium-drawhelper-master/img/glyphicons_067_cleaning.png",
                 polylineDrawingOptions: defaultPolylineOptions,
@@ -1662,45 +1661,71 @@ export const DrawHelper = (function() {
             toolbar.className = "toolbar";
             options.container.appendChild(toolbar);
 
-            function addIcon(id, url, title, callback) {
+            function addIcon(id, url, title, callback, className = '') {
                 var div = document.createElement('DIV');
-                div.className = 'button';
+                div.className = 'button ' + className;
+                div.id = id;
                 div.title = title;
                 toolbar.appendChild(div);
                 div.onclick = callback;
+                console.log(url);
                 var span = document.createElement('SPAN');
                 div.appendChild(span);
                 var image = document.createElement('IMG');
                 image.src = url;
-                span.appendChild(image);
+                // span.appendChild(image);
                 return div;
             }
 
             var scene = drawHelper._scene;
 
             addIcon('marker', options.markerIcon, 'Click to start drawing a 2D marker', function() {
+                document.getElementById("marker").classList.add("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.add("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingMarker({
                     callback: function(position) {
                         _self.executeListeners({name: 'markerCreated', position: position});
                     }
                 });
-            })
+            }, 'drop-poi-link');
 
             addIcon('polyline', options.polylineIcon, 'Click to start drawing a 2D polyline', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.add("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.add("opened");
                 drawHelper.startDrawingPolyline({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polylineCreated', positions: positions});
                     }
                 });
-            })
+            }, 'line-link');
 
             addIcon('polygon', options.polygonIcon, 'Click to start drawing a 2D polygon', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.add("active");
+                document.getElementById("circle").classList.remove("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.remove("opened");
+                document.getElementById("add-polygon").classList.add("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingPolygon({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polygonCreated', positions: positions});
                     }
                 });
-            })
+            }, 'polygon-link');
 
             // addIcon('extent', options.extentIcon, 'Click to start drawing an Extent', function() {
             //     drawHelper.startDrawingExtent({
@@ -1711,21 +1736,29 @@ export const DrawHelper = (function() {
             // })
 
             addIcon('circle', options.circleIcon, 'Click to start drawing a Circle', function() {
+                document.getElementById("marker").classList.remove("active");
+                document.getElementById("polyline").classList.remove("active");
+                document.getElementById("polygon").classList.remove("active");
+                document.getElementById("circle").classList.add("active");
+                document.getElementById("add-marker").classList.remove("opened");
+                document.getElementById("add-circle").classList.add("opened");
+                document.getElementById("add-polygon").classList.remove("opened");
+                document.getElementById("add-path").classList.remove("opened");
                 drawHelper.startDrawingCircle({
                     callback: function(center, radius) {
                         _self.executeListeners({name: 'circleCreated', center: center, radius: radius});
                     }
                 });
-            })
+            }, 'circle-link');
 
             // add a clear button at the end
             // add a divider first
-            var div = document.createElement('DIV');
+            /*var div = document.createElement('DIV');
             div.className = 'divider';
             toolbar.appendChild(div);
             addIcon('clear', options.clearIcon, 'Remove all primitives', function() {
                 scene.primitives.removeAll();
-            });
+            });*/
 
             enhanceWithListeners(this);
 
