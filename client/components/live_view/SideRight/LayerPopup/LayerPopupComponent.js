@@ -22,9 +22,99 @@ class LayerPopupComponent extends React.Component {
         };
         this.state = {
             showAll: true,
+
+            // toggle_data : {
+            //     key : {
+            //         count : 0,
+            //         flag : false
+            //     }
+            // }
+            // static_data : {
+            //      air :{
+            //          length : 25,
+            //          imageId : 'airplane_logo'
+            //      },
+            //      maritime :{
+            //          length : 50,
+            //          imageId : 'boat'
+            //      },
+            //      personnel :{
+            //          length : 30,
+            //          imageId : 'people_logo'
+            //      },
+            //      sensor :{
+            //          length : 90,
+            //          imageId : 'bolt_logo'
+            //      },
+            //      blue_forces :{
+            //          length : 10,
+            //          imageId : 'horse_logo'
+            //      },
+            //      bases :{
+            //          length : 12,
+            //          imageId : 'house_logo'
+            //      },
+            //      intel_requirement :{
+            //          length : 30,
+            //          imageId : 'paper_list_logo'
+            //      },
+            //      pois :{
+            //          length : 10,
+            //          imageId : 'star_logo'
+            //      },
+            //      ci :{
+            //          length : 25,
+            //          imageId : 'eye_logo'
+            //      },
+            //      sigint :{
+            //          length : 10,
+            //          imageId : 'stats_logo'
+            //      },
+            //      oswt :{
+            //          length : 20,
+            //          imageId : 'megaphone_logo'
+            //      },
+            //      gmti :{
+            //          length : 30,
+            //          imageId : 'pointer_logo'
+            //      },
+            //      intel_request_collection_point :{
+            //          length : 15,
+            //          imageId : 'cross_logo'
+            //      },
+            //      observation :{
+            //          length : 20,
+            //          imageId : 'lens_logo'
+            //      },
+            //      media :{
+            //          length : 12,
+            //          imageId : 'photocamera_logo'
+            //      }
+            //  }
         };
 
-    }
+        // Code to create the points
+        // let arr =  this.props.allLayers;
+        // alert(arr);
+        // let key = Object.keys(this.state.static_data);
+        // for(let i=0 ; i < key.length ; i++){
+        //     let len = this.state.static_data[key[i]].length;
+        //     for(let j=0;j<len;j++){
+        //         let min=0;
+        //         let max=200;
+        //         let lat = Math.random() * (+max - +min) + +min;
+        //         let lon = Math.random() * (+max - +min) + +min;
+        //         let map_str = key[i] + "_" + j;
+        //         // this.props.toggleMapLayer(map_str);
+        //         //call 3D pin
+        //         this.props.add3DPin(lat, lon, this.state.static_data[key[i]].imageId, '', map_str, '', '', true);
+        //         console.log("3DPIN", map_str, lon, lat, this.state.static_data[key[i]].imageId);
+        //     }
+        //
+        // }
+
+        };
+
 
     componentDidMount() {
         //this.props.fetchLocationKMLs();
@@ -120,16 +210,41 @@ class LayerPopupComponent extends React.Component {
                 this.props.toggleMapLayer(str_temp+'_'+i);
             }
         }
-    }
+
+
+        // check checkbox status
+        if(selected) {
+            // if data is coming in API
+             if(layerData.length > 0){
+                 // read each record
+                 layerData.map((d) => {
+                     // if in location file path given
+                     if(d.fileLocation != null && d.fileLocation != '' && d.fileLocation != undefined){
+                         // load kml/kmz
+                         this.props.addKML(d.fileLocation, number+'-PARENT');
+                     }
+                 });
+             }
+         } else {
+               // if check box value false Remove KML data for that Layer
+             this.props.removeKML(number+'-PARENT');
+           }
+ }
     else{
         // if no Data coming in API to display, Load KML File
         // if check box value true load KML file
-       // if(selected) {
-       //     this.props.addKML('./assets/demo.kml', number+'-PARENT');
-        //  } else {
+       /* if(selected) {
+            if(layerData.length > 0){
+                layerData.map((d) => {
+                    if(d.fileLocation != null && d.fileLocation != '' && d.fileLocation != undefined){
+                        this.props.addKML('./assets/demo.kml', number+'-PARENT');
+                    }
+                });
+            }
+        } else {
               // if check box value false Remove KML data for that Layer
-        //    this.props.removeKML(number+'-PARENT');
-        //  }
+            this.props.removeKML(number+'-PARENT');
+          } */
     } 
 
         //this.props.toggleMapLayer(map_str);
@@ -205,10 +320,13 @@ class LayerPopupComponent extends React.Component {
                         let arr =[];
                         list.data.forEach((dat) => {
 
+                            // if file location given ignore lat lng value
                             if(dat.latitude!='undefined' && dat.latitude!= null
                             && dat.latitude!= '' && dat.latitude <=360  && dat.latitude >=-360 &&
                             dat.longitude!='undefined' && dat.longitude!= null
-                            && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360){
+                            && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360
+                            && !(dat.fileLocation != '' && dat.fileLocation != undefined && dat.fileLocation != null ) ){
+
                                 let temp = dat.latitude + ',' + dat.longitude;
                                 let temp_map_data = this.getLatLongFromGridCoords(temp);
                                 arr.push({lat :temp_map_data.latitude , lon : temp_map_data.longitude, allData : dat});
@@ -234,10 +352,12 @@ class LayerPopupComponent extends React.Component {
                     else{
                         list.data.forEach((dat) => {
 
+                            // if file location given ignore lat lng value
                             if(dat.latitude!='undefined' && dat.latitude!= null
                             && dat.latitude!= '' && dat.latitude <=360  && dat.latitude >=-360 &&
                             dat.longitude!='undefined' && dat.longitude!= null
-                            && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360){
+                            && dat.longitude!= '' && dat.longitude <=360  && dat.longitude >=-360
+                            && !(dat.fileLocation != '' && dat.fileLocation != undefined && dat.fileLocation != null ) ){
                                 data[this.makeStr(list.name)].value.push({lat :dat.latitude , lon : dat.longitude, allData : dat });
                             }
                         });
@@ -347,8 +467,8 @@ class LayerPopupComponent extends React.Component {
                 {
                 number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
                 && number.subCategories.map((subCategory) =>
-                <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, number.data)}/> </div>
-            )
+               <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, '')}/> </div>
+               )
         }
         </div>
     )
