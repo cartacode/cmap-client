@@ -461,7 +461,7 @@ class BaseModal extends React.Component {
          </div>
          <div className = "row personnel">
            <div className="col-md-12">
-             <Map size={100} viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} toolBarOptions={{show:false}}/>
+             <Map size={100} height={95} viewerId={viewerIdentifiers.location} updateLatLong={this.updateLatLong} toolBarOptions={{show: false}} enableLiveViewToolBar = {false}/>
            </div>
          </div>
          <div className="row personnel" >
