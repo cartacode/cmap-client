@@ -461,13 +461,13 @@ class LayerPopupComponent extends React.Component {
                     />;
                 }) */}
                 {
-                allLayers.map((number) =>
-                <div className="popup-item">
+                allLayers.map((number, i) =>
+                <div className="popup-item" key={i}>
                 {number.name} <CheckBox onChangeState={this.myFunction.bind(this, number.name, number.data)}/>
                 {
                 number.subCategories !=null && number.subCategories != '' && number.subCategories != undefined
-                && number.subCategories.map((subCategory) =>
-               <div className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, '')}/> </div>
+                && number.subCategories.map((subCategory, j) =>
+               <div key = {j} className="popup-item sub-nav-option">{subCategory.name} <CheckBox  onChangeState={this.myFunction.bind(this,subCategory.name, '')}/> </div>
                )
         }
         </div>
