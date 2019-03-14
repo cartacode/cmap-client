@@ -876,10 +876,15 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
             viewer.infoBox.container.style.top = movement.position.y + 'px';
             viewer.infoBox.container.style.left = movement.position.x + 'px';
             viewer.infoBox.container.style.display = 'block';
-
+            // Close Event
+            viewer.infoBox.viewModel.closeClicked.addEventListener(function() { viewer.infoBox.container.style.display = 'none'; });
+            
             // Hiding the lat long functionality and showing the data
             viewer.infoBox.container.childNodes[0].style.display = 'block';
-            viewer.infoBox.container.childNodes[1].style.display = 'none';
+            
+            if(viewer.infoBox.container.childNodes[1] != '' && viewer.infoBox.container.childNodes[1] != null && viewer.infoBox.container.childNodes[1] != undefined){
+              viewer.infoBox.container.childNodes[1].style.display = 'none';
+            }
           }
 
           // commenting for the demo; continue build after demo
