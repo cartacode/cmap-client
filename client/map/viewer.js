@@ -1052,7 +1052,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
             let layer = $('#layer-select option:selected').text();
             console.log(layer);
             if (layer === 'Blue Forces')
-              layer = 'bolt_logo';
+              layer = 'horse_logo';
             else if (layer === 'Intel Report')
               layer = 'paper_list_logo';
             else if (layer === 'Observation')
