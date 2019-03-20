@@ -122,10 +122,10 @@ class PersonnelPopupComponent extends React.Component {
               add3DPin={this.props.add3DPin}
               removePin={this.props.removePin}
               key={index}
-              tooltipLabel={item.firstName + ' ' + item.lastName}
+              tooltipLabel={''}
               tooltipText={'<img src="/assets/img/admin/photo_1_old.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' + item.firstName + ' ' + item.lastName +
               '<br/>' + item.rank + '<br/>' + item.branchOfService + ' / ' + item.assignedUnit + '<br/>' + item.branchOfService + ' / ' + item.deployedUnit + '<br/>' +
-              item.location + '<br/>' + item.status + '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
+              item.location + '<br/>' + item.status + '<a style="position: absolute; right: 0px; color: #b8850c;"><strong>Details</strong></a>'}
             />;
           }) }
         </div>

@@ -141,10 +141,10 @@ class IntelReqPopupComponent extends React.Component {
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
             let tooltipTextData = '<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
             'Intel Request #' + item.ReqUserFrndlyID + '<br/>' + item.MissionTypeText + '<br/>' + item.SupportedUnitName +
-            '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
+            '<a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
             if(latLong.latitude !== 0 && latLong.longitude !== 0) {
               //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
-              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, item.ReportClassificationName, tooltipTextData, false);
+              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', tooltipTextData, false);
             }
 
             return <PlatformPopupItemComponent
@@ -165,7 +165,7 @@ class IntelReqPopupComponent extends React.Component {
               key={index}
               addKML={this.props.addKML}
               removeKML={this.props.removeKML}
-              tooltipLabel={item.ReportClassificationName}
+              tooltipLabel={''}
               tooltipText={tooltipTextData}
             />;
           }) }
