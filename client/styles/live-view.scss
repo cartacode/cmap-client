@@ -1113,10 +1113,12 @@ button.btn-save {
 .cesium-viewer-infoBoxContainer {
   position: absolute;
   top: 0px;
-  background: rgba(40, 72, 98, .9) !important;
+  background: rgb(27, 55, 78) !important;
   color: #FFF;
-  border: 1px solid #FF7C16;
+  border: -1px solid #fff;
   width: 400px;
+  height: 98px;
+  border: 1px solid #fff;
  
 }
 
@@ -1128,14 +1130,14 @@ button.btn-save {
   overflow: hidden;
   border: none;
   height: 100px!important;
-  width: 360px;
+  width: 387px;
 }
 
 
 .cesium-viewer-infoBoxContainer .cesium-infoBox-close {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: 0px;
+  right: 0px;
   margin-right: 0 !important;
 }
 
@@ -1181,4 +1183,8 @@ margin: 0px;
 }
 .cesium-viewer-infoBoxContainer form {
     padding: 10px 27px!important;
+}
+button.cesium-infoBox-close {
+  background: transparent;
+  border: none!important;
 }
