@@ -95,10 +95,11 @@ class PlatformPopupComponent extends React.Component {
 
         <div className="checklist-block">
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
-            let tooltipLabelData = item.name;
-            let tooltipTextData =  '<img src="/assets/img/admin/aircraft.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' +
+            let tooltipLabelData = '';//item.name;
+            let tooltipTextData =  '<div class="div-image" style="width: 35%; float: left;"><img width="100%" src="/assets/img/admin/aircraft.png" ></div>' +
+            '<div style="float: left; width: 54%;padding: 0px 10px; line-height: 18px;">' +
             item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
-            '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
+            '<a style="loat: right; color: #b8850c;" class="action_detail"><strong> Details </strong></a></div>';
              this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
                                Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
                                'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData , false);

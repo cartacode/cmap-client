@@ -1188,7 +1188,7 @@ export function toggleMapLayerIcon(map_name, viewerId) {
   const viewer = viewers.get(viewerId);
   if(viewer.entities.getById(map_name) != undefined){
       const entity =viewer.entities.getById(map_name);
-      console.log("TOGGLE",entity.id);
+      //console.log("TOGGLE",entity.id);
       entity.show = !entity.show;
   }
 
