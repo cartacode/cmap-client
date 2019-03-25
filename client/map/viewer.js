@@ -873,6 +873,14 @@ async function attachLeftClick(viewer, viewerId, leftClickHandler) {
         if (pickedObject.id && pickedObject.id.description) {
 
           if (Cesium.defined(viewer.infoBox)) {
+           /*  var frame = viewer.infoBox.frame;
+            var cssLink = frame.contentDocument.createElement('link');
+            cssLink.href = Cesium.buildModuleUrl('../styles/custom.scss');
+            cssLink.rel = 'stylesheet';
+            cssLink.type = 'text/css';
+            frame.contentDocument.head.appendChild(cssLink); */
+            viewer.infoBox.container.id = 'left-click-container';
+
             viewer.infoBox.container.style.top = movement.position.y + 'px';
             viewer.infoBox.container.style.left = movement.position.x + 'px';
             viewer.infoBox.container.style.display = 'block';
@@ -973,7 +981,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
         if (Cesium.defined(viewer.infoBox)) {
 
           let parentDiv = document.createElement('div');
-
+          parentDiv.id = 'parentDiv';
           let form = document.createElement('form');
           form.setAttribute('action', ' ');
           form.style.padding = '10px';
@@ -1047,6 +1055,7 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
           let submitButton = document.createElement('button');
           submitButton.innerHTML = 'Submit';
           submitButton.id = 'add-icon';
+          viewer.infoBox.container.id = 'right-click-container';
           submitButton.onclick = (event) => {
             event.preventDefault();
             let layer = $('#layer-select option:selected').text();
@@ -1116,7 +1125,9 @@ async function attachRightClick(viewer, viewerId, rightClickHandler) {
 
             // viewer.flyTo(entity, {maximumHeight : 100000});
 
-            console.log($('#file-input').val());
+            //console.log($('#file-input').val());
+
+            //viewer.infoBox.container.id = 'right-click-container';
             viewer.infoBox.container.style.display = 'none';
           };
 

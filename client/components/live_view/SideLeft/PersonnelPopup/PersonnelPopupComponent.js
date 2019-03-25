@@ -102,7 +102,7 @@ class PersonnelPopupComponent extends React.Component {
             //   'campsite', null, 'orange', item.ID);
               this.props.add3DPin(Number(item.latitude) === 0 ? 38.889931 : Number(item.latitude),
                                 Number(item.longitude) === 0 ? -77.009003 : Number(item.longitude),
-                                'people_logo', '', item.ID, '', '<img src="/assets/img/admin/photo_1_old.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' + item.firstName + ' ' + item.lastName +
+                                'people_logo', '', item.ID, '', '<img src="/assets/img/admin/photo_1_old.png" style="height:62%;float:left;margin-left:-10px;margin-right:5px;">' + item.firstName + ' ' + item.lastName +
                                 '<br/>' + item.rank + '<br/>' + item.branchOfService + ' / ' + item.assignedUnit + '<br/>' + item.branchOfService + ' / ' + item.deployedUnit + '<br/>' +
                                 item.location + '<br/>' + item.status + '<a style="position: absolute; right: 0px; color: #b8850c;"><strong>Details</strong></a>', false);
 
@@ -123,9 +123,9 @@ class PersonnelPopupComponent extends React.Component {
               removePin={this.props.removePin}
               key={index}
               tooltipLabel={''}
-              tooltipText={'<img src="/assets/img/admin/photo_1_old.png" style="height:97%;float:left;margin-left:-10px;margin-right:5px;">' + item.firstName + ' ' + item.lastName +
+              tooltipText={'<img src="/assets/img/admin/photo_1_old.png" style="height:62%;float:left;margin-left:-10px;margin-right:5px;" />' + item.firstName + ' ' + item.lastName +
               '<br/>' + item.rank + '<br/>' + item.branchOfService + ' / ' + item.assignedUnit + '<br/>' + item.branchOfService + ' / ' + item.deployedUnit + '<br/>' +
-              item.location + '<br/>' + item.status + '<a style="position: absolute; right: 0px; color: #b8850c;"><strong>Details</strong></a>'}
+              item.location + '<br/>' + item.status + '<a style="position: absolute; right: 15px; color: #b8850c;"><strong>Details</strong></a>'}
             />;
           }) }
         </div>
