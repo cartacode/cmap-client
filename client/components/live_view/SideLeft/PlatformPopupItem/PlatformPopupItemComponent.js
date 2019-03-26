@@ -56,7 +56,7 @@ class PlatformPopupItemComponent extends React.Component {
         });
       } else if(this.props.pinType === '3D') {
         // this.props.add3DPin(this.props.lat, this.props.long, this.props.pinColor, '', this.props.uniqueID, '', '', false);
-        this.props.moveMap(this.props.lat, this.props.long);
+        this.props.moveMap(this.props.lat, this.props.long, this.props.uniqueID);
       } else {
         this.props.moveMap(this.props.lat, this.props.long);
       }

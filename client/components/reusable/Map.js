@@ -220,9 +220,9 @@ export default class Map extends React.PureComponent {
     return returnObj;
   }
 
-  positionMapToCoords = (lat, long) =>{
+  positionMapToCoords = (lat, long, uniqueId) =>{
     this.setState({ latlong: { latitude: lat, longitude: long, height: 0 } });
-    positionMap(lat, long, this.props.viewerId);
+    positionMap(lat, long, this.props.viewerId, uniqueId);
   }
 
   addPin =(lat, long, iconId, pinText, pinColor, pinId, tooltipLabel, tooltipText, pinType) =>{

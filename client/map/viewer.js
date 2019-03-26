@@ -459,12 +459,16 @@ export async function toggleShowEntity(entityId, bDisplay, viewerId, bDestroy = 
   }
 }
 
-export async function positionMap(latitude, longitude, viewerId) {
+export async function positionMap(latitude, longitude, viewerId, uniqueId) {
   let viewer = viewers.get(viewerId);
 
   if (!viewer) {
     await sleep(3000);
     viewer = viewers.get(viewerId);
+  }
+
+  if(uniqueId != null && uniqueId != undefined && uniqueId != ''){
+    toggleShowEntity(uniqueId, true, viewerId);
   }
 
   viewer.camera.flyTo({
