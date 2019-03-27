@@ -96,13 +96,20 @@ class PlatformPopupComponent extends React.Component {
         <div className="checklist-block">
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
             let tooltipLabelData = '';//item.name;
-            let tooltipTextData =  '<div class="div-image" style="width: 36%; border-right:1px solid #fff; float: left; margin:-15px 0px 0px -15px;"><img width="100%" src="/assets/img/admin/aircraft.png" /></div>' +
+             let tooltipTextData =  '<div class="div-image" style="width: 170px; height: 162px; border-right:1px solid #fff; float: left; margin:-15px 0px 0px -15px;"><img width="170px" height="162px" src="/assets/img/admin/aircraft.png" /></div>' +
             '<div style="float: left; width: 54%;padding: 5px 10px; line-height: 18px;">' +
-            item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
-            '<a style="position: absolute; right: 15px; color: #b8850c;" class="action_detail"><strong> Details </strong></a></div>';
             //  this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
             //                    Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
             //                    'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData, false);
+
+            '<ul><li>'+item.name + '</li><li>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '</li><li>' + item.location + '</li><li>' + item.StatusAbbrev +
+            '<a style="position: absolute; right: 15px; color: #b8850c;" class="action_detail"><strong> Details </strong></a></li></ul></div>';
+             
+          
+             /* this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
+                               Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
+                               'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData , false);
+ */
                               
 
              return <PlatformPopupItemComponent

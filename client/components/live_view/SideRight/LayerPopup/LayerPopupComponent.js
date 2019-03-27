@@ -382,10 +382,10 @@ class LayerPopupComponent extends React.Component {
                             let j =0;
                             if(!(key[i] in this.toggle_data)){
                             arr_of_point.forEach((pin) => {
-                                let tooltipTextData = '<img src="/assets/img/live_view/map_layer/'+image_id+'.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
-                                'Name : '+pin.allData.name+'<br/>'+'lat : ' + pin.lat + '<br/>' + 'long : '+pin.lon+ '<br/>' + 'Description : '+pin.allData.description +
-                                '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
-                                this.props.add3DPin(pin.lat,pin.lon,image_id,'',key[i] + '_' + j,pin.allData.name,tooltipTextData,false);
+                                let tooltipTextData = '<div style="    width: 170px; height: 162px;border-right:1px solid #fff; float: left; margin:-15px 0px 0px -15px;"><img width="170px" height="162px"  src="/assets/img/live_view/map_layer/'+image_id+'.png" /></div>' +
+                                '<div style="float: left; width: 54%; line-height: 18px;"><ul><li>Name : '+pin.allData.name+'</li><li>'+'lat : ' + pin.lat + '</li><li>' + 'long : '+pin.lon+ '</li><li>' + 'Description : '+pin.allData.description +
+                                '<a style="position: absolute; right: 15px; color: #b8850c;"><strong>Details</strong></a></li></ul></div>';
+                                this.props.add3DPin(pin.lat,pin.lon,image_id,'',key[i] + '_' + j,'',tooltipTextData,false);
                                 j++
                             });
                             this.toggle_data[key[i]] = {

@@ -157,9 +157,9 @@ class MissionPopupComponent extends React.Component {
               addKML={this.props.addKML}
               removeKML={this.props.removeKML}
               kmlSrc={item.FlightPlan}
-              tooltipText={'<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
-              item.MissionName + '<br/>' + item.Platform + '<br/>' + item.MissionType + '<br/>' + item.SupportedUnit +
-              '<br/><br/><a style="color:#ff7c16;float:right;"><strong>Details</strong></a>'}
+              tooltipText={'<div class="div-image" style="width: 170px; height: 162px; border-right:1px solid #fff; float: left; margin:-15px 0px 0px -15px;"><img width="170px" height="162px" src="/assets/img/admin/branch_unit_logos/u39.png" ></div>' +
+              '<div style="float: left; width: 54%;padding: 5px 10px; line-height: 18px;"><ul ><li>'+item.MissionName + '</li><li>' + item.Platform + '</li><li>' + item.MissionType + '</li><li>' + item.SupportedUnit +
+              '<a style="position: absolute; right: 15px; color: #b8850c;"><strong>Details</strong></a></li></ul></div>'}
             />;
           }) }
         </div>

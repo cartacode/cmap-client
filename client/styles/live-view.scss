@@ -1113,11 +1113,11 @@ button.btn-save {
 .cesium-viewer-infoBoxContainer {
   position: absolute;
   top: 0px;
-  background: rgb(27, 55, 78) !important;
+  //background: rgb(27, 55, 78) !important;
   color: #FFF;
   width: 450px;
-  height: auto;
-  border: 1px solid #fff;
+  height: auto !important;
+  //border: 1px solid #fff;
   margin:0px;
   padding:0px;
  
@@ -1131,8 +1131,8 @@ button.btn-save {
 
   border: none;
   height: auto!important;
-  width: 450px;
-  max-height: 114px;
+  width: 465px;
+  max-height: 175px !important;
 }
 
 
@@ -1215,5 +1215,18 @@ button.cesium-infoBox-close {
   #left-click-container {
     height: 114px;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
+}
+
+iframe.cesium-infoBox-iframe {
+  border: 1px solid #fff !important;
+}
+iframe.cesium-infoBox-iframe {
+  background: #072033;
+ 
+}
+
+#right-click-container {
+  background: #072033;
+  padding: 8px;
 }

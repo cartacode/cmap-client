@@ -139,13 +139,20 @@ class IntelReqPopupComponent extends React.Component {
             if((new Date(item.ActiveDateTimeEnd) < (new Date()))) { return; }
             //console.log("ITEM",item.GridCoordinates);
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
-            let tooltipTextData = '<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
-            'Intel Request #' + item.ReqUserFrndlyID + '<br/>' + item.MissionTypeText + '<br/>' + item.SupportedUnitName +
-            '<a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
+
+            
             // if(latLong.latitude !== 0 && latLong.longitude !== 0) {
             //   //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
             //   this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', tooltipTextData, false);
             // }
+
+            let tooltipTextData = '<div class="div-image" style="width: 170px; height: 162px; border-right:1px solid #fff; float: left; margin:-15px 0px 0px -15px;"><img width="170px" height="162px" src="/assets/img/admin/branch_unit_logos/u39.png" ></div>' +
+            '<div style="float: left; width: 54%;padding: 5px 10px; line-height: 18px;"><ul ><li>Intel Request #' + item.ReqUserFrndlyID + '</li><li>' + item.MissionTypeText + '</li><li>' + item.SupportedUnitName +
+            '<a style="position: absolute; right: 15px; color: #b8850c;"><strong>Details</strong></a></li></ul></div>';
+           /*  if(latLong.latitude !== 0 && latLong.longitude !== 0) {
+              //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
+              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', tooltipTextData, false);
+            } */
 
             return <PlatformPopupItemComponent
               color={(item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? '#90EE90' : '#FFFF00')}
