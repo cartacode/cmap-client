@@ -30,21 +30,25 @@ class SideBarLeftComponent extends React.Component {
       event.preventDefault();
     }
 
-    if (opened && this.state.popupOpen) {
-      this.setState({
-        popupOpen: false,
-      }, ()=>{
-        setTimeout(()=>{
-          this.setState({
-            popupOpen: true,
-          });
-        }, 300);
-      });
-    } else {
-      this.setState({
-        popupOpen: opened,
-      });
-    }
+    this.setState({
+      popupOpen: opened,
+    });
+
+    // if (opened && this.state.popupOpen) {
+    //   this.setState({
+    //     popupOpen: false,
+    //   }, ()=>{
+    //     setTimeout(()=>{
+    //       this.setState({
+    //         popupOpen: true,
+    //       });
+    //     }, 300);
+    //   });
+    // } else {
+    //   this.setState({
+    //     popupOpen: opened,
+    //   });
+    // }
 
     if (hasBall !== undefined) {
       this.setState({
@@ -87,10 +91,10 @@ class SideBarLeftComponent extends React.Component {
 
   render() {
     const { menuClicked } = this.state;
-    const {toolbar_show} = this.props;
+   // const {toolbar_show} = this.props;
     return (
       <div style={{background: 'rgba(40, 72, 98, 0.7)' }}>
-        {toolbar_show && <div className="sidebar-left-block sidebar-block">
+        {<div className="sidebar-left-block sidebar-block">
           <a href="#" className="logo">
             <img src="../../../../assets/img/live_view/logo.png" alt="logo" />
           </a>

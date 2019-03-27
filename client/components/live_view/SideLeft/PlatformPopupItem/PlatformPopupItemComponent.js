@@ -14,12 +14,16 @@ class PlatformPopupItemComponent extends React.Component {
     this.state = {
       checked: props.checked,
     };
+    this.onChangeState(true);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      checked: nextProps.checked,
-    });
+    if(this.state.checked !== nextProps.checked) {
+      this.onChangeState(nextProps.checked);
+      this.setState({
+        checked: nextProps.checked,
+      });
+    }
   }
 
   onRowChangeState = (e) => {
@@ -66,6 +70,7 @@ class PlatformPopupItemComponent extends React.Component {
   }
 
   onChangeState = (state) => {
+    // console.log('on chnage ' +state);
     if(state) {
       if(this.props.kmlSrc) {
         this.props.addKML(this.props.kmlSrc, this.props.uniqueID, this.props.tooltipText);
@@ -86,7 +91,7 @@ class PlatformPopupItemComponent extends React.Component {
   render() {
     const { color, popupText, textValue, hasColorBall } = this.props;
 
-    this.onChangeState(this.state.checked);
+   // this.onChangeState(this.state.checked);
 
     return (
       <div className="popup-item" onClick={(e)=>this.onRowChangeState(e)}>

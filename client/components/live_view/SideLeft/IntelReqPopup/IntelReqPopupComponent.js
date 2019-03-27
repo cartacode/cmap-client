@@ -137,15 +137,15 @@ class IntelReqPopupComponent extends React.Component {
           { itemsToDisplay && itemsToDisplay.map((item, index) => {
             // only display current and future items
             if((new Date(item.ActiveDateTimeEnd) < (new Date()))) { return; }
-            console.log("ITEM",item.GridCoordinates);
+            //console.log("ITEM",item.GridCoordinates);
             const latLong = this.getLatLongFromGridCoords(item.GridCoordinates);
             let tooltipTextData = '<img src="/assets/img/admin/branch_unit_logos/u39.png" style="height:97%;float:left;padding-left:15px;padding-right:15px;background:black;margin-left:-10px;margin-right:5px;">' +
             'Intel Request #' + item.ReqUserFrndlyID + '<br/>' + item.MissionTypeText + '<br/>' + item.SupportedUnitName +
             '<a style="color:#ff7c16;float:right;"><strong>Details</strong></a>';
-            if(latLong.latitude !== 0 && latLong.longitude !== 0) {
-              //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
-              this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', tooltipTextData, false);
-            }
+            // if(latLong.latitude !== 0 && latLong.longitude !== 0) {
+            //   //this.props.addPin(latLong.latitude, latLong.longitude, 'circle', item.ReqUserFrndlyID.toString(), (item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? 'lightGreen' : 'yellow'), item.ID, null, null, 'circle');
+            //   this.props.add3DPin(latLong.latitude, latLong.longitude, 'cross_logo', '', item.IntelRequestID, '', tooltipTextData, false);
+            // }
 
             return <PlatformPopupItemComponent
               color={(item.IsInCollectionPlan || (item.StatusId !== 1 && item.StatusId !== 21) ? '#90EE90' : '#FFFF00')}

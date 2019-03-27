@@ -49,11 +49,11 @@ class SideBarRightComponent extends React.Component {
   }
 
   render() {
-    const {toolbar_show} = this.props;
+    //const {toolbar_show} = this.props;
 
     return (
       <div>
-          {toolbar_show && <div className="sidebar-right-block sidebar-block">
+          {<div className="sidebar-right-block sidebar-block">
           <ul>
             <li className={'maps-link' + (this.state.mapsPopupOpen ? ' active' : '')}>
               <a href="#" onClick={(e)=>this.onPopup(true, 'mapsPopupOpen', e)}><span>Maps</span></a>

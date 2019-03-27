@@ -110,9 +110,10 @@ export function createViewer(viewerId, elementId, LEFT_DOUBLE_CLICK, LEFT_CLICK,
   //}
 
   //var cesiumWidget = new Cesium.CesiumWidget(elementId, {scene3DOnly: true});
-  if (true) {
+  const rightToolBar = document.getElementById("drawingToolsRight");
+  if (rightToolBar) {
     var drawHelper = new DrawHelper(viewer);
-    var toolbar = drawHelper.addToolbar(document.getElementById("drawingToolsRight"), {
+    var toolbar = drawHelper.addToolbar(rightToolBar, {
       buttons: ['marker', 'polyline', 'polygon', 'circle']
     });
 
@@ -334,7 +335,11 @@ export async function flyTo(container, viewerId) {
 
   var geocode = new Cesium.Geocoder({
     container: container,
-    scene: viewer.scene
+    scene: viewer.scene,
+    // autoComplete: true,
+    flightDuration: 2,
+    // url: 'https://dev.virtualearth.net',
+    // key: 'ArOgWQkl4MCPhYGdu_lpeZ68vphHIOr4OUo5xnLt3soQLDDWt0ZeXuOeJdd5iYkf',
   });
 }
 
@@ -1274,7 +1279,7 @@ export function addPoint(x, y, z, viewerId, label, focus = false) {
     }
   });
 
-  console.log(viewer);
+ // console.log(viewer);
   if (focus) {
     viewer.flyTo(viewer.entities);
   }

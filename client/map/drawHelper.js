@@ -1634,7 +1634,7 @@ export const DrawHelper = (function() {
 
         // constructor
         function _(drawHelper, options) {
-
+            console.log(options.container +' container');
             // container must be specified
             if(!(Cesium.defined(options.container))) {
                 throw new Cesium.DeveloperError('Container is required');
@@ -1668,7 +1668,7 @@ export const DrawHelper = (function() {
                 div.title = title;
                 toolbar.appendChild(div);
                 div.onclick = callback;
-                console.log(url);
+               // console.log(url);
                 var span = document.createElement('SPAN');
                 div.appendChild(span);
                 var image = document.createElement('IMG');

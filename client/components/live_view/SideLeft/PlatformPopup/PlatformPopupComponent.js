@@ -100,9 +100,9 @@ class PlatformPopupComponent extends React.Component {
             '<div style="float: left; width: 54%;padding: 5px 10px; line-height: 18px;">' +
             item.name + '<br/>' + item.branchOfService + ' / ' + (item.DeployedUnit ? item.DeployedUnit : item.owningUnit) + '<br/>' + item.location + '<br/>' + item.StatusAbbrev +
             '<a style="position: absolute; right: 15px; color: #b8850c;" class="action_detail"><strong> Details </strong></a></div>';
-             this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
-                               Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
-                               'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData , false);
+            //  this.props.add3DPin(Number(item.LocationLatitude) === 0 ? 38.889931 : Number(item.LocationLatitude),
+            //                    Number(item.LocationLongitude) === 0 ? -77.009003 : Number(item.LocationLongitude),
+            //                    'airplane_logo', '', item.id, tooltipLabelData, tooltipTextData, false);
                               
 
              return <PlatformPopupItemComponent

@@ -297,7 +297,7 @@ export default class Map extends React.PureComponent {
 
     return (
       <div className="d-flex">
-        {
+        {toolbar_show &&
           <SideBarLeftComponent
             moveMap={this.positionMapToCoords}
             addPin={this.addPin}
@@ -315,7 +315,7 @@ export default class Map extends React.PureComponent {
           <LocationInfoComponent latlong={latlong}/>
           {/* <ToolBar lookUpMode={this.lookUpMode} options={this.props.toolBarOptions} /> */}
         </div>
-        {
+        {toolbar_show &&
           <SideBarRightComponent
             setContainer={this.flyTo}
             setMapLayer={this.changeMapLayer}
