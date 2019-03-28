@@ -5508,13 +5508,16 @@ select.form-control.multiple-select {
 /************************************************** cesium map search box icon alignment  ****************/    
 
 #default-fly-to svg.cesium-svgPath-svg {
-   position: absolute;
+  position: absolute;
   right: 27px;
   top: 80px;
   cursor: pointer;
   width: 23px;
+  height: 24px;
+  left: unset;
   
 }
+
 #default-fly-to path {
   fill: #ed7d31;
 }
