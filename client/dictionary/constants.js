@@ -187,7 +187,8 @@ export const Error = {
 
 export const ImageryUrls = {
   BING_IMAGERY: 'https://dev.virtualearth.net',
-  GEOSERVER_IMAGERY: 'http://18.219.160.200:9090/geoserver/wms'
+ // GEOSERVER_IMAGERY: 'http://18.219.160.200:9090/geoserver/wms'
+ GEOSERVER_IMAGERY: 'http://18.221.155.233:8080/geoserver/amps/wms'
 }
 
 export const MapTypes = {
@@ -195,11 +196,19 @@ export const MapTypes = {
   INTERNET: 'internet'
 }
 
-export const LocalMapLayer = {
+/* export const LocalMapLayer = {
   WORLD_MAP: 'WORLD_RADAR:WORLDGEOTIF',
   ASIA_CATEGORIZED: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
   SYRIA_LEBANON: 'WORLD_RADAR:WORLDGEOTIF,SYRIA_LEBNON:Syria_Lenon_generated_Map'
+} */
+
+
+export const LocalMapLayer = {
+  WORLD_MAP: 'amps:WORLDGEOTIF',
+  ASIA_CATEGORIZED: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+  SYRIA_LEBANON: 'amps:WORLDGEOTIF,amps:amps_Layer_Group_Syria_lebanon_navigation'
 }
+
 
 /* Pending - Gray
 Available - White

@@ -4,7 +4,8 @@ const env = {
 }
 const mapDictionary = {
     production: "",
-    dev: "http://ec2-18-220-128-32.us-east-2.compute.amazonaws.com:8080/geoserver/wms",
+    //dev: "http://ec2-18-220-128-32.us-east-2.compute.amazonaws.com:8080/geoserver/wms",
+  dev: "http://ec2-18-221-155-233.us-east-2.compute.amazonaws.com:8080/geoserver/amps/wms",
 }
 /**
  * getImageryurl: Returns Imagery URL corresponding to server instance

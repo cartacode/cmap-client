@@ -3,7 +3,7 @@
   "version": "0.1.0-alpha",
   "scripts": {
     "prebuild": "npm run clean:public",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build": "cross-env NODE_ENV=production webpack --mode development",
     "clean": "npm-run-all clean:public clean:test",
     "clean:docs": "rimraf public/docs && mkdirp public/docs",
     "clean:public": "rimraf public && mkdirp public",
@@ -24,6 +24,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-preset-es2017": "^6.24.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^3.3.4",
     "cesium": "^1.47.0",
@@ -68,7 +69,8 @@
     "requirejs": "^2.3.6",
     "tinycolor2": "^1.4.1",
     "uuid": "^3.3.2",
-    "volleyball": "^1.4.1"
+    "volleyball": "^1.4.1",
+    "react-hot-loader": "^4.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.1",
