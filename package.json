@@ -3,7 +3,7 @@
   "version": "0.1.0-alpha",
   "scripts": {
     "prebuild": "npm run clean:public",
-    "build": "cross-env NODE_ENV=production webpack --mode development",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
     "clean": "npm-run-all clean:public clean:test",
     "clean:docs": "rimraf public/docs && mkdirp public/docs",
     "clean:public": "rimraf public && mkdirp public",
@@ -69,8 +69,7 @@
     "requirejs": "^2.3.6",
     "tinycolor2": "^1.4.1",
     "uuid": "^3.3.2",
-    "volleyball": "^1.4.1",
-    "react-hot-loader": "^4.3.3"
+    "volleyball": "^1.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.1",

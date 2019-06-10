@@ -205,7 +205,7 @@ export const MapTypes = {
 
 export const LocalMapLayer = {
   WORLD_MAP: 'amps:WORLDGEOTIF',
-  ASIA_CATEGORIZED: 'WORLD_RADAR:WORLDGEOTIF,asia_categorized:asia-osm',
+  ASIA_CATEGORIZED: 'amps:WORLDGEOTIF,amps:asia-osm',
   SYRIA_LEBANON: 'amps:WORLDGEOTIF,amps:amps_Layer_Group_Syria_lebanon_navigation'
 }
 
