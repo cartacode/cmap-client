@@ -83,6 +83,23 @@ class HeaderComponent extends React.Component {
 
     const menuItems = [];
 
+    //Change primary "STATUS" navigation item to dynamically reflect the Log In Users UNIT Name
+    let assignedUnit = ses.AssignedUnitName;
+    let deployedUnit = ses.DeployedUnitName;
+    let unitName = '';
+    if(deployedUnit==="")
+        {  
+           unitName = assignedUnit;
+        } 
+        else 
+        { 
+          unitName = deployedUnit;
+        }
+       
+        //15 character limit
+        if(unitName.length>15){
+          unitName = unitName.substring(0,15);
+        }
 
     if(dashboardAccess) {
       menuItems.push({title: translations['dashboard'], url: '/dashboard'});
@@ -93,8 +110,9 @@ class HeaderComponent extends React.Component {
     }
 
     if(statusAccess) {
-      menuItems.push({title: translations['status'], url: '/status'});
+      menuItems.push({title: unitName, url: '/status'});
     }
+
 
     if(intelReqAccess) {
       menuItems.push({title: translations['intel request'], url: '/intel-request/request'});

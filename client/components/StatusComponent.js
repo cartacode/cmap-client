@@ -185,7 +185,24 @@ class StatusComponent extends React.Component {
     let roles2 = JSON.parse(roles);
     let access = roles2.some(v => statusUser.includes(v));
     console.log(access);
-
+    //Change primary "STATUS" navigation item to dynamically reflect the Log In Users UNIT Name
+    let assignedUnit = ses.AssignedUnitName;
+    let deployedUnit = ses.DeployedUnitName;
+    let unitName = '';
+    if(deployedUnit==="")
+      {  
+        unitName = assignedUnit;
+      } 
+    else 
+      { 
+        unitName = deployedUnit;
+      }
+   
+      //15 character limit
+      if(unitName.length>15){
+        unitName = unitName.substring(0,15);
+    }
+    
     const platform = [
       { platform:'grey eagle', tail:'fg2592', status:'flight ready', remark:'none', etic:'90 days', update:'update' },
       { platform:'grey eagle', tail:'an9444', status:'flight ready', remark:'none', etic:'90 days', update:'update'},
@@ -373,7 +390,7 @@ class StatusComponent extends React.Component {
     return ( access ? (
       <div>
           <div className="row status" >
-            <FullHeaderLine headerText={translations["unit status report"]} />
+            <FullHeaderLine headerText={unitName+' report'} />
             <div className="status-content">
               <div className="col-md-4 image-block">
                 <img src={logo} className="photo" alt="" />
