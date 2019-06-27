@@ -21,6 +21,14 @@ import SysConfigContainer from '../containers/admin/SysConfigContainer';
 import ReferenceDocsContainer from '../containers/admin/ReferenceDocsContainer';
 import SubMenu from './reusable/SubMenu';
 import { adminUser, sysDocsUser, adminTabUser, intelCustomer } from '../dictionary/auth';
+import CcirContainer from '../containers/admin/CcirContainer';
+import PedTeamContainer from '../containers/admin/PedTeamContainer';
+import OpordContainer from '../containers/admin/OpordContainer';
+import AirCrewContainer from '../containers/admin/AirCrewContainer';
+import EquipmentContainer from '../containers/admin/EquipmentContainer';
+import OperationsContainer from '../containers/admin/OperationsContainer';
+import PirContainer from '../containers/admin/PirContainer';
+
 
 class AdminComponent extends React.Component {
 
@@ -78,14 +86,23 @@ class AdminComponent extends React.Component {
 
     else {
       menuItems = [
+      {title: translations['ccir'], url: `${match.url}/ccir`},
+      {title: translations['OPORD'], url: `${match.url}/opord`},
+
       {title: translations['personnel'], url: `${match.url}/personnel` },
       {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true, },
       {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
       {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
       {title: translations['Location'], url: `${match.url}/location`},
+      {title: translations['PedTeam'], url: `${match.url}/pedteam`},
+      {title: translations['AirCrew'], url: `${match.url}/aircrew`},
+      {title: translations['equipment'], url: `${match.url}/equipment`},
+      {title: translations['Operations'], url: `${match.url}/operations`},
+      {title: translations['pir'], url: `${match.url}/pir`},
+
       //{title: translations['status'], url: `${match.url}/admin-status`},
       {title: translations['reports'], url: `${match.url}/reports`},
-      {title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
+      //{title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
       //{title: translations['Chain of Command'], url: `${match.url}/org-builder`},
       // {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
       // {title: translations['Sys. Health'], url: `${match.url}/sys-health`},
@@ -154,6 +171,20 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/com-net`} component={ComNetContainer} />
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
           <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />
+
+           <Route path={`${match.url}/ccir`} component={CcirContainer} />
+         <Route path={`${match.url}/opord`} component={OpordContainer} />
+          <Route path={`${match.url}/pedteam`} component={PedTeamContainer} />
+          <Route path={`${match.url}/aircrew`} component={AirCrewContainer} />
+          <Route path={`${match.url}/equipment`} component={EquipmentContainer} />
+          <Route path={`${match.url}/operations`} component={OperationsContainer} />
+          <Route path={`${match.url}/pir`} component={PirContainer} /> 
+
+
+
+
+
+
         </Switch>
       </div>) : null
     );

@@ -837,7 +837,13 @@
  "Export and Download":"Export and Download",
  "GenralErrorMessage": "An Error Has Occured",
  "Increase Priority":"Increase Priority",
- "Decrease Priority":"Decrease Priority"
+ "Decrease Priority":"Decrease Priority",
+
+ 
+ "AirCrew":"Air Crew",
+ "Operations": "Operations"
+
+
 
 
 }
