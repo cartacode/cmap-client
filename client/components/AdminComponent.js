@@ -77,17 +77,16 @@ class AdminComponent extends React.Component {
     }
 
     else {
-      
       menuItems = [
       {title: translations['personnel'], url: `${match.url}/personnel` },
       {title: translations['platforms'], url: `${match.url}/platforms`,submenu:true, },
       {title: translations['payloads'], url: `${match.url}/payloads`,submenu:true},
       {title: translations['Munitions'], url: `${match.url}/munitions`,submenu:true},
       {title: translations['Location'], url: `${match.url}/location`},
-      {title: translations['status'], url: `${match.url}/admin-status`},
+      //{title: translations['status'], url: `${match.url}/admin-status`},
       {title: translations['reports'], url: `${match.url}/reports`},
       {title: translations['Ccir/Pir'], url: `${match.url}/ccir-pir`},
-      {title: translations['Chain of Command'], url: `${match.url}/org-builder`},
+      //{title: translations['Chain of Command'], url: `${match.url}/org-builder`},
       // {title: translations['Com/Net'], url: `${match.url}/com-net/satcom`},
       // {title: translations['Sys. Health'], url: `${match.url}/sys-health`},
     ];

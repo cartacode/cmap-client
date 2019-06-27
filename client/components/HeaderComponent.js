@@ -113,6 +113,9 @@ class HeaderComponent extends React.Component {
       menuItems.push({title: unitName, url: '/status'});
     }
 
+    if(adminAccess) { 
+      menuItems.push({title: translations['Chain of Command'], url: '/admin/org-builder'});
+    }
 
     if(intelReqAccess) {
       menuItems.push({title: translations['intel request'], url: '/intel-request/request'});
