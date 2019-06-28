@@ -1,6 +1,8 @@
 // Dev url
 //export const baseUrl = 'http://18.222.48.211:8081/api';
-export const baseUrl = 'https://18.222.103.61/api';
+//export const baseUrl = 'http://18.222.103.61/api';
+export const baseUrl = 'https://ec2-18-222-103-61.us-east-2.compute.amazonaws.com/api';
+
 
 
 // Staging URL
