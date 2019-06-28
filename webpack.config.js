@@ -21,7 +21,8 @@ module.exports = function getWebpackConfig() {
       stats: 'errors-only',
     },
 
-    devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map',
+    // devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map',
+    devtool: isDev ? 'cheap-module-eval-source-map' : '',
 
     entry: getEntry(isDev),
 
