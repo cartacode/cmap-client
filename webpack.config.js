@@ -83,7 +83,18 @@ module.exports = function getWebpackConfig() {
     node: {
       fs: 'empty',
     },
-
+    optimization: {
+      minimize: true,
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    },
     output: {
       filename: '[name].[hash].js',
       path: path.join(__dirname, 'public'),
@@ -152,7 +163,7 @@ function getPlugins(isDev) {
     ]),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
-      $: 'jquery'
+      $: 'jquery',
     }),
   ];
 

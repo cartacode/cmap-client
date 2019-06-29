@@ -9,15 +9,6 @@ import AddNodeModal from './org-builder/AddNodeModal';
 import OptionsModal from './org-builder/OptionsModal';
 import { fetchOrganicOrg } from '../../actions/organicorg';
 import { fetchOrganicPersonnel } from '../../actions/organicpersonnel';
-// import '../../vendor/treant-js/Treant.css';
-// import '../../vendor/treant-js/examples/custom-colored/custom-colored.css';
-// import '../../vendor/treant-js/vendor/raphael.js';
-// import '../../vendor/treant-js/Treant.js';
-
-// import '../../../node_modules/treant-js/Treant.css';
-// import '../../../node_modules/treant-js/examples/custom-colored/custom-colored.css';
-// import '../../../node_modules/treant-js/vendor/raphael.js';
-// import Treant from '../../../node_modules/treant-js/Treant.js';
 
 import { superAdmin, adminUser } from '../../dictionary/auth';
 

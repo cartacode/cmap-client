@@ -19,16 +19,11 @@ class LiveViewComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      currentMap: '/assets/img/admin/comsnet4.png'
-    };
   }
-
-
 
   render() {
 
-    let langs = ['val 1', 'val 2'];
+
     const {translations} = this.props;
 
     let ses = JSON.parse(localStorage.getItem('session'));
