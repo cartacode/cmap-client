@@ -83,7 +83,7 @@ module.exports = function getWebpackConfig() {
     node: {
       fs: 'empty',
     },
-    optimization: {
+    optimization: isDev ?  {} :{
       minimize: true,
       splitChunks: {
         cacheGroups: {
