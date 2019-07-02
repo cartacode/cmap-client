@@ -24,6 +24,7 @@ import dashboards from 'reducers/dashboards';
 import auth from 'reducers/auth';
 import intellibraries from 'reducers/intellibrarys';
 import equipmentinventory from 'reducers/equipmentinventory';
+import operations from 'reducers/operations';
 
 export default function createReducer() {
   return combineReducers({
@@ -51,5 +52,6 @@ export default function createReducer() {
     dashboards,
     intellibraries,
     equipmentinventory,
+    operations
   });
 }
