@@ -180,9 +180,9 @@ class AddEquipmentInventory extends React.Component {
     const { equipment } = this.state;
 
     const fields = [
-      { name: translations.equipment, type: 'dropdown', ddID: 'Equipment/GetEquipments', domID: 'metaDataID', valFieldID: 'equipmentId', required: true },
+      { name: translations.equipment, type: 'input', domID: 'equipment', valFieldID: 'equipment', required: true },
       { name: translations.SerialNo, type: 'input', domID: 'SerialNo', valFieldID: 'serialNo', required: true },
-      { name: translations.Quantity, type: 'input', domID: 'quantity', valFieldID: 'quantity', required: true },
+      { name: translations.Quantity, type: 'number', domID: 'quantity', valFieldID: 'quantity', required: true },
       { name: translations.Remarks, type: 'input', domID: 'remarks', valFieldID: 'remarks', required: true },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'owningUnit' , required: true },
       { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true },
