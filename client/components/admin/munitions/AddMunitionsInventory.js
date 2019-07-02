@@ -262,7 +262,7 @@ class AddMunitionsInventory extends React.Component {
           <div className="row personnel" >
 
             <div className="under-munitions-content">
-              <div className="col-md-4"></div>
+              <div className="col-md-4" />
               <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handleMunitionGeneralData} initstate={this.props.oneMunitionInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)}
                 editFetched={this.state.editFetched} stopupd={this.stopupd} />
             </div>

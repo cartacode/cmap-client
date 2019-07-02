@@ -194,4 +194,12 @@ export default {
     isFetching: false,
   },
 
+  equipments: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allEquipmentInventory: [],
+    oneEquipmentInventory: {},
+  },
+
 };
