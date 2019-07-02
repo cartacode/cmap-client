@@ -68,6 +68,17 @@ export default {
     error: {},
   },
 
+  operations: {
+    allOperations: [],
+    oneOperation: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
   ccirpir: {
     allCcirPirs: [],
     oneCcirPir: {},

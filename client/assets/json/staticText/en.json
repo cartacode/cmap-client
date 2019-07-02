@@ -845,7 +845,8 @@
 
  "Payload #7":"Payload #7",
  "Payload #8":"Payload #8",
-
+ "OperationName":"Operation Name",
+ "ThreatGroup":"Threat Group",
  "Remarks" :"Remarks",
  "SerialNo" :"Serial No",
  "Quantity" :"Quantity"
