@@ -10,24 +10,25 @@ import {NoticeType, Error} from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import { requestHeaders, baseUrl } from '../../../dictionary/network';
 
-
-
-
 class AddPlatformInventory extends React.Component {
 
   constructor(props) {
     super(props);
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const locationcategory = 1; // TODO: use session here
     this.state = {
       file: '',
       clear:false,
       imagePreviewUrl: '',
-      locationcategory: '',
-      inventoryId: '0',
-      isUpdated: false,
+      locationcategory,
+      isUpdated: true,
        platform: {
       //   metaDataID: '',
-      //   locationID: '',
-      //   owningUnit: '',
+        locationID: ses.LocationID,
+        locationcategory,
+        owningUnit: ses.AssignedUnit,
+        branch: ses.Branch,
+        COCOM: ses.COCOMID,
       //   tailNumber: '',
       //   dispPlatformPayload1: '',
       //   dispPlatformPayload2: '',
@@ -86,62 +87,56 @@ class AddPlatformInventory extends React.Component {
   handlePlatformGeneralData = (generalData) => {
     const { platform } = this.state;
     this.setState({ locationcategory: generalData.locationcategory });
-    this.setState({ selectedBranch: generalData.branch });
+    // this.setState({ selectedBranch: generalData.branch });
 
     this.setState({
       platform: {
         ...platform,
         metaDataID: generalData.metaDataID,
         locationID: generalData.locationID,
-        owningUnit: generalData.owningUnit,
-        deployedUnit: generalData.deployedUnit,
+        owningUnit: generalData.owningUnit,        
         locationcategory: generalData.locationcategory,
         tailNumber: generalData.tailNumber,
-        Company: generalData.Company,
-        payload1: generalData.payload1,
-        payload2: generalData.payload2,
-        payload3: generalData.payload3,
-        armament1: generalData.armament1,
-        armament2: generalData.armament2,
-        armament3: generalData.armament3,
-        coms1: generalData.coms1,
-        coms2: generalData.coms2,       
-        branch: generalData.branch,
-        COCOM: generalData.COCOM,
+        Company: generalData.Company,        
       }, 
     });
 
     if(generalData.locationcategory && generalData.locationcategory!=this.state.locationcategory) {
       this.updatelocationid(generalData);
     }
-    if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
-    this.updateOwningUnit(generalData);
-    // this.updateDeployedUnits(generalData.branch, platform.deployedUnit);
-    }
+    // if( generalData.branch && generalData.branch !== this.state.selectedBranch) {
+    // this.updateOwningUnit(generalData);
+    // // this.updateDeployedUnits(generalData.branch, platform.deployedUnit);
+    // }
   }
 
-  handlePayloadData = (generalData) => {
+  handlePayloadData = (data) => {
     const { platform } = this.state;
     this.setState({
       platform: {
         ...platform,
-        payload1: generalData.payload1,
-        payload2: generalData.payload2,
-        payload3: generalData.payload3,
-        coms1: generalData.coms1,
+        payload1: data.payload1,
+        payload2: data.payload2,
+        payload3: data.payload3,
+        payload4: data.payload4,
+        payload5: data.payload5,
+        payload6: data.payload6,
+        payload7: data.payload7,
+        payload8: data.payload8,
       },
     });
   }
 
-  handleArmsData = (generalData) => {
+  handleArmsData = (data) => {
     const { platform } = this.state;
     this.setState({
       platform: {
         ...platform,
-        armament1: generalData.armament1,
-        armament2: generalData.armament2,
-        armament3: generalData.armament3,
-        coms2: generalData.coms2,
+        armament1: data.armament1,
+        armament2: data.armament2,
+        armament3: data.armament3,
+        coms2: data.coms2,
+        coms1: data.coms1,
       },
     });
   }
@@ -270,9 +265,10 @@ class AddPlatformInventory extends React.Component {
     // if (!this.props.show) {
     //   return null;
     // }
-   
+    const ses = JSON.parse(localStorage.getItem('session')); 
     const { translations } = this.props;
-
+    const {platform} = this.state;
+    
     const generalFields = [
       { name:translations["Platform Specifications"], type: 'dropdown', ddID: 'Platform/GetPlatforms', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       //{ name: translations['Tail#'], type: 'input', domID: 'Tail#', valFieldID: 'tailNumber', required: true, regexType:'Alphanumeric', regex: '^[a-zA-Z0-9]+$' },
@@ -280,11 +276,11 @@ class AddPlatformInventory extends React.Component {
       //{ name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM',valFieldID: 'COCOM'},
       { name: translations['Contract Company'], type: 'input', domID: 'Company', valFieldID: 'Company', required: true },
      // { name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit'  , required: true},
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'owningUnit'  , required: true},
 
       //{ name: translations['Deployed Unit'], type: 'dropdown', domID: 'dispDeployedUnit', ddID: 'Units/GetUnits?onlyUsersDeployedUnits=true', valFieldID: 'deployedUnit'},
       { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
-      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID' , required: true}
+      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: `Locations/GetLocationsByCategory?Category=${platform.locationcategory}`, valFieldID: 'locationID' , required: true}
     ];
 
     const payloadFields = [
@@ -305,7 +301,6 @@ class AddPlatformInventory extends React.Component {
       { name: translations['Armament #2'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament2', valFieldID: 'armament2' },
       { name: translations['Armament #3'], type: 'dropdown', ddID: 'MunitionsInventory/GetMunitionsInventory', domID: 'dispPlatformArmament3', valFieldID: 'armament3' },
       { name: translations['Coms Type #1'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs1', valFieldID: 'coms1' },
-
       { name: translations['Coms Type #2'], type: 'dropdown', ddID: 'ComsType', domID: 'dispPlatformComs2', valFieldID: 'coms2' },
     ];
 

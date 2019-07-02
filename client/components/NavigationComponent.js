@@ -21,6 +21,7 @@ import initialState from '../store/initialState';
 import { connect } from 'react-redux';
 import { refresh } from '../actions/auth';
 import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
+import OrgBuilderContainer from '../containers/admin/OrgBuilderContainer';
 
 let condition = true;
 class NavigationComponent extends React.Component {
@@ -86,6 +87,7 @@ class NavigationComponent extends React.Component {
           <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
           <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
           <PrivateRoute exact path="/liveview" component={LiveViewContainer} />
+          <PrivateRoute exact path="/org-builder" component={OrgBuilderContainer} />
           <PrivateRoute exact path="/messages" component={MessagesContainer} />
           <PrivateRoute path="/mission-mgt" component={MissionMGTComponent} />
           <PrivateRoute path="/orders-assets" component={OrdersAssetsComponent} />

@@ -167,7 +167,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/admin-status`} component={AdminStatusContainer} />
           <Route path={`${match.url}/reports`} component={ReportsContainer} />
           <Route path={`${match.url}/ccir-pir`} component={CcirPirContainer} />
-          <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} />
+          {/* <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} /> */}
           <Route path={`${match.url}/com-net`} component={ComNetContainer} />
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
           <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />

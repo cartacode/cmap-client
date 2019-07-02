@@ -42,9 +42,14 @@ class ContentBlock extends React.Component {
     //   this.props.data(this.state.content);
     // }
 
+    const { clearit } = this.props;
+    if (clearit) {
+      this.setState({ content: [] });
+      this.props.stopset();
+    }
+
     if (editFetched) {
-      this.props.stopupd();
-      console.log(this.state.content);
+      this.props.stopupd();     
       // console.log('inint state '+ JSON.stringify(initstate));
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
@@ -57,11 +62,6 @@ class ContentBlock extends React.Component {
 
     }
 
-    const { clearit } = this.props;
-    if (clearit) {
-      this.setState({ content: [] });
-      this.props.stopset();
-    }
   }
 
   handleChange = (e) => {
