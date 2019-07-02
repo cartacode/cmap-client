@@ -16,21 +16,28 @@ class AddPayloadsInventory extends React.Component {
 
   constructor(props) {
     super(props);
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const locationcategory = 1; // TODO: use session here
     this.state = {
       file: '',
       clear:false,
-      editFetched:false,
+      editFetched:true,
       imagePreviewUrl: '',
-      locationcategory: '',
+      locationcategory,
       onePayloadInventory: {},
-      loading:false
+      loading:false,
 
-      // payloads : {
+      payloads : {
       // metaDataID:'',
       // locationID:'',
       // owningUnit:'',
       // serialNumber:''
-      // },
+      locationID: ses.LocationID,
+      locationcategory,
+      owningUnit: ses.AssignedUnit,
+      branch: ses.Branch,
+      COCOM: ses.COCOMID,
+       },
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -81,11 +88,10 @@ class AddPayloadsInventory extends React.Component {
         owningUnit: generalData.owningUnit,
         serialNumber: generalData.serialNumber,
         locationcategory: generalData.locationcategory,
-        COCOM: generalData.COCOM,
-        branch: generalData.branch,
+       
         id: this.props.editId,
       },
-      selectedBranch: generalData.branch,
+      
 
     });
 
@@ -93,9 +99,9 @@ class AddPayloadsInventory extends React.Component {
       this.updatelocationid(generalData);
     }
 
-    if(generalData.branch && generalData.branch !== this.state.selectedBranch) {
+   /*  if(generalData.branch && generalData.branch !== this.state.selectedBranch) {
       this.updateOwningUnit(generalData);
-    }
+    } */
   }
 
   handleSubmit = event => {
@@ -217,8 +223,11 @@ class AddPayloadsInventory extends React.Component {
     // if(!this.props.show) {
     //   return null;
     // }
+    const ses = JSON.parse(localStorage.getItem('session')); 
 
     const { translations } = this.props;
+    const {payloads} = this.state;
+
     // let { onePayloadInventory } = this.props;
     // if (onePayloadInventory === undefined) {
     //   onePayloadInventory = {};
@@ -229,9 +238,9 @@ class AddPayloadsInventory extends React.Component {
       { name: translations['Serial#'], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
       //{ name: translations['COCOM'], type: 'dropdown', domID: 'dispLocationCOCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
       //{ name: translations['Branch'], type: 'dropdown', domID: 'ServiceBranch', ddID: 'BranchOfService', valFieldID: 'branch', required: true },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit' , required: true},
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'owningUnit' , required: true},
       { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory' , required: true},
-      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
+      { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: `Locations/GetLocationsByCategory?Category=${payloads.locationcategory}`, valFieldID: 'locationID', required: true },
     ];
 
     return (
@@ -256,7 +265,7 @@ class AddPayloadsInventory extends React.Component {
           <div className="row personnel" >
             <div className="under-munitions-content">
               <div className="col-md-4" />
-              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.props.onePayloadInventory} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopUpdate}/>
+              <ContentBlock fields={generalFields} editId={this.props.editId} data={this.handlePayloadGeneralData} initstate ={this.state.payloads} clearit={this.state.clear} stopset={this.stopset.bind(this)} editFetched = {this.state.editFetched} stopupd = {this.stopUpdate}/>
             </div>
           </div>
         </div>
