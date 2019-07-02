@@ -230,8 +230,8 @@ class AddMunitionsInventory extends React.Component {
     let generalFields = [
       { name: translations["Munitions Specifications"], type: 'dropdown', ddID: 'Munition/GetMunitions', domID: 'metaDataID', valFieldID: 'metaDataID', required: true },
       { name: translations["Serial#"], type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
-      { name: translations["COCOM"], type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
-      { name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch',  required: true },
+      //{ name: translations["COCOM"], type: 'dropdown', domID: 'COCOM', ddID: 'COCOM', valFieldID: 'COCOM'},
+      //{ name: translations['Branch'], type: 'dropdown', domID: 'branch', ddID: "BranchOfService", valFieldID: 'branch',  required: true },
       { name: translations["Owning Unit"], type: 'dropdown', domID: 'owningUnit', ddID: 'Units/GetUnits', valFieldID: 'owningUnit' , required: true },
       { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationCatg', required: true },
       { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: '', valFieldID: 'locationID', required: true },
