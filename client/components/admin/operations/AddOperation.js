@@ -85,8 +85,8 @@ class AddOperation extends React.Component {
         regionID: generalData.regionID,
         threatGroupID:generalData.threadGroupID,
         owningUnit: generalData.owningUnit,
-        CurrentAssignmentStart: organizationAndDutyData.CurrentAssignmentStart,
-        CurrentAssignmentEnd: organizationAndDutyData.CurrentAssignmentEnd,
+        CurrentAssignmentStart: generalData.CurrentAssignmentStart,
+        CurrentAssignmentEnd: generalData.CurrentAssignmentEnd,
 
         
       },

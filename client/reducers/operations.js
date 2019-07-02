@@ -12,15 +12,7 @@ export default function operations(state = initialState.operations, { payload, t
       return {
         ...state,
         isFetching: false,
-        allOperations: [{
-          "OperationName":"op1", "Unit":"Unit1", "Country":"C1", "Region":"R1", "ThreatGroup":"T1"
-        },
-        {
-          "OperationName":"op2", "Unit":"Unit2", "Country":"C2", "Region":"R2", "ThreatGroup":"T2"
-        },
-        {
-          "OperationName":"op3", "Unit":"Unit3", "Country":"C3", "Region":"R3", "ThreatGroup":"T3"
-        }],
+        allOperations: payload.data,
       };
     case OPERATION__FETCH_ONE.REQUEST:
       return {

@@ -8,35 +8,34 @@ import { createAction } from 'util/action';
 export function addOperation(personnel) {
   return createAction({
     type: OPERATION__ADD,
-    action: () => axios.post(`${baseUrl}/Personnel`, personnel, { headers: formDataRequestHeader }),
+    action: () => axios.post(`${baseUrl}/Operation`, personnel, { headers: formDataRequestHeader }),
   });
 }
 
 export function updateOperation(id, data) {
   return createAction({
     type: OPERATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Personnel/PutPersonnel/${id}`, data, { headers: formDataRequestHeader }),
+    action: () => axios.put(`${baseUrl}/Operation/PutOperation/${id}`, data, { headers: formDataRequestHeader }),
   });
 }
 
 export function fetchOperations() {
-    console.log("action 23");
   return createAction({
     type: OPERATION__FETCH,
-    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnelData`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Operation/GetOperationData`, { headers: requestHeaders }),
   });
 }
 
 export function fetchOperationById(id) {
   return createAction({
     type: OPERATION__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Personnel/GetPersonnel/${id}`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Operation/GetOperation/${id}`, { headers: requestHeaders }),
   });
 }
 
 export function deleteOperationById(id) {
   return createAction({
     type: OPERATION__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Personnel/DeletePersonnel/${id}`, { headers: requestHeaders }),
+    action: () => axios.delete(`${baseUrl}/Operation/DeleteOperation/${id}`, { headers: requestHeaders }),
   });
 }
