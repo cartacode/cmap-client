@@ -15,7 +15,7 @@ class AddPlatformInventory extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = ses.LocationCategoryId; //  use session here
+    const locationcategory = ses.LocationCategoryID; //  use session here
     this.state = {
       file: '',
       clear:false,

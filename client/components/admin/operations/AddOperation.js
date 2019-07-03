@@ -15,7 +15,7 @@ class AddOperation extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = ses.LocationCategoryId; // TODO: use session here
+    const locationcategory = ses.LocationCategoryID; //  use session here
     this.state = {
       clear: false,
       imagePreviewUrl: '',
