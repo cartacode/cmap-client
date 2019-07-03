@@ -48,8 +48,7 @@ class OperationsComponent extends React.Component {  constructor(props) {
   }
 
   loadData = (actionType) => {
-    console.log("51    HSHAS SAKJ S HJAK HKJA SKJ ASKJ SAKJ SAKJ SA");
-    console.log(actionType);
+    
     this.notify(actionType);
     this.props.fetchOperations();
   }

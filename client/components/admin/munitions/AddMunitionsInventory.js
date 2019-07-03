@@ -18,7 +18,7 @@ class AddMunitionsInventory extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationCatg = 1; // TODO: use session here
+    const locationCatg = ses.LocationCategoryId; //  use session here
     this.state = {
       file: '',
       clear: false,
