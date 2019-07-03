@@ -15,7 +15,7 @@ class AddEquipmentInventory extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = 1; // TODO: use session here
+    const locationcategory = ses.LocationCategoryID;
     this.state = {
       clear: false,
       imagePreviewUrl: '',
@@ -24,7 +24,7 @@ class AddEquipmentInventory extends React.Component {
       equipment: {
         locationID: ses.LocationID,
         locationcategory,
-        owningUnit: ses.AssignedUnit,
+        unitID: ses.AssignedUnit,
         branch: ses.Branch,
         COCOM: ses.COCOMID,
       },
@@ -40,14 +40,9 @@ class AddEquipmentInventory extends React.Component {
   componentDidMount = () => {
     const { editId } = this.props;
     this.setState({ clear: true });
-    // if (editId !== '0') {
-    //   this.props.fetchEquipmentInventoryById(editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       equipment: this.props.oneEquipmentInventory,
-    //     });
-    //   });
-    // }
+    if (editId !== '0') {
+      this.getEquipment(editId);
+    }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -56,17 +51,21 @@ class AddEquipmentInventory extends React.Component {
       this.setState({ clear: true });
     }
 
-    // if(editId !== '0' && prevProps.editId !== editId) {
-    //   this.props.fetchEquipmentInventoryById(this.props.editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       equipment: this.props.oneEquipmentInventory,
-    //     });
-
-    //   });
-    // }
+    if(editId !== '0' && prevProps.editId !== editId) {
+      this.getEquipment(editId);
+    }
 
   }
+
+getEquipment = (editId) => {
+  this.props.fetchEquipmentInventoryById(editId).then(() => {
+    this.setState({
+      isUpdated: true,
+      equipment: this.props.oneEquipmentInventory,
+    });
+
+  });
+}
 
   stopUpdate = ()=> {
     this.setState({
@@ -80,12 +79,13 @@ class AddEquipmentInventory extends React.Component {
       locationcategory: generalData.locationcategory,
       equipment: {
         ...equipment,
-        serialNo: generalData.serialNo,
+        serialNumber: generalData.serialNumber,
         quantity: generalData.quantity,
-        equipmentId: generalData.equipmentId,
+        description: generalData.description,
         locationID: generalData.locationID,
-        owningUnit: generalData.owningUnit,
+        unitID: generalData.unitID,
         locationcategory: generalData.locationcategory,
+        remarks: generalData.remarks,
       },
     });
 
@@ -180,11 +180,11 @@ class AddEquipmentInventory extends React.Component {
     const { equipment } = this.state;
 
     const fields = [
-      { name: translations.equipment, type: 'input', domID: 'equipment', valFieldID: 'equipment', required: true },
-      { name: translations.SerialNo, type: 'input', domID: 'SerialNo', valFieldID: 'serialNo', required: true },
+      { name: translations.equipment, type: 'input', domID: 'description', valFieldID: 'description', required: true },
+      { name: translations.SerialNo, type: 'input', domID: 'serialNumber', valFieldID: 'serialNumber', required: true },
       { name: translations.Quantity, type: 'number', domID: 'quantity', valFieldID: 'quantity', required: true },
       { name: translations.Remarks, type: 'input', domID: 'remarks', valFieldID: 'remarks', required: true },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'owningUnit' , required: true },
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
       { name: translations['Location Category'], type: 'dropdown', domID: 'locationcategory', ddID: 'LocationCategory', valFieldID: 'locationcategory', required: true },
       { name: translations['Location ID'], type: 'dropdown', domID: 'locationID', ddID: `Locations/GetLocationsByCategory?Category=${equipment.locationcategory}`, valFieldID: 'locationID', required: true },
     ];
@@ -235,10 +235,10 @@ AddEquipmentInventory.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    oneEquipmentInventory: state.equipmentinventory.oneEquipmentInventory,
-    isAdded: state.equipmentinventory.isAdded,
-    isUpdated: state.equipmentinventory.isUpdated,
-    error: state.equipmentinventory.error,
+    oneEquipmentInventory: state.equipments.oneEquipmentInventory,
+    isAdded: state.equipments.isAdded,
+    isUpdated: state.equipments.isUpdated,
+    error: state.equipments.error,
   };
 };
 

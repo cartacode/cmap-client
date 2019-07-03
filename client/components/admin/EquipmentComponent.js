@@ -19,7 +19,7 @@ class EquipmentComponent extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.fetchEquipmentInventory();
+    this.props.fetchEquipmentInventory();
   }
 
   addEquipmentInventory = () => {
@@ -114,7 +114,7 @@ class EquipmentComponent extends React.Component {
       },
       {
         Header: translations.Equipment,
-        accessor: 'equipment',
+        accessor: 'description',
       },
       {
         Header: translations.Quantity,
@@ -122,7 +122,7 @@ class EquipmentComponent extends React.Component {
       },
       {
         Header: translations.SerialNo,
-        accessor: 'serialNo',
+        accessor: 'serialNumber',
       },
       {
         Header: translations.Remarks,

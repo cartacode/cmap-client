@@ -23,7 +23,7 @@ import mssionmgts from 'reducers/mssionmgts';
 import dashboards from 'reducers/dashboards';
 import auth from 'reducers/auth';
 import intellibraries from 'reducers/intellibrarys';
-import equipmentinventory from 'reducers/equipmentinventory';
+import equipments from 'reducers/equipmentinventory';
 import operations from 'reducers/operations';
 
 export default function createReducer() {
@@ -51,7 +51,7 @@ export default function createReducer() {
     auth,
     dashboards,
     intellibraries,
-    equipmentinventory,
-    operations
+    equipments,
+    operations,
   });
 }

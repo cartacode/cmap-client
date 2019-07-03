@@ -6,9 +6,9 @@ import { fetchEquipmentInventory, deleteEquipmentInventoryById } from 'actions/e
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allEquipmentInventory: state.equipmentinventory.allEquipmentInventory,
-    isLoading: state.equipmentinventory.isFetching,
-    isDeleted: state.equipmentinventory.isDeleted
+    allEquipmentInventory: state.equipments.allEquipmentInventory,
+    isLoading: state.equipments.isFetching,
+    isDeleted: state.equipments.isDeleted,
   };
 };
 
