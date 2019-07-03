@@ -110,27 +110,27 @@ class EquipmentComponent extends React.Component {
 
       {
         Header: translations.Unit,
-        accessor: 'unit',
+        accessor: 'Unit',
       },
       {
         Header: translations.Equipment,
-        accessor: 'description',
+        accessor: 'Equipment.description',
       },
       {
         Header: translations.Quantity,
-        accessor: 'quantity',
+        accessor: 'Equipment.quantity',
       },
       {
         Header: translations.SerialNo,
-        accessor: 'serialNumber',
+        accessor: 'Equipment.serialNumber',
       },
       {
         Header: translations.Remarks,
-        accessor: 'remarks',
+        accessor: 'Equipment.remarks',
       },
       {
         Header: translations.view,
-        accessor: 'id',
+        accessor: 'Equipment.id',
         filterable: false,
         maxWidth: 150,
         Cell: row => <div>
