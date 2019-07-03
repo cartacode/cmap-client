@@ -15,7 +15,7 @@ class AddOperation extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = 1; // TODO: use session here
+    const locationcategory = ses.LocationCategoryId; // TODO: use session here
     this.state = {
       clear: false,
       imagePreviewUrl: '',
@@ -24,7 +24,7 @@ class AddOperation extends React.Component {
       operation: {
         locationID: ses.LocationID,
         locationcategory,
-        owningUnit: ses.AssignedUnit,
+        unitID: ses.AssignedUnit,
         branch: ses.Branch,
         COCOM: ses.COCOMID,
       },
@@ -40,14 +40,14 @@ class AddOperation extends React.Component {
   componentDidMount = () => {
     const { editId } = this.props;
     this.setState({ clear: true });
-    // if (editId !== '0') {
-    //   this.props.fetchEquipmentInventoryById(editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       equipment: this.props.oneEquipmentInventory,
-    //     });
-    //   });
-    // }
+     if (editId !== '0') {
+       this.props.fetchOperationById(editId).then(() => {
+         this.setState({
+           isUpdated: true,
+           operation: this.props.oneOperation,
+        });
+     });
+     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -56,15 +56,14 @@ class AddOperation extends React.Component {
       this.setState({ clear: true });
     }
 
-    // if(editId !== '0' && prevProps.editId !== editId) {
-    //   this.props.fetchEquipmentInventoryById(this.props.editId).then(() => {
-    //     this.setState({
-    //       isUpdated: true,
-    //       equipment: this.props.oneEquipmentInventory,
-    //     });
-
-    //   });
-    // }
+     if(editId !== '0' && prevProps.editId !== editId) {
+      this.props.fetchOperationById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          operation: this.props.oneOperation,
+       });
+    });
+     }
 
   }
 
@@ -80,11 +79,11 @@ class AddOperation extends React.Component {
       EffectiveAreaKML: generalData.EffectiveAreaKML,
       operation: {
         ...operation,
-        operationName: generalData.operationName,
-        countryID: generalData.countryID,
-        regionID: generalData.regionID,
-        threatGroupID:generalData.threadGroupID,
-        owningUnit: generalData.owningUnit,
+        name: generalData.name,
+        country: generalData.country,
+        region: generalData.region,
+        threatGroup:generalData.threatGroup,
+        unitID: generalData.unitID,
         CurrentAssignmentStart: generalData.CurrentAssignmentStart,
         CurrentAssignmentEnd: generalData.CurrentAssignmentEnd,
 
@@ -104,7 +103,8 @@ class AddOperation extends React.Component {
     event.preventDefault();
     const { operation } = this.state;
     const { editId } = this.props;
-
+    console.log(editId);
+    console.log(operation);
     if (editId && editId !== '0') {
       equipment.id = editId;
       this.props.updateOperation(editId, operation).then(() => {
@@ -183,12 +183,12 @@ class AddOperation extends React.Component {
     const { operation } = this.state;
 
     const fields = [
-      { name: translations['Country'], type: 'dropdown', ddID: 'Countries', valFieldID: 'CountryId', domID: 'Country', required: true },
-      { name: translations['Region'], type: 'dropdown', ddID: 'Regions', valFieldID: 'RegionId', domID: 'Region', required: true },
-      { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'dispThreatGroups', valFieldID: 'threatGroupID', required: true },
+      { name: translations['Country'], type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
+      { name: translations['Region'], type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
+      { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
       { name: translations['Effective Area KML'], type: 'file', valFieldID: 'EffectiveAreaKML', domID: 'KML', extension: 'kml' },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'owningUnit', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'owningUnit' , required: true },
-      { name: translations['Named Operation'], type: 'input', valFieldID: 'OperationName', domID: 'Opname', required: true },
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID' , required: true },
+      { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name', required: true },
       {name: translations['Dates of Current Assignment Start'], type: 'date', domID: 'CurrentAssignmentStart',  valFieldID: 'CurrentAssignmentStart'},
       {name: translations['Dates of Current Assignment End'], type: 'date', domID: 'CurrentAssignmentEnd', valFieldID: 'CurrentAssignmentEnd' }
 

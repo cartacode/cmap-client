@@ -5,24 +5,24 @@ import { OPERATION__ADD, OPERATION__UPDATE, OPERATION__FETCH , OPERATION__FETCH_
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
-export function addOperation(personnel) {
+export function addOperation(operation) {
   return createAction({
     type: OPERATION__ADD,
-    action: () => axios.post(`${baseUrl}/Operation`, personnel, { headers: formDataRequestHeader }),
+    action: () => axios.post(`${baseUrl}/Operations/PostOperations`, operation, { headers: requestHeaders }),
   });
 }
 
 export function updateOperation(id, data) {
   return createAction({
     type: OPERATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Operation/PutOperation/${id}`, data, { headers: formDataRequestHeader }),
+    action: () => axios.put(`${baseUrl}/Operation/PutOperation/${id}`, data, { headers: requestHeaders }),
   });
 }
 
 export function fetchOperations() {
   return createAction({
     type: OPERATION__FETCH,
-    action: () => axios.get(`${baseUrl}/Operation/GetOperationData`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Operations/GetOperations`, { headers: requestHeaders }),
   });
 }
 

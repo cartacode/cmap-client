@@ -18,7 +18,7 @@ class OperationsComponent extends React.Component {  constructor(props) {
   }
 
   componentDidMount() {
-    // this.props.fetchEquipmentInventory();
+     this.props.fetchOperations();
   }
 
   addOperation = () => {
@@ -36,6 +36,7 @@ class OperationsComponent extends React.Component {  constructor(props) {
 
   closeOperationForm = (actionType, actionSuccess) => {
     if (actionSuccess) {
+      console.log("39 GDDBD D DUHID ID IDH UID HUI DIU DIU DH ");
       this.loadData(actionType);
       this.setState({
         editId: '0',
@@ -47,8 +48,10 @@ class OperationsComponent extends React.Component {  constructor(props) {
   }
 
   loadData = (actionType) => {
+    console.log("51    HSHAS SAKJ S HJAK HKJA SKJ ASKJ SAKJ SAKJ SA");
+    console.log(actionType);
     this.notify(actionType);
-    this.props.fetchOperation();
+    this.props.fetchOperations();
   }
 
   // This will get call when user click on Yes to Delete a Record
@@ -109,23 +112,23 @@ class OperationsComponent extends React.Component {  constructor(props) {
 
       {
         Header: translations['OperationName'],
-        accessor: 'OperationName',
+        accessor: 'name',
       },
       {
         Header: translations['Unit'],
-        accessor: 'Unit',
+        accessor: 'unitID',
       },
       {
         Header: translations['Country'],
-        accessor: 'Country',
+        accessor: 'country',
       },
       {
         Header: translations['Region'],
-        accessor: 'Region',
+        accessor: 'region',
       },
       {
         Header: translations['ThreatGroup'],
-        accessor: 'ThreatGroup',
+        accessor: 'threatGroup',
       },
       {
         Header: translations.view,
@@ -140,7 +143,7 @@ class OperationsComponent extends React.Component {  constructor(props) {
             <span><a href="JavaScript:void('0');" className="btn btn-danger btn-xs action-not-allow" data-tip data-for="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a>
               <ReactTooltip id="Action Not Allowed" type="warning"><span>Action Not Allowed</span></ReactTooltip> </span>
             :
-            <a href="javaScript:void('0');" onClick={() => this.deleteOperationInventory(row.value)} className="btn btn-danger btn-xs" data-tip data-for="Delete"> <span className="glyphicon glyphicon-trash"/>
+            <a href="javaScript:void('0');" onClick={() => this.deleteOperation(row.value)} className="btn btn-danger btn-xs" data-tip data-for="Delete"> <span className="glyphicon glyphicon-trash"/>
               <ReactTooltip id="Delete" type="warning"><span>{translations.Delete}</span></ReactTooltip> </a>}
         </div>,
       },

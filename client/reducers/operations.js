@@ -9,6 +9,7 @@ export default function operations(state = initialState.operations, { payload, t
         isFetching: true,
       };
     case OPERATION__FETCH.SUCCESS:
+    console.log(payload.data);
       return {
         ...state,
         isFetching: false,
