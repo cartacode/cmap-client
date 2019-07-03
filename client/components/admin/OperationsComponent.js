@@ -112,27 +112,27 @@ class OperationsComponent extends React.Component {  constructor(props) {
 
       {
         Header: translations['OperationName'],
-        accessor: 'name',
+        accessor: 'Operation.name',
       },
       {
         Header: translations['Unit'],
-        accessor: 'unitID',
+        accessor: 'Operation.unit',
       },
       {
         Header: translations['Country'],
-        accessor: 'country',
+        accessor: 'Operation.country',
       },
       {
         Header: translations['Region'],
-        accessor: 'region',
+        accessor: 'Operation.region',
       },
       {
         Header: translations['ThreatGroup'],
-        accessor: 'threatGroup',
+        accessor: 'Operation.threatGroup',
       },
       {
         Header: translations.view,
-        accessor: 'id',
+        accessor: 'Operation.id',
         filterable: false,
         maxWidth: 150,
         Cell: row => <div>

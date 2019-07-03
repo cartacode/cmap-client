@@ -15,7 +15,7 @@ export function addOperation(operation) {
 export function updateOperation(id, data) {
   return createAction({
     type: OPERATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Operation/PutOperation/${id}`, data, { headers: requestHeaders }),
+    action: () => axios.put(`${baseUrl}/Operations/PutOperations/${id}`, data, { headers: requestHeaders }),
   });
 }
 
@@ -29,13 +29,13 @@ export function fetchOperations() {
 export function fetchOperationById(id) {
   return createAction({
     type: OPERATION__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Operation/GetOperation/${id}`, { headers: requestHeaders }),
+    action: () => axios.get(`${baseUrl}/Operations/GetOperations/${id}`, { headers: requestHeaders }),
   });
 }
 
 export function deleteOperationById(id) {
   return createAction({
     type: OPERATION__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Operation/DeleteOperation/${id}`, { headers: requestHeaders }),
+    action: () => axios.delete(`${baseUrl}/Operations/DeleteOperations/${id}`, { headers: requestHeaders }),
   });
 }

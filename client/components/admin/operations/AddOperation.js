@@ -106,7 +106,7 @@ class AddOperation extends React.Component {
     console.log(editId);
     console.log(operation);
     if (editId && editId !== '0') {
-      equipment.id = editId;
+      operation.id = editId;
       this.props.updateOperation(editId, operation).then(() => {
         this.setState({
           loading: false,
