@@ -115,7 +115,7 @@ class OperationsComponent extends React.Component {  constructor(props) {
       },
       {
         Header: translations['Unit'],
-        accessor: 'Operation.unit',
+        accessor: 'Operation.unitID',
       },
       {
         Header: translations['Country'],
