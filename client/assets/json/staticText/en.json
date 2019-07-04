@@ -855,5 +855,11 @@
 "Operation Inventory Title":"Operations ",
 "equip":"equip",
 "Ops":"Ops",
-"callSign":"Aircraft Call Sign"
+"callSign":"Aircraft Call Sign",
+
+"ccirNumber": "CCIR Number",
+"reportDate": "Date of Report",
+"who": "Who",
+"what": "What"
+
 }
