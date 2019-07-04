@@ -1,267 +1,187 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { adminUser } from '../../dictionary/auth';
 import { NotificationManager } from 'react-notifications';
-import ReactTable from 'react-table';
-import "react-table/react-table.css";
-import CcirPirModal from './ccir-pirs/CcirPirModal';
-import { defaultFilter, getConfirmation  } from '../../util/helpers';
-import { TableDefaults, NoticeType } from '../../dictionary/constants';
+import { NoticeType, TableDefaults } from '../../dictionary/constants';
+import { defaultFilter, getConfirmation } from '../../util/helpers';
 import Loader from '../reusable/Loader';
-import ReactTooltip from 'react-tooltip'; 
-
-import { superAdmin, adminUser } from '../../dictionary/auth';
+import ReactTooltip from 'react-tooltip';
+import ReactTable from 'react-table';
+// import AddCcir from './equipments/AddCcir';
 
 class CcirComponent extends React.Component {
-
   constructor(props) {
     super(props);
-    this.state={
-      ccirModalOpen:false,
-      tableRowDetailModalOpen: false     ,
-      addCcirPirModalOpen: false,
-      editId: '0', 
-      loading:false
+    this.state = {
+      addCcirOpen: false,
+      editId: '0',
+    };
+  }
+
+  componentDidMount() {
+    this.props.fetchCcir();
+  }
+
+  addCcir = () => {
+    this.setState({
+      addCcirOpen: !this.state.addCcirOpen,
+    });
+  };
+
+  openCcirForm = (row) => {
+    this.setState({
+      editId: row,
+      addCcirOpen: true,
+    });
+  };
+
+  closeCcirForm = (actionType, actionSuccess) => {
+    if (actionSuccess) {
+      this.loadData(actionType);
+      this.setState({
+        editId: '0',
+        addCcirOpen: false,
+      });
+    } else {
+      this.notify(actionType);
     }
   }
 
-  // ccirModal = () => {
-  //   this.setState({
-  //     ccirModalOpen: !this.state.ccirModalOpen
-  //   })
-  // }
-
-  componentDidMount() {
-    // Fetch List of Records 
-    this.props.fetchCcirPirs();
+  loadData = (actionType) => {
+    this.notify(actionType);
+    this.props.fetchCcir();
   }
 
-
-
-  // Open form Add/Edit Rerocd
-  openCcirPirForm = (row) => {
-    this.setState({
-      editId: row,
-      addCcirPirModalOpen: true,
-    });
+  // This will get call when user click on Yes to Delete a Record
+  deleteLogic(value) {
+    if (value !== undefined && value !== '0') {
+      this.setState({
+        loading: true,
+      });
+      this.props.deleteCcirById(value).then(() => {
+        this.setState({
+          loading: false,
+        });
+        if (this.props.isDeleted) {
+          this.loadData(NoticeType.DELETE);
+        } else {
+          this.notify(NoticeType.NOT_DELETE);
+        }
+      });
+    }
   }
 
-  // Close Add/Edit Form
-/* closeCcirPirForm = (messageType) => {
-  //show Success Message
-  this.loadData(messageType);
-  this.props.fetchCcirPirs();
-  this.setState({
-    editId: '0',
-    addCcirPirModalOpen: false,
-  });
-} */
-
-// @param: actionType - this is type of action like ADD, NOT_ADD etc.
-// @param: actionSuccess - true/false for action success or not
-// @param: msg: - text to display the Success/error message
-closeCcirPirForm = (actionType, actionSuccess, msg) => {
-  if(actionSuccess) {
-    this.loadData(actionType);
-    this.setState({
-      editId: '0',
-      addCcirPirModalOpen: false,
-    });
-  }else {
-    this.notify(actionType, msg);
-  }
-}
-
-
-loadData = (actionType) => {
-  this.notify(actionType);
-  this.props.fetchCcirPirs();
-}
-
-// will call from onClose in CcirPirModal
-callCloseCcirPirForm = () =>{
-  this.closeCcirPirForm('');
-}
-
-// This will get call when user click on Yes to Delete a Record
-deleteLogic(row){
-   // Start Loader
-   this.setState({loading:true});
-   this.props.deleteCcirPirById(row).then(() => {
-     // Stop Loader
-     this.setState({loading:false});
-     //if Deleted Successfully
-     if(this.props.isDeleted){
-       this.loadData(NoticeType.DELETE);
-     }
-     else{
-       this.notify(NoticeType.NOT_DELETE);
-     }
-     
-   });
-}
-
-// Delete Record will call when user click on Delete Button
-deleteCcirPirRecord(row){
-  const { translations } = this.props;
-  // Get Confirm user wish to Delete Yes/No 
-  getConfirmation(translations['DeleteConfirmation'],
-                  translations['Yes'],
-                  translations['No'],
-                  () => this.deleteLogic(row)
-                  );
-}
-
-// function to Display Success Messages
-notify =(type,actionType)=>{
-  const { translations } = this.props;
-    if(type === NoticeType.NOT_DELETE){
-    NotificationManager.error(translations['DeleteUnSuccessfull'], translations['CCIRPIR Title'], 5000);
-  }
-  else if (NoticeType.NOT_ADD === actionType) {
-    NotificationManager.error(translations.AddUnSuccessfull, translations['CCIRPIR Title'], 5000);
-  }
-  else if (NoticeType.NOT_UPDATE === actionType) {
-    NotificationManager.error(translations.UpdateUnSuccessfull, translations['CCIRPIR Title'], 5000);
-  } 
-  else if (NoticeType.NOT_ADD === type) {
-    NotificationManager.error(translations.AddUnSuccessfull, translations['CCIRPIR Title'], 5000);
-  }
-  else if(type === NoticeType.DELETE){
-    NotificationManager.success(translations['DeletedSuccesfully'], translations['CCIRPIR Title'], 5000);
-
-  }
-  else if(type === NoticeType.ADD){
-    //NotificationManager.success(translations['Delete CCIRPIR Message'], translations['CCIRPIR Title'], 5000);
-    NotificationManager.success(translations['AddedSuccesfully'], translations['CCIRPIR Title'], 5000);
-  }
-  else if(type === NoticeType.UPDATE){
-    NotificationManager.success(translations['UpdatedSuccesfully'], translations['CCIRPIR Title'], 5000);
+  // will call when user click on Delete Button
+  deleteCcir = (value) => {
+    const { translations } = this.props;
+    // Get Confirm user wish to Delete Yes/No
+    getConfirmation(translations.DeleteConfirmation, translations.Yes, translations.No, () => this.deleteLogic(value));
   }
 
-}
+  notify = (actionType) => {
+    const { translations } = this.props;
+    if (NoticeType.NOT_DELETE === actionType) {
+      NotificationManager.error(translations.DeleteUnSuccessfull, translations['Ccir  Title'], 5000);
+    } else if (NoticeType.NOT_ADD === actionType) {
+      NotificationManager.error(translations.AddUnSuccessfull, translations['Ccir  Title'], 5000);
+    } else if (NoticeType.NOT_UPDATE === actionType) {
+      NotificationManager.error(translations.UpdateUnSuccessfull, translations['Ccir  Title'], 5000);
+    } else if (NoticeType.DELETE !== actionType) {
+      if (this.state.editId && this.state.editId !== '0') {
+        NotificationManager.success(translations.UpdatedSuccesfully, translations['Ccir  Title'], 5000);
+      } else {
+        NotificationManager.success(translations.AddedSuccesfully, translations['Ccir  Title'], 5000);
+      }
+    } else {
+      NotificationManager.success(translations.DeletedSuccesfully, translations['Ccir  Title'], 5000);
+    }
+  }
 
+  render() {
 
-// tableRowDetailModal = () => {
-//   this.setState({
-//     tableRowDetailModalOpen: !this.state.tableRowDetailModalOpen
-//   })
-// }
+    const { translations } = this.props;
+    const { allCcir } = this.props;
 
-// onFind(){
-//   console.log("find");
-// }
+    const ses = JSON.parse(localStorage.getItem('session'));
+    const roles = JSON.parse(ses.UserRoles);
+    const access = roles.some(v => adminUser.includes(v));
 
+    const columns = [
 
-render() {
+      {
+        Header: translations.reportDate,
+        accessor: 'reportTimeCriteria',
+      },
+      {
+        Header: translations.ccirNumber,
+        accessor: 'idNumber',
+      },
+      {
+        Header: translations.unit,
+        accessor: 'unit',
+      },
+      {
+        Header: translations.description,
+        accessor: 'description',
+      },
+      {
+        Header: translations.who,
+        accessor: 'who',
+      },
+      {
+        Header: translations.what,
+        accessor: 'what',
+      },
+      {
+        Header: translations.view,
+        accessor: 'id',
+        filterable: false,
+        maxWidth: 150,
+        Cell: row => <div>
+          <a href="#" className="btn btn-primary btn-xs" onClick={() => this.openCcirForm(row.value)} data-tip data-for="Edit" ><span className="glyphicon glyphicon-edit"/>
+            <ReactTooltip id="Edit" type="warning"> <span>{translations.edit}</span> </ReactTooltip> </a>
+              &nbsp;
+          {this.state.editId == row.value ?
+            <span><a href="JavaScript:void('0');" className="btn btn-danger btn-xs action-not-allow" data-tip data-for="Action Not Allowed" > <span className="glyphicon glyphicon-trash"/></a>
+              <ReactTooltip id="Action Not Allowed" type="warning"><span>Action Not Allowed</span></ReactTooltip> </span>
+            :
+            <a href="javaScript:void('0');" onClick={() => this.deleteCcir(row.value)} className="btn btn-danger btn-xs" data-tip data-for="Delete"> <span className="glyphicon glyphicon-trash"/>
+              <ReactTooltip id="Delete" type="warning"><span>{translations.Delete}</span></ReactTooltip> </a>}
+        </div>,
+      },
+    ];
 
-  let ses = JSON.parse(localStorage.getItem('session'));
-  let roles = ses.UserRoles;
-  let roles2 = JSON.parse(roles);
-  let access = roles2.some(v => adminUser.includes(v));
-    
-  const {translations} = this.props;
-  const {allCcirPirs} = this.props;
-
-  // Set Columns and Data to display in the Table List
-  const columns = [
-    {
-      Header: translations['Mission Name'],
-      accessor: 'MissionName',
-    },
-    {
-      Header: translations['COCOM'],
-      accessor: 'COCOM',
-      maxWidth: 150,
-    },
-    {
-      Header: translations['Region'],
-      accessor: 'RegionName',
-      maxWidth: 500,
-    },
-    {
-      Header: translations['Country'],
-      accessor: 'CountryName',
-    },
-    {
-      Header: translations['Unit'],
-      accessor: 'UnitName',
-    },
-    {
-      Header: translations.Branch,
-      accessor: 'BranchName',
-       
-    },
-    {
-      Header: translations.view,
-      accessor: 'CCIRPIRId',
-      filterable: false,
-      maxWidth: 150,
-      Cell: row => <div><a href="javaScript:void('0');" className="btn btn-primary btn-xs" onClick={() => this.openCcirPirForm(row.value)} data-tip data-for={translations["Edit"]} ><span className="glyphicon glyphicon-edit"/>
-      <ReactTooltip id='Edit'  type='warning'>
-                           <span>Edit</span>
-                              </ReactTooltip> </a>
-      
-      &nbsp; 
-        {this.state.editId == row.value ? <span><a href="javaScript:void('0');" className="btn btn-danger btn-xs action-not-allow" data-tip data-for={translations["Action Not Allowed"]} > <span className="glyphicon glyphicon-trash"/></a>
-        <ReactTooltip id='Action Not Allowed'  type='warning'>
-                           <span>Action Not Allowed</span>
-                              </ReactTooltip> </span> :
-          <a href="javaScript:void('0');" onClick={() => this.deleteCcirPirRecord(row.value)} className="btn btn-danger btn-xs" data-tip data-for={translations["Delete"]}> <span className="glyphicon glyphicon-trash"/>
-          <ReactTooltip id='Delete'  type='warning'>
-                           <span>Delete</span>
-                              </ReactTooltip></a>}  
-      </div>,
-
-    } 
-  ];
-
-  return ( access ? (
-    <div>
-      
+    return (access ? (<div>
+      <Loader loading={this.state.loading} />
       <div className="row orders-assets">
         <div className="header-line">
-          <Loader loading={this.state.loading} />
-          <img src="/assets/img/admin/personnel_1.png" alt=""/>
+          <img src="/assets/img/admin/personnel_1.png" alt="" />
           <div className="header-text">
-            {!this.state.addCcirPirModalOpen ?
+            {translations.ccir} &nbsp;
+            {!this.state.addCcirOpen ?
               <span>
-                {translations.summary} &nbsp;
-                <a className="btn btn-info btn-xs add-data" onClick={() => this.openCcirPirForm('0')}><i className="glyphicon glyphicon-plus"/>&nbsp;{translations.Add}</a>
+                <a className="btn btn-info btn-xs add-data" onClick={() => this.openCcirForm('0')}><i className="glyphicon glyphicon-plus" />&nbsp;{translations.Add}</a>
               </span>
-              : translations.form }
+              : ''}
           </div>
-          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
+          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt="" />
         </div>
-        {/* {!this.state.addCcirPirModalOpen ? <div className="col-md-12 filter-line">
-          <div className="add-button">
-            <button className="ccir-button" onClick={() => this.openCcirPirForm('0')} >{translations["Add Ccir/Pirs"]}</button>
-          </div>
-        </div>:null} */}
-        {this.state.addCcirPirModalOpen ?
-          <CcirPirModal  editId = {this.state.editId} onClose={this.closeCcirPirForm} translations = {translations} />
-          : null
-        }
-        
+
+        {this.state.addCcirOpen ?
+          <AddCcir editId={this.state.editId} onClose={this.closeCcirForm} translations={translations} />
+          : null }
+
         <div className="col-md-12">
-          <ReactTable
-            data={allCcirPirs}
-            columns={columns}
-            defaultPageSize={TableDefaults.PAGE_SIZE}
-						  minRows={TableDefaults.MIN_ROWS}
-            className="-striped -highlight"
-            filterable={true}
-						  defaultFilterMethod={defaultFilter}
-          />
+          <ReactTable data={allCcir} columns={columns} className="-striped -highlight" filterable={true} defaultPageSize={TableDefaults.PAGE_SIZE} minRows={TableDefaults.MIN_ROWS} loading={this.props.isLoading} defaultFilterMethod={defaultFilter} />
         </div>
       </div>
-  </div> ) : null
-  );
-}
+
+    </div>) : null);
+  }
 }
 
 CcirComponent.propTypes = {
   children: PropTypes.element,
-
 };
 
 export default CcirComponent;

@@ -101,6 +101,12 @@ export const EQUIPMENT_INVENTORY__FETCH = createActionType('EQUIPMENT_INVENTORY_
 export const EQUIPMENT_INVENTORY__FETCH_ONE = createActionType('EQUIPMENT_INVENTORY__FETCH_ONE');
 export const EQUIPMENT_INVENTORY__DELETE_ONE = createActionType('EQUIPMENT_INVENTORY__DELETE_ONE');
 
+export const CCIR__ADD = createActionType('CCIR__ADD');
+export const CCIR__UPDATE = createActionType('CCIR__UPDATE');
+export const CCIR__FETCH = createActionType('CCIR__FETCH');
+export const CCIR__FETCH_ONE = createActionType('CCIR__FETCH_ONE');
+export const CCIR__DELETE_ONE = createActionType('CCIR__DELETE_ONE');
+
 
 export const STATUS_PLATFORM__FETCH = createActionType('STATUS_PLATFORM__FETCH');
 export const STATUS_PAYLOAD__FETCH = createActionType('STATUS_PAYLOAD__FETCH');

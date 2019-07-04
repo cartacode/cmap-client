@@ -213,4 +213,11 @@ export default {
     oneEquipmentInventory: {},
   },
 
+  ccirs: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allCcir: [],
+    oneCcir: {},
+  },
 };
