@@ -8,14 +8,14 @@ import { createAction } from 'util/action';
 export function addOperation(operation) {
   return createAction({
     type: OPERATION__ADD,
-    action: () => axios.post(`${baseUrl}/Operations/PostOperations`, operation, { headers: requestHeaders }),
+    action: () => axios.post(`${baseUrl}/Operations/PostOperations`, operation, { headers: formDataRequestHeader }),
   });
 }
 
 export function updateOperation(id, data) {
   return createAction({
     type: OPERATION__UPDATE,
-    action: () => axios.put(`${baseUrl}/Operations/PutOperations/${id}`, data, { headers: requestHeaders }),
+    action: () => axios.put(`${baseUrl}/Operations/PutOperations/${id}`, data, { headers: formDataRequestHeader }),
   });
 }
 

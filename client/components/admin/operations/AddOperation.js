@@ -30,6 +30,7 @@ class AddOperation extends React.Component {
       },
       oneOperation: {},
       loading: false,
+      kmlFile:null
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -76,7 +77,7 @@ class AddOperation extends React.Component {
   handleGeneralData = (generalData) => {
     const { operation } = this.state;
     this.setState({
-      EffectiveAreaKML: generalData.EffectiveAreaKML,
+      kmlFile: generalData.kmlFile,
       operation: {
         ...operation,
         name: generalData.name,
@@ -105,9 +106,20 @@ class AddOperation extends React.Component {
     const { editId } = this.props;
     console.log(editId);
     console.log(operation);
+
+    const { kmlFile } = this.state;
+    //We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (kmlFile) {
+      formData.append('kmlFile', kmlFile, kmlFile.name);
+    }
+
+
     if (editId && editId !== '0') {
       operation.id = editId;
-      this.props.updateOperation(editId, operation).then(() => {
+      formData.append("operationFormData", JSON.stringify(operation));
+
+      this.props.updateOperation(editId, formData).then(() => {
         this.setState({
           loading: false,
         });
@@ -119,7 +131,9 @@ class AddOperation extends React.Component {
         }
       });
     } else {
-      this.props.addOperation(operation).then((res) => {
+      formData.append("operationFormData", JSON.stringify(operation));
+
+      this.props.addOperation(formData).then((res) => {
         this.setState({
           loading: false,
         });
@@ -186,7 +200,7 @@ class AddOperation extends React.Component {
       { name: translations['Country'], type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
       { name: translations['Region'], type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
-      { name: translations['Effective Area KML'], type: 'file', valFieldID: 'EffectiveAreaKML', domID: 'KML', extension: 'kml' },
+      { name: translations['Effective Area KML'], type: 'file', valFieldID: 'kmlFile', domID: 'kmlFile', extension: 'kml' },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID' , required: true },
       { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name', required: true },
       {name: translations['Dates of Current Assignment Start'], type: 'date', domID: 'CurrentAssignmentStart',  valFieldID: 'CurrentAssignmentStart'},

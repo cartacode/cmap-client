@@ -852,5 +852,7 @@
  "SerialNo" :"Serial No",
  "Quantity" :"Quantity",
 
-"Operation Inventory Title":"Operations "
+"Operation Inventory Title":"Operations ",
+"equip":"equip",
+"Ops":"Ops"
 }
