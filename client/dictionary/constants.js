@@ -178,7 +178,9 @@ export const IntelConstants = {
 
 export const InputAttributes = {
   MAX_LENGTH: 50,
+  DESC_LENGTH: 1000,
   TEXTAREA_LEN: 500,
+
 };
 
 export const Error = {

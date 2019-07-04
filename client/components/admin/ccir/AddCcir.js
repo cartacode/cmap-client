@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 
 import axios from 'axios';
-import { NoticeType, Error } from '../../../dictionary/constants';
+import { NoticeType, Error, InputAttributes } from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 import { requestHeaders, baseUrl } from '../../../dictionary/network';
 
@@ -15,7 +15,6 @@ class AddCcir extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = ses.LocationCategoryID;
     this.state = {
       clear: false,      
       isUpdated: true,
@@ -127,7 +126,6 @@ getCcir = (editId) => {
   resetForm = () => {
     this.setState(this.baseState);
     const { translations } = this.props;
-    console.log('FORM RESET DONE');
     if (confirm(translations.ClearConfirmation)) {
       this.setState({ clear: true });
     }
@@ -137,14 +135,12 @@ getCcir = (editId) => {
 
     const ses = JSON.parse(localStorage.getItem('session'));
     const { translations } = this.props;
-    const { ccir } = this.state;
 
     const fields = [
-      { name: translations.description, type: 'input', domID: 'description', valFieldID: 'description', required: true },
       { name: translations.ccirNumber, type: 'input', domID: 'idNumber', valFieldID: 'idNumber', required: true },
+      { name: translations.Description, type: 'input', domID: 'description', valFieldID: 'description', required: true, maxlength: InputAttributes.DESC_LENGTH },
       { name: translations.reportDate, type: 'date', domID: 'reportTimeCriteria', valFieldID: 'reportTimeCriteria', required: true },
       { name: translations.Unit, type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
-    
     ];
 
     return (
@@ -204,8 +200,6 @@ const mapDispatchToProps = {
   addCcir,
   fetchCcirById,
   updateCcir,
-  uploadFile,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCcir);

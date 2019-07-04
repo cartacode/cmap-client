@@ -7,7 +7,7 @@ import { defaultFilter, getConfirmation } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 import ReactTable from 'react-table';
-// import AddCcir from './equipments/AddCcir';
+import AddCcir from './ccir/AddCcir';
 
 class CcirComponent extends React.Component {
   constructor(props) {
