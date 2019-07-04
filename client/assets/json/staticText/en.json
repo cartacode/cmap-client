@@ -854,5 +854,6 @@
 
 "Operation Inventory Title":"Operations ",
 "equip":"equip",
-"Ops":"Ops"
+"Ops":"Ops",
+"callSign":"Aircraft Call Sign"
 }
