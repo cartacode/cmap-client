@@ -1,5 +1,5 @@
 import { uploadFile } from 'actions/file';
-import { addOperation, updateOperation, fetchOperations, fetchOperationById, deleteOperationById,  } from 'actions/operations';
+import { addOperation, updateOperation, fetchOperations, fetchOperationById, deleteOperationById } from 'actions/operations';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -15,22 +15,18 @@ class AddOperation extends React.Component {
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const locationcategory = ses.LocationCategoryID; //  use session here
+
     this.state = {
       clear: false,
-      imagePreviewUrl: '',
-      locationcategory,
       isUpdated: true,
       operation: {
-        locationID: ses.LocationID,
-        locationcategory,
         unitID: ses.AssignedUnit,
-        branch: ses.Branch,
+        branchID: ses.Branch,
         COCOM: ses.COCOMID,
       },
       oneOperation: {},
       loading: false,
-      kmlFile:null
+      kmlFile: null,
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -41,14 +37,14 @@ class AddOperation extends React.Component {
   componentDidMount = () => {
     const { editId } = this.props;
     this.setState({ clear: true });
-     if (editId !== '0') {
-       this.props.fetchOperationById(editId).then(() => {
-         this.setState({
-           isUpdated: true,
-           operation: this.props.oneOperation,
+    if (editId !== '0') {
+      this.props.fetchOperationById(editId).then(() => {
+        this.setState({
+          isUpdated: true,
+          operation: this.props.oneOperation,
         });
-     });
-     }
+      });
+    }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -57,14 +53,14 @@ class AddOperation extends React.Component {
       this.setState({ clear: true });
     }
 
-     if(editId !== '0' && prevProps.editId !== editId) {
+    if(editId !== '0' && prevProps.editId !== editId) {
       this.props.fetchOperationById(editId).then(() => {
         this.setState({
           isUpdated: true,
           operation: this.props.oneOperation,
-       });
-    });
-     }
+        });
+      });
+    }
 
   }
 
@@ -83,12 +79,10 @@ class AddOperation extends React.Component {
         name: generalData.name,
         country: generalData.country,
         region: generalData.region,
-        threatGroup:generalData.threatGroup,
+        threatGroup: generalData.threatGroup,
         unitID: generalData.unitID,
-        CurrentAssignmentStart: generalData.CurrentAssignmentStart,
-        CurrentAssignmentEnd: generalData.CurrentAssignmentEnd,
-
-        
+        startDate: generalData.startDate,
+        endDate: generalData.endDate,
       },
     });
 
@@ -108,16 +102,15 @@ class AddOperation extends React.Component {
     console.log(operation);
 
     const { kmlFile } = this.state;
-    //We are going to upload files with JSON request body.
+    // We are going to upload files with JSON request body.
     const formData = new FormData();
     if (kmlFile) {
       formData.append('kmlFile', kmlFile, kmlFile.name);
     }
 
-
     if (editId && editId !== '0') {
       operation.id = editId;
-      formData.append("operationFormData", JSON.stringify(operation));
+      formData.append('operationFormData', JSON.stringify(operation));
 
       this.props.updateOperation(editId, formData).then(() => {
         this.setState({
@@ -125,13 +118,12 @@ class AddOperation extends React.Component {
         });
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        }
-        else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
           this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
-      formData.append("operationFormData", JSON.stringify(operation));
+      formData.append('operationFormData', JSON.stringify(operation));
 
       this.props.addOperation(formData).then((res) => {
         this.setState({
@@ -140,42 +132,12 @@ class AddOperation extends React.Component {
         // this.props.onClose(NoticeType.ADD);
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        }
-        else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
           this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }
   }
-/* 
-  updatelocationid(generalData) {
-    const locationselect = document.getElementsByName('locationID')[0];
-    locationselect.length = 0;
-    locationselect.add(new Option('--Fetching Locations--', ''));
-    const apiUrl = `${baseUrl}/Locations/GetLocationsByCategory?Category=` + generalData.locationcategory;
-    axios.get(apiUrl, { headers: requestHeaders })
-      .then(response => {
-        locationselect.length = 0;
-        if(response.data) {
-          locationselect.add(new Option('--Select Location--', ''));
-          response.data.map(item => {
-            let selected = false;
-            if(item.id === generalData.locationID) {
-              selected = true;
-            }
-            locationselect.add(new Option(item.description, item.id.trim(), selected, selected));
-          });
-        }else{
-          locationselect.add(new Option('No Location Found', ''));
-        }
-
-      })
-      .catch((error) => {
-        locationselect.length = 0;
-        locationselect.add(new Option('Error Fetching Locations', ''));
-        console.log('Exception comes:' + error);
-      });
-  } */
 
   stopset = () => {
     this.setState({ clear: false });
@@ -197,14 +159,14 @@ class AddOperation extends React.Component {
     const { operation } = this.state;
 
     const fields = [
-      { name: translations['Country'], type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
-      { name: translations['Region'], type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
+      { name: translations.Country, type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
+      { name: translations.Region, type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
       { name: translations['Effective Area KML'], type: 'file', valFieldID: 'kmlFile', domID: 'kmlFile', extension: 'kml' },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID' , required: true },
+      { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
       { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name', required: true },
-      {name: translations['Dates of Current Assignment Start'], type: 'date', domID: 'CurrentAssignmentStart',  valFieldID: 'CurrentAssignmentStart'},
-      {name: translations['Dates of Current Assignment End'], type: 'date', domID: 'CurrentAssignmentEnd', valFieldID: 'CurrentAssignmentEnd' }
+      { name: translations['Start Date'], type: 'date', domID: 'startDate', valFieldID: 'startDate' },
+      { name: translations['End Date'], type: 'date', domID: 'endDate', valFieldID: 'endDate' },
 
     ];
 
@@ -250,24 +212,24 @@ AddOperation.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
 };
- 
+
 const mapStateToProps = state => {
   return {
-     translations: state.localization.staticText,
+    translations: state.localization.staticText,
     oneOperation: state.operations.oneOperation,
     isAdded: state.operations.isAdded,
     isUpdated: state.operations.isUpdated,
-    error: state.operations.error, 
+    error: state.operations.error,
   };
 };
 
 const mapDispatchToProps = {
-  addOperation, 
-  updateOperation, 
-  fetchOperations, 
-  fetchOperationById, 
-  deleteOperationById
+  addOperation,
+  updateOperation,
+  fetchOperations,
+  fetchOperationById,
+  deleteOperationById,
 
-}; 
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddOperation);
