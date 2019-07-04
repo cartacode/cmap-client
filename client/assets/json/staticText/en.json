@@ -855,9 +855,5 @@
 "Operation Inventory Title":"Operations ",
 "equip":"equip",
 "Ops":"Ops",
-
-"ccirNumber": "CCIR Number",
-"reportDate": "Date of Report",
-"who": "Who",
-"what": "What"
+"callSign":"Aircraft Call Sign"
 }
