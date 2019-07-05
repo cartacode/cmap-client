@@ -3,7 +3,7 @@ import React from 'react';
 import { adminUser } from '../../dictionary/auth';
 import { NotificationManager } from 'react-notifications';
 import { NoticeType, TableDefaults } from '../../dictionary/constants';
-import { defaultFilter, getConfirmation } from '../../util/helpers';
+import { defaultFilter, getConfirmation, formatDateTime } from '../../util/helpers';
 import Loader from '../reusable/Loader';
 import ReactTooltip from 'react-tooltip';
 import ReactTable from 'react-table';
@@ -110,7 +110,10 @@ class CcirComponent extends React.Component {
 
       {
         Header: translations.reportDate,
-        accessor: 'reportTimeCriteria',
+        id: 'reportTimeCriteria',
+        accessor: d => {
+          return formatDateTime(d.ActiveDateTimeStart);
+        },
       },
       {
         Header: translations.ccirNumber,
@@ -118,20 +121,20 @@ class CcirComponent extends React.Component {
       },
       {
         Header: translations.unit,
-        accessor: 'unit',
+        accessor: 'unitName',
       },
       {
         Header: translations.description,
         accessor: 'description',
       },
-      {
-        Header: translations.who,
-        accessor: 'who',
-      },
-      {
-        Header: translations.what,
-        accessor: 'what',
-      },
+      // {
+      //   Header: translations.who,
+      //   accessor: 'who',
+      // },
+      // {
+      //   Header: translations.what,
+      //   accessor: 'what',
+      // },
       {
         Header: translations.view,
         accessor: 'id',
