@@ -3,17 +3,17 @@ import { CCIR__ADD, CCIR__UPDATE, CCIR__FETCH, CCIR__FETCH_ONE, CCIR__DELETE_ONE
 import { baseUrl, requestHeaders } from 'dictionary/network';
 import { createAction } from 'util/action';
 
-export function addCcir(equipment) {
+export function addCcir(ccir) {
   return createAction({
     type: CCIR__ADD,
-    action: () => axios.post(`${baseUrl}/CCIRs/PostCCIR`, JSON.stringify(equipment), { headers: requestHeaders }),
+    action: () => axios.post(`${baseUrl}/CCIRs/PostCCIR`, JSON.stringify(ccir), { headers: requestHeaders }),
   });
 }
 
-export function updateCcir(id, equipment) {  
+export function updateCcir(id, ccir) {  
   return createAction({
     type: CCIR__UPDATE,
-    action: () => axios.put(`${baseUrl}/CCIRs/PutCCIR/${id}`, JSON.stringify(equipment), { headers: requestHeaders }),
+    action: () => axios.put(`${baseUrl}/CCIRs/PutCCIR/${id}`, JSON.stringify(ccir), { headers: requestHeaders }),
   });
 }
 

@@ -29,6 +29,8 @@ class SelectBox extends React.Component {
       <div>
         <Select
           value={selectedOption}
+          isSearchable={true}
+          name="reactSelect"
           onChange={this.handleChange}
           options={this.props.options}
         />

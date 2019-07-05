@@ -1,21 +1,20 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import PirComponent from '../../components/admin/PirComponent';
-import {fetchCcirPirs, deleteCcirPirById} from 'actions/ccirpir';
+import { fetchPir, deletePirById } from 'actions/pir';
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allCcirPirs: state.ccirpir.allCcirPirs,
-    isDeleted: state.ccirpir.isDeleted
+    allPir: state.pirs.allPir,
+    isLoading: state.pirs.isFetching,
+    isDeleted: state.pirs.isDeleted,
   };
 };
 
-
 const mapDispatchToProps = {
-  fetchCcirPirs, 
-  deleteCcirPirById
+  fetchPir,
+  deletePirById,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(PirComponent);

@@ -107,6 +107,12 @@ export const CCIR__FETCH = createActionType('CCIR__FETCH');
 export const CCIR__FETCH_ONE = createActionType('CCIR__FETCH_ONE');
 export const CCIR__DELETE_ONE = createActionType('CCIR__DELETE_ONE');
 
+export const PIR__ADD = createActionType('PIR__ADD');
+export const PIR__UPDATE = createActionType('PIR__UPDATE');
+export const PIR__FETCH = createActionType('PIR__FETCH');
+export const PIR__FETCH_ONE = createActionType('PIR__FETCH_ONE');
+export const PIR__DELETE_ONE = createActionType('PIR__DELETE_ONE');
+
 
 export const STATUS_PLATFORM__FETCH = createActionType('STATUS_PLATFORM__FETCH');
 export const STATUS_PAYLOAD__FETCH = createActionType('STATUS_PAYLOAD__FETCH');

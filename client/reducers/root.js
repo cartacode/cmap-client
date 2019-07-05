@@ -26,6 +26,7 @@ import intellibraries from 'reducers/intellibrarys';
 import equipments from 'reducers/equipmentinventory';
 import operations from 'reducers/operations';
 import ccirs from 'reducers/ccir';
+import pirs from 'reducers/pir';
 
 export default function createReducer() {
   return combineReducers({
@@ -55,5 +56,6 @@ export default function createReducer() {
     equipments,
     operations,
     ccirs,
+    pirs,
   });
 }

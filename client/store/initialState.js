@@ -220,4 +220,12 @@ export default {
     allCcir: [],
     oneCcir: {},
   },
+
+  pirs: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allPir: [],
+    onePir: {},
+  },
 };

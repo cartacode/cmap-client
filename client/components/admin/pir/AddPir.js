@@ -1,35 +1,27 @@
-import moment from 'moment';
-import { addOperation, updateOperation, fetchOperations, fetchOperationById, deleteOperationById } from 'actions/operations';
+import { addPir, fetchPirById, updatePir } from 'actions/pir';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ContentBlock from '../../reusable/ContentBlock';
 
-import { NoticeType, Error, DateConsts } from '../../../dictionary/constants';
+import { NoticeType, Error, InputAttributes } from '../../../dictionary/constants';
 import Loader from '../../reusable/Loader';
 
-class AddOperation extends React.Component {
+class AddPir extends React.Component {
 
   constructor(props) {
     super(props);
     const ses = JSON.parse(localStorage.getItem('session'));
-    const currentDate = moment().utc();
-    const start = currentDate.format(DateConsts.DB_DATETIME_FORMAT);
-    const end = currentDate.add(30, 'days').format(DateConsts.DB_DATETIME_FORMAT);
-
     this.state = {
       clear: false,
       isUpdated: true,
-      operation: {
+      pir: {
         unitID: ses.AssignedUnit,
         branchID: ses.Branch,
         COCOM: ses.COCOMID,
-        startDate: start,
-        endDate: end,
       },
-      oneOperation: {},
+      onePir: {},
       loading: false,
-      kmlFile: null,
     };
 
     this.resetForm = this.resetForm.bind(this);
@@ -41,12 +33,7 @@ class AddOperation extends React.Component {
     const { editId } = this.props;
     this.setState({ clear: true });
     if (editId !== '0') {
-      this.props.fetchOperationById(editId).then(() => {
-        this.setState({
-          isUpdated: true,
-          operation: this.props.oneOperation,
-        });
-      });
+      this.getPir(editId);
     }
   }
 
@@ -57,15 +44,20 @@ class AddOperation extends React.Component {
     }
 
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.props.fetchOperationById(editId).then(() => {
-        this.setState({
-          isUpdated: true,
-          operation: this.props.oneOperation,
-        });
-      });
+      this.getPir(editId);
     }
 
   }
+
+getPir = (editId) => {
+  this.props.fetchPirById(editId).then(() => {
+    this.setState({
+      isUpdated: true,
+      pir: this.props.onePir,
+    });
+
+  });
+}
 
   stopUpdate = ()=> {
     this.setState({
@@ -73,25 +65,43 @@ class AddOperation extends React.Component {
     });
   }
 
-  handleGeneralData = (generalData) => {
-    const { operation } = this.state;
+  handlePir1 = (data) => {
+    const { pir } = this.state;
     this.setState({
-      kmlFile: generalData.kmlFile,
-      operation: {
-        ...operation,
-        name: generalData.name,
-        country: generalData.country,
-        region: generalData.region,
-        threatGroup: generalData.threatGroup,
-        unitID: generalData.unitID,
-        startDate: generalData.startDate,
-        endDate: generalData.endDate,
+      pir: {
+        ...pir,
+        unitID: data.unitID,
+        threatGroup: data.threatGroup,
+        objectiveID: data.objectiveID,
+        country: data.country,
+        region: data.region,
       },
     });
+  }
 
-    /* if(generalData.locationcategory && generalData.locationcategory != this.state.locationcategory) {
-      this.updatelocationid(generalData);
-    } */
+  handlePir2 = (data) => {
+    const { pir } = this.state;
+    this.setState({
+      pir: {
+        ...pir,
+        idNumber: data.idNumber,
+        description: data.description,
+        name: data.name,
+        EEIs: data.EEIs,
+      },
+    });
+  }
+
+  handlePir3 = (data) => {
+    const { pir } = this.state;
+    this.setState({
+      pir: {
+        ...pir,
+        locationNAI: data.locationNAI,
+        locationPOI: data.locationPOI,
+        locationTAI: data.locationTAI,
+      },
+    });
   }
 
   handleSubmit = event => {
@@ -99,23 +109,12 @@ class AddOperation extends React.Component {
       loading: true,
     });
     event.preventDefault();
-    const { operation } = this.state;
+    const { pir } = this.state;
     const { editId } = this.props;
-    console.log(editId);
-    console.log(operation);
-
-    const { kmlFile } = this.state;
-    // We are going to upload files with JSON request body.
-    const formData = new FormData();
-    if (kmlFile) {
-      formData.append('kmlFile', kmlFile, kmlFile.name);
-    }
 
     if (editId && editId !== '0') {
-      operation.id = editId;
-      formData.append('operationFormData', JSON.stringify(operation));
-
-      this.props.updateOperation(editId, formData).then(() => {
+      pir.id = editId;
+      this.props.updatePir(editId, pir).then(() => {
         this.setState({
           loading: false,
         });
@@ -126,9 +125,7 @@ class AddOperation extends React.Component {
         }
       });
     } else {
-      formData.append('operationFormData', JSON.stringify(operation));
-
-      this.props.addOperation(formData).then((res) => {
+      this.props.addPir(pir).then((res) => {
         this.setState({
           loading: false,
         });
@@ -149,7 +146,6 @@ class AddOperation extends React.Component {
   resetForm = () => {
     this.setState(this.baseState);
     const { translations } = this.props;
-    console.log('FORM RESET DONE');
     if (confirm(translations.ClearConfirmation)) {
       this.setState({ clear: true });
     }
@@ -159,18 +155,26 @@ class AddOperation extends React.Component {
 
     const ses = JSON.parse(localStorage.getItem('session'));
     const { translations } = this.props;
-    const { operation } = this.state;
 
-    const fields = [
+    const pir1 = [
+      { name: translations.Unit, type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
+      { name: translations['Threat Group'], type: 'dropdown', ddID: 'ThreatGroup/GetThreatGroups', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
+      { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID' },
       { name: translations.Country, type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
       { name: translations.Region, type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
-      { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
-      { name: translations['Effective Area KML'], type: 'file', valFieldID: 'kmlFile', domID: 'kmlFile', extension: 'kml' },
-      { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
-      { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name', required: true },
-      { name: translations['Start Date'], type: 'date', domID: 'startDate', valFieldID: 'startDate' },
-      { name: translations['End Date'], type: 'date', domID: 'endDate', valFieldID: 'endDate' },
+    ];
 
+    const pir2 = [
+      { name: translations.pirNumber, type: 'input', domID: 'idNumber', valFieldID: 'idNumber', required: true },
+      { name: translations.title, type: 'input', domID: 'name', valFieldID: 'name', required: true },
+      { name: translations.Description, type: 'input', domID: 'description', valFieldID: 'description', required: true, maxlength: InputAttributes.DESC_LENGTH },
+      { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'EEIs', multiple: true, required: true },
+    ];
+
+    const pir3 = [
+      { name: translations.NAI, type: 'dropdown', domID: 'locationNAI', valFieldID: 'locationNAI', ddID: 'Locations/GetLocationsByCategory?Category=2' },
+      { name: translations.POI, type: 'dropdown', domID: 'locationPOI', valFieldID: 'locationPOI', ddID: 'Locations/GetLocationsByCategory?Category=3' },
+      { name: translations.TAI, type: 'dropdown', domID: 'locationTAI', valFieldID: 'locationTAI', ddID: 'Locations/GetLocationsByCategory?Category=6' },
     ];
 
     return (
@@ -180,8 +184,9 @@ class AddOperation extends React.Component {
         <div className="payload-content">
           <div className="row personnel" >
             <div className="under-munitions-content">
-              <div className="col-md-4" />
-              <ContentBlock fields={fields} data={this.handleGeneralData} initstate={this.state.operation} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={pir1} data={this.handlePir1} initstate={this.state.pir} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={pir2} data={this.handlePir2} initstate={this.state.pir} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
+              <ContentBlock fields={pir3} data={this.handlePir3} initstate={this.state.pir} editId={this.props.editId} stopupd={this.stopUpdate} editFetched={this.state.isUpdated} clearit={this.state.clear} stopset={this.stopset.bind(this)} />
             </div>
           </div>
 
@@ -209,7 +214,7 @@ class AddOperation extends React.Component {
   }
 }
 
-AddOperation.propTypes = {
+AddPir.propTypes = {
   children: PropTypes.node,
   editId: PropTypes.any,
   onClose: PropTypes.func.isRequired,
@@ -219,20 +224,17 @@ AddOperation.propTypes = {
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    oneOperation: state.operations.oneOperation,
-    isAdded: state.operations.isAdded,
-    isUpdated: state.operations.isUpdated,
-    error: state.operations.error,
+    onePir: state.pirs.onePir,
+    isAdded: state.pirs.isAdded,
+    isUpdated: state.pirs.isUpdated,
+    error: state.pirs.error,
   };
 };
 
 const mapDispatchToProps = {
-  addOperation,
-  updateOperation,
-  fetchOperations,
-  fetchOperationById,
-  deleteOperationById,
-
+  addPir,
+  fetchPirById,
+  updatePir,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddOperation);
+export default connect(mapStateToProps, mapDispatchToProps)(AddPir);

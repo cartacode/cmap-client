@@ -860,6 +860,11 @@
 "ccirNumber": "CCIR Number",
 "reportDate": "Date of Report",
 "who": "Who",
+"what": "What",
+
+"pirNumber": "PIR Number",
+"title": "Title",
+"place": "Place",
 "what": "What"
 
 }

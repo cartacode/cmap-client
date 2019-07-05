@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { baseUrl, requestHeaders } from 'dictionary/network';
 
+let labelField = 'description';
+let  valueField = 'id';
 class Table extends React.Component {
 
-  labelField = "description";
-  valueField = 'id';
+  
 
   constructor(props) {
     super(props);
