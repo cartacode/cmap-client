@@ -68,6 +68,17 @@ export default {
     error: {},
   },
 
+  pedteam: {
+    allPedTeams: [],
+    onePedTeam: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
   operations: {
     allOperations: [],
     oneOperation: {},

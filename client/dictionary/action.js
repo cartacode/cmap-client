@@ -70,6 +70,12 @@ export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
 export const PERSONNEL__DELETE_ONE = createActionType('PERSONNEL__DELETE_ONE');
 
+export const PEDTEAM__ADD = createActionType('PEDTEAM__ADD');
+export const PEDTEAM__UPDATE = createActionType('PEDTEAM__UPDATE');
+export const PEDTEAM__FETCH = createActionType('PEDTEAM__FETCH');
+export const PEDTEAM__FETCH_ONE = createActionType('PEDTEAM__FETCH_ONE');
+export const PEDTEAM__DELETE_ONE = createActionType('PEDTEAM__DELETE_ONE');
+
 export const OPERATION__ADD = createActionType('OPERATION__ADD');
 export const OPERATION__UPDATE = createActionType('OPERATION__UPDATE');
 export const OPERATION__FETCH = createActionType('OPERATION__FETCH');

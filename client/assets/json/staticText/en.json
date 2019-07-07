@@ -862,6 +862,9 @@
 "who": "Who",
 "what": "What",
 
+"Team":"Team",
+"Number of Personnel":"Number of Personnel",
+"pedteam":"Ped Team",
 "pirNumber": "PIR Number",
 "title": "Title",
 "place": "Place",
