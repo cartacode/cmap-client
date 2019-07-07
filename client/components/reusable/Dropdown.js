@@ -7,7 +7,8 @@ let labelField = 'description';
 let  valueField = 'id';
 class Table extends React.Component {
 
-  
+  labelField = "description";
+  valueField = 'id';
 
   constructor(props) {
     super(props);
@@ -147,6 +148,7 @@ class Table extends React.Component {
 Table.propTypes = {
   children: PropTypes.element,
   dropdownData: PropTypes.func,
+  dropdownDataUrl: PropTypes.string,
   id: PropTypes.string,
   initValue: PropTypes.any,
   multiSelect: PropTypes.string,
