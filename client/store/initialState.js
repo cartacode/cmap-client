@@ -79,6 +79,17 @@ export default {
     error: {},
   },
 
+  opord: {
+    allOpords: [],
+    oneOpord: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
   operations: {
     allOperations: [],
     oneOperation: {},

@@ -76,6 +76,12 @@ export const PEDTEAM__FETCH = createActionType('PEDTEAM__FETCH');
 export const PEDTEAM__FETCH_ONE = createActionType('PEDTEAM__FETCH_ONE');
 export const PEDTEAM__DELETE_ONE = createActionType('PEDTEAM__DELETE_ONE');
 
+export const OPORD__ADD = createActionType('OPORD__ADD');
+export const OPORD__UPDATE = createActionType('OPORD__UPDATE');
+export const OPORD__FETCH = createActionType('OPORD__FETCH');
+export const OPORD__FETCH_ONE = createActionType('OPORD__FETCH_ONE');
+export const OPORD__DELETE_ONE = createActionType('OPORD__DELETE_ONE');
+
 export const OPERATION__ADD = createActionType('OPERATION__ADD');
 export const OPERATION__UPDATE = createActionType('OPERATION__UPDATE');
 export const OPERATION__FETCH = createActionType('OPERATION__FETCH');

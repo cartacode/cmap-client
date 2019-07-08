@@ -10,6 +10,8 @@ import PedTaskingContainer from '../containers/mission_mgt/PedTaskingContainer';
 import MissionSummaryContainer from '../containers/mission_mgt/MissionSummaryContainer';
 
 import { missionManageUser, missionATOUser, missionFlightUser, missionPEDUser } from '../dictionary/auth';
+import AtoWizardComponent from './mission_mgt/AtoWizardComponent';
+import AtoWizardContainer from '../containers/mission_mgt/AtoWizardContainer';
 
 class MissionMGTComponent extends React.Component {
 
@@ -46,6 +48,7 @@ class MissionMGTComponent extends React.Component {
 
     if(missionATOAccess) {
       menuItems.push({title: translations['ato'], url: `${match.url}/ato`});
+      menuItems.push({title: 'ATO Wizard', url: `${match.url}/wizard`});
     }
 
     if(missionFlightAccess){
@@ -100,6 +103,7 @@ class MissionMGTComponent extends React.Component {
           <Route path={`${match.url}/ped-tasking`} component={PedTaskingContainer} />
           <Route path={`${match.url}/mission-summary`} component={MissionSummaryContainer} />
           <Route path={`${match.url}/mission-detail/:editId`} component={MissionDetailContainer} />
+          <Route path={`${match.url}/wizard`} component={AtoWizardContainer} />
         </Switch>
     </div> ) : null
     );

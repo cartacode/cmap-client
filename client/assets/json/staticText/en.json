@@ -868,6 +868,16 @@
 "pirNumber": "PIR Number",
 "title": "Title",
 "place": "Place",
-"what": "What"
+"what": "What",
+
+"FTN": "FTN",
+"Operation Name":"Operation Name",
+"Exercise Name":"Exercise Name",
+
+"Listing":"Listing",
+"name": "Name",
+"Format":"Format",
+"chatRoom":"ChatRoom"
+
 
 }

@@ -5560,3 +5560,110 @@ input#uploadFile0 {
 .checkbox-default {
   width: 50px;
 }
+
+/****************** ATO Wizard css  *****************/
+
+.dropzoneClass {
+  text-align: center;
+  display: inline-block;
+  font-size: 1.5rem;
+  padding-top: 60px;
+  position: relative;
+  width: 480px;
+  height: 150px;
+  border-width: 2px;
+  border-color: #cee3f5;
+  border-style: dashed;
+  border-radius: 5px;
+}
+
+.error-file {
+  color: red;
+  margin-left: 90px;
+}
+
+.fileUploadSource {
+  margin-left: 105px;
+}
+
+.fileUpload {
+  margin-top:40px;
+}
+
+/* Excel Preview */
+
+.ExcelTable2007 {
+	border: 1px solid #B0CBEF;
+	border-width: 1px 0px 0px 1px;
+	font-size: 11pt;
+	font-family: Calibri;
+	font-weight: 100;
+	border-spacing: 0px;
+	border-collapse: collapse;
+  padding: 10px;
+  max-width: 1000px !important;
+  overflow-x: scroll;
+}
+
+.ExcelTable2007 TH {
+	font-weight: bold;
+	font-size: 14px;
+	border: 1px solid #9EB6CE;
+	border-width: 0px 1px 1px 0px;
+	height: 17px;
+	line-height: 17px;
+}
+
+.ExcelTable2007 TD {
+	border: 0px;
+	background-color:transparent;
+	padding: 0px 4px 0px 2px;
+	border: 1px solid #D0D7E5;
+	border-width: 0px 1px 1px 0px;
+}
+
+.ExcelTable2007 TD B {
+	border: 0px;
+	background-color: transparent;
+	font-weight: bold;
+}
+
+.ExcelTable2007 TD.heading {
+	background-color: transparent;
+	text-align: center;
+	border: 1px solid #9EB6CE;
+	border-width: 0px 1px 1px 0px;
+	font-weight: bold;
+}
+
+.ExcelTable2007 TH.heading {
+	background-image: url("/assets/img/menu/mission_mgt/Wizard/excel-2007-header-left.gif");
+	background-repeat: none;
+}
+
+TH {
+	text-align: center;
+}
+
+.jumbotron-background {
+	background-image: url("/assets/img/menu/mission_mgt/Wizard/excelmock3.jpg");
+	border-radius: 0rem !important;
+	color: white
+}
+
+.jumbotron-button {
+	color: #fff !important;
+	background-color: transparent !important;
+	border-color: lightgrey !important;
+}
+
+.jumbotron-button:hover {
+	color: #fff !important;
+	background-color: #5a6268 !important;
+	border-color: #545b62 !important;
+}
+
+.restrict-card {
+	height: 175px;
+	overflow-y: overlay;
+}

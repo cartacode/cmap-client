@@ -85,7 +85,7 @@ render() {
   let ses = JSON.parse(localStorage.getItem('session'));
   let roles = ses.UserRoles;
   let roles2 = JSON.parse(roles);
-  let access = roles2.some(v => superAdmin.includes(v));
+  let access = roles2.some(v => adminUser.includes(v));
 
   const columns = [
     {
