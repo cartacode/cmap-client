@@ -20,10 +20,9 @@ class OpordComponent extends React.Component {
       filterValue: '',
       filter: [],
       addOpordModalOpen: false,
-      tableRowDetailModalOpen: false,
-      addshow: false,
+     // addshow: false,
       editId: '0',
-      editForm:false,
+     // editForm:false,
     };
   }
 
@@ -35,10 +34,10 @@ class OpordComponent extends React.Component {
 
 
 
-stopupdate = () => 
+/* stopupdate = () => 
   {
     this.setState({editForm:false});
-  }
+  } */
 
 // This will get call when user click on Yes to Delete a Record
   deleteLogic(value) {
