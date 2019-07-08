@@ -161,7 +161,7 @@ class ReportsComponent extends React.Component {
 
 	render() {
 	  const { translations } = this.props;
-		const { allPayloads, payloadList, payloadTypes, cocomList, locationList } = this.props;
+		const { allReports } = this.props;
 		
 		let ses = JSON.parse(localStorage.getItem('session'));
     let roles = ses.UserRoles;
@@ -251,7 +251,7 @@ class ReportsComponent extends React.Component {
 
 	        <div className="col-md-12">
 	          <ReactTable
-	            data={allPayloads}
+	            data={allReports}
 	            columns={columns}
 	            defaultPageSize={TableDefaults.PAGE_SIZE}
 	            minRows={TableDefaults.MIN_ROWS}
