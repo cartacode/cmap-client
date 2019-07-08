@@ -82,6 +82,10 @@ class AtoWizardComponent extends React.Component {
         ...wizard,
         LocationCOCOM: ''
       },
+      fileName:null,
+      files:[],
+      rows:[],
+      cols:[]
     });
   }
 
@@ -127,7 +131,7 @@ class AtoWizardComponent extends React.Component {
               <div className="col-md-6">
                 
                 <div className='fileUpload'>
-                  {this.state.rejected ? <p className="error-file text-center">Incorrect File Type. Please upload Excel or CSV.</p> : null}
+                  {this.state.rejected ? <p className="error-file">Incorrect File Type. Please upload Excel or CSV.</p> : null}
                     <Dropzone className="dropzoneClass" onDrop={this.onDrop}>{this.state.fileName == null ?
                         <span>Drag &amp; Drop or click to upload <b>XLSX/CSV:</b></span> : this.state.fileName} 
                     </Dropzone>
