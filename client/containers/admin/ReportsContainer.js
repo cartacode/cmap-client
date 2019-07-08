@@ -6,14 +6,12 @@ const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
     
-    isLoading: state.payloads.isFetching,
-   
-    isDeleted: state.payloads.isDeleted
+    
   };
 };
 
 const mapDispatchToProps = {
-
+  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsComponent);
