@@ -17,6 +17,7 @@ class MenuComponent extends React.Component {
     const menuItems = [
       {title: translations['dashboard'], url: '/'},
       {title: translations['liveview'], url: '/'},
+      {title: translations['Chain of Command'], url: '/'},
       {title: translations['status'], url: '/'},
       {title: translations['intel request'], url: '/'},
       {title: translations['mission mgt'], url: '/'},

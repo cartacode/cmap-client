@@ -1,21 +1,20 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import CcirComponent from '../../components/admin/CcirComponent';
-import {fetchCcirPirs, deleteCcirPirById} from 'actions/ccirpir';
+import { fetchCcir, deleteCcirById } from 'actions/ccir';
 
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    allCcirPirs: state.ccirpir.allCcirPirs,
-    isDeleted: state.ccirpir.isDeleted
+    allCcir: state.ccirs.allCcir,
+    isLoading: state.ccirs.isFetching,
+    isDeleted: state.ccirs.isDeleted,
   };
 };
 
-
 const mapDispatchToProps = {
-  fetchCcirPirs, 
-  deleteCcirPirById
+  fetchCcir,
+  deleteCcirById,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(CcirComponent);

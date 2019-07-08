@@ -96,8 +96,8 @@ class AdminComponent extends React.Component {
       {title: translations['Location'], url: `${match.url}/location`},
       {title: translations['PedTeam'], url: `${match.url}/pedteam`},
       {title: translations['AirCrew'], url: `${match.url}/aircrew`},
-      {title: translations['equipment'], url: `${match.url}/equipment`},
-      {title: translations['Operations'], url: `${match.url}/operations`},
+      {title: translations['equip'], url: `${match.url}/equipment`},
+      {title: translations['Ops'], url: `${match.url}/operations`},
       {title: translations['pir'], url: `${match.url}/pir`},
 
       //{title: translations['status'], url: `${match.url}/admin-status`},
@@ -121,7 +121,7 @@ class AdminComponent extends React.Component {
       }
 
       return (
-        <div className="submenu-button" key={i} onMouseEnter={this.handleHover.bind(this,i)} onMouseLeave={this.handleLeave.bind(this)}>
+        <div className="submenu-button " key={i} onMouseEnter={this.handleHover.bind(this,i)} onMouseLeave={this.handleLeave.bind(this)}>
           <NavLink to={item.url} className={`${matchForLink ? 'active-submenu-item' : ''} submenu`}>
             
             {item.title}
@@ -167,7 +167,7 @@ class AdminComponent extends React.Component {
           <Route path={`${match.url}/admin-status`} component={AdminStatusContainer} />
           <Route path={`${match.url}/reports`} component={ReportsContainer} />
           <Route path={`${match.url}/ccir-pir`} component={CcirPirContainer} />
-          <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} />
+          {/* <Route path={`${match.url}/org-builder`} component={OrgBuilderContainer} /> */}
           <Route path={`${match.url}/com-net`} component={ComNetContainer} />
           <Route path={`${match.url}/sys-health`} component={SysHealthContainer} />
           <Route path={`${match.url}/sys-config`} component={ReferenceDocsContainer} />

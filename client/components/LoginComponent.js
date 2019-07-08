@@ -96,7 +96,7 @@ class LoginComponent extends React.Component {
           <div className="second-header-line">
             <img src="/assets/img/admin/personnel_1.png" alt=""/>
             <div className="header-text">
-              a-isr mission Manager
+            Advanced Mission Planning System
             </div>
             <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
           </div>
@@ -163,7 +163,7 @@ class LoginComponent extends React.Component {
         </div>
 
         <div className="col-md-12 app-name">
-          centcom a-isr mission manager
+          Advanced Mission Planning System
         </div>
         <div className="col-md-12 logo-text">
           <div className="text-header">

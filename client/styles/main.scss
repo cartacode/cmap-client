@@ -520,12 +520,12 @@ a.submenu:hover {
     .submenu-button {
       margin-bottom: 2px;
       display: inline-block;
-      margin-right: 40px;
+      margin-right: 30px;
       height: 31px;
 
       .submenu {
         text-transform: uppercase;
-        min-width: 75px;
+       /*  min-width: 75px; */
         color: #bad3e5;
         text-decoration: none;
         display: block;

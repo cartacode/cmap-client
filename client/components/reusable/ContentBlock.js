@@ -5,6 +5,7 @@ import CustomDatePicker from '../reusable/CustomDatePicker';
 import { InputAttributes } from '../../dictionary/constants';
 import moment from 'moment';
 import { showAlert } from '../../util/helpers';
+import MultiSelectDropdown from './MultiSelectDropdown';
 
 class ContentBlock extends React.Component {
 
@@ -42,9 +43,14 @@ class ContentBlock extends React.Component {
     //   this.props.data(this.state.content);
     // }
 
+    const { clearit } = this.props;
+    if (clearit) {
+      this.setState({ content: [] });
+      this.props.stopset();
+    }
+
     if (editFetched) {
-      this.props.stopupd();
-      console.log(this.state.content);
+      this.props.stopupd();     
       // console.log('inint state '+ JSON.stringify(initstate));
       this.setState({ content: initstate }, () => { this.props.data(this.state.content); });
 
@@ -57,11 +63,6 @@ class ContentBlock extends React.Component {
 
     }
 
-    const { clearit } = this.props;
-    if (clearit) {
-      this.setState({ content: [] });
-      this.props.stopset();
-    }
   }
 
   handleChange = (e) => {
@@ -171,6 +172,22 @@ class ContentBlock extends React.Component {
       }
     }
 
+    handleDropdownMultipleSelectedData = (dropdownData, name) => {
+      this.updateMultiSelectDropdownContent(name, dropdownData);
+    }
+
+    updateMultiSelectDropdownContent(name, value) {
+      const { content } = this.state;
+      this.setState({
+        content: {
+          ...content,
+          [name]: value,
+        },
+      }, () => {
+        this.props.data(this.state.content);
+      });
+    }
+
     updateContent(name, value) {
       const { content } = this.state;
       this.setState({
@@ -189,7 +206,7 @@ class ContentBlock extends React.Component {
     updatedContent(name, value) {
       const { content } = this.state;
       this.setState({
-          RoleIDs: [...this.state.RoleIDs, value],        
+        RoleIDs: [...this.state.RoleIDs, value],        
       }, () => {
         console.log(this.state.RoleIDs);
         this.props.data(this.state.RoleIDs);
@@ -292,13 +309,18 @@ class ContentBlock extends React.Component {
             if (item.required) {
               req = true;
             }
-            // if(value === '') {
-            //   value = 11;
-            // }
-            input = (
-              <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} />
+            
+            let disabled = false;
+            if(item.disabled) {
+              disabled = true;
+            }
+            const multiple = item.multiple;
 
+            input = (!multiple ?
+              <Dropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} required={req} />
+              : <MultiSelectDropdown id={item.valFieldID} initValue={value} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownMultipleSelectedData} required={req} disabled={disabled}/>
             );
+            
             break;
 
           case 'date':

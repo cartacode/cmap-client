@@ -139,7 +139,7 @@ class ChangePasswordComponent extends React.Component {
         </div>
       </div>
         <div className="col-md-12 app-name">
-          centcom a-isr mission manager
+        Advanced Mission Planning System
         </div>
         <div className="col-md-12 logo-text">
           <div className="text-header">

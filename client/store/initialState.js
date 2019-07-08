@@ -68,6 +68,39 @@ export default {
     error: {},
   },
 
+  pedteam: {
+    allPedTeams: [],
+    onePedTeam: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
+  opord: {
+    allOpords: [],
+    oneOpord: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
+  operations: {
+    allOperations: [],
+    oneOperation: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
   ccirpir: {
     allCcirPirs: [],
     oneCcirPir: {},
@@ -194,4 +227,27 @@ export default {
     isFetching: false,
   },
 
+  equipments: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allEquipmentInventory: [],
+    oneEquipmentInventory: {},
+  },
+
+  ccirs: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allCcir: [],
+    oneCcir: {},
+  },
+
+  pirs: {
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    allPir: [],
+    onePir: {},
+  },
 };

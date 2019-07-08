@@ -23,6 +23,14 @@ import mssionmgts from 'reducers/mssionmgts';
 import dashboards from 'reducers/dashboards';
 import auth from 'reducers/auth';
 import intellibraries from 'reducers/intellibrarys';
+import equipments from 'reducers/equipmentinventory';
+import operations from 'reducers/operations';
+import ccirs from 'reducers/ccir';
+import pirs from 'reducers/pir';
+import pedteam from 'reducers/pedteam';
+import opord from 'reducers/opord';
+
+
 
 export default function createReducer() {
   return combineReducers({
@@ -49,5 +57,11 @@ export default function createReducer() {
     auth,
     dashboards,
     intellibraries,
+    equipments,
+    operations,
+    ccirs,
+    pirs,
+    pedteam,
+    opord
   });
 }

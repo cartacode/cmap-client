@@ -70,6 +70,24 @@ export const PERSONNEL__FETCH = createActionType('PERSONNEL__FETCH');
 export const PERSONNEL__FETCH_ONE = createActionType('PERSONNEL__FETCH_ONE');
 export const PERSONNEL__DELETE_ONE = createActionType('PERSONNEL__DELETE_ONE');
 
+export const PEDTEAM__ADD = createActionType('PEDTEAM__ADD');
+export const PEDTEAM__UPDATE = createActionType('PEDTEAM__UPDATE');
+export const PEDTEAM__FETCH = createActionType('PEDTEAM__FETCH');
+export const PEDTEAM__FETCH_ONE = createActionType('PEDTEAM__FETCH_ONE');
+export const PEDTEAM__DELETE_ONE = createActionType('PEDTEAM__DELETE_ONE');
+
+export const OPORD__ADD = createActionType('OPORD__ADD');
+export const OPORD__UPDATE = createActionType('OPORD__UPDATE');
+export const OPORD__FETCH = createActionType('OPORD__FETCH');
+export const OPORD__FETCH_ONE = createActionType('OPORD__FETCH_ONE');
+export const OPORD__DELETE_ONE = createActionType('OPORD__DELETE_ONE');
+
+export const OPERATION__ADD = createActionType('OPERATION__ADD');
+export const OPERATION__UPDATE = createActionType('OPERATION__UPDATE');
+export const OPERATION__FETCH = createActionType('OPERATION__FETCH');
+export const OPERATION__FETCH_ONE = createActionType('OPERATION__FETCH_ONE');
+export const OPERATION__DELETE_ONE = createActionType('OPERATION__DELETE_ONE');
+
 export const CCIRPIR__ADD = createActionType('CCIRPIR__ADD');
 export const CCIRPIR__UPDATE = createActionType('CCIRPIR__UPDATE');
 export const CCIRPIR__FETCH = createActionType('CCIRPIR__FETCH');
@@ -88,6 +106,24 @@ export const PLATFORM_INVENTORY__UPDATE = createActionType('PLATFORM_INVENTORY__
 export const PLATFORM_INVENTORY__FETCH = createActionType('PLATFORM_INVENTORY__FETCH');
 export const PLATFORM_INVENTORY__FETCH_ONE = createActionType('PLATFORM_INVENTORY__FETCH_ONE');
 export const PLATFORM_INVENTORY__DELETE_ONE = createActionType('PLATFORM_INVENTORY__DELETE_ONE');
+
+export const EQUIPMENT_INVENTORY__ADD = createActionType('EQUIPMENT_INVENTORY__ADD');
+export const EQUIPMENT_INVENTORY__UPDATE = createActionType('EQUIPMENT_INVENTORY__UPDATE');
+export const EQUIPMENT_INVENTORY__FETCH = createActionType('EQUIPMENT_INVENTORY__FETCH');
+export const EQUIPMENT_INVENTORY__FETCH_ONE = createActionType('EQUIPMENT_INVENTORY__FETCH_ONE');
+export const EQUIPMENT_INVENTORY__DELETE_ONE = createActionType('EQUIPMENT_INVENTORY__DELETE_ONE');
+
+export const CCIR__ADD = createActionType('CCIR__ADD');
+export const CCIR__UPDATE = createActionType('CCIR__UPDATE');
+export const CCIR__FETCH = createActionType('CCIR__FETCH');
+export const CCIR__FETCH_ONE = createActionType('CCIR__FETCH_ONE');
+export const CCIR__DELETE_ONE = createActionType('CCIR__DELETE_ONE');
+
+export const PIR__ADD = createActionType('PIR__ADD');
+export const PIR__UPDATE = createActionType('PIR__UPDATE');
+export const PIR__FETCH = createActionType('PIR__FETCH');
+export const PIR__FETCH_ONE = createActionType('PIR__FETCH_ONE');
+export const PIR__DELETE_ONE = createActionType('PIR__DELETE_ONE');
 
 
 export const STATUS_PLATFORM__FETCH = createActionType('STATUS_PLATFORM__FETCH');

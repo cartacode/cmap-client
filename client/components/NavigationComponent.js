@@ -21,6 +21,7 @@ import initialState from '../store/initialState';
 import { connect } from 'react-redux';
 import { refresh } from '../actions/auth';
 import { requestHeaders, formDataRequestHeader } from '../dictionary/network';
+import OrgBuilderContainer from '../containers/admin/OrgBuilderContainer';
 
 let condition = true;
 class NavigationComponent extends React.Component {
@@ -30,14 +31,11 @@ class NavigationComponent extends React.Component {
 
     if (ses === null) { console.log('Empty Session'); } else
     {
-      console.log(ses);
+      
       if(Object.keys(ses).length === 0 && ses.constructor === Object) { console.log('Empty Session'); } else {
         const expired = ses['.expires'];
         const exp = new Date(expired).toISOString();
-        console.log(exp);
-        // console.log(new Date().toISOString());
         const current = new Date().toISOString();
-        console.log(current);
         if (exp < current)
         {
         //   localStorage.removeItem('session');
@@ -86,6 +84,7 @@ class NavigationComponent extends React.Component {
           <PrivateRoute exact path="/intel-library" component={IntelLibraryContainer} />
           <PrivateRoute path="/intel-request" component={IntelRequestComponent} />
           <PrivateRoute exact path="/liveview" component={LiveViewContainer} />
+          <PrivateRoute path="/org-builder" component={OrgBuilderContainer} />
           <PrivateRoute exact path="/messages" component={MessagesContainer} />
           <PrivateRoute path="/mission-mgt" component={MissionMGTComponent} />
           <PrivateRoute path="/orders-assets" component={OrdersAssetsComponent} />

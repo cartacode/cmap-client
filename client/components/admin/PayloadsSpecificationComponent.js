@@ -296,7 +296,7 @@ class PayloadsSpecificationComponent extends React.Component {
 	    { name: translations.wami, onClick: this.openWamiModal, typeSpec: 'WAMI', id: 3 },
 	    { name: translations.sigint, onClick: this.openSigintModal, typeSpec: 'SIGINT', id: 4 },
 	    { name: translations.gmti, onClick: this.openGmtiModal, typeSpec: 'GMTI', id: 5 },
-	    { name: translations.equipment, onClick: this.openEquipmentModal, typeSpec: 'EQUIPMENT', id: 18 },
+	   /*  { name: translations.equipment, onClick: this.openEquipmentModal, typeSpec: 'EQUIPMENT', id: 18 }, */
 	  ];
 
 	  const columns = [
