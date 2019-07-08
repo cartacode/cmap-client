@@ -872,7 +872,12 @@
 
 "FTN": "FTN",
 "Operation Name":"Operation Name",
-"Exercise Name":"Exercise Name"
+"Exercise Name":"Exercise Name",
+
+"Listing":"Listing",
+"name": "Name",
+"Format":"Format",
+"chatRoom":"ChatRoom"
 
 
 }

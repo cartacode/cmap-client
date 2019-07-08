@@ -5,8 +5,15 @@ import ReportsComponent from '../../components/admin/ReportsComponent';
 const mapStateToProps = state => {
   return {
     translations: state.localization.staticText,
-    router: state.router,
+    
+    isLoading: state.payloads.isFetching,
+   
+    isDeleted: state.payloads.isDeleted
   };
 };
 
-export default connect(mapStateToProps)(ReportsComponent);
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReportsComponent);
