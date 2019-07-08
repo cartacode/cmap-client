@@ -113,7 +113,7 @@ class PirComponent extends React.Component {
       },
       {
         Header: translations.pirNumber,
-        id: 'idNumber',
+        accessor: 'PIRNumber',
       },
       {
         Header: translations.title,

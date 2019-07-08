@@ -158,8 +158,8 @@ getPir = (editId) => {
 
     const pir1 = [
       { name: translations.Unit, type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
-      { name: translations['Threat Group'], type: 'dropdown', ddID: 'ThreatGroup/GetThreatGroups', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
-      { name: translations.Objective, type: 'dropdown', domID: 'dispObjective', ddID: 'Objective/GetObjectives', valFieldID: 'objectiveID' },
+      { name: translations['Threat Group'], type: 'select', ddID: 'ThreatGroup/GetThreatGroups', createUrl: 'ThreatGroup/PostThreatGroup', createName: 'description', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
+      { name: translations.Objective, type: 'select', domID: 'dispObjective', ddID: 'Objective/GetObjectives', createUrl: 'Objective/PostObjective', createName: 'objectiveName', valFieldID: 'objectiveID' },
       { name: translations.Country, type: 'dropdown', ddID: 'Countries', valFieldID: 'country', domID: 'country', required: true },
       { name: translations.Region, type: 'dropdown', ddID: 'Regions', valFieldID: 'region', domID: 'region', required: true },
     ];

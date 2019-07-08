@@ -6,6 +6,7 @@ import { InputAttributes } from '../../dictionary/constants';
 import moment from 'moment';
 import { showAlert } from '../../util/helpers';
 import MultiSelectDropdown from './MultiSelectDropdown';
+import Selectable from './Selectable';
 
 class ContentBlock extends React.Component {
 
@@ -123,7 +124,10 @@ class ContentBlock extends React.Component {
   }
 
   handleDropdownSelectedData = (dropdownData, name) => {
-    this.updateContent(name, dropdownData.trim());
+    if (typeof dropdownData === 'string') {
+      dropdownData = dropdownData.trim();
+    }
+    this.updateContent(name, dropdownData);
   }
 
   handleChangeDate = (changeDate, name) => {
@@ -322,7 +326,11 @@ class ContentBlock extends React.Component {
             );
             
             break;
-
+          case 'select':
+            input = (
+              <Selectable id={item.valFieldID} initValue={value} createUrl={item.createUrl} createName = {item.createName} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} />
+            );
+            break;
           case 'date':
           
             if (value === '') {
