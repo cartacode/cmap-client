@@ -29,6 +29,8 @@ import ccirs from 'reducers/ccir';
 import pirs from 'reducers/pir';
 import pedteam from 'reducers/pedteam';
 import opord from 'reducers/opord';
+import reports from 'reducers/reports';
+
 
 
 
@@ -62,6 +64,7 @@ export default function createReducer() {
     ccirs,
     pirs,
     pedteam,
-    opord
+    opord,
+    reports
   });
 }
