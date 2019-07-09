@@ -190,7 +190,9 @@ export const Error = {
 export const ImageryUrls = {
   BING_IMAGERY: 'https://dev.virtualearth.net',
  // GEOSERVER_IMAGERY: 'http://18.219.160.200:9090/geoserver/wms'
- GEOSERVER_IMAGERY: 'https://ec2-18-221-155-233.us-east-2.compute.amazonaws.com:8080/geoserver/amps/wms'
+ //GEOSERVER_IMAGERY: 'https://ec2-18-221-155-233.us-east-2.compute.amazonaws.com:8080/geoserver/amps/wms'
+ GEOSERVER_IMAGERY: 'https://cartography.tcampere.com:8080/geoserver/amps/wms'
+
 }
 
 export const MapTypes = {
