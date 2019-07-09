@@ -1,5 +1,7 @@
 import {connect} from 'react-redux';
 
+import { fetchReportList, deleteReportById } from 'actions/reports';
+
 import ReportsComponent from '../../components/admin/ReportsComponent';
 
 const mapStateToProps = state => {
@@ -12,7 +14,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  
+  fetchReportList,
+  deleteReportById
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsComponent);

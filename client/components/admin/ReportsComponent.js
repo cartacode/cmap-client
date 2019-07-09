@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import 'react-table/react-table.css';
-import moment from 'moment';
+/* import moment from 'moment';
 import TimelineFilter from '../reusable/TimelineFilter';
 import FullHeaderLine from '../reusable/FullHeaderLine';
 import MissionMgtDropDown from '../reusable/MissionMgtDropDown';
 import { MissionConsts } from '../../dictionary/constants';
-import CustomDatePicker from '../reusable/CustomDatePicker';
+import CustomDatePicker from '../reusable/CustomDatePicker'; */
 import Loader from '../reusable/Loader';
 import DropDownButtonSpec from '../reusable/DropDownButtonSpec';
 import { TableDefaults, NoticeType } from '../../dictionary/constants';
@@ -15,6 +15,8 @@ import { defaultFilter, getConfirmation } from '../../util/helpers';
 import { superAdmin, adminUser } from '../../dictionary/auth';
 import ScrollToTop from '../reusable/ScrollToTop';
 import ReactTable from 'react-table';
+import ChatRoomModal from './reports/chatRoom';
+
 
 
 class ReportsComponent extends React.Component {
@@ -25,17 +27,14 @@ class ReportsComponent extends React.Component {
       filter: [],
       chatRoomModalOpen: false,
       reportModalOpen: false,
-     
-     
       editId: '0',
-     
 			loading: false,
 
     };
   }
 
   componentDidMount() {
-    //this.props.fetchPayloads();
+    //this.props.fetchReportList();
   }
 
 	openChatRoomModal = () => {
@@ -43,8 +42,8 @@ class ReportsComponent extends React.Component {
 	  this.setState({
 	    editId: '0',
 	    chatRoomModalOpen: true,
-	    reportModalOpen: false,
-			selectedSpecText: translations['eo/ir'],
+			reportModalOpen: false,
+			selectedSpecText:translations['Chat Room']
 
 	  });
 	}
@@ -55,8 +54,9 @@ class ReportsComponent extends React.Component {
 	    editId: '0',
 	    //payloadTypeId: 2,
 	    chatRoomModalOpen: false,
-	    reportModalOpen: true,
-			selectedSpecText: translations.sar,
+			reportModalOpen: true,
+			selectedSpecText:translations['Report Upload']
+		
 	  });
 	}
 
@@ -66,7 +66,7 @@ class ReportsComponent extends React.Component {
 
 	
 
-	closePayloadSpecifiction=(actionType, actionSuccess)=>{
+	closeReports=(actionType, actionSuccess)=>{
 		if(actionSuccess) {
 			this.loadData(actionType);
 			this.setState({
@@ -120,7 +120,17 @@ class ReportsComponent extends React.Component {
 
 	openReportListing = (row) => {
 	  const value = row.value;
-	  
+		const typeID = row.original.typeID;
+
+
+		this.modelStateReset();
+		this.setState({
+	    editId: value,
+	    chatRoomModalOpen: typeID === 1,
+	    reportModalOpen: typeID === 2 ,
+	   
+	  });
+
 
 	  console.log(this.state.editId);
 	  }
@@ -133,7 +143,7 @@ class ReportsComponent extends React.Component {
 	  deleteLogic(value) {
 	    if (value !== undefined && value !== '0') {
 	      this.setState({ loading: true });
-		  this.props.deletePayloadsById(value).then(() => {
+		  this.props.deleteReportById(value).then(() => {
 	        // this.setState({	editId: '0'});
 	        this.setState({ loading: false });
 	        if(this.props.isDeleted)
@@ -169,7 +179,7 @@ class ReportsComponent extends React.Component {
     let access = roles2.some(v => adminUser.includes(v));
 
 	  const addReportAndChatRoom = [
-	    { name: translations['reports'], onClick: this.openReportModal, typeSpec: 'Reports', id: 1 },
+	    { name: translations['reportsUpload'], onClick: this.openReportModal, typeSpec: 'Reports', id: 1 },
 	    { name: translations['chatRoom'], onClick: this.openChatRoomModal, typeSpec: 'Chatroom', id: 2 },
 	  ];
 
@@ -229,23 +239,26 @@ class ReportsComponent extends React.Component {
 	          <img src="/assets/img/admin/personnel_1.png" alt=""/>
 	          <div className="header-text">
 								<div className="col-md-12 filter-line text-center">
+								{!this.state.chatRoomModalOpen && !this.state.reportModalOpen ?
+
 											<div>
 												<span className="specifi-text">{translations['reports']} &nbsp;</span>
 												<div className="add-button">
 													<DropDownButtonSpec key = "1" label={translations.Add} id="1" items={addReportAndChatRoom} />
 												</div>
 											</div>
-									
+										: <span className="specifi-text">{this.state.selectedSpecText !== '' ? (this.state.selectedSpecText ) : translations.reports} &nbsp;</span>
+									} 
 								</div>
 						</div>
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 	        </div>
-	       {/*  {this.state.chatRoomModalOpen ?
-	          <EoirModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
+	         {this.state.chatRoomModalOpen ?
+	          <ChatRoomModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closeReports} translations = {translations}/>
 	          : null }
-	        {this.state.reportModalOpen ?
+	       {/*  {this.state.reportModalOpen ?
 	          <SargmtiModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sargmtiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
-	          : null } */}
+	          : null }  */}
 	      
 
 

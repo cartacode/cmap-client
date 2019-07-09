@@ -93,6 +93,7 @@ export default {
   reports: {
     allReports: [],
     oneReport: {},
+    oneChatRoom:{},
     isFetching: false,
     isFetchingOne: false,
     isDeleted: false,

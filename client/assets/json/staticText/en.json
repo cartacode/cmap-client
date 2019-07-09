@@ -877,7 +877,11 @@
 "Listing":"Listing",
 "name": "Name",
 "Format":"Format",
-"chatRoom":"ChatRoom"
+"chatRoom":"ChatRoom",
+"link":"Link",
+"reportsUpload":"Reports Upload",
+"Chat Room":"Chat Room",
+"Report Upload":"Report Upload"
 
 
 }
