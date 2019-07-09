@@ -167,7 +167,7 @@ class AddOperation extends React.Component {
       { name: translations['Threat Group'], type: 'dropdown', ddID: 'EEIThreat', domID: 'threatGroup', valFieldID: 'threatGroup', required: true },
       { name: translations['Effective Area KML'], type: 'file', valFieldID: 'kmlFile', domID: 'kmlFile', extension: 'kml' },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
-      { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name', required: true },
+      { name: translations['Named Operation'], type: 'input', valFieldID: 'name', domID: 'name' },
       { name: translations['Start Date'], type: 'date', domID: 'startDate', valFieldID: 'startDate' },
       { name: translations['End Date'], type: 'date', domID: 'endDate', valFieldID: 'endDate' },
 
