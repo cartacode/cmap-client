@@ -168,7 +168,7 @@ getPir = (editId) => {
       { name: translations.pirNumber, type: 'input', domID: 'idNumber', valFieldID: 'idNumber', required: true },
       { name: translations.title, type: 'input', domID: 'name', valFieldID: 'name', required: true },
       { name: translations.Description, type: 'input', domID: 'description', valFieldID: 'description', required: true, maxlength: InputAttributes.DESC_LENGTH },
-      { name: translations.EEIs, type: 'dropdown', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'EEIs', multiple: true, required: true },
+      { name: translations.EEIs, type: 'multiselect', domID: 'dispEEIs', ddID: 'IntelReqEEI/GetEEIOptions', valFieldID: 'EEIs', required: true, createUrl: 'EEIOptions/PostEEIOptions', createName: 'description' },
     ];
 
     const pir3 = [

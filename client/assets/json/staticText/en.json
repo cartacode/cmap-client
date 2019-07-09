@@ -860,7 +860,6 @@
 "ccirNumber": "CCIR Number",
 "reportDate": "Date of Report",
 "who": "Who",
-"what": "What",
 
 "Team":"Team",
 "Number of Personnel":"Number of Personnel",
@@ -869,6 +868,7 @@
 "title": "Title",
 "place": "Place",
 "what": "What",
+"TAI": "TAI",
 
 "FTN": "FTN",
 "Operation Name":"Operation Name",

@@ -7,6 +7,8 @@ import moment from 'moment';
 import { showAlert } from '../../util/helpers';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import Selectable from './Selectable';
+import SelectableMulti from './SelectableMulti';
+
 
 class ContentBlock extends React.Component {
 
@@ -329,6 +331,11 @@ class ContentBlock extends React.Component {
           case 'select':
             input = (
               <Selectable id={item.valFieldID} initValue={value} createUrl={item.createUrl} createName = {item.createName} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} />
+            );
+            break;
+          case 'multiselect':
+            input = (
+              <SelectableMulti id={item.valFieldID} initValue={value} createUrl={item.createUrl} createName = {item.createName} dropdownDataUrl={item.ddID} labelName={item.label} finalValue={item.value} options={item.options} dropdownData={this.handleDropdownSelectedData} />
             );
             break;
           case 'date':

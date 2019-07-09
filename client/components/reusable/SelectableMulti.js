@@ -21,15 +21,16 @@ const customStyles = {
     borderRadius: '0px',
     border: '1px solid #ccc',
     color: '#FFF',
-    height: '26px',
-  }),  
-  singleValue: (styles, { data }) => ({ ...styles, color: '#84a1e0' }),
+  }),
+  multiValue: (styles, { data }) => ({ ...styles, color: '#fffccc', backgroundColor: '#1E90FF' }),
+  multiValueRemove: (styles, { data }) => ({ ...styles, color: '#fffccc', backgroundColor: 'orange' }),
+  multiValueLabel: (styles, { data }) => ({ ...styles, color: '#fffccc', backgroundColor: '#337ab7' }),
   input: styles => ({ ...styles, color: '#84a1e0' }),
   indicatorSeparator: styles => ({ ...styles, display: 'none' }),
   menu: styles => ({ ...styles, backgroundColor: '#0f2b3d' }),
 };
 
-class Selectable extends React.Component {
+class SelectableMulti extends React.Component {
 
   constructor(props) {
     super(props);
@@ -37,28 +38,30 @@ class Selectable extends React.Component {
     this.state = {
       isLoading: false,
       selectOptions: [],
-      value: { id: '', description: 'Select Item' },
-      id: '',
+      // values: [{ id: '', description: 'Select Item' }],
+      values: [],
+      ids: [],
     };
   }
 
-  // Updating initial state value of component
-  componentDidUpdate = () => {
-    let { initValue } = this.props;
-    const { id } = this.state;
+  // Updating initial state values of component
+  // componentDidUpdate = () => {
+  //   let { initValue } = this.props;
+  //   const { ids } = this.state;
     
-    if (typeof initValue === 'string') {
-      initValue = initValue.trim();
-    }
-    if (initValue && id == '' && initValue !== id) {
-      const option = this.getOptionByValue(initValue)[0];
-      this.setState({
-        value: option,
-        id: initValue,
-      });
-    }
-
-  }
+  //   if (typeof initValue === 'string') {
+  //     initValue = initValue.trim();
+  //   }
+  //   // if (initValue && id == '' && initValue !== id) {
+  //   if (initValue && ids.length === 0) {
+  //     const options = this.getOptionsByValue(initValue);
+  //     // const newIds = newValues.map(option => option.id);
+  //     this.setState({
+  //       values: options,
+  //       ids: initValue,
+  //     });
+  //   }
+  // }
 
   // searching among options
   filterOptions = (inputValue) => {
@@ -69,9 +72,10 @@ class Selectable extends React.Component {
   };
 
   // get option object by id field
-  getOptionByValue = (inputValue) => {
+  getOptionsByValue = (inputValues) => {
     return this.state.selectOptions.filter(i =>
-      i.id.toString() === inputValue.toString()
+      // i.id.toString() === inputValue.toString()
+      inputValues.includes(i.id)
     );
   }
 
@@ -100,21 +104,48 @@ class Selectable extends React.Component {
       resolve(this.getOptions(inputValue));
     });
 
-  // update value of option on select in new component
-  handleChange = (newValue, actionMeta) => {
+  // update values of option on select in new component
+  handleChange = (newValues, actionMeta) => {
+    console.log(actionMeta.action);
     if(actionMeta.action === 'select-option' || actionMeta.action === 'remove-value' || actionMeta.action === 'clear') {
-      let val =  { id: '', description: 'Select Item' };
-      if(newValue) {
-        val = newValue;
+      let newIds = [];
+      if(newValues) {
+        newIds = newValues.map(option => option.id);
       }
-      this.props.dropdownData(val.id, this.props.id);
-      
+      this.props.dropdownData(newIds, this.props.id);
       this.setState({
-        id: val.id,
-        value: newValue,
+        ids: newIds,
+        values: newValues,
       });
     }
   }
+
+  // handleInputChange = (newValues, actionMeta) => {
+  //   if(actionMeta.action === 'select-option') {
+  //     const newIds = newValues.map(option => option.id);
+  //     console.log(newIds);
+  //     this.props.dropdownData(newIds, this.props.id);
+  //     this.setState({
+  //       ids: newIds,
+  //       values: newValues,
+  //     });
+  //   }
+  // }
+  // handleMultiSelectChange = (e) => {
+   
+  //   let options = e.target.options;
+  //   let values = [];
+  //   for (let i = 0, l = options.length; i < l; i++) {
+  //     if (options[i].selected) {
+  //       values.push(options[i].value);
+  //     }
+  //   }
+  //   this.setState({
+  //     selectedMultipleDropDownValue: values,
+  //   }, () =>{
+  //     this.props.dropdownData(values, name);
+  //   });
+  // }
 
   // Creatng an option which is not present in dropdonw
   handleCreateOption = (inputValue) => {
@@ -128,14 +159,16 @@ class Selectable extends React.Component {
     axios.post(apiUrl, JSON.stringify(data), { headers: requestHeaders }).then(response => {
       // this.selectOptions = response.data;
       const newOption = { id: response.data.id, description: response.data[fieldName] };
-      this.setState({
+      this.setState(prevState => ({
         isLoading: false,
         selectOptions: [...this.state.selectOptions, newOption],
-        value: newOption,
-        id: newOption.id,
+        values: [...prevState.values, newOption],
+        ids: [...prevState.ids, newOption.id],
+      }), () => {
+        const { ids } = this.state;
+        // updating parent coponent state values
+        this.props.dropdownData(ids, this.props.id);
       });
-      // updating parent coponent satae value 
-      this.props.dropdownData(newOption.id, this.props.id);
     });
   }
 
@@ -151,17 +184,14 @@ class Selectable extends React.Component {
      description: optionLabel,
    };
  }
-
-
  
  render() {
-   
    return (
      <AsyncCreatSelect
-       isSearchable={true}
        isClearable={true}
-       value={this.state.value}
-       onChange={this.handleChange}
+       isMulti={true}
+       value={this.state.values}
+       onChange={this.handleChange}       
        onCreateOption={this.handleCreateOption}
        loadOptions={this.promiseOptions}
        getOptionLabel={opt=> opt.description}
@@ -176,7 +206,7 @@ class Selectable extends React.Component {
  }
 }
 
-Selectable.propTypes = {
+SelectableMulti.propTypes = {
   children: PropTypes.element,
   createName: PropTypes.string,
   createUrl: PropTypes.string,
@@ -189,4 +219,4 @@ Selectable.propTypes = {
   required: PropTypes.bool,
 };
 
-export default Selectable;
+export default SelectableMulti;
