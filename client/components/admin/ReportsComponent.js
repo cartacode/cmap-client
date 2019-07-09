@@ -16,6 +16,8 @@ import { superAdmin, adminUser } from '../../dictionary/auth';
 import ScrollToTop from '../reusable/ScrollToTop';
 import ReactTable from 'react-table';
 import ChatRoomModal from './reports/chatRoom';
+import ReportUpload from './reports/reportUpload';
+
 
 
 
@@ -254,11 +256,11 @@ class ReportsComponent extends React.Component {
 	          <img className="mirrored-X-image" src="/assets/img/admin/personnel_1.png" alt=""/>
 	        </div>
 	         {this.state.chatRoomModalOpen ?
-	          <ChatRoomModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.eoirModalOpen} onClose={this.closeReports} translations = {translations}/>
+	          <ChatRoomModal editId={this.state.editId}  show={this.state.chatRoomModalOpen} onClose={this.closeReports} translations = {translations}/>
 	          : null }
-	       {/*  {this.state.reportModalOpen ?
-	          <SargmtiModal editId={this.state.editId} payloadTypeId={this.state.payloadTypeId} payloadSpecType= {this.state.payloadSpecType} show={this.state.sargmtiModalOpen} onClose={this.closePayloadSpecifiction} translations = {translations}/>
-	          : null }  */}
+	         {this.state.reportModalOpen ?
+	          <ReportUpload editId={this.state.editId}  show={this.state.reportModalOpen} onClose={this.closeReports} translations = {translations}/>
+	          : null }  
 	      
 
 

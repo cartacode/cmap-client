@@ -881,7 +881,11 @@
 "link":"Link",
 "reportsUpload":"Reports Upload",
 "Chat Room":"Chat Room",
-"Report Upload":"Report Upload"
+"Report Upload":"Report Upload",
+"doc":"doc",
+"ppt":"ppt",
+"fileType":"File Type",
+"FileToUpload":"File To Upload"
 
 
 }

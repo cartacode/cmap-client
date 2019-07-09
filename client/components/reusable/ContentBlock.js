@@ -178,6 +178,46 @@ class ContentBlock extends React.Component {
       }
     }
 
+
+
+    /**
+     * This method is use for handle the selected file by browse.
+     */
+    handleSelectedFileForMultipleExtensions = (event) => {
+      const name = event.target.name;
+      const id = event.target.id;
+      const file = event.target.files[0];
+      const extension = event.target.getAttribute('data-extension');
+      let fileSize = 5242880; // 5Mb
+      let fileSizeToDisplay = '5 MB';
+      this.arrFilesNotShow.push(name);
+
+      // check for extension of file if extension mentioned
+      if(extension !== undefined && extension !== '' && extension !== null) {
+        if(file.name.split('.').pop() !== extension) {
+          showAlert('Select a valid ' + extension + ' File ');
+          document.getElementById(id).value = null;
+          return;
+        }
+        if(extension === 'kml') {
+          // Set Size 2Mb
+          fileSize = 2097152;
+          fileSizeToDisplay = '2 MB';
+        }
+
+      }
+
+      if(file.size > fileSize) {
+        showAlert('File size should be less than ' + fileSizeToDisplay);
+        document.getElementById(id).value = null;
+        this.updateContent(name, new File([''], ''));
+      }else {
+        this.updateContent(name, file);
+      }
+    }
+
+
+
     handleDropdownMultipleSelectedData = (dropdownData, name) => {
       this.updateMultiSelectDropdownContent(name, dropdownData);
     }
@@ -384,7 +424,15 @@ class ContentBlock extends React.Component {
                 <br />
                 {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link-content-block" >Download {item.name} </a> : ''}
               </div>);
-            } else {
+            } 
+            console.log("HHHHHHhh "+item.extensionsSupported);
+            if(item.extensionsSupported){
+              input = (<div >
+                <input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFileForMultipleExtensions.bind(this)} data-extension={item.extension} />
+                <br />
+                {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link-content-block" >Download {item.name} </a> : ''}
+              </div>);
+            }else {
               input = (<div >
                 <input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} />
                 <br />
