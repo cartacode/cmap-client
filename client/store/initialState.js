@@ -90,6 +90,17 @@ export default {
     error: {},
   },
 
+  reports: {
+    allReports: [],
+    oneReport: {},
+    isFetching: false,
+    isFetchingOne: false,
+    isDeleted: false,
+    isAdded: false,
+    isUpdated: false,
+    error: {},
+  },
+
   operations: {
     allOperations: [],
     oneOperation: {},

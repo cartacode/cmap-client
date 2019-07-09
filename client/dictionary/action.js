@@ -82,6 +82,13 @@ export const OPORD__FETCH = createActionType('OPORD__FETCH');
 export const OPORD__FETCH_ONE = createActionType('OPORD__FETCH_ONE');
 export const OPORD__DELETE_ONE = createActionType('OPORD__DELETE_ONE');
 
+
+export const REPORT__ADD = createActionType('REPORT__ADD');
+export const REPORT__UPDATE = createActionType('REPORT__UPDATE');
+export const REPORT__FETCH = createActionType('REPORT__FETCH');
+export const REPORT__FETCH_ONE = createActionType('REPORT__FETCH_ONE');
+export const REPORT__DELETE_ONE = createActionType('REPORT__DELETE_ONE');
+
 export const OPERATION__ADD = createActionType('OPERATION__ADD');
 export const OPERATION__UPDATE = createActionType('OPERATION__UPDATE');
 export const OPERATION__FETCH = createActionType('OPERATION__FETCH');
