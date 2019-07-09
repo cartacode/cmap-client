@@ -51,7 +51,7 @@ class ReportUpload extends React.Component {
     }
 
     if(editId !== '0' && prevProps.editId !== editId) {
-      this.ReportUpload(editId);
+      this.getReportUpload(editId);
     }
 
   }
@@ -75,9 +75,10 @@ getReportUpload = (editId) => {
   handleGeneralData = (generalData) => {
     const { report } = this.state;
     this.setState({
+      reportFile: generalData.reportFile,
+
         report: {
         ...report,
-        file: generalData.file,
         fileType: generalData.fileType,
         description: generalData.description,
         unitID: generalData.unitID,
@@ -88,42 +89,66 @@ getReportUpload = (editId) => {
    
   }
 
+
+
+
+
+
+
+
   handleSubmit = event => {
-    this.setState({
+   this.setState({
       loading: true,
     });
     event.preventDefault();
     const { report } = this.state;
     const { editId } = this.props;
 
+    const { reportFile } = this.state;
+    // We are going to upload files with JSON request body.
+    const formData = new FormData();
+    if (reportFile) {
+      formData.append('reportFile', reportFile, reportFile.name);
+    }
+
     if (editId && editId !== '0') {
-        report.id = editId;
-      this.props.updateReportUpload(editId, report).then(() => {
+      report.id = editId;
+      formData.append('reportFormData', JSON.stringify(report));
+
+      this.props.updateReportUpload(editId, formData).then(() => {
         this.setState({
           loading: false,
         });
         if(this.props.isUpdated) {
           this.props.onClose(NoticeType.UPDATE, this.props.isUpdated);
-        }
-        else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
+        } else if(!this.props.isUpdated && this.props.error === Error.ERROR_CODE) {
           this.props.onClose(NoticeType.NOT_UPDATE, this.props.isUpdated);
         }
       });
     } else {
-      this.props.addReportUpload(report).then((res) => {
+      formData.append('reportFormData', JSON.stringify(operation));
+
+      this.props.addReportUpload(formData).then((res) => {
         this.setState({
           loading: false,
         });
         // this.props.onClose(NoticeType.ADD);
         if(this.props.isAdded) {
           this.props.onClose(NoticeType.ADD, this.props.isAdded);
-        }
-        else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
+        } else if(!this.props.isAdded && this.props.error === Error.ERROR_CODE) {
           this.props.onClose(NoticeType.NOT_ADD, this.props.isAdded);
         }
       });
     }
   }
+
+
+
+
+
+
+
+
 
 
   stopset = () => {
@@ -149,7 +174,7 @@ getReportUpload = (editId) => {
     const fields = [
       { name: translations['Description'], type: 'input', domID: 'description', valFieldID: 'description', required: true },
       { name: translations['fileType'], type: 'dropdown', ddID: '', domID: 'fileType', valFieldID: 'fileType', options: fileTypeOptions },
-      { name: translations['FileToUpload'], type: 'file', valFieldID: 'file', domID: 'file' },
+      { name: translations['FileToUpload'], type: 'file', valFieldID: 'reportFile', domID: 'reportFile' },
       { name: translations['Owning Unit'], type: 'dropdown', domID: 'unitID', ddID: `Units/GetUnits?branchID=${ses.Branch}`, valFieldID: 'unitID', required: true },
       ];
 
