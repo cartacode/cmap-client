@@ -1,30 +1,44 @@
-import { REPORT__FETCH, REPORT__FETCH_ONE, REPORT__DELETE_ONE, REPORT__ADD, REPORT__UPDATE } from 'dictionary/action';
+import {  REPORT_CHATROOM__ADD, REPORT_CHATROOM__UPDATE, REPORT_UPLOAD__ADD, REPORT_UPLOAD__UPDATE, REPORT_UPLOAD__FETCH_ONE, REPORT_CHATROOM__FETCH_ONE, REPORT_LIST__FETCH,  REPORT__DELETE_ONE } from 'dictionary/action';
 import initialState from 'store/initialState';
 
 export default function reports(state = initialState.reports, { payload, type, error }) {
   switch (type) {
-    case REPORT__FETCH.REQUEST:
+    case REPORT_LIST__FETCH.REQUEST:
       return {
         ...state,
         isFetching: true,
       };
-    case REPORT__FETCH.SUCCESS:
+    case REPORT_LIST__FETCH.SUCCESS:
       return {
         ...state,
         isFetching: false,
         allReports: payload.data,
       };
-   /*  case REPORT__FETCH_ONE.REQUEST:
+    case REPORT_UPLOAD__FETCH_ONE.REQUEST:
       return {
         ...state,
         isFetchingOne: true,
       };
-    case REPORT__FETCH_ONE.SUCCESS:
+    case REPORT_UPLOAD__FETCH_ONE.SUCCESS:
       return {
         ...state,
         isFetchingOne: false,
         oneReport: payload.data,
-      }; */
+      };
+
+      case REPORT_CHATROOM__FETCH_ONE.REQUEST:
+      return {
+        ...state,
+        isFetchingOne: true,
+      };
+    case REPORT_CHATROOM__FETCH_ONE.SUCCESS:
+      return {
+        ...state,
+        isFetchingOne: false,
+        oneChatRoom: payload.data,
+      };
+      
+      
     case REPORT__DELETE_ONE.REQUEST:
       return {
         ...state,
@@ -41,18 +55,18 @@ export default function reports(state = initialState.reports, { payload, type, e
         isDeleted: false,
       };
 
-   /*  case REPORT__ADD.REQUEST:
+     case REPORT_UPLOAD__ADD.REQUEST:
       return {
         ...state,
         isAdded: false,
 
       };
-    case REPORT__ADD.SUCCESS:
+    case REPORT_UPLOAD__ADD.SUCCESS:
       return {
         ...state,
         isAdded: true,
       };
-    case REPORT__ADD.FAILURE:
+    case REPORT_UPLOAD__ADD.FAILURE:
       return {
         ...state,
         isAdded: false,
@@ -60,23 +74,60 @@ export default function reports(state = initialState.reports, { payload, type, e
       };
 
 
-    case REPORT__UPDATE.REQUEST:
+    case REPORT_UPLOAD__UPDATE.REQUEST:
       return {
         ...state,
         isUpdated: false,
 
       };
-    case REPORT__UPDATE.SUCCESS:
+    case REPORT_UPLOAD__UPDATE.SUCCESS:
       return {
         ...state,
         isUpdated: true,
       };
-    case REPORT__UPDATE.FAILURE:
+    case REPORT_UPLOAD__UPDATE.FAILURE:
       return {
         ...state,
         isUpdated: false,
         error: error.response.data,
-      }; */
+      }; 
+
+      case REPORT_CHATROOM__ADD.REQUEST:
+      return {
+        ...state,
+        isAdded: false,
+
+      };
+    case REPORT_CHATROOM__ADD.SUCCESS:
+      return {
+        ...state,
+        isAdded: true,
+      };
+    case REPORT_CHATROOM__ADD.FAILURE:
+      return {
+        ...state,
+        isAdded: false,
+        error: error.response.data,
+      };
+
+
+    case REPORT_CHATROOM__UPDATE.REQUEST:
+      return {
+        ...state,
+        isUpdated: false,
+
+      };
+    case REPORT_CHATROOM__UPDATE.SUCCESS:
+      return {
+        ...state,
+        isUpdated: true,
+      };
+    case REPORT_CHATROOM__UPDATE.FAILURE:
+      return {
+        ...state,
+        isUpdated: false,
+        error: error.response.data,
+      }; 
 
     default:
       return state;

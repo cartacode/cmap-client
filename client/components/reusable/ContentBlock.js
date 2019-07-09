@@ -178,6 +178,9 @@ class ContentBlock extends React.Component {
       }
     }
 
+
+
+
     handleDropdownMultipleSelectedData = (dropdownData, name) => {
       this.updateMultiSelectDropdownContent(name, dropdownData);
     }
@@ -384,7 +387,8 @@ class ContentBlock extends React.Component {
                 <br />
                 {value !== '' && showFileDownload ? <a href={value} target="_blank" className="name-link-content-block" >Download {item.name} </a> : ''}
               </div>);
-            } else {
+            } 
+            else {
               input = (<div >
                 <input type="file" id={`uploadFile${i}`} className="hidden_input" name={item.valFieldID} onChange={this.handleSelectedFile.bind(this)} data-extension={item.extension} />
                 <br />

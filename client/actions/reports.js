@@ -1,23 +1,39 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import {  REPORT_LIST__FETCH,  REPORT__DELETE_ONE } from 'dictionary/action';
+import {  REPORT_CHATROOM__ADD, REPORT_CHATROOM__UPDATE, REPORT_UPLOAD__ADD, REPORT_UPLOAD__UPDATE, REPORT__FETCH_ONE, REPORT_LIST__FETCH,  REPORT__DELETE_ONE } from 'dictionary/action';
 import { baseUrl, requestHeaders, formDataRequestHeader } from 'dictionary/network';
 import { createAction } from 'util/action';
 
-/* export function addPayload(payload) {
+ export function addChatRoom(chatRoom) {
   return createAction({
-    type: PAYLOAD__ADD,
-    action: () => axios.post(`${baseUrl}/Payload/PostPayload`, payload, {headers: formDataRequestHeader }),
+    type: REPORT_CHATROOM__ADD,
+    action: () => axios.post(`${baseUrl}/reports/PostChatRoom`, chatRoom, {headers: requestHeaders }),
   });
 }
 
-export function updatePayload(id, payload) {
+export function updateChatRoom(id, chatRoom) {
   return createAction({
-    type: PAYLOAD__UPDATE,
-    action: () => axios.put(`${baseUrl}/Payload/PutPayload/${id}`, payload, {headers: formDataRequestHeader }),
+    type: REPORT_CHATROOM__UPDATE,
+    action: () => axios.put(`${baseUrl}/reports/PutChatRoom/${id}`, chatRoom, {headers: requestHeaders }),
   });
-} */
+} 
+
+
+
+export function addReportUpload(report) {
+  return createAction({
+    type: REPORT_UPLOAD__ADD,
+    action: () => axios.post(`${baseUrl}/reports/PostReportUpload`, report, {headers: formDataRequestHeader }),
+  });
+}
+
+export function updateReportUpload(id, report) {
+  return createAction({
+    type: REPORT_UPLOAD__UPDATE,
+    action: () => axios.put(`${baseUrl}/reports/PutReportUpload/${id}`, report, {headers: formDataRequestHeader }),
+  });
+} 
 
 export function fetchReportList() {
   return createAction({
@@ -25,31 +41,27 @@ export function fetchReportList() {
     action: () => axios.get(`${baseUrl}/Report/GetReports`, {headers: requestHeaders}),
   });
 }
-/* 
-export function fetchPayloads() {
+ 
+
+
+export function fetchReportById(id) {
   return createAction({
-    type: PAYLOAD__FETCH,
-    action: () => axios.get(`${baseUrl}/Payload/GetPayloadsData`, {headers: requestHeaders }),
+    type: REPORT_UPLOAD__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/report/GetReport/${id}`, {headers:requestHeaders}),
+  });
+}
+ 
+
+export function fetchChatRoomById(id) {
+  return createAction({
+    type:REPORT_CHATROOM__FETCH_ONE,
+    action: () => axios.get(`${baseUrl}/report/GetReport/${id}`, {headers:requestHeaders}),
   });
 }
 
-export function fetchPayloadTypes() {
-  return createAction({
-    type: PAYLOAD_TYPE__FETCH,
-    action: () => axios.get(`${baseUrl}/PayloadType`, {headers: requestHeaders }),
-  })
-}
-
-export function fetchPayloadsById(id) {
-  return createAction({
-    type: PAYLOAD__FETCH_ONE,
-    action: () => axios.get(`${baseUrl}/Payload/GetPayload/${id}`, {headers:requestHeaders}),
-  });
-}
- */
-export function deleteReportsById(id) {
+export function deleteReportById(id) {
   return createAction({
     type: REPORT__DELETE_ONE,
-    action: () => axios.delete(`${baseUrl}/Payload/DeletePayload/${id}`, {headers:requestHeaders}),
+    action: () => axios.delete(`${baseUrl}/Report/DeleteReport/${id}`, {headers:requestHeaders}),
   });
 }
