@@ -39,3 +39,10 @@ export function deletePersonnelById(id) {
     action: () => axios.delete(`${baseUrl}/Personnel/DeletePersonnel/${id}`, { headers: requestHeaders }),
   });
 }
+
+export function fetchFlightPersonnels() {
+  return createAction({
+    type: PERSONNEL__FETCH,
+    action: () => axios.get(`${baseUrl}/Personnel/GetFlightCrewPersonnelList`, { headers: requestHeaders }),
+  });
+}
